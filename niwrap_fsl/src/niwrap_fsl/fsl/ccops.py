@@ -168,7 +168,7 @@ def ccops_validate(
     if params.get("connexity_constraint", None) is not None:
         if not isinstance(params["connexity_constraint"], (float, int)):
             raise StyxValidationError(f'`connexity_constraint` has the wrong type: Received `{type(params.get("connexity_constraint", None))}` expected `float | None`')
-        if 0 <= params["connexity_constraint"] <= 1:
+        if not (0 <= params["connexity_constraint"] <= 1):
             raise StyxValidationError("Parameter `connexity_constraint` must be between 0 and 1 (inclusive)")
     if params.get("binarise_val", None) is not None:
         if not isinstance(params["binarise_val"], (float, int)):

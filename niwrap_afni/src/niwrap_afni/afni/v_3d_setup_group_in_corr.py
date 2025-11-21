@@ -146,7 +146,7 @@ def v_3d_setup_group_in_corr_validate(
     if params.get("lr_pairs", None) is not None:
         if not isinstance(params["lr_pairs"], list):
             raise StyxValidationError(f'`lr_pairs` has the wrong type: Received `{type(params.get("lr_pairs", None))}` expected `list[str] | None`')
-        if len(params["lr_pairs"]) <= 2:
+        if len(params["lr_pairs"]) > 2:
             raise StyxValidationError("Parameter `lr_pairs` must contain at most 2 elements")
         for e in params["lr_pairs"]:
             if not isinstance(e, str):

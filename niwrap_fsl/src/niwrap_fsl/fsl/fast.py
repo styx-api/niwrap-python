@@ -199,17 +199,17 @@ def fast_validate(
     if params.get("number_classes", None) is not None:
         if not isinstance(params["number_classes"], int):
             raise StyxValidationError(f'`number_classes` has the wrong type: Received `{type(params.get("number_classes", None))}` expected `int | None`')
-        if params["number_classes"] >= 1:
+        if params["number_classes"] < 1:
             raise StyxValidationError("Parameter `number_classes` must be at least 1")
     if params.get("bias_iters", None) is not None:
         if not isinstance(params["bias_iters"], int):
             raise StyxValidationError(f'`bias_iters` has the wrong type: Received `{type(params.get("bias_iters", None))}` expected `int | None`')
-        if params["bias_iters"] >= 1:
+        if params["bias_iters"] < 1:
             raise StyxValidationError("Parameter `bias_iters` must be at least 1")
     if params.get("bias_lowpass", None) is not None:
         if not isinstance(params["bias_lowpass"], (float, int)):
             raise StyxValidationError(f'`bias_lowpass` has the wrong type: Received `{type(params.get("bias_lowpass", None))}` expected `float | None`')
-        if params["bias_lowpass"] >= 0:
+        if params["bias_lowpass"] < 0:
             raise StyxValidationError("Parameter `bias_lowpass` must be at least 0")
     if params.get("img_type", None) is not None:
         if not isinstance(params["img_type"], int):
@@ -261,7 +261,7 @@ def fast_validate(
     if params.get("segment_iters", None) is not None:
         if not isinstance(params["segment_iters"], int):
             raise StyxValidationError(f'`segment_iters` has the wrong type: Received `{type(params.get("segment_iters", None))}` expected `int | None`')
-        if params["segment_iters"] >= 1:
+        if params["segment_iters"] < 1:
             raise StyxValidationError("Parameter `segment_iters` must be at least 1")
     if params.get("mixel_smooth", None) is not None:
         if not isinstance(params["mixel_smooth"], (float, int)):
@@ -269,7 +269,7 @@ def fast_validate(
     if params.get("hyper", None) is not None:
         if not isinstance(params["hyper"], (float, int)):
             raise StyxValidationError(f'`hyper` has the wrong type: Received `{type(params.get("hyper", None))}` expected `float | None`')
-        if 0.0 <= params["hyper"] <= 1.0:
+        if not (0.0 <= params["hyper"] <= 1.0):
             raise StyxValidationError("Parameter `hyper` must be between 0.0 and 1.0 (inclusive)")
     if params.get("verbose", False) is None:
         raise StyxValidationError("`verbose` must not be None")
@@ -281,7 +281,7 @@ def fast_validate(
     if params.get("iters_afterbias", None) is not None:
         if not isinstance(params["iters_afterbias"], int):
             raise StyxValidationError(f'`iters_afterbias` has the wrong type: Received `{type(params.get("iters_afterbias", None))}` expected `int | None`')
-        if params["iters_afterbias"] >= 1:
+        if params["iters_afterbias"] < 1:
             raise StyxValidationError("Parameter `iters_afterbias` must be at least 1")
     if params.get("in_files", None) is None:
         raise StyxValidationError("`in_files` must not be None")

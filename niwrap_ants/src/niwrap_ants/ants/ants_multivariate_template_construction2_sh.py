@@ -319,7 +319,7 @@ def ants_multivariate_template_construction2_sh_validate(
     if params.get("gradient_step", None) is not None:
         if not isinstance(params["gradient_step"], (float, int)):
             raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float | None`')
-        if params["gradient_step"] <= 0.25:
+        if params["gradient_step"] > 0.25:
             raise StyxValidationError("Parameter `gradient_step` must be at most 0.25")
     if params.get("iterations", None) is not None:
         if not isinstance(params["iterations"], int):

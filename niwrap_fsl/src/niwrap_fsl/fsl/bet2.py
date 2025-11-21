@@ -165,17 +165,17 @@ def bet2_validate(
     if params.get("fractional_intensity", None) is not None:
         if not isinstance(params["fractional_intensity"], (float, int)):
             raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
-        if 0 <= params["fractional_intensity"] <= 1:
+        if not (0 <= params["fractional_intensity"] <= 1):
             raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
     if params.get("vertical_gradient", None) is not None:
         if not isinstance(params["vertical_gradient"], (float, int)):
             raise StyxValidationError(f'`vertical_gradient` has the wrong type: Received `{type(params.get("vertical_gradient", None))}` expected `float | None`')
-        if -1 <= params["vertical_gradient"] <= 1:
+        if not (-1 <= params["vertical_gradient"] <= 1):
             raise StyxValidationError("Parameter `vertical_gradient` must be between -1 and 1 (inclusive)")
     if params.get("center_of_gravity", None) is not None:
         if not isinstance(params["center_of_gravity"], list):
             raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
-        if len(params["center_of_gravity"]) == 3:
+        if len(params["center_of_gravity"]) != 3:
             raise StyxValidationError("Parameter `center_of_gravity` must contain exactly 3 elements")
         for e in params["center_of_gravity"]:
             if not isinstance(e, (float, int)):

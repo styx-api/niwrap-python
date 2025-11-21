@@ -99,7 +99,7 @@ def mri_gcut_validate(
     if params.get("threshold_value", None) is not None:
         if not isinstance(params["threshold_value"], (float, int)):
             raise StyxValidationError(f'`threshold_value` has the wrong type: Received `{type(params.get("threshold_value", None))}` expected `float | None`')
-        if 0 <= params["threshold_value"] <= 1:
+        if not (0 <= params["threshold_value"] <= 1):
             raise StyxValidationError("Parameter `threshold_value` must be between 0 and 1 (inclusive)")
     if params.get("infile", None) is None:
         raise StyxValidationError("`infile` must not be None")

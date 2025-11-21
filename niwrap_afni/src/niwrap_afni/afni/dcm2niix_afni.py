@@ -284,7 +284,7 @@ def dcm2niix_afni_validate(
     if params.get("series_crc_number", None) is not None:
         if not isinstance(params["series_crc_number"], list):
             raise StyxValidationError(f'`series_crc_number` has the wrong type: Received `{type(params.get("series_crc_number", None))}` expected `list[str] | None`')
-        if len(params["series_crc_number"]) <= 16:
+        if len(params["series_crc_number"]) > 16:
             raise StyxValidationError("Parameter `series_crc_number` must contain at most 16 elements")
         for e in params["series_crc_number"]:
             if not isinstance(e, str):

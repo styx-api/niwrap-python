@@ -98,7 +98,7 @@ def possum_interpmot_py_validate(
         raise StyxValidationError("`motion_type` must not be None")
     if not isinstance(params["motion_type"], int):
         raise StyxValidationError(f'`motion_type` has the wrong type: Received `{type(params.get("motion_type", None))}` expected `int`')
-    if 0 <= params["motion_type"] <= 2:
+    if not (0 <= params["motion_type"] <= 2):
         raise StyxValidationError("Parameter `motion_type` must be between 0 and 2 (inclusive)")
     if params.get("tr", None) is None:
         raise StyxValidationError("`tr` must not be None")

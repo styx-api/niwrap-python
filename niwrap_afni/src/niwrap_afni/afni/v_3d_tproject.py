@@ -212,7 +212,7 @@ def v_3d_tproject_validate(
     if params.get("bandpass", None) is not None:
         if not isinstance(params["bandpass"], list):
             raise StyxValidationError(f'`bandpass` has the wrong type: Received `{type(params.get("bandpass", None))}` expected `list[float] | None`')
-        if len(params["bandpass"]) == 2:
+        if len(params["bandpass"]) != 2:
             raise StyxValidationError("Parameter `bandpass` must contain exactly 2 elements")
         for e in params["bandpass"]:
             if not isinstance(e, (float, int)):
@@ -267,7 +267,7 @@ def v_3d_tproject_validate(
     if params.get("stopband", None) is not None:
         if not isinstance(params["stopband"], list):
             raise StyxValidationError(f'`stopband` has the wrong type: Received `{type(params.get("stopband", None))}` expected `list[float] | None`')
-        if len(params["stopband"]) == 2:
+        if len(params["stopband"]) != 2:
             raise StyxValidationError("Parameter `stopband` must contain exactly 2 elements")
         for e in params["stopband"]:
             if not isinstance(e, (float, int)):

@@ -227,7 +227,7 @@ def v_3drotate_validate(
     if params.get("ashift", None) is not None:
         if not isinstance(params["ashift"], list):
             raise StyxValidationError(f'`ashift` has the wrong type: Received `{type(params.get("ashift", None))}` expected `list[float] | None`')
-        if len(params["ashift"]) == 3:
+        if len(params["ashift"]) != 3:
             raise StyxValidationError("Parameter `ashift` must contain exactly 3 elements")
         for e in params["ashift"]:
             if not isinstance(e, (float, int)):
@@ -235,7 +235,7 @@ def v_3drotate_validate(
     if params.get("bshift", None) is not None:
         if not isinstance(params["bshift"], list):
             raise StyxValidationError(f'`bshift` has the wrong type: Received `{type(params.get("bshift", None))}` expected `list[float] | None`')
-        if len(params["bshift"]) == 3:
+        if len(params["bshift"]) != 3:
             raise StyxValidationError("Parameter `bshift` must contain exactly 3 elements")
         for e in params["bshift"]:
             if not isinstance(e, (float, int)):
@@ -243,7 +243,7 @@ def v_3drotate_validate(
     if params.get("rotate", None) is not None:
         if not isinstance(params["rotate"], list):
             raise StyxValidationError(f'`rotate` has the wrong type: Received `{type(params.get("rotate", None))}` expected `list[str] | None`')
-        if len(params["rotate"]) == 3:
+        if len(params["rotate"]) != 3:
             raise StyxValidationError("Parameter `rotate` must contain exactly 3 elements")
         for e in params["rotate"]:
             if not isinstance(e, str):
@@ -276,7 +276,7 @@ def v_3drotate_validate(
     if params.get("origin", None) is not None:
         if not isinstance(params["origin"], list):
             raise StyxValidationError(f'`origin` has the wrong type: Received `{type(params.get("origin", None))}` expected `list[float] | None`')
-        if len(params["origin"]) == 3:
+        if len(params["origin"]) != 3:
             raise StyxValidationError("Parameter `origin` must contain exactly 3 elements")
         for e in params["origin"]:
             if not isinstance(e, (float, int)):

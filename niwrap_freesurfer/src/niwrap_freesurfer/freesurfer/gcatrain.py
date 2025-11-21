@@ -169,7 +169,7 @@ def gcatrain_validate(
         raise StyxValidationError("`init_subject_transform` must not be None")
     if not isinstance(params["init_subject_transform"], list):
         raise StyxValidationError(f'`init_subject_transform` has the wrong type: Received `{type(params.get("init_subject_transform", None))}` expected `list[str]`')
-    if len(params["init_subject_transform"]) == 2:
+    if len(params["init_subject_transform"]) != 2:
         raise StyxValidationError("Parameter `init_subject_transform` must contain exactly 2 elements")
     for e in params["init_subject_transform"]:
         if not isinstance(e, str):

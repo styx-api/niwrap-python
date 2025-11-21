@@ -145,7 +145,7 @@ def mris_target_pos_validate(
     if params.get("threshold_values", None) is not None:
         if not isinstance(params["threshold_values"], list):
             raise StyxValidationError(f'`threshold_values` has the wrong type: Received `{type(params.get("threshold_values", None))}` expected `list[float] | None`')
-        if len(params["threshold_values"]) == 2:
+        if len(params["threshold_values"]) != 2:
             raise StyxValidationError("Parameter `threshold_values` must contain exactly 2 elements")
         for e in params["threshold_values"]:
             if not isinstance(e, (float, int)):

@@ -204,7 +204,7 @@ def v_3d_tcorrelate_validate(
     if params.get("polort", None) is not None:
         if not isinstance(params["polort"], int):
             raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `int | None`')
-        if -1 <= params["polort"] <= 9:
+        if not (-1 <= params["polort"] <= 9):
             raise StyxValidationError("Parameter `polort` must be between -1 and 9 (inclusive)")
     if params.get("ort", None) is not None:
         if not isinstance(params["ort"], (pathlib.Path, str)):

@@ -212,7 +212,7 @@ def v_3dkmeans_validate(
     if params.get("mask_range", None) is not None:
         if not isinstance(params["mask_range"], list):
             raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
-        if len(params["mask_range"]) == 2:
+        if len(params["mask_range"]) != 2:
             raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
         for e in params["mask_range"]:
             if not isinstance(e, (float, int)):
@@ -264,7 +264,7 @@ def v_3dkmeans_validate(
     if params.get("voxdbg", None) is not None:
         if not isinstance(params["voxdbg"], list):
             raise StyxValidationError(f'`voxdbg` has the wrong type: Received `{type(params.get("voxdbg", None))}` expected `list[float] | None`')
-        if len(params["voxdbg"]) == 3:
+        if len(params["voxdbg"]) != 3:
             raise StyxValidationError("Parameter `voxdbg` must contain exactly 3 elements")
         for e in params["voxdbg"]:
             if not isinstance(e, (float, int)):

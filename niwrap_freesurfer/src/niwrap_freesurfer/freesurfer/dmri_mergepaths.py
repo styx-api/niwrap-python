@@ -115,7 +115,7 @@ def dmri_mergepaths_validate(
         raise StyxValidationError("`threshold` must not be None")
     if not isinstance(params["threshold"], (float, int)):
         raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
-    if 0 <= params["threshold"] <= 1:
+    if not (0 <= params["threshold"] <= 1):
         raise StyxValidationError("Parameter `threshold` must be between 0 and 1 (inclusive)")
     if params.get("debug", False) is None:
         raise StyxValidationError("`debug` must not be None")

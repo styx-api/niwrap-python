@@ -139,7 +139,7 @@ def overlay_validate(
         raise StyxValidationError("`bg_thresh` must not be None")
     if not isinstance(params["bg_thresh"], list):
         raise StyxValidationError(f'`bg_thresh` has the wrong type: Received `{type(params.get("bg_thresh", None))}` expected `list[float]`')
-    if len(params["bg_thresh"]) == 2:
+    if len(params["bg_thresh"]) != 2:
         raise StyxValidationError("Parameter `bg_thresh` must contain exactly 2 elements")
     for e in params["bg_thresh"]:
         if not isinstance(e, (float, int)):
@@ -172,7 +172,7 @@ def overlay_validate(
         raise StyxValidationError("`stat_thresh` must not be None")
     if not isinstance(params["stat_thresh"], list):
         raise StyxValidationError(f'`stat_thresh` has the wrong type: Received `{type(params.get("stat_thresh", None))}` expected `list[float]`')
-    if len(params["stat_thresh"]) == 2:
+    if len(params["stat_thresh"]) != 2:
         raise StyxValidationError("Parameter `stat_thresh` must contain exactly 2 elements")
     for e in params["stat_thresh"]:
         if not isinstance(e, (float, int)):
@@ -180,7 +180,7 @@ def overlay_validate(
     if params.get("stat_thresh2", None) is not None:
         if not isinstance(params["stat_thresh2"], list):
             raise StyxValidationError(f'`stat_thresh2` has the wrong type: Received `{type(params.get("stat_thresh2", None))}` expected `list[float] | None`')
-        if len(params["stat_thresh2"]) == 2:
+        if len(params["stat_thresh2"]) != 2:
             raise StyxValidationError("Parameter `stat_thresh2` must contain exactly 2 elements")
         for e in params["stat_thresh2"]:
             if not isinstance(e, (float, int)):

@@ -230,7 +230,7 @@ def ants_brain_extraction_sh_validate(
     if params.get("debug_mode", None) is not None:
         if not isinstance(params["debug_mode"], int):
             raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", None))}` expected `int | None`')
-        if params["debug_mode"] >= 0:
+        if params["debug_mode"] < 0:
             raise StyxValidationError("Parameter `debug_mode` must be at least 0")
     if params.get("output_prefix", None) is not None:
         if not isinstance(params["output_prefix"], str):

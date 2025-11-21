@@ -104,7 +104,7 @@ def apply_morph_validate(
     if params.get("dbg_coords", None) is not None:
         if not isinstance(params["dbg_coords"], list):
             raise StyxValidationError(f'`dbg_coords` has the wrong type: Received `{type(params.get("dbg_coords", None))}` expected `list[float] | None`')
-        if len(params["dbg_coords"]) == 3:
+        if len(params["dbg_coords"]) != 3:
             raise StyxValidationError("Parameter `dbg_coords` must contain exactly 3 elements")
         for e in params["dbg_coords"]:
             if not isinstance(e, (float, int)):

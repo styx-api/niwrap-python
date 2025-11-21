@@ -270,7 +270,7 @@ def first_utils_validate(
     if params.get("threshold", None) is not None:
         if not isinstance(params["threshold"], (float, int)):
             raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
-        if params["threshold"] >= 0:
+        if params["threshold"] < 0:
             raise StyxValidationError("Parameter `threshold` must be at least 0")
     if params.get("mesh_label", None) is not None:
         if not isinstance(params["mesh_label"], str):
@@ -328,7 +328,7 @@ def first_utils_validate(
     if params.get("num_modes", None) is not None:
         if not isinstance(params["num_modes"], (float, int)):
             raise StyxValidationError(f'`num_modes` has the wrong type: Received `{type(params.get("num_modes", None))}` expected `float | None`')
-        if params["num_modes"] >= 0:
+        if params["num_modes"] < 0:
             raise StyxValidationError("Parameter `num_modes` must be at least 0")
     if params.get("single_boundary_corr", False) is None:
         raise StyxValidationError("`single_boundary_corr` must not be None")

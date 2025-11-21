@@ -190,7 +190,7 @@ def ants_ai_validate(
     if params.get("random_seed", None) is not None:
         if not isinstance(params["random_seed"], int):
             raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
-        if params["random_seed"] >= 0:
+        if params["random_seed"] < 0:
             raise StyxValidationError("Parameter `random_seed` must be at least 0")
     if params.get("verbose", None) is not None:
         if not isinstance(params["verbose"], bool):

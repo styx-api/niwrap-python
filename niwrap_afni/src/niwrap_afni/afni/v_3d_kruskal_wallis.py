@@ -90,7 +90,7 @@ def v_3d_kruskal_wallis_validate(
         raise StyxValidationError("`levels` must not be None")
     if not isinstance(params["levels"], int):
         raise StyxValidationError(f'`levels` has the wrong type: Received `{type(params.get("levels", None))}` expected `int`')
-    if params["levels"] >= 2:
+    if params["levels"] < 2:
         raise StyxValidationError("Parameter `levels` must be at least 2")
     if params.get("datasets", None) is None:
         raise StyxValidationError("`datasets` must not be None")

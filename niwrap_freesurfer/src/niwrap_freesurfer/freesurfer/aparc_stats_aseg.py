@@ -241,7 +241,7 @@ def aparc_stats_aseg_validate(
     if params.get("longitudinal", None) is not None:
         if not isinstance(params["longitudinal"], list):
             raise StyxValidationError(f'`longitudinal` has the wrong type: Received `{type(params.get("longitudinal", None))}` expected `list[str] | None`')
-        if len(params["longitudinal"]) == 2:
+        if len(params["longitudinal"]) != 2:
             raise StyxValidationError("Parameter `longitudinal` must contain exactly 2 elements")
         for e in params["longitudinal"]:
             if not isinstance(e, str):

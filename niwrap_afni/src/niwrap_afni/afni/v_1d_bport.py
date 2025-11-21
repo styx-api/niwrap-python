@@ -121,7 +121,7 @@ def v_1d_bport_validate(
         raise StyxValidationError("`band` must not be None")
     if not isinstance(params["band"], list):
         raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float]`')
-    if len(params["band"]) == 2:
+    if len(params["band"]) != 2:
         raise StyxValidationError("Parameter `band` must contain exactly 2 elements")
     for e in params["band"]:
         if not isinstance(e, (float, int)):
@@ -151,7 +151,7 @@ def v_1d_bport_validate(
     if params.get("nodata", None) is not None:
         if not isinstance(params["nodata"], list):
             raise StyxValidationError(f'`nodata` has the wrong type: Received `{type(params.get("nodata", None))}` expected `list[float] | None`')
-        if 1 <= len(params["nodata"]) <= 2:
+        if not (1 <= len(params["nodata"]) <= 2):
             raise StyxValidationError("Parameter `nodata` must contain between 1 and 2 elements (inclusive)")
         for e in params["nodata"]:
             if not isinstance(e, (float, int)):

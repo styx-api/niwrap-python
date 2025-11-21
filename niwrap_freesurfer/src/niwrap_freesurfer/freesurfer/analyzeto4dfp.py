@@ -119,7 +119,7 @@ def analyzeto4dfp_validate(
     if params.get("orientation", None) is not None:
         if not isinstance(params["orientation"], int):
             raise StyxValidationError(f'`orientation` has the wrong type: Received `{type(params.get("orientation", None))}` expected `int | None`')
-        if 0 <= params["orientation"] <= 5:
+        if not (0 <= params["orientation"] <= 5):
             raise StyxValidationError("Parameter `orientation` must be between 0 and 5 (inclusive)")
 
 

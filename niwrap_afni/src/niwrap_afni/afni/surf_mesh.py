@@ -113,7 +113,7 @@ def surf_mesh_validate(
         raise StyxValidationError("`edge_fraction` must not be None")
     if not isinstance(params["edge_fraction"], (float, int)):
         raise StyxValidationError(f'`edge_fraction` has the wrong type: Received `{type(params.get("edge_fraction", None))}` expected `float`')
-    if 0 <= params["edge_fraction"] <= 1:
+    if not (0 <= params["edge_fraction"] <= 1):
         raise StyxValidationError("Parameter `edge_fraction` must be between 0 and 1 (inclusive)")
     if params.get("surface_volume", None) is not None:
         if not isinstance(params["surface_volume"], (pathlib.Path, str)):

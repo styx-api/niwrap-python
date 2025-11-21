@@ -100,7 +100,7 @@ def flirt_average_validate(
         raise StyxValidationError("`ninputs` must not be None")
     if not isinstance(params["ninputs"], int):
         raise StyxValidationError(f'`ninputs` has the wrong type: Received `{type(params.get("ninputs", None))}` expected `int`')
-    if params["ninputs"] >= 2:
+    if params["ninputs"] < 2:
         raise StyxValidationError("Parameter `ninputs` must be at least 2")
     if params.get("input1", None) is None:
         raise StyxValidationError("`input1` must not be None")

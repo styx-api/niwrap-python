@@ -235,7 +235,7 @@ def v_3d_anova2_validate(
         raise StyxValidationError("`type` must not be None")
     if not isinstance(params["type"], int):
         raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `int`')
-    if 1 <= params["type"] <= 3:
+    if not (1 <= params["type"] <= 3):
         raise StyxValidationError("Parameter `type` must be between 1 and 3 (inclusive)")
     if params.get("alevels", None) is None:
         raise StyxValidationError("`alevels` must not be None")
@@ -248,7 +248,7 @@ def v_3d_anova2_validate(
     if params.get("dataset", None) is not None:
         if not isinstance(params["dataset"], list):
             raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `list[str] | None`')
-        if len(params["dataset"]) >= 1:
+        if len(params["dataset"]) < 1:
             raise StyxValidationError("Parameter `dataset` must contain at least 1 element")
         for e in params["dataset"]:
             if not isinstance(e, str):

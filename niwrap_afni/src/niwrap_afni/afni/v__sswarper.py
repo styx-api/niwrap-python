@@ -275,7 +275,7 @@ def v__sswarper_validate(
     if params.get("warp_scale", None) is not None:
         if not isinstance(params["warp_scale"], (float, int)):
             raise StyxValidationError(f'`warp_scale` has the wrong type: Received `{type(params.get("warp_scale", None))}` expected `float | None`')
-        if 0.1 <= params["warp_scale"] <= 1.0:
+        if not (0.1 <= params["warp_scale"] <= 1.0):
             raise StyxValidationError("Parameter `warp_scale` must be between 0.1 and 1.0 (inclusive)")
     if params.get("ssopt_flag", None) is not None:
         if not isinstance(params["ssopt_flag"], str):

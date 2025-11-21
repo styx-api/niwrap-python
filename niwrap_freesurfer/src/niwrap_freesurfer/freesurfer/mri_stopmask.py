@@ -133,7 +133,7 @@ def mri_stopmask_validate(
         raise StyxValidationError("`filled` must not be None")
     if not isinstance(params["filled"], list):
         raise StyxValidationError(f'`filled` has the wrong type: Received `{type(params.get("filled", None))}` expected `list[InputPathType]`')
-    if len(params["filled"]) <= 2:
+    if len(params["filled"]) > 2:
         raise StyxValidationError("Parameter `filled` must contain at most 2 elements")
     for e in params["filled"]:
         if not isinstance(e, (pathlib.Path, str)):

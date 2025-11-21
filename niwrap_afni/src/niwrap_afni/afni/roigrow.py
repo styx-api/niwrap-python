@@ -139,7 +139,7 @@ def roigrow_validate(
     if params.get("inbox_edges", None) is not None:
         if not isinstance(params["inbox_edges"], list):
             raise StyxValidationError(f'`inbox_edges` has the wrong type: Received `{type(params.get("inbox_edges", None))}` expected `list[float] | None`')
-        if len(params["inbox_edges"]) == 3:
+        if len(params["inbox_edges"]) != 3:
             raise StyxValidationError("Parameter `inbox_edges` must contain exactly 3 elements")
         for e in params["inbox_edges"]:
             if not isinstance(e, (float, int)):

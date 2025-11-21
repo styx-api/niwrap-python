@@ -106,7 +106,7 @@ def v__suma_make_spec_caret_validate(
     if params.get("debug", None) is not None:
         if not isinstance(params["debug"], int):
             raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
-        if 0 <= params["debug"] <= 2:
+        if not (0 <= params["debug"] <= 2):
             raise StyxValidationError("Parameter `debug` must be between 0 and 2 (inclusive)")
     if params.get("echo", False) is None:
         raise StyxValidationError("`echo` must not be None")
@@ -118,7 +118,7 @@ def v__suma_make_spec_caret_validate(
     if params.get("side_labels_style", None) is not None:
         if not isinstance(params["side_labels_style"], int):
             raise StyxValidationError(f'`side_labels_style` has the wrong type: Received `{type(params.get("side_labels_style", None))}` expected `int | None`')
-        if 1 <= params["side_labels_style"] <= 3:
+        if not (1 <= params["side_labels_style"] <= 3):
             raise StyxValidationError("Parameter `side_labels_style` must be between 1 and 3 (inclusive)")
 
 

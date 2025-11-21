@@ -161,7 +161,7 @@ def mris_make_template_validate(
     if params.get("addframe_parameters", None) is not None:
         if not isinstance(params["addframe_parameters"], list):
             raise StyxValidationError(f'`addframe_parameters` has the wrong type: Received `{type(params.get("addframe_parameters", None))}` expected `list[str] | None`')
-        if len(params["addframe_parameters"]) == 2:
+        if len(params["addframe_parameters"]) != 2:
             raise StyxValidationError("Parameter `addframe_parameters` must contain exactly 2 elements")
         for e in params["addframe_parameters"]:
             if not isinstance(e, str):
@@ -185,7 +185,7 @@ def mris_make_template_validate(
     if params.get("overlay_parameters", None) is not None:
         if not isinstance(params["overlay_parameters"], list):
             raise StyxValidationError(f'`overlay_parameters` has the wrong type: Received `{type(params.get("overlay_parameters", None))}` expected `list[str] | None`')
-        if len(params["overlay_parameters"]) == 2:
+        if len(params["overlay_parameters"]) != 2:
             raise StyxValidationError("Parameter `overlay_parameters` must contain exactly 2 elements")
         for e in params["overlay_parameters"]:
             if not isinstance(e, str):

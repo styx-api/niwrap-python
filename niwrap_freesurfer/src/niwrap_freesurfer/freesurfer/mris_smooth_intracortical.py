@@ -145,7 +145,7 @@ def mris_smooth_intracortical_validate(
     if params.get("tan_size", None) is not None:
         if not isinstance(params["tan_size"], int):
             raise StyxValidationError(f'`tan_size` has the wrong type: Received `{type(params.get("tan_size", None))}` expected `int | None`')
-        if 0 <= params["tan_size"] <= 6:
+        if not (0 <= params["tan_size"] <= 6):
             raise StyxValidationError("Parameter `tan_size` must be between 0 and 6 (inclusive)")
     if params.get("rad_size", None) is not None:
         if not isinstance(params["rad_size"], (float, int)):

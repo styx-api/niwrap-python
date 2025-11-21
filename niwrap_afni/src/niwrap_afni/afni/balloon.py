@@ -111,7 +111,7 @@ def balloon_validate(
     if params.get("t_rise", None) is not None:
         if not isinstance(params["t_rise"], list):
             raise StyxValidationError(f'`t_rise` has the wrong type: Received `{type(params.get("t_rise", None))}` expected `list[float] | None`')
-        if len(params["t_rise"]) <= 1:
+        if len(params["t_rise"]) > 1:
             raise StyxValidationError("Parameter `t_rise` must contain at most 1 element")
         for e in params["t_rise"]:
             if not isinstance(e, (float, int)):
@@ -119,7 +119,7 @@ def balloon_validate(
     if params.get("t_fall", None) is not None:
         if not isinstance(params["t_fall"], list):
             raise StyxValidationError(f'`t_fall` has the wrong type: Received `{type(params.get("t_fall", None))}` expected `list[float] | None`')
-        if len(params["t_fall"]) <= 1:
+        if len(params["t_fall"]) > 1:
             raise StyxValidationError("Parameter `t_fall` must contain at most 1 element")
         for e in params["t_fall"]:
             if not isinstance(e, (float, int)):
@@ -127,7 +127,7 @@ def balloon_validate(
     if params.get("t_sustain", None) is not None:
         if not isinstance(params["t_sustain"], list):
             raise StyxValidationError(f'`t_sustain` has the wrong type: Received `{type(params.get("t_sustain", None))}` expected `list[float] | None`')
-        if len(params["t_sustain"]) <= 1:
+        if len(params["t_sustain"]) > 1:
             raise StyxValidationError("Parameter `t_sustain` must contain at most 1 element")
         for e in params["t_sustain"]:
             if not isinstance(e, (float, int)):

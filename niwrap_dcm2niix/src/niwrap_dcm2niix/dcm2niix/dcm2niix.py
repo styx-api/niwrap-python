@@ -244,7 +244,7 @@ def dcm2niix_validate(
     if params.get("compression_level", None) is not None:
         if not isinstance(params["compression_level"], (float, int)):
             raise StyxValidationError(f'`compression_level` has the wrong type: Received `{type(params.get("compression_level", None))}` expected `float | None`')
-        if 1 <= params["compression_level"] <= 9:
+        if not (1 <= params["compression_level"] <= 9):
             raise StyxValidationError("Parameter `compression_level` must be between 1 and 9 (inclusive)")
     if params.get("adjacent", None) is not None:
         if not isinstance(params["adjacent"], bool):
@@ -263,7 +263,7 @@ def dcm2niix_validate(
     if params.get("depth", None) is not None:
         if not isinstance(params["depth"], (float, int)):
             raise StyxValidationError(f'`depth` has the wrong type: Received `{type(params.get("depth", None))}` expected `float | None`')
-        if 0 <= params["depth"] <= 9:
+        if not (0 <= params["depth"] <= 9):
             raise StyxValidationError("Parameter `depth` must be between 0 and 9 (inclusive)")
     if params.get("export_format", None) is not None:
         if not isinstance(params["export_format"], str):

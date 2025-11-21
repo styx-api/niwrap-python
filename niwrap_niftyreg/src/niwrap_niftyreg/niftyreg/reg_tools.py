@@ -154,7 +154,7 @@ def reg_tools_validate(
     if params.get("smooth_gaussian", None) is not None:
         if not isinstance(params["smooth_gaussian"], list):
             raise StyxValidationError(f'`smooth_gaussian` has the wrong type: Received `{type(params.get("smooth_gaussian", None))}` expected `list[float] | None`')
-        if len(params["smooth_gaussian"]) == 3:
+        if len(params["smooth_gaussian"]) != 3:
             raise StyxValidationError("Parameter `smooth_gaussian` must contain exactly 3 elements")
         for e in params["smooth_gaussian"]:
             if not isinstance(e, (float, int)):

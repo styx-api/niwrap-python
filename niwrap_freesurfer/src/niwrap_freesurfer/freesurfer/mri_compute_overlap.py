@@ -162,7 +162,7 @@ def mri_compute_overlap_validate(
     if params.get("translate_label", None) is not None:
         if not isinstance(params["translate_label"], list):
             raise StyxValidationError(f'`translate_label` has the wrong type: Received `{type(params.get("translate_label", None))}` expected `list[float] | None`')
-        if len(params["translate_label"]) <= 2:
+        if len(params["translate_label"]) > 2:
             raise StyxValidationError("Parameter `translate_label` must contain at most 2 elements")
         for e in params["translate_label"]:
             if not isinstance(e, (float, int)):

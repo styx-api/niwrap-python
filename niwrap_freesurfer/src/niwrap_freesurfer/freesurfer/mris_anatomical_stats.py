@@ -158,7 +158,7 @@ def mris_anatomical_stats_validate(
     if params.get("thickness_range", None) is not None:
         if not isinstance(params["thickness_range"], list):
             raise StyxValidationError(f'`thickness_range` has the wrong type: Received `{type(params.get("thickness_range", None))}` expected `list[float] | None`')
-        if len(params["thickness_range"]) == 2:
+        if len(params["thickness_range"]) != 2:
             raise StyxValidationError("Parameter `thickness_range` must contain exactly 2 elements")
         for e in params["thickness_range"]:
             if not isinstance(e, (float, int)):

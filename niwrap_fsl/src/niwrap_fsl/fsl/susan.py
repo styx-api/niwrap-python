@@ -138,19 +138,19 @@ def susan_validate(
         raise StyxValidationError("`dimensionality` must not be None")
     if not isinstance(params["dimensionality"], (float, int)):
         raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `float`')
-    if 2 <= params["dimensionality"] <= 3:
+    if not (2 <= params["dimensionality"] <= 3):
         raise StyxValidationError("Parameter `dimensionality` must be between 2 and 3 (inclusive)")
     if params.get("use_median_filter", None) is None:
         raise StyxValidationError("`use_median_filter` must not be None")
     if not isinstance(params["use_median_filter"], (float, int)):
         raise StyxValidationError(f'`use_median_filter` has the wrong type: Received `{type(params.get("use_median_filter", None))}` expected `float`')
-    if 0 <= params["use_median_filter"] <= 1:
+    if not (0 <= params["use_median_filter"] <= 1):
         raise StyxValidationError("Parameter `use_median_filter` must be between 0 and 1 (inclusive)")
     if params.get("n_usans", None) is None:
         raise StyxValidationError("`n_usans` must not be None")
     if not isinstance(params["n_usans"], (float, int)):
         raise StyxValidationError(f'`n_usans` has the wrong type: Received `{type(params.get("n_usans", None))}` expected `float`')
-    if 0 <= params["n_usans"] <= 2:
+    if not (0 <= params["n_usans"] <= 2):
         raise StyxValidationError("Parameter `n_usans` must be between 0 and 2 (inclusive)")
     if params.get("usan1", None) is not None:
         if not isinstance(params["usan1"], (pathlib.Path, str)):

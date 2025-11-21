@@ -224,7 +224,7 @@ def mri_defacer_validate(
     if params.get("fill_constants", None) is not None:
         if not isinstance(params["fill_constants"], list):
             raise StyxValidationError(f'`fill_constants` has the wrong type: Received `{type(params.get("fill_constants", None))}` expected `list[float] | None`')
-        if len(params["fill_constants"]) == 2:
+        if len(params["fill_constants"]) != 2:
             raise StyxValidationError("Parameter `fill_constants` must contain exactly 2 elements")
         for e in params["fill_constants"]:
             if not isinstance(e, (float, int)):
@@ -259,7 +259,7 @@ def mri_defacer_validate(
     if params.get("apply_to_volume", None) is not None:
         if not isinstance(params["apply_to_volume"], list):
             raise StyxValidationError(f'`apply_to_volume` has the wrong type: Received `{type(params.get("apply_to_volume", None))}` expected `list[str] | None`')
-        if len(params["apply_to_volume"]) == 4:
+        if len(params["apply_to_volume"]) != 4:
             raise StyxValidationError("Parameter `apply_to_volume` must contain exactly 4 elements")
         for e in params["apply_to_volume"]:
             if not isinstance(e, str):
@@ -267,7 +267,7 @@ def mri_defacer_validate(
     if params.get("ripple_center", None) is not None:
         if not isinstance(params["ripple_center"], list):
             raise StyxValidationError(f'`ripple_center` has the wrong type: Received `{type(params.get("ripple_center", None))}` expected `list[float] | None`')
-        if len(params["ripple_center"]) == 3:
+        if len(params["ripple_center"]) != 3:
             raise StyxValidationError("Parameter `ripple_center` must contain exactly 3 elements")
         for e in params["ripple_center"]:
             if not isinstance(e, (float, int)):
@@ -275,7 +275,7 @@ def mri_defacer_validate(
     if params.get("apply_ripple", None) is not None:
         if not isinstance(params["apply_ripple"], list):
             raise StyxValidationError(f'`apply_ripple` has the wrong type: Received `{type(params.get("apply_ripple", None))}` expected `list[str] | None`')
-        if len(params["apply_ripple"]) == 6:
+        if len(params["apply_ripple"]) != 6:
             raise StyxValidationError("Parameter `apply_ripple` must contain exactly 6 elements")
         for e in params["apply_ripple"]:
             if not isinstance(e, str):

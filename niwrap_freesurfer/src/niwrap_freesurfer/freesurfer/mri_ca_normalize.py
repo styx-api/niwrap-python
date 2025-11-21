@@ -271,7 +271,7 @@ def mri_ca_normalize_validate(
     if params.get("debug_voxel_coords", None) is not None:
         if not isinstance(params["debug_voxel_coords"], list):
             raise StyxValidationError(f'`debug_voxel_coords` has the wrong type: Received `{type(params.get("debug_voxel_coords", None))}` expected `list[float] | None`')
-        if len(params["debug_voxel_coords"]) == 3:
+        if len(params["debug_voxel_coords"]) != 3:
             raise StyxValidationError("Parameter `debug_voxel_coords` must contain exactly 3 elements")
         for e in params["debug_voxel_coords"]:
             if not isinstance(e, (float, int)):
@@ -279,7 +279,7 @@ def mri_ca_normalize_validate(
     if params.get("debug_node_coords", None) is not None:
         if not isinstance(params["debug_node_coords"], list):
             raise StyxValidationError(f'`debug_node_coords` has the wrong type: Received `{type(params.get("debug_node_coords", None))}` expected `list[float] | None`')
-        if len(params["debug_node_coords"]) == 3:
+        if len(params["debug_node_coords"]) != 3:
             raise StyxValidationError("Parameter `debug_node_coords` must contain exactly 3 elements")
         for e in params["debug_node_coords"]:
             if not isinstance(e, (float, int)):

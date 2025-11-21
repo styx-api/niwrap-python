@@ -379,7 +379,7 @@ def mri_vol2vol_validate(
     if params.get("slice_crop", None) is not None:
         if not isinstance(params["slice_crop"], list):
             raise StyxValidationError(f'`slice_crop` has the wrong type: Received `{type(params.get("slice_crop", None))}` expected `list[float] | None`')
-        if len(params["slice_crop"]) <= 2:
+        if len(params["slice_crop"]) > 2:
             raise StyxValidationError("Parameter `slice_crop` must contain at most 2 elements")
         for e in params["slice_crop"]:
             if not isinstance(e, (float, int)):
@@ -442,7 +442,7 @@ def mri_vol2vol_validate(
     if params.get("rot", None) is not None:
         if not isinstance(params["rot"], list):
             raise StyxValidationError(f'`rot` has the wrong type: Received `{type(params.get("rot", None))}` expected `list[float] | None`')
-        if len(params["rot"]) == 3:
+        if len(params["rot"]) != 3:
             raise StyxValidationError("Parameter `rot` must contain exactly 3 elements")
         for e in params["rot"]:
             if not isinstance(e, (float, int)):
@@ -450,7 +450,7 @@ def mri_vol2vol_validate(
     if params.get("trans", None) is not None:
         if not isinstance(params["trans"], list):
             raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
-        if len(params["trans"]) == 3:
+        if len(params["trans"]) != 3:
             raise StyxValidationError("Parameter `trans` must contain exactly 3 elements")
         for e in params["trans"]:
             if not isinstance(e, (float, int)):
@@ -458,7 +458,7 @@ def mri_vol2vol_validate(
     if params.get("shear", None) is not None:
         if not isinstance(params["shear"], list):
             raise StyxValidationError(f'`shear` has the wrong type: Received `{type(params.get("shear", None))}` expected `list[float] | None`')
-        if len(params["shear"]) == 3:
+        if len(params["shear"]) != 3:
             raise StyxValidationError("Parameter `shear` must contain exactly 3 elements")
         for e in params["shear"]:
             if not isinstance(e, (float, int)):

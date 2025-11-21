@@ -100,7 +100,7 @@ def p2dsetstat_validate(
         raise StyxValidationError("`pvalue` must not be None")
     if not isinstance(params["pvalue"], (float, int)):
         raise StyxValidationError(f'`pvalue` has the wrong type: Received `{type(params.get("pvalue", None))}` expected `float`')
-    if 0 <= params["pvalue"] <= 1:
+    if not (0 <= params["pvalue"] <= 1):
         raise StyxValidationError("Parameter `pvalue` must be between 0 and 1 (inclusive)")
     if params.get("bisided", False) is None:
         raise StyxValidationError("`bisided` must not be None")

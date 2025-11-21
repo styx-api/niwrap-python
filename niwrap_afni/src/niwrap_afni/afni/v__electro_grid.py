@@ -101,7 +101,7 @@ def v__electro_grid_validate(
     if params.get("grid", None) is not None:
         if not isinstance(params["grid"], list):
             raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[int] | None`')
-        if len(params["grid"]) == 2:
+        if len(params["grid"]) != 2:
             raise StyxValidationError("Parameter `grid` must contain exactly 2 elements")
         for e in params["grid"]:
             if not isinstance(e, int):

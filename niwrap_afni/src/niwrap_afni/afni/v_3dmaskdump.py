@@ -195,7 +195,7 @@ def v_3dmaskdump_validate(
     if params.get("mask_range", None) is not None:
         if not isinstance(params["mask_range"], list):
             raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[str] | None`')
-        if len(params["mask_range"]) == 2:
+        if len(params["mask_range"]) != 2:
             raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
         for e in params["mask_range"]:
             if not isinstance(e, str):

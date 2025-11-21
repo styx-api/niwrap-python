@@ -118,7 +118,7 @@ def tbss_skeleton_validate(
     if params.get("skeleton_params", None) is not None:
         if not isinstance(params["skeleton_params"], list):
             raise StyxValidationError(f'`skeleton_params` has the wrong type: Received `{type(params.get("skeleton_params", None))}` expected `list[str] | None`')
-        if len(params["skeleton_params"]) == 5:
+        if len(params["skeleton_params"]) != 5:
             raise StyxValidationError("Parameter `skeleton_params` must contain exactly 5 elements")
         for e in params["skeleton_params"]:
             if not isinstance(e, str):

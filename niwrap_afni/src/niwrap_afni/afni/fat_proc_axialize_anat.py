@@ -259,7 +259,7 @@ def fat_proc_axialize_anat_validate(
     if params.get("qc_ulay_range", None) is not None:
         if not isinstance(params["qc_ulay_range"], list):
             raise StyxValidationError(f'`qc_ulay_range` has the wrong type: Received `{type(params.get("qc_ulay_range", None))}` expected `list[float] | None`')
-        if len(params["qc_ulay_range"]) == 2:
+        if len(params["qc_ulay_range"]) != 2:
             raise StyxValidationError("Parameter `qc_ulay_range` must contain exactly 2 elements")
         for e in params["qc_ulay_range"]:
             if not isinstance(e, (float, int)):

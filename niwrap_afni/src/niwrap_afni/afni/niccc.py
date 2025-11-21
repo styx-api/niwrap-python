@@ -170,7 +170,7 @@ def niccc_validate(
     if params.get("find_attr", None) is not None:
         if not isinstance(params["find_attr"], list):
             raise StyxValidationError(f'`find_attr` has the wrong type: Received `{type(params.get("find_attr", None))}` expected `list[str] | None`')
-        if len(params["find_attr"]) == 2:
+        if len(params["find_attr"]) != 2:
             raise StyxValidationError("Parameter `find_attr` must contain exactly 2 elements")
         for e in params["find_attr"]:
             if not isinstance(e, str):
@@ -178,7 +178,7 @@ def niccc_validate(
     if params.get("skip_attr", None) is not None:
         if not isinstance(params["skip_attr"], list):
             raise StyxValidationError(f'`skip_attr` has the wrong type: Received `{type(params.get("skip_attr", None))}` expected `list[str] | None`')
-        if len(params["skip_attr"]) == 2:
+        if len(params["skip_attr"]) != 2:
             raise StyxValidationError("Parameter `skip_attr` must contain exactly 2 elements")
         for e in params["skip_attr"]:
             if not isinstance(e, str):

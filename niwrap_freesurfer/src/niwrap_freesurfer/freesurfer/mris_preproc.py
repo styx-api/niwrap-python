@@ -398,7 +398,7 @@ def mris_preproc_validate(
     if params.get("projfrac_max", None) is not None:
         if not isinstance(params["projfrac_max"], list):
             raise StyxValidationError(f'`projfrac_max` has the wrong type: Received `{type(params.get("projfrac_max", None))}` expected `list[float] | None`')
-        if len(params["projfrac_max"]) == 3:
+        if len(params["projfrac_max"]) != 3:
             raise StyxValidationError("Parameter `projfrac_max` must contain exactly 3 elements")
         for e in params["projfrac_max"]:
             if not isinstance(e, (float, int)):
@@ -406,7 +406,7 @@ def mris_preproc_validate(
     if params.get("projfrac_avg", None) is not None:
         if not isinstance(params["projfrac_avg"], list):
             raise StyxValidationError(f'`projfrac_avg` has the wrong type: Received `{type(params.get("projfrac_avg", None))}` expected `list[float] | None`')
-        if len(params["projfrac_avg"]) == 3:
+        if len(params["projfrac_avg"]) != 3:
             raise StyxValidationError("Parameter `projfrac_avg` must contain exactly 3 elements")
         for e in params["projfrac_avg"]:
             if not isinstance(e, (float, int)):

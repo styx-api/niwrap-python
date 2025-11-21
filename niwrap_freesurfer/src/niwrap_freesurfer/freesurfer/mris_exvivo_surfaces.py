@@ -131,7 +131,7 @@ def mris_exvivo_surfaces_validate(
     if params.get("formalin", None) is not None:
         if not isinstance(params["formalin"], int):
             raise StyxValidationError(f'`formalin` has the wrong type: Received `{type(params.get("formalin", None))}` expected `int | None`')
-        if 0 <= params["formalin"] <= 1:
+        if not (0 <= params["formalin"] <= 1):
             raise StyxValidationError("Parameter `formalin` must be between 0 and 1 (inclusive)")
 
 

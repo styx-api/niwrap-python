@@ -251,7 +251,7 @@ def mri_surf2volseg_validate(
     if params.get("label_wm_unknown", None) is not None:
         if not isinstance(params["label_wm_unknown"], list):
             raise StyxValidationError(f'`label_wm_unknown` has the wrong type: Received `{type(params.get("label_wm_unknown", None))}` expected `list[float] | None`')
-        if len(params["label_wm_unknown"]) == 2:
+        if len(params["label_wm_unknown"]) != 2:
             raise StyxValidationError("Parameter `label_wm_unknown` must contain exactly 2 elements")
         for e in params["label_wm_unknown"]:
             if not isinstance(e, (float, int)):
@@ -290,7 +290,7 @@ def mri_surf2volseg_validate(
     if params.get("crs_test", None) is not None:
         if not isinstance(params["crs_test"], list):
             raise StyxValidationError(f'`crs_test` has the wrong type: Received `{type(params.get("crs_test", None))}` expected `list[float] | None`')
-        if len(params["crs_test"]) == 3:
+        if len(params["crs_test"]) != 3:
             raise StyxValidationError("Parameter `crs_test` must contain exactly 3 elements")
         for e in params["crs_test"]:
             if not isinstance(e, (float, int)):

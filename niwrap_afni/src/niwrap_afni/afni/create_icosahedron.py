@@ -137,7 +137,7 @@ def create_icosahedron_validate(
     if params.get("center_coordinates", None) is not None:
         if not isinstance(params["center_coordinates"], list):
             raise StyxValidationError(f'`center_coordinates` has the wrong type: Received `{type(params.get("center_coordinates", None))}` expected `list[float] | None`')
-        if len(params["center_coordinates"]) == 3:
+        if len(params["center_coordinates"]) != 3:
             raise StyxValidationError("Parameter `center_coordinates` must contain exactly 3 elements")
         for e in params["center_coordinates"]:
             if not isinstance(e, (float, int)):

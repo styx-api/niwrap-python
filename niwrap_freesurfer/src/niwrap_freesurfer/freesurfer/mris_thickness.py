@@ -118,7 +118,7 @@ def mris_thickness_validate(
     if params.get("fill_holes", None) is not None:
         if not isinstance(params["fill_holes"], list):
             raise StyxValidationError(f'`fill_holes` has the wrong type: Received `{type(params.get("fill_holes", None))}` expected `list[str] | None`')
-        if len(params["fill_holes"]) == 2:
+        if len(params["fill_holes"]) != 2:
             raise StyxValidationError("Parameter `fill_holes` must contain exactly 2 elements")
         for e in params["fill_holes"]:
             if not isinstance(e, str):
@@ -126,7 +126,7 @@ def mris_thickness_validate(
     if params.get("thickness_from_seg", None) is not None:
         if not isinstance(params["thickness_from_seg"], list):
             raise StyxValidationError(f'`thickness_from_seg` has the wrong type: Received `{type(params.get("thickness_from_seg", None))}` expected `list[str] | None`')
-        if len(params["thickness_from_seg"]) == 5:
+        if len(params["thickness_from_seg"]) != 5:
             raise StyxValidationError("Parameter `thickness_from_seg` must contain exactly 5 elements")
         for e in params["thickness_from_seg"]:
             if not isinstance(e, str):

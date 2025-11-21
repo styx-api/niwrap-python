@@ -151,7 +151,7 @@ def abids_json_tool_py_validate(
     if params.get("add_json", None) is not None:
         if not isinstance(params["add_json"], list):
             raise StyxValidationError(f'`add_json` has the wrong type: Received `{type(params.get("add_json", None))}` expected `list[str] | None`')
-        if len(params["add_json"]) >= 1:
+        if len(params["add_json"]) < 1:
             raise StyxValidationError("Parameter `add_json` must contain at least 1 element")
         for e in params["add_json"]:
             if not isinstance(e, str):

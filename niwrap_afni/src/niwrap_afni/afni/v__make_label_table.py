@@ -293,7 +293,7 @@ def v__make_label_table_validate(
     if params.get("lab_file", None) is not None:
         if not isinstance(params["lab_file"], list):
             raise StyxValidationError(f'`lab_file` has the wrong type: Received `{type(params.get("lab_file", None))}` expected `list[str] | None`')
-        if 1 <= len(params["lab_file"]) <= 2:
+        if not (1 <= len(params["lab_file"]) <= 2):
             raise StyxValidationError("Parameter `lab_file` must contain between 1 and 2 elements (inclusive)")
         for e in params["lab_file"]:
             if not isinstance(e, str):
@@ -358,7 +358,7 @@ def v__make_label_table_validate(
     if params.get("dset_lt_to_atlas_pl", None) is not None:
         if not isinstance(params["dset_lt_to_atlas_pl"], list):
             raise StyxValidationError(f'`dset_lt_to_atlas_pl` has the wrong type: Received `{type(params.get("dset_lt_to_atlas_pl", None))}` expected `list[InputPathType] | None`')
-        if len(params["dset_lt_to_atlas_pl"]) == 2:
+        if len(params["dset_lt_to_atlas_pl"]) != 2:
             raise StyxValidationError("Parameter `dset_lt_to_atlas_pl` must contain exactly 2 elements")
         for e in params["dset_lt_to_atlas_pl"]:
             if not isinstance(e, (pathlib.Path, str)):

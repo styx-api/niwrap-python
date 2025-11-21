@@ -170,7 +170,7 @@ def convex_hull_validate(
     if params.get("isorange", None) is not None:
         if not isinstance(params["isorange"], list):
             raise StyxValidationError(f'`isorange` has the wrong type: Received `{type(params.get("isorange", None))}` expected `list[float] | None`')
-        if len(params["isorange"]) == 2:
+        if len(params["isorange"]) != 2:
             raise StyxValidationError("Parameter `isorange` must contain exactly 2 elements")
         for e in params["isorange"]:
             if not isinstance(e, (float, int)):

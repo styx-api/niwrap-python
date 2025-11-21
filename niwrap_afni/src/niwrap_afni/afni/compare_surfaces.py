@@ -172,7 +172,7 @@ def compare_surfaces_validate(
     if params.get("node_range", None) is not None:
         if not isinstance(params["node_range"], list):
             raise StyxValidationError(f'`node_range` has the wrong type: Received `{type(params.get("node_range", None))}` expected `list[float] | None`')
-        if len(params["node_range"]) <= 2:
+        if len(params["node_range"]) > 2:
             raise StyxValidationError("Parameter `node_range` must contain at most 2 elements")
         for e in params["node_range"]:
             if not isinstance(e, (float, int)):

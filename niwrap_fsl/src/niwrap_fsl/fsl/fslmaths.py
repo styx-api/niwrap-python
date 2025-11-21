@@ -639,12 +639,12 @@ def fslmaths_operation_validate(
     if params.get("thrp", None) is not None:
         if not isinstance(params["thrp"], (float, int)):
             raise StyxValidationError(f'`thrp` has the wrong type: Received `{type(params.get("thrp", None))}` expected `float | None`')
-        if 0 <= params["thrp"] <= 100:
+        if not (0 <= params["thrp"] <= 100):
             raise StyxValidationError("Parameter `thrp` must be between 0 and 100 (inclusive)")
     if params.get("thrP", None) is not None:
         if not isinstance(params["thrP"], (float, int)):
             raise StyxValidationError(f'`thrP` has the wrong type: Received `{type(params.get("thrP", None))}` expected `float | None`')
-        if 0 <= params["thrP"] <= 100:
+        if not (0 <= params["thrP"] <= 100):
             raise StyxValidationError("Parameter `thrP` must be between 0 and 100 (inclusive)")
     if params.get("uthr", None) is not None:
         if not isinstance(params["uthr"], (float, int)):
@@ -652,12 +652,12 @@ def fslmaths_operation_validate(
     if params.get("uthrp", None) is not None:
         if not isinstance(params["uthrp"], (float, int)):
             raise StyxValidationError(f'`uthrp` has the wrong type: Received `{type(params.get("uthrp", None))}` expected `float | None`')
-        if 0 <= params["uthrp"] <= 100:
+        if not (0 <= params["uthrp"] <= 100):
             raise StyxValidationError("Parameter `uthrp` must be between 0 and 100 (inclusive)")
     if params.get("uthrP", None) is not None:
         if not isinstance(params["uthrP"], (float, int)):
             raise StyxValidationError(f'`uthrP` has the wrong type: Received `{type(params.get("uthrP", None))}` expected `float | None`')
-        if 0 <= params["uthrP"] <= 100:
+        if not (0 <= params["uthrP"] <= 100):
             raise StyxValidationError("Parameter `uthrP` must be between 0 and 100 (inclusive)")
     if params.get("max", None) is not None:
         if not isinstance(params["max"], (float, int)):
@@ -812,7 +812,7 @@ def fslmaths_operation_validate(
     if params.get("kernel_boxv3", None) is not None:
         if not isinstance(params["kernel_boxv3"], list):
             raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
-        if len(params["kernel_boxv3"]) == 3:
+        if len(params["kernel_boxv3"]) != 3:
             raise StyxValidationError("Parameter `kernel_boxv3` must contain exactly 3 elements")
         for e in params["kernel_boxv3"]:
             if not isinstance(e, (float, int)):
@@ -972,22 +972,22 @@ def fslmaths_operation_validate(
     if params.get("Tperc", None) is not None:
         if not isinstance(params["Tperc"], (float, int)):
             raise StyxValidationError(f'`Tperc` has the wrong type: Received `{type(params.get("Tperc", None))}` expected `float | None`')
-        if 0 <= params["Tperc"] <= 100:
+        if not (0 <= params["Tperc"] <= 100):
             raise StyxValidationError("Parameter `Tperc` must be between 0 and 100 (inclusive)")
     if params.get("Xperc", None) is not None:
         if not isinstance(params["Xperc"], (float, int)):
             raise StyxValidationError(f'`Xperc` has the wrong type: Received `{type(params.get("Xperc", None))}` expected `float | None`')
-        if 0 <= params["Xperc"] <= 100:
+        if not (0 <= params["Xperc"] <= 100):
             raise StyxValidationError("Parameter `Xperc` must be between 0 and 100 (inclusive)")
     if params.get("Yperc", None) is not None:
         if not isinstance(params["Yperc"], (float, int)):
             raise StyxValidationError(f'`Yperc` has the wrong type: Received `{type(params.get("Yperc", None))}` expected `float | None`')
-        if 0 <= params["Yperc"] <= 100:
+        if not (0 <= params["Yperc"] <= 100):
             raise StyxValidationError("Parameter `Yperc` must be between 0 and 100 (inclusive)")
     if params.get("Zperc", None) is not None:
         if not isinstance(params["Zperc"], (float, int)):
             raise StyxValidationError(f'`Zperc` has the wrong type: Received `{type(params.get("Zperc", None))}` expected `float | None`')
-        if 0 <= params["Zperc"] <= 100:
+        if not (0 <= params["Zperc"] <= 100):
             raise StyxValidationError("Parameter `Zperc` must be between 0 and 100 (inclusive)")
     if params.get("Tar1", False) is None:
         raise StyxValidationError("`Tar1` must not be None")
@@ -996,7 +996,7 @@ def fslmaths_operation_validate(
     if params.get("roi", None) is not None:
         if not isinstance(params["roi"], list):
             raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
-        if len(params["roi"]) == 6:
+        if len(params["roi"]) != 6:
             raise StyxValidationError("Parameter `roi` must contain exactly 6 elements")
         for e in params["roi"]:
             if not isinstance(e, (float, int)):
@@ -1004,7 +1004,7 @@ def fslmaths_operation_validate(
     if params.get("bptf", None) is not None:
         if not isinstance(params["bptf"], list):
             raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
-        if len(params["bptf"]) == 2:
+        if len(params["bptf"]) != 2:
             raise StyxValidationError("Parameter `bptf` must contain exactly 2 elements")
         for e in params["bptf"]:
             if not isinstance(e, (float, int)):

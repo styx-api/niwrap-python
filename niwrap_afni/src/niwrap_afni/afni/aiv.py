@@ -103,7 +103,7 @@ def aiv_validate(
     if params.get("port", None) is not None:
         if not isinstance(params["port"], (float, int)):
             raise StyxValidationError(f'`port` has the wrong type: Received `{type(params.get("port", None))}` expected `float | None`')
-        if 1024 <= params["port"] <= 65535:
+        if not (1024 <= params["port"] <= 65535):
             raise StyxValidationError("Parameter `port` must be between 1024 and 65535 (inclusive)")
     if params.get("pad", None) is not None:
         if not isinstance(params["pad"], str):

@@ -212,7 +212,7 @@ def fat_proc_convert_dcm_dwis_validate(
     if params.get("origin_xyz", None) is not None:
         if not isinstance(params["origin_xyz"], list):
             raise StyxValidationError(f'`origin_xyz` has the wrong type: Received `{type(params.get("origin_xyz", None))}` expected `list[float] | None`')
-        if len(params["origin_xyz"]) == 3:
+        if len(params["origin_xyz"]) != 3:
             raise StyxValidationError("Parameter `origin_xyz` must contain exactly 3 elements")
         for e in params["origin_xyz"]:
             if not isinstance(e, (float, int)):

@@ -227,7 +227,7 @@ def mri_average_validate(
     if params.get("translation", None) is not None:
         if not isinstance(params["translation"], list):
             raise StyxValidationError(f'`translation` has the wrong type: Received `{type(params.get("translation", None))}` expected `list[float] | None`')
-        if len(params["translation"]) == 3:
+        if len(params["translation"]) != 3:
             raise StyxValidationError("Parameter `translation` must contain exactly 3 elements")
         for e in params["translation"]:
             if not isinstance(e, (float, int)):
@@ -235,7 +235,7 @@ def mri_average_validate(
     if params.get("rotation", None) is not None:
         if not isinstance(params["rotation"], list):
             raise StyxValidationError(f'`rotation` has the wrong type: Received `{type(params.get("rotation", None))}` expected `list[float] | None`')
-        if len(params["rotation"]) == 3:
+        if len(params["rotation"]) != 3:
             raise StyxValidationError("Parameter `rotation` must contain exactly 3 elements")
         for e in params["rotation"]:
             if not isinstance(e, (float, int)):

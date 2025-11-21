@@ -247,7 +247,7 @@ def imcat_validate(
     if params.get("res_in", None) is not None:
         if not isinstance(params["res_in"], list):
             raise StyxValidationError(f'`res_in` has the wrong type: Received `{type(params.get("res_in", None))}` expected `list[float] | None`')
-        if len(params["res_in"]) <= 2:
+        if len(params["res_in"]) > 2:
             raise StyxValidationError("Parameter `res_in` must contain at most 2 elements")
         for e in params["res_in"]:
             if not isinstance(e, (float, int)):
@@ -255,7 +255,7 @@ def imcat_validate(
     if params.get("respad_in", None) is not None:
         if not isinstance(params["respad_in"], list):
             raise StyxValidationError(f'`respad_in` has the wrong type: Received `{type(params.get("respad_in", None))}` expected `list[float] | None`')
-        if len(params["respad_in"]) <= 2:
+        if len(params["respad_in"]) > 2:
             raise StyxValidationError("Parameter `respad_in` must contain at most 2 elements")
         for e in params["respad_in"]:
             if not isinstance(e, (float, int)):
@@ -263,12 +263,12 @@ def imcat_validate(
     if params.get("pad_val", None) is not None:
         if not isinstance(params["pad_val"], (float, int)):
             raise StyxValidationError(f'`pad_val` has the wrong type: Received `{type(params.get("pad_val", None))}` expected `float | None`')
-        if 0 <= params["pad_val"] <= 255:
+        if not (0 <= params["pad_val"] <= 255):
             raise StyxValidationError("Parameter `pad_val` must be between 0 and 255 (inclusive)")
     if params.get("crop", None) is not None:
         if not isinstance(params["crop"], list):
             raise StyxValidationError(f'`crop` has the wrong type: Received `{type(params.get("crop", None))}` expected `list[float] | None`')
-        if len(params["crop"]) <= 4:
+        if len(params["crop"]) > 4:
             raise StyxValidationError("Parameter `crop` must contain at most 4 elements")
         for e in params["crop"]:
             if not isinstance(e, (float, int)):
@@ -294,7 +294,7 @@ def imcat_validate(
     if params.get("gray_wrap", None) is not None:
         if not isinstance(params["gray_wrap"], (float, int)):
             raise StyxValidationError(f'`gray_wrap` has the wrong type: Received `{type(params.get("gray_wrap", None))}` expected `float | None`')
-        if 0.0 <= params["gray_wrap"] <= 1.0:
+        if not (0.0 <= params["gray_wrap"] <= 1.0):
             raise StyxValidationError("Parameter `gray_wrap` must be between 0.0 and 1.0 (inclusive)")
     if params.get("image_wrap", False) is None:
         raise StyxValidationError("`image_wrap` must not be None")
@@ -310,7 +310,7 @@ def imcat_validate(
     if params.get("matrix", None) is not None:
         if not isinstance(params["matrix"], list):
             raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `list[float] | None`')
-        if len(params["matrix"]) <= 2:
+        if len(params["matrix"]) > 2:
             raise StyxValidationError("Parameter `matrix` must contain at most 2 elements")
         for e in params["matrix"]:
             if not isinstance(e, (float, int)):
@@ -331,7 +331,7 @@ def imcat_validate(
     if params.get("gap_col", None) is not None:
         if not isinstance(params["gap_col"], list):
             raise StyxValidationError(f'`gap_col` has the wrong type: Received `{type(params.get("gap_col", None))}` expected `list[float] | None`')
-        if len(params["gap_col"]) <= 3:
+        if len(params["gap_col"]) > 3:
             raise StyxValidationError("Parameter `gap_col` must contain at most 3 elements")
         for e in params["gap_col"]:
             if not isinstance(e, (float, int)):

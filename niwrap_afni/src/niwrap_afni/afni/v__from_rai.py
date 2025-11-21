@@ -70,7 +70,7 @@ def v__from_rai_validate(
         raise StyxValidationError("`rai_coordinates` must not be None")
     if not isinstance(params["rai_coordinates"], list):
         raise StyxValidationError(f'`rai_coordinates` has the wrong type: Received `{type(params.get("rai_coordinates", None))}` expected `list[float]`')
-    if len(params["rai_coordinates"]) == 3:
+    if len(params["rai_coordinates"]) != 3:
         raise StyxValidationError("Parameter `rai_coordinates` must contain exactly 3 elements")
     for e in params["rai_coordinates"]:
         if not isinstance(e, (float, int)):

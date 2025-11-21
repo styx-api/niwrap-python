@@ -275,7 +275,7 @@ def mri_segment_validate(
     if params.get("debug_voxel", None) is not None:
         if not isinstance(params["debug_voxel"], list):
             raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
-        if len(params["debug_voxel"]) == 3:
+        if len(params["debug_voxel"]) != 3:
             raise StyxValidationError("Parameter `debug_voxel` must contain exactly 3 elements")
         for e in params["debug_voxel"]:
             if not isinstance(e, (float, int)):

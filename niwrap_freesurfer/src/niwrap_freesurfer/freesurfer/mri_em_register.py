@@ -423,7 +423,7 @@ def mri_em_register_validate(
     if params.get("debug_voxel", None) is not None:
         if not isinstance(params["debug_voxel"], list):
             raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
-        if len(params["debug_voxel"]) == 3:
+        if len(params["debug_voxel"]) != 3:
             raise StyxValidationError("Parameter `debug_voxel` must contain exactly 3 elements")
         for e in params["debug_voxel"]:
             if not isinstance(e, (float, int)):
@@ -443,7 +443,7 @@ def mri_em_register_validate(
     if params.get("example", None) is not None:
         if not isinstance(params["example"], list):
             raise StyxValidationError(f'`example` has the wrong type: Received `{type(params.get("example", None))}` expected `list[InputPathType] | None`')
-        if len(params["example"]) == 2:
+        if len(params["example"]) != 2:
             raise StyxValidationError("Parameter `example` must contain exactly 2 elements")
         for e in params["example"]:
             if not isinstance(e, (pathlib.Path, str)):
@@ -541,7 +541,7 @@ def mri_em_register_validate(
     if params.get("translation_vector", None) is not None:
         if not isinstance(params["translation_vector"], list):
             raise StyxValidationError(f'`translation_vector` has the wrong type: Received `{type(params.get("translation_vector", None))}` expected `list[float] | None`')
-        if len(params["translation_vector"]) == 3:
+        if len(params["translation_vector"]) != 3:
             raise StyxValidationError("Parameter `translation_vector` must contain exactly 3 elements")
         for e in params["translation_vector"]:
             if not isinstance(e, (float, int)):
@@ -549,7 +549,7 @@ def mri_em_register_validate(
     if params.get("rotation_vector", None) is not None:
         if not isinstance(params["rotation_vector"], list):
             raise StyxValidationError(f'`rotation_vector` has the wrong type: Received `{type(params.get("rotation_vector", None))}` expected `list[float] | None`')
-        if len(params["rotation_vector"]) == 3:
+        if len(params["rotation_vector"]) != 3:
             raise StyxValidationError("Parameter `rotation_vector` must contain exactly 3 elements")
         for e in params["rotation_vector"]:
             if not isinstance(e, (float, int)):

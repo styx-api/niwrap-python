@@ -334,12 +334,12 @@ def ants_atropos_n4_sh_validate(
     if params.get("max_n4_atropos_iterations", None) is not None:
         if not isinstance(params["max_n4_atropos_iterations"], int):
             raise StyxValidationError(f'`max_n4_atropos_iterations` has the wrong type: Received `{type(params.get("max_n4_atropos_iterations", None))}` expected `int | None`')
-        if params["max_n4_atropos_iterations"] >= 1:
+        if params["max_n4_atropos_iterations"] < 1:
             raise StyxValidationError("Parameter `max_n4_atropos_iterations` must be at least 1")
     if params.get("max_atropos_iterations", None) is not None:
         if not isinstance(params["max_atropos_iterations"], int):
             raise StyxValidationError(f'`max_atropos_iterations` has the wrong type: Received `{type(params.get("max_atropos_iterations", None))}` expected `int | None`')
-        if params["max_atropos_iterations"] >= 1:
+        if params["max_atropos_iterations"] < 1:
             raise StyxValidationError("Parameter `max_atropos_iterations` must be at least 1")
     if params.get("segmentation_priors", None) is None:
         raise StyxValidationError("`segmentation_priors` must not be None")

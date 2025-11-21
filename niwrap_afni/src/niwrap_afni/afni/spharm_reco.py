@@ -122,7 +122,7 @@ def spharm_reco_validate(
         raise StyxValidationError("`coefficients` must not be None")
     if not isinstance(params["coefficients"], list):
         raise StyxValidationError(f'`coefficients` has the wrong type: Received `{type(params.get("coefficients", None))}` expected `list[InputPathType]`')
-    if len(params["coefficients"]) >= 1:
+    if len(params["coefficients"]) < 1:
         raise StyxValidationError("Parameter `coefficients` must contain at least 1 element")
     for e in params["coefficients"]:
         if not isinstance(e, (pathlib.Path, str)):
@@ -142,7 +142,7 @@ def spharm_reco_validate(
     if params.get("smoothing", None) is not None:
         if not isinstance(params["smoothing"], (float, int)):
             raise StyxValidationError(f'`smoothing` has the wrong type: Received `{type(params.get("smoothing", None))}` expected `float | None`')
-        if 0 <= params["smoothing"] <= 0.001:
+        if not (0 <= params["smoothing"] <= 0.001):
             raise StyxValidationError("Parameter `smoothing` must be between 0 and 0.001 (inclusive)")
 
 

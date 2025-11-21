@@ -291,7 +291,7 @@ def v_1dplot_py_validate(
     if params.get("xvals", None) is not None:
         if not isinstance(params["xvals"], list):
             raise StyxValidationError(f'`xvals` has the wrong type: Received `{type(params.get("xvals", None))}` expected `list[float] | None`')
-        if len(params["xvals"]) == 3:
+        if len(params["xvals"]) != 3:
             raise StyxValidationError("Parameter `xvals` must contain exactly 3 elements")
         for e in params["xvals"]:
             if not isinstance(e, (float, int)):
@@ -351,7 +351,7 @@ def v_1dplot_py_validate(
     if params.get("figsize", None) is not None:
         if not isinstance(params["figsize"], list):
             raise StyxValidationError(f'`figsize` has the wrong type: Received `{type(params.get("figsize", None))}` expected `list[float] | None`')
-        if len(params["figsize"]) == 2:
+        if len(params["figsize"]) != 2:
             raise StyxValidationError("Parameter `figsize` must contain exactly 2 elements")
         for e in params["figsize"]:
             if not isinstance(e, (float, int)):

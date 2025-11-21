@@ -134,7 +134,7 @@ def v_3dmask_svd_validate(
     if params.get("bandpass", None) is not None:
         if not isinstance(params["bandpass"], list):
             raise StyxValidationError(f'`bandpass` has the wrong type: Received `{type(params.get("bandpass", None))}` expected `list[str] | None`')
-        if len(params["bandpass"]) == 2:
+        if len(params["bandpass"]) != 2:
             raise StyxValidationError("Parameter `bandpass` must contain exactly 2 elements")
         for e in params["bandpass"]:
             if not isinstance(e, str):
@@ -142,7 +142,7 @@ def v_3dmask_svd_validate(
     if params.get("ort", None) is not None:
         if not isinstance(params["ort"], list):
             raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `list[InputPathType] | None`')
-        if len(params["ort"]) <= 999:
+        if len(params["ort"]) > 999:
             raise StyxValidationError("Parameter `ort` must contain at most 999 elements")
         for e in params["ort"]:
             if not isinstance(e, (pathlib.Path, str)):

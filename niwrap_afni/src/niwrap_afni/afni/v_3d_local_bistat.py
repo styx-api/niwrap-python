@@ -168,7 +168,7 @@ def v_3d_local_bistat_validate(
     if params.get("hclip1", None) is not None:
         if not isinstance(params["hclip1"], list):
             raise StyxValidationError(f'`hclip1` has the wrong type: Received `{type(params.get("hclip1", None))}` expected `list[str] | None`')
-        if len(params["hclip1"]) == 2:
+        if len(params["hclip1"]) != 2:
             raise StyxValidationError("Parameter `hclip1` must contain exactly 2 elements")
         for e in params["hclip1"]:
             if not isinstance(e, str):
@@ -176,7 +176,7 @@ def v_3d_local_bistat_validate(
     if params.get("hclip2", None) is not None:
         if not isinstance(params["hclip2"], list):
             raise StyxValidationError(f'`hclip2` has the wrong type: Received `{type(params.get("hclip2", None))}` expected `list[str] | None`')
-        if len(params["hclip2"]) == 2:
+        if len(params["hclip2"]) != 2:
             raise StyxValidationError("Parameter `hclip2` must contain exactly 2 elements")
         for e in params["hclip2"]:
             if not isinstance(e, str):

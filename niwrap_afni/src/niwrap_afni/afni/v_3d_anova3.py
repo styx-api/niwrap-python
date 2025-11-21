@@ -438,7 +438,7 @@ def v_3d_anova3_validate(
         raise StyxValidationError("`type` must not be None")
     if not isinstance(params["type"], int):
         raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `int`')
-    if 1 <= params["type"] <= 5:
+    if not (1 <= params["type"] <= 5):
         raise StyxValidationError("Parameter `type` must be between 1 and 5 (inclusive)")
     if params.get("alevels", None) is None:
         raise StyxValidationError("`alevels` must not be None")

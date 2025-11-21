@@ -129,7 +129,7 @@ def v_3d_cm_validate(
     if params.get("set_origin", None) is not None:
         if not isinstance(params["set_origin"], list):
             raise StyxValidationError(f'`set_origin` has the wrong type: Received `{type(params.get("set_origin", None))}` expected `list[float] | None`')
-        if len(params["set_origin"]) == 3:
+        if len(params["set_origin"]) != 3:
             raise StyxValidationError("Parameter `set_origin` must contain exactly 3 elements")
         for e in params["set_origin"]:
             if not isinstance(e, (float, int)):

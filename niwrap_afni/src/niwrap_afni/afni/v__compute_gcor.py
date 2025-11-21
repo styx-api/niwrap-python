@@ -123,7 +123,7 @@ def v__compute_gcor_validate(
     if params.get("verbose", None) is not None:
         if not isinstance(params["verbose"], (float, int)):
             raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
-        if 0 <= params["verbose"] <= 3:
+        if not (0 <= params["verbose"] <= 3):
             raise StyxValidationError("Parameter `verbose` must be between 0 and 3 (inclusive)")
 
 

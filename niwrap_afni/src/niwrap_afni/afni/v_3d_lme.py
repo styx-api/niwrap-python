@@ -244,7 +244,7 @@ def v_3d_lme_validate(
     if params.get("BOUNDS", None) is not None:
         if not isinstance(params["BOUNDS"], list):
             raise StyxValidationError(f'`BOUNDS` has the wrong type: Received `{type(params.get("BOUNDS", None))}` expected `list[float] | None`')
-        if len(params["BOUNDS"]) == 2:
+        if len(params["BOUNDS"]) != 2:
             raise StyxValidationError("Parameter `BOUNDS` must contain exactly 2 elements")
         for e in params["BOUNDS"]:
             if not isinstance(e, (float, int)):

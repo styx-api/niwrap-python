@@ -269,7 +269,7 @@ def mideface_validate(
     if params.get("fill_const", None) is not None:
         if not isinstance(params["fill_const"], list):
             raise StyxValidationError(f'`fill_const` has the wrong type: Received `{type(params.get("fill_const", None))}` expected `list[float] | None`')
-        if len(params["fill_const"]) == 2:
+        if len(params["fill_const"]) != 2:
             raise StyxValidationError("Parameter `fill_const` must contain exactly 2 elements")
         for e in params["fill_const"]:
             if not isinstance(e, (float, int)):

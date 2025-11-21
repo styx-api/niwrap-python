@@ -95,19 +95,19 @@ def firdesign_validate(
         raise StyxValidationError("`fbot` must not be None")
     if not isinstance(params["fbot"], (float, int)):
         raise StyxValidationError(f'`fbot` has the wrong type: Received `{type(params.get("fbot", None))}` expected `float`')
-    if params["fbot"] >= 0:
+    if params["fbot"] < 0:
         raise StyxValidationError("Parameter `fbot` must be at least 0")
     if params.get("ftop", None) is None:
         raise StyxValidationError("`ftop` must not be None")
     if not isinstance(params["ftop"], (float, int)):
         raise StyxValidationError(f'`ftop` has the wrong type: Received `{type(params.get("ftop", None))}` expected `float`')
-    if params["ftop"] >= 0:
+    if params["ftop"] < 0:
         raise StyxValidationError("Parameter `ftop` must be at least 0")
     if params.get("ntap", None) is None:
         raise StyxValidationError("`ntap` must not be None")
     if not isinstance(params["ntap"], (float, int)):
         raise StyxValidationError(f'`ntap` has the wrong type: Received `{type(params.get("ntap", None))}` expected `float`')
-    if 8 <= params["ntap"] <= 2000:
+    if not (8 <= params["ntap"] <= 2000):
         raise StyxValidationError("Parameter `ntap` must be between 8 and 2000 (inclusive)")
     if params.get("tr", None) is not None:
         if not isinstance(params["tr"], (float, int)):
@@ -115,7 +115,7 @@ def firdesign_validate(
     if params.get("alternative_band", None) is not None:
         if not isinstance(params["alternative_band"], list):
             raise StyxValidationError(f'`alternative_band` has the wrong type: Received `{type(params.get("alternative_band", None))}` expected `list[float] | None`')
-        if len(params["alternative_band"]) <= 2:
+        if len(params["alternative_band"]) > 2:
             raise StyxValidationError("Parameter `alternative_band` must contain at most 2 elements")
         for e in params["alternative_band"]:
             if not isinstance(e, (float, int)):
@@ -123,7 +123,7 @@ def firdesign_validate(
     if params.get("alternative_ntap", None) is not None:
         if not isinstance(params["alternative_ntap"], (float, int)):
             raise StyxValidationError(f'`alternative_ntap` has the wrong type: Received `{type(params.get("alternative_ntap", None))}` expected `float | None`')
-        if 8 <= params["alternative_ntap"] <= 2000:
+        if not (8 <= params["alternative_ntap"] <= 2000):
             raise StyxValidationError("Parameter `alternative_ntap` must be between 8 and 2000 (inclusive)")
 
 

@@ -268,7 +268,7 @@ def tkmeditfv_validate(
     if params.get("crs_location", None) is not None:
         if not isinstance(params["crs_location"], list):
             raise StyxValidationError(f'`crs_location` has the wrong type: Received `{type(params.get("crs_location", None))}` expected `list[float] | None`')
-        if len(params["crs_location"]) == 3:
+        if len(params["crs_location"]) != 3:
             raise StyxValidationError("Parameter `crs_location` must contain exactly 3 elements")
         for e in params["crs_location"]:
             if not isinstance(e, (float, int)):
@@ -327,7 +327,7 @@ def tkmeditfv_validate(
     if params.get("intensity_minmax", None) is not None:
         if not isinstance(params["intensity_minmax"], list):
             raise StyxValidationError(f'`intensity_minmax` has the wrong type: Received `{type(params.get("intensity_minmax", None))}` expected `list[float] | None`')
-        if len(params["intensity_minmax"]) == 2:
+        if len(params["intensity_minmax"]) != 2:
             raise StyxValidationError("Parameter `intensity_minmax` must contain exactly 2 elements")
         for e in params["intensity_minmax"]:
             if not isinstance(e, (float, int)):

@@ -109,7 +109,7 @@ def inspec_validate(
     if params.get("detail", None) is not None:
         if not isinstance(params["detail"], (float, int)):
             raise StyxValidationError(f'`detail` has the wrong type: Received `{type(params.get("detail", None))}` expected `float | None`')
-        if 0 <= params["detail"] <= 3:
+        if not (0 <= params["detail"] <= 3):
             raise StyxValidationError("Parameter `detail` must be between 0 and 3 (inclusive)")
     if params.get("leftspec", None) is not None:
         if not isinstance(params["leftspec"], (pathlib.Path, str)):

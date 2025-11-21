@@ -304,7 +304,7 @@ def run_fastsurfer_sh_validate(
     if params.get("threads", None) is not None:
         if not isinstance(params["threads"], int):
             raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
-        if params["threads"] >= 1:
+        if params["threads"] < 1:
             raise StyxValidationError("Parameter `threads` must be at least 1")
     if params.get("device", None) is not None:
         if not isinstance(params["device"], str):
@@ -315,7 +315,7 @@ def run_fastsurfer_sh_validate(
     if params.get("batch_size", None) is not None:
         if not isinstance(params["batch_size"], int):
             raise StyxValidationError(f'`batch_size` has the wrong type: Received `{type(params.get("batch_size", None))}` expected `int | None`')
-        if params["batch_size"] >= 1:
+        if params["batch_size"] < 1:
             raise StyxValidationError("Parameter `batch_size` must be at least 1")
     if params.get("python_cmd", None) is not None:
         if not isinstance(params["python_cmd"], str):

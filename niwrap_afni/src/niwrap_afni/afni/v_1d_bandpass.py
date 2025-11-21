@@ -100,7 +100,7 @@ def v_1d_bandpass_validate(
         raise StyxValidationError("`fbot` must not be None")
     if not isinstance(params["fbot"], (float, int)):
         raise StyxValidationError(f'`fbot` has the wrong type: Received `{type(params.get("fbot", None))}` expected `float`')
-    if params["fbot"] >= 0:
+    if params["fbot"] < 0:
         raise StyxValidationError("Parameter `fbot` must be at least 0")
     if params.get("ftop", None) is None:
         raise StyxValidationError("`ftop` must not be None")

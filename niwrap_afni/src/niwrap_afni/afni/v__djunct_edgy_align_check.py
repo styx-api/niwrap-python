@@ -215,7 +215,7 @@ def v__djunct_edgy_align_check_validate(
     if params.get("set_dicom_xyz", None) is not None:
         if not isinstance(params["set_dicom_xyz"], list):
             raise StyxValidationError(f'`set_dicom_xyz` has the wrong type: Received `{type(params.get("set_dicom_xyz", None))}` expected `list[float] | None`')
-        if len(params["set_dicom_xyz"]) == 3:
+        if len(params["set_dicom_xyz"]) != 3:
             raise StyxValidationError("Parameter `set_dicom_xyz` must contain exactly 3 elements")
         for e in params["set_dicom_xyz"]:
             if not isinstance(e, (float, int)):
@@ -289,7 +289,7 @@ def v__djunct_edgy_align_check_validate(
     if params.get("ulay_range", None) is not None:
         if not isinstance(params["ulay_range"], list):
             raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `list[float] | None`')
-        if len(params["ulay_range"]) == 2:
+        if len(params["ulay_range"]) != 2:
             raise StyxValidationError("Parameter `ulay_range` must contain exactly 2 elements")
         for e in params["ulay_range"]:
             if not isinstance(e, (float, int)):
@@ -297,7 +297,7 @@ def v__djunct_edgy_align_check_validate(
     if params.get("ulay_range_nz", None) is not None:
         if not isinstance(params["ulay_range_nz"], list):
             raise StyxValidationError(f'`ulay_range_nz` has the wrong type: Received `{type(params.get("ulay_range_nz", None))}` expected `list[float] | None`')
-        if len(params["ulay_range_nz"]) == 2:
+        if len(params["ulay_range_nz"]) != 2:
             raise StyxValidationError("Parameter `ulay_range_nz` must contain exactly 2 elements")
         for e in params["ulay_range_nz"]:
             if not isinstance(e, (float, int)):
@@ -305,7 +305,7 @@ def v__djunct_edgy_align_check_validate(
     if params.get("ulay_range_am", None) is not None:
         if not isinstance(params["ulay_range_am"], list):
             raise StyxValidationError(f'`ulay_range_am` has the wrong type: Received `{type(params.get("ulay_range_am", None))}` expected `list[float] | None`')
-        if len(params["ulay_range_am"]) == 2:
+        if len(params["ulay_range_am"]) != 2:
             raise StyxValidationError("Parameter `ulay_range_am` must contain exactly 2 elements")
         for e in params["ulay_range_am"]:
             if not isinstance(e, (float, int)):

@@ -147,7 +147,7 @@ def mri_long_normalize_validate(
     if params.get("debug_gvx", None) is not None:
         if not isinstance(params["debug_gvx"], list):
             raise StyxValidationError(f'`debug_gvx` has the wrong type: Received `{type(params.get("debug_gvx", None))}` expected `list[float] | None`')
-        if len(params["debug_gvx"]) == 3:
+        if len(params["debug_gvx"]) != 3:
             raise StyxValidationError("Parameter `debug_gvx` must contain exactly 3 elements")
         for e in params["debug_gvx"]:
             if not isinstance(e, (float, int)):
@@ -155,7 +155,7 @@ def mri_long_normalize_validate(
     if params.get("debug_gx", None) is not None:
         if not isinstance(params["debug_gx"], list):
             raise StyxValidationError(f'`debug_gx` has the wrong type: Received `{type(params.get("debug_gx", None))}` expected `list[float] | None`')
-        if len(params["debug_gx"]) == 3:
+        if len(params["debug_gx"]) != 3:
             raise StyxValidationError("Parameter `debug_gx` must contain exactly 3 elements")
         for e in params["debug_gx"]:
             if not isinstance(e, (float, int)):
@@ -163,7 +163,7 @@ def mri_long_normalize_validate(
     if params.get("reading", None) is not None:
         if not isinstance(params["reading"], list):
             raise StyxValidationError(f'`reading` has the wrong type: Received `{type(params.get("reading", None))}` expected `list[str] | None`')
-        if len(params["reading"]) == 2:
+        if len(params["reading"]) != 2:
             raise StyxValidationError("Parameter `reading` must contain exactly 2 elements")
         for e in params["reading"]:
             if not isinstance(e, str):

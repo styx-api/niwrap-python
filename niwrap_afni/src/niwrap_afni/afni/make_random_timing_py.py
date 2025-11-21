@@ -202,13 +202,13 @@ def make_random_timing_py_validate(
         raise StyxValidationError("`num_runs` must not be None")
     if not isinstance(params["num_runs"], (float, int)):
         raise StyxValidationError(f'`num_runs` has the wrong type: Received `{type(params.get("num_runs", None))}` expected `float`')
-    if params["num_runs"] >= 1:
+    if params["num_runs"] < 1:
         raise StyxValidationError("Parameter `num_runs` must be at least 1")
     if params.get("run_time", None) is None:
         raise StyxValidationError("`run_time` must not be None")
     if not isinstance(params["run_time"], list):
         raise StyxValidationError(f'`run_time` has the wrong type: Received `{type(params.get("run_time", None))}` expected `list[float]`')
-    if len(params["run_time"]) >= 1:
+    if len(params["run_time"]) < 1:
         raise StyxValidationError("Parameter `run_time` must contain at least 1 element")
     for e in params["run_time"]:
         if not isinstance(e, (float, int)):
@@ -217,13 +217,13 @@ def make_random_timing_py_validate(
         raise StyxValidationError("`num_stim` must not be None")
     if not isinstance(params["num_stim"], (float, int)):
         raise StyxValidationError(f'`num_stim` has the wrong type: Received `{type(params.get("num_stim", None))}` expected `float`')
-    if params["num_stim"] >= 1:
+    if params["num_stim"] < 1:
         raise StyxValidationError("Parameter `num_stim` must be at least 1")
     if params.get("num_reps", None) is None:
         raise StyxValidationError("`num_reps` must not be None")
     if not isinstance(params["num_reps"], list):
         raise StyxValidationError(f'`num_reps` has the wrong type: Received `{type(params.get("num_reps", None))}` expected `list[float]`')
-    if len(params["num_reps"]) >= 1:
+    if len(params["num_reps"]) < 1:
         raise StyxValidationError("Parameter `num_reps` must contain at least 1 element")
     for e in params["num_reps"]:
         if not isinstance(e, (float, int)):
@@ -235,7 +235,7 @@ def make_random_timing_py_validate(
     if params.get("stim_dur", None) is not None:
         if not isinstance(params["stim_dur"], list):
             raise StyxValidationError(f'`stim_dur` has the wrong type: Received `{type(params.get("stim_dur", None))}` expected `list[float] | None`')
-        if len(params["stim_dur"]) >= 1:
+        if len(params["stim_dur"]) < 1:
             raise StyxValidationError("Parameter `stim_dur` must contain at least 1 element")
         for e in params["stim_dur"]:
             if not isinstance(e, (float, int)):
@@ -247,7 +247,7 @@ def make_random_timing_py_validate(
     if params.get("max_consec", None) is not None:
         if not isinstance(params["max_consec"], list):
             raise StyxValidationError(f'`max_consec` has the wrong type: Received `{type(params.get("max_consec", None))}` expected `list[float] | None`')
-        if len(params["max_consec"]) >= 1:
+        if len(params["max_consec"]) < 1:
             raise StyxValidationError("Parameter `max_consec` must contain at least 1 element")
         for e in params["max_consec"]:
             if not isinstance(e, (float, int)):
@@ -261,7 +261,7 @@ def make_random_timing_py_validate(
     if params.get("not_first", None) is not None:
         if not isinstance(params["not_first"], list):
             raise StyxValidationError(f'`not_first` has the wrong type: Received `{type(params.get("not_first", None))}` expected `list[str] | None`')
-        if len(params["not_first"]) >= 1:
+        if len(params["not_first"]) < 1:
             raise StyxValidationError("Parameter `not_first` must contain at least 1 element")
         for e in params["not_first"]:
             if not isinstance(e, str):
@@ -269,7 +269,7 @@ def make_random_timing_py_validate(
     if params.get("not_last", None) is not None:
         if not isinstance(params["not_last"], list):
             raise StyxValidationError(f'`not_last` has the wrong type: Received `{type(params.get("not_last", None))}` expected `list[str] | None`')
-        if len(params["not_last"]) >= 1:
+        if len(params["not_last"]) < 1:
             raise StyxValidationError("Parameter `not_last` must contain at least 1 element")
         for e in params["not_last"]:
             if not isinstance(e, str):
@@ -280,7 +280,7 @@ def make_random_timing_py_validate(
     if params.get("ordered_stimuli", None) is not None:
         if not isinstance(params["ordered_stimuli"], list):
             raise StyxValidationError(f'`ordered_stimuli` has the wrong type: Received `{type(params.get("ordered_stimuli", None))}` expected `list[str] | None`')
-        if len(params["ordered_stimuli"]) >= 1:
+        if len(params["ordered_stimuli"]) < 1:
             raise StyxValidationError("Parameter `ordered_stimuli` must contain at least 1 element")
         for e in params["ordered_stimuli"]:
             if not isinstance(e, str):
@@ -300,7 +300,7 @@ def make_random_timing_py_validate(
     if params.get("stim_labels", None) is not None:
         if not isinstance(params["stim_labels"], list):
             raise StyxValidationError(f'`stim_labels` has the wrong type: Received `{type(params.get("stim_labels", None))}` expected `list[str] | None`')
-        if len(params["stim_labels"]) >= 1:
+        if len(params["stim_labels"]) < 1:
             raise StyxValidationError("Parameter `stim_labels` must contain at least 1 element")
         for e in params["stim_labels"]:
             if not isinstance(e, str):

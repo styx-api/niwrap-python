@@ -122,17 +122,17 @@ def v_1dfft_validate(
     if params.get("ignore", None) is not None:
         if not isinstance(params["ignore"], (float, int)):
             raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `float | None`')
-        if params["ignore"] >= 0:
+        if params["ignore"] < 0:
             raise StyxValidationError("Parameter `ignore` must be at least 0")
     if params.get("use", None) is not None:
         if not isinstance(params["use"], (float, int)):
             raise StyxValidationError(f'`use` has the wrong type: Received `{type(params.get("use", None))}` expected `float | None`')
-        if params["use"] >= 0:
+        if params["use"] < 0:
             raise StyxValidationError("Parameter `use` must be at least 0")
     if params.get("nfft", None) is not None:
         if not isinstance(params["nfft"], (float, int)):
             raise StyxValidationError(f'`nfft` has the wrong type: Received `{type(params.get("nfft", None))}` expected `float | None`')
-        if params["nfft"] >= 1:
+        if params["nfft"] < 1:
             raise StyxValidationError("Parameter `nfft` must be at least 1")
     if params.get("tocx", False) is None:
         raise StyxValidationError("`tocx` must not be None")

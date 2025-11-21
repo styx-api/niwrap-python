@@ -181,7 +181,7 @@ def v__atlasize_validate(
     if params.get("lab_file", None) is not None:
         if not isinstance(params["lab_file"], list):
             raise StyxValidationError(f'`lab_file` has the wrong type: Received `{type(params.get("lab_file", None))}` expected `list[str] | None`')
-        if len(params["lab_file"]) <= 3:
+        if len(params["lab_file"]) > 3:
             raise StyxValidationError("Parameter `lab_file` must contain at most 3 elements")
         for e in params["lab_file"]:
             if not isinstance(e, str):

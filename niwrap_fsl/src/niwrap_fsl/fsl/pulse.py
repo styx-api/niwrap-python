@@ -291,7 +291,7 @@ def pulse_validate(
     if params.get("cover", None) is not None:
         if not isinstance(params["cover"], (float, int)):
             raise StyxValidationError(f'`cover` has the wrong type: Received `{type(params.get("cover", None))}` expected `float | None`')
-        if 50 <= params["cover"] <= 100:
+        if not (50 <= params["cover"] <= 100):
             raise StyxValidationError("Parameter `cover` must be between 50 and 100 (inclusive)")
 
 

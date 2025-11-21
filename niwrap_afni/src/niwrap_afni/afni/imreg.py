@@ -244,7 +244,7 @@ def imreg_validate(
     if params.get("fine", None) is not None:
         if not isinstance(params["fine"], list):
             raise StyxValidationError(f'`fine` has the wrong type: Received `{type(params.get("fine", None))}` expected `list[float] | None`')
-        if len(params["fine"]) == 3:
+        if len(params["fine"]) != 3:
             raise StyxValidationError("Parameter `fine` must contain exactly 3 elements")
         for e in params["fine"]:
             if not isinstance(e, (float, int)):

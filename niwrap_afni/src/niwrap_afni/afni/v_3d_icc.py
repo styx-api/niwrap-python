@@ -171,7 +171,7 @@ def v_3d_icc_validate(
     if params.get("bounds", None) is not None:
         if not isinstance(params["bounds"], list):
             raise StyxValidationError(f'`bounds` has the wrong type: Received `{type(params.get("bounds", None))}` expected `list[float] | None`')
-        if len(params["bounds"]) == 2:
+        if len(params["bounds"]) != 2:
             raise StyxValidationError("Parameter `bounds` must contain exactly 2 elements")
         for e in params["bounds"]:
             if not isinstance(e, (float, int)):

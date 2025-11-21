@@ -188,7 +188,7 @@ def mri_gtmseg_validate(
     if params.get("context_annotation", None) is not None:
         if not isinstance(params["context_annotation"], list):
             raise StyxValidationError(f'`context_annotation` has the wrong type: Received `{type(params.get("context_annotation", None))}` expected `list[str] | None`')
-        if len(params["context_annotation"]) == 3:
+        if len(params["context_annotation"]) != 3:
             raise StyxValidationError("Parameter `context_annotation` must contain exactly 3 elements")
         for e in params["context_annotation"]:
             if not isinstance(e, str):
@@ -200,7 +200,7 @@ def mri_gtmseg_validate(
     if params.get("wm_annotation", None) is not None:
         if not isinstance(params["wm_annotation"], list):
             raise StyxValidationError(f'`wm_annotation` has the wrong type: Received `{type(params.get("wm_annotation", None))}` expected `list[str] | None`')
-        if len(params["wm_annotation"]) == 3:
+        if len(params["wm_annotation"]) != 3:
             raise StyxValidationError("Parameter `wm_annotation` must contain exactly 3 elements")
         for e in params["wm_annotation"]:
             if not isinstance(e, str):
@@ -222,7 +222,7 @@ def mri_gtmseg_validate(
     if params.get("lhminmax", None) is not None:
         if not isinstance(params["lhminmax"], list):
             raise StyxValidationError(f'`lhminmax` has the wrong type: Received `{type(params.get("lhminmax", None))}` expected `list[float] | None`')
-        if len(params["lhminmax"]) == 2:
+        if len(params["lhminmax"]) != 2:
             raise StyxValidationError("Parameter `lhminmax` must contain exactly 2 elements")
         for e in params["lhminmax"]:
             if not isinstance(e, (float, int)):
@@ -230,7 +230,7 @@ def mri_gtmseg_validate(
     if params.get("rhminmax", None) is not None:
         if not isinstance(params["rhminmax"], list):
             raise StyxValidationError(f'`rhminmax` has the wrong type: Received `{type(params.get("rhminmax", None))}` expected `list[float] | None`')
-        if len(params["rhminmax"]) == 2:
+        if len(params["rhminmax"]) != 2:
             raise StyxValidationError("Parameter `rhminmax` must contain exactly 2 elements")
         for e in params["rhminmax"]:
             if not isinstance(e, (float, int)):

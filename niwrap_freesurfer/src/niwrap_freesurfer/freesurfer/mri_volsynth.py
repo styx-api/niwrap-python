@@ -333,7 +333,7 @@ def mri_volsynth_validate(
     if params.get("dim", None) is not None:
         if not isinstance(params["dim"], list):
             raise StyxValidationError(f'`dim` has the wrong type: Received `{type(params.get("dim", None))}` expected `list[float] | None`')
-        if len(params["dim"]) == 4:
+        if len(params["dim"]) != 4:
             raise StyxValidationError("Parameter `dim` must contain exactly 4 elements")
         for e in params["dim"]:
             if not isinstance(e, (float, int)):
@@ -341,7 +341,7 @@ def mri_volsynth_validate(
     if params.get("res", None) is not None:
         if not isinstance(params["res"], list):
             raise StyxValidationError(f'`res` has the wrong type: Received `{type(params.get("res", None))}` expected `list[float] | None`')
-        if len(params["res"]) == 4:
+        if len(params["res"]) != 4:
             raise StyxValidationError("Parameter `res` must contain exactly 4 elements")
         for e in params["res"]:
             if not isinstance(e, (float, int)):
@@ -349,7 +349,7 @@ def mri_volsynth_validate(
     if params.get("vox_size", None) is not None:
         if not isinstance(params["vox_size"], list):
             raise StyxValidationError(f'`vox_size` has the wrong type: Received `{type(params.get("vox_size", None))}` expected `list[float] | None`')
-        if len(params["vox_size"]) == 3:
+        if len(params["vox_size"]) != 3:
             raise StyxValidationError("Parameter `vox_size` must contain exactly 3 elements")
         for e in params["vox_size"]:
             if not isinstance(e, (float, int)):
@@ -360,7 +360,7 @@ def mri_volsynth_validate(
     if params.get("cdircos", None) is not None:
         if not isinstance(params["cdircos"], list):
             raise StyxValidationError(f'`cdircos` has the wrong type: Received `{type(params.get("cdircos", None))}` expected `list[float] | None`')
-        if len(params["cdircos"]) == 3:
+        if len(params["cdircos"]) != 3:
             raise StyxValidationError("Parameter `cdircos` must contain exactly 3 elements")
         for e in params["cdircos"]:
             if not isinstance(e, (float, int)):
@@ -368,7 +368,7 @@ def mri_volsynth_validate(
     if params.get("rdircos", None) is not None:
         if not isinstance(params["rdircos"], list):
             raise StyxValidationError(f'`rdircos` has the wrong type: Received `{type(params.get("rdircos", None))}` expected `list[float] | None`')
-        if len(params["rdircos"]) == 3:
+        if len(params["rdircos"]) != 3:
             raise StyxValidationError("Parameter `rdircos` must contain exactly 3 elements")
         for e in params["rdircos"]:
             if not isinstance(e, (float, int)):
@@ -376,7 +376,7 @@ def mri_volsynth_validate(
     if params.get("sdircos", None) is not None:
         if not isinstance(params["sdircos"], list):
             raise StyxValidationError(f'`sdircos` has the wrong type: Received `{type(params.get("sdircos", None))}` expected `list[float] | None`')
-        if len(params["sdircos"]) == 3:
+        if len(params["sdircos"]) != 3:
             raise StyxValidationError("Parameter `sdircos` must contain exactly 3 elements")
         for e in params["sdircos"]:
             if not isinstance(e, (float, int)):
@@ -384,7 +384,7 @@ def mri_volsynth_validate(
     if params.get("c_ras", None) is not None:
         if not isinstance(params["c_ras"], list):
             raise StyxValidationError(f'`c_ras` has the wrong type: Received `{type(params.get("c_ras", None))}` expected `list[float] | None`')
-        if len(params["c_ras"]) == 3:
+        if len(params["c_ras"]) != 3:
             raise StyxValidationError("Parameter `c_ras` must contain exactly 3 elements")
         for e in params["c_ras"]:
             if not isinstance(e, (float, int)):
@@ -392,7 +392,7 @@ def mri_volsynth_validate(
     if params.get("p0", None) is not None:
         if not isinstance(params["p0"], list):
             raise StyxValidationError(f'`p0` has the wrong type: Received `{type(params.get("p0", None))}` expected `list[float] | None`')
-        if len(params["p0"]) == 3:
+        if len(params["p0"]) != 3:
             raise StyxValidationError("Parameter `p0` must contain exactly 3 elements")
         for e in params["p0"]:
             if not isinstance(e, (float, int)):
@@ -412,7 +412,7 @@ def mri_volsynth_validate(
     if params.get("bb", None) is not None:
         if not isinstance(params["bb"], list):
             raise StyxValidationError(f'`bb` has the wrong type: Received `{type(params.get("bb", None))}` expected `list[float] | None`')
-        if len(params["bb"]) == 6:
+        if len(params["bb"]) != 6:
             raise StyxValidationError("Parameter `bb` must contain exactly 6 elements")
         for e in params["bb"]:
             if not isinstance(e, (float, int)):
@@ -426,7 +426,7 @@ def mri_volsynth_validate(
     if params.get("delta_crsf", None) is not None:
         if not isinstance(params["delta_crsf"], list):
             raise StyxValidationError(f'`delta_crsf` has the wrong type: Received `{type(params.get("delta_crsf", None))}` expected `list[float] | None`')
-        if len(params["delta_crsf"]) == 4:
+        if len(params["delta_crsf"]) != 4:
             raise StyxValidationError("Parameter `delta_crsf` must contain exactly 4 elements")
         for e in params["delta_crsf"]:
             if not isinstance(e, (float, int)):
@@ -440,7 +440,7 @@ def mri_volsynth_validate(
     if params.get("grid", None) is not None:
         if not isinstance(params["grid"], list):
             raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
-        if len(params["grid"]) == 3:
+        if len(params["grid"]) != 3:
             raise StyxValidationError("Parameter `grid` must contain exactly 3 elements")
         for e in params["grid"]:
             if not isinstance(e, (float, int)):
@@ -473,7 +473,7 @@ def mri_volsynth_validate(
     if params.get("sphere_center", None) is not None:
         if not isinstance(params["sphere_center"], list):
             raise StyxValidationError(f'`sphere_center` has the wrong type: Received `{type(params.get("sphere_center", None))}` expected `list[float] | None`')
-        if len(params["sphere_center"]) == 3:
+        if len(params["sphere_center"]) != 3:
             raise StyxValidationError("Parameter `sphere_center` must contain exactly 3 elements")
         for e in params["sphere_center"]:
             if not isinstance(e, (float, int)):
@@ -481,7 +481,7 @@ def mri_volsynth_validate(
     if params.get("hsc", None) is not None:
         if not isinstance(params["hsc"], list):
             raise StyxValidationError(f'`hsc` has the wrong type: Received `{type(params.get("hsc", None))}` expected `list[float] | None`')
-        if len(params["hsc"]) == 2:
+        if len(params["hsc"]) != 2:
             raise StyxValidationError("Parameter `hsc` must contain exactly 2 elements")
         for e in params["hsc"]:
             if not isinstance(e, (float, int)):

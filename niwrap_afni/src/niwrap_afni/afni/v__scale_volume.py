@@ -113,7 +113,7 @@ def v__scale_volume_validate(
     if params.get("val_clip", None) is not None:
         if not isinstance(params["val_clip"], list):
             raise StyxValidationError(f'`val_clip` has the wrong type: Received `{type(params.get("val_clip", None))}` expected `list[float] | None`')
-        if len(params["val_clip"]) == 2:
+        if len(params["val_clip"]) != 2:
             raise StyxValidationError("Parameter `val_clip` must contain exactly 2 elements")
         for e in params["val_clip"]:
             if not isinstance(e, (float, int)):
@@ -121,7 +121,7 @@ def v__scale_volume_validate(
     if params.get("perc_clip", None) is not None:
         if not isinstance(params["perc_clip"], list):
             raise StyxValidationError(f'`perc_clip` has the wrong type: Received `{type(params.get("perc_clip", None))}` expected `list[float] | None`')
-        if len(params["perc_clip"]) == 2:
+        if len(params["perc_clip"]) != 2:
             raise StyxValidationError("Parameter `perc_clip` must contain exactly 2 elements")
         for e in params["perc_clip"]:
             if not isinstance(e, (float, int)):

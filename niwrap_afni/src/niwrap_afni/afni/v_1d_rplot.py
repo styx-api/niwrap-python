@@ -182,7 +182,7 @@ def v_1d_rplot_validate(
     if params.get("save_size", None) is not None:
         if not isinstance(params["save_size"], list):
             raise StyxValidationError(f'`save_size` has the wrong type: Received `{type(params.get("save_size", None))}` expected `list[float] | None`')
-        if len(params["save_size"]) == 2:
+        if len(params["save_size"]) != 2:
             raise StyxValidationError("Parameter `save_size` must contain exactly 2 elements")
         for e in params["save_size"]:
             if not isinstance(e, (float, int)):

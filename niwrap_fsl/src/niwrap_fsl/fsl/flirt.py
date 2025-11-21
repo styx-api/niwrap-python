@@ -456,7 +456,7 @@ def flirt_validate(
     if params.get("searchr_x", None) is not None:
         if not isinstance(params["searchr_x"], list):
             raise StyxValidationError(f'`searchr_x` has the wrong type: Received `{type(params.get("searchr_x", None))}` expected `list[int] | None`')
-        if len(params["searchr_x"]) == 2:
+        if len(params["searchr_x"]) != 2:
             raise StyxValidationError("Parameter `searchr_x` must contain exactly 2 elements")
         for e in params["searchr_x"]:
             if not isinstance(e, int):
@@ -464,7 +464,7 @@ def flirt_validate(
     if params.get("searchr_y", None) is not None:
         if not isinstance(params["searchr_y"], list):
             raise StyxValidationError(f'`searchr_y` has the wrong type: Received `{type(params.get("searchr_y", None))}` expected `list[int] | None`')
-        if len(params["searchr_y"]) == 2:
+        if len(params["searchr_y"]) != 2:
             raise StyxValidationError("Parameter `searchr_y` must contain exactly 2 elements")
         for e in params["searchr_y"]:
             if not isinstance(e, int):
@@ -472,7 +472,7 @@ def flirt_validate(
     if params.get("searchr_z", None) is not None:
         if not isinstance(params["searchr_z"], list):
             raise StyxValidationError(f'`searchr_z` has the wrong type: Received `{type(params.get("searchr_z", None))}` expected `list[int] | None`')
-        if len(params["searchr_z"]) == 2:
+        if len(params["searchr_z"]) != 2:
             raise StyxValidationError("Parameter `searchr_z` must contain exactly 2 elements")
         for e in params["searchr_z"]:
             if not isinstance(e, int):

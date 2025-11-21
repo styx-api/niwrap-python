@@ -190,7 +190,7 @@ def v_3d_unifize_validate(
     if params.get("rbt", None) is not None:
         if not isinstance(params["rbt"], list):
             raise StyxValidationError(f'`rbt` has the wrong type: Received `{type(params.get("rbt", None))}` expected `list[float] | None`')
-        if len(params["rbt"]) == 3:
+        if len(params["rbt"]) != 3:
             raise StyxValidationError("Parameter `rbt` must contain exactly 3 elements")
         for e in params["rbt"]:
             if not isinstance(e, (float, int)):

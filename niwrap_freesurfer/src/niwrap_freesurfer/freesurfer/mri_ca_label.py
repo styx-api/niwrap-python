@@ -417,7 +417,7 @@ def mri_ca_label_validate(
     if params.get("debug_voxel", None) is not None:
         if not isinstance(params["debug_voxel"], list):
             raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
-        if len(params["debug_voxel"]) == 3:
+        if len(params["debug_voxel"]) != 3:
             raise StyxValidationError("Parameter `debug_voxel` must contain exactly 3 elements")
         for e in params["debug_voxel"]:
             if not isinstance(e, (float, int)):
@@ -425,7 +425,7 @@ def mri_ca_label_validate(
     if params.get("debug_node", None) is not None:
         if not isinstance(params["debug_node"], list):
             raise StyxValidationError(f'`debug_node` has the wrong type: Received `{type(params.get("debug_node", None))}` expected `list[float] | None`')
-        if len(params["debug_node"]) == 3:
+        if len(params["debug_node"]) != 3:
             raise StyxValidationError("Parameter `debug_node` must contain exactly 3 elements")
         for e in params["debug_node"]:
             if not isinstance(e, (float, int)):
@@ -445,7 +445,7 @@ def mri_ca_label_validate(
     if params.get("example", None) is not None:
         if not isinstance(params["example"], list):
             raise StyxValidationError(f'`example` has the wrong type: Received `{type(params.get("example", None))}` expected `list[InputPathType] | None`')
-        if len(params["example"]) == 2:
+        if len(params["example"]) != 2:
             raise StyxValidationError("Parameter `example` must contain exactly 2 elements")
         for e in params["example"]:
             if not isinstance(e, (pathlib.Path, str)):

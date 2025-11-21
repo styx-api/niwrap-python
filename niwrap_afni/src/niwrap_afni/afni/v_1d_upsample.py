@@ -78,7 +78,7 @@ def v_1d_upsample_validate(
         raise StyxValidationError("`upsample_factor` must not be None")
     if not isinstance(params["upsample_factor"], (float, int)):
         raise StyxValidationError(f'`upsample_factor` has the wrong type: Received `{type(params.get("upsample_factor", None))}` expected `float`')
-    if 2 <= params["upsample_factor"] <= 32:
+    if not (2 <= params["upsample_factor"] <= 32):
         raise StyxValidationError("Parameter `upsample_factor` must be between 2 and 32 (inclusive)")
     if params.get("input_file", None) is None:
         raise StyxValidationError("`input_file` must not be None")

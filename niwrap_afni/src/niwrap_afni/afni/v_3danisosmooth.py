@@ -267,7 +267,7 @@ def v_3danisosmooth_validate(
     if params.get("edgefraction", None) is not None:
         if not isinstance(params["edgefraction"], (float, int)):
             raise StyxValidationError(f'`edgefraction` has the wrong type: Received `{type(params.get("edgefraction", None))}` expected `float | None`')
-        if 0 <= params["edgefraction"] <= 1:
+        if not (0 <= params["edgefraction"] <= 1):
             raise StyxValidationError("Parameter `edgefraction` must be between 0 and 1 (inclusive)")
     if params.get("datum_type", None) is not None:
         if not isinstance(params["datum_type"], str):

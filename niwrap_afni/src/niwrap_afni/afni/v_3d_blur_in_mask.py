@@ -161,7 +161,7 @@ def v_3d_blur_in_mask_validate(
     if params.get("fwhm_xyz", None) is not None:
         if not isinstance(params["fwhm_xyz"], list):
             raise StyxValidationError(f'`fwhm_xyz` has the wrong type: Received `{type(params.get("fwhm_xyz", None))}` expected `list[float] | None`')
-        if len(params["fwhm_xyz"]) <= 3:
+        if len(params["fwhm_xyz"]) > 3:
             raise StyxValidationError("Parameter `fwhm_xyz` must contain at most 3 elements")
         for e in params["fwhm_xyz"]:
             if not isinstance(e, (float, int)):

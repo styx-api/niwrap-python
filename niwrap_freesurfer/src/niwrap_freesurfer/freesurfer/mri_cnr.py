@@ -118,7 +118,7 @@ def mri_cnr_validate(
     if params.get("slope", None) is not None:
         if not isinstance(params["slope"], list):
             raise StyxValidationError(f'`slope` has the wrong type: Received `{type(params.get("slope", None))}` expected `list[str] | None`')
-        if len(params["slope"]) == 5:
+        if len(params["slope"]) != 5:
             raise StyxValidationError("Parameter `slope` must contain exactly 5 elements")
         for e in params["slope"]:
             if not isinstance(e, str):
@@ -129,7 +129,7 @@ def mri_cnr_validate(
     if params.get("labels", None) is not None:
         if not isinstance(params["labels"], list):
             raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
-        if len(params["labels"]) == 2:
+        if len(params["labels"]) != 2:
             raise StyxValidationError("Parameter `labels` must contain exactly 2 elements")
         for e in params["labels"]:
             if not isinstance(e, str):

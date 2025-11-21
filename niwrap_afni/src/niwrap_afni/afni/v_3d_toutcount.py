@@ -133,7 +133,7 @@ def v_3d_toutcount_validate(
     if params.get("q_threshold", None) is not None:
         if not isinstance(params["q_threshold"], (float, int)):
             raise StyxValidationError(f'`q_threshold` has the wrong type: Received `{type(params.get("q_threshold", None))}` expected `float | None`')
-        if 0 <= params["q_threshold"] <= 1:
+        if not (0 <= params["q_threshold"] <= 1):
             raise StyxValidationError("Parameter `q_threshold` must be between 0 and 1 (inclusive)")
     if params.get("autoclip", False) is None:
         raise StyxValidationError("`autoclip` must not be None")

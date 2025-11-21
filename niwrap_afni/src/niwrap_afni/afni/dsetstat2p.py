@@ -104,7 +104,7 @@ def dsetstat2p_validate(
         raise StyxValidationError("`statval` must not be None")
     if not isinstance(params["statval"], (float, int)):
         raise StyxValidationError(f'`statval` has the wrong type: Received `{type(params.get("statval", None))}` expected `float`')
-    if params["statval"] >= 0:
+    if params["statval"] < 0:
         raise StyxValidationError("Parameter `statval` must be at least 0")
     if params.get("bisided", False) is None:
         raise StyxValidationError("`bisided` must not be None")

@@ -192,7 +192,7 @@ def v_3d_xclust_sim_validate(
     if params.get("fpr", None) is not None:
         if not isinstance(params["fpr"], (float, int)):
             raise StyxValidationError(f'`fpr` has the wrong type: Received `{type(params.get("fpr", None))}` expected `float | None`')
-        if 2 <= params["fpr"] <= 9:
+        if not (2 <= params["fpr"] <= 9):
             raise StyxValidationError("Parameter `fpr` must be between 2 and 9 (inclusive)")
     if params.get("multiFPR", False) is None:
         raise StyxValidationError("`multiFPR` must not be None")
@@ -220,7 +220,7 @@ def v_3d_xclust_sim_validate(
     if params.get("splitfrac", None) is not None:
         if not isinstance(params["splitfrac"], (float, int)):
             raise StyxValidationError(f'`splitfrac` has the wrong type: Received `{type(params.get("splitfrac", None))}` expected `float | None`')
-        if 0.2 <= params["splitfrac"] <= 0.8:
+        if not (0.2 <= params["splitfrac"] <= 0.8):
             raise StyxValidationError("Parameter `splitfrac` must be between 0.2 and 0.8 (inclusive)")
     if params.get("prefix", None) is not None:
         if not isinstance(params["prefix"], str):

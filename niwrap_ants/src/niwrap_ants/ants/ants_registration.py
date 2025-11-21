@@ -1888,7 +1888,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("use_gradient_filter", None) is not None:
         if not isinstance(params["use_gradient_filter"], bool):
@@ -1989,7 +1989,7 @@ def ants_registration_metric_mutual_information_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("use_gradient_filter", None) is not None:
         if not isinstance(params["use_gradient_filter"], bool):
@@ -2090,7 +2090,7 @@ def ants_registration_metric_mattes_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("use_gradient_filter", None) is not None:
         if not isinstance(params["use_gradient_filter"], bool):
@@ -2191,7 +2191,7 @@ def ants_registration_metric_mean_squares_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("use_gradient_filter", None) is not None:
         if not isinstance(params["use_gradient_filter"], bool):
@@ -2292,7 +2292,7 @@ def ants_registration_metric_demons_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("use_gradient_filter", None) is not None:
         if not isinstance(params["use_gradient_filter"], bool):
@@ -2393,7 +2393,7 @@ def ants_registration_metric_global_correlation_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("use_gradient_filter", None) is not None:
         if not isinstance(params["use_gradient_filter"], bool):
@@ -2478,7 +2478,7 @@ def ants_registration_metric_euclidean_icp_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("boundary_points_only", None) is not None:
         if not isinstance(params["boundary_points_only"], str):
@@ -2554,7 +2554,7 @@ def ants_registration_metric_point_set_expectation_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
 
 
@@ -2644,7 +2644,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("boundary_points_only", None) is not None:
         if not isinstance(params["boundary_points_only"], str):
@@ -3298,7 +3298,7 @@ def ants_registration_validate(
     if params.get("write_interval_volumes", None) is not None:
         if not isinstance(params["write_interval_volumes"], int):
             raise StyxValidationError(f'`write_interval_volumes` has the wrong type: Received `{type(params.get("write_interval_volumes", None))}` expected `int | None`')
-        if params["write_interval_volumes"] >= 0:
+        if params["write_interval_volumes"] < 0:
             raise StyxValidationError("Parameter `write_interval_volumes` must be at least 0")
     if params.get("collapse_output_transforms", None) is not None:
         if not isinstance(params["collapse_output_transforms"], bool):
@@ -3314,7 +3314,7 @@ def ants_registration_validate(
     if params.get("restrict_deformation", None) is not None:
         if not isinstance(params["restrict_deformation"], list):
             raise StyxValidationError(f'`restrict_deformation` has the wrong type: Received `{type(params.get("restrict_deformation", None))}` expected `list[bool] | None`')
-        if 3 <= len(params["restrict_deformation"]) <= 6:
+        if not (3 <= len(params["restrict_deformation"]) <= 6):
             raise StyxValidationError("Parameter `restrict_deformation` must contain between 3 and 6 elements (inclusive)")
         for e in params["restrict_deformation"]:
             if not isinstance(e, bool):
@@ -3346,7 +3346,7 @@ def ants_registration_validate(
     if params.get("random_seed", None) is not None:
         if not isinstance(params["random_seed"], int):
             raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
-        if params["random_seed"] >= 1:
+        if params["random_seed"] < 1:
             raise StyxValidationError("Parameter `random_seed` must be at least 1")
     if params.get("verbose", None) is not None:
         if not isinstance(params["verbose"], bool):

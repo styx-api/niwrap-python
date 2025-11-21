@@ -192,7 +192,7 @@ def surf_measures_validate(
     if params.get("debug", None) is not None:
         if not isinstance(params["debug"], int):
             raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
-        if 0 <= params["debug"] <= 5:
+        if not (0 <= params["debug"] <= 5):
             raise StyxValidationError("Parameter `debug` must be between 0 and 5 (inclusive)")
     if params.get("dnode", None) is not None:
         if not isinstance(params["dnode"], (float, int)):

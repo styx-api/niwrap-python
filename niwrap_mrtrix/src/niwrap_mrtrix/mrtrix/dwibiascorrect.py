@@ -376,7 +376,7 @@ def dwibiascorrect_validate(
     if params.get("continue_scratch_dir", None) is not None:
         if not isinstance(params["continue_scratch_dir"], list):
             raise StyxValidationError(f'`continue_scratch_dir` has the wrong type: Received `{type(params.get("continue_scratch_dir", None))}` expected `list[InputPathType] | None`')
-        if len(params["continue_scratch_dir"]) == 2:
+        if len(params["continue_scratch_dir"]) != 2:
             raise StyxValidationError("Parameter `continue_scratch_dir` must contain exactly 2 elements")
         for e in params["continue_scratch_dir"]:
             if not isinstance(e, (pathlib.Path, str)):

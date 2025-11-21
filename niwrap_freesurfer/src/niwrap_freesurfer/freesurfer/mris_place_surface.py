@@ -420,7 +420,7 @@ def mris_place_surface_validate(
     if params.get("rip_projection", None) is not None:
         if not isinstance(params["rip_projection"], list):
             raise StyxValidationError(f'`rip_projection` has the wrong type: Received `{type(params.get("rip_projection", None))}` expected `list[float] | None`')
-        if len(params["rip_projection"]) == 3:
+        if len(params["rip_projection"]) != 3:
             raise StyxValidationError("Parameter `rip_projection` must contain exactly 3 elements")
         for e in params["rip_projection"]:
             if not isinstance(e, (float, int)):
@@ -484,7 +484,7 @@ def mris_place_surface_validate(
     if params.get("fill_lateral_ventricles", None) is not None:
         if not isinstance(params["fill_lateral_ventricles"], list):
             raise StyxValidationError(f'`fill_lateral_ventricles` has the wrong type: Received `{type(params.get("fill_lateral_ventricles", None))}` expected `list[float] | None`')
-        if len(params["fill_lateral_ventricles"]) >= 3:
+        if len(params["fill_lateral_ventricles"]) < 3:
             raise StyxValidationError("Parameter `fill_lateral_ventricles` must contain at least 3 elements")
         for e in params["fill_lateral_ventricles"]:
             if not isinstance(e, (float, int)):

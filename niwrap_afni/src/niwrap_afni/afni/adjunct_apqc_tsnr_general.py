@@ -214,7 +214,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("set_dicom_xyz", None) is not None:
         if not isinstance(params["set_dicom_xyz"], list):
             raise StyxValidationError(f'`set_dicom_xyz` has the wrong type: Received `{type(params.get("set_dicom_xyz", None))}` expected `list[str] | None`')
-        if len(params["set_dicom_xyz"]) <= 3:
+        if len(params["set_dicom_xyz"]) > 3:
             raise StyxValidationError("Parameter `set_dicom_xyz` must contain at most 3 elements")
         for e in params["set_dicom_xyz"]:
             if not isinstance(e, str):
@@ -222,7 +222,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("set_ijk", None) is not None:
         if not isinstance(params["set_ijk"], list):
             raise StyxValidationError(f'`set_ijk` has the wrong type: Received `{type(params.get("set_ijk", None))}` expected `list[str] | None`')
-        if len(params["set_ijk"]) <= 3:
+        if len(params["set_ijk"]) > 3:
             raise StyxValidationError("Parameter `set_ijk` must contain at most 3 elements")
         for e in params["set_ijk"]:
             if not isinstance(e, str):
@@ -230,7 +230,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("set_subbricks", None) is not None:
         if not isinstance(params["set_subbricks"], list):
             raise StyxValidationError(f'`set_subbricks` has the wrong type: Received `{type(params.get("set_subbricks", None))}` expected `list[str] | None`')
-        if len(params["set_subbricks"]) <= 3:
+        if len(params["set_subbricks"]) > 3:
             raise StyxValidationError("Parameter `set_subbricks` must contain at most 3 elements")
         for e in params["set_subbricks"]:
             if not isinstance(e, str):
@@ -247,7 +247,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("ulay_range_nz", None) is not None:
         if not isinstance(params["ulay_range_nz"], list):
             raise StyxValidationError(f'`ulay_range_nz` has the wrong type: Received `{type(params.get("ulay_range_nz", None))}` expected `list[str] | None`')
-        if len(params["ulay_range_nz"]) <= 2:
+        if len(params["ulay_range_nz"]) > 2:
             raise StyxValidationError("Parameter `ulay_range_nz` must contain at most 2 elements")
         for e in params["ulay_range_nz"]:
             if not isinstance(e, str):
@@ -255,7 +255,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("ulay_range", None) is not None:
         if not isinstance(params["ulay_range"], list):
             raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `list[str] | None`')
-        if len(params["ulay_range"]) <= 2:
+        if len(params["ulay_range"]) > 2:
             raise StyxValidationError("Parameter `ulay_range` must contain at most 2 elements")
         for e in params["ulay_range"]:
             if not isinstance(e, str):
@@ -263,7 +263,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("delta_slices", None) is not None:
         if not isinstance(params["delta_slices"], list):
             raise StyxValidationError(f'`delta_slices` has the wrong type: Received `{type(params.get("delta_slices", None))}` expected `list[str] | None`')
-        if len(params["delta_slices"]) <= 3:
+        if len(params["delta_slices"]) > 3:
             raise StyxValidationError("Parameter `delta_slices` must contain at most 3 elements")
         for e in params["delta_slices"]:
             if not isinstance(e, str):
@@ -271,7 +271,7 @@ def adjunct_apqc_tsnr_general_validate(
     if params.get("olay_disc_hot_range", None) is not None:
         if not isinstance(params["olay_disc_hot_range"], list):
             raise StyxValidationError(f'`olay_disc_hot_range` has the wrong type: Received `{type(params.get("olay_disc_hot_range", None))}` expected `list[str] | None`')
-        if len(params["olay_disc_hot_range"]) <= 2:
+        if len(params["olay_disc_hot_range"]) > 2:
             raise StyxValidationError("Parameter `olay_disc_hot_range` must contain at most 2 elements")
         for e in params["olay_disc_hot_range"]:
             if not isinstance(e, str):

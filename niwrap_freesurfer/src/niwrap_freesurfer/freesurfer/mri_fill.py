@@ -193,7 +193,7 @@ def mri_fill_validate(
     if params.get("seed_cc_tal", None) is not None:
         if not isinstance(params["seed_cc_tal"], list):
             raise StyxValidationError(f'`seed_cc_tal` has the wrong type: Received `{type(params.get("seed_cc_tal", None))}` expected `list[float] | None`')
-        if len(params["seed_cc_tal"]) == 3:
+        if len(params["seed_cc_tal"]) != 3:
             raise StyxValidationError("Parameter `seed_cc_tal` must contain exactly 3 elements")
         for e in params["seed_cc_tal"]:
             if not isinstance(e, (float, int)):
@@ -201,7 +201,7 @@ def mri_fill_validate(
     if params.get("seed_pons_tal", None) is not None:
         if not isinstance(params["seed_pons_tal"], list):
             raise StyxValidationError(f'`seed_pons_tal` has the wrong type: Received `{type(params.get("seed_pons_tal", None))}` expected `list[float] | None`')
-        if len(params["seed_pons_tal"]) == 3:
+        if len(params["seed_pons_tal"]) != 3:
             raise StyxValidationError("Parameter `seed_pons_tal` must contain exactly 3 elements")
         for e in params["seed_pons_tal"]:
             if not isinstance(e, (float, int)):
@@ -209,7 +209,7 @@ def mri_fill_validate(
     if params.get("seed_lh_tal", None) is not None:
         if not isinstance(params["seed_lh_tal"], list):
             raise StyxValidationError(f'`seed_lh_tal` has the wrong type: Received `{type(params.get("seed_lh_tal", None))}` expected `list[float] | None`')
-        if len(params["seed_lh_tal"]) == 3:
+        if len(params["seed_lh_tal"]) != 3:
             raise StyxValidationError("Parameter `seed_lh_tal` must contain exactly 3 elements")
         for e in params["seed_lh_tal"]:
             if not isinstance(e, (float, int)):
@@ -217,7 +217,7 @@ def mri_fill_validate(
     if params.get("seed_rh_tal", None) is not None:
         if not isinstance(params["seed_rh_tal"], list):
             raise StyxValidationError(f'`seed_rh_tal` has the wrong type: Received `{type(params.get("seed_rh_tal", None))}` expected `list[float] | None`')
-        if len(params["seed_rh_tal"]) == 3:
+        if len(params["seed_rh_tal"]) != 3:
             raise StyxValidationError("Parameter `seed_rh_tal` must contain exactly 3 elements")
         for e in params["seed_rh_tal"]:
             if not isinstance(e, (float, int)):
@@ -225,7 +225,7 @@ def mri_fill_validate(
     if params.get("seed_cc_vox", None) is not None:
         if not isinstance(params["seed_cc_vox"], list):
             raise StyxValidationError(f'`seed_cc_vox` has the wrong type: Received `{type(params.get("seed_cc_vox", None))}` expected `list[float] | None`')
-        if len(params["seed_cc_vox"]) == 3:
+        if len(params["seed_cc_vox"]) != 3:
             raise StyxValidationError("Parameter `seed_cc_vox` must contain exactly 3 elements")
         for e in params["seed_cc_vox"]:
             if not isinstance(e, (float, int)):
@@ -233,7 +233,7 @@ def mri_fill_validate(
     if params.get("seed_pons_vox", None) is not None:
         if not isinstance(params["seed_pons_vox"], list):
             raise StyxValidationError(f'`seed_pons_vox` has the wrong type: Received `{type(params.get("seed_pons_vox", None))}` expected `list[float] | None`')
-        if len(params["seed_pons_vox"]) == 3:
+        if len(params["seed_pons_vox"]) != 3:
             raise StyxValidationError("Parameter `seed_pons_vox` must contain exactly 3 elements")
         for e in params["seed_pons_vox"]:
             if not isinstance(e, (float, int)):

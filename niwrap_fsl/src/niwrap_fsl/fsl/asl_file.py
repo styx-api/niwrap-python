@@ -267,7 +267,7 @@ def asl_file_validate(
     if params.get("neighbour", None) is not None:
         if not isinstance(params["neighbour"], (float, int)):
             raise StyxValidationError(f'`neighbour` has the wrong type: Received `{type(params.get("neighbour", None))}` expected `float | None`')
-        if 3 <= params["neighbour"] <= 9:
+        if not (3 <= params["neighbour"] <= 9):
             raise StyxValidationError("Parameter `neighbour` must be between 3 and 9 (inclusive)")
     if params.get("pvgm", None) is not None:
         if not isinstance(params["pvgm"], (pathlib.Path, str)):
@@ -278,7 +278,7 @@ def asl_file_validate(
     if params.get("kernel", None) is not None:
         if not isinstance(params["kernel"], (float, int)):
             raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float | None`')
-        if 3 <= params["kernel"] <= 9:
+        if not (3 <= params["kernel"] <= 9):
             raise StyxValidationError("Parameter `kernel` must be between 3 and 9 (inclusive)")
     if params.get("outfile", None) is None:
         raise StyxValidationError("`outfile` must not be None")

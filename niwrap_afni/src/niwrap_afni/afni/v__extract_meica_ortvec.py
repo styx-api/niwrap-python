@@ -105,12 +105,12 @@ def v__extract_meica_ortvec_validate(
     if params.get("reject_ignored", None) is not None:
         if not isinstance(params["reject_ignored"], int):
             raise StyxValidationError(f'`reject_ignored` has the wrong type: Received `{type(params.get("reject_ignored", None))}` expected `int | None`')
-        if 0 <= params["reject_ignored"] <= 1:
+        if not (0 <= params["reject_ignored"] <= 1):
             raise StyxValidationError("Parameter `reject_ignored` must be between 0 and 1 (inclusive)")
     if params.get("reject_midk", None) is not None:
         if not isinstance(params["reject_midk"], int):
             raise StyxValidationError(f'`reject_midk` has the wrong type: Received `{type(params.get("reject_midk", None))}` expected `int | None`')
-        if 0 <= params["reject_midk"] <= 1:
+        if not (0 <= params["reject_midk"] <= 1):
             raise StyxValidationError("Parameter `reject_midk` must be between 0 and 1 (inclusive)")
     if params.get("work_dir", None) is not None:
         if not isinstance(params["work_dir"], str):

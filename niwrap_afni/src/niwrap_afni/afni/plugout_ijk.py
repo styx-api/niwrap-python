@@ -138,7 +138,7 @@ def plugout_ijk_validate(
     if params.get("port_offset", None) is not None:
         if not isinstance(params["port_offset"], (float, int)):
             raise StyxValidationError(f'`port_offset` has the wrong type: Received `{type(params.get("port_offset", None))}` expected `float | None`')
-        if 1025 <= params["port_offset"] <= 65500:
+        if not (1025 <= params["port_offset"] <= 65500):
             raise StyxValidationError("Parameter `port_offset` must be between 1025 and 65500 (inclusive)")
     if params.get("port_quiet", None) is not None:
         if not isinstance(params["port_quiet"], (float, int)):
@@ -146,7 +146,7 @@ def plugout_ijk_validate(
     if params.get("port_bloc_offset", None) is not None:
         if not isinstance(params["port_bloc_offset"], (float, int)):
             raise StyxValidationError(f'`port_bloc_offset` has the wrong type: Received `{type(params.get("port_bloc_offset", None))}` expected `float | None`')
-        if params["port_bloc_offset"] <= 4000:
+        if params["port_bloc_offset"] > 4000:
             raise StyxValidationError("Parameter `port_bloc_offset` must be at most 4000")
     if params.get("max_bloc", False) is None:
         raise StyxValidationError("`max_bloc` must not be None")

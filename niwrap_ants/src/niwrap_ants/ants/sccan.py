@@ -243,7 +243,7 @@ def sccan_validate(
     if params.get("iterations", None) is not None:
         if not isinstance(params["iterations"], int):
             raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `int | None`')
-        if params["iterations"] >= 20:
+        if params["iterations"] < 20:
             raise StyxValidationError("Parameter `iterations` must be at least 20")
     if params.get("n_eigenvectors", None) is not None:
         if not isinstance(params["n_eigenvectors"], int):

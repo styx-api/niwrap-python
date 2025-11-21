@@ -154,7 +154,7 @@ def v_3ddot_validate(
     if params.get("mrange", None) is not None:
         if not isinstance(params["mrange"], list):
             raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
-        if len(params["mrange"]) == 2:
+        if len(params["mrange"]) != 2:
             raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
         for e in params["mrange"]:
             if not isinstance(e, (float, int)):

@@ -220,7 +220,7 @@ def v_3d_localstat_validate(
     if params.get("reduce_grid", None) is not None:
         if not isinstance(params["reduce_grid"], list):
             raise StyxValidationError(f'`reduce_grid` has the wrong type: Received `{type(params.get("reduce_grid", None))}` expected `list[float] | None`')
-        if 1 <= len(params["reduce_grid"]) <= 3:
+        if not (1 <= len(params["reduce_grid"]) <= 3):
             raise StyxValidationError("Parameter `reduce_grid` must contain between 1 and 3 elements (inclusive)")
         for e in params["reduce_grid"]:
             if not isinstance(e, (float, int)):
@@ -228,7 +228,7 @@ def v_3d_localstat_validate(
     if params.get("reduce_restore_grid", None) is not None:
         if not isinstance(params["reduce_restore_grid"], list):
             raise StyxValidationError(f'`reduce_restore_grid` has the wrong type: Received `{type(params.get("reduce_restore_grid", None))}` expected `list[float] | None`')
-        if 1 <= len(params["reduce_restore_grid"]) <= 3:
+        if not (1 <= len(params["reduce_restore_grid"]) <= 3):
             raise StyxValidationError("Parameter `reduce_restore_grid` must contain between 1 and 3 elements (inclusive)")
         for e in params["reduce_restore_grid"]:
             if not isinstance(e, (float, int)):

@@ -120,7 +120,7 @@ def mris_flatten_validate(
     if params.get("distances", None) is not None:
         if not isinstance(params["distances"], list):
             raise StyxValidationError(f'`distances` has the wrong type: Received `{type(params.get("distances", None))}` expected `list[float] | None`')
-        if len(params["distances"]) == 2:
+        if len(params["distances"]) != 2:
             raise StyxValidationError("Parameter `distances` must contain exactly 2 elements")
         for e in params["distances"]:
             if not isinstance(e, (float, int)):

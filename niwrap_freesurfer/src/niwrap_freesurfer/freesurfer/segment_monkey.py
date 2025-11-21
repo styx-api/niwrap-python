@@ -65,7 +65,7 @@ def segment_monkey_validate(
         raise StyxValidationError("`control_points` must not be None")
     if not isinstance(params["control_points"], list):
         raise StyxValidationError(f'`control_points` has the wrong type: Received `{type(params.get("control_points", None))}` expected `list[str]`')
-    if len(params["control_points"]) >= 1:
+    if len(params["control_points"]) < 1:
         raise StyxValidationError("Parameter `control_points` must contain at least 1 element")
     for e in params["control_points"]:
         if not isinstance(e, str):

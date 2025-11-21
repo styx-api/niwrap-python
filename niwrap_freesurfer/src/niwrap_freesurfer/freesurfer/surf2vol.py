@@ -207,12 +207,12 @@ def surf2vol_validate(
     if params.get("poisson_ratio", None) is not None:
         if not isinstance(params["poisson_ratio"], (float, int)):
             raise StyxValidationError(f'`poisson_ratio` has the wrong type: Received `{type(params.get("poisson_ratio", None))}` expected `float | None`')
-        if params["poisson_ratio"] <= 0.5:
+        if params["poisson_ratio"] > 0.5:
             raise StyxValidationError("Parameter `poisson_ratio` must be at most 0.5")
     if params.get("dirty_factor", None) is not None:
         if not isinstance(params["dirty_factor"], (float, int)):
             raise StyxValidationError(f'`dirty_factor` has the wrong type: Received `{type(params.get("dirty_factor", None))}` expected `float | None`')
-        if 0 <= params["dirty_factor"] <= 1:
+        if not (0 <= params["dirty_factor"] <= 1):
             raise StyxValidationError("Parameter `dirty_factor` must be between 0 and 1 (inclusive)")
     if params.get("debug_output", False) is None:
         raise StyxValidationError("`debug_output` must not be None")

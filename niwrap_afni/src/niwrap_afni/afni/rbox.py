@@ -213,7 +213,7 @@ def rbox_validate(
     if params.get("add_point", None) is not None:
         if not isinstance(params["add_point"], list):
             raise StyxValidationError(f'`add_point` has the wrong type: Received `{type(params.get("add_point", None))}` expected `list[str] | None`')
-        if len(params["add_point"]) >= 1:
+        if len(params["add_point"]) < 1:
             raise StyxValidationError("Parameter `add_point` must contain at least 1 element")
         for e in params["add_point"]:
             if not isinstance(e, str):
@@ -256,7 +256,7 @@ def rbox_validate(
     if params.get("mesh_lattice", None) is not None:
         if not isinstance(params["mesh_lattice"], list):
             raise StyxValidationError(f'`mesh_lattice` has the wrong type: Received `{type(params.get("mesh_lattice", None))}` expected `list[str] | None`')
-        if len(params["mesh_lattice"]) >= 3:
+        if len(params["mesh_lattice"]) < 3:
             raise StyxValidationError("Parameter `mesh_lattice` must contain at least 3 elements")
         for e in params["mesh_lattice"]:
             if not isinstance(e, str):

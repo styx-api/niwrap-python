@@ -176,7 +176,7 @@ def v_3drefit_validate(
     if params.get("atrcopy", None) is not None:
         if not isinstance(params["atrcopy"], list):
             raise StyxValidationError(f'`atrcopy` has the wrong type: Received `{type(params.get("atrcopy", None))}` expected `list[str] | None`')
-        if len(params["atrcopy"]) == 2:
+        if len(params["atrcopy"]) != 2:
             raise StyxValidationError("Parameter `atrcopy` must contain exactly 2 elements")
         for e in params["atrcopy"]:
             if not isinstance(e, str):
@@ -184,7 +184,7 @@ def v_3drefit_validate(
     if params.get("atrfloat", None) is not None:
         if not isinstance(params["atrfloat"], list):
             raise StyxValidationError(f'`atrfloat` has the wrong type: Received `{type(params.get("atrfloat", None))}` expected `list[str] | None`')
-        if len(params["atrfloat"]) == 2:
+        if len(params["atrfloat"]) != 2:
             raise StyxValidationError("Parameter `atrfloat` must contain exactly 2 elements")
         for e in params["atrfloat"]:
             if not isinstance(e, str):
@@ -192,7 +192,7 @@ def v_3drefit_validate(
     if params.get("atrint", None) is not None:
         if not isinstance(params["atrint"], list):
             raise StyxValidationError(f'`atrint` has the wrong type: Received `{type(params.get("atrint", None))}` expected `list[str] | None`')
-        if len(params["atrint"]) == 2:
+        if len(params["atrint"]) != 2:
             raise StyxValidationError("Parameter `atrint` must contain exactly 2 elements")
         for e in params["atrint"]:
             if not isinstance(e, str):
@@ -200,7 +200,7 @@ def v_3drefit_validate(
     if params.get("atrstring", None) is not None:
         if not isinstance(params["atrstring"], list):
             raise StyxValidationError(f'`atrstring` has the wrong type: Received `{type(params.get("atrstring", None))}` expected `list[str] | None`')
-        if len(params["atrstring"]) == 2:
+        if len(params["atrstring"]) != 2:
             raise StyxValidationError("Parameter `atrstring` must contain exactly 2 elements")
         for e in params["atrstring"]:
             if not isinstance(e, str):

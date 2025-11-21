@@ -119,7 +119,7 @@ def v__roi_modal_grow_validate(
     if params.get("neighborhood_type", None) is not None:
         if not isinstance(params["neighborhood_type"], int):
             raise StyxValidationError(f'`neighborhood_type` has the wrong type: Received `{type(params.get("neighborhood_type", None))}` expected `int | None`')
-        if 1 <= params["neighborhood_type"] <= 3:
+        if not (1 <= params["neighborhood_type"] <= 3):
             raise StyxValidationError("Parameter `neighborhood_type` must be between 1 and 3 (inclusive)")
 
 

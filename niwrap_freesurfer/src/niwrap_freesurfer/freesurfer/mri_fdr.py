@@ -113,7 +113,7 @@ def mri_fdr_validate(
         raise StyxValidationError("`input_files` must not be None")
     if not isinstance(params["input_files"], list):
         raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
-    if len(params["input_files"]) >= 1:
+    if len(params["input_files"]) < 1:
         raise StyxValidationError("Parameter `input_files` must contain at least 1 element")
     for e in params["input_files"]:
         if not isinstance(e, str):
@@ -122,7 +122,7 @@ def mri_fdr_validate(
         raise StyxValidationError("`fdr_value` must not be None")
     if not isinstance(params["fdr_value"], (float, int)):
         raise StyxValidationError(f'`fdr_value` has the wrong type: Received `{type(params.get("fdr_value", None))}` expected `float`')
-    if 0 <= params["fdr_value"] <= 1:
+    if not (0 <= params["fdr_value"] <= 1):
         raise StyxValidationError("Parameter `fdr_value` must be between 0 and 1 (inclusive)")
     if params.get("default_frame", None) is not None:
         if not isinstance(params["default_frame"], int):

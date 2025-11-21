@@ -249,7 +249,7 @@ def fvcompare_validate(
     if params.get("gray_levels", None) is not None:
         if not isinstance(params["gray_levels"], list):
             raise StyxValidationError(f'`gray_levels` has the wrong type: Received `{type(params.get("gray_levels", None))}` expected `list[float] | None`')
-        if len(params["gray_levels"]) == 2:
+        if len(params["gray_levels"]) != 2:
             raise StyxValidationError("Parameter `gray_levels` must contain exactly 2 elements")
         for e in params["gray_levels"]:
             if not isinstance(e, (float, int)):
@@ -257,7 +257,7 @@ def fvcompare_validate(
     if params.get("cursor_position", None) is not None:
         if not isinstance(params["cursor_position"], list):
             raise StyxValidationError(f'`cursor_position` has the wrong type: Received `{type(params.get("cursor_position", None))}` expected `list[float] | None`')
-        if len(params["cursor_position"]) == 3:
+        if len(params["cursor_position"]) != 3:
             raise StyxValidationError("Parameter `cursor_position` must contain exactly 3 elements")
         for e in params["cursor_position"]:
             if not isinstance(e, (float, int)):

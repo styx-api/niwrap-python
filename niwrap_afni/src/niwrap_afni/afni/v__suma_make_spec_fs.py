@@ -159,7 +159,7 @@ def v__suma_make_spec_fs_validate(
     if params.get("debug", None) is not None:
         if not isinstance(params["debug"], int):
             raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
-        if 0 <= params["debug"] <= 2:
+        if not (0 <= params["debug"] <= 2):
             raise StyxValidationError("Parameter `debug` must be between 0 and 2 (inclusive)")
     if params.get("fs_setup", False) is None:
         raise StyxValidationError("`fs_setup` must not be None")

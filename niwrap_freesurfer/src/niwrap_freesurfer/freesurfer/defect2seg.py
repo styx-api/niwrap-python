@@ -119,7 +119,7 @@ def defect2seg_validate(
     if params.get("left_hemisphere", None) is not None:
         if not isinstance(params["left_hemisphere"], list):
             raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", None))}` expected `list[str] | None`')
-        if len(params["left_hemisphere"]) <= 4:
+        if len(params["left_hemisphere"]) > 4:
             raise StyxValidationError("Parameter `left_hemisphere` must contain at most 4 elements")
         for e in params["left_hemisphere"]:
             if not isinstance(e, str):
@@ -127,7 +127,7 @@ def defect2seg_validate(
     if params.get("right_hemisphere", None) is not None:
         if not isinstance(params["right_hemisphere"], list):
             raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", None))}` expected `list[str] | None`')
-        if len(params["right_hemisphere"]) <= 4:
+        if len(params["right_hemisphere"]) > 4:
             raise StyxValidationError("Parameter `right_hemisphere` must contain at most 4 elements")
         for e in params["right_hemisphere"]:
             if not isinstance(e, str):

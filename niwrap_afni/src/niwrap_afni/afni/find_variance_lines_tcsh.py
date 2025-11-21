@@ -168,7 +168,7 @@ def find_variance_lines_tcsh_validate(
     if params.get("percentile", None) is not None:
         if not isinstance(params["percentile"], int):
             raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `int | None`')
-        if 0 <= params["percentile"] <= 99:
+        if not (0 <= params["percentile"] <= 99):
             raise StyxValidationError("Parameter `percentile` must be between 0 and 99 (inclusive)")
     if params.get("polort", None) is not None:
         if not isinstance(params["polort"], str):
@@ -179,12 +179,12 @@ def find_variance_lines_tcsh_validate(
     if params.get("do_clean", None) is not None:
         if not isinstance(params["do_clean"], int):
             raise StyxValidationError(f'`do_clean` has the wrong type: Received `{type(params.get("do_clean", None))}` expected `int | None`')
-        if 0 <= params["do_clean"] <= 1:
+        if not (0 <= params["do_clean"] <= 1):
             raise StyxValidationError("Parameter `do_clean` must be between 0 and 1 (inclusive)")
     if params.get("do_img", None) is not None:
         if not isinstance(params["do_img"], int):
             raise StyxValidationError(f'`do_img` has the wrong type: Received `{type(params.get("do_img", None))}` expected `int | None`')
-        if 0 <= params["do_img"] <= 1:
+        if not (0 <= params["do_img"] <= 1):
             raise StyxValidationError("Parameter `do_img` must be between 0 and 1 (inclusive)")
     if params.get("echo", False) is None:
         raise StyxValidationError("`echo` must not be None")

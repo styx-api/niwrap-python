@@ -96,7 +96,7 @@ def create_displacement_field_validate(
         raise StyxValidationError("`component_images` must not be None")
     if not isinstance(params["component_images"], list):
         raise StyxValidationError(f'`component_images` has the wrong type: Received `{type(params.get("component_images", None))}` expected `list[InputPathType]`')
-    if 1 <= len(params["component_images"]) <= 8:
+    if not (1 <= len(params["component_images"]) <= 8):
         raise StyxValidationError("Parameter `component_images` must contain between 1 and 8 elements (inclusive)")
     for e in params["component_images"]:
         if not isinstance(e, (pathlib.Path, str)):

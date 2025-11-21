@@ -137,7 +137,7 @@ def gen_epi_review_py_validate(
     if params.get("image_size", None) is not None:
         if not isinstance(params["image_size"], list):
             raise StyxValidationError(f'`image_size` has the wrong type: Received `{type(params.get("image_size", None))}` expected `list[float] | None`')
-        if len(params["image_size"]) == 2:
+        if len(params["image_size"]) != 2:
             raise StyxValidationError("Parameter `image_size` must contain exactly 2 elements")
         for e in params["image_size"]:
             if not isinstance(e, (float, int)):
@@ -151,7 +151,7 @@ def gen_epi_review_py_validate(
     if params.get("graph_size", None) is not None:
         if not isinstance(params["graph_size"], list):
             raise StyxValidationError(f'`graph_size` has the wrong type: Received `{type(params.get("graph_size", None))}` expected `list[float] | None`')
-        if len(params["graph_size"]) == 2:
+        if len(params["graph_size"]) != 2:
             raise StyxValidationError("Parameter `graph_size` must contain exactly 2 elements")
         for e in params["graph_size"]:
             if not isinstance(e, (float, int)):

@@ -153,7 +153,7 @@ def mri_cor2label_validate(
     if params.get("surface_overlay", None) is not None:
         if not isinstance(params["surface_overlay"], list):
             raise StyxValidationError(f'`surface_overlay` has the wrong type: Received `{type(params.get("surface_overlay", None))}` expected `list[str] | None`')
-        if len(params["surface_overlay"]) == 3:
+        if len(params["surface_overlay"]) != 3:
             raise StyxValidationError("Parameter `surface_overlay` must contain exactly 3 elements")
         for e in params["surface_overlay"]:
             if not isinstance(e, str):
@@ -164,7 +164,7 @@ def mri_cor2label_validate(
     if params.get("optimize", None) is not None:
         if not isinstance(params["optimize"], list):
             raise StyxValidationError(f'`optimize` has the wrong type: Received `{type(params.get("optimize", None))}` expected `list[str] | None`')
-        if len(params["optimize"]) == 3:
+        if len(params["optimize"]) != 3:
             raise StyxValidationError("Parameter `optimize` must contain exactly 3 elements")
         for e in params["optimize"]:
             if not isinstance(e, str):

@@ -145,7 +145,7 @@ def fsread_annot_validate(
     if params.get("fscmap_range", None) is not None:
         if not isinstance(params["fscmap_range"], list):
             raise StyxValidationError(f'`fscmap_range` has the wrong type: Received `{type(params.get("fscmap_range", None))}` expected `list[float] | None`')
-        if len(params["fscmap_range"]) == 2:
+        if len(params["fscmap_range"]) != 2:
             raise StyxValidationError("Parameter `fscmap_range` must contain exactly 2 elements")
         for e in params["fscmap_range"]:
             if not isinstance(e, (float, int)):

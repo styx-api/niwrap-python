@@ -158,7 +158,7 @@ def v__diff_files_validate(
     if params.get("verbosity", None) is not None:
         if not isinstance(params["verbosity"], (float, int)):
             raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
-        if 1 <= params["verbosity"] <= 3:
+        if not (1 <= params["verbosity"] <= 3):
             raise StyxValidationError("Parameter `verbosity` must be between 1 and 3 (inclusive)")
 
 

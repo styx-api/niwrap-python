@@ -251,7 +251,7 @@ def v_3dttest___validate(
     if params.get("exblur", None) is not None:
         if not isinstance(params["exblur"], int):
             raise StyxValidationError(f'`exblur` has the wrong type: Received `{type(params.get("exblur", None))}` expected `int | None`')
-        if 0 <= params["exblur"] <= 100:
+        if not (0 <= params["exblur"] <= 100):
             raise StyxValidationError("Parameter `exblur` must be between 0 and 100 (inclusive)")
     if params.get("randomsign", False) is None:
         raise StyxValidationError("`randomsign` must not be None")

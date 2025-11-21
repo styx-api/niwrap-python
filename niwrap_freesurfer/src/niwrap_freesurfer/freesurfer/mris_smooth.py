@@ -155,7 +155,7 @@ def mris_smooth_validate(
     if params.get("gaussian_params", None) is not None:
         if not isinstance(params["gaussian_params"], list):
             raise StyxValidationError(f'`gaussian_params` has the wrong type: Received `{type(params.get("gaussian_params", None))}` expected `list[float] | None`')
-        if len(params["gaussian_params"]) == 2:
+        if len(params["gaussian_params"]) != 2:
             raise StyxValidationError("Parameter `gaussian_params` must contain exactly 2 elements")
         for e in params["gaussian_params"]:
             if not isinstance(e, (float, int)):

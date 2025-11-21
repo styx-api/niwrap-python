@@ -79,7 +79,7 @@ def v_3d_sharpen_validate(
     if params.get("sharpening_factor", None) is not None:
         if not isinstance(params["sharpening_factor"], (float, int)):
             raise StyxValidationError(f'`sharpening_factor` has the wrong type: Received `{type(params.get("sharpening_factor", None))}` expected `float | None`')
-        if 0.1 <= params["sharpening_factor"] <= 0.9:
+        if not (0.1 <= params["sharpening_factor"] <= 0.9):
             raise StyxValidationError("Parameter `sharpening_factor` must be between 0.1 and 0.9 (inclusive)")
     if params.get("input_dataset", None) is None:
         raise StyxValidationError("`input_dataset` must not be None")

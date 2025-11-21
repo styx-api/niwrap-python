@@ -372,7 +372,7 @@ def v__animal_warper_validate(
     if params.get("maxlev", None) is not None:
         if not isinstance(params["maxlev"], (float, int)):
             raise StyxValidationError(f'`maxlev` has the wrong type: Received `{type(params.get("maxlev", None))}` expected `float | None`')
-        if 0 <= params["maxlev"] <= 11:
+        if not (0 <= params["maxlev"] <= 11):
             raise StyxValidationError("Parameter `maxlev` must be between 0 and 11 (inclusive)")
     if params.get("no_surfaces", False) is None:
         raise StyxValidationError("`no_surfaces` must not be None")

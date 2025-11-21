@@ -89,7 +89,7 @@ def v_3d_periodogram_validate(
     if params.get("taper", None) is not None:
         if not isinstance(params["taper"], (float, int)):
             raise StyxValidationError(f'`taper` has the wrong type: Received `{type(params.get("taper", None))}` expected `float | None`')
-        if 0 <= params["taper"] <= 1:
+        if not (0 <= params["taper"] <= 1):
             raise StyxValidationError("Parameter `taper` must be between 0 and 1 (inclusive)")
     if params.get("nfft", None) is not None:
         if not isinstance(params["nfft"], (float, int)):

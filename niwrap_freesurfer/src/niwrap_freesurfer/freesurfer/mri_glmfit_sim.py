@@ -316,7 +316,7 @@ def mri_glmfit_sim_validate(
     if params.get("uniform", None) is not None:
         if not isinstance(params["uniform"], list):
             raise StyxValidationError(f'`uniform` has the wrong type: Received `{type(params.get("uniform", None))}` expected `list[float] | None`')
-        if len(params["uniform"]) <= 2:
+        if len(params["uniform"]) > 2:
             raise StyxValidationError("Parameter `uniform` must contain at most 2 elements")
         for e in params["uniform"]:
             if not isinstance(e, (float, int)):

@@ -189,7 +189,7 @@ def mri_seghead_validate(
     if params.get("seed_point", None) is not None:
         if not isinstance(params["seed_point"], list):
             raise StyxValidationError(f'`seed_point` has the wrong type: Received `{type(params.get("seed_point", None))}` expected `list[float] | None`')
-        if len(params["seed_point"]) == 3:
+        if len(params["seed_point"]) != 3:
             raise StyxValidationError("Parameter `seed_point` must contain exactly 3 elements")
         for e in params["seed_point"]:
             if not isinstance(e, (float, int)):

@@ -89,7 +89,7 @@ def v_3d_edu_01_scale_validate(
     if params.get("mult_factors", None) is not None:
         if not isinstance(params["mult_factors"], list):
             raise StyxValidationError(f'`mult_factors` has the wrong type: Received `{type(params.get("mult_factors", None))}` expected `list[float] | None`')
-        if len(params["mult_factors"]) == 2:
+        if len(params["mult_factors"]) != 2:
             raise StyxValidationError("Parameter `mult_factors` must contain exactly 2 elements")
         for e in params["mult_factors"]:
             if not isinstance(e, (float, int)):

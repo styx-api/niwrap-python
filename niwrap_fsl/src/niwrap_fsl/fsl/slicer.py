@@ -221,7 +221,7 @@ def slicer_validate(
     if params.get("intensity_range", None) is not None:
         if not isinstance(params["intensity_range"], list):
             raise StyxValidationError(f'`intensity_range` has the wrong type: Received `{type(params.get("intensity_range", None))}` expected `list[float] | None`')
-        if len(params["intensity_range"]) == 2:
+        if len(params["intensity_range"]) != 2:
             raise StyxValidationError("Parameter `intensity_range` must contain exactly 2 elements")
         for e in params["intensity_range"]:
             if not isinstance(e, (float, int)):

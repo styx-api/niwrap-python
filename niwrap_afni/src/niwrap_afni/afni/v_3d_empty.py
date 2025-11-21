@@ -93,7 +93,7 @@ def v_3d_empty_validate(
     if params.get("nxyz", None) is not None:
         if not isinstance(params["nxyz"], list):
             raise StyxValidationError(f'`nxyz` has the wrong type: Received `{type(params.get("nxyz", None))}` expected `list[float] | None`')
-        if len(params["nxyz"]) == 3:
+        if len(params["nxyz"]) != 3:
             raise StyxValidationError("Parameter `nxyz` must contain exactly 3 elements")
         for e in params["nxyz"]:
             if not isinstance(e, (float, int)):

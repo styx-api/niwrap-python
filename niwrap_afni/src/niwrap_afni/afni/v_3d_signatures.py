@@ -110,7 +110,7 @@ def v_3d_signatures_validate(
     if params.get("threshold", None) is not None:
         if not isinstance(params["threshold"], (float, int)):
             raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
-        if 0 <= params["threshold"] <= 1:
+        if not (0 <= params["threshold"] <= 1):
             raise StyxValidationError("Parameter `threshold` must be between 0 and 1 (inclusive)")
     if params.get("smoothing", None) is not None:
         if not isinstance(params["smoothing"], (float, int)):

@@ -199,7 +199,7 @@ def make_color_map_validate(
     if params.get("fscolut_labels", None) is not None:
         if not isinstance(params["fscolut_labels"], list):
             raise StyxValidationError(f'`fscolut_labels` has the wrong type: Received `{type(params.get("fscolut_labels", None))}` expected `list[float] | None`')
-        if len(params["fscolut_labels"]) == 2:
+        if len(params["fscolut_labels"]) != 2:
             raise StyxValidationError("Parameter `fscolut_labels` must contain exactly 2 elements")
         for e in params["fscolut_labels"]:
             if not isinstance(e, (float, int)):

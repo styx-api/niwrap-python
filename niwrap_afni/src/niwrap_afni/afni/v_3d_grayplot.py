@@ -158,7 +158,7 @@ def v_3d_grayplot_validate(
     if params.get("dimensions", None) is not None:
         if not isinstance(params["dimensions"], list):
             raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `list[float] | None`')
-        if len(params["dimensions"]) == 2:
+        if len(params["dimensions"]) != 2:
             raise StyxValidationError("Parameter `dimensions` must contain exactly 2 elements")
         for e in params["dimensions"]:
             if not isinstance(e, (float, int)):
@@ -199,7 +199,7 @@ def v_3d_grayplot_validate(
     if params.get("raw_with_bounds", None) is not None:
         if not isinstance(params["raw_with_bounds"], list):
             raise StyxValidationError(f'`raw_with_bounds` has the wrong type: Received `{type(params.get("raw_with_bounds", None))}` expected `list[float] | None`')
-        if len(params["raw_with_bounds"]) == 2:
+        if len(params["raw_with_bounds"]) != 2:
             raise StyxValidationError("Parameter `raw_with_bounds` must contain exactly 2 elements")
         for e in params["raw_with_bounds"]:
             if not isinstance(e, (float, int)):

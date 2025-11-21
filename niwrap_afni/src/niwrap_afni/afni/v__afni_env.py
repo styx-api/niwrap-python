@@ -114,7 +114,7 @@ def v__afni_env_validate(
     if params.get("set_flag", None) is not None:
         if not isinstance(params["set_flag"], list):
             raise StyxValidationError(f'`set_flag` has the wrong type: Received `{type(params.get("set_flag", None))}` expected `list[str] | None`')
-        if len(params["set_flag"]) == 2:
+        if len(params["set_flag"]) != 2:
             raise StyxValidationError("Parameter `set_flag` must contain exactly 2 elements")
         for e in params["set_flag"]:
             if not isinstance(e, str):

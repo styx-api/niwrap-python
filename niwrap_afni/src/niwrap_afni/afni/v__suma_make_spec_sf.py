@@ -79,7 +79,7 @@ def v__suma_make_spec_sf_validate(
     if params.get("debug_level", None) is not None:
         if not isinstance(params["debug_level"], int):
             raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `int | None`')
-        if params["debug_level"] <= 2:
+        if params["debug_level"] > 2:
             raise StyxValidationError("Parameter `debug_level` must be at most 2")
     if params.get("surface_path", None) is not None:
         if not isinstance(params["surface_path"], str):

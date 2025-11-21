@@ -475,7 +475,7 @@ def tkregister2_cmdl_validate(
     if params.get("surf_rgb", None) is not None:
         if not isinstance(params["surf_rgb"], list):
             raise StyxValidationError(f'`surf_rgb` has the wrong type: Received `{type(params.get("surf_rgb", None))}` expected `list[float] | None`')
-        if len(params["surf_rgb"]) == 3:
+        if len(params["surf_rgb"]) != 3:
             raise StyxValidationError("Parameter `surf_rgb` must contain exactly 3 elements")
         for e in params["surf_rgb"]:
             if not isinstance(e, (float, int)):
@@ -568,7 +568,7 @@ def tkregister2_cmdl_validate(
     if params.get("int", None) is not None:
         if not isinstance(params["int"], list):
             raise StyxValidationError(f'`int` has the wrong type: Received `{type(params.get("int", None))}` expected `list[str] | None`')
-        if len(params["int"]) == 2:
+        if len(params["int"]) != 2:
             raise StyxValidationError("Parameter `int` must contain exactly 2 elements")
         for e in params["int"]:
             if not isinstance(e, str):
@@ -601,7 +601,7 @@ def tkregister2_cmdl_validate(
     if params.get("trans", None) is not None:
         if not isinstance(params["trans"], list):
             raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
-        if len(params["trans"]) == 3:
+        if len(params["trans"]) != 3:
             raise StyxValidationError("Parameter `trans` must contain exactly 3 elements")
         for e in params["trans"]:
             if not isinstance(e, (float, int)):
@@ -609,7 +609,7 @@ def tkregister2_cmdl_validate(
     if params.get("rot", None) is not None:
         if not isinstance(params["rot"], list):
             raise StyxValidationError(f'`rot` has the wrong type: Received `{type(params.get("rot", None))}` expected `list[float] | None`')
-        if len(params["rot"]) == 3:
+        if len(params["rot"]) != 3:
             raise StyxValidationError("Parameter `rot` must contain exactly 3 elements")
         for e in params["rot"]:
             if not isinstance(e, (float, int)):

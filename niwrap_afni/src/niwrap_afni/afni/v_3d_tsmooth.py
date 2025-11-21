@@ -164,7 +164,7 @@ def v_3d_tsmooth_validate(
     if params.get("lin_filter_custom", None) is not None:
         if not isinstance(params["lin_filter_custom"], (float, int)):
             raise StyxValidationError(f'`lin_filter_custom` has the wrong type: Received `{type(params.get("lin_filter_custom", None))}` expected `float | None`')
-        if 0 <= params["lin_filter_custom"] <= 1:
+        if not (0 <= params["lin_filter_custom"] <= 1):
             raise StyxValidationError("Parameter `lin_filter_custom` must be between 0 and 1 (inclusive)")
     if params.get("hamming", None) is not None:
         if not isinstance(params["hamming"], int):

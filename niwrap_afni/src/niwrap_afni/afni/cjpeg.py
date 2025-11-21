@@ -97,7 +97,7 @@ def cjpeg_validate(
     if params.get("quality", None) is not None:
         if not isinstance(params["quality"], (float, int)):
             raise StyxValidationError(f'`quality` has the wrong type: Received `{type(params.get("quality", None))}` expected `float | None`')
-        if 0 <= params["quality"] <= 100:
+        if not (0 <= params["quality"] <= 100):
             raise StyxValidationError("Parameter `quality` must be between 0 and 100 (inclusive)")
     if params.get("grayscale", False) is None:
         raise StyxValidationError("`grayscale` must not be None")

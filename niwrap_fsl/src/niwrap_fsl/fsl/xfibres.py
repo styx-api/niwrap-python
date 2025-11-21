@@ -295,7 +295,7 @@ def xfibres_validate(
     if params.get("rmean", None) is not None:
         if not isinstance(params["rmean"], (float, int)):
             raise StyxValidationError(f'`rmean` has the wrong type: Received `{type(params.get("rmean", None))}` expected `float | None`')
-        if params["rmean"] <= 0.5:
+        if params["rmean"] > 0.5:
             raise StyxValidationError("Parameter `rmean` must be at most 0.5")
     if params.get("rstd", None) is not None:
         if not isinstance(params["rstd"], (float, int)):

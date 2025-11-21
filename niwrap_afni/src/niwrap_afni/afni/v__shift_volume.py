@@ -96,7 +96,7 @@ def v__shift_volume_validate(
     if params.get("rai_shift_vector", None) is not None:
         if not isinstance(params["rai_shift_vector"], list):
             raise StyxValidationError(f'`rai_shift_vector` has the wrong type: Received `{type(params.get("rai_shift_vector", None))}` expected `list[float] | None`')
-        if len(params["rai_shift_vector"]) == 3:
+        if len(params["rai_shift_vector"]) != 3:
             raise StyxValidationError("Parameter `rai_shift_vector` must contain exactly 3 elements")
         for e in params["rai_shift_vector"]:
             if not isinstance(e, (float, int)):

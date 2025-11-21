@@ -273,7 +273,7 @@ def optseq2_validate(
         raise StyxValidationError("`psdwin` must not be None")
     if not isinstance(params["psdwin"], list):
         raise StyxValidationError(f'`psdwin` has the wrong type: Received `{type(params.get("psdwin", None))}` expected `list[float]`')
-    if 2 <= len(params["psdwin"]) <= 3:
+    if not (2 <= len(params["psdwin"]) <= 3):
         raise StyxValidationError("Parameter `psdwin` must contain between 2 and 3 elements (inclusive)")
     for e in params["psdwin"]:
         if not isinstance(e, (float, int)):
@@ -281,7 +281,7 @@ def optseq2_validate(
     if params.get("event", None) is not None:
         if not isinstance(params["event"], list):
             raise StyxValidationError(f'`event` has the wrong type: Received `{type(params.get("event", None))}` expected `list[str] | None`')
-        if len(params["event"]) == 3:
+        if len(params["event"]) != 3:
             raise StyxValidationError("Parameter `event` must contain exactly 3 elements")
         for e in params["event"]:
             if not isinstance(e, str):
@@ -310,12 +310,12 @@ def optseq2_validate(
     if params.get("ar1", None) is not None:
         if not isinstance(params["ar1"], (float, int)):
             raise StyxValidationError(f'`ar1` has the wrong type: Received `{type(params.get("ar1", None))}` expected `float | None`')
-        if -1 <= params["ar1"] <= 1:
+        if not (-1 <= params["ar1"] <= 1):
             raise StyxValidationError("Parameter `ar1` must be between -1 and 1 (inclusive)")
     if params.get("penalize", None) is not None:
         if not isinstance(params["penalize"], list):
             raise StyxValidationError(f'`penalize` has the wrong type: Received `{type(params.get("penalize", None))}` expected `list[float] | None`')
-        if len(params["penalize"]) == 3:
+        if len(params["penalize"]) != 3:
             raise StyxValidationError("Parameter `penalize` must contain exactly 3 elements")
         for e in params["penalize"]:
             if not isinstance(e, (float, int)):

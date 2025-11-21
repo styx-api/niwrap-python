@@ -121,7 +121,7 @@ def v__quiet_talkers_validate(
     if params.get("npb_range", None) is not None:
         if not isinstance(params["npb_range"], list):
             raise StyxValidationError(f'`npb_range` has the wrong type: Received `{type(params.get("npb_range", None))}` expected `list[float] | None`')
-        if len(params["npb_range"]) == 2:
+        if len(params["npb_range"]) != 2:
             raise StyxValidationError("Parameter `npb_range` must contain exactly 2 elements")
         for e in params["npb_range"]:
             if not isinstance(e, (float, int)):

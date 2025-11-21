@@ -183,7 +183,7 @@ def fsl_deface_validate(
     if params.get("shift_nud", None) is not None:
         if not isinstance(params["shift_nud"], list):
             raise StyxValidationError(f'`shift_nud` has the wrong type: Received `{type(params.get("shift_nud", None))}` expected `list[float] | None`')
-        if len(params["shift_nud"]) == 3:
+        if len(params["shift_nud"]) != 3:
             raise StyxValidationError("Parameter `shift_nud` must contain exactly 3 elements")
         for e in params["shift_nud"]:
             if not isinstance(e, (float, int)):
@@ -191,7 +191,7 @@ def fsl_deface_validate(
     if params.get("fractional_intensity", None) is not None:
         if not isinstance(params["fractional_intensity"], (float, int)):
             raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
-        if 0 <= params["fractional_intensity"] <= 1:
+        if not (0 <= params["fractional_intensity"] <= 1):
             raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
     if params.get("bias_correct_flag", False) is None:
         raise StyxValidationError("`bias_correct_flag` must not be None")
@@ -200,7 +200,7 @@ def fsl_deface_validate(
     if params.get("center_of_gravity", None) is not None:
         if not isinstance(params["center_of_gravity"], list):
             raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
-        if len(params["center_of_gravity"]) == 3:
+        if len(params["center_of_gravity"]) != 3:
             raise StyxValidationError("Parameter `center_of_gravity` must contain exactly 3 elements")
         for e in params["center_of_gravity"]:
             if not isinstance(e, (float, int)):

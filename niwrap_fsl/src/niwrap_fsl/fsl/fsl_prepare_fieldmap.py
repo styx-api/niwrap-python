@@ -109,7 +109,7 @@ def fsl_prepare_fieldmap_validate(
         raise StyxValidationError("`delta_te` must not be None")
     if not isinstance(params["delta_te"], (float, int)):
         raise StyxValidationError(f'`delta_te` has the wrong type: Received `{type(params.get("delta_te", None))}` expected `float`')
-    if params["delta_te"] >= 0:
+    if params["delta_te"] < 0:
         raise StyxValidationError("Parameter `delta_te` must be at least 0")
     if params.get("nocheck_flag", False) is None:
         raise StyxValidationError("`nocheck_flag` must not be None")

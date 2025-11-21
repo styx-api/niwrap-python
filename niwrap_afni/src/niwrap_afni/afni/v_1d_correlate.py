@@ -114,7 +114,7 @@ def v_1d_correlate_validate(
     if params.get("alpha", None) is not None:
         if not isinstance(params["alpha"], (float, int)):
             raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
-        if 1 <= params["alpha"] <= 20:
+        if not (1 <= params["alpha"] <= 20):
             raise StyxValidationError("Parameter `alpha` must be between 1 and 20 (inclusive)")
     if params.get("block", False) is None:
         raise StyxValidationError("`block` must not be None")

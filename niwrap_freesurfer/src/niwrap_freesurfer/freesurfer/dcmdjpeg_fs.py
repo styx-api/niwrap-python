@@ -431,7 +431,7 @@ def dcmdjpeg_fs_validate(
     if params.get("padding_create", None) is not None:
         if not isinstance(params["padding_create"], list):
             raise StyxValidationError(f'`padding_create` has the wrong type: Received `{type(params.get("padding_create", None))}` expected `list[float] | None`')
-        if len(params["padding_create"]) == 2:
+        if len(params["padding_create"]) != 2:
             raise StyxValidationError("Parameter `padding_create` must contain exactly 2 elements")
         for e in params["padding_create"]:
             if not isinstance(e, (float, int)):

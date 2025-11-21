@@ -88,7 +88,7 @@ def imupsam_validate(
         raise StyxValidationError("`factor` must not be None")
     if not isinstance(params["factor"], int):
         raise StyxValidationError(f'`factor` has the wrong type: Received `{type(params.get("factor", None))}` expected `int`')
-    if 2 <= params["factor"] <= 30:
+    if not (2 <= params["factor"] <= 30):
         raise StyxValidationError("Parameter `factor` must be between 2 and 30 (inclusive)")
     if params.get("input_image", None) is None:
         raise StyxValidationError("`input_image` must not be None")

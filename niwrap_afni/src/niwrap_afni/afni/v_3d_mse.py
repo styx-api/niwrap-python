@@ -118,7 +118,7 @@ def v_3d_mse_validate(
     if params.get("polynomial_order", None) is not None:
         if not isinstance(params["polynomial_order"], int):
             raise StyxValidationError(f'`polynomial_order` has the wrong type: Received `{type(params.get("polynomial_order", None))}` expected `int | None`')
-        if -1 <= params["polynomial_order"] <= 3:
+        if not (-1 <= params["polynomial_order"] <= 3):
             raise StyxValidationError("Parameter `polynomial_order` must be between -1 and 3 (inclusive)")
     if params.get("autoclip", False) is None:
         raise StyxValidationError("`autoclip` must not be None")

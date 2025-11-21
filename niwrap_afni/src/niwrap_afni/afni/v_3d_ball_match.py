@@ -104,7 +104,7 @@ def v_3d_ball_match_validate(
     if params.get("spheroid_axes", None) is not None:
         if not isinstance(params["spheroid_axes"], list):
             raise StyxValidationError(f'`spheroid_axes` has the wrong type: Received `{type(params.get("spheroid_axes", None))}` expected `list[float] | None`')
-        if len(params["spheroid_axes"]) == 2:
+        if len(params["spheroid_axes"]) != 2:
             raise StyxValidationError("Parameter `spheroid_axes` must contain exactly 2 elements")
         for e in params["spheroid_axes"]:
             if not isinstance(e, (float, int)):

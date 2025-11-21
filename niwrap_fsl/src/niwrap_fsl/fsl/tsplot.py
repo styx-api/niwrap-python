@@ -121,7 +121,7 @@ def tsplot_validate(
     if params.get("coordinates", None) is not None:
         if not isinstance(params["coordinates"], list):
             raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
-        if len(params["coordinates"]) == 3:
+        if len(params["coordinates"]) != 3:
             raise StyxValidationError("Parameter `coordinates` must contain exactly 3 elements")
         for e in params["coordinates"]:
             if not isinstance(e, (float, int)):
@@ -129,7 +129,7 @@ def tsplot_validate(
     if params.get("coordinates_output", None) is not None:
         if not isinstance(params["coordinates_output"], list):
             raise StyxValidationError(f'`coordinates_output` has the wrong type: Received `{type(params.get("coordinates_output", None))}` expected `list[float] | None`')
-        if len(params["coordinates_output"]) == 3:
+        if len(params["coordinates_output"]) != 3:
             raise StyxValidationError("Parameter `coordinates_output` must contain exactly 3 elements")
         for e in params["coordinates_output"]:
             if not isinstance(e, (float, int)):

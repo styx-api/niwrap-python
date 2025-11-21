@@ -356,7 +356,7 @@ def gdcmconv_fs_validate(
     if params.get("icon_minmax", None) is not None:
         if not isinstance(params["icon_minmax"], list):
             raise StyxValidationError(f'`icon_minmax` has the wrong type: Received `{type(params.get("icon_minmax", None))}` expected `list[float] | None`')
-        if len(params["icon_minmax"]) == 2:
+        if len(params["icon_minmax"]) != 2:
             raise StyxValidationError("Parameter `icon_minmax` must contain exactly 2 elements")
         for e in params["icon_minmax"]:
             if not isinstance(e, (float, int)):
@@ -414,7 +414,7 @@ def gdcmconv_fs_validate(
     if params.get("tile", None) is not None:
         if not isinstance(params["tile"], list):
             raise StyxValidationError(f'`tile` has the wrong type: Received `{type(params.get("tile", None))}` expected `list[float] | None`')
-        if len(params["tile"]) == 2:
+        if len(params["tile"]) != 2:
             raise StyxValidationError("Parameter `tile` must contain exactly 2 elements")
         for e in params["tile"]:
             if not isinstance(e, (float, int)):

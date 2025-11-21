@@ -176,7 +176,7 @@ def v_3d_undump_validate(
     if params.get("dimensions", None) is not None:
         if not isinstance(params["dimensions"], list):
             raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `list[float] | None`')
-        if len(params["dimensions"]) <= 3:
+        if len(params["dimensions"]) > 3:
             raise StyxValidationError("Parameter `dimensions` must contain at most 3 elements")
         for e in params["dimensions"]:
             if not isinstance(e, (float, int)):

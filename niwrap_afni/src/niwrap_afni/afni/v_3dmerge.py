@@ -146,7 +146,7 @@ def v_3dmerge_validate(
     if params.get("clust", None) is not None:
         if not isinstance(params["clust"], list):
             raise StyxValidationError(f'`clust` has the wrong type: Received `{type(params.get("clust", None))}` expected `list[float] | None`')
-        if len(params["clust"]) == 2:
+        if len(params["clust"]) != 2:
             raise StyxValidationError("Parameter `clust` must contain exactly 2 elements")
         for e in params["clust"]:
             if not isinstance(e, (float, int)):

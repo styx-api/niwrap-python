@@ -179,7 +179,7 @@ def dmri_pathstats_validate(
     if params.get("rois", None) is not None:
         if not isinstance(params["rois"], list):
             raise StyxValidationError(f'`rois` has the wrong type: Received `{type(params.get("rois", None))}` expected `list[InputPathType] | None`')
-        if len(params["rois"]) >= 0:
+        if len(params["rois"]) < 0:
             raise StyxValidationError("Parameter `rois` must contain at least 0 elements")
         for e in params["rois"]:
             if not isinstance(e, (pathlib.Path, str)):
@@ -191,7 +191,7 @@ def dmri_pathstats_validate(
     if params.get("meas", None) is not None:
         if not isinstance(params["meas"], list):
             raise StyxValidationError(f'`meas` has the wrong type: Received `{type(params.get("meas", None))}` expected `list[InputPathType] | None`')
-        if len(params["meas"]) >= 0:
+        if len(params["meas"]) < 0:
             raise StyxValidationError("Parameter `meas` must contain at least 0 elements")
         for e in params["meas"]:
             if not isinstance(e, (pathlib.Path, str)):
@@ -199,7 +199,7 @@ def dmri_pathstats_validate(
     if params.get("measname", None) is not None:
         if not isinstance(params["measname"], list):
             raise StyxValidationError(f'`measname` has the wrong type: Received `{type(params.get("measname", None))}` expected `list[str] | None`')
-        if len(params["measname"]) >= 0:
+        if len(params["measname"]) < 0:
             raise StyxValidationError("Parameter `measname` must contain at least 0 elements")
         for e in params["measname"]:
             if not isinstance(e, str):
@@ -231,12 +231,12 @@ def dmri_pathstats_validate(
     if params.get("pthr", None) is not None:
         if not isinstance(params["pthr"], (float, int)):
             raise StyxValidationError(f'`pthr` has the wrong type: Received `{type(params.get("pthr", None))}` expected `float | None`')
-        if 0 <= params["pthr"] <= 1:
+        if not (0 <= params["pthr"] <= 1):
             raise StyxValidationError("Parameter `pthr` must be between 0 and 1 (inclusive)")
     if params.get("fthr", None) is not None:
         if not isinstance(params["fthr"], (float, int)):
             raise StyxValidationError(f'`fthr` has the wrong type: Received `{type(params.get("fthr", None))}` expected `float | None`')
-        if 0 <= params["fthr"] <= 1:
+        if not (0 <= params["fthr"] <= 1):
             raise StyxValidationError("Parameter `fthr` must be between 0 and 1 (inclusive)")
     if params.get("debug", False) is None:
         raise StyxValidationError("`debug` must not be None")

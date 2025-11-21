@@ -123,7 +123,7 @@ def stimband_validate(
     if params.get("min_pow", None) is not None:
         if not isinstance(params["min_pow"], (float, int)):
             raise StyxValidationError(f'`min_pow` has the wrong type: Received `{type(params.get("min_pow", None))}` expected `float | None`')
-        if 50 <= params["min_pow"] <= 99:
+        if not (50 <= params["min_pow"] <= 99):
             raise StyxValidationError("Parameter `min_pow` must be between 50 and 99 (inclusive)")
 
 

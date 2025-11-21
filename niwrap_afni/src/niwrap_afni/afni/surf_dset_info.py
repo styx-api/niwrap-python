@@ -167,7 +167,7 @@ def surf_dset_info_validate(
     if params.get("debug_level", None) is not None:
         if not isinstance(params["debug_level"], int):
             raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `int | None`')
-        if params["debug_level"] >= 0:
+        if params["debug_level"] < 0:
             raise StyxValidationError("Parameter `debug_level` must be at least 0")
     if params.get("novolreg", False) is None:
         raise StyxValidationError("`novolreg` must not be None")

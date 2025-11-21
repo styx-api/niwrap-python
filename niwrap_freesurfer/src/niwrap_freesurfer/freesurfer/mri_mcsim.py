@@ -203,7 +203,7 @@ def mri_mcsim_validate(
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], list):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[str]`')
-    if len(params["surface"]) == 2:
+    if len(params["surface"]) != 2:
         raise StyxValidationError("Parameter `surface` must contain exactly 2 elements")
     for e in params["surface"]:
         if not isinstance(e, str):

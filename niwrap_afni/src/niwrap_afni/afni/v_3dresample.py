@@ -129,7 +129,7 @@ def v_3dresample_validate(
     if params.get("voxel_size", None) is not None:
         if not isinstance(params["voxel_size"], list):
             raise StyxValidationError(f'`voxel_size` has the wrong type: Received `{type(params.get("voxel_size", None))}` expected `list[float] | None`')
-        if len(params["voxel_size"]) == 3:
+        if len(params["voxel_size"]) != 3:
             raise StyxValidationError("Parameter `voxel_size` must contain exactly 3 elements")
         for e in params["voxel_size"]:
             if not isinstance(e, (float, int)):

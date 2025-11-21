@@ -119,7 +119,7 @@ def v_3d_dft_validate(
     if params.get("taper", None) is not None:
         if not isinstance(params["taper"], (float, int)):
             raise StyxValidationError(f'`taper` has the wrong type: Received `{type(params.get("taper", None))}` expected `float | None`')
-        if 0.0 <= params["taper"] <= 1.0:
+        if not (0.0 <= params["taper"] <= 1.0):
             raise StyxValidationError("Parameter `taper` must be between 0.0 and 1.0 (inclusive)")
     if params.get("inverse", False) is None:
         raise StyxValidationError("`inverse` must not be None")

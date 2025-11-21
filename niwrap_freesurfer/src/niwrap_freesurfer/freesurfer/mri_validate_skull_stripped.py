@@ -83,7 +83,7 @@ def mri_validate_skull_stripped_validate(
         raise StyxValidationError("`weight` must not be None")
     if not isinstance(params["weight"], (float, int)):
         raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float`')
-    if params["weight"] >= 1.01:
+    if params["weight"] < 1.01:
         raise StyxValidationError("Parameter `weight` must be at least 1.01")
 
 

@@ -226,7 +226,7 @@ def mris_sample_parc_validate(
     if params.get("trans", None) is not None:
         if not isinstance(params["trans"], list):
             raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
-        if len(params["trans"]) == 2:
+        if len(params["trans"]) != 2:
             raise StyxValidationError("Parameter `trans` must contain exactly 2 elements")
         for e in params["trans"]:
             if not isinstance(e, (float, int)):

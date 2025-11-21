@@ -311,7 +311,7 @@ def run_samseg_validate(
     if params.get("lesion_pseudo_samples", None) is not None:
         if not isinstance(params["lesion_pseudo_samples"], list):
             raise StyxValidationError(f'`lesion_pseudo_samples` has the wrong type: Received `{type(params.get("lesion_pseudo_samples", None))}` expected `list[float] | None`')
-        if len(params["lesion_pseudo_samples"]) == 2:
+        if len(params["lesion_pseudo_samples"]) != 2:
             raise StyxValidationError("Parameter `lesion_pseudo_samples` must contain exactly 2 elements")
         for e in params["lesion_pseudo_samples"]:
             if not isinstance(e, (float, int)):

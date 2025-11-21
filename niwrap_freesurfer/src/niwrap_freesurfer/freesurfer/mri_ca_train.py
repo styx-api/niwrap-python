@@ -146,7 +146,7 @@ def mri_ca_train_validate(
         raise StyxValidationError("`subjects` must not be None")
     if not isinstance(params["subjects"], list):
         raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
-    if len(params["subjects"]) >= 1:
+    if len(params["subjects"]) < 1:
         raise StyxValidationError("Parameter `subjects` must contain at least 1 element")
     for e in params["subjects"]:
         if not isinstance(e, str):
@@ -184,7 +184,7 @@ def mri_ca_train_validate(
     if params.get("makesym", None) is not None:
         if not isinstance(params["makesym"], list):
             raise StyxValidationError(f'`makesym` has the wrong type: Received `{type(params.get("makesym", None))}` expected `list[str] | None`')
-        if len(params["makesym"]) <= 2:
+        if len(params["makesym"]) > 2:
             raise StyxValidationError("Parameter `makesym` must contain at most 2 elements")
         for e in params["makesym"]:
             if not isinstance(e, str):
@@ -192,7 +192,7 @@ def mri_ca_train_validate(
     if params.get("check_symmetry", None) is not None:
         if not isinstance(params["check_symmetry"], list):
             raise StyxValidationError(f'`check_symmetry` has the wrong type: Received `{type(params.get("check_symmetry", None))}` expected `list[str] | None`')
-        if len(params["check_symmetry"]) <= 2:
+        if len(params["check_symmetry"]) > 2:
             raise StyxValidationError("Parameter `check_symmetry` must contain at most 2 elements")
         for e in params["check_symmetry"]:
             if not isinstance(e, str):

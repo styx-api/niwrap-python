@@ -218,7 +218,7 @@ def ants_motion_corr_validate(
     if params.get("random_seed", None) is not None:
         if not isinstance(params["random_seed"], int):
             raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
-        if params["random_seed"] >= 1:
+        if params["random_seed"] < 1:
             raise StyxValidationError("Parameter `random_seed` must be at least 1")
     if params.get("interpolation", None) is not None:
         if not isinstance(params["interpolation"], str):

@@ -170,7 +170,7 @@ def v_3dhistog_validate(
     if params.get("omit", None) is not None:
         if not isinstance(params["omit"], list):
             raise StyxValidationError(f'`omit` has the wrong type: Received `{type(params.get("omit", None))}` expected `list[float] | None`')
-        if len(params["omit"]) <= 100:
+        if len(params["omit"]) > 100:
             raise StyxValidationError("Parameter `omit` must contain at most 100 elements")
         for e in params["omit"]:
             if not isinstance(e, (float, int)):

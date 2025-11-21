@@ -158,7 +158,7 @@ def v_3d_polyfit_validate(
     if params.get("poly_order", None) is not None:
         if not isinstance(params["poly_order"], int):
             raise StyxValidationError(f'`poly_order` has the wrong type: Received `{type(params.get("poly_order", None))}` expected `int | None`')
-        if -1 <= params["poly_order"] <= 9:
+        if not (-1 <= params["poly_order"] <= 9):
             raise StyxValidationError("Parameter `poly_order` must be between -1 and 9 (inclusive)")
     if params.get("blur", None) is not None:
         if not isinstance(params["blur"], (float, int)):
@@ -193,7 +193,7 @@ def v_3d_polyfit_validate(
     if params.get("fit_method", None) is not None:
         if not isinstance(params["fit_method"], int):
             raise StyxValidationError(f'`fit_method` has the wrong type: Received `{type(params.get("fit_method", None))}` expected `int | None`')
-        if 1 <= params["fit_method"] <= 2:
+        if not (1 <= params["fit_method"] <= 2):
             raise StyxValidationError("Parameter `fit_method` must be between 1 and 2 (inclusive)")
     if params.get("base_dataset", None) is not None:
         if not isinstance(params["base_dataset"], (pathlib.Path, str)):

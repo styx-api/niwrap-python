@@ -144,37 +144,37 @@ def v_1d_apar2mat_validate(
         raise StyxValidationError("`x_scale` must not be None")
     if not isinstance(params["x_scale"], (float, int)):
         raise StyxValidationError(f'`x_scale` has the wrong type: Received `{type(params.get("x_scale", None))}` expected `float`')
-    if 0.1 <= params["x_scale"] <= 10.0:
+    if not (0.1 <= params["x_scale"] <= 10.0):
         raise StyxValidationError("Parameter `x_scale` must be between 0.1 and 10.0 (inclusive)")
     if params.get("y_scale", None) is None:
         raise StyxValidationError("`y_scale` must not be None")
     if not isinstance(params["y_scale"], (float, int)):
         raise StyxValidationError(f'`y_scale` has the wrong type: Received `{type(params.get("y_scale", None))}` expected `float`')
-    if 0.1 <= params["y_scale"] <= 10.0:
+    if not (0.1 <= params["y_scale"] <= 10.0):
         raise StyxValidationError("Parameter `y_scale` must be between 0.1 and 10.0 (inclusive)")
     if params.get("z_scale", None) is None:
         raise StyxValidationError("`z_scale` must not be None")
     if not isinstance(params["z_scale"], (float, int)):
         raise StyxValidationError(f'`z_scale` has the wrong type: Received `{type(params.get("z_scale", None))}` expected `float`')
-    if 0.1 <= params["z_scale"] <= 10.0:
+    if not (0.1 <= params["z_scale"] <= 10.0):
         raise StyxValidationError("Parameter `z_scale` must be between 0.1 and 10.0 (inclusive)")
     if params.get("y_x_shear", None) is None:
         raise StyxValidationError("`y_x_shear` must not be None")
     if not isinstance(params["y_x_shear"], (float, int)):
         raise StyxValidationError(f'`y_x_shear` has the wrong type: Received `{type(params.get("y_x_shear", None))}` expected `float`')
-    if -0.3333 <= params["y_x_shear"] <= 0.3333:
+    if not (-0.3333 <= params["y_x_shear"] <= 0.3333):
         raise StyxValidationError("Parameter `y_x_shear` must be between -0.3333 and 0.3333 (inclusive)")
     if params.get("z_x_shear", None) is None:
         raise StyxValidationError("`z_x_shear` must not be None")
     if not isinstance(params["z_x_shear"], (float, int)):
         raise StyxValidationError(f'`z_x_shear` has the wrong type: Received `{type(params.get("z_x_shear", None))}` expected `float`')
-    if -0.3333 <= params["z_x_shear"] <= 0.3333:
+    if not (-0.3333 <= params["z_x_shear"] <= 0.3333):
         raise StyxValidationError("Parameter `z_x_shear` must be between -0.3333 and 0.3333 (inclusive)")
     if params.get("z_y_shear", None) is None:
         raise StyxValidationError("`z_y_shear` must not be None")
     if not isinstance(params["z_y_shear"], (float, int)):
         raise StyxValidationError(f'`z_y_shear` has the wrong type: Received `{type(params.get("z_y_shear", None))}` expected `float`')
-    if -0.3333 <= params["z_y_shear"] <= 0.3333:
+    if not (-0.3333 <= params["z_y_shear"] <= 0.3333):
         raise StyxValidationError("Parameter `z_y_shear` must be between -0.3333 and 0.3333 (inclusive)")
 
 

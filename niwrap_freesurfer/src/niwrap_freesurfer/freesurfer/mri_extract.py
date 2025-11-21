@@ -96,7 +96,7 @@ def mri_extract_validate(
     if params.get("coordinates", None) is not None:
         if not isinstance(params["coordinates"], list):
             raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
-        if len(params["coordinates"]) == 6:
+        if len(params["coordinates"]) != 6:
             raise StyxValidationError("Parameter `coordinates` must contain exactly 6 elements")
         for e in params["coordinates"]:
             if not isinstance(e, (float, int)):

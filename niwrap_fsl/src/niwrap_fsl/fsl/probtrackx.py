@@ -282,7 +282,7 @@ def probtrackx_validate(
     if params.get("verbose", None) is not None:
         if not isinstance(params["verbose"], int):
             raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `int | None`')
-        if 0 <= params["verbose"] <= 2:
+        if not (0 <= params["verbose"] <= 2):
             raise StyxValidationError("Parameter `verbose` must be between 0 and 2 (inclusive)")
     if params.get("targetmasks", None) is not None:
         if not isinstance(params["targetmasks"], (pathlib.Path, str)):

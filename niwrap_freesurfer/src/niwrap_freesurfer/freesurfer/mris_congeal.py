@@ -184,7 +184,7 @@ def mris_congeal_validate(
     if params.get("manual_label", None) is not None:
         if not isinstance(params["manual_label"], list):
             raise StyxValidationError(f'`manual_label` has the wrong type: Received `{type(params.get("manual_label", None))}` expected `list[str] | None`')
-        if len(params["manual_label"]) <= 3:
+        if len(params["manual_label"]) > 3:
             raise StyxValidationError("Parameter `manual_label` must contain at most 3 elements")
         for e in params["manual_label"]:
             if not isinstance(e, str):
@@ -192,7 +192,7 @@ def mris_congeal_validate(
     if params.get("addframe", None) is not None:
         if not isinstance(params["addframe"], list):
             raise StyxValidationError(f'`addframe` has the wrong type: Received `{type(params.get("addframe", None))}` expected `list[str] | None`')
-        if len(params["addframe"]) <= 4:
+        if len(params["addframe"]) > 4:
             raise StyxValidationError("Parameter `addframe` must contain at most 4 elements")
         for e in params["addframe"]:
             if not isinstance(e, str):
@@ -200,7 +200,7 @@ def mris_congeal_validate(
     if params.get("overlay", None) is not None:
         if not isinstance(params["overlay"], list):
             raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `list[str] | None`')
-        if len(params["overlay"]) <= 2:
+        if len(params["overlay"]) > 2:
             raise StyxValidationError("Parameter `overlay` must contain at most 2 elements")
         for e in params["overlay"]:
             if not isinstance(e, str):

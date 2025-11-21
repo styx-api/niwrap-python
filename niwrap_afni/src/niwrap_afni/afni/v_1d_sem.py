@@ -181,7 +181,7 @@ def v_1d_sem_validate(
     if params.get("limits", None) is not None:
         if not isinstance(params["limits"], list):
             raise StyxValidationError(f'`limits` has the wrong type: Received `{type(params.get("limits", None))}` expected `list[float] | None`')
-        if len(params["limits"]) == 2:
+        if len(params["limits"]) != 2:
             raise StyxValidationError("Parameter `limits` must contain exactly 2 elements")
         for e in params["limits"]:
             if not isinstance(e, (float, int)):

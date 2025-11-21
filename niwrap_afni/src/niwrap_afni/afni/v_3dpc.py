@@ -182,7 +182,7 @@ def v_3dpc_validate(
     if params.get("reduce", None) is not None:
         if not isinstance(params["reduce"], list):
             raise StyxValidationError(f'`reduce` has the wrong type: Received `{type(params.get("reduce", None))}` expected `list[str] | None`')
-        if len(params["reduce"]) == 2:
+        if len(params["reduce"]) != 2:
             raise StyxValidationError("Parameter `reduce` must contain exactly 2 elements")
         for e in params["reduce"]:
             if not isinstance(e, str):

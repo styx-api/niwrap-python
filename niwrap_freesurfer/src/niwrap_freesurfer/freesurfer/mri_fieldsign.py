@@ -194,7 +194,7 @@ def mri_fieldsign_validate(
         raise StyxValidationError("`eccen_values` must not be None")
     if not isinstance(params["eccen_values"], list):
         raise StyxValidationError(f'`eccen_values` has the wrong type: Received `{type(params.get("eccen_values", None))}` expected `list[float]`')
-    if len(params["eccen_values"]) == 2:
+    if len(params["eccen_values"]) != 2:
         raise StyxValidationError("Parameter `eccen_values` must contain exactly 2 elements")
     for e in params["eccen_values"]:
         if not isinstance(e, (float, int)):
@@ -203,7 +203,7 @@ def mri_fieldsign_validate(
         raise StyxValidationError("`polar_values` must not be None")
     if not isinstance(params["polar_values"], list):
         raise StyxValidationError(f'`polar_values` has the wrong type: Received `{type(params.get("polar_values", None))}` expected `list[float]`')
-    if len(params["polar_values"]) == 2:
+    if len(params["polar_values"]) != 2:
         raise StyxValidationError("Parameter `polar_values` must contain exactly 2 elements")
     for e in params["polar_values"]:
         if not isinstance(e, (float, int)):

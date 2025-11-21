@@ -242,7 +242,7 @@ def surface_metrics_validate(
     if params.get("sph_coords_center", None) is not None:
         if not isinstance(params["sph_coords_center"], list):
             raise StyxValidationError(f'`sph_coords_center` has the wrong type: Received `{type(params.get("sph_coords_center", None))}` expected `list[float] | None`')
-        if len(params["sph_coords_center"]) <= 3:
+        if len(params["sph_coords_center"]) > 3:
             raise StyxValidationError("Parameter `sph_coords_center` must contain at most 3 elements")
         for e in params["sph_coords_center"]:
             if not isinstance(e, (float, int)):

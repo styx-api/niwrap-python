@@ -97,7 +97,7 @@ def tile_images_validate(
         raise StyxValidationError("`input_images` must not be None")
     if not isinstance(params["input_images"], list):
         raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
-    if len(params["input_images"]) >= 1:
+    if len(params["input_images"]) < 1:
         raise StyxValidationError("Parameter `input_images` must contain at least 1 element")
     for e in params["input_images"]:
         if not isinstance(e, (pathlib.Path, str)):

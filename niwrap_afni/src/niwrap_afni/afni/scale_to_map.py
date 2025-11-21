@@ -322,7 +322,7 @@ def scale_to_map_validate(
     if params.get("clp", None) is not None:
         if not isinstance(params["clp"], list):
             raise StyxValidationError(f'`clp` has the wrong type: Received `{type(params.get("clp", None))}` expected `list[float] | None`')
-        if len(params["clp"]) <= 2:
+        if len(params["clp"]) > 2:
             raise StyxValidationError("Parameter `clp` must contain at most 2 elements")
         for e in params["clp"]:
             if not isinstance(e, (float, int)):
@@ -330,7 +330,7 @@ def scale_to_map_validate(
     if params.get("perc_clp", None) is not None:
         if not isinstance(params["perc_clp"], list):
             raise StyxValidationError(f'`perc_clp` has the wrong type: Received `{type(params.get("perc_clp", None))}` expected `list[float] | None`')
-        if len(params["perc_clp"]) <= 2:
+        if len(params["perc_clp"]) > 2:
             raise StyxValidationError("Parameter `perc_clp` must contain at most 2 elements")
         for e in params["perc_clp"]:
             if not isinstance(e, (float, int)):
@@ -360,7 +360,7 @@ def scale_to_map_validate(
     if params.get("msk", None) is not None:
         if not isinstance(params["msk"], list):
             raise StyxValidationError(f'`msk` has the wrong type: Received `{type(params.get("msk", None))}` expected `list[float] | None`')
-        if len(params["msk"]) <= 2:
+        if len(params["msk"]) > 2:
             raise StyxValidationError("Parameter `msk` must contain at most 2 elements")
         for e in params["msk"]:
             if not isinstance(e, (float, int)):
@@ -368,7 +368,7 @@ def scale_to_map_validate(
     if params.get("msk_col", None) is not None:
         if not isinstance(params["msk_col"], list):
             raise StyxValidationError(f'`msk_col` has the wrong type: Received `{type(params.get("msk_col", None))}` expected `list[float] | None`')
-        if len(params["msk_col"]) == 3:
+        if len(params["msk_col"]) != 3:
             raise StyxValidationError("Parameter `msk_col` must contain exactly 3 elements")
         for e in params["msk_col"]:
             if not isinstance(e, (float, int)):

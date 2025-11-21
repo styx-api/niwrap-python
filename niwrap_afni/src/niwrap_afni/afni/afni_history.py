@@ -182,7 +182,7 @@ def afni_history_validate(
     if params.get("verb_level", None) is not None:
         if not isinstance(params["verb_level"], int):
             raise StyxValidationError(f'`verb_level` has the wrong type: Received `{type(params.get("verb_level", None))}` expected `int | None`')
-        if 0 <= params["verb_level"] <= 6:
+        if not (0 <= params["verb_level"] <= 6):
             raise StyxValidationError("Parameter `verb_level` must be between 0 and 6 (inclusive)")
     if params.get("check_date", None) is not None:
         if not isinstance(params["check_date"], str):
@@ -213,12 +213,12 @@ def afni_history_validate(
     if params.get("level", None) is not None:
         if not isinstance(params["level"], int):
             raise StyxValidationError(f'`level` has the wrong type: Received `{type(params.get("level", None))}` expected `int | None`')
-        if 1 <= params["level"] <= 5:
+        if not (1 <= params["level"] <= 5):
             raise StyxValidationError("Parameter `level` must be between 1 and 5 (inclusive)")
     if params.get("min_level", None) is not None:
         if not isinstance(params["min_level"], int):
             raise StyxValidationError(f'`min_level` has the wrong type: Received `{type(params.get("min_level", None))}` expected `int | None`')
-        if 1 <= params["min_level"] <= 5:
+        if not (1 <= params["min_level"] <= 5):
             raise StyxValidationError("Parameter `min_level` must be between 1 and 5 (inclusive)")
     if params.get("program", None) is not None:
         if not isinstance(params["program"], str):

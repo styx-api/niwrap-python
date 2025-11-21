@@ -207,12 +207,12 @@ def make_bianca_mask_validate(
     if params.get("fractional_intensity", None) is not None:
         if not isinstance(params["fractional_intensity"], (float, int)):
             raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
-        if 0 <= params["fractional_intensity"] <= 1:
+        if not (0 <= params["fractional_intensity"] <= 1):
             raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
     if params.get("vg_fractional_intensity", None) is not None:
         if not isinstance(params["vg_fractional_intensity"], (float, int)):
             raise StyxValidationError(f'`vg_fractional_intensity` has the wrong type: Received `{type(params.get("vg_fractional_intensity", None))}` expected `float | None`')
-        if -1 <= params["vg_fractional_intensity"] <= 1:
+        if not (-1 <= params["vg_fractional_intensity"] <= 1):
             raise StyxValidationError("Parameter `vg_fractional_intensity` must be between -1 and 1 (inclusive)")
     if params.get("head_radius", None) is not None:
         if not isinstance(params["head_radius"], (float, int)):

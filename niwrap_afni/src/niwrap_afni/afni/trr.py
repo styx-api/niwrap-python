@@ -213,7 +213,7 @@ def trr_validate(
     if params.get("plot_size", None) is not None:
         if not isinstance(params["plot_size"], list):
             raise StyxValidationError(f'`plot_size` has the wrong type: Received `{type(params.get("plot_size", None))}` expected `list[float] | None`')
-        if len(params["plot_size"]) == 2:
+        if len(params["plot_size"]) != 2:
             raise StyxValidationError("Parameter `plot_size` must contain exactly 2 elements")
         for e in params["plot_size"]:
             if not isinstance(e, (float, int)):

@@ -159,7 +159,7 @@ def eddy_combine_validate(
         raise StyxValidationError("`only_matched_flag` must not be None")
     if not isinstance(params["only_matched_flag"], int):
         raise StyxValidationError(f'`only_matched_flag` has the wrong type: Received `{type(params.get("only_matched_flag", None))}` expected `int`')
-    if 0 <= params["only_matched_flag"] <= 1:
+    if not (0 <= params["only_matched_flag"] <= 1):
         raise StyxValidationError("Parameter `only_matched_flag` must be between 0 and 1 (inclusive)")
 
 

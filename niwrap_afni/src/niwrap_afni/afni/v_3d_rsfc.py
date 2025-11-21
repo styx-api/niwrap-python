@@ -248,7 +248,7 @@ def v_3d_rsfc_validate(
     if params.get("band", None) is not None:
         if not isinstance(params["band"], list):
             raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float] | None`')
-        if len(params["band"]) == 2:
+        if len(params["band"]) != 2:
             raise StyxValidationError("Parameter `band` must contain exactly 2 elements")
         for e in params["band"]:
             if not isinstance(e, (float, int)):

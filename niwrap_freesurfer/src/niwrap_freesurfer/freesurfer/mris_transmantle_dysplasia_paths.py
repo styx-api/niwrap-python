@@ -118,7 +118,7 @@ def mris_transmantle_dysplasia_paths_validate(
     if params.get("filter", None) is not None:
         if not isinstance(params["filter"], list):
             raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `list[float] | None`')
-        if len(params["filter"]) == 2:
+        if len(params["filter"]) != 2:
             raise StyxValidationError("Parameter `filter` must contain exactly 2 elements")
         for e in params["filter"]:
             if not isinstance(e, (float, int)):

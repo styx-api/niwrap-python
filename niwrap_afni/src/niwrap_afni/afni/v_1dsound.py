@@ -145,7 +145,7 @@ def v_1dsound_validate(
     if params.get("tper_option", None) is not None:
         if not isinstance(params["tper_option"], (float, int)):
             raise StyxValidationError(f'`tper_option` has the wrong type: Received `{type(params.get("tper_option", None))}` expected `float | None`')
-        if 0.01 <= params["tper_option"] <= 1.0:
+        if not (0.01 <= params["tper_option"] <= 1.0):
             raise StyxValidationError("Parameter `tper_option` must be between 0.01 and 1.0 (inclusive)")
     if params.get("fm_option", False) is None:
         raise StyxValidationError("`fm_option` must not be None")

@@ -95,7 +95,7 @@ def register_elderly_subject_validate(
     if params.get("sampling_percentage", None) is not None:
         if not isinstance(params["sampling_percentage"], (float, int)):
             raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if 0 <= params["sampling_percentage"] <= 1:
+        if not (0 <= params["sampling_percentage"] <= 1):
             raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
     if params.get("output_fsamples", None) is None:
         raise StyxValidationError("`output_fsamples` must not be None")

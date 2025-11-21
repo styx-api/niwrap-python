@@ -112,7 +112,7 @@ def tfim_validate(
     if params.get("pthresh", None) is not None:
         if not isinstance(params["pthresh"], (float, int)):
             raise StyxValidationError(f'`pthresh` has the wrong type: Received `{type(params.get("pthresh", None))}` expected `float | None`')
-        if 0 <= params["pthresh"] <= 1:
+        if not (0 <= params["pthresh"] <= 1):
             raise StyxValidationError("Parameter `pthresh` must be between 0 and 1 (inclusive)")
     if params.get("eqcorr", None) is not None:
         if not isinstance(params["eqcorr"], (float, int)):

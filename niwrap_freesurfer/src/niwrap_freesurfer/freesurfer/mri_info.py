@@ -511,7 +511,7 @@ def mri_info_validate(
     if params.get("voxel_crs", None) is not None:
         if not isinstance(params["voxel_crs"], list):
             raise StyxValidationError(f'`voxel_crs` has the wrong type: Received `{type(params.get("voxel_crs", None))}` expected `list[str] | None`')
-        if len(params["voxel_crs"]) == 3:
+        if len(params["voxel_crs"]) != 3:
             raise StyxValidationError("Parameter `voxel_crs` must contain exactly 3 elements")
         for e in params["voxel_crs"]:
             if not isinstance(e, str):

@@ -317,7 +317,7 @@ def mri_watershed_validate(
     if params.get("seed_point", None) is not None:
         if not isinstance(params["seed_point"], list):
             raise StyxValidationError(f'`seed_point` has the wrong type: Received `{type(params.get("seed_point", None))}` expected `list[float] | None`')
-        if len(params["seed_point"]) == 3:
+        if len(params["seed_point"]) != 3:
             raise StyxValidationError("Parameter `seed_point` must contain exactly 3 elements")
         for e in params["seed_point"]:
             if not isinstance(e, (float, int)):
@@ -325,7 +325,7 @@ def mri_watershed_validate(
     if params.get("center_brain", None) is not None:
         if not isinstance(params["center_brain"], list):
             raise StyxValidationError(f'`center_brain` has the wrong type: Received `{type(params.get("center_brain", None))}` expected `list[float] | None`')
-        if len(params["center_brain"]) == 3:
+        if len(params["center_brain"]) != 3:
             raise StyxValidationError("Parameter `center_brain` must contain exactly 3 elements")
         for e in params["center_brain"]:
             if not isinstance(e, (float, int)):

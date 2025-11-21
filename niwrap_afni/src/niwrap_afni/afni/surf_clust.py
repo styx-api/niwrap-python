@@ -297,7 +297,7 @@ def surf_clust_validate(
         raise StyxValidationError("`input_dataset` must not be None")
     if not isinstance(params["input_dataset"], list):
         raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `list[InputPathType]`')
-    if len(params["input_dataset"]) == 2:
+    if len(params["input_dataset"]) != 2:
         raise StyxValidationError("Parameter `input_dataset` must contain exactly 2 elements")
     for e in params["input_dataset"]:
         if not isinstance(e, (pathlib.Path, str)):
@@ -351,7 +351,7 @@ def surf_clust_validate(
     if params.get("ir_range", None) is not None:
         if not isinstance(params["ir_range"], list):
             raise StyxValidationError(f'`ir_range` has the wrong type: Received `{type(params.get("ir_range", None))}` expected `list[float] | None`')
-        if len(params["ir_range"]) == 2:
+        if len(params["ir_range"]) != 2:
             raise StyxValidationError("Parameter `ir_range` must contain exactly 2 elements")
         for e in params["ir_range"]:
             if not isinstance(e, (float, int)):
@@ -359,7 +359,7 @@ def surf_clust_validate(
     if params.get("ex_range", None) is not None:
         if not isinstance(params["ex_range"], list):
             raise StyxValidationError(f'`ex_range` has the wrong type: Received `{type(params.get("ex_range", None))}` expected `list[float] | None`')
-        if len(params["ex_range"]) == 2:
+        if len(params["ex_range"]) != 2:
             raise StyxValidationError("Parameter `ex_range` must contain exactly 2 elements")
         for e in params["ex_range"]:
             if not isinstance(e, (float, int)):

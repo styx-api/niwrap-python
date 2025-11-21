@@ -302,7 +302,7 @@ def v_3d_brick_stat_validate(
     if params.get("mrange", None) is not None:
         if not isinstance(params["mrange"], list):
             raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
-        if len(params["mrange"]) == 2:
+        if len(params["mrange"]) != 2:
             raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
         for e in params["mrange"]:
             if not isinstance(e, (float, int)):
@@ -317,7 +317,7 @@ def v_3d_brick_stat_validate(
     if params.get("percentile", None) is not None:
         if not isinstance(params["percentile"], list):
             raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `list[float] | None`')
-        if len(params["percentile"]) == 3:
+        if len(params["percentile"]) != 3:
             raise StyxValidationError("Parameter `percentile` must contain exactly 3 elements")
         for e in params["percentile"]:
             if not isinstance(e, (float, int)):

@@ -125,7 +125,7 @@ def v_3d_space_time_corr_validate(
     if params.get("freeze_insetA_ijk", None) is not None:
         if not isinstance(params["freeze_insetA_ijk"], list):
             raise StyxValidationError(f'`freeze_insetA_ijk` has the wrong type: Received `{type(params.get("freeze_insetA_ijk", None))}` expected `list[float] | None`')
-        if len(params["freeze_insetA_ijk"]) == 3:
+        if len(params["freeze_insetA_ijk"]) != 3:
             raise StyxValidationError("Parameter `freeze_insetA_ijk` must contain exactly 3 elements")
         for e in params["freeze_insetA_ijk"]:
             if not isinstance(e, (float, int)):
@@ -133,7 +133,7 @@ def v_3d_space_time_corr_validate(
     if params.get("freeze_insetA_xyz", None) is not None:
         if not isinstance(params["freeze_insetA_xyz"], list):
             raise StyxValidationError(f'`freeze_insetA_xyz` has the wrong type: Received `{type(params.get("freeze_insetA_xyz", None))}` expected `list[float] | None`')
-        if len(params["freeze_insetA_xyz"]) == 3:
+        if len(params["freeze_insetA_xyz"]) != 3:
             raise StyxValidationError("Parameter `freeze_insetA_xyz` must contain exactly 3 elements")
         for e in params["freeze_insetA_xyz"]:
             if not isinstance(e, (float, int)):

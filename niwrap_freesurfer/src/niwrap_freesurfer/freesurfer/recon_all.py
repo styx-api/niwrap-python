@@ -489,7 +489,7 @@ def recon_all_validate(
     if params.get("pons_crs", None) is not None:
         if not isinstance(params["pons_crs"], list):
             raise StyxValidationError(f'`pons_crs` has the wrong type: Received `{type(params.get("pons_crs", None))}` expected `list[float] | None`')
-        if len(params["pons_crs"]) == 3:
+        if len(params["pons_crs"]) != 3:
             raise StyxValidationError("Parameter `pons_crs` must contain exactly 3 elements")
         for e in params["pons_crs"]:
             if not isinstance(e, (float, int)):
@@ -497,7 +497,7 @@ def recon_all_validate(
     if params.get("cc_crs", None) is not None:
         if not isinstance(params["cc_crs"], list):
             raise StyxValidationError(f'`cc_crs` has the wrong type: Received `{type(params.get("cc_crs", None))}` expected `list[float] | None`')
-        if len(params["cc_crs"]) == 3:
+        if len(params["cc_crs"]) != 3:
             raise StyxValidationError("Parameter `cc_crs` must contain exactly 3 elements")
         for e in params["cc_crs"]:
             if not isinstance(e, (float, int)):
@@ -505,7 +505,7 @@ def recon_all_validate(
     if params.get("lh_crs", None) is not None:
         if not isinstance(params["lh_crs"], list):
             raise StyxValidationError(f'`lh_crs` has the wrong type: Received `{type(params.get("lh_crs", None))}` expected `list[float] | None`')
-        if len(params["lh_crs"]) == 3:
+        if len(params["lh_crs"]) != 3:
             raise StyxValidationError("Parameter `lh_crs` must contain exactly 3 elements")
         for e in params["lh_crs"]:
             if not isinstance(e, (float, int)):
@@ -513,7 +513,7 @@ def recon_all_validate(
     if params.get("rh_crs", None) is not None:
         if not isinstance(params["rh_crs"], list):
             raise StyxValidationError(f'`rh_crs` has the wrong type: Received `{type(params.get("rh_crs", None))}` expected `list[float] | None`')
-        if len(params["rh_crs"]) == 3:
+        if len(params["rh_crs"]) != 3:
             raise StyxValidationError("Parameter `rh_crs` must contain exactly 3 elements")
         for e in params["rh_crs"]:
             if not isinstance(e, (float, int)):
@@ -554,7 +554,7 @@ def recon_all_validate(
     if params.get("wsseed", None) is not None:
         if not isinstance(params["wsseed"], list):
             raise StyxValidationError(f'`wsseed` has the wrong type: Received `{type(params.get("wsseed", None))}` expected `list[float] | None`')
-        if len(params["wsseed"]) == 3:
+        if len(params["wsseed"]) != 3:
             raise StyxValidationError("Parameter `wsseed` must contain exactly 3 elements")
         for e in params["wsseed"]:
             if not isinstance(e, (float, int)):

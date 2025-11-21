@@ -141,7 +141,7 @@ def v_3dinfill_validate(
     if params.get("ed", None) is not None:
         if not isinstance(params["ed"], list):
             raise StyxValidationError(f'`ed` has the wrong type: Received `{type(params.get("ed", None))}` expected `list[float] | None`')
-        if len(params["ed"]) == 2:
+        if len(params["ed"]) != 2:
             raise StyxValidationError("Parameter `ed` must contain exactly 2 elements")
         for e in params["ed"]:
             if not isinstance(e, (float, int)):
@@ -152,7 +152,7 @@ def v_3dinfill_validate(
     if params.get("mask_range", None) is not None:
         if not isinstance(params["mask_range"], list):
             raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
-        if len(params["mask_range"]) == 2:
+        if len(params["mask_range"]) != 2:
             raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
         for e in params["mask_range"]:
             if not isinstance(e, (float, int)):
@@ -160,7 +160,7 @@ def v_3dinfill_validate(
     if params.get("mrange", None) is not None:
         if not isinstance(params["mrange"], list):
             raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
-        if len(params["mrange"]) == 2:
+        if len(params["mrange"]) != 2:
             raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
         for e in params["mrange"]:
             if not isinstance(e, (float, int)):

@@ -95,7 +95,7 @@ def set_spacing_validate(
         raise StyxValidationError("`spacing` must not be None")
     if not isinstance(params["spacing"], list):
         raise StyxValidationError(f'`spacing` has the wrong type: Received `{type(params.get("spacing", None))}` expected `list[float]`')
-    if 2 <= len(params["spacing"]) <= 3:
+    if not (2 <= len(params["spacing"]) <= 3):
         raise StyxValidationError("Parameter `spacing` must contain between 2 and 3 elements (inclusive)")
     for e in params["spacing"]:
         if not isinstance(e, (float, int)):

@@ -201,7 +201,7 @@ def mri_label2vol_validate(
     if params.get("fill_threshold", None) is not None:
         if not isinstance(params["fill_threshold"], (float, int)):
             raise StyxValidationError(f'`fill_threshold` has the wrong type: Received `{type(params.get("fill_threshold", None))}` expected `float | None`')
-        if 0 <= params["fill_threshold"] <= 1:
+        if not (0 <= params["fill_threshold"] <= 1):
             raise StyxValidationError("Parameter `fill_threshold` must be between 0 and 1 (inclusive)")
     if params.get("label_vox_vol", None) is not None:
         if not isinstance(params["label_vox_vol"], (float, int)):
