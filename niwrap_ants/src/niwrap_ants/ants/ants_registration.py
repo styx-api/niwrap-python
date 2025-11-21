@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_REGISTRATION_METADATA = Metadata(
-    id="2a63accee921365e0dc00c94ee071f77f0a8845f.boutiques",
+    id="067e3045451de9a93d1272494a23e2df83ef5663.boutiques",
     name="antsRegistration",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -2998,7 +2998,7 @@ def ants_registration_winsorize_image_intensities_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + str(params.get("lower_quantile", None)) + str(params.get("upper_quantile", None)) + "]")
+    cargs.append("[" + str(params.get("lower_quantile", None)) + "," + str(params.get("upper_quantile", None)) + "]")
     return cargs
 
 
