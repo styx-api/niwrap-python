@@ -46,7 +46,7 @@ pip install -r https://raw.githubusercontent.com/styx-api/niwrap-python/main/req
 | [ANTs](https://github.com/ANTsX/ANTs) | [`2.5.3`](https://hub.docker.com/r/antsx/ants) | 71/113 (62.8%) |
 | [Convert3D](http://www.itksnap.org/pmwiki/pmwiki.php?n=Convert3D.Convert3D) | [`1.1.0`](https://hub.docker.com/r/pyushkevich/itksnap) | 4/4 (100% 🎉) |
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | [`1.0.20240202`](https://hub.docker.com/r/vnmd/dcm2niix_v1.0.20240202) | 1/1 (100% 🎉) |
-| [FastSurfer](https://github.com/Deep-MI/FastSurfer) | [`2.3.3`](https://hub.docker.com/r/deepmi/fastsurfer) | 1/1 (100% 🎉) |
+| [FastSurfer](https://github.com/Deep-MI/FastSurfer) | [`2.3.3`](https://hub.docker.com/r/nx10x/fastsurfer) | 1/1 (100% 🎉) |
 | [FreeSurfer](https://github.com/freesurfer/freesurfer) | [`7.4.1`](https://hub.docker.com/r/freesurfer/freesurfer) | 696/789 (88.2%) |
 | [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) | [`6.0.4`](https://hub.docker.com/r/brainlife/fsl) | 245/313 (78.3%) |
 | [Greedy](https://sites.google.com/view/greedyreg/about) | [`1.0.1`](https://hub.docker.com/r/pyushkevich/itksnap) | 1/1 (100% 🎉) |
