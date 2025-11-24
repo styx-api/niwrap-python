@@ -130,12 +130,9 @@ def cifti_label_adjacency_cargs(
             "wb_command",
             "-cifti-label-adjacency",
             params.get("adjacency-out", None),
-            "-left-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-right-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-cerebellum-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else "")
+            "-left-surface" + (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
+            "-right-surface" + (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
+            "-cerebellum-surface" + (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs

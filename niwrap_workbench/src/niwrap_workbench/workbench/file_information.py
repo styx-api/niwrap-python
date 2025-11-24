@@ -106,8 +106,7 @@ def file_information_only_metadata_cargs(
     if params.get("key", None) is not None:
         cargs.extend([
             "-only-metadata",
-            "-key",
-            params.get("key", None)
+            "-key" + params.get("key", None)
         ])
     return cargs
 

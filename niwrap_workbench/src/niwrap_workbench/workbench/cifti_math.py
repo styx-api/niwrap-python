@@ -308,8 +308,7 @@ def cifti_math_cargs(
             "wb_command",
             "-cifti-math",
             params.get("cifti-out", None),
-            "-fixnan",
-            (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
+            "-fixnan" + (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
             ("-override-mapping-check" if (params.get("override-mapping-check", False)) else ""),
             *([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
         ])

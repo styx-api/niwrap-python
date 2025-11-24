@@ -4,8 +4,14 @@
     "outvol": {
       "var_param": "outvol"
     },
-    "roi-vol": {
-      "var_param": "roi_vol"
+    "roi-out": {
+      "var_param": "roi_out",
+      "fn_struct_make_params": "create_signed_distance_volume_roi_out",
+      "properties": {
+        "roi-vol": {
+          "var_param": "roi_vol"
+        }
+      }
     },
     "value": {
       "var_param": "value"

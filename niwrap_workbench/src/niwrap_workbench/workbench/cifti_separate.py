@@ -13,61 +13,111 @@ CIFTI_SEPARATE_METADATA = Metadata(
 )
 
 
+_CiftiSeparateRoiParamsDictNoTag = typing.TypedDict('_CiftiSeparateRoiParamsDictNoTag', {
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDictTagged = typing.TypedDict('CiftiSeparateRoiParamsDictTagged', {
+    "@type": typing.Literal["roi"],
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDict = _CiftiSeparateRoiParamsDictNoTag | CiftiSeparateRoiParamsDictTagged
+
+
+_CiftiSeparateLabelParamsDictNoTag = typing.TypedDict('_CiftiSeparateLabelParamsDictNoTag', {
+    "label-out": str,
+})
+CiftiSeparateLabelParamsDictTagged = typing.TypedDict('CiftiSeparateLabelParamsDictTagged', {
+    "@type": typing.Literal["label"],
+    "label-out": str,
+})
+CiftiSeparateLabelParamsDict = _CiftiSeparateLabelParamsDictNoTag | CiftiSeparateLabelParamsDictTagged
+
+
 _CiftiSeparateVolumeAllParamsDictNoTag = typing.TypedDict('_CiftiSeparateVolumeAllParamsDictNoTag', {
     "volume-out": str,
-    "roi-out": typing.NotRequired[str | None],
-    "label-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict | None],
+    "label": typing.NotRequired[CiftiSeparateLabelParamsDict | None],
     "crop": bool,
 })
 CiftiSeparateVolumeAllParamsDictTagged = typing.TypedDict('CiftiSeparateVolumeAllParamsDictTagged', {
     "@type": typing.Literal["volume-all"],
     "volume-out": str,
-    "roi-out": typing.NotRequired[str | None],
-    "label-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict | None],
+    "label": typing.NotRequired[CiftiSeparateLabelParamsDict | None],
     "crop": bool,
 })
 CiftiSeparateVolumeAllParamsDict = _CiftiSeparateVolumeAllParamsDictNoTag | CiftiSeparateVolumeAllParamsDictTagged
 
 
-_CiftiSeparateLabelParamsDictNoTag = typing.TypedDict('_CiftiSeparateLabelParamsDictNoTag', {
+_CiftiSeparateRoiParamsDict_NoTag = typing.TypedDict('_CiftiSeparateRoiParamsDict_NoTag', {
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDictTagged_ = typing.TypedDict('CiftiSeparateRoiParamsDictTagged_', {
+    "@type": typing.Literal["roi"],
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDict_ = _CiftiSeparateRoiParamsDict_NoTag | CiftiSeparateRoiParamsDictTagged_
+
+
+_CiftiSeparateLabelParamsDict_NoTag = typing.TypedDict('_CiftiSeparateLabelParamsDict_NoTag', {
     "structure": str,
     "label-out": str,
-    "roi-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict_ | None],
 })
-CiftiSeparateLabelParamsDictTagged = typing.TypedDict('CiftiSeparateLabelParamsDictTagged', {
+CiftiSeparateLabelParamsDictTagged_ = typing.TypedDict('CiftiSeparateLabelParamsDictTagged_', {
     "@type": typing.Literal["label"],
     "structure": str,
     "label-out": str,
-    "roi-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict_ | None],
 })
-CiftiSeparateLabelParamsDict = _CiftiSeparateLabelParamsDictNoTag | CiftiSeparateLabelParamsDictTagged
+CiftiSeparateLabelParamsDict_ = _CiftiSeparateLabelParamsDict_NoTag | CiftiSeparateLabelParamsDictTagged_
+
+
+_CiftiSeparateRoiParamsDict_2NoTag = typing.TypedDict('_CiftiSeparateRoiParamsDict_2NoTag', {
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDictTagged_2 = typing.TypedDict('CiftiSeparateRoiParamsDictTagged_2', {
+    "@type": typing.Literal["roi"],
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDict_2 = _CiftiSeparateRoiParamsDict_2NoTag | CiftiSeparateRoiParamsDictTagged_2
 
 
 _CiftiSeparateMetricParamsDictNoTag = typing.TypedDict('_CiftiSeparateMetricParamsDictNoTag', {
     "structure": str,
     "metric-out": str,
-    "roi-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict_2 | None],
 })
 CiftiSeparateMetricParamsDictTagged = typing.TypedDict('CiftiSeparateMetricParamsDictTagged', {
     "@type": typing.Literal["metric"],
     "structure": str,
     "metric-out": str,
-    "roi-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict_2 | None],
 })
 CiftiSeparateMetricParamsDict = _CiftiSeparateMetricParamsDictNoTag | CiftiSeparateMetricParamsDictTagged
+
+
+_CiftiSeparateRoiParamsDict_3NoTag = typing.TypedDict('_CiftiSeparateRoiParamsDict_3NoTag', {
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDictTagged_3 = typing.TypedDict('CiftiSeparateRoiParamsDictTagged_3', {
+    "@type": typing.Literal["roi"],
+    "roi-out": str,
+})
+CiftiSeparateRoiParamsDict_3 = _CiftiSeparateRoiParamsDict_3NoTag | CiftiSeparateRoiParamsDictTagged_3
 
 
 _CiftiSeparateVolumeParamsDictNoTag = typing.TypedDict('_CiftiSeparateVolumeParamsDictNoTag', {
     "structure": str,
     "volume-out": str,
-    "roi-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict_3 | None],
     "crop": bool,
 })
 CiftiSeparateVolumeParamsDictTagged = typing.TypedDict('CiftiSeparateVolumeParamsDictTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
     "volume-out": str,
-    "roi-out": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[CiftiSeparateRoiParamsDict_3 | None],
     "crop": bool,
 })
 CiftiSeparateVolumeParamsDict = _CiftiSeparateVolumeParamsDictNoTag | CiftiSeparateVolumeParamsDictTagged
@@ -75,7 +125,7 @@ CiftiSeparateVolumeParamsDict = _CiftiSeparateVolumeParamsDictNoTag | CiftiSepar
 
 _CiftiSeparateParamsDictNoTag = typing.TypedDict('_CiftiSeparateParamsDictNoTag', {
     "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
-    "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict] | None],
+    "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict_] | None],
     "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiSeparateVolumeParamsDict] | None],
     "cifti-in": InputPathType,
@@ -84,7 +134,7 @@ _CiftiSeparateParamsDictNoTag = typing.TypedDict('_CiftiSeparateParamsDictNoTag'
 CiftiSeparateParamsDictTagged = typing.TypedDict('CiftiSeparateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-separate"],
     "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
-    "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict] | None],
+    "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict_] | None],
     "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiSeparateVolumeParamsDict] | None],
     "cifti-in": InputPathType,
@@ -93,81 +143,54 @@ CiftiSeparateParamsDictTagged = typing.TypedDict('CiftiSeparateParamsDictTagged'
 CiftiSeparateParamsDict = _CiftiSeparateParamsDictNoTag | CiftiSeparateParamsDictTagged
 
 
-class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):
+class CiftiSeparateRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `CiftiSeparateVolumeAllParamsDict | None(...)`.
+    Output object returned when calling `CiftiSeparateRoiParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    volume_out: OutputPathType
-    """the output volume"""
+    roi_out: OutputPathType
+    """the roi output volume"""
 
 
-def cifti_separate_volume_all(
-    volume_out: str,
-    roi_out: str | None = None,
-    label_out: str | None = None,
-    crop: bool = False,
-) -> CiftiSeparateVolumeAllParamsDictTagged:
+def cifti_separate_roi(
+    roi_out: str,
+) -> CiftiSeparateRoiParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        volume_out: the output volume.
-        roi_out: also output the roi of which voxels have data\
-            \
-            the roi output volume.
-        label_out: output a volume label file indicating the location of\
-            structures\
-            \
-            the label output volume.
-        crop: crop volume to the size of the data rather than using the\
-            original volume size.
+        roi_out: the roi output volume.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "volume-all",
-        "volume-out": volume_out,
-        "crop": crop,
+        "@type": "roi",
+        "roi-out": roi_out,
     }
-    if roi_out is not None:
-        params["roi-out"] = roi_out
-    if label_out is not None:
-        params["label-out"] = label_out
     return params
 
 
-def cifti_separate_volume_all_validate(
+def cifti_separate_roi_validate(
     params: typing.Any,
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `CiftiSeparateVolumeAllParamsDict` object.
+    `CiftiSeparateRoiParamsDict` object.
     
     Args:
         params: The parameters object to validate.
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("roi-out", None) is not None:
-        if not isinstance(params["roi-out"], str):
-            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
-    if params.get("label-out", None) is not None:
-        if not isinstance(params["label-out"], str):
-            raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str | None`')
-    if params.get("crop", False) is None:
-        raise StyxValidationError("`crop` must not be None")
-    if not isinstance(params["crop"], bool):
-        raise StyxValidationError(f'`crop` has the wrong type: Received `{type(params.get("crop", False))}` expected `bool`')
+    if params.get("roi-out", None) is None:
+        raise StyxValidationError("`roi-out` must not be None")
+    if not isinstance(params["roi-out"], str):
+        raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str`')
 
 
-def cifti_separate_volume_all_cargs(
-    params: CiftiSeparateVolumeAllParamsDict,
+def cifti_separate_roi_cargs(
+    params: CiftiSeparateRoiParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -180,23 +203,17 @@ def cifti_separate_volume_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-out", None) is not None or params.get("label-out", None) is not None or params.get("crop", False):
-        cargs.extend([
-            "-volume-all",
-            params.get("volume-out", None),
-            "-roi",
-            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
-            "-label",
-            (params.get("label-out", None) if (params.get("label-out", None) is not None) else ""),
-            ("-crop" if (params.get("crop", False)) else "")
-        ])
+    cargs.extend([
+        "-roi",
+        params.get("roi-out", None)
+    ])
     return cargs
 
 
-def cifti_separate_volume_all_outputs(
-    params: CiftiSeparateVolumeAllParamsDict,
+def cifti_separate_roi_outputs(
+    params: CiftiSeparateRoiParamsDict,
     execution: Execution,
-) -> CiftiSeparateVolumeAllOutputs:
+) -> CiftiSeparateRoiOutputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -206,47 +223,38 @@ def cifti_separate_volume_all_outputs(
     Returns:
         Outputs object.
     """
-    ret = CiftiSeparateVolumeAllOutputs(
+    ret = CiftiSeparateRoiOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume-out", None)),
+        roi_out=execution.output_file(params.get("roi-out", None)),
     )
     return ret
 
 
 class CiftiSeparateLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list[CiftiSeparateLabelParamsDict] | None(...)`.
+    Output object returned when calling `CiftiSeparateLabelParamsDict | None(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     label_out: OutputPathType
-    """the output label file"""
+    """the label output volume"""
 
 
 def cifti_separate_label(
-    structure: str,
     label_out: str,
-    roi_out: str | None = None,
 ) -> CiftiSeparateLabelParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        structure: the structure to output.
-        label_out: the output label file.
-        roi_out: also output the roi of which vertices have data\
-            \
-            the roi output metric.
+        label_out: the label output volume.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "label",
-        "structure": structure,
         "label-out": label_out,
     }
-    if roi_out is not None:
-        params["roi-out"] = roi_out
     return params
 
 
@@ -262,17 +270,10 @@ def cifti_separate_label_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("structure", None) is None:
-        raise StyxValidationError("`structure` must not be None")
-    if not isinstance(params["structure"], str):
-        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
     if params.get("label-out", None) is None:
         raise StyxValidationError("`label-out` must not be None")
     if not isinstance(params["label-out"], str):
         raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
-    if params.get("roi-out", None) is not None:
-        if not isinstance(params["roi-out"], str):
-            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
 
 
 def cifti_separate_label_cargs(
@@ -289,14 +290,10 @@ def cifti_separate_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-out", None) is not None:
-        cargs.extend([
-            "-label",
-            params.get("structure", None),
-            params.get("label-out", None),
-            "-roi",
-            params.get("roi-out", None)
-        ])
+    cargs.extend([
+        "-label",
+        params.get("label-out", None)
+    ])
     return cargs
 
 
@@ -320,6 +317,403 @@ def cifti_separate_label_outputs(
     return ret
 
 
+class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `CiftiSeparateVolumeAllParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    volume_out: OutputPathType
+    """the output volume"""
+    roi: CiftiSeparateRoiOutputs | None
+    """Outputs from `cifti_separate_roi_outputs`."""
+    label: CiftiSeparateLabelOutputs | None
+    """Outputs from `cifti_separate_label_outputs`."""
+
+
+def cifti_separate_volume_all(
+    volume_out: str,
+    roi: CiftiSeparateRoiParamsDict | None = None,
+    label: CiftiSeparateLabelParamsDict | None = None,
+    crop: bool = False,
+) -> CiftiSeparateVolumeAllParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        volume_out: the output volume.
+        roi: also output the roi of which voxels have data.
+        label: output a volume label file indicating the location of structures.
+        crop: crop volume to the size of the data rather than using the\
+            original volume size.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "volume-all",
+        "volume-out": volume_out,
+        "crop": crop,
+    }
+    if roi is not None:
+        params["roi"] = roi
+    if label is not None:
+        params["label"] = label
+    return params
+
+
+def cifti_separate_volume_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateVolumeAllParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("roi", None) is not None:
+        cifti_separate_roi_validate(params["roi"])
+    if params.get("label", None) is not None:
+        cifti_separate_label_validate(params["label"])
+    if params.get("crop", False) is None:
+        raise StyxValidationError("`crop` must not be None")
+    if not isinstance(params["crop"], bool):
+        raise StyxValidationError(f'`crop` has the wrong type: Received `{type(params.get("crop", False))}` expected `bool`')
+
+
+def cifti_separate_volume_all_cargs(
+    params: CiftiSeparateVolumeAllParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("roi", None) is not None or params.get("label", None) is not None or params.get("crop", False):
+        cargs.extend([
+            "-volume-all",
+            params.get("volume-out", None),
+            *(cifti_separate_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+            *(cifti_separate_label_cargs(params.get("label", None), execution) if (params.get("label", None) is not None) else []),
+            ("-crop" if (params.get("crop", False)) else "")
+        ])
+    return cargs
+
+
+def cifti_separate_volume_all_outputs(
+    params: CiftiSeparateVolumeAllParamsDict,
+    execution: Execution,
+) -> CiftiSeparateVolumeAllOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiSeparateVolumeAllOutputs(
+        root=execution.output_file("."),
+        volume_out=execution.output_file(params.get("volume-out", None)),
+        roi=cifti_separate_roi_outputs(params.get("roi"), execution) if params.get("roi") else None,
+        label=cifti_separate_label_outputs(params.get("label"), execution) if params.get("label") else None,
+    )
+    return ret
+
+
+class CiftiSeparateRoiOutputs_(typing.NamedTuple):
+    """
+    Output object returned when calling `CiftiSeparateRoiParamsDict_ | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    roi_out: OutputPathType
+    """the roi output metric"""
+
+
+def cifti_separate_roi_(
+    roi_out: str,
+) -> CiftiSeparateRoiParamsDictTagged_:
+    """
+    Build parameters.
+    
+    Args:
+        roi_out: the roi output metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "roi",
+        "roi-out": roi_out,
+    }
+    return params
+
+
+def cifti_separate_roi_validate_(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateRoiParamsDict_` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-out", None) is None:
+        raise StyxValidationError("`roi-out` must not be None")
+    if not isinstance(params["roi-out"], str):
+        raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str`')
+
+
+def cifti_separate_roi_cargs_(
+    params: CiftiSeparateRoiParamsDict_,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-roi",
+        params.get("roi-out", None)
+    ])
+    return cargs
+
+
+def cifti_separate_roi_outputs_(
+    params: CiftiSeparateRoiParamsDict_,
+    execution: Execution,
+) -> CiftiSeparateRoiOutputs_:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiSeparateRoiOutputs_(
+        root=execution.output_file("."),
+        roi_out=execution.output_file(params.get("roi-out", None)),
+    )
+    return ret
+
+
+class CiftiSeparateLabelOutputs_(typing.NamedTuple):
+    """
+    Output object returned when calling `list[CiftiSeparateLabelParamsDict_] | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    label_out: OutputPathType
+    """the output label file"""
+    roi: CiftiSeparateRoiOutputs_ | None
+    """Outputs from `cifti_separate_roi_outputs_`."""
+
+
+def cifti_separate_label_(
+    structure: str,
+    label_out: str,
+    roi: CiftiSeparateRoiParamsDict_ | None = None,
+) -> CiftiSeparateLabelParamsDictTagged_:
+    """
+    Build parameters.
+    
+    Args:
+        structure: the structure to output.
+        label_out: the output label file.
+        roi: also output the roi of which vertices have data.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "label",
+        "structure": structure,
+        "label-out": label_out,
+    }
+    if roi is not None:
+        params["roi"] = roi
+    return params
+
+
+def cifti_separate_label_validate_(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateLabelParamsDict_` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("roi", None) is not None:
+        cifti_separate_roi_validate_(params["roi"])
+
+
+def cifti_separate_label_cargs_(
+    params: CiftiSeparateLabelParamsDict_,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("roi", None) is not None:
+        cargs.extend([
+            "-label",
+            params.get("structure", None),
+            params.get("label-out", None),
+            *cifti_separate_roi_cargs_(params.get("roi", None), execution)
+        ])
+    return cargs
+
+
+def cifti_separate_label_outputs_(
+    params: CiftiSeparateLabelParamsDict_,
+    execution: Execution,
+) -> CiftiSeparateLabelOutputs_:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiSeparateLabelOutputs_(
+        root=execution.output_file("."),
+        label_out=execution.output_file(params.get("label-out", None)),
+        roi=cifti_separate_roi_outputs_(params.get("roi"), execution) if params.get("roi") else None,
+    )
+    return ret
+
+
+class CiftiSeparateRoiOutputs_2(typing.NamedTuple):
+    """
+    Output object returned when calling `CiftiSeparateRoiParamsDict_2 | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    roi_out: OutputPathType
+    """the roi output metric"""
+
+
+def cifti_separate_roi_2(
+    roi_out: str,
+) -> CiftiSeparateRoiParamsDictTagged_2:
+    """
+    Build parameters.
+    
+    Args:
+        roi_out: the roi output metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "roi",
+        "roi-out": roi_out,
+    }
+    return params
+
+
+def cifti_separate_roi_validate_2(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateRoiParamsDict_2` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-out", None) is None:
+        raise StyxValidationError("`roi-out` must not be None")
+    if not isinstance(params["roi-out"], str):
+        raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str`')
+
+
+def cifti_separate_roi_cargs_2(
+    params: CiftiSeparateRoiParamsDict_2,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-roi",
+        params.get("roi-out", None)
+    ])
+    return cargs
+
+
+def cifti_separate_roi_outputs_2(
+    params: CiftiSeparateRoiParamsDict_2,
+    execution: Execution,
+) -> CiftiSeparateRoiOutputs_2:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiSeparateRoiOutputs_2(
+        root=execution.output_file("."),
+        roi_out=execution.output_file(params.get("roi-out", None)),
+    )
+    return ret
+
+
 class CiftiSeparateMetricOutputs(typing.NamedTuple):
     """
     Output object returned when calling `list[CiftiSeparateMetricParamsDict] | None(...)`.
@@ -328,12 +722,14 @@ class CiftiSeparateMetricOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     metric_out: OutputPathType
     """the output metric"""
+    roi: CiftiSeparateRoiOutputs_2 | None
+    """Outputs from `cifti_separate_roi_outputs_2`."""
 
 
 def cifti_separate_metric(
     structure: str,
     metric_out: str,
-    roi_out: str | None = None,
+    roi: CiftiSeparateRoiParamsDict_2 | None = None,
 ) -> CiftiSeparateMetricParamsDictTagged:
     """
     Build parameters.
@@ -341,9 +737,7 @@ def cifti_separate_metric(
     Args:
         structure: the structure to output.
         metric_out: the output metric.
-        roi_out: also output the roi of which vertices have data\
-            \
-            the roi output metric.
+        roi: also output the roi of which vertices have data.
     Returns:
         Parameter dictionary
     """
@@ -352,8 +746,8 @@ def cifti_separate_metric(
         "structure": structure,
         "metric-out": metric_out,
     }
-    if roi_out is not None:
-        params["roi-out"] = roi_out
+    if roi is not None:
+        params["roi"] = roi
     return params
 
 
@@ -377,9 +771,8 @@ def cifti_separate_metric_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("roi-out", None) is not None:
-        if not isinstance(params["roi-out"], str):
-            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("roi", None) is not None:
+        cifti_separate_roi_validate_2(params["roi"])
 
 
 def cifti_separate_metric_cargs(
@@ -396,13 +789,12 @@ def cifti_separate_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-out", None) is not None:
+    if params.get("roi", None) is not None:
         cargs.extend([
             "-metric",
             params.get("structure", None),
             params.get("metric-out", None),
-            "-roi",
-            params.get("roi-out", None)
+            *cifti_separate_roi_cargs_2(params.get("roi", None), execution)
         ])
     return cargs
 
@@ -423,6 +815,94 @@ def cifti_separate_metric_outputs(
     ret = CiftiSeparateMetricOutputs(
         root=execution.output_file("."),
         metric_out=execution.output_file(params.get("metric-out", None)),
+        roi=cifti_separate_roi_outputs_2(params.get("roi"), execution) if params.get("roi") else None,
+    )
+    return ret
+
+
+class CiftiSeparateRoiOutputs_3(typing.NamedTuple):
+    """
+    Output object returned when calling `CiftiSeparateRoiParamsDict_3 | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    roi_out: OutputPathType
+    """the roi output volume"""
+
+
+def cifti_separate_roi_3(
+    roi_out: str,
+) -> CiftiSeparateRoiParamsDictTagged_3:
+    """
+    Build parameters.
+    
+    Args:
+        roi_out: the roi output volume.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "roi",
+        "roi-out": roi_out,
+    }
+    return params
+
+
+def cifti_separate_roi_validate_3(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateRoiParamsDict_3` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-out", None) is None:
+        raise StyxValidationError("`roi-out` must not be None")
+    if not isinstance(params["roi-out"], str):
+        raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str`')
+
+
+def cifti_separate_roi_cargs_3(
+    params: CiftiSeparateRoiParamsDict_3,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-roi",
+        params.get("roi-out", None)
+    ])
+    return cargs
+
+
+def cifti_separate_roi_outputs_3(
+    params: CiftiSeparateRoiParamsDict_3,
+    execution: Execution,
+) -> CiftiSeparateRoiOutputs_3:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiSeparateRoiOutputs_3(
+        root=execution.output_file("."),
+        roi_out=execution.output_file(params.get("roi-out", None)),
     )
     return ret
 
@@ -435,12 +915,14 @@ class CiftiSeparateVolumeOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     volume_out: OutputPathType
     """the output volume"""
+    roi: CiftiSeparateRoiOutputs_3 | None
+    """Outputs from `cifti_separate_roi_outputs_3`."""
 
 
 def cifti_separate_volume(
     structure: str,
     volume_out: str,
-    roi_out: str | None = None,
+    roi: CiftiSeparateRoiParamsDict_3 | None = None,
     crop: bool = False,
 ) -> CiftiSeparateVolumeParamsDictTagged:
     """
@@ -449,9 +931,7 @@ def cifti_separate_volume(
     Args:
         structure: the structure to output.
         volume_out: the output volume.
-        roi_out: also output the roi of which voxels have data\
-            \
-            the roi output volume.
+        roi: also output the roi of which voxels have data.
         crop: crop volume to the size of the component rather than using the\
             original volume size.
     Returns:
@@ -463,8 +943,8 @@ def cifti_separate_volume(
         "volume-out": volume_out,
         "crop": crop,
     }
-    if roi_out is not None:
-        params["roi-out"] = roi_out
+    if roi is not None:
+        params["roi"] = roi
     return params
 
 
@@ -488,9 +968,8 @@ def cifti_separate_volume_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("roi-out", None) is not None:
-        if not isinstance(params["roi-out"], str):
-            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("roi", None) is not None:
+        cifti_separate_roi_validate_3(params["roi"])
     if params.get("crop", False) is None:
         raise StyxValidationError("`crop` must not be None")
     if not isinstance(params["crop"], bool):
@@ -511,13 +990,12 @@ def cifti_separate_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-out", None) is not None or params.get("crop", False):
+    if params.get("roi", None) is not None or params.get("crop", False):
         cargs.extend([
             "-volume",
             params.get("structure", None),
             params.get("volume-out", None),
-            "-roi",
-            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
+            *(cifti_separate_roi_cargs_3(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-crop" if (params.get("crop", False)) else "")
         ])
     return cargs
@@ -539,6 +1017,7 @@ def cifti_separate_volume_outputs(
     ret = CiftiSeparateVolumeOutputs(
         root=execution.output_file("."),
         volume_out=execution.output_file(params.get("volume-out", None)),
+        roi=cifti_separate_roi_outputs_3(params.get("roi"), execution) if params.get("roi") else None,
     )
     return ret
 
@@ -551,8 +1030,8 @@ class CiftiSeparateOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     volume_all: CiftiSeparateVolumeAllOutputs | None
     """Outputs from `cifti_separate_volume_all_outputs`."""
-    label: list[CiftiSeparateLabelOutputs] | None
-    """Outputs from `cifti_separate_label_outputs`.This is a list of outputs
+    label: list[CiftiSeparateLabelOutputs_] | None
+    """Outputs from `cifti_separate_label_outputs_`.This is a list of outputs
     with the same length and order as the inputs."""
     metric: list[CiftiSeparateMetricOutputs] | None
     """Outputs from `cifti_separate_metric_outputs`.This is a list of outputs
@@ -566,7 +1045,7 @@ def cifti_separate_params(
     cifti_in: InputPathType,
     direction: str,
     volume_all: CiftiSeparateVolumeAllParamsDict | None = None,
-    label: list[CiftiSeparateLabelParamsDict] | None = None,
+    label: list[CiftiSeparateLabelParamsDict_] | None = None,
     metric: list[CiftiSeparateMetricParamsDict] | None = None,
     volume: list[CiftiSeparateVolumeParamsDict] | None = None,
 ) -> CiftiSeparateParamsDictTagged:
@@ -615,9 +1094,9 @@ def cifti_separate_validate(
         cifti_separate_volume_all_validate(params["volume-all"])
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
-            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiSeparateLabelParamsDict] | None`')
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiSeparateLabelParamsDict_] | None`')
         for e in params["label"]:
-            cifti_separate_label_validate(e)
+            cifti_separate_label_validate_(e)
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
             raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiSeparateMetricParamsDict] | None`')
@@ -657,7 +1136,7 @@ def cifti_separate_cargs(
             "wb_command",
             "-cifti-separate",
             *(cifti_separate_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
-            *([a for c in [cifti_separate_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
+            *([a for c in [cifti_separate_label_cargs_(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
             *([a for c in [cifti_separate_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
             *([a for c in [cifti_separate_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
         ])
@@ -682,7 +1161,7 @@ def cifti_separate_outputs(
     ret = CiftiSeparateOutputs(
         root=execution.output_file("."),
         volume_all=cifti_separate_volume_all_outputs(params.get("volume-all"), execution) if params.get("volume-all") else None,
-        label=[cifti_separate_label_outputs(i, execution) if cifti_separate_label_outputs else None for i in params.get("label")] if params.get("label") else None,
+        label=[cifti_separate_label_outputs_(i, execution) if cifti_separate_label_outputs_ else None for i in params.get("label")] if params.get("label") else None,
         metric=[cifti_separate_metric_outputs(i, execution) if cifti_separate_metric_outputs else None for i in params.get("metric")] if params.get("metric") else None,
         volume=[cifti_separate_volume_outputs(i, execution) if cifti_separate_volume_outputs else None for i in params.get("volume")] if params.get("volume") else None,
     )
@@ -763,7 +1242,7 @@ def cifti_separate(
     cifti_in: InputPathType,
     direction: str,
     volume_all: CiftiSeparateVolumeAllParamsDict | None = None,
-    label: list[CiftiSeparateLabelParamsDict] | None = None,
+    label: list[CiftiSeparateLabelParamsDict_] | None = None,
     metric: list[CiftiSeparateMetricParamsDict] | None = None,
     volume: list[CiftiSeparateVolumeParamsDict] | None = None,
     runner: Runner | None = None,
@@ -843,14 +1322,29 @@ def cifti_separate(
 __all__ = [
     "CIFTI_SEPARATE_METADATA",
     "CiftiSeparateLabelOutputs",
+    "CiftiSeparateLabelOutputs_",
     "CiftiSeparateLabelParamsDict",
     "CiftiSeparateLabelParamsDictTagged",
+    "CiftiSeparateLabelParamsDictTagged_",
+    "CiftiSeparateLabelParamsDict_",
     "CiftiSeparateMetricOutputs",
     "CiftiSeparateMetricParamsDict",
     "CiftiSeparateMetricParamsDictTagged",
     "CiftiSeparateOutputs",
     "CiftiSeparateParamsDict",
     "CiftiSeparateParamsDictTagged",
+    "CiftiSeparateRoiOutputs",
+    "CiftiSeparateRoiOutputs_",
+    "CiftiSeparateRoiOutputs_2",
+    "CiftiSeparateRoiOutputs_3",
+    "CiftiSeparateRoiParamsDict",
+    "CiftiSeparateRoiParamsDictTagged",
+    "CiftiSeparateRoiParamsDictTagged_",
+    "CiftiSeparateRoiParamsDictTagged_2",
+    "CiftiSeparateRoiParamsDictTagged_3",
+    "CiftiSeparateRoiParamsDict_",
+    "CiftiSeparateRoiParamsDict_2",
+    "CiftiSeparateRoiParamsDict_3",
     "CiftiSeparateVolumeAllOutputs",
     "CiftiSeparateVolumeAllParamsDict",
     "CiftiSeparateVolumeAllParamsDictTagged",
@@ -860,8 +1354,13 @@ __all__ = [
     "cifti_separate",
     "cifti_separate_execute",
     "cifti_separate_label",
+    "cifti_separate_label_",
     "cifti_separate_metric",
     "cifti_separate_params",
+    "cifti_separate_roi",
+    "cifti_separate_roi_",
+    "cifti_separate_roi_2",
+    "cifti_separate_roi_3",
     "cifti_separate_volume",
     "cifti_separate_volume_all",
 ]

@@ -37,12 +37,22 @@ LabelResampleAreaMetricsParamsDictTagged = typing.TypedDict('LabelResampleAreaMe
 LabelResampleAreaMetricsParamsDict = _LabelResampleAreaMetricsParamsDictNoTag | LabelResampleAreaMetricsParamsDictTagged
 
 
+_LabelResampleValidRoiOutParamsDictNoTag = typing.TypedDict('_LabelResampleValidRoiOutParamsDictNoTag', {
+    "roi-out": str,
+})
+LabelResampleValidRoiOutParamsDictTagged = typing.TypedDict('LabelResampleValidRoiOutParamsDictTagged', {
+    "@type": typing.Literal["valid-roi-out"],
+    "roi-out": str,
+})
+LabelResampleValidRoiOutParamsDict = _LabelResampleValidRoiOutParamsDictNoTag | LabelResampleValidRoiOutParamsDictTagged
+
+
 _LabelResampleParamsDictNoTag = typing.TypedDict('_LabelResampleParamsDictNoTag', {
     "label-out": str,
     "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-out": typing.NotRequired[str | None],
+    "valid-roi-out": typing.NotRequired[LabelResampleValidRoiOutParamsDict | None],
     "largest": bool,
     "bypass-sphere-check": bool,
     "label-in": InputPathType,
@@ -56,7 +66,7 @@ LabelResampleParamsDictTagged = typing.TypedDict('LabelResampleParamsDictTagged'
     "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-out": typing.NotRequired[str | None],
+    "valid-roi-out": typing.NotRequired[LabelResampleValidRoiOutParamsDict | None],
     "largest": bool,
     "bypass-sphere-check": bool,
     "label-in": InputPathType,
@@ -197,6 +207,93 @@ def label_resample_area_metrics_cargs(
     return cargs
 
 
+class LabelResampleValidRoiOutOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `LabelResampleValidRoiOutParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    roi_out: OutputPathType
+    """the output roi as a metric"""
+
+
+def label_resample_valid_roi_out(
+    roi_out: str,
+) -> LabelResampleValidRoiOutParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        roi_out: the output roi as a metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "valid-roi-out",
+        "roi-out": roi_out,
+    }
+    return params
+
+
+def label_resample_valid_roi_out_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelResampleValidRoiOutParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-out", None) is None:
+        raise StyxValidationError("`roi-out` must not be None")
+    if not isinstance(params["roi-out"], str):
+        raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str`')
+
+
+def label_resample_valid_roi_out_cargs(
+    params: LabelResampleValidRoiOutParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-valid-roi-out",
+        params.get("roi-out", None)
+    ])
+    return cargs
+
+
+def label_resample_valid_roi_out_outputs(
+    params: LabelResampleValidRoiOutParamsDict,
+    execution: Execution,
+) -> LabelResampleValidRoiOutOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = LabelResampleValidRoiOutOutputs(
+        root=execution.output_file("."),
+        roi_out=execution.output_file(params.get("roi-out", None)),
+    )
+    return ret
+
+
 class LabelResampleOutputs(typing.NamedTuple):
     """
     Output object returned when calling `LabelResampleParamsDict(...)`.
@@ -205,6 +302,8 @@ class LabelResampleOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     label_out: OutputPathType
     """the output label file"""
+    valid_roi_out: LabelResampleValidRoiOutOutputs | None
+    """Outputs from `label_resample_valid_roi_out_outputs`."""
 
 
 def label_resample_params(
@@ -216,7 +315,7 @@ def label_resample_params(
     area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
     area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
     roi_metric: InputPathType | None = None,
-    roi_out: str | None = None,
+    valid_roi_out: LabelResampleValidRoiOutParamsDict | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
 ) -> LabelResampleParamsDictTagged:
@@ -238,10 +337,8 @@ def label_resample_params(
             vertices\
             \
             the roi, as a metric file.
-        roi_out: output the ROI of vertices that got data from valid source\
-            vertices\
-            \
-            the output roi as a metric.
+        valid_roi_out: output the ROI of vertices that got data from valid\
+            source vertices.
         largest: use only the label of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.
@@ -264,8 +361,8 @@ def label_resample_params(
         params["area-metrics"] = area_metrics
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
-    if roi_out is not None:
-        params["roi-out"] = roi_out
+    if valid_roi_out is not None:
+        params["valid-roi-out"] = valid_roi_out
     return params
 
 
@@ -292,9 +389,8 @@ def label_resample_validate(
     if params.get("roi-metric", None) is not None:
         if not isinstance(params["roi-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-out", None) is not None:
-        if not isinstance(params["roi-out"], str):
-            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("valid-roi-out", None) is not None:
+        label_resample_valid_roi_out_validate(params["valid-roi-out"])
     if params.get("largest", False) is None:
         raise StyxValidationError("`largest` must not be None")
     if not isinstance(params["largest"], bool):
@@ -335,17 +431,15 @@ def label_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-out", None) is not None or params.get("largest", False) or params.get("bypass-sphere-check", False):
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("roi-metric", None) is not None or params.get("valid-roi-out", None) is not None or params.get("largest", False) or params.get("bypass-sphere-check", False):
         cargs.extend([
             "wb_command",
             "-label-resample",
             params.get("label-out", None),
             *(label_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
             *(label_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
-            "-current-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-valid-roi-out",
-            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
+            "-current-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            *(label_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else []),
             ("-largest" if (params.get("largest", False)) else ""),
             ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
         ])
@@ -372,6 +466,7 @@ def label_resample_outputs(
     ret = LabelResampleOutputs(
         root=execution.output_file("."),
         label_out=execution.output_file(params.get("label-out", None)),
+        valid_roi_out=label_resample_valid_roi_out_outputs(params.get("valid-roi-out"), execution) if params.get("valid-roi-out") else None,
     )
     return ret
 
@@ -430,7 +525,7 @@ def label_resample(
     area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
     area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
     roi_metric: InputPathType | None = None,
-    roi_out: str | None = None,
+    valid_roi_out: LabelResampleValidRoiOutParamsDict | None = None,
     largest: bool = False,
     bypass_sphere_check: bool = False,
     runner: Runner | None = None,
@@ -475,10 +570,8 @@ def label_resample(
             vertices\
             \
             the roi, as a metric file.
-        roi_out: output the ROI of vertices that got data from valid source\
-            vertices\
-            \
-            the output roi as a metric.
+        valid_roi_out: output the ROI of vertices that got data from valid\
+            source vertices.
         largest: use only the label of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.
@@ -491,7 +584,7 @@ def label_resample(
         area_surfs=area_surfs,
         area_metrics=area_metrics,
         roi_metric=roi_metric,
-        roi_out=roi_out,
+        valid_roi_out=valid_roi_out,
         largest=largest,
         bypass_sphere_check=bypass_sphere_check,
         label_in=label_in,
@@ -511,9 +604,13 @@ __all__ = [
     "LabelResampleOutputs",
     "LabelResampleParamsDict",
     "LabelResampleParamsDictTagged",
+    "LabelResampleValidRoiOutOutputs",
+    "LabelResampleValidRoiOutParamsDict",
+    "LabelResampleValidRoiOutParamsDictTagged",
     "label_resample",
     "label_resample_area_metrics",
     "label_resample_area_surfs",
     "label_resample_execute",
     "label_resample_params",
+    "label_resample_valid_roi_out",
 ]

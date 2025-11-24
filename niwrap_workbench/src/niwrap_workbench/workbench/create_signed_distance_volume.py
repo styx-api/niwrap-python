@@ -13,9 +13,19 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
 )
 
 
+_CreateSignedDistanceVolumeRoiOutParamsDictNoTag = typing.TypedDict('_CreateSignedDistanceVolumeRoiOutParamsDictNoTag', {
+    "roi-vol": str,
+})
+CreateSignedDistanceVolumeRoiOutParamsDictTagged = typing.TypedDict('CreateSignedDistanceVolumeRoiOutParamsDictTagged', {
+    "@type": typing.Literal["roi-out"],
+    "roi-vol": str,
+})
+CreateSignedDistanceVolumeRoiOutParamsDict = _CreateSignedDistanceVolumeRoiOutParamsDictNoTag | CreateSignedDistanceVolumeRoiOutParamsDictTagged
+
+
 _CreateSignedDistanceVolumeParamsDictNoTag = typing.TypedDict('_CreateSignedDistanceVolumeParamsDictNoTag', {
     "outvol": str,
-    "roi-vol": typing.NotRequired[str | None],
+    "roi-out": typing.NotRequired[CreateSignedDistanceVolumeRoiOutParamsDict | None],
     "value": typing.NotRequired[float | None],
     "dist": typing.NotRequired[float | None],
     "dist": typing.NotRequired[float | None],
@@ -27,7 +37,7 @@ _CreateSignedDistanceVolumeParamsDictNoTag = typing.TypedDict('_CreateSignedDist
 CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDistanceVolumeParamsDictTagged', {
     "@type": typing.Literal["workbench/create-signed-distance-volume"],
     "outvol": str,
-    "roi-vol": typing.NotRequired[str | None],
+    "roi-out": typing.NotRequired[CreateSignedDistanceVolumeRoiOutParamsDict | None],
     "value": typing.NotRequired[float | None],
     "dist": typing.NotRequired[float | None],
     "dist": typing.NotRequired[float | None],
@@ -39,6 +49,93 @@ CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDista
 CreateSignedDistanceVolumeParamsDict = _CreateSignedDistanceVolumeParamsDictNoTag | CreateSignedDistanceVolumeParamsDictTagged
 
 
+class CreateSignedDistanceVolumeRoiOutOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `CreateSignedDistanceVolumeRoiOutParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    roi_vol: OutputPathType
+    """the output roi volume"""
+
+
+def create_signed_distance_volume_roi_out(
+    roi_vol: str,
+) -> CreateSignedDistanceVolumeRoiOutParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        roi_vol: the output roi volume.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "roi-out",
+        "roi-vol": roi_vol,
+    }
+    return params
+
+
+def create_signed_distance_volume_roi_out_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateSignedDistanceVolumeRoiOutParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-vol", None) is None:
+        raise StyxValidationError("`roi-vol` must not be None")
+    if not isinstance(params["roi-vol"], str):
+        raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `str`')
+
+
+def create_signed_distance_volume_roi_out_cargs(
+    params: CreateSignedDistanceVolumeRoiOutParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-roi-out",
+        params.get("roi-vol", None)
+    ])
+    return cargs
+
+
+def create_signed_distance_volume_roi_out_outputs(
+    params: CreateSignedDistanceVolumeRoiOutParamsDict,
+    execution: Execution,
+) -> CreateSignedDistanceVolumeRoiOutOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CreateSignedDistanceVolumeRoiOutOutputs(
+        root=execution.output_file("."),
+        roi_vol=execution.output_file(params.get("roi-vol", None)),
+    )
+    return ret
+
+
 class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
     """
     Output object returned when calling `CreateSignedDistanceVolumeParamsDict(...)`.
@@ -47,13 +144,15 @@ class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     outvol: OutputPathType
     """the output volume"""
+    roi_out: CreateSignedDistanceVolumeRoiOutOutputs | None
+    """Outputs from `create_signed_distance_volume_roi_out_outputs`."""
 
 
 def create_signed_distance_volume_params(
     outvol: str,
     surface: InputPathType,
     refspace: str,
-    roi_vol: str | None = None,
+    roi_out: CreateSignedDistanceVolumeRoiOutParamsDict | None = None,
     value: float | None = None,
     dist: float | None = None,
     dist_: float | None = None,
@@ -67,9 +166,7 @@ def create_signed_distance_volume_params(
         outvol: the output volume.
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
-        roi_vol: output an roi volume of where the output has a computed value\
-            \
-            the output roi volume.
+        roi_out: output an roi volume of where the output has a computed value.
         value: specify a value to put in all voxels that don't get assigned a\
             distance\
             \
@@ -96,8 +193,8 @@ def create_signed_distance_volume_params(
         "surface": surface,
         "refspace": refspace,
     }
-    if roi_vol is not None:
-        params["roi-vol"] = roi_vol
+    if roi_out is not None:
+        params["roi-out"] = roi_out
     if value is not None:
         params["value"] = value
     if dist is not None:
@@ -127,9 +224,8 @@ def create_signed_distance_volume_validate(
         raise StyxValidationError("`outvol` must not be None")
     if not isinstance(params["outvol"], str):
         raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str`')
-    if params.get("roi-vol", None) is not None:
-        if not isinstance(params["roi-vol"], str):
-            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `str | None`')
+    if params.get("roi-out", None) is not None:
+        create_signed_distance_volume_roi_out_validate(params["roi-out"])
     if params.get("value", None) is not None:
         if not isinstance(params["value"], (float, int)):
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
@@ -169,23 +265,17 @@ def create_signed_distance_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-vol", None) is not None or params.get("value", None) is not None or params.get("dist", None) is not None or params.get("dist", None) is not None or params.get("num", None) is not None or params.get("method", None) is not None:
+    if params.get("roi-out", None) is not None or params.get("value", None) is not None or params.get("dist", None) is not None or params.get("dist", None) is not None or params.get("num", None) is not None or params.get("method", None) is not None:
         cargs.extend([
             "wb_command",
             "-create-signed-distance-volume",
             params.get("outvol", None),
-            "-roi-out",
-            (params.get("roi-vol", None) if (params.get("roi-vol", None) is not None) else ""),
-            "-fill-value",
-            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-            "-exact-limit",
-            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-            "-approx-limit",
-            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-            "-approx-neighborhood",
-            (str(params.get("num", None)) if (params.get("num", None) is not None) else ""),
-            "-winding",
-            (params.get("method", None) if (params.get("method", None) is not None) else "")
+            *(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution) if (params.get("roi-out", None) is not None) else []),
+            "-fill-value" + (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+            "-exact-limit" + (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
+            "-approx-limit" + (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
+            "-approx-neighborhood" + (str(params.get("num", None)) if (params.get("num", None) is not None) else ""),
+            "-winding" + (params.get("method", None) if (params.get("method", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("refspace", None))
@@ -208,6 +298,7 @@ def create_signed_distance_volume_outputs(
     ret = CreateSignedDistanceVolumeOutputs(
         root=execution.output_file("."),
         outvol=execution.output_file(params.get("outvol", None)),
+        roi_out=create_signed_distance_volume_roi_out_outputs(params.get("roi-out"), execution) if params.get("roi-out") else None,
     )
     return ret
 
@@ -258,7 +349,7 @@ def create_signed_distance_volume(
     outvol: str,
     surface: InputPathType,
     refspace: str,
-    roi_vol: str | None = None,
+    roi_out: CreateSignedDistanceVolumeRoiOutParamsDict | None = None,
     value: float | None = None,
     dist: float | None = None,
     dist_: float | None = None,
@@ -292,9 +383,7 @@ def create_signed_distance_volume(
         outvol: the output volume.
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
-        roi_vol: output an roi volume of where the output has a computed value\
-            \
-            the output roi volume.
+        roi_out: output an roi volume of where the output has a computed value.
         value: specify a value to put in all voxels that don't get assigned a\
             distance\
             \
@@ -318,7 +407,7 @@ def create_signed_distance_volume(
     """
     params = create_signed_distance_volume_params(
         outvol=outvol,
-        roi_vol=roi_vol,
+        roi_out=roi_out,
         value=value,
         dist=dist,
         dist_=dist_,
@@ -335,7 +424,11 @@ __all__ = [
     "CreateSignedDistanceVolumeOutputs",
     "CreateSignedDistanceVolumeParamsDict",
     "CreateSignedDistanceVolumeParamsDictTagged",
+    "CreateSignedDistanceVolumeRoiOutOutputs",
+    "CreateSignedDistanceVolumeRoiOutParamsDict",
+    "CreateSignedDistanceVolumeRoiOutParamsDictTagged",
     "create_signed_distance_volume",
     "create_signed_distance_volume_execute",
     "create_signed_distance_volume_params",
+    "create_signed_distance_volume_roi_out",
 ]

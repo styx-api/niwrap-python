@@ -1,11 +1,23 @@
 {
   "fn_root_make_params_and_execute": "surface_curvature",
   "properties": {
-    "mean-out": {
-      "var_param": "mean_out"
+    "mean": {
+      "var_param": "mean",
+      "fn_struct_make_params": "surface_curvature_mean",
+      "properties": {
+        "mean-out": {
+          "var_param": "mean_out"
+        }
+      }
     },
-    "gauss-out": {
-      "var_param": "gauss_out"
+    "gauss": {
+      "var_param": "gauss",
+      "fn_struct_make_params": "surface_curvature_gauss",
+      "properties": {
+        "gauss-out": {
+          "var_param": "gauss_out"
+        }
+      }
     },
     "surface": {
       "var_param": "surface"

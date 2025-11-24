@@ -960,7 +960,7 @@ def ants_apply_transforms_multi_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + ",".join([a for c in [ants_apply_transforms_params_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("params", None)] for a in c]) + "]")
+    cargs.append("MultiLabel" + "[" + ",".join([a for c in [ants_apply_transforms_params_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("params", None)] for a in c]) + "]")
     return cargs
 
 

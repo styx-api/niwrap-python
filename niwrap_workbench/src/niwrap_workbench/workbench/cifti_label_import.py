@@ -148,11 +148,9 @@ def cifti_label_import_cargs(
             "-cifti-label-import",
             params.get("output", None),
             ("-discard-others" if (params.get("discard-others", False)) else ""),
-            "-unlabeled-value",
-            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+            "-unlabeled-value" + (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
             ("-drop-unused-labels" if (params.get("drop-unused-labels", False)) else ""),
-            "-hierarchy",
-            (params.get("file", None) if (params.get("file", None) is not None) else "")
+            "-hierarchy" + (params.get("file", None) if (params.get("file", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("input", None)))
     cargs.append(params.get("label-list-file", None))

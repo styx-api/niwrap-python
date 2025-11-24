@@ -383,13 +383,10 @@ def convert_warpfield_cargs(
             "wb_command",
             "-convert-warpfield",
             *(convert_warpfield_from_world_cargs(params.get("from-world", None), execution) if (params.get("from-world", None) is not None) else []),
-            "-from-itk",
-            (params.get("input", None) if (params.get("input", None) is not None) else ""),
+            "-from-itk" + (params.get("input", None) if (params.get("input", None) is not None) else ""),
             *(convert_warpfield_from_fnirt_cargs(params.get("from-fnirt", None), execution) if (params.get("from-fnirt", None) is not None) else []),
-            "-to-world",
-            (params.get("output", None) if (params.get("output", None) is not None) else ""),
-            "-to-itk",
-            (params.get("output", None) if (params.get("output", None) is not None) else ""),
+            "-to-world" + (params.get("output", None) if (params.get("output", None) is not None) else ""),
+            "-to-itk" + (params.get("output", None) if (params.get("output", None) is not None) else ""),
             *([a for c in [convert_warpfield_to_fnirt_cargs(s, execution) for s in params.get("to-fnirt", None)] for a in c] if (params.get("to-fnirt", None) is not None) else [])
         ])
     return cargs

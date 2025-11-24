@@ -340,15 +340,13 @@ def volume_extrema_cargs(
             "-volume-extrema",
             params.get("volume-out", None),
             *(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
             *(volume_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
             ("-sum-subvols" if (params.get("sum-subvols", False)) else ""),
             ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
             ("-only-maxima" if (params.get("only-maxima", False)) else ""),
             ("-only-minima" if (params.get("only-minima", False)) else ""),
-            "-subvolume",
-            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
+            "-subvolume" + (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("distance", None)))

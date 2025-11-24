@@ -25,11 +25,21 @@ VolumeGradientPresmoothParamsDictTagged = typing.TypedDict('VolumeGradientPresmo
 VolumeGradientPresmoothParamsDict = _VolumeGradientPresmoothParamsDictNoTag | VolumeGradientPresmoothParamsDictTagged
 
 
+_VolumeGradientVectorsParamsDictNoTag = typing.TypedDict('_VolumeGradientVectorsParamsDictNoTag', {
+    "vector-volume-out": str,
+})
+VolumeGradientVectorsParamsDictTagged = typing.TypedDict('VolumeGradientVectorsParamsDictTagged', {
+    "@type": typing.Literal["vectors"],
+    "vector-volume-out": str,
+})
+VolumeGradientVectorsParamsDict = _VolumeGradientVectorsParamsDictNoTag | VolumeGradientVectorsParamsDictTagged
+
+
 _VolumeGradientParamsDictNoTag = typing.TypedDict('_VolumeGradientParamsDictNoTag', {
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "vector-volume-out": typing.NotRequired[str | None],
+    "vectors": typing.NotRequired[VolumeGradientVectorsParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
@@ -38,7 +48,7 @@ VolumeGradientParamsDictTagged = typing.TypedDict('VolumeGradientParamsDictTagge
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "vector-volume-out": typing.NotRequired[str | None],
+    "vectors": typing.NotRequired[VolumeGradientVectorsParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "volume-in": InputPathType,
 })
@@ -112,6 +122,93 @@ def volume_gradient_presmooth_cargs(
     return cargs
 
 
+class VolumeGradientVectorsOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `VolumeGradientVectorsParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    vector_volume_out: OutputPathType
+    """the vectors as a volume file"""
+
+
+def volume_gradient_vectors(
+    vector_volume_out: str,
+) -> VolumeGradientVectorsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        vector_volume_out: the vectors as a volume file.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "vectors",
+        "vector-volume-out": vector_volume_out,
+    }
+    return params
+
+
+def volume_gradient_vectors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeGradientVectorsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vector-volume-out", None) is None:
+        raise StyxValidationError("`vector-volume-out` must not be None")
+    if not isinstance(params["vector-volume-out"], str):
+        raise StyxValidationError(f'`vector-volume-out` has the wrong type: Received `{type(params.get("vector-volume-out", None))}` expected `str`')
+
+
+def volume_gradient_vectors_cargs(
+    params: VolumeGradientVectorsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-vectors",
+        params.get("vector-volume-out", None)
+    ])
+    return cargs
+
+
+def volume_gradient_vectors_outputs(
+    params: VolumeGradientVectorsParamsDict,
+    execution: Execution,
+) -> VolumeGradientVectorsOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = VolumeGradientVectorsOutputs(
+        root=execution.output_file("."),
+        vector_volume_out=execution.output_file(params.get("vector-volume-out", None)),
+    )
+    return ret
+
+
 class VolumeGradientOutputs(typing.NamedTuple):
     """
     Output object returned when calling `VolumeGradientParamsDict(...)`.
@@ -120,6 +217,8 @@ class VolumeGradientOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     volume_out: OutputPathType
     """the output gradient magnitude volume"""
+    vectors: VolumeGradientVectorsOutputs | None
+    """Outputs from `volume_gradient_vectors_outputs`."""
 
 
 def volume_gradient_params(
@@ -127,7 +226,7 @@ def volume_gradient_params(
     volume_in: InputPathType,
     presmooth: VolumeGradientPresmoothParamsDict | None = None,
     roi_volume: InputPathType | None = None,
-    vector_volume_out: str | None = None,
+    vectors: VolumeGradientVectorsParamsDict | None = None,
     subvol: str | None = None,
 ) -> VolumeGradientParamsDictTagged:
     """
@@ -140,9 +239,7 @@ def volume_gradient_params(
         roi_volume: select a region of interest to take the gradient of\
             \
             the region to take the gradient within.
-        vector_volume_out: output vectors\
-            \
-            the vectors as a volume file.
+        vectors: output vectors.
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
@@ -158,8 +255,8 @@ def volume_gradient_params(
         params["presmooth"] = presmooth
     if roi_volume is not None:
         params["roi-volume"] = roi_volume
-    if vector_volume_out is not None:
-        params["vector-volume-out"] = vector_volume_out
+    if vectors is not None:
+        params["vectors"] = vectors
     if subvol is not None:
         params["subvol"] = subvol
     return params
@@ -186,9 +283,8 @@ def volume_gradient_validate(
     if params.get("roi-volume", None) is not None:
         if not isinstance(params["roi-volume"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("vector-volume-out", None) is not None:
-        if not isinstance(params["vector-volume-out"], str):
-            raise StyxValidationError(f'`vector-volume-out` has the wrong type: Received `{type(params.get("vector-volume-out", None))}` expected `str | None`')
+    if params.get("vectors", None) is not None:
+        volume_gradient_vectors_validate(params["vectors"])
     if params.get("subvol", None) is not None:
         if not isinstance(params["subvol"], str):
             raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
@@ -212,18 +308,15 @@ def volume_gradient_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("presmooth", None) is not None or params.get("roi-volume", None) is not None or params.get("vector-volume-out", None) is not None or params.get("subvol", None) is not None:
+    if params.get("presmooth", None) is not None or params.get("roi-volume", None) is not None or params.get("vectors", None) is not None or params.get("subvol", None) is not None:
         cargs.extend([
             "wb_command",
             "-volume-gradient",
             params.get("volume-out", None),
             *(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-vectors",
-            (params.get("vector-volume-out", None) if (params.get("vector-volume-out", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            *(volume_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
+            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
@@ -245,6 +338,7 @@ def volume_gradient_outputs(
     ret = VolumeGradientOutputs(
         root=execution.output_file("."),
         volume_out=execution.output_file(params.get("volume-out", None)),
+        vectors=volume_gradient_vectors_outputs(params.get("vectors"), execution) if params.get("vectors") else None,
     )
     return ret
 
@@ -284,7 +378,7 @@ def volume_gradient(
     volume_in: InputPathType,
     presmooth: VolumeGradientPresmoothParamsDict | None = None,
     roi_volume: InputPathType | None = None,
-    vector_volume_out: str | None = None,
+    vectors: VolumeGradientVectorsParamsDict | None = None,
     subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
@@ -305,9 +399,7 @@ def volume_gradient(
         roi_volume: select a region of interest to take the gradient of\
             \
             the region to take the gradient within.
-        vector_volume_out: output vectors\
-            \
-            the vectors as a volume file.
+        vectors: output vectors.
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
@@ -319,7 +411,7 @@ def volume_gradient(
         volume_out=volume_out,
         presmooth=presmooth,
         roi_volume=roi_volume,
-        vector_volume_out=vector_volume_out,
+        vectors=vectors,
         subvol=subvol,
         volume_in=volume_in,
     )
@@ -333,8 +425,12 @@ __all__ = [
     "VolumeGradientParamsDictTagged",
     "VolumeGradientPresmoothParamsDict",
     "VolumeGradientPresmoothParamsDictTagged",
+    "VolumeGradientVectorsOutputs",
+    "VolumeGradientVectorsParamsDict",
+    "VolumeGradientVectorsParamsDictTagged",
     "volume_gradient",
     "volume_gradient_execute",
     "volume_gradient_params",
     "volume_gradient_presmooth",
+    "volume_gradient_vectors",
 ]

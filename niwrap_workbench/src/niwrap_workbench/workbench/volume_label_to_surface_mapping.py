@@ -147,12 +147,9 @@ def volume_label_to_surface_mapping_ribbon_constrained_cargs(
             "-ribbon-constrained",
             execution.input_file(params.get("inner-surf", None)),
             execution.input_file(params.get("outer-surf", None)),
-            "-volume-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-dilate-missing",
-            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-            "-voxel-subdiv",
-            (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+            "-volume-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-dilate-missing" + (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
+            "-voxel-subdiv" + (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
             ("-thin-columns" if (params.get("thin-columns", False)) else "")
         ])
     return cargs
@@ -253,8 +250,7 @@ def volume_label_to_surface_mapping_cargs(
             "-volume-label-to-surface-mapping",
             params.get("label-out", None),
             *(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
-            "-subvol-select",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-subvol-select" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(execution.input_file(params.get("surface", None)))

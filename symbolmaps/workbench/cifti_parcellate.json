@@ -52,8 +52,14 @@
     "value": {
       "var_param": "value"
     },
-    "mask-out": {
-      "var_param": "mask_out"
+    "nonempty-mask-out": {
+      "var_param": "nonempty_mask_out",
+      "fn_struct_make_params": "cifti_parcellate_nonempty_mask_out",
+      "properties": {
+        "mask-out": {
+          "var_param": "mask_out"
+        }
+      }
     },
     "legacy-mode": {
       "var_param": "legacy_mode"

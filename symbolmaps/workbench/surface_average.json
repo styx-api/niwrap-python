@@ -4,11 +4,23 @@
     "surface-out": {
       "var_param": "surface_out"
     },
-    "stddev-metric-out": {
-      "var_param": "stddev_metric_out"
+    "stddev": {
+      "var_param": "stddev",
+      "fn_struct_make_params": "surface_average_stddev",
+      "properties": {
+        "stddev-metric-out": {
+          "var_param": "stddev_metric_out"
+        }
+      }
     },
-    "uncert-metric-out": {
-      "var_param": "uncert_metric_out"
+    "uncertainty": {
+      "var_param": "uncertainty",
+      "fn_struct_make_params": "surface_average_uncertainty",
+      "properties": {
+        "uncert-metric-out": {
+          "var_param": "uncert_metric_out"
+        }
+      }
     },
     "surf": {
       "var_param": "surf",

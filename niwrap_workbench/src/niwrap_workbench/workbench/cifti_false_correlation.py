@@ -136,8 +136,7 @@ def cifti_false_correlation_left_surface_cargs(
         cargs.extend([
             "-left-surface",
             execution.input_file(params.get("surface", None)),
-            "-dump-text",
-            params.get("text-out", None)
+            "-dump-text" + params.get("text-out", None)
         ])
     return cargs
 
@@ -205,8 +204,7 @@ def cifti_false_correlation_right_surface_cargs(
         cargs.extend([
             "-right-surface",
             execution.input_file(params.get("surface", None)),
-            "-dump-text",
-            params.get("text-out", None)
+            "-dump-text" + params.get("text-out", None)
         ])
     return cargs
 
@@ -274,8 +272,7 @@ def cifti_false_correlation_cerebellum_surface_cargs(
         cargs.extend([
             "-cerebellum-surface",
             execution.input_file(params.get("surface", None)),
-            "-dump-text",
-            params.get("text-out", None)
+            "-dump-text" + params.get("text-out", None)
         ])
     return cargs
 

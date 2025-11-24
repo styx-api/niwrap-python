@@ -322,8 +322,7 @@ def cifti_resample_dconn_memory_weighted_cargs(
     if params.get("exponent", None) is not None or params.get("legacy-cutoff", False):
         cargs.extend([
             "-weighted",
-            "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
+            "-exponent" + (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
             ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
         ])
     return cargs
@@ -465,8 +464,7 @@ def cifti_resample_dconn_memory_weighted_cargs_(
     if params.get("exponent", None) is not None or params.get("legacy-cutoff", False):
         cargs.extend([
             "-weighted",
-            "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
+            "-exponent" + (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
             ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
         ])
     return cargs
@@ -746,8 +744,7 @@ def cifti_resample_dconn_memory_warpfield_cargs(
         cargs.extend([
             "-warpfield",
             params.get("warpfield", None),
-            "-fnirt",
-            params.get("source-volume", None)
+            "-fnirt" + params.get("source-volume", None)
         ])
     return cargs
 

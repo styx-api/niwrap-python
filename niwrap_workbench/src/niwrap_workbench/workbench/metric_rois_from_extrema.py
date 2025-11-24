@@ -159,14 +159,10 @@ def metric_rois_from_extrema_cargs(
             "wb_command",
             "-metric-rois-from-extrema",
             params.get("metric-out", None),
-            "-gaussian",
-            (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-overlap-logic",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else "")
+            "-gaussian" + (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
+            "-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-overlap-logic" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric", None)))

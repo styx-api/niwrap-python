@@ -206,10 +206,8 @@ def cifti_estimate_fwhm_cargs(
             "wb_command",
             "-cifti-estimate-fwhm",
             ("-merged-volume" if (params.get("merged-volume", False)) else ""),
-            "-column",
-            (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
-            "-whole-file",
-            ("-demean" if (params.get("demean", None) is not None) else ""),
+            "-column" + (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
+            "-whole-file" + ("-demean" if (params.get("demean", None) is not None) else ""),
             *([a for c in [cifti_estimate_fwhm_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
         ])
     cargs.append(execution.input_file(params.get("cifti", None)))

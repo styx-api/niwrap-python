@@ -4,8 +4,14 @@
     "counts-out": {
       "var_param": "counts_out"
     },
-    "distance-out": {
-      "var_param": "distance_out"
+    "distances": {
+      "var_param": "distances",
+      "fn_struct_make_params": "convert_matrix4_to_matrix2_distances",
+      "properties": {
+        "distance-out": {
+          "var_param": "distance_out"
+        }
+      }
     },
     "individual-fibers": {
       "var_param": "individual_fibers",

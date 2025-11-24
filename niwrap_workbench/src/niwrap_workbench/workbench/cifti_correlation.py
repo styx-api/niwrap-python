@@ -146,16 +146,11 @@ def cifti_correlation_roi_override_cargs(
     if params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-vol", None) is not None or params.get("roi-cifti", None) is not None:
         cargs.extend([
             "-roi-override",
-            "-left-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-right-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-cerebellum-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-vol-roi",
-            (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
-            "-cifti-roi",
-            (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else "")
+            "-left-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-right-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-cerebellum-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-vol-roi" + (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
+            "-cifti-roi" + (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else "")
         ])
     return cargs
 
@@ -279,13 +274,11 @@ def cifti_correlation_cargs(
             "-cifti-correlation",
             params.get("cifti-out", None),
             *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else []),
-            "-weights",
-            (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
+            "-weights" + (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
             ("-fisher-z" if (params.get("fisher-z", False)) else ""),
             ("-no-demean" if (params.get("no-demean", False)) else ""),
             ("-covariance" if (params.get("covariance", False)) else ""),
-            "-mem-limit",
-            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
+            "-mem-limit" + (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs

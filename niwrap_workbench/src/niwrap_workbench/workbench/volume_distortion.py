@@ -126,8 +126,7 @@ def volume_distortion_cargs(
             "wb_command",
             "-volume-distortion",
             params.get("volume-out", None),
-            "-fnirt",
-            (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
+            "-fnirt" + (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
             ("-circular" if (params.get("circular", False)) else ""),
             ("-log2" if (params.get("log2", False)) else "")
         ])

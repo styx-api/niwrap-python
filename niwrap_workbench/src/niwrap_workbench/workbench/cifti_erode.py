@@ -139,8 +139,7 @@ def cifti_erode_left_surface_cargs(
         cargs.extend([
             "-left-surface",
             execution.input_file(params.get("surface", None)),
-            "-left-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-left-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -209,8 +208,7 @@ def cifti_erode_right_surface_cargs(
         cargs.extend([
             "-right-surface",
             execution.input_file(params.get("surface", None)),
-            "-right-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-right-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -279,8 +277,7 @@ def cifti_erode_cerebellum_surface_cargs(
         cargs.extend([
             "-cerebellum-surface",
             execution.input_file(params.get("surface", None)),
-            "-cerebellum-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-cerebellum-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 

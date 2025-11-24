@@ -37,11 +37,21 @@ MetricGradientRoiParamsDictTagged = typing.TypedDict('MetricGradientRoiParamsDic
 MetricGradientRoiParamsDict = _MetricGradientRoiParamsDictNoTag | MetricGradientRoiParamsDictTagged
 
 
+_MetricGradientVectorsParamsDictNoTag = typing.TypedDict('_MetricGradientVectorsParamsDictNoTag', {
+    "vector-metric-out": str,
+})
+MetricGradientVectorsParamsDictTagged = typing.TypedDict('MetricGradientVectorsParamsDictTagged', {
+    "@type": typing.Literal["vectors"],
+    "vector-metric-out": str,
+})
+MetricGradientVectorsParamsDict = _MetricGradientVectorsParamsDictNoTag | MetricGradientVectorsParamsDictTagged
+
+
 _MetricGradientParamsDictNoTag = typing.TypedDict('_MetricGradientParamsDictNoTag', {
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricGradientPresmoothParamsDict | None],
     "roi": typing.NotRequired[MetricGradientRoiParamsDict | None],
-    "vector-metric-out": typing.NotRequired[str | None],
+    "vectors": typing.NotRequired[MetricGradientVectorsParamsDict | None],
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
     "average-normals": bool,
@@ -53,7 +63,7 @@ MetricGradientParamsDictTagged = typing.TypedDict('MetricGradientParamsDictTagge
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricGradientPresmoothParamsDict | None],
     "roi": typing.NotRequired[MetricGradientRoiParamsDict | None],
-    "vector-metric-out": typing.NotRequired[str | None],
+    "vectors": typing.NotRequired[MetricGradientVectorsParamsDict | None],
     "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
     "average-normals": bool,
@@ -197,6 +207,93 @@ def metric_gradient_roi_cargs(
     return cargs
 
 
+class MetricGradientVectorsOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `MetricGradientVectorsParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    vector_metric_out: OutputPathType
+    """the vectors as a metric file"""
+
+
+def metric_gradient_vectors(
+    vector_metric_out: str,
+) -> MetricGradientVectorsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        vector_metric_out: the vectors as a metric file.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "vectors",
+        "vector-metric-out": vector_metric_out,
+    }
+    return params
+
+
+def metric_gradient_vectors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricGradientVectorsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vector-metric-out", None) is None:
+        raise StyxValidationError("`vector-metric-out` must not be None")
+    if not isinstance(params["vector-metric-out"], str):
+        raise StyxValidationError(f'`vector-metric-out` has the wrong type: Received `{type(params.get("vector-metric-out", None))}` expected `str`')
+
+
+def metric_gradient_vectors_cargs(
+    params: MetricGradientVectorsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-vectors",
+        params.get("vector-metric-out", None)
+    ])
+    return cargs
+
+
+def metric_gradient_vectors_outputs(
+    params: MetricGradientVectorsParamsDict,
+    execution: Execution,
+) -> MetricGradientVectorsOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = MetricGradientVectorsOutputs(
+        root=execution.output_file("."),
+        vector_metric_out=execution.output_file(params.get("vector-metric-out", None)),
+    )
+    return ret
+
+
 class MetricGradientOutputs(typing.NamedTuple):
     """
     Output object returned when calling `MetricGradientParamsDict(...)`.
@@ -205,6 +302,8 @@ class MetricGradientOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     metric_out: OutputPathType
     """the magnitude of the gradient"""
+    vectors: MetricGradientVectorsOutputs | None
+    """Outputs from `metric_gradient_vectors_outputs`."""
 
 
 def metric_gradient_params(
@@ -213,7 +312,7 @@ def metric_gradient_params(
     metric_in: InputPathType,
     presmooth: MetricGradientPresmoothParamsDict | None = None,
     roi: MetricGradientRoiParamsDict | None = None,
-    vector_metric_out: str | None = None,
+    vectors: MetricGradientVectorsParamsDict | None = None,
     column: str | None = None,
     area_metric: InputPathType | None = None,
     average_normals: bool = False,
@@ -227,9 +326,7 @@ def metric_gradient_params(
         metric_in: the metric to compute the gradient of.
         presmooth: smooth the metric before computing the gradient.
         roi: select a region of interest to take the gradient of.
-        vector_metric_out: output gradient vectors\
-            \
-            the vectors as a metric file.
+        vectors: output gradient vectors.
         column: select a single column to compute the gradient of\
             \
             the column number or name.
@@ -253,8 +350,8 @@ def metric_gradient_params(
         params["presmooth"] = presmooth
     if roi is not None:
         params["roi"] = roi
-    if vector_metric_out is not None:
-        params["vector-metric-out"] = vector_metric_out
+    if vectors is not None:
+        params["vectors"] = vectors
     if column is not None:
         params["column"] = column
     if area_metric is not None:
@@ -282,9 +379,8 @@ def metric_gradient_validate(
         metric_gradient_presmooth_validate(params["presmooth"])
     if params.get("roi", None) is not None:
         metric_gradient_roi_validate(params["roi"])
-    if params.get("vector-metric-out", None) is not None:
-        if not isinstance(params["vector-metric-out"], str):
-            raise StyxValidationError(f'`vector-metric-out` has the wrong type: Received `{type(params.get("vector-metric-out", None))}` expected `str | None`')
+    if params.get("vectors", None) is not None:
+        metric_gradient_vectors_validate(params["vectors"])
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
@@ -319,19 +415,16 @@ def metric_gradient_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("presmooth", None) is not None or params.get("roi", None) is not None or params.get("vector-metric-out", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None or params.get("average-normals", False):
+    if params.get("presmooth", None) is not None or params.get("roi", None) is not None or params.get("vectors", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None or params.get("average-normals", False):
         cargs.extend([
             "wb_command",
             "-metric-gradient",
             params.get("metric-out", None),
             *(metric_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
             *(metric_gradient_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            "-vectors",
-            (params.get("vector-metric-out", None) if (params.get("vector-metric-out", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            *(metric_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
+            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas" + (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
             ("-average-normals" if (params.get("average-normals", False)) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
@@ -355,6 +448,7 @@ def metric_gradient_outputs(
     ret = MetricGradientOutputs(
         root=execution.output_file("."),
         metric_out=execution.output_file(params.get("metric-out", None)),
+        vectors=metric_gradient_vectors_outputs(params.get("vectors"), execution) if params.get("vectors") else None,
     )
     return ret
 
@@ -416,7 +510,7 @@ def metric_gradient(
     metric_in: InputPathType,
     presmooth: MetricGradientPresmoothParamsDict | None = None,
     roi: MetricGradientRoiParamsDict | None = None,
-    vector_metric_out: str | None = None,
+    vectors: MetricGradientVectorsParamsDict | None = None,
     column: str | None = None,
     area_metric: InputPathType | None = None,
     average_normals: bool = False,
@@ -459,9 +553,7 @@ def metric_gradient(
         metric_in: the metric to compute the gradient of.
         presmooth: smooth the metric before computing the gradient.
         roi: select a region of interest to take the gradient of.
-        vector_metric_out: output gradient vectors\
-            \
-            the vectors as a metric file.
+        vectors: output gradient vectors.
         column: select a single column to compute the gradient of\
             \
             the column number or name.
@@ -479,7 +571,7 @@ def metric_gradient(
         metric_out=metric_out,
         presmooth=presmooth,
         roi=roi,
-        vector_metric_out=vector_metric_out,
+        vectors=vectors,
         column=column,
         area_metric=area_metric,
         average_normals=average_normals,
@@ -498,9 +590,13 @@ __all__ = [
     "MetricGradientPresmoothParamsDictTagged",
     "MetricGradientRoiParamsDict",
     "MetricGradientRoiParamsDictTagged",
+    "MetricGradientVectorsOutputs",
+    "MetricGradientVectorsParamsDict",
+    "MetricGradientVectorsParamsDictTagged",
     "metric_gradient",
     "metric_gradient_execute",
     "metric_gradient_params",
     "metric_gradient_presmooth",
     "metric_gradient_roi",
+    "metric_gradient_vectors",
 ]

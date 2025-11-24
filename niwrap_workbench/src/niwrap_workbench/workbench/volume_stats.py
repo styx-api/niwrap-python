@@ -214,12 +214,9 @@ def volume_stats_cargs(
         cargs.extend([
             "wb_command",
             "-volume-stats",
-            "-reduce",
-            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
-            "-percentile",
-            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
+            "-reduce" + (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
+            "-percentile" + (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
+            "-subvolume" + (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
             *(volume_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])

@@ -52,8 +52,14 @@
     "average-output": {
       "var_param": "average_output"
     },
-    "vectors-out": {
-      "var_param": "vectors_out"
+    "vectors": {
+      "var_param": "vectors",
+      "fn_struct_make_params": "cifti_gradient_vectors",
+      "properties": {
+        "vectors-out": {
+          "var_param": "vectors_out"
+        }
+      }
     },
     "surface": {
       "var_param": "surface",

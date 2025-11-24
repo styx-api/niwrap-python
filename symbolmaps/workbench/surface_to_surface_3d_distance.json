@@ -4,8 +4,14 @@
     "dists-out": {
       "var_param": "dists_out"
     },
-    "vectors-out": {
-      "var_param": "vectors_out"
+    "vectors": {
+      "var_param": "vectors",
+      "fn_struct_make_params": "surface_to_surface_3d_distance_vectors",
+      "properties": {
+        "vectors-out": {
+          "var_param": "vectors_out"
+        }
+      }
     },
     "surface-comp": {
       "var_param": "surface_comp"

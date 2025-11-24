@@ -155,10 +155,8 @@ def metric_false_correlation_cargs(
             "wb_command",
             "-metric-false-correlation",
             params.get("metric-out", None),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-dump-text",
-            (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
+            "-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-dump-text" + (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

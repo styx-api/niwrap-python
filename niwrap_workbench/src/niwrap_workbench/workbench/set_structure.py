@@ -117,10 +117,8 @@ def set_structure_cargs(
         cargs.extend([
             "wb_command",
             "-set-structure",
-            "-surface-type",
-            (params.get("type", None) if (params.get("type", None) is not None) else ""),
-            "-surface-secondary-type",
-            (params.get("secondary type", None) if (params.get("secondary type", None) is not None) else "")
+            "-surface-type" + (params.get("type", None) if (params.get("type", None) is not None) else ""),
+            "-surface-secondary-type" + (params.get("secondary type", None) if (params.get("secondary type", None) is not None) else "")
         ])
     cargs.append(params.get("data-file", None))
     cargs.append(params.get("structure", None))

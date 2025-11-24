@@ -59,8 +59,14 @@
         "method": {
           "var_param": "method"
         },
-        "roi-out": {
-          "var_param": "roi_out"
+        "bad-vertices-out": {
+          "var_param": "bad_vertices_out",
+          "fn_struct_make_params": "volume_to_surface_mapping_bad_vertices_out",
+          "properties": {
+            "roi-out": {
+              "var_param": "roi_out"
+            }
+          }
         },
         "output-weights": {
           "var_param": "output_weights",

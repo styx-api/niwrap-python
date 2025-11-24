@@ -4,8 +4,14 @@
     "out-surface": {
       "var_param": "out_surface"
     },
-    "placement-metric": {
-      "var_param": "placement_metric"
+    "placement-out": {
+      "var_param": "placement_out",
+      "fn_struct_make_params": "surface_cortex_layer_placement_out",
+      "properties": {
+        "placement-metric": {
+          "var_param": "placement_metric"
+        }
+      }
     },
     "white-surface": {
       "var_param": "white_surface"

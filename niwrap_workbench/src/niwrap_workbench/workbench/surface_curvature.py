@@ -13,18 +13,212 @@ SURFACE_CURVATURE_METADATA = Metadata(
 )
 
 
+_SurfaceCurvatureMeanParamsDictNoTag = typing.TypedDict('_SurfaceCurvatureMeanParamsDictNoTag', {
+    "mean-out": str,
+})
+SurfaceCurvatureMeanParamsDictTagged = typing.TypedDict('SurfaceCurvatureMeanParamsDictTagged', {
+    "@type": typing.Literal["mean"],
+    "mean-out": str,
+})
+SurfaceCurvatureMeanParamsDict = _SurfaceCurvatureMeanParamsDictNoTag | SurfaceCurvatureMeanParamsDictTagged
+
+
+_SurfaceCurvatureGaussParamsDictNoTag = typing.TypedDict('_SurfaceCurvatureGaussParamsDictNoTag', {
+    "gauss-out": str,
+})
+SurfaceCurvatureGaussParamsDictTagged = typing.TypedDict('SurfaceCurvatureGaussParamsDictTagged', {
+    "@type": typing.Literal["gauss"],
+    "gauss-out": str,
+})
+SurfaceCurvatureGaussParamsDict = _SurfaceCurvatureGaussParamsDictNoTag | SurfaceCurvatureGaussParamsDictTagged
+
+
 _SurfaceCurvatureParamsDictNoTag = typing.TypedDict('_SurfaceCurvatureParamsDictNoTag', {
-    "mean-out": typing.NotRequired[str | None],
-    "gauss-out": typing.NotRequired[str | None],
+    "mean": typing.NotRequired[SurfaceCurvatureMeanParamsDict | None],
+    "gauss": typing.NotRequired[SurfaceCurvatureGaussParamsDict | None],
     "surface": InputPathType,
 })
 SurfaceCurvatureParamsDictTagged = typing.TypedDict('SurfaceCurvatureParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-curvature"],
-    "mean-out": typing.NotRequired[str | None],
-    "gauss-out": typing.NotRequired[str | None],
+    "mean": typing.NotRequired[SurfaceCurvatureMeanParamsDict | None],
+    "gauss": typing.NotRequired[SurfaceCurvatureGaussParamsDict | None],
     "surface": InputPathType,
 })
 SurfaceCurvatureParamsDict = _SurfaceCurvatureParamsDictNoTag | SurfaceCurvatureParamsDictTagged
+
+
+class SurfaceCurvatureMeanOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `SurfaceCurvatureMeanParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    mean_out: OutputPathType
+    """mean curvature metric"""
+
+
+def surface_curvature_mean(
+    mean_out: str,
+) -> SurfaceCurvatureMeanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        mean_out: mean curvature metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "mean",
+        "mean-out": mean_out,
+    }
+    return params
+
+
+def surface_curvature_mean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCurvatureMeanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean-out", None) is None:
+        raise StyxValidationError("`mean-out` must not be None")
+    if not isinstance(params["mean-out"], str):
+        raise StyxValidationError(f'`mean-out` has the wrong type: Received `{type(params.get("mean-out", None))}` expected `str`')
+
+
+def surface_curvature_mean_cargs(
+    params: SurfaceCurvatureMeanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-mean",
+        params.get("mean-out", None)
+    ])
+    return cargs
+
+
+def surface_curvature_mean_outputs(
+    params: SurfaceCurvatureMeanParamsDict,
+    execution: Execution,
+) -> SurfaceCurvatureMeanOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = SurfaceCurvatureMeanOutputs(
+        root=execution.output_file("."),
+        mean_out=execution.output_file(params.get("mean-out", None)),
+    )
+    return ret
+
+
+class SurfaceCurvatureGaussOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `SurfaceCurvatureGaussParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    gauss_out: OutputPathType
+    """gaussian curvature metric"""
+
+
+def surface_curvature_gauss(
+    gauss_out: str,
+) -> SurfaceCurvatureGaussParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        gauss_out: gaussian curvature metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "gauss",
+        "gauss-out": gauss_out,
+    }
+    return params
+
+
+def surface_curvature_gauss_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCurvatureGaussParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gauss-out", None) is None:
+        raise StyxValidationError("`gauss-out` must not be None")
+    if not isinstance(params["gauss-out"], str):
+        raise StyxValidationError(f'`gauss-out` has the wrong type: Received `{type(params.get("gauss-out", None))}` expected `str`')
+
+
+def surface_curvature_gauss_cargs(
+    params: SurfaceCurvatureGaussParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-gauss",
+        params.get("gauss-out", None)
+    ])
+    return cargs
+
+
+def surface_curvature_gauss_outputs(
+    params: SurfaceCurvatureGaussParamsDict,
+    execution: Execution,
+) -> SurfaceCurvatureGaussOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = SurfaceCurvatureGaussOutputs(
+        root=execution.output_file("."),
+        gauss_out=execution.output_file(params.get("gauss-out", None)),
+    )
+    return ret
 
 
 class SurfaceCurvatureOutputs(typing.NamedTuple):
@@ -33,24 +227,24 @@ class SurfaceCurvatureOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
+    mean: SurfaceCurvatureMeanOutputs | None
+    """Outputs from `surface_curvature_mean_outputs`."""
+    gauss: SurfaceCurvatureGaussOutputs | None
+    """Outputs from `surface_curvature_gauss_outputs`."""
 
 
 def surface_curvature_params(
     surface: InputPathType,
-    mean_out: str | None = None,
-    gauss_out: str | None = None,
+    mean: SurfaceCurvatureMeanParamsDict | None = None,
+    gauss: SurfaceCurvatureGaussParamsDict | None = None,
 ) -> SurfaceCurvatureParamsDictTagged:
     """
     Build parameters.
     
     Args:
         surface: the surface to compute the curvature of.
-        mean_out: output mean curvature\
-            \
-            mean curvature metric.
-        gauss_out: output gaussian curvature\
-            \
-            gaussian curvature metric.
+        mean: output mean curvature.
+        gauss: output gaussian curvature.
     Returns:
         Parameter dictionary
     """
@@ -58,10 +252,10 @@ def surface_curvature_params(
         "@type": "workbench/surface-curvature",
         "surface": surface,
     }
-    if mean_out is not None:
-        params["mean-out"] = mean_out
-    if gauss_out is not None:
-        params["gauss-out"] = gauss_out
+    if mean is not None:
+        params["mean"] = mean
+    if gauss is not None:
+        params["gauss"] = gauss
     return params
 
 
@@ -77,12 +271,10 @@ def surface_curvature_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("mean-out", None) is not None:
-        if not isinstance(params["mean-out"], str):
-            raise StyxValidationError(f'`mean-out` has the wrong type: Received `{type(params.get("mean-out", None))}` expected `str | None`')
-    if params.get("gauss-out", None) is not None:
-        if not isinstance(params["gauss-out"], str):
-            raise StyxValidationError(f'`gauss-out` has the wrong type: Received `{type(params.get("gauss-out", None))}` expected `str | None`')
+    if params.get("mean", None) is not None:
+        surface_curvature_mean_validate(params["mean"])
+    if params.get("gauss", None) is not None:
+        surface_curvature_gauss_validate(params["gauss"])
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -103,14 +295,12 @@ def surface_curvature_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("mean-out", None) is not None or params.get("gauss-out", None) is not None:
+    if params.get("mean", None) is not None or params.get("gauss", None) is not None:
         cargs.extend([
             "wb_command",
             "-surface-curvature",
-            "-mean",
-            (params.get("mean-out", None) if (params.get("mean-out", None) is not None) else ""),
-            "-gauss",
-            (params.get("gauss-out", None) if (params.get("gauss-out", None) is not None) else "")
+            *(surface_curvature_mean_cargs(params.get("mean", None), execution) if (params.get("mean", None) is not None) else []),
+            *(surface_curvature_gauss_cargs(params.get("gauss", None), execution) if (params.get("gauss", None) is not None) else [])
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
@@ -131,6 +321,8 @@ def surface_curvature_outputs(
     """
     ret = SurfaceCurvatureOutputs(
         root=execution.output_file("."),
+        mean=surface_curvature_mean_outputs(params.get("mean"), execution) if params.get("mean") else None,
+        gauss=surface_curvature_gauss_outputs(params.get("gauss"), execution) if params.get("gauss") else None,
     )
     return ret
 
@@ -164,8 +356,8 @@ def surface_curvature_execute(
 
 def surface_curvature(
     surface: InputPathType,
-    mean_out: str | None = None,
-    gauss_out: str | None = None,
+    mean: SurfaceCurvatureMeanParamsDict | None = None,
+    gauss: SurfaceCurvatureGaussParamsDict | None = None,
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
@@ -177,19 +369,15 @@ def surface_curvature(
     
     Args:
         surface: the surface to compute the curvature of.
-        mean_out: output mean curvature\
-            \
-            mean curvature metric.
-        gauss_out: output gaussian curvature\
-            \
-            gaussian curvature metric.
+        mean: output mean curvature.
+        gauss: output gaussian curvature.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
     params = surface_curvature_params(
-        mean_out=mean_out,
-        gauss_out=gauss_out,
+        mean=mean,
+        gauss=gauss,
         surface=surface,
     )
     return surface_curvature_execute(params, runner)
@@ -197,10 +385,18 @@ def surface_curvature(
 
 __all__ = [
     "SURFACE_CURVATURE_METADATA",
+    "SurfaceCurvatureGaussOutputs",
+    "SurfaceCurvatureGaussParamsDict",
+    "SurfaceCurvatureGaussParamsDictTagged",
+    "SurfaceCurvatureMeanOutputs",
+    "SurfaceCurvatureMeanParamsDict",
+    "SurfaceCurvatureMeanParamsDictTagged",
     "SurfaceCurvatureOutputs",
     "SurfaceCurvatureParamsDict",
     "SurfaceCurvatureParamsDictTagged",
     "surface_curvature",
     "surface_curvature_execute",
+    "surface_curvature_gauss",
+    "surface_curvature_mean",
     "surface_curvature_params",
 ]

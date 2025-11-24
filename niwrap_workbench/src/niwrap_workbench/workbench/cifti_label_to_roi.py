@@ -130,12 +130,9 @@ def cifti_label_to_roi_cargs(
             "wb_command",
             "-cifti-label-to-roi",
             params.get("scalar-out", None),
-            "-name",
-            (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
-            "-key",
-            (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
-            "-map",
-            (params.get("map", None) if (params.get("map", None) is not None) else "")
+            "-name" + (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
+            "-key" + (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
+            "-map" + (params.get("map", None) if (params.get("map", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs

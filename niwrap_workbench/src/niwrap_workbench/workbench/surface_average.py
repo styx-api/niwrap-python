@@ -13,6 +13,26 @@ SURFACE_AVERAGE_METADATA = Metadata(
 )
 
 
+_SurfaceAverageStddevParamsDictNoTag = typing.TypedDict('_SurfaceAverageStddevParamsDictNoTag', {
+    "stddev-metric-out": str,
+})
+SurfaceAverageStddevParamsDictTagged = typing.TypedDict('SurfaceAverageStddevParamsDictTagged', {
+    "@type": typing.Literal["stddev"],
+    "stddev-metric-out": str,
+})
+SurfaceAverageStddevParamsDict = _SurfaceAverageStddevParamsDictNoTag | SurfaceAverageStddevParamsDictTagged
+
+
+_SurfaceAverageUncertaintyParamsDictNoTag = typing.TypedDict('_SurfaceAverageUncertaintyParamsDictNoTag', {
+    "uncert-metric-out": str,
+})
+SurfaceAverageUncertaintyParamsDictTagged = typing.TypedDict('SurfaceAverageUncertaintyParamsDictTagged', {
+    "@type": typing.Literal["uncertainty"],
+    "uncert-metric-out": str,
+})
+SurfaceAverageUncertaintyParamsDict = _SurfaceAverageUncertaintyParamsDictNoTag | SurfaceAverageUncertaintyParamsDictTagged
+
+
 _SurfaceAverageSurfParamsDictNoTag = typing.TypedDict('_SurfaceAverageSurfParamsDictNoTag', {
     "surface": InputPathType,
     "weight": typing.NotRequired[float | None],
@@ -27,18 +47,192 @@ SurfaceAverageSurfParamsDict = _SurfaceAverageSurfParamsDictNoTag | SurfaceAvera
 
 _SurfaceAverageParamsDictNoTag = typing.TypedDict('_SurfaceAverageParamsDictNoTag', {
     "surface-out": str,
-    "stddev-metric-out": typing.NotRequired[str | None],
-    "uncert-metric-out": typing.NotRequired[str | None],
+    "stddev": typing.NotRequired[SurfaceAverageStddevParamsDict | None],
+    "uncertainty": typing.NotRequired[SurfaceAverageUncertaintyParamsDict | None],
     "surf": typing.NotRequired[list[SurfaceAverageSurfParamsDict] | None],
 })
 SurfaceAverageParamsDictTagged = typing.TypedDict('SurfaceAverageParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-average"],
     "surface-out": str,
-    "stddev-metric-out": typing.NotRequired[str | None],
-    "uncert-metric-out": typing.NotRequired[str | None],
+    "stddev": typing.NotRequired[SurfaceAverageStddevParamsDict | None],
+    "uncertainty": typing.NotRequired[SurfaceAverageUncertaintyParamsDict | None],
     "surf": typing.NotRequired[list[SurfaceAverageSurfParamsDict] | None],
 })
 SurfaceAverageParamsDict = _SurfaceAverageParamsDictNoTag | SurfaceAverageParamsDictTagged
+
+
+class SurfaceAverageStddevOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `SurfaceAverageStddevParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    stddev_metric_out: OutputPathType
+    """the output metric for 3D sample standard deviation"""
+
+
+def surface_average_stddev(
+    stddev_metric_out: str,
+) -> SurfaceAverageStddevParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        stddev_metric_out: the output metric for 3D sample standard deviation.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "stddev",
+        "stddev-metric-out": stddev_metric_out,
+    }
+    return params
+
+
+def surface_average_stddev_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceAverageStddevParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stddev-metric-out", None) is None:
+        raise StyxValidationError("`stddev-metric-out` must not be None")
+    if not isinstance(params["stddev-metric-out"], str):
+        raise StyxValidationError(f'`stddev-metric-out` has the wrong type: Received `{type(params.get("stddev-metric-out", None))}` expected `str`')
+
+
+def surface_average_stddev_cargs(
+    params: SurfaceAverageStddevParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-stddev",
+        params.get("stddev-metric-out", None)
+    ])
+    return cargs
+
+
+def surface_average_stddev_outputs(
+    params: SurfaceAverageStddevParamsDict,
+    execution: Execution,
+) -> SurfaceAverageStddevOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = SurfaceAverageStddevOutputs(
+        root=execution.output_file("."),
+        stddev_metric_out=execution.output_file(params.get("stddev-metric-out", None)),
+    )
+    return ret
+
+
+class SurfaceAverageUncertaintyOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `SurfaceAverageUncertaintyParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    uncert_metric_out: OutputPathType
+    """the output metric for uncertainty"""
+
+
+def surface_average_uncertainty(
+    uncert_metric_out: str,
+) -> SurfaceAverageUncertaintyParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        uncert_metric_out: the output metric for uncertainty.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "uncertainty",
+        "uncert-metric-out": uncert_metric_out,
+    }
+    return params
+
+
+def surface_average_uncertainty_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceAverageUncertaintyParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("uncert-metric-out", None) is None:
+        raise StyxValidationError("`uncert-metric-out` must not be None")
+    if not isinstance(params["uncert-metric-out"], str):
+        raise StyxValidationError(f'`uncert-metric-out` has the wrong type: Received `{type(params.get("uncert-metric-out", None))}` expected `str`')
+
+
+def surface_average_uncertainty_cargs(
+    params: SurfaceAverageUncertaintyParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-uncertainty",
+        params.get("uncert-metric-out", None)
+    ])
+    return cargs
+
+
+def surface_average_uncertainty_outputs(
+    params: SurfaceAverageUncertaintyParamsDict,
+    execution: Execution,
+) -> SurfaceAverageUncertaintyOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = SurfaceAverageUncertaintyOutputs(
+        root=execution.output_file("."),
+        uncert_metric_out=execution.output_file(params.get("uncert-metric-out", None)),
+    )
+    return ret
 
 
 def surface_average_surf(
@@ -104,8 +298,7 @@ def surface_average_surf_cargs(
         cargs.extend([
             "-surf",
             execution.input_file(params.get("surface", None)),
-            "-weight",
-            str(params.get("weight", None))
+            "-weight" + str(params.get("weight", None))
         ])
     return cargs
 
@@ -118,12 +311,16 @@ class SurfaceAverageOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     surface_out: OutputPathType
     """the output averaged surface"""
+    stddev: SurfaceAverageStddevOutputs | None
+    """Outputs from `surface_average_stddev_outputs`."""
+    uncertainty: SurfaceAverageUncertaintyOutputs | None
+    """Outputs from `surface_average_uncertainty_outputs`."""
 
 
 def surface_average_params(
     surface_out: str,
-    stddev_metric_out: str | None = None,
-    uncert_metric_out: str | None = None,
+    stddev: SurfaceAverageStddevParamsDict | None = None,
+    uncertainty: SurfaceAverageUncertaintyParamsDict | None = None,
     surf: list[SurfaceAverageSurfParamsDict] | None = None,
 ) -> SurfaceAverageParamsDictTagged:
     """
@@ -131,12 +328,8 @@ def surface_average_params(
     
     Args:
         surface_out: the output averaged surface.
-        stddev_metric_out: compute 3D sample standard deviation\
-            \
-            the output metric for 3D sample standard deviation.
-        uncert_metric_out: compute caret5 'uncertainty'\
-            \
-            the output metric for uncertainty.
+        stddev: compute 3D sample standard deviation.
+        uncertainty: compute caret5 'uncertainty'.
         surf: specify a surface to include in the average.
     Returns:
         Parameter dictionary
@@ -145,10 +338,10 @@ def surface_average_params(
         "@type": "workbench/surface-average",
         "surface-out": surface_out,
     }
-    if stddev_metric_out is not None:
-        params["stddev-metric-out"] = stddev_metric_out
-    if uncert_metric_out is not None:
-        params["uncert-metric-out"] = uncert_metric_out
+    if stddev is not None:
+        params["stddev"] = stddev
+    if uncertainty is not None:
+        params["uncertainty"] = uncertainty
     if surf is not None:
         params["surf"] = surf
     return params
@@ -170,12 +363,10 @@ def surface_average_validate(
         raise StyxValidationError("`surface-out` must not be None")
     if not isinstance(params["surface-out"], str):
         raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
-    if params.get("stddev-metric-out", None) is not None:
-        if not isinstance(params["stddev-metric-out"], str):
-            raise StyxValidationError(f'`stddev-metric-out` has the wrong type: Received `{type(params.get("stddev-metric-out", None))}` expected `str | None`')
-    if params.get("uncert-metric-out", None) is not None:
-        if not isinstance(params["uncert-metric-out"], str):
-            raise StyxValidationError(f'`uncert-metric-out` has the wrong type: Received `{type(params.get("uncert-metric-out", None))}` expected `str | None`')
+    if params.get("stddev", None) is not None:
+        surface_average_stddev_validate(params["stddev"])
+    if params.get("uncertainty", None) is not None:
+        surface_average_uncertainty_validate(params["uncertainty"])
     if params.get("surf", None) is not None:
         if not isinstance(params["surf"], list):
             raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `list[SurfaceAverageSurfParamsDict] | None`')
@@ -197,15 +388,13 @@ def surface_average_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("stddev-metric-out", None) is not None or params.get("uncert-metric-out", None) is not None or params.get("surf", None) is not None:
+    if params.get("stddev", None) is not None or params.get("uncertainty", None) is not None or params.get("surf", None) is not None:
         cargs.extend([
             "wb_command",
             "-surface-average",
             params.get("surface-out", None),
-            "-stddev",
-            (params.get("stddev-metric-out", None) if (params.get("stddev-metric-out", None) is not None) else ""),
-            "-uncertainty",
-            (params.get("uncert-metric-out", None) if (params.get("uncert-metric-out", None) is not None) else ""),
+            *(surface_average_stddev_cargs(params.get("stddev", None), execution) if (params.get("stddev", None) is not None) else []),
+            *(surface_average_uncertainty_cargs(params.get("uncertainty", None), execution) if (params.get("uncertainty", None) is not None) else []),
             *([a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c] if (params.get("surf", None) is not None) else [])
         ])
     return cargs
@@ -227,6 +416,8 @@ def surface_average_outputs(
     ret = SurfaceAverageOutputs(
         root=execution.output_file("."),
         surface_out=execution.output_file(params.get("surface-out", None)),
+        stddev=surface_average_stddev_outputs(params.get("stddev"), execution) if params.get("stddev") else None,
+        uncertainty=surface_average_uncertainty_outputs(params.get("uncertainty"), execution) if params.get("uncertainty") else None,
     )
     return ret
 
@@ -265,8 +456,8 @@ def surface_average_execute(
 
 def surface_average(
     surface_out: str,
-    stddev_metric_out: str | None = None,
-    uncert_metric_out: str | None = None,
+    stddev: SurfaceAverageStddevParamsDict | None = None,
+    uncertainty: SurfaceAverageUncertaintyParamsDict | None = None,
     surf: list[SurfaceAverageSurfParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
@@ -284,12 +475,8 @@ def surface_average(
     
     Args:
         surface_out: the output averaged surface.
-        stddev_metric_out: compute 3D sample standard deviation\
-            \
-            the output metric for 3D sample standard deviation.
-        uncert_metric_out: compute caret5 'uncertainty'\
-            \
-            the output metric for uncertainty.
+        stddev: compute 3D sample standard deviation.
+        uncertainty: compute caret5 'uncertainty'.
         surf: specify a surface to include in the average.
         runner: Command runner.
     Returns:
@@ -297,8 +484,8 @@ def surface_average(
     """
     params = surface_average_params(
         surface_out=surface_out,
-        stddev_metric_out=stddev_metric_out,
-        uncert_metric_out=uncert_metric_out,
+        stddev=stddev,
+        uncertainty=uncertainty,
         surf=surf,
     )
     return surface_average_execute(params, runner)
@@ -309,10 +496,18 @@ __all__ = [
     "SurfaceAverageOutputs",
     "SurfaceAverageParamsDict",
     "SurfaceAverageParamsDictTagged",
+    "SurfaceAverageStddevOutputs",
+    "SurfaceAverageStddevParamsDict",
+    "SurfaceAverageStddevParamsDictTagged",
     "SurfaceAverageSurfParamsDict",
     "SurfaceAverageSurfParamsDictTagged",
+    "SurfaceAverageUncertaintyOutputs",
+    "SurfaceAverageUncertaintyParamsDict",
+    "SurfaceAverageUncertaintyParamsDictTagged",
     "surface_average",
     "surface_average_execute",
     "surface_average_params",
+    "surface_average_stddev",
     "surface_average_surf",
+    "surface_average_uncertainty",
 ]

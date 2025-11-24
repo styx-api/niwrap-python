@@ -127,12 +127,9 @@ def metric_estimate_fwhm_cargs(
         cargs.extend([
             "wb_command",
             "-metric-estimate-fwhm",
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-whole-file",
-            ("-demean" if (params.get("demean", None) is not None) else "")
+            "-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-whole-file" + ("-demean" if (params.get("demean", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

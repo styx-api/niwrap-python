@@ -120,8 +120,7 @@ def metric_regression_remove_cargs(
         cargs.extend([
             "-remove",
             execution.input_file(params.get("metric", None)),
-            "-remove-column",
-            params.get("column", None)
+            "-remove-column" + params.get("column", None)
         ])
     return cargs
 
@@ -189,8 +188,7 @@ def metric_regression_keep_cargs(
         cargs.extend([
             "-keep",
             execution.input_file(params.get("metric", None)),
-            "-keep-column",
-            params.get("column", None)
+            "-keep-column" + params.get("column", None)
         ])
     return cargs
 
@@ -303,10 +301,8 @@ def metric_regression_cargs(
             "wb_command",
             "-metric-regression",
             params.get("metric-out", None),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
             *([a for c in [metric_regression_remove_cargs(s, execution) for s in params.get("remove", None)] for a in c] if (params.get("remove", None) is not None) else []),
             *([a for c in [metric_regression_keep_cargs(s, execution) for s in params.get("keep", None)] for a in c] if (params.get("keep", None) is not None) else [])
         ])

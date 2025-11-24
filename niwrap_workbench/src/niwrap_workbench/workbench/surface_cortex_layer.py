@@ -13,9 +13,19 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
 )
 
 
+_SurfaceCortexLayerPlacementOutParamsDictNoTag = typing.TypedDict('_SurfaceCortexLayerPlacementOutParamsDictNoTag', {
+    "placement-metric": str,
+})
+SurfaceCortexLayerPlacementOutParamsDictTagged = typing.TypedDict('SurfaceCortexLayerPlacementOutParamsDictTagged', {
+    "@type": typing.Literal["placement-out"],
+    "placement-metric": str,
+})
+SurfaceCortexLayerPlacementOutParamsDict = _SurfaceCortexLayerPlacementOutParamsDictNoTag | SurfaceCortexLayerPlacementOutParamsDictTagged
+
+
 _SurfaceCortexLayerParamsDictNoTag = typing.TypedDict('_SurfaceCortexLayerParamsDictNoTag', {
     "out-surface": str,
-    "placement-metric": typing.NotRequired[str | None],
+    "placement-out": typing.NotRequired[SurfaceCortexLayerPlacementOutParamsDict | None],
     "white-surface": InputPathType,
     "pial-surface": InputPathType,
     "location": float,
@@ -23,12 +33,99 @@ _SurfaceCortexLayerParamsDictNoTag = typing.TypedDict('_SurfaceCortexLayerParams
 SurfaceCortexLayerParamsDictTagged = typing.TypedDict('SurfaceCortexLayerParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-cortex-layer"],
     "out-surface": str,
-    "placement-metric": typing.NotRequired[str | None],
+    "placement-out": typing.NotRequired[SurfaceCortexLayerPlacementOutParamsDict | None],
     "white-surface": InputPathType,
     "pial-surface": InputPathType,
     "location": float,
 })
 SurfaceCortexLayerParamsDict = _SurfaceCortexLayerParamsDictNoTag | SurfaceCortexLayerParamsDictTagged
+
+
+class SurfaceCortexLayerPlacementOutOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `SurfaceCortexLayerPlacementOutParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    placement_metric: OutputPathType
+    """output metric"""
+
+
+def surface_cortex_layer_placement_out(
+    placement_metric: str,
+) -> SurfaceCortexLayerPlacementOutParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        placement_metric: output metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "placement-out",
+        "placement-metric": placement_metric,
+    }
+    return params
+
+
+def surface_cortex_layer_placement_out_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCortexLayerPlacementOutParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("placement-metric", None) is None:
+        raise StyxValidationError("`placement-metric` must not be None")
+    if not isinstance(params["placement-metric"], str):
+        raise StyxValidationError(f'`placement-metric` has the wrong type: Received `{type(params.get("placement-metric", None))}` expected `str`')
+
+
+def surface_cortex_layer_placement_out_cargs(
+    params: SurfaceCortexLayerPlacementOutParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-placement-out",
+        params.get("placement-metric", None)
+    ])
+    return cargs
+
+
+def surface_cortex_layer_placement_out_outputs(
+    params: SurfaceCortexLayerPlacementOutParamsDict,
+    execution: Execution,
+) -> SurfaceCortexLayerPlacementOutOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = SurfaceCortexLayerPlacementOutOutputs(
+        root=execution.output_file("."),
+        placement_metric=execution.output_file(params.get("placement-metric", None)),
+    )
+    return ret
 
 
 class SurfaceCortexLayerOutputs(typing.NamedTuple):
@@ -39,6 +136,8 @@ class SurfaceCortexLayerOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     out_surface: OutputPathType
     """the output surface"""
+    placement_out: SurfaceCortexLayerPlacementOutOutputs | None
+    """Outputs from `surface_cortex_layer_placement_out_outputs`."""
 
 
 def surface_cortex_layer_params(
@@ -46,7 +145,7 @@ def surface_cortex_layer_params(
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
-    placement_metric: str | None = None,
+    placement_out: SurfaceCortexLayerPlacementOutParamsDict | None = None,
 ) -> SurfaceCortexLayerParamsDictTagged:
     """
     Build parameters.
@@ -56,10 +155,8 @@ def surface_cortex_layer_params(
         white_surface: the white matter surface.
         pial_surface: the pial surface.
         location: what volume fraction to place the layer at.
-        placement_metric: output the placement as a volume fraction from pial\
-            to white\
-            \
-            output metric.
+        placement_out: output the placement as a volume fraction from pial to\
+            white.
     Returns:
         Parameter dictionary
     """
@@ -70,8 +167,8 @@ def surface_cortex_layer_params(
         "pial-surface": pial_surface,
         "location": location,
     }
-    if placement_metric is not None:
-        params["placement-metric"] = placement_metric
+    if placement_out is not None:
+        params["placement-out"] = placement_out
     return params
 
 
@@ -91,9 +188,8 @@ def surface_cortex_layer_validate(
         raise StyxValidationError("`out-surface` must not be None")
     if not isinstance(params["out-surface"], str):
         raise StyxValidationError(f'`out-surface` has the wrong type: Received `{type(params.get("out-surface", None))}` expected `str`')
-    if params.get("placement-metric", None) is not None:
-        if not isinstance(params["placement-metric"], str):
-            raise StyxValidationError(f'`placement-metric` has the wrong type: Received `{type(params.get("placement-metric", None))}` expected `str | None`')
+    if params.get("placement-out", None) is not None:
+        surface_cortex_layer_placement_out_validate(params["placement-out"])
     if params.get("white-surface", None) is None:
         raise StyxValidationError("`white-surface` must not be None")
     if not isinstance(params["white-surface"], (pathlib.Path, str)):
@@ -122,13 +218,12 @@ def surface_cortex_layer_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("placement-metric", None) is not None:
+    if params.get("placement-out", None) is not None:
         cargs.extend([
             "wb_command",
             "-surface-cortex-layer",
             params.get("out-surface", None),
-            "-placement-out",
-            params.get("placement-metric", None)
+            *surface_cortex_layer_placement_out_cargs(params.get("placement-out", None), execution)
         ])
     cargs.append(execution.input_file(params.get("white-surface", None)))
     cargs.append(execution.input_file(params.get("pial-surface", None)))
@@ -152,6 +247,7 @@ def surface_cortex_layer_outputs(
     ret = SurfaceCortexLayerOutputs(
         root=execution.output_file("."),
         out_surface=execution.output_file(params.get("out-surface", None)),
+        placement_out=surface_cortex_layer_placement_out_outputs(params.get("placement-out"), execution) if params.get("placement-out") else None,
     )
     return ret
 
@@ -191,7 +287,7 @@ def surface_cortex_layer(
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
-    placement_metric: str | None = None,
+    placement_out: SurfaceCortexLayerPlacementOutParamsDict | None = None,
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
@@ -209,17 +305,15 @@ def surface_cortex_layer(
         white_surface: the white matter surface.
         pial_surface: the pial surface.
         location: what volume fraction to place the layer at.
-        placement_metric: output the placement as a volume fraction from pial\
-            to white\
-            \
-            output metric.
+        placement_out: output the placement as a volume fraction from pial to\
+            white.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCortexLayerOutputs`).
     """
     params = surface_cortex_layer_params(
         out_surface=out_surface,
-        placement_metric=placement_metric,
+        placement_out=placement_out,
         white_surface=white_surface,
         pial_surface=pial_surface,
         location=location,
@@ -232,7 +326,11 @@ __all__ = [
     "SurfaceCortexLayerOutputs",
     "SurfaceCortexLayerParamsDict",
     "SurfaceCortexLayerParamsDictTagged",
+    "SurfaceCortexLayerPlacementOutOutputs",
+    "SurfaceCortexLayerPlacementOutParamsDict",
+    "SurfaceCortexLayerPlacementOutParamsDictTagged",
     "surface_cortex_layer",
     "surface_cortex_layer_execute",
     "surface_cortex_layer_params",
+    "surface_cortex_layer_placement_out",
 ]

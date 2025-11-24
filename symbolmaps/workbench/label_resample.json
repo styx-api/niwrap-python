@@ -31,8 +31,14 @@
     "roi-metric": {
       "var_param": "roi_metric"
     },
-    "roi-out": {
-      "var_param": "roi_out"
+    "valid-roi-out": {
+      "var_param": "valid_roi_out",
+      "fn_struct_make_params": "label_resample_valid_roi_out",
+      "properties": {
+        "roi-out": {
+          "var_param": "roi_out"
+        }
+      }
     },
     "largest": {
       "var_param": "largest"

@@ -328,14 +328,10 @@ def volume_dilate_cargs(
             "wb_command",
             "-volume-dilate",
             params.get("volume-out", None),
-            "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            "-bad-voxel-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-data-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+            "-exponent" + (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
+            "-bad-voxel-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-data-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
             ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else ""),
             *(volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution) if (params.get("grad-extrapolate", None) is not None) else [])
         ])

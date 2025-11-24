@@ -147,8 +147,7 @@ def volume_parcel_smoothing_cargs(
             params.get("volume-out", None),
             ("-fwhm" if (params.get("fwhm", False)) else ""),
             ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("data-volume", None)))
     cargs.append(execution.input_file(params.get("label-volume", None)))

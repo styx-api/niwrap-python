@@ -140,8 +140,7 @@ def cifti_change_mapping_series_cargs(
             "-series",
             str(params.get("step", None)),
             str(params.get("start", None)),
-            "-unit",
-            params.get("unit", None)
+            "-unit" + params.get("unit", None)
         ])
     return cargs
 
@@ -201,8 +200,7 @@ def cifti_change_mapping_scalar_cargs(
     if params.get("file", None) is not None:
         cargs.extend([
             "-scalar",
-            "-name-file",
-            params.get("file", None)
+            "-name-file" + params.get("file", None)
         ])
     return cargs
 

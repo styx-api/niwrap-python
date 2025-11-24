@@ -263,15 +263,11 @@ def cifti_rois_from_extrema_cargs(
             "wb_command",
             "-cifti-rois-from-extrema",
             params.get("cifti-out", None),
-            "-left-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-right-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-cerebellum-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
+            "-left-surface" + (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
+            "-right-surface" + (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
+            "-cerebellum-surface" + (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
             *(cifti_rois_from_extrema_gaussian_cargs(params.get("gaussian", None), execution) if (params.get("gaussian", None) is not None) else []),
-            "-overlap-logic",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-overlap-logic" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
             ("-merged-volume" if (params.get("merged-volume", False)) else "")
         ])
     cargs.append(execution.input_file(params.get("cifti", None)))

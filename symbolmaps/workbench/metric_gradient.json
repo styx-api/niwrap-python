@@ -28,8 +28,14 @@
         }
       }
     },
-    "vector-metric-out": {
-      "var_param": "vector_metric_out"
+    "vectors": {
+      "var_param": "vectors",
+      "fn_struct_make_params": "metric_gradient_vectors",
+      "properties": {
+        "vector-metric-out": {
+          "var_param": "vector_metric_out"
+        }
+      }
     },
     "column": {
       "var_param": "column"

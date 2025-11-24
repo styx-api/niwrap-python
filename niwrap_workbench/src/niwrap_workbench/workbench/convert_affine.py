@@ -465,12 +465,10 @@ def convert_affine_cargs(
             "wb_command",
             "-convert-affine",
             *(convert_affine_from_world_cargs(params.get("from-world", None), execution) if (params.get("from-world", None) is not None) else []),
-            "-from-itk",
-            (params.get("input", None) if (params.get("input", None) is not None) else ""),
+            "-from-itk" + (params.get("input", None) if (params.get("input", None) is not None) else ""),
             *(convert_affine_from_flirt_cargs(params.get("from-flirt", None), execution) if (params.get("from-flirt", None) is not None) else []),
             *(convert_affine_to_world_cargs(params.get("to-world", None), execution) if (params.get("to-world", None) is not None) else []),
-            "-to-itk",
-            (params.get("output", None) if (params.get("output", None) is not None) else ""),
+            "-to-itk" + (params.get("output", None) if (params.get("output", None) is not None) else ""),
             *([a for c in [convert_affine_to_flirt_cargs(s, execution) for s in params.get("to-flirt", None)] for a in c] if (params.get("to-flirt", None) is not None) else [])
         ])
     return cargs

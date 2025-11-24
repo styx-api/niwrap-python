@@ -184,8 +184,7 @@ def cifti_create_dense_from_template_series_cargs(
             "-series",
             str(params.get("step", None)),
             str(params.get("start", None)),
-            "-unit",
-            params.get("unit", None)
+            "-unit" + params.get("unit", None)
         ])
     return cargs
 
@@ -650,8 +649,7 @@ def cifti_create_dense_from_template_cargs(
             params.get("cifti-out", None),
             *(cifti_create_dense_from_template_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
             *(cifti_create_dense_from_template_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
-            "-label-collision",
-            (params.get("action", None) if (params.get("action", None) is not None) else ""),
+            "-label-collision" + (params.get("action", None) if (params.get("action", None) is not None) else ""),
             *([a for c in [cifti_create_dense_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else []),
             *([a for c in [cifti_create_dense_from_template_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
             *([a for c in [cifti_create_dense_from_template_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),

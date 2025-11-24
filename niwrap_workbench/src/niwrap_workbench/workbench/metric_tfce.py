@@ -313,13 +313,10 @@ def metric_tfce_cargs(
             "-metric-tfce",
             params.get("metric-out", None),
             *(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             *(metric_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else []),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas" + (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

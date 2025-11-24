@@ -136,8 +136,7 @@ def zip_scene_file_cargs(
         cargs.extend([
             "wb_command",
             "-zip-scene-file",
-            "-base-dir",
-            (params.get("directory", None) if (params.get("directory", None) is not None) else ""),
+            "-base-dir" + (params.get("directory", None) if (params.get("directory", None) is not None) else ""),
             ("-skip-missing" if (params.get("skip-missing", False)) else ""),
             ("-write-scene-file" if (params.get("write-scene-file", False)) else "")
         ])

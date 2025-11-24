@@ -37,6 +37,16 @@ VolumeToSurfaceMappingDilateMissingParamsDictTagged = typing.TypedDict('VolumeTo
 VolumeToSurfaceMappingDilateMissingParamsDict = _VolumeToSurfaceMappingDilateMissingParamsDictNoTag | VolumeToSurfaceMappingDilateMissingParamsDictTagged
 
 
+_VolumeToSurfaceMappingBadVerticesOutParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingBadVerticesOutParamsDictNoTag', {
+    "roi-out": str,
+})
+VolumeToSurfaceMappingBadVerticesOutParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingBadVerticesOutParamsDictTagged', {
+    "@type": typing.Literal["bad-vertices-out"],
+    "roi-out": str,
+})
+VolumeToSurfaceMappingBadVerticesOutParamsDict = _VolumeToSurfaceMappingBadVerticesOutParamsDictNoTag | VolumeToSurfaceMappingBadVerticesOutParamsDictTagged
+
+
 _VolumeToSurfaceMappingOutputWeightsParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingOutputWeightsParamsDictNoTag', {
     "vertex": int,
     "weights-out": str,
@@ -58,7 +68,7 @@ _VolumeToSurfaceMappingRibbonConstrainedParamsDictNoTag = typing.TypedDict('_Vol
     "thin-columns": bool,
     "scale": typing.NotRequired[float | None],
     "method": typing.NotRequired[str | None],
-    "roi-out": typing.NotRequired[str | None],
+    "bad-vertices-out": typing.NotRequired[VolumeToSurfaceMappingBadVerticesOutParamsDict | None],
     "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParamsDict | None],
     "text-out": typing.NotRequired[str | None],
 })
@@ -72,7 +82,7 @@ VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('Volu
     "thin-columns": bool,
     "scale": typing.NotRequired[float | None],
     "method": typing.NotRequired[str | None],
-    "roi-out": typing.NotRequired[str | None],
+    "bad-vertices-out": typing.NotRequired[VolumeToSurfaceMappingBadVerticesOutParamsDict | None],
     "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParamsDict | None],
     "text-out": typing.NotRequired[str | None],
 })
@@ -253,6 +263,93 @@ def volume_to_surface_mapping_dilate_missing_cargs(
     return cargs
 
 
+class VolumeToSurfaceMappingBadVerticesOutOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `VolumeToSurfaceMappingBadVerticesOutParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    roi_out: OutputPathType
+    """the output metric file of vertices that have no data"""
+
+
+def volume_to_surface_mapping_bad_vertices_out(
+    roi_out: str,
+) -> VolumeToSurfaceMappingBadVerticesOutParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        roi_out: the output metric file of vertices that have no data.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "bad-vertices-out",
+        "roi-out": roi_out,
+    }
+    return params
+
+
+def volume_to_surface_mapping_bad_vertices_out_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingBadVerticesOutParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-out", None) is None:
+        raise StyxValidationError("`roi-out` must not be None")
+    if not isinstance(params["roi-out"], str):
+        raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str`')
+
+
+def volume_to_surface_mapping_bad_vertices_out_cargs(
+    params: VolumeToSurfaceMappingBadVerticesOutParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-bad-vertices-out",
+        params.get("roi-out", None)
+    ])
+    return cargs
+
+
+def volume_to_surface_mapping_bad_vertices_out_outputs(
+    params: VolumeToSurfaceMappingBadVerticesOutParamsDict,
+    execution: Execution,
+) -> VolumeToSurfaceMappingBadVerticesOutOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = VolumeToSurfaceMappingBadVerticesOutOutputs(
+        root=execution.output_file("."),
+        roi_out=execution.output_file(params.get("roi-out", None)),
+    )
+    return ret
+
+
 class VolumeToSurfaceMappingOutputWeightsOutputs(typing.NamedTuple):
     """
     Output object returned when calling `VolumeToSurfaceMappingOutputWeightsParamsDict | None(...)`.
@@ -354,6 +451,8 @@ class VolumeToSurfaceMappingRibbonConstrainedOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
+    bad_vertices_out: VolumeToSurfaceMappingBadVerticesOutOutputs | None
+    """Outputs from `volume_to_surface_mapping_bad_vertices_out_outputs`."""
     output_weights: VolumeToSurfaceMappingOutputWeightsOutputs | None
     """Outputs from `volume_to_surface_mapping_output_weights_outputs`."""
 
@@ -367,7 +466,7 @@ def volume_to_surface_mapping_ribbon_constrained(
     thin_columns: bool = False,
     scale: float | None = None,
     method: str | None = None,
-    roi_out: str | None = None,
+    bad_vertices_out: VolumeToSurfaceMappingBadVerticesOutParamsDict | None = None,
     output_weights: VolumeToSurfaceMappingOutputWeightsParamsDict | None = None,
     text_out: str | None = None,
 ) -> VolumeToSurfaceMappingRibbonConstrainedParamsDictTagged:
@@ -391,10 +490,8 @@ def volume_to_surface_mapping_ribbon_constrained(
             subpoints inside the ribbon\
             \
             interpolation method, must be CUBIC, ENCLOSING_VOXEL, or TRILINEAR.
-        roi_out: output an ROI of which vertices didn't intersect any valid\
-            voxels\
-            \
-            the output metric file of vertices that have no data.
+        bad_vertices_out: output an ROI of which vertices didn't intersect any\
+            valid voxels.
         output_weights: write the voxel weights for a vertex to a volume file.
         text_out: write the voxel weights for all vertices to a text file\
             \
@@ -418,8 +515,8 @@ def volume_to_surface_mapping_ribbon_constrained(
         params["scale"] = scale
     if method is not None:
         params["method"] = method
-    if roi_out is not None:
-        params["roi-out"] = roi_out
+    if bad_vertices_out is not None:
+        params["bad-vertices-out"] = bad_vertices_out
     if output_weights is not None:
         params["output-weights"] = output_weights
     if text_out is not None:
@@ -464,9 +561,8 @@ def volume_to_surface_mapping_ribbon_constrained_validate(
     if params.get("method", None) is not None:
         if not isinstance(params["method"], str):
             raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
-    if params.get("roi-out", None) is not None:
-        if not isinstance(params["roi-out"], str):
-            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("bad-vertices-out", None) is not None:
+        volume_to_surface_mapping_bad_vertices_out_validate(params["bad-vertices-out"])
     if params.get("output-weights", None) is not None:
         volume_to_surface_mapping_output_weights_validate(params["output-weights"])
     if params.get("text-out", None) is not None:
@@ -488,25 +584,20 @@ def volume_to_surface_mapping_ribbon_constrained_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("volume-roi", None) is not None or params.get("dilate-missing", None) is not None or params.get("subdiv-num", None) is not None or params.get("thin-columns", False) or params.get("scale", None) is not None or params.get("method", None) is not None or params.get("roi-out", None) is not None or params.get("output-weights", None) is not None or params.get("text-out", None) is not None:
+    if params.get("volume-roi", None) is not None or params.get("dilate-missing", None) is not None or params.get("subdiv-num", None) is not None or params.get("thin-columns", False) or params.get("scale", None) is not None or params.get("method", None) is not None or params.get("bad-vertices-out", None) is not None or params.get("output-weights", None) is not None or params.get("text-out", None) is not None:
         cargs.extend([
             "-ribbon-constrained",
             execution.input_file(params.get("inner-surf", None)),
             execution.input_file(params.get("outer-surf", None)),
             *(volume_to_surface_mapping_volume_roi_cargs(params.get("volume-roi", None), execution) if (params.get("volume-roi", None) is not None) else []),
             *(volume_to_surface_mapping_dilate_missing_cargs(params.get("dilate-missing", None), execution) if (params.get("dilate-missing", None) is not None) else []),
-            "-voxel-subdiv",
-            (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+            "-voxel-subdiv" + (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
             ("-thin-columns" if (params.get("thin-columns", False)) else ""),
-            "-gaussian",
-            (str(params.get("scale", None)) if (params.get("scale", None) is not None) else ""),
-            "-interpolate",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
-            "-bad-vertices-out",
-            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
+            "-gaussian" + (str(params.get("scale", None)) if (params.get("scale", None) is not None) else ""),
+            "-interpolate" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            *(volume_to_surface_mapping_bad_vertices_out_cargs(params.get("bad-vertices-out", None), execution) if (params.get("bad-vertices-out", None) is not None) else []),
             *(volume_to_surface_mapping_output_weights_cargs(params.get("output-weights", None), execution) if (params.get("output-weights", None) is not None) else []),
-            "-output-weights-text",
-            (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
+            "-output-weights-text" + (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
         ])
     return cargs
 
@@ -526,6 +617,7 @@ def volume_to_surface_mapping_ribbon_constrained_outputs(
     """
     ret = VolumeToSurfaceMappingRibbonConstrainedOutputs(
         root=execution.output_file("."),
+        bad_vertices_out=volume_to_surface_mapping_bad_vertices_out_outputs(params.get("bad-vertices-out"), execution) if params.get("bad-vertices-out") else None,
         output_weights=volume_to_surface_mapping_output_weights_outputs(params.get("output-weights"), execution) if params.get("output-weights") else None,
     )
     return ret
@@ -742,8 +834,7 @@ def volume_to_surface_mapping_cargs(
             ("-cubic" if (params.get("cubic", False)) else ""),
             *(volume_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
             *(volume_to_surface_mapping_myelin_style_cargs(params.get("myelin-style", None), execution) if (params.get("myelin-style", None) is not None) else []),
-            "-subvol-select",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-subvol-select" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
@@ -917,6 +1008,9 @@ def volume_to_surface_mapping(
 
 __all__ = [
     "VOLUME_TO_SURFACE_MAPPING_METADATA",
+    "VolumeToSurfaceMappingBadVerticesOutOutputs",
+    "VolumeToSurfaceMappingBadVerticesOutParamsDict",
+    "VolumeToSurfaceMappingBadVerticesOutParamsDictTagged",
     "VolumeToSurfaceMappingDilateMissingParamsDict",
     "VolumeToSurfaceMappingDilateMissingParamsDictTagged",
     "VolumeToSurfaceMappingMyelinStyleParamsDict",
@@ -933,6 +1027,7 @@ __all__ = [
     "VolumeToSurfaceMappingVolumeRoiParamsDict",
     "VolumeToSurfaceMappingVolumeRoiParamsDictTagged",
     "volume_to_surface_mapping",
+    "volume_to_surface_mapping_bad_vertices_out",
     "volume_to_surface_mapping_dilate_missing",
     "volume_to_surface_mapping_execute",
     "volume_to_surface_mapping_myelin_style",

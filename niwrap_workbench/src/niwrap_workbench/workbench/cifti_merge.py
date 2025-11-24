@@ -356,10 +356,8 @@ def cifti_merge_cargs(
             "wb_command",
             "-cifti-merge",
             params.get("cifti-out", None),
-            "-direction",
-            (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
-            "-mem-limit",
-            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
+            "-direction" + (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
+            "-mem-limit" + (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
             *([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
         ])
     return cargs

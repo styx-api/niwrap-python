@@ -45,6 +45,16 @@ CiftiParcellateExcludeOutliersParamsDictTagged = typing.TypedDict('CiftiParcella
 CiftiParcellateExcludeOutliersParamsDict = _CiftiParcellateExcludeOutliersParamsDictNoTag | CiftiParcellateExcludeOutliersParamsDictTagged
 
 
+_CiftiParcellateNonemptyMaskOutParamsDictNoTag = typing.TypedDict('_CiftiParcellateNonemptyMaskOutParamsDictNoTag', {
+    "mask-out": str,
+})
+CiftiParcellateNonemptyMaskOutParamsDictTagged = typing.TypedDict('CiftiParcellateNonemptyMaskOutParamsDictTagged', {
+    "@type": typing.Literal["nonempty-mask-out"],
+    "mask-out": str,
+})
+CiftiParcellateNonemptyMaskOutParamsDict = _CiftiParcellateNonemptyMaskOutParamsDictNoTag | CiftiParcellateNonemptyMaskOutParamsDictTagged
+
+
 _CiftiParcellateParamsDictNoTag = typing.TypedDict('_CiftiParcellateParamsDictNoTag', {
     "cifti-out": str,
     "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
@@ -53,7 +63,7 @@ _CiftiParcellateParamsDictNoTag = typing.TypedDict('_CiftiParcellateParamsDictNo
     "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "value": typing.NotRequired[float | None],
-    "mask-out": typing.NotRequired[str | None],
+    "nonempty-mask-out": typing.NotRequired[CiftiParcellateNonemptyMaskOutParamsDict | None],
     "legacy-mode": bool,
     "include-empty": bool,
     "cifti-in": InputPathType,
@@ -69,7 +79,7 @@ CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTag
     "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
     "only-numeric": bool,
     "value": typing.NotRequired[float | None],
-    "mask-out": typing.NotRequired[str | None],
+    "nonempty-mask-out": typing.NotRequired[CiftiParcellateNonemptyMaskOutParamsDict | None],
     "legacy-mode": bool,
     "include-empty": bool,
     "cifti-in": InputPathType,
@@ -179,18 +189,12 @@ def cifti_parcellate_spatial_weights_cargs(
     if params.get("left-surf", None) is not None or params.get("right-surf", None) is not None or params.get("cerebellum-surf", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None:
         cargs.extend([
             "-spatial-weights",
-            "-left-area-surf",
-            (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
-            "-right-area-surf",
-            (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
-            "-cerebellum-area-surf",
-            (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
-            "-left-area-metric",
-            (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
-            "-right-area-metric",
-            (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
-            "-cerebellum-area-metric",
-            (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
+            "-left-area-surf" + (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
+            "-right-area-surf" + (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
+            "-cerebellum-area-surf" + (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
+            "-left-area-metric" + (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
+            "-right-area-metric" + (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
+            "-cerebellum-area-metric" + (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
         ])
     return cargs
 
@@ -260,6 +264,93 @@ def cifti_parcellate_exclude_outliers_cargs(
     return cargs
 
 
+class CiftiParcellateNonemptyMaskOutOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `CiftiParcellateNonemptyMaskOutParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    mask_out: OutputPathType
+    """the output mask file"""
+
+
+def cifti_parcellate_nonempty_mask_out(
+    mask_out: str,
+) -> CiftiParcellateNonemptyMaskOutParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        mask_out: the output mask file.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "nonempty-mask-out",
+        "mask-out": mask_out,
+    }
+    return params
+
+
+def cifti_parcellate_nonempty_mask_out_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiParcellateNonemptyMaskOutParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mask-out", None) is None:
+        raise StyxValidationError("`mask-out` must not be None")
+    if not isinstance(params["mask-out"], str):
+        raise StyxValidationError(f'`mask-out` has the wrong type: Received `{type(params.get("mask-out", None))}` expected `str`')
+
+
+def cifti_parcellate_nonempty_mask_out_cargs(
+    params: CiftiParcellateNonemptyMaskOutParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-nonempty-mask-out",
+        params.get("mask-out", None)
+    ])
+    return cargs
+
+
+def cifti_parcellate_nonempty_mask_out_outputs(
+    params: CiftiParcellateNonemptyMaskOutParamsDict,
+    execution: Execution,
+) -> CiftiParcellateNonemptyMaskOutOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiParcellateNonemptyMaskOutOutputs(
+        root=execution.output_file("."),
+        mask_out=execution.output_file(params.get("mask-out", None)),
+    )
+    return ret
+
+
 class CiftiParcellateOutputs(typing.NamedTuple):
     """
     Output object returned when calling `CiftiParcellateParamsDict(...)`.
@@ -268,6 +359,8 @@ class CiftiParcellateOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     cifti_out: OutputPathType
     """output cifti file"""
+    nonempty_mask_out: CiftiParcellateNonemptyMaskOutOutputs | None
+    """Outputs from `cifti_parcellate_nonempty_mask_out_outputs`."""
 
 
 def cifti_parcellate_params(
@@ -281,7 +374,7 @@ def cifti_parcellate_params(
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     value: float | None = None,
-    mask_out: str | None = None,
+    nonempty_mask_out: CiftiParcellateNonemptyMaskOutParamsDict | None = None,
     legacy_mode: bool = False,
     include_empty: bool = False,
 ) -> CiftiParcellateParamsDictTagged:
@@ -309,10 +402,8 @@ def cifti_parcellate_params(
         value: specify value to use in empty parcels (default 0)\
             \
             the value to fill empty parcels with.
-        mask_out: output a matching pscalar file that has 0s in empty parcels,\
-            and 1s elsewhere\
-            \
-            the output mask file.
+        nonempty_mask_out: output a matching pscalar file that has 0s in empty\
+            parcels, and 1s elsewhere.
         legacy_mode: use the old behavior, parcels are defined by the\
             intersection between labels and valid data, and empty parcels are\
             discarded.
@@ -340,8 +431,8 @@ def cifti_parcellate_params(
         params["exclude-outliers"] = exclude_outliers
     if value is not None:
         params["value"] = value
-    if mask_out is not None:
-        params["mask-out"] = mask_out
+    if nonempty_mask_out is not None:
+        params["nonempty-mask-out"] = nonempty_mask_out
     return params
 
 
@@ -378,9 +469,8 @@ def cifti_parcellate_validate(
     if params.get("value", None) is not None:
         if not isinstance(params["value"], (float, int)):
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
-    if params.get("mask-out", None) is not None:
-        if not isinstance(params["mask-out"], str):
-            raise StyxValidationError(f'`mask-out` has the wrong type: Received `{type(params.get("mask-out", None))}` expected `str | None`')
+    if params.get("nonempty-mask-out", None) is not None:
+        cifti_parcellate_nonempty_mask_out_validate(params["nonempty-mask-out"])
     if params.get("legacy-mode", False) is None:
         raise StyxValidationError("`legacy-mode` must not be None")
     if not isinstance(params["legacy-mode"], bool):
@@ -417,22 +507,18 @@ def cifti_parcellate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("method", None) is not None or params.get("exclude-outliers", None) is not None or params.get("only-numeric", False) or params.get("value", None) is not None or params.get("mask-out", None) is not None or params.get("legacy-mode", False) or params.get("include-empty", False):
+    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("method", None) is not None or params.get("exclude-outliers", None) is not None or params.get("only-numeric", False) or params.get("value", None) is not None or params.get("nonempty-mask-out", None) is not None or params.get("legacy-mode", False) or params.get("include-empty", False):
         cargs.extend([
             "wb_command",
             "-cifti-parcellate",
             params.get("cifti-out", None),
             *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
-            "-cifti-weights",
-            (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
-            "-method",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-cifti-weights" + (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
+            "-method" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
             *(cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
             ("-only-numeric" if (params.get("only-numeric", False)) else ""),
-            "-fill-value",
-            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-            "-nonempty-mask-out",
-            (params.get("mask-out", None) if (params.get("mask-out", None) is not None) else ""),
+            "-fill-value" + (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+            *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else []),
             ("-legacy-mode" if (params.get("legacy-mode", False)) else ""),
             ("-include-empty" if (params.get("include-empty", False)) else "")
         ])
@@ -458,6 +544,7 @@ def cifti_parcellate_outputs(
     ret = CiftiParcellateOutputs(
         root=execution.output_file("."),
         cifti_out=execution.output_file(params.get("cifti-out", None)),
+        nonempty_mask_out=cifti_parcellate_nonempty_mask_out_outputs(params.get("nonempty-mask-out"), execution) if params.get("nonempty-mask-out") else None,
     )
     return ret
 
@@ -532,7 +619,7 @@ def cifti_parcellate(
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     value: float | None = None,
-    mask_out: str | None = None,
+    nonempty_mask_out: CiftiParcellateNonemptyMaskOutParamsDict | None = None,
     legacy_mode: bool = False,
     include_empty: bool = False,
     runner: Runner | None = None,
@@ -597,10 +684,8 @@ def cifti_parcellate(
         value: specify value to use in empty parcels (default 0)\
             \
             the value to fill empty parcels with.
-        mask_out: output a matching pscalar file that has 0s in empty parcels,\
-            and 1s elsewhere\
-            \
-            the output mask file.
+        nonempty_mask_out: output a matching pscalar file that has 0s in empty\
+            parcels, and 1s elsewhere.
         legacy_mode: use the old behavior, parcels are defined by the\
             intersection between labels and valid data, and empty parcels are\
             discarded.
@@ -617,7 +702,7 @@ def cifti_parcellate(
         exclude_outliers=exclude_outliers,
         only_numeric=only_numeric,
         value=value,
-        mask_out=mask_out,
+        nonempty_mask_out=nonempty_mask_out,
         legacy_mode=legacy_mode,
         include_empty=include_empty,
         cifti_in=cifti_in,
@@ -631,6 +716,9 @@ __all__ = [
     "CIFTI_PARCELLATE_METADATA",
     "CiftiParcellateExcludeOutliersParamsDict",
     "CiftiParcellateExcludeOutliersParamsDictTagged",
+    "CiftiParcellateNonemptyMaskOutOutputs",
+    "CiftiParcellateNonemptyMaskOutParamsDict",
+    "CiftiParcellateNonemptyMaskOutParamsDictTagged",
     "CiftiParcellateOutputs",
     "CiftiParcellateParamsDict",
     "CiftiParcellateParamsDictTagged",
@@ -639,6 +727,7 @@ __all__ = [
     "cifti_parcellate",
     "cifti_parcellate_exclude_outliers",
     "cifti_parcellate_execute",
+    "cifti_parcellate_nonempty_mask_out",
     "cifti_parcellate_params",
     "cifti_parcellate_spatial_weights",
 ]

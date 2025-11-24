@@ -117,8 +117,7 @@ def metric_mask_cargs(
             "wb_command",
             "-metric-mask",
             params.get("metric-out", None),
-            "-column",
-            params.get("column", None)
+            "-column" + params.get("column", None)
         ])
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(execution.input_file(params.get("mask", None)))

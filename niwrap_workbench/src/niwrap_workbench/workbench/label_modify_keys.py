@@ -117,8 +117,7 @@ def label_modify_keys_cargs(
             "wb_command",
             "-label-modify-keys",
             params.get("label-out", None),
-            "-column",
-            params.get("column", None)
+            "-column" + params.get("column", None)
         ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("remap-file", None))

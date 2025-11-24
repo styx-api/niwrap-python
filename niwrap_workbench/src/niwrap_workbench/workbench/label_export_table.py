@@ -105,8 +105,7 @@ def label_export_table_cargs(
         cargs.extend([
             "wb_command",
             "-label-export-table",
-            "-hierarchy",
-            params.get("json-out", None)
+            "-hierarchy" + params.get("json-out", None)
         ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("table-out", None))

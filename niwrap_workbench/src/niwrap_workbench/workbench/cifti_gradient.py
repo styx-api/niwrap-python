@@ -49,6 +49,16 @@ CiftiGradientCerebellumSurfaceParamsDictTagged = typing.TypedDict('CiftiGradient
 CiftiGradientCerebellumSurfaceParamsDict = _CiftiGradientCerebellumSurfaceParamsDictNoTag | CiftiGradientCerebellumSurfaceParamsDictTagged
 
 
+_CiftiGradientVectorsParamsDictNoTag = typing.TypedDict('_CiftiGradientVectorsParamsDictNoTag', {
+    "vectors-out": str,
+})
+CiftiGradientVectorsParamsDictTagged = typing.TypedDict('CiftiGradientVectorsParamsDictTagged', {
+    "@type": typing.Literal["vectors"],
+    "vectors-out": str,
+})
+CiftiGradientVectorsParamsDict = _CiftiGradientVectorsParamsDictNoTag | CiftiGradientVectorsParamsDictTagged
+
+
 _CiftiGradientSurfaceParamsDictNoTag = typing.TypedDict('_CiftiGradientSurfaceParamsDictNoTag', {
     "structure": str,
     "surface": InputPathType,
@@ -72,7 +82,7 @@ _CiftiGradientParamsDictNoTag = typing.TypedDict('_CiftiGradientParamsDictNoTag'
     "volume-kernel": typing.NotRequired[float | None],
     "presmooth-fwhm": bool,
     "average-output": bool,
-    "vectors-out": typing.NotRequired[str | None],
+    "vectors": typing.NotRequired[CiftiGradientVectorsParamsDict | None],
     "surface": typing.NotRequired[list[CiftiGradientSurfaceParamsDict] | None],
     "cifti": InputPathType,
     "direction": str,
@@ -87,7 +97,7 @@ CiftiGradientParamsDictTagged = typing.TypedDict('CiftiGradientParamsDictTagged'
     "volume-kernel": typing.NotRequired[float | None],
     "presmooth-fwhm": bool,
     "average-output": bool,
-    "vectors-out": typing.NotRequired[str | None],
+    "vectors": typing.NotRequired[CiftiGradientVectorsParamsDict | None],
     "surface": typing.NotRequired[list[CiftiGradientSurfaceParamsDict] | None],
     "cifti": InputPathType,
     "direction": str,
@@ -159,8 +169,7 @@ def cifti_gradient_left_surface_cargs(
         cargs.extend([
             "-left-surface",
             execution.input_file(params.get("surface", None)),
-            "-left-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-left-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -229,8 +238,7 @@ def cifti_gradient_right_surface_cargs(
         cargs.extend([
             "-right-surface",
             execution.input_file(params.get("surface", None)),
-            "-right-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-right-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -299,10 +307,96 @@ def cifti_gradient_cerebellum_surface_cargs(
         cargs.extend([
             "-cerebellum-surface",
             execution.input_file(params.get("surface", None)),
-            "-cerebellum-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-cerebellum-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
+
+
+class CiftiGradientVectorsOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `CiftiGradientVectorsParamsDict | None(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    vectors_out: OutputPathType
+    """the vectors, as a dscalar file"""
+
+
+def cifti_gradient_vectors(
+    vectors_out: str,
+) -> CiftiGradientVectorsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        vectors_out: the vectors, as a dscalar file.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "vectors",
+        "vectors-out": vectors_out,
+    }
+    return params
+
+
+def cifti_gradient_vectors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiGradientVectorsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vectors-out", None) is None:
+        raise StyxValidationError("`vectors-out` must not be None")
+    if not isinstance(params["vectors-out"], str):
+        raise StyxValidationError(f'`vectors-out` has the wrong type: Received `{type(params.get("vectors-out", None))}` expected `str`')
+
+
+def cifti_gradient_vectors_cargs(
+    params: CiftiGradientVectorsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.extend([
+        "-vectors",
+        params.get("vectors-out", None)
+    ])
+    return cargs
+
+
+def cifti_gradient_vectors_outputs(
+    params: CiftiGradientVectorsParamsDict,
+    execution: Execution,
+) -> CiftiGradientVectorsOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = CiftiGradientVectorsOutputs(
+        root=execution.output_file("."),
+        vectors_out=execution.output_file(params.get("vectors-out", None)),
+    )
+    return ret
 
 
 def cifti_gradient_surface(
@@ -377,8 +471,7 @@ def cifti_gradient_surface_cargs(
             "-surface",
             params.get("structure", None),
             execution.input_file(params.get("surface", None)),
-            "-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
+            "-corrected-areas" + execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -391,6 +484,8 @@ class CiftiGradientOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     cifti_out: OutputPathType
     """the output cifti"""
+    vectors: CiftiGradientVectorsOutputs | None
+    """Outputs from `cifti_gradient_vectors_outputs`."""
 
 
 def cifti_gradient_params(
@@ -404,7 +499,7 @@ def cifti_gradient_params(
     volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     average_output: bool = False,
-    vectors_out: str | None = None,
+    vectors: CiftiGradientVectorsParamsDict | None = None,
     surface: list[CiftiGradientSurfaceParamsDict] | None = None,
 ) -> CiftiGradientParamsDictTagged:
     """
@@ -428,9 +523,7 @@ def cifti_gradient_params(
         presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
         average_output: output the average of the gradient magnitude maps\
             instead of each gradient map separately.
-        vectors_out: output gradient vectors\
-            \
-            the vectors, as a dscalar file.
+        vectors: output gradient vectors.
         surface: specify a surface by structure name.
     Returns:
         Parameter dictionary
@@ -453,8 +546,8 @@ def cifti_gradient_params(
         params["surface-kernel"] = surface_kernel
     if volume_kernel is not None:
         params["volume-kernel"] = volume_kernel
-    if vectors_out is not None:
-        params["vectors-out"] = vectors_out
+    if vectors is not None:
+        params["vectors"] = vectors
     if surface is not None:
         params["surface"] = surface
     return params
@@ -496,9 +589,8 @@ def cifti_gradient_validate(
         raise StyxValidationError("`average-output` must not be None")
     if not isinstance(params["average-output"], bool):
         raise StyxValidationError(f'`average-output` has the wrong type: Received `{type(params.get("average-output", False))}` expected `bool`')
-    if params.get("vectors-out", None) is not None:
-        if not isinstance(params["vectors-out"], str):
-            raise StyxValidationError(f'`vectors-out` has the wrong type: Received `{type(params.get("vectors-out", None))}` expected `str | None`')
+    if params.get("vectors", None) is not None:
+        cifti_gradient_vectors_validate(params["vectors"])
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
             raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiGradientSurfaceParamsDict] | None`')
@@ -528,7 +620,7 @@ def cifti_gradient_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("surface-kernel", None) is not None or params.get("volume-kernel", None) is not None or params.get("presmooth-fwhm", False) or params.get("average-output", False) or params.get("vectors-out", None) is not None or params.get("surface", None) is not None:
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("surface-kernel", None) is not None or params.get("volume-kernel", None) is not None or params.get("presmooth-fwhm", False) or params.get("average-output", False) or params.get("vectors", None) is not None or params.get("surface", None) is not None:
         cargs.extend([
             "wb_command",
             "-cifti-gradient",
@@ -536,14 +628,11 @@ def cifti_gradient_cargs(
             *(cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
             *(cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
             *(cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-            "-surface-presmooth",
-            (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
-            "-volume-presmooth",
-            (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
+            "-surface-presmooth" + (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
+            "-volume-presmooth" + (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
             ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
             ("-average-output" if (params.get("average-output", False)) else ""),
-            "-vectors",
-            (params.get("vectors-out", None) if (params.get("vectors-out", None) is not None) else ""),
+            *(cifti_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
             *([a for c in [cifti_gradient_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
         ])
     cargs.append(execution.input_file(params.get("cifti", None)))
@@ -567,6 +656,7 @@ def cifti_gradient_outputs(
     ret = CiftiGradientOutputs(
         root=execution.output_file("."),
         cifti_out=execution.output_file(params.get("cifti-out", None)),
+        vectors=cifti_gradient_vectors_outputs(params.get("vectors"), execution) if params.get("vectors") else None,
     )
     return ret
 
@@ -650,7 +740,7 @@ def cifti_gradient(
     volume_kernel: float | None = None,
     presmooth_fwhm: bool = False,
     average_output: bool = False,
-    vectors_out: str | None = None,
+    vectors: CiftiGradientVectorsParamsDict | None = None,
     surface: list[CiftiGradientSurfaceParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
@@ -720,9 +810,7 @@ def cifti_gradient(
         presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
         average_output: output the average of the gradient magnitude maps\
             instead of each gradient map separately.
-        vectors_out: output gradient vectors\
-            \
-            the vectors, as a dscalar file.
+        vectors: output gradient vectors.
         surface: specify a surface by structure name.
         runner: Command runner.
     Returns:
@@ -737,7 +825,7 @@ def cifti_gradient(
         volume_kernel=volume_kernel,
         presmooth_fwhm=presmooth_fwhm,
         average_output=average_output,
-        vectors_out=vectors_out,
+        vectors=vectors,
         surface=surface,
         cifti=cifti,
         direction=direction,
@@ -758,6 +846,9 @@ __all__ = [
     "CiftiGradientRightSurfaceParamsDictTagged",
     "CiftiGradientSurfaceParamsDict",
     "CiftiGradientSurfaceParamsDictTagged",
+    "CiftiGradientVectorsOutputs",
+    "CiftiGradientVectorsParamsDict",
+    "CiftiGradientVectorsParamsDictTagged",
     "cifti_gradient",
     "cifti_gradient_cerebellum_surface",
     "cifti_gradient_execute",
@@ -765,4 +856,5 @@ __all__ = [
     "cifti_gradient_params",
     "cifti_gradient_right_surface",
     "cifti_gradient_surface",
+    "cifti_gradient_vectors",
 ]

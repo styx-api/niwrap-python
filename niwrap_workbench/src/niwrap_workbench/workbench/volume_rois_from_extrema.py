@@ -150,14 +150,10 @@ def volume_rois_from_extrema_cargs(
             "wb_command",
             "-volume-rois-from-extrema",
             params.get("volume-out", None),
-            "-gaussian",
-            (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-            "-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-overlap-logic",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-gaussian" + (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
+            "-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-overlap-logic" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("limit", None)))
