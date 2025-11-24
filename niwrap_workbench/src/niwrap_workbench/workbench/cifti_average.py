@@ -181,7 +181,8 @@ def cifti_average_cifti_cargs(
         cargs.extend([
             "-cifti",
             execution.input_file(params.get("cifti-in", None)),
-            "-weight" + str(params.get("weight", None))
+            "-weight",
+            str(params.get("weight", None))
         ])
     return cargs
 
@@ -277,7 +278,8 @@ def cifti_average_cargs(
             "-cifti-average",
             params.get("cifti-out", None),
             *(cifti_average_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-            "-mem-limit" + (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
+            "-mem-limit",
+            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
             *([a for c in [cifti_average_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
         ])
     return cargs

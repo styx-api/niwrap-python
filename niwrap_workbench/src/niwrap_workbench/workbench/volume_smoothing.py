@@ -148,9 +148,11 @@ def volume_smoothing_cargs(
             "-volume-smoothing",
             params.get("volume-out", None),
             ("-fwhm" if (params.get("fwhm", False)) else ""),
-            "-roi" + (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
+            "-roi",
+            (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
             ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
-            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-subvolume",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("kernel", None)))

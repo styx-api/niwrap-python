@@ -163,7 +163,8 @@ def cifti_smoothing_left_surface_cargs(
         cargs.extend([
             "-left-surface",
             execution.input_file(params.get("surface", None)),
-            "-left-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-left-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -232,7 +233,8 @@ def cifti_smoothing_right_surface_cargs(
         cargs.extend([
             "-right-surface",
             execution.input_file(params.get("surface", None)),
-            "-right-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-right-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -301,7 +303,8 @@ def cifti_smoothing_cerebellum_surface_cargs(
         cargs.extend([
             "-cerebellum-surface",
             execution.input_file(params.get("surface", None)),
-            "-cerebellum-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-cerebellum-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -378,7 +381,8 @@ def cifti_smoothing_surface_cargs(
             "-surface",
             params.get("structure", None),
             execution.input_file(params.get("surface", None)),
-            "-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -546,7 +550,8 @@ def cifti_smoothing_cargs(
             *(cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
             *(cifti_smoothing_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
             *(cifti_smoothing_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-            "-cifti-roi" + (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
+            "-cifti-roi",
+            (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
             ("-fix-zeros-volume" if (params.get("fix-zeros-volume", False)) else ""),
             ("-fix-zeros-surface" if (params.get("fix-zeros-surface", False)) else ""),
             ("-merged-volume" if (params.get("merged-volume", False)) else ""),

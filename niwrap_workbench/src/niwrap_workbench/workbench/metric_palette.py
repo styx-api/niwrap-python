@@ -628,19 +628,27 @@ def metric_palette_cargs(
         cargs.extend([
             "wb_command",
             "-metric-palette",
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             *(metric_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
             *(metric_palette_neg_percent_cargs(params.get("neg-percent", None), execution) if (params.get("neg-percent", None) is not None) else []),
             *(metric_palette_pos_user_cargs(params.get("pos-user", None), execution) if (params.get("pos-user", None) is not None) else []),
             *(metric_palette_neg_user_cargs(params.get("neg-user", None), execution) if (params.get("neg-user", None) is not None) else []),
-            "-interpolate" + (("true" if params.get("interpolate", None) else "false") if (params.get("interpolate", None) is not None) else ""),
-            "-disp-pos" + (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
-            "-disp-neg" + (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
-            "-disp-zero" + (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
-            "-palette-name" + (params.get("name", None) if (params.get("name", None) is not None) else ""),
+            "-interpolate",
+            (("true" if params.get("interpolate", None) else "false") if (params.get("interpolate", None) is not None) else ""),
+            "-disp-pos",
+            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
+            "-disp-neg",
+            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
+            "-disp-zero",
+            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
+            "-palette-name",
+            (params.get("name", None) if (params.get("name", None) is not None) else ""),
             *(metric_palette_thresholding_cargs(params.get("thresholding", None), execution) if (params.get("thresholding", None) is not None) else []),
-            "-inversion" + (params.get("type", None) if (params.get("type", None) is not None) else ""),
-            "-normalization" + (params.get("type", None) if (params.get("type", None) is not None) else "")
+            "-inversion",
+            (params.get("type", None) if (params.get("type", None) is not None) else ""),
+            "-normalization",
+            (params.get("type", None) if (params.get("type", None) is not None) else "")
         ])
     cargs.append(params.get("metric", None))
     cargs.append(params.get("mode", None))

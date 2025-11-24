@@ -95,7 +95,8 @@ def nifti_information_print_xml_cargs(
     if params.get("version", None) is not None:
         cargs.extend([
             "-print-xml",
-            "-version" + params.get("version", None)
+            "-version",
+            params.get("version", None)
         ])
     return cargs
 
@@ -184,7 +185,8 @@ def nifti_information_cargs(
         cargs.extend([
             "wb_command",
             "-nifti-information",
-            "-print-header" + ("-allow-truncated" if (params.get("allow-truncated", None) is not None) else ""),
+            "-print-header",
+            ("-allow-truncated" if (params.get("allow-truncated", None) is not None) else ""),
             ("-print-matrix" if (params.get("print-matrix", False)) else ""),
             *(nifti_information_print_xml_cargs(params.get("print-xml", None), execution) if (params.get("print-xml", None) is not None) else [])
         ])

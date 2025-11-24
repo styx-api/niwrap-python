@@ -320,11 +320,14 @@ def volume_weighted_stats_cargs(
             "wb_command",
             "-volume-weighted-stats",
             *(volume_weighted_stats_weight_volume_cargs(params.get("weight-volume", None), execution) if (params.get("weight-volume", None) is not None) else []),
-            "-subvolume" + (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
+            "-subvolume",
+            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
             *(volume_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-mean" if (params.get("mean", False)) else ""),
-            "-stdev" + ("-sample" if (params.get("sample", None) is not None) else ""),
-            "-percentile" + (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
+            "-stdev",
+            ("-sample" if (params.get("sample", None) is not None) else ""),
+            "-percentile",
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             ("-sum" if (params.get("sum", False)) else ""),
             ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])

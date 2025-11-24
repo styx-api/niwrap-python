@@ -189,12 +189,18 @@ def cifti_parcellate_spatial_weights_cargs(
     if params.get("left-surf", None) is not None or params.get("right-surf", None) is not None or params.get("cerebellum-surf", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None:
         cargs.extend([
             "-spatial-weights",
-            "-left-area-surf" + (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
-            "-right-area-surf" + (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
-            "-cerebellum-area-surf" + (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
-            "-left-area-metric" + (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
-            "-right-area-metric" + (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
-            "-cerebellum-area-metric" + (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
+            "-left-area-surf",
+            (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
+            "-right-area-surf",
+            (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
+            "-cerebellum-area-surf",
+            (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
+            "-left-area-metric",
+            (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
+            "-right-area-metric",
+            (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
+            "-cerebellum-area-metric",
+            (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
         ])
     return cargs
 
@@ -513,11 +519,14 @@ def cifti_parcellate_cargs(
             "-cifti-parcellate",
             params.get("cifti-out", None),
             *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
-            "-cifti-weights" + (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
-            "-method" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-cifti-weights",
+            (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
+            "-method",
+            (params.get("method", None) if (params.get("method", None) is not None) else ""),
             *(cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
             ("-only-numeric" if (params.get("only-numeric", False)) else ""),
-            "-fill-value" + (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+            "-fill-value",
+            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
             *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else []),
             ("-legacy-mode" if (params.get("legacy-mode", False)) else ""),
             ("-include-empty" if (params.get("include-empty", False)) else "")

@@ -591,13 +591,17 @@ def volume_to_surface_mapping_ribbon_constrained_cargs(
             execution.input_file(params.get("outer-surf", None)),
             *(volume_to_surface_mapping_volume_roi_cargs(params.get("volume-roi", None), execution) if (params.get("volume-roi", None) is not None) else []),
             *(volume_to_surface_mapping_dilate_missing_cargs(params.get("dilate-missing", None), execution) if (params.get("dilate-missing", None) is not None) else []),
-            "-voxel-subdiv" + (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+            "-voxel-subdiv",
+            (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
             ("-thin-columns" if (params.get("thin-columns", False)) else ""),
-            "-gaussian" + (str(params.get("scale", None)) if (params.get("scale", None) is not None) else ""),
-            "-interpolate" + (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-gaussian",
+            (str(params.get("scale", None)) if (params.get("scale", None) is not None) else ""),
+            "-interpolate",
+            (params.get("method", None) if (params.get("method", None) is not None) else ""),
             *(volume_to_surface_mapping_bad_vertices_out_cargs(params.get("bad-vertices-out", None), execution) if (params.get("bad-vertices-out", None) is not None) else []),
             *(volume_to_surface_mapping_output_weights_cargs(params.get("output-weights", None), execution) if (params.get("output-weights", None) is not None) else []),
-            "-output-weights-text" + (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
+            "-output-weights-text",
+            (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
         ])
     return cargs
 
@@ -834,7 +838,8 @@ def volume_to_surface_mapping_cargs(
             ("-cubic" if (params.get("cubic", False)) else ""),
             *(volume_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
             *(volume_to_surface_mapping_myelin_style_cargs(params.get("myelin-style", None), execution) if (params.get("myelin-style", None) is not None) else []),
-            "-subvol-select" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-subvol-select",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(execution.input_file(params.get("surface", None)))

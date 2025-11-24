@@ -214,9 +214,12 @@ def metric_stats_cargs(
         cargs.extend([
             "wb_command",
             "-metric-stats",
-            "-reduce" + (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
-            "-percentile" + (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-reduce",
+            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
+            "-percentile",
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             *(metric_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])

@@ -135,7 +135,8 @@ def border_to_rois_cargs(
             "wb_command",
             "-border-to-rois",
             params.get("metric-out", None),
-            "-border" + (params.get("name", None) if (params.get("name", None) is not None) else ""),
+            "-border",
+            (params.get("name", None) if (params.get("name", None) is not None) else ""),
             ("-inverse" if (params.get("inverse", False)) else ""),
             ("-include-border" if (params.get("include-border", False)) else "")
         ])

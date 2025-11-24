@@ -151,9 +151,12 @@ def label_dilate_cargs(
             "wb_command",
             "-label-dilate",
             params.get("label-out", None),
-            "-bad-vertex-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-corrected-areas" + (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+            "-bad-vertex-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))

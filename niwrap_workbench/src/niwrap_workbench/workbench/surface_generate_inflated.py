@@ -120,7 +120,8 @@ def surface_generate_inflated_cargs(
             "-surface-generate-inflated",
             params.get("inflated-surface-out", None),
             params.get("very-inflated-surface-out", None),
-            "-iterations-scale" + str(params.get("iterations-scale-value", None))
+            "-iterations-scale",
+            str(params.get("iterations-scale-value", None))
         ])
     cargs.append(execution.input_file(params.get("anatomical-surface-in", None)))
     return cargs

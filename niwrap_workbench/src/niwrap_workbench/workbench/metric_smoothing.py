@@ -258,9 +258,12 @@ def metric_smoothing_cargs(
             ("-fwhm" if (params.get("fwhm", False)) else ""),
             *(metric_smoothing_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-corrected-areas" + (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-            "-method" + (params.get("method", None) if (params.get("method", None) is not None) else "")
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            "-method",
+            (params.get("method", None) if (params.get("method", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

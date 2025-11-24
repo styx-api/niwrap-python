@@ -165,7 +165,8 @@ def cifti_correlation_gradient_left_surface_cargs(
         cargs.extend([
             "-left-surface",
             execution.input_file(params.get("surface", None)),
-            "-left-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-left-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -234,7 +235,8 @@ def cifti_correlation_gradient_right_surface_cargs(
         cargs.extend([
             "-right-surface",
             execution.input_file(params.get("surface", None)),
-            "-right-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-right-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -303,7 +305,8 @@ def cifti_correlation_gradient_cerebellum_surface_cargs(
         cargs.extend([
             "-cerebellum-surface",
             execution.input_file(params.get("surface", None)),
-            "-cerebellum-corrected-areas" + execution.input_file(params.get("area-metric", None))
+            "-cerebellum-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -560,15 +563,20 @@ def cifti_correlation_gradient_cargs(
             *(cifti_correlation_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
             *(cifti_correlation_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
             *(cifti_correlation_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-            "-surface-presmooth" + (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
-            "-volume-presmooth" + (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
+            "-surface-presmooth",
+            (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
+            "-volume-presmooth",
+            (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
             ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
             ("-undo-fisher-z" if (params.get("undo-fisher-z", False)) else ""),
             ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-            "-surface-exclude" + (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
-            "-volume-exclude" + (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
+            "-surface-exclude",
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
+            "-volume-exclude",
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
             ("-covariance" if (params.get("covariance", False)) else ""),
-            "-mem-limit" + (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
+            "-mem-limit",
+            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
             *(cifti_correlation_gradient_double_correlation_cargs(params.get("double-correlation", None), execution) if (params.get("double-correlation", None) is not None) else [])
         ])
     cargs.append(execution.input_file(params.get("cifti", None)))

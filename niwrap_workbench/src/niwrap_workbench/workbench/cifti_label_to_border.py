@@ -228,8 +228,10 @@ def cifti_label_to_border_cargs(
         cargs.extend([
             "wb_command",
             "-cifti-label-to-border",
-            "-placement" + (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-placement",
+            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             *([a for c in [cifti_label_to_border_border_cargs(s, execution) for s in params.get("border", None)] for a in c] if (params.get("border", None) is not None) else [])
         ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))

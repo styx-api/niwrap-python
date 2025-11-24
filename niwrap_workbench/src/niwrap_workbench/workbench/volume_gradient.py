@@ -314,9 +314,11 @@ def volume_gradient_cargs(
             "-volume-gradient",
             params.get("volume-out", None),
             *(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-roi",
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
             *(volume_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
-            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+            "-subvolume",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs

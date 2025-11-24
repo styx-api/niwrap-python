@@ -117,7 +117,8 @@ def cifti_label_modify_keys_cargs(
             "wb_command",
             "-cifti-label-modify-keys",
             params.get("cifti-out", None),
-            "-column" + params.get("column", None)
+            "-column",
+            params.get("column", None)
         ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("remap-file", None))

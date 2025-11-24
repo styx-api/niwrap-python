@@ -298,7 +298,8 @@ def surface_average_surf_cargs(
         cargs.extend([
             "-surf",
             execution.input_file(params.get("surface", None)),
-            "-weight" + str(params.get("weight", None))
+            "-weight",
+            str(params.get("weight", None))
         ])
     return cargs
 

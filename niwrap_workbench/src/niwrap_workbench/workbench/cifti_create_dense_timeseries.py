@@ -231,7 +231,8 @@ def cifti_create_dense_timeseries_left_metric_cargs(
         cargs.extend([
             "-left-metric",
             execution.input_file(params.get("metric", None)),
-            "-roi-left" + execution.input_file(params.get("roi-metric", None))
+            "-roi-left",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -299,7 +300,8 @@ def cifti_create_dense_timeseries_right_metric_cargs(
         cargs.extend([
             "-right-metric",
             execution.input_file(params.get("metric", None)),
-            "-roi-right" + execution.input_file(params.get("roi-metric", None))
+            "-roi-right",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -367,7 +369,8 @@ def cifti_create_dense_timeseries_cerebellum_metric_cargs(
         cargs.extend([
             "-cerebellum-metric",
             execution.input_file(params.get("metric", None)),
-            "-roi-cerebellum" + execution.input_file(params.get("roi-metric", None))
+            "-roi-cerebellum",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -443,7 +446,8 @@ def cifti_create_dense_timeseries_metric_cargs(
             "-metric",
             params.get("structure", None),
             execution.input_file(params.get("metric", None)),
-            "-roi" + execution.input_file(params.get("roi-metric", None))
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -577,9 +581,12 @@ def cifti_create_dense_timeseries_cargs(
             *(cifti_create_dense_timeseries_left_metric_cargs(params.get("left-metric", None), execution) if (params.get("left-metric", None) is not None) else []),
             *(cifti_create_dense_timeseries_right_metric_cargs(params.get("right-metric", None), execution) if (params.get("right-metric", None) is not None) else []),
             *(cifti_create_dense_timeseries_cerebellum_metric_cargs(params.get("cerebellum-metric", None), execution) if (params.get("cerebellum-metric", None) is not None) else []),
-            "-timestep" + (str(params.get("interval", None)) if (params.get("interval", None) is not None) else ""),
-            "-timestart" + (str(params.get("start", None)) if (params.get("start", None) is not None) else ""),
-            "-unit" + (params.get("unit", None) if (params.get("unit", None) is not None) else ""),
+            "-timestep",
+            (str(params.get("interval", None)) if (params.get("interval", None) is not None) else ""),
+            "-timestart",
+            (str(params.get("start", None)) if (params.get("start", None) is not None) else ""),
+            "-unit",
+            (params.get("unit", None) if (params.get("unit", None) is not None) else ""),
             *([a for c in [cifti_create_dense_timeseries_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
         ])
     return cargs

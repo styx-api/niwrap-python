@@ -325,7 +325,8 @@ def cifti_convert_reset_timepoints_cargs(
             "-reset-timepoints",
             str(params.get("timestep", None)),
             str(params.get("timestart", None)),
-            "-unit" + params.get("unit", None)
+            "-unit",
+            params.get("unit", None)
         ])
     return cargs
 
@@ -717,7 +718,8 @@ def cifti_convert_reset_timepoints_cargs_(
             "-reset-timepoints",
             str(params.get("timestep", None)),
             str(params.get("timestart", None)),
-            "-unit" + params.get("unit", None)
+            "-unit",
+            params.get("unit", None)
         ])
     return cargs
 
@@ -915,7 +917,8 @@ def cifti_convert_to_text_cargs(
             "-to-text",
             execution.input_file(params.get("cifti-in", None)),
             params.get("text-out", None),
-            "-col-delim" + params.get("delim-string", None)
+            "-col-delim",
+            params.get("delim-string", None)
         ])
     return cargs
 
@@ -991,7 +994,8 @@ def cifti_convert_reset_timepoints_cargs_2(
             "-reset-timepoints",
             str(params.get("timestep", None)),
             str(params.get("timestart", None)),
-            "-unit" + params.get("unit", None)
+            "-unit",
+            params.get("unit", None)
         ])
     return cargs
 
@@ -1101,7 +1105,8 @@ def cifti_convert_from_text_cargs(
             params.get("text-in", None),
             execution.input_file(params.get("cifti-template", None)),
             params.get("cifti-out", None),
-            "-col-delim" + (params.get("delim-string", None) if (params.get("delim-string", None) is not None) else ""),
+            "-col-delim",
+            (params.get("delim-string", None) if (params.get("delim-string", None) is not None) else ""),
             *(cifti_convert_reset_timepoints_cargs_2(params.get("reset-timepoints", None), execution) if (params.get("reset-timepoints", None) is not None) else []),
             ("-reset-scalars" if (params.get("reset-scalars", False)) else "")
         ])

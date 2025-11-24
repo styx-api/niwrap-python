@@ -137,8 +137,10 @@ def metric_rois_to_border_cargs(
             "wb_command",
             "-metric-rois-to-border",
             params.get("border-out", None),
-            "-placement" + (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else "")
+            "-placement",
+            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric", None)))

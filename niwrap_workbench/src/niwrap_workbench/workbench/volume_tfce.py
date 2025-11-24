@@ -292,9 +292,11 @@ def volume_tfce_cargs(
             "-volume-tfce",
             params.get("volume-out", None),
             *(volume_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi" + (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-roi",
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
             *(volume_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else []),
-            "-subvolume" + (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
+            "-subvolume",
+            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs

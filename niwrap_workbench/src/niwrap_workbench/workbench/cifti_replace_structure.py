@@ -479,7 +479,8 @@ def cifti_replace_structure_cargs(
             "-cifti-replace-structure",
             *(cifti_replace_structure_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
             ("-discard-unused-labels" if (params.get("discard-unused-labels", False)) else ""),
-            "-label-collision" + (params.get("action", None) if (params.get("action", None) is not None) else ""),
+            "-label-collision",
+            (params.get("action", None) if (params.get("action", None) is not None) else ""),
             *([a for c in [cifti_replace_structure_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
             *([a for c in [cifti_replace_structure_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
             *([a for c in [cifti_replace_structure_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])

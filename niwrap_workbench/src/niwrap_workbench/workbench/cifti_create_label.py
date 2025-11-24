@@ -224,7 +224,8 @@ def cifti_create_label_left_label_cargs(
         cargs.extend([
             "-left-label",
             execution.input_file(params.get("label", None)),
-            "-roi-left" + execution.input_file(params.get("roi-metric", None))
+            "-roi-left",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -292,7 +293,8 @@ def cifti_create_label_right_label_cargs(
         cargs.extend([
             "-right-label",
             execution.input_file(params.get("label", None)),
-            "-roi-right" + execution.input_file(params.get("roi-metric", None))
+            "-roi-right",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -360,7 +362,8 @@ def cifti_create_label_cerebellum_label_cargs(
         cargs.extend([
             "-cerebellum-label",
             execution.input_file(params.get("label", None)),
-            "-roi-cerebellum" + execution.input_file(params.get("roi-metric", None))
+            "-roi-cerebellum",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -436,7 +439,8 @@ def cifti_create_label_label_cargs(
             "-label",
             params.get("structure", None),
             execution.input_file(params.get("label", None)),
-            "-roi" + execution.input_file(params.get("roi-metric", None))
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 

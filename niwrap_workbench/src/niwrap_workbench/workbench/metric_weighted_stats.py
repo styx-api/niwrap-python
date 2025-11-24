@@ -254,13 +254,18 @@ def metric_weighted_stats_cargs(
         cargs.extend([
             "wb_command",
             "-metric-weighted-stats",
-            "-area-surface" + (execution.input_file(params.get("area-surface", None)) if (params.get("area-surface", None) is not None) else ""),
-            "-weight-metric" + (execution.input_file(params.get("weight-metric", None)) if (params.get("weight-metric", None) is not None) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-area-surface",
+            (execution.input_file(params.get("area-surface", None)) if (params.get("area-surface", None) is not None) else ""),
+            "-weight-metric",
+            (execution.input_file(params.get("weight-metric", None)) if (params.get("weight-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             *(metric_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
             ("-mean" if (params.get("mean", False)) else ""),
-            "-stdev" + ("-sample" if (params.get("sample", None) is not None) else ""),
-            "-percentile" + (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
+            "-stdev",
+            ("-sample" if (params.get("sample", None) is not None) else ""),
+            "-percentile",
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             ("-sum" if (params.get("sum", False)) else ""),
             ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])

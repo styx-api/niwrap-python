@@ -119,9 +119,12 @@ def volume_estimate_fwhm_cargs(
         cargs.extend([
             "wb_command",
             "-volume-estimate-fwhm",
-            "-roi" + (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
-            "-subvolume" + (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
-            "-whole-file" + ("-demean" if (params.get("demean", None) is not None) else "")
+            "-roi",
+            (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
+            "-subvolume",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+            "-whole-file",
+            ("-demean" if (params.get("demean", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("volume", None)))
     return cargs

@@ -203,8 +203,10 @@ def volume_warpfield_affine_regression_cargs(
         cargs.extend([
             "wb_command",
             "-volume-warpfield-affine-regression",
-            "-roi" + (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
-            "-fnirt" + (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
+            "-roi",
+            (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
+            "-fnirt",
+            (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
             *(volume_warpfield_affine_regression_flirt_out_cargs(params.get("flirt-out", None), execution) if (params.get("flirt-out", None) is not None) else [])
         ])
     cargs.append(params.get("warpfield", None))

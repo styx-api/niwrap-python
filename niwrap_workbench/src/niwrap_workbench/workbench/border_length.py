@@ -125,7 +125,8 @@ def border_length_cargs(
         cargs.extend([
             "wb_command",
             "-border-length",
-            "-corrected-areas" + (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
             ("-separate-pieces" if (params.get("separate-pieces", False)) else ""),
             ("-hide-border-name" if (params.get("hide-border-name", False)) else "")
         ])

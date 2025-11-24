@@ -212,7 +212,8 @@ def cifti_reduce_cargs(
             "wb_command",
             "-cifti-reduce",
             params.get("cifti-out", None),
-            "-direction" + (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
+            "-direction",
+            (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
             *(cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
             ("-only-numeric" if (params.get("only-numeric", False)) else "")
         ])

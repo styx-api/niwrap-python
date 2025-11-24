@@ -105,7 +105,8 @@ def foci_list_coords_cargs(
         cargs.extend([
             "wb_command",
             "-foci-list-coords",
-            "-names-out" + params.get("names-file-out", None)
+            "-names-out",
+            params.get("names-file-out", None)
         ])
     cargs.append(execution.input_file(params.get("foci-file", None)))
     cargs.append(params.get("coord-file-out", None))

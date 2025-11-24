@@ -203,13 +203,18 @@ def metric_dilate_cargs(
             "wb_command",
             "-metric-dilate",
             params.get("metric-out", None),
-            "-bad-vertex-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-data-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-bad-vertex-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-data-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             ("-nearest" if (params.get("nearest", False)) else ""),
             ("-linear" if (params.get("linear", False)) else ""),
-            "-exponent" + (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            "-corrected-areas" + (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            "-exponent",
+            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
             ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
         ])
     cargs.append(execution.input_file(params.get("metric", None)))

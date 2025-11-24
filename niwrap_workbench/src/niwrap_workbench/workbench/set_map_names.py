@@ -195,8 +195,10 @@ def set_map_names_cargs(
         cargs.extend([
             "wb_command",
             "-set-map-names",
-            "-name-file" + (params.get("file", None) if (params.get("file", None) is not None) else ""),
-            "-from-data-file" + (params.get("file", None) if (params.get("file", None) is not None) else ""),
+            "-name-file",
+            (params.get("file", None) if (params.get("file", None) is not None) else ""),
+            "-from-data-file",
+            (params.get("file", None) if (params.get("file", None) is not None) else ""),
             *([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c] if (params.get("map", None) is not None) else [])
         ])
     cargs.append(params.get("data-file", None))

@@ -181,7 +181,8 @@ def surface_distortion_match_surface_area_cargs(
     if params.get("roi-metric", None) is not None:
         cargs.extend([
             "-match-surface-area",
-            "-roi" + execution.input_file(params.get("roi-metric", None))
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -305,7 +306,8 @@ def surface_distortion_cargs(
             *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else []),
             ("-caret5-method" if (params.get("caret5-method", False)) else ""),
             ("-edge-method" if (params.get("edge-method", False)) else ""),
-            "-local-affine-method" + ("-log2" if (params.get("log2", None) is not None) else "")
+            "-local-affine-method",
+            ("-log2" if (params.get("log2", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface-reference", None)))
     cargs.append(execution.input_file(params.get("surface-distorted", None)))

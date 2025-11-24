@@ -108,7 +108,8 @@ def cifti_transpose_cargs(
             "wb_command",
             "-cifti-transpose",
             params.get("cifti-out", None),
-            "-mem-limit" + str(params.get("limit-GB", None))
+            "-mem-limit",
+            str(params.get("limit-GB", None))
         ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs

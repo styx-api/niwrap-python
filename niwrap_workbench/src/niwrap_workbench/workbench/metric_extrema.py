@@ -349,13 +349,15 @@ def metric_extrema_cargs(
             "-metric-extrema",
             params.get("metric-out", None),
             *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi" + (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
             ("-sum-columns" if (params.get("sum-columns", False)) else ""),
             ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
             ("-only-maxima" if (params.get("only-maxima", False)) else ""),
             ("-only-minima" if (params.get("only-minima", False)) else ""),
-            "-column" + (params.get("column", None) if (params.get("column", None) is not None) else "")
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else "")
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
