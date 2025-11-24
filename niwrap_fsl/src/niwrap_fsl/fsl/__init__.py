@@ -71,8 +71,6 @@ from .easythresh import *
 from .eddy import *
 from .eddy_combine import *
 from .eddy_correct import *
-from .eddy_cuda import *
-from .eddy_cuda10_2 import *
 from .eddy_cuda8_0 import *
 from .eddy_cuda9_1 import *
 from .eddy_openmp import *
@@ -331,10 +329,8 @@ def execute(
         "fsl/eddy": eddy_execute,
         "fsl/eddy_combine": eddy_combine_execute,
         "fsl/eddy_correct": eddy_correct_execute,
-        "fsl/eddy_cuda": eddy_cuda_execute,
         "fsl/eddy_cuda8.0": eddy_cuda8_0_execute,
         "fsl/eddy_cuda9.1": eddy_cuda9_1_execute,
-        "fsl/eddy_cuda10.2": eddy_cuda10_2_execute,
         "fsl/eddy_openmp": eddy_openmp_execute,
         "fsl/eddy_quad": eddy_quad_execute,
         "fsl/epi_reg": epi_reg_execute,

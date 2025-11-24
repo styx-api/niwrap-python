@@ -48,7 +48,7 @@ pip install -r https://raw.githubusercontent.com/styx-api/niwrap-python/main/req
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | [`1.0.20240202`](https://hub.docker.com/r/vnmd/dcm2niix_v1.0.20240202) | 1/1 (100% 🎉) |
 | [FastSurfer](https://github.com/Deep-MI/FastSurfer) | [`2.3.3`](https://hub.docker.com/r/nx10x/fastsurfer) | 1/1 (100% 🎉) |
 | [FreeSurfer](https://github.com/freesurfer/freesurfer) | [`7.4.1`](https://hub.docker.com/r/freesurfer/freesurfer) | 696/789 (88.2%) |
-| [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) | [`6.0.4`](https://hub.docker.com/r/brainlife/fsl) | 245/313 (78.3%) |
+| [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) | [`6.0.4`](https://hub.docker.com/r/brainlife/fsl) | 243/311 (78.1%) |
 | [Greedy](https://sites.google.com/view/greedyreg/about) | [`1.0.1`](https://hub.docker.com/r/pyushkevich/itksnap) | 1/1 (100% 🎉) |
 | [MRTrix3](https://www.mrtrix.org/) | [`3.0.4`](https://hub.docker.com/r/mrtrix3/mrtrix3) | 115/121 (95.0%) |
 | [MRTrix3Tissue](https://3tissue.github.io/) | [`5.2.8`](https://hub.docker.com/r/brainlife/3tissue) | 1/1 (100% 🎉) |
