@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_REGISTRATION_METADATA = Metadata(
-    id="067e3045451de9a93d1272494a23e2df83ef5663.boutiques",
+    id="86707a12f497c1fc5ce28e8b8d8b83ce0463ad5f.boutiques",
     name="antsRegistration",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -24,13 +24,11 @@ AntsRegistrationInitialMovingTransformParamsDict = _AntsRegistrationInitialMovin
 
 
 _AntsRegistrationInitialMovingTransformUseInverseParamsDictNoTag = typing.TypedDict('_AntsRegistrationInitialMovingTransformUseInverseParamsDictNoTag', {
-    "initial_moving_transform": InputPathType,
-    "use_inverse": typing.NotRequired[bool | None],
+    "use_inverse_value": typing.NotRequired[bool | None],
 })
 AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged', {
     "@type": typing.Literal["initial_moving_transform_use_inverse"],
-    "initial_moving_transform": InputPathType,
-    "use_inverse": typing.NotRequired[bool | None],
+    "use_inverse_value": typing.NotRequired[bool | None],
 })
 AntsRegistrationInitialMovingTransformUseInverseParamsDict = _AntsRegistrationInitialMovingTransformUseInverseParamsDictNoTag | AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged
 
@@ -125,18 +123,26 @@ AntsRegistrationTransformGaussianDisplacementFieldParamsDictTagged = typing.Type
 AntsRegistrationTransformGaussianDisplacementFieldParamsDict = _AntsRegistrationTransformGaussianDisplacementFieldParamsDictNoTag | AntsRegistrationTransformGaussianDisplacementFieldParamsDictTagged
 
 
+_AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictNoTag = typing.TypedDict('_AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictNoTag', {
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictTagged = typing.TypedDict('AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictTagged', {
+    "@type": typing.Literal["total_field_mesh_size_at_base_level"],
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict = _AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictNoTag | AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictTagged
+
+
 _AntsRegistrationTransformBsplineDisplacementFieldParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineDisplacementFieldParamsDictNoTag', {
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
-    "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "total_field_mesh_size_at_base_level": typing.NotRequired[AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict | None],
 })
 AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged = typing.TypedDict('AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged', {
     "@type": typing.Literal["transform_bspline_displacement_field"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
-    "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "total_field_mesh_size_at_base_level": typing.NotRequired[AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict | None],
 })
 AntsRegistrationTransformBsplineDisplacementFieldParamsDict = _AntsRegistrationTransformBsplineDisplacementFieldParamsDictNoTag | AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged
 
@@ -161,275 +167,610 @@ AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictTagged = typing.Typed
 AntsRegistrationTransformTimeVaryingVelocityFieldParamsDict = _AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictNoTag | AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictTagged
 
 
+_AntsRegistrationNumberOfTimePointSamplesParamsDictNoTag = typing.TypedDict('_AntsRegistrationNumberOfTimePointSamplesParamsDictNoTag', {
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationNumberOfTimePointSamplesParamsDictTagged = typing.TypedDict('AntsRegistrationNumberOfTimePointSamplesParamsDictTagged', {
+    "@type": typing.Literal["number_of_time_point_samples"],
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationNumberOfTimePointSamplesParamsDict = _AntsRegistrationNumberOfTimePointSamplesParamsDictNoTag | AntsRegistrationNumberOfTimePointSamplesParamsDictTagged
+
+
 _AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictNoTag', {
     "gradient_step": float,
     "velocity_field_mesh_size": float,
-    "number_of_time_point_samples": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "number_of_time_point_samples": typing.NotRequired[AntsRegistrationNumberOfTimePointSamplesParamsDict | None],
 })
 AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged = typing.TypedDict('AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged', {
     "@type": typing.Literal["transform_time_varying_bspline_velocity_field"],
     "gradient_step": float,
     "velocity_field_mesh_size": float,
-    "number_of_time_point_samples": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "number_of_time_point_samples": typing.NotRequired[AntsRegistrationNumberOfTimePointSamplesParamsDict | None],
 })
 AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDict = _AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictNoTag | AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged
 
 
+_AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictNoTag = typing.TypedDict('_AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictNoTag', {
+    "total_field_variance_in_voxel_space_value": typing.NotRequired[float | None],
+})
+AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictTagged = typing.TypedDict('AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictTagged', {
+    "@type": typing.Literal["update_field_variance_in_voxel_space"],
+    "total_field_variance_in_voxel_space_value": typing.NotRequired[float | None],
+})
+AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict = _AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictNoTag | AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictTagged
+
+
 _AntsRegistrationTransformSynParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformSynParamsDictNoTag', {
     "gradient_step": float,
-    "update_field_variance_in_voxel_space": float,
-    "total_field_variance_in_voxel_space": float,
+    "update_field_variance_in_voxel_space": typing.NotRequired[AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict | None],
 })
 AntsRegistrationTransformSynParamsDictTagged = typing.TypedDict('AntsRegistrationTransformSynParamsDictTagged', {
     "@type": typing.Literal["transform_syn"],
     "gradient_step": float,
-    "update_field_variance_in_voxel_space": float,
-    "total_field_variance_in_voxel_space": float,
+    "update_field_variance_in_voxel_space": typing.NotRequired[AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict | None],
 })
 AntsRegistrationTransformSynParamsDict = _AntsRegistrationTransformSynParamsDictNoTag | AntsRegistrationTransformSynParamsDictTagged
+
+
+_AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictNoTag', {
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictTagged = typing.TypedDict('AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictTagged', {
+    "@type": typing.Literal["total_field_mesh_size_at_base_level_1"],
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict = _AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictNoTag | AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictTagged
 
 
 _AntsRegistrationTransformBsplineSynParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineSynParamsDictNoTag', {
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
-    "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "total_field_mesh_size_at_base_level": typing.NotRequired[AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict | None],
 })
 AntsRegistrationTransformBsplineSynParamsDictTagged = typing.TypedDict('AntsRegistrationTransformBsplineSynParamsDictTagged', {
     "@type": typing.Literal["transform_bspline_syn"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
-    "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "total_field_mesh_size_at_base_level": typing.NotRequired[AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict | None],
 })
 AntsRegistrationTransformBsplineSynParamsDict = _AntsRegistrationTransformBsplineSynParamsDictNoTag | AntsRegistrationTransformBsplineSynParamsDictTagged
 
 
 _AntsRegistrationTransformExponentialParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformExponentialParamsDictNoTag', {
-    "gradient_step": float,
-    "update_field_variance_in_voxel_space": float,
-    "velocity_field_variance_in_voxel_space": float,
-    "number_of_integration_steps": float,
+    "number_of_integration_steps_value": typing.NotRequired[float | None],
 })
 AntsRegistrationTransformExponentialParamsDictTagged = typing.TypedDict('AntsRegistrationTransformExponentialParamsDictTagged', {
     "@type": typing.Literal["transform_exponential"],
-    "gradient_step": float,
-    "update_field_variance_in_voxel_space": float,
-    "velocity_field_variance_in_voxel_space": float,
-    "number_of_integration_steps": float,
+    "number_of_integration_steps_value": typing.NotRequired[float | None],
 })
 AntsRegistrationTransformExponentialParamsDict = _AntsRegistrationTransformExponentialParamsDictNoTag | AntsRegistrationTransformExponentialParamsDictTagged
+
+
+_AntsRegistrationNumberOfIntegrationSteps1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationNumberOfIntegrationSteps1ParamsDictNoTag', {
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationNumberOfIntegrationSteps1ParamsDictTagged = typing.TypedDict('AntsRegistrationNumberOfIntegrationSteps1ParamsDictTagged', {
+    "@type": typing.Literal["number_of_integration_steps_1"],
+    "spline_order_value": typing.NotRequired[float | None],
+})
+AntsRegistrationNumberOfIntegrationSteps1ParamsDict = _AntsRegistrationNumberOfIntegrationSteps1ParamsDictNoTag | AntsRegistrationNumberOfIntegrationSteps1ParamsDictTagged
+
+
+_AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictNoTag = typing.TypedDict('_AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictNoTag', {
+    "velocity_field_mesh_size_at_base_level_value": float,
+    "number_of_integration_steps": typing.NotRequired[AntsRegistrationNumberOfIntegrationSteps1ParamsDict | None],
+})
+AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictTagged = typing.TypedDict('AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictTagged', {
+    "@type": typing.Literal["velocity_field_mesh_size_at_base_level"],
+    "velocity_field_mesh_size_at_base_level_value": float,
+    "number_of_integration_steps": typing.NotRequired[AntsRegistrationNumberOfIntegrationSteps1ParamsDict | None],
+})
+AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict = _AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictNoTag | AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictTagged
 
 
 _AntsRegistrationTransformBsplineExponentialParamsDictNoTag = typing.TypedDict('_AntsRegistrationTransformBsplineExponentialParamsDictNoTag', {
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
-    "velocity_field_mesh_size_at_base_level": typing.NotRequired[float | None],
-    "number_of_integration_steps": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "velocity_field_mesh_size_at_base_level": typing.NotRequired[AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict | None],
 })
 AntsRegistrationTransformBsplineExponentialParamsDictTagged = typing.TypedDict('AntsRegistrationTransformBsplineExponentialParamsDictTagged', {
     "@type": typing.Literal["transform_bspline_exponential"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
-    "velocity_field_mesh_size_at_base_level": typing.NotRequired[float | None],
-    "number_of_integration_steps": typing.NotRequired[float | None],
-    "spline_order": typing.NotRequired[float | None],
+    "velocity_field_mesh_size_at_base_level": typing.NotRequired[AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict | None],
 })
 AntsRegistrationTransformBsplineExponentialParamsDict = _AntsRegistrationTransformBsplineExponentialParamsDictNoTag | AntsRegistrationTransformBsplineExponentialParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentageParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentageParamsDictNoTag', {
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentageParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentageParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage"],
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentageParamsDict = _AntsRegistrationSamplingPercentageParamsDictNoTag | AntsRegistrationSamplingPercentageParamsDictTagged
+
+
+_AntsRegistrationSamplingStrategyParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingStrategyParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentageParamsDict | None],
+})
+AntsRegistrationSamplingStrategyParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingStrategyParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentageParamsDict | None],
+})
+AntsRegistrationSamplingStrategyParamsDict = _AntsRegistrationSamplingStrategyParamsDictNoTag | AntsRegistrationSamplingStrategyParamsDictTagged
+
+
+_AntsRegistrationRadiusParamsDictNoTag = typing.TypedDict('_AntsRegistrationRadiusParamsDictNoTag', {
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategyParamsDict | None],
+})
+AntsRegistrationRadiusParamsDictTagged = typing.TypedDict('AntsRegistrationRadiusParamsDictTagged', {
+    "@type": typing.Literal["radius"],
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategyParamsDict | None],
+})
+AntsRegistrationRadiusParamsDict = _AntsRegistrationRadiusParamsDictNoTag | AntsRegistrationRadiusParamsDictTagged
 
 
 _AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "radius": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "radius": typing.NotRequired[AntsRegistrationRadiusParamsDict | None],
 })
 AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["metric_ants_neighbourhood_cross_correlation"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "radius": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "radius": typing.NotRequired[AntsRegistrationRadiusParamsDict | None],
 })
 AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDict = _AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag | AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage1ParamsDictNoTag', {
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage1ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage1ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_1"],
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage1ParamsDict = _AntsRegistrationSamplingPercentage1ParamsDictNoTag | AntsRegistrationSamplingPercentage1ParamsDictTagged
+
+
+_AntsRegistrationSamplingStrategy1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingStrategy1ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage1ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy1ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingStrategy1ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_1"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage1ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy1ParamsDict = _AntsRegistrationSamplingStrategy1ParamsDictNoTag | AntsRegistrationSamplingStrategy1ParamsDictTagged
+
+
+_AntsRegistrationNumberOfBinsParamsDictNoTag = typing.TypedDict('_AntsRegistrationNumberOfBinsParamsDictNoTag', {
+    "number_of_bins_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy1ParamsDict | None],
+})
+AntsRegistrationNumberOfBinsParamsDictTagged = typing.TypedDict('AntsRegistrationNumberOfBinsParamsDictTagged', {
+    "@type": typing.Literal["number_of_bins"],
+    "number_of_bins_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy1ParamsDict | None],
+})
+AntsRegistrationNumberOfBinsParamsDict = _AntsRegistrationNumberOfBinsParamsDictNoTag | AntsRegistrationNumberOfBinsParamsDictTagged
 
 
 _AntsRegistrationMetricMutualInformationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMutualInformationParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "number_of_bins": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBinsParamsDict | None],
 })
 AntsRegistrationMetricMutualInformationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricMutualInformationParamsDictTagged', {
     "@type": typing.Literal["metric_mutual_information"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "number_of_bins": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBinsParamsDict | None],
 })
 AntsRegistrationMetricMutualInformationParamsDict = _AntsRegistrationMetricMutualInformationParamsDictNoTag | AntsRegistrationMetricMutualInformationParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage2ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage2ParamsDictNoTag', {
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage2ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage2ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_2"],
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage2ParamsDict = _AntsRegistrationSamplingPercentage2ParamsDictNoTag | AntsRegistrationSamplingPercentage2ParamsDictTagged
+
+
+_AntsRegistrationSamplingStrategy2ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingStrategy2ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage2ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy2ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingStrategy2ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_2"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage2ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy2ParamsDict = _AntsRegistrationSamplingStrategy2ParamsDictNoTag | AntsRegistrationSamplingStrategy2ParamsDictTagged
+
+
+_AntsRegistrationNumberOfBins1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationNumberOfBins1ParamsDictNoTag', {
+    "number_of_bins_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy2ParamsDict | None],
+})
+AntsRegistrationNumberOfBins1ParamsDictTagged = typing.TypedDict('AntsRegistrationNumberOfBins1ParamsDictTagged', {
+    "@type": typing.Literal["number_of_bins_1"],
+    "number_of_bins_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy2ParamsDict | None],
+})
+AntsRegistrationNumberOfBins1ParamsDict = _AntsRegistrationNumberOfBins1ParamsDictNoTag | AntsRegistrationNumberOfBins1ParamsDictTagged
 
 
 _AntsRegistrationMetricMattesParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMattesParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "number_of_bins": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins1ParamsDict | None],
 })
 AntsRegistrationMetricMattesParamsDictTagged = typing.TypedDict('AntsRegistrationMetricMattesParamsDictTagged', {
     "@type": typing.Literal["metric_mattes"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "number_of_bins": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins1ParamsDict | None],
 })
 AntsRegistrationMetricMattesParamsDict = _AntsRegistrationMetricMattesParamsDictNoTag | AntsRegistrationMetricMattesParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage3ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage3ParamsDictNoTag', {
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage3ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage3ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_3"],
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage3ParamsDict = _AntsRegistrationSamplingPercentage3ParamsDictNoTag | AntsRegistrationSamplingPercentage3ParamsDictTagged
+
+
+_AntsRegistrationSamplingStrategy3ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingStrategy3ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage3ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy3ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingStrategy3ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_3"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage3ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy3ParamsDict = _AntsRegistrationSamplingStrategy3ParamsDictNoTag | AntsRegistrationSamplingStrategy3ParamsDictTagged
+
+
+_AntsRegistrationRadius1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationRadius1ParamsDictNoTag', {
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy3ParamsDict | None],
+})
+AntsRegistrationRadius1ParamsDictTagged = typing.TypedDict('AntsRegistrationRadius1ParamsDictTagged', {
+    "@type": typing.Literal["radius_1"],
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy3ParamsDict | None],
+})
+AntsRegistrationRadius1ParamsDict = _AntsRegistrationRadius1ParamsDictNoTag | AntsRegistrationRadius1ParamsDictTagged
 
 
 _AntsRegistrationMetricMeanSquaresParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMeanSquaresParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "radius": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "radius": typing.NotRequired[AntsRegistrationRadius1ParamsDict | None],
 })
 AntsRegistrationMetricMeanSquaresParamsDictTagged = typing.TypedDict('AntsRegistrationMetricMeanSquaresParamsDictTagged', {
     "@type": typing.Literal["metric_mean_squares"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "radius": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "radius": typing.NotRequired[AntsRegistrationRadius1ParamsDict | None],
 })
 AntsRegistrationMetricMeanSquaresParamsDict = _AntsRegistrationMetricMeanSquaresParamsDictNoTag | AntsRegistrationMetricMeanSquaresParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage4ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage4ParamsDictNoTag', {
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage4ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage4ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_4"],
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage4ParamsDict = _AntsRegistrationSamplingPercentage4ParamsDictNoTag | AntsRegistrationSamplingPercentage4ParamsDictTagged
+
+
+_AntsRegistrationSamplingStrategy4ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingStrategy4ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage4ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy4ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingStrategy4ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_4"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage4ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy4ParamsDict = _AntsRegistrationSamplingStrategy4ParamsDictNoTag | AntsRegistrationSamplingStrategy4ParamsDictTagged
+
+
+_AntsRegistrationNumberOfBins2ParamsDictNoTag = typing.TypedDict('_AntsRegistrationNumberOfBins2ParamsDictNoTag', {
+    "number_of_bins_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy4ParamsDict | None],
+})
+AntsRegistrationNumberOfBins2ParamsDictTagged = typing.TypedDict('AntsRegistrationNumberOfBins2ParamsDictTagged', {
+    "@type": typing.Literal["number_of_bins_2"],
+    "number_of_bins_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy4ParamsDict | None],
+})
+AntsRegistrationNumberOfBins2ParamsDict = _AntsRegistrationNumberOfBins2ParamsDictNoTag | AntsRegistrationNumberOfBins2ParamsDictTagged
 
 
 _AntsRegistrationMetricDemonsParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricDemonsParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "number_of_bins": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins2ParamsDict | None],
 })
 AntsRegistrationMetricDemonsParamsDictTagged = typing.TypedDict('AntsRegistrationMetricDemonsParamsDictTagged', {
     "@type": typing.Literal["metric_demons"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "number_of_bins": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins2ParamsDict | None],
 })
 AntsRegistrationMetricDemonsParamsDict = _AntsRegistrationMetricDemonsParamsDictNoTag | AntsRegistrationMetricDemonsParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage5ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage5ParamsDictNoTag', {
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage5ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage5ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_5"],
+    "use_gradient_filter_value": typing.NotRequired[bool | None],
+})
+AntsRegistrationSamplingPercentage5ParamsDict = _AntsRegistrationSamplingPercentage5ParamsDictNoTag | AntsRegistrationSamplingPercentage5ParamsDictTagged
+
+
+_AntsRegistrationSamplingStrategy5ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingStrategy5ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage5ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy5ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingStrategy5ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_5"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage5ParamsDict | None],
+})
+AntsRegistrationSamplingStrategy5ParamsDict = _AntsRegistrationSamplingStrategy5ParamsDictNoTag | AntsRegistrationSamplingStrategy5ParamsDictTagged
+
+
+_AntsRegistrationRadius2ParamsDictNoTag = typing.TypedDict('_AntsRegistrationRadius2ParamsDictNoTag', {
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy5ParamsDict | None],
+})
+AntsRegistrationRadius2ParamsDictTagged = typing.TypedDict('AntsRegistrationRadius2ParamsDictTagged', {
+    "@type": typing.Literal["radius_2"],
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsRegistrationSamplingStrategy5ParamsDict | None],
+})
+AntsRegistrationRadius2ParamsDict = _AntsRegistrationRadius2ParamsDictNoTag | AntsRegistrationRadius2ParamsDictTagged
 
 
 _AntsRegistrationMetricGlobalCorrelationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricGlobalCorrelationParamsDictNoTag', {
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "radius": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "radius": typing.NotRequired[AntsRegistrationRadius2ParamsDict | None],
 })
 AntsRegistrationMetricGlobalCorrelationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParamsDictTagged', {
     "@type": typing.Literal["metric_global_correlation"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
-    "radius": typing.NotRequired[float | None],
-    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
-    "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[bool | None],
+    "radius": typing.NotRequired[AntsRegistrationRadius2ParamsDict | None],
 })
 AntsRegistrationMetricGlobalCorrelationParamsDict = _AntsRegistrationMetricGlobalCorrelationParamsDictNoTag | AntsRegistrationMetricGlobalCorrelationParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage6ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage6ParamsDictNoTag', {
+    "boundary_points_only_value": typing.NotRequired[typing.Literal["0"] | None],
+})
+AntsRegistrationSamplingPercentage6ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage6ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_6"],
+    "boundary_points_only_value": typing.NotRequired[typing.Literal["0"] | None],
+})
+AntsRegistrationSamplingPercentage6ParamsDict = _AntsRegistrationSamplingPercentage6ParamsDictNoTag | AntsRegistrationSamplingPercentage6ParamsDictTagged
 
 
 _AntsRegistrationMetricEuclideanIcpParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricEuclideanIcpParamsDictNoTag', {
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
-    "sampling_percentage": typing.NotRequired[float | None],
-    "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage6ParamsDict | None],
 })
 AntsRegistrationMetricEuclideanIcpParamsDictTagged = typing.TypedDict('AntsRegistrationMetricEuclideanIcpParamsDictTagged', {
     "@type": typing.Literal["metric_euclidean_icp"],
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
-    "sampling_percentage": typing.NotRequired[float | None],
-    "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage6ParamsDict | None],
 })
 AntsRegistrationMetricEuclideanIcpParamsDict = _AntsRegistrationMetricEuclideanIcpParamsDictNoTag | AntsRegistrationMetricEuclideanIcpParamsDictTagged
 
 
+_AntsRegistrationPointSetSigmaParamsDictNoTag = typing.TypedDict('_AntsRegistrationPointSetSigmaParamsDictNoTag', {
+    "k_neighborhood_value": typing.NotRequired[float | None],
+})
+AntsRegistrationPointSetSigmaParamsDictTagged = typing.TypedDict('AntsRegistrationPointSetSigmaParamsDictTagged', {
+    "@type": typing.Literal["point_set_sigma"],
+    "k_neighborhood_value": typing.NotRequired[float | None],
+})
+AntsRegistrationPointSetSigmaParamsDict = _AntsRegistrationPointSetSigmaParamsDictNoTag | AntsRegistrationPointSetSigmaParamsDictTagged
+
+
+_AntsRegistrationBoundaryPointsOnly1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationBoundaryPointsOnly1ParamsDictNoTag', {
+    "boundary_points_only_value": typing.Literal["0"],
+    "point_set_sigma": typing.NotRequired[AntsRegistrationPointSetSigmaParamsDict | None],
+})
+AntsRegistrationBoundaryPointsOnly1ParamsDictTagged = typing.TypedDict('AntsRegistrationBoundaryPointsOnly1ParamsDictTagged', {
+    "@type": typing.Literal["boundary_points_only_1"],
+    "boundary_points_only_value": typing.Literal["0"],
+    "point_set_sigma": typing.NotRequired[AntsRegistrationPointSetSigmaParamsDict | None],
+})
+AntsRegistrationBoundaryPointsOnly1ParamsDict = _AntsRegistrationBoundaryPointsOnly1ParamsDictNoTag | AntsRegistrationBoundaryPointsOnly1ParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage7ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage7ParamsDictNoTag', {
+    "sampling_percentage_value": float,
+    "boundary_points_only": typing.NotRequired[AntsRegistrationBoundaryPointsOnly1ParamsDict | None],
+})
+AntsRegistrationSamplingPercentage7ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage7ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_7"],
+    "sampling_percentage_value": float,
+    "boundary_points_only": typing.NotRequired[AntsRegistrationBoundaryPointsOnly1ParamsDict | None],
+})
+AntsRegistrationSamplingPercentage7ParamsDict = _AntsRegistrationSamplingPercentage7ParamsDictNoTag | AntsRegistrationSamplingPercentage7ParamsDictTagged
+
+
 _AntsRegistrationMetricPointSetExpectationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricPointSetExpectationParamsDictNoTag', {
+    "fixed_point_set": str,
+    "moving_point_set": str,
     "metric_weight": float,
-    "point_set_sigma": typing.NotRequired[float | None],
-    "sampling_percentage": typing.NotRequired[float | None],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage7ParamsDict | None],
 })
 AntsRegistrationMetricPointSetExpectationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricPointSetExpectationParamsDictTagged', {
     "@type": typing.Literal["metric_point_set_expectation"],
+    "fixed_point_set": str,
+    "moving_point_set": str,
     "metric_weight": float,
-    "point_set_sigma": typing.NotRequired[float | None],
-    "sampling_percentage": typing.NotRequired[float | None],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage7ParamsDict | None],
 })
 AntsRegistrationMetricPointSetExpectationParamsDict = _AntsRegistrationMetricPointSetExpectationParamsDictNoTag | AntsRegistrationMetricPointSetExpectationParamsDictTagged
+
+
+_AntsRegistrationPointSetSigma1ParamsDictNoTag = typing.TypedDict('_AntsRegistrationPointSetSigma1ParamsDictNoTag', {
+    "k_neighborhood_value": typing.NotRequired[float | None],
+})
+AntsRegistrationPointSetSigma1ParamsDictTagged = typing.TypedDict('AntsRegistrationPointSetSigma1ParamsDictTagged', {
+    "@type": typing.Literal["point_set_sigma_1"],
+    "k_neighborhood_value": typing.NotRequired[float | None],
+})
+AntsRegistrationPointSetSigma1ParamsDict = _AntsRegistrationPointSetSigma1ParamsDictNoTag | AntsRegistrationPointSetSigma1ParamsDictTagged
+
+
+_AntsRegistrationBoundaryPointsOnly2ParamsDictNoTag = typing.TypedDict('_AntsRegistrationBoundaryPointsOnly2ParamsDictNoTag', {
+    "boundary_points_only_value": typing.Literal["0"],
+    "point_set_sigma": typing.NotRequired[AntsRegistrationPointSetSigma1ParamsDict | None],
+})
+AntsRegistrationBoundaryPointsOnly2ParamsDictTagged = typing.TypedDict('AntsRegistrationBoundaryPointsOnly2ParamsDictTagged', {
+    "@type": typing.Literal["boundary_points_only_2"],
+    "boundary_points_only_value": typing.Literal["0"],
+    "point_set_sigma": typing.NotRequired[AntsRegistrationPointSetSigma1ParamsDict | None],
+})
+AntsRegistrationBoundaryPointsOnly2ParamsDict = _AntsRegistrationBoundaryPointsOnly2ParamsDictNoTag | AntsRegistrationBoundaryPointsOnly2ParamsDictTagged
+
+
+_AntsRegistrationSamplingPercentage8ParamsDictNoTag = typing.TypedDict('_AntsRegistrationSamplingPercentage8ParamsDictNoTag', {
+    "sampling_percentage_value": float,
+    "boundary_points_only": typing.NotRequired[AntsRegistrationBoundaryPointsOnly2ParamsDict | None],
+})
+AntsRegistrationSamplingPercentage8ParamsDictTagged = typing.TypedDict('AntsRegistrationSamplingPercentage8ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_8"],
+    "sampling_percentage_value": float,
+    "boundary_points_only": typing.NotRequired[AntsRegistrationBoundaryPointsOnly2ParamsDict | None],
+})
+AntsRegistrationSamplingPercentage8ParamsDict = _AntsRegistrationSamplingPercentage8ParamsDictNoTag | AntsRegistrationSamplingPercentage8ParamsDictTagged
 
 
 _AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictNoTag', {
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
-    "sampling_percentage": typing.NotRequired[float | None],
-    "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
-    "point_set_sigma": typing.NotRequired[float | None],
-    "k_neighborhood": typing.NotRequired[float | None],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage8ParamsDict | None],
 })
 AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged = typing.TypedDict('AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged', {
     "@type": typing.Literal["metric_jensen_havrda_charvet_tsallis"],
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
-    "sampling_percentage": typing.NotRequired[float | None],
-    "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
-    "point_set_sigma": typing.NotRequired[float | None],
-    "k_neighborhood": typing.NotRequired[float | None],
+    "sampling_percentage": typing.NotRequired[AntsRegistrationSamplingPercentage8ParamsDict | None],
 })
 AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDict = _AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictNoTag | AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged
 
 
-_AntsRegistrationMetricIgdmParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricIgdmParamsDictNoTag', {})
+_AntsRegistrationKNeighborhood2ParamsDictNoTag = typing.TypedDict('_AntsRegistrationKNeighborhood2ParamsDictNoTag', {
+    "gradient_sigma_value": typing.NotRequired[float | None],
+})
+AntsRegistrationKNeighborhood2ParamsDictTagged = typing.TypedDict('AntsRegistrationKNeighborhood2ParamsDictTagged', {
+    "@type": typing.Literal["k_neighborhood_2"],
+    "gradient_sigma_value": typing.NotRequired[float | None],
+})
+AntsRegistrationKNeighborhood2ParamsDict = _AntsRegistrationKNeighborhood2ParamsDictNoTag | AntsRegistrationKNeighborhood2ParamsDictTagged
+
+
+_AntsRegistrationDistanceSigmaParamsDictNoTag = typing.TypedDict('_AntsRegistrationDistanceSigmaParamsDictNoTag', {
+    "distance_sigma_value": float,
+    "k_neighborhood": typing.NotRequired[AntsRegistrationKNeighborhood2ParamsDict | None],
+})
+AntsRegistrationDistanceSigmaParamsDictTagged = typing.TypedDict('AntsRegistrationDistanceSigmaParamsDictTagged', {
+    "@type": typing.Literal["distance_sigma"],
+    "distance_sigma_value": float,
+    "k_neighborhood": typing.NotRequired[AntsRegistrationKNeighborhood2ParamsDict | None],
+})
+AntsRegistrationDistanceSigmaParamsDict = _AntsRegistrationDistanceSigmaParamsDictNoTag | AntsRegistrationDistanceSigmaParamsDictTagged
+
+
+_AntsRegistrationIntensitySigmaParamsDictNoTag = typing.TypedDict('_AntsRegistrationIntensitySigmaParamsDictNoTag', {
+    "intensity_sigma_value": float,
+    "distance_sigma": typing.NotRequired[AntsRegistrationDistanceSigmaParamsDict | None],
+})
+AntsRegistrationIntensitySigmaParamsDictTagged = typing.TypedDict('AntsRegistrationIntensitySigmaParamsDictTagged', {
+    "@type": typing.Literal["intensity_sigma"],
+    "intensity_sigma_value": float,
+    "distance_sigma": typing.NotRequired[AntsRegistrationDistanceSigmaParamsDict | None],
+})
+AntsRegistrationIntensitySigmaParamsDict = _AntsRegistrationIntensitySigmaParamsDictNoTag | AntsRegistrationIntensitySigmaParamsDictTagged
+
+
+_AntsRegistrationNeighborhoodRadiusParamsDictNoTag = typing.TypedDict('_AntsRegistrationNeighborhoodRadiusParamsDictNoTag', {
+    "neighborhood_radius_value": str,
+    "intensity_sigma": typing.NotRequired[AntsRegistrationIntensitySigmaParamsDict | None],
+})
+AntsRegistrationNeighborhoodRadiusParamsDictTagged = typing.TypedDict('AntsRegistrationNeighborhoodRadiusParamsDictTagged', {
+    "@type": typing.Literal["neighborhood_radius"],
+    "neighborhood_radius_value": str,
+    "intensity_sigma": typing.NotRequired[AntsRegistrationIntensitySigmaParamsDict | None],
+})
+AntsRegistrationNeighborhoodRadiusParamsDict = _AntsRegistrationNeighborhoodRadiusParamsDictNoTag | AntsRegistrationNeighborhoodRadiusParamsDictTagged
+
+
+_AntsRegistrationMetricIgdmParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricIgdmParamsDictNoTag', {
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "fixed_mask": str,
+    "moving_mask": str,
+    "neighborhood_radius": typing.NotRequired[AntsRegistrationNeighborhoodRadiusParamsDict | None],
+})
 AntsRegistrationMetricIgdmParamsDictTagged = typing.TypedDict('AntsRegistrationMetricIgdmParamsDictTagged', {
     "@type": typing.Literal["metric_igdm"],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "fixed_mask": str,
+    "moving_mask": str,
+    "neighborhood_radius": typing.NotRequired[AntsRegistrationNeighborhoodRadiusParamsDict | None],
 })
 AntsRegistrationMetricIgdmParamsDict = _AntsRegistrationMetricIgdmParamsDictNoTag | AntsRegistrationMetricIgdmParamsDictTagged
 
@@ -481,13 +822,11 @@ AntsRegistrationWinsorizeImageIntensitiesParamsDict = _AntsRegistrationWinsorize
 
 
 _AntsRegistrationMasksParamsDictNoTag = typing.TypedDict('_AntsRegistrationMasksParamsDictNoTag', {
-    "fixed_mask": typing.NotRequired[str | None],
-    "moving_mask": typing.NotRequired[str | None],
+    "moving_mask_value": typing.NotRequired[str | None],
 })
 AntsRegistrationMasksParamsDictTagged = typing.TypedDict('AntsRegistrationMasksParamsDictTagged', {
     "@type": typing.Literal["masks"],
-    "fixed_mask": typing.NotRequired[str | None],
-    "moving_mask": typing.NotRequired[str | None],
+    "moving_mask_value": typing.NotRequired[str | None],
 })
 AntsRegistrationMasksParamsDict = _AntsRegistrationMasksParamsDictNoTag | AntsRegistrationMasksParamsDictTagged
 
@@ -739,24 +1078,21 @@ def ants_registration_initial_moving_transform_cargs(
 
 
 def ants_registration_initial_moving_transform_use_inverse(
-    initial_moving_transform: InputPathType,
-    use_inverse: bool | None = None,
+    use_inverse_value: bool | None = None,
 ) -> AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        initial_moving_transform:.
-        use_inverse: Use the inverse of the initial moving transform.
+        use_inverse_value: Use the inverse of the initial moving transform.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "initial_moving_transform_use_inverse",
-        "initial_moving_transform": initial_moving_transform,
     }
-    if use_inverse is not None:
-        params["use_inverse"] = use_inverse
+    if use_inverse_value is not None:
+        params["use_inverse_value"] = use_inverse_value
     return params
 
 
@@ -772,13 +1108,9 @@ def ants_registration_initial_moving_transform_use_inverse_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("initial_moving_transform", None) is None:
-        raise StyxValidationError("`initial_moving_transform` must not be None")
-    if not isinstance(params["initial_moving_transform"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`initial_moving_transform` has the wrong type: Received `{type(params.get("initial_moving_transform", None))}` expected `InputPathType`')
-    if params.get("use_inverse", None) is not None:
-        if not isinstance(params["use_inverse"], bool):
-            raise StyxValidationError(f'`use_inverse` has the wrong type: Received `{type(params.get("use_inverse", None))}` expected `bool | None`')
+    if params.get("use_inverse_value", None) is not None:
+        if not isinstance(params["use_inverse_value"], bool):
+            raise StyxValidationError(f'`use_inverse_value` has the wrong type: Received `{type(params.get("use_inverse_value", None))}` expected `bool | None`')
 
 
 def ants_registration_initial_moving_transform_use_inverse_cargs(
@@ -795,8 +1127,8 @@ def ants_registration_initial_moving_transform_use_inverse_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("use_inverse", None) is not None:
-        cargs.append("[" + execution.input_file(params.get("initial_moving_transform", None)) + "," + ("1" if params.get("use_inverse", None) else "0") + "]")
+    if params.get("use_inverse_value", None) is not None:
+        cargs.append("," + ("1" if params.get("use_inverse_value", None) else "0"))
     return cargs
 
 
@@ -1270,11 +1602,65 @@ def ants_registration_transform_gaussian_displacement_field_cargs(
     return cargs
 
 
+def ants_registration_total_field_mesh_size_at_base_level(
+    spline_order_value: float | None = None,
+) -> AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        spline_order_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "total_field_mesh_size_at_base_level",
+    }
+    if spline_order_value is not None:
+        params["spline_order_value"] = spline_order_value
+    return params
+
+
+def ants_registration_total_field_mesh_size_at_base_level_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spline_order_value", None) is not None:
+        if not isinstance(params["spline_order_value"], (float, int)):
+            raise StyxValidationError(f'`spline_order_value` has the wrong type: Received `{type(params.get("spline_order_value", None))}` expected `float | None`')
+
+
+def ants_registration_total_field_mesh_size_at_base_level_cargs(
+    params: AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("spline_order_value", None) is not None:
+        cargs.append("," + str(params.get("spline_order_value", None)))
+    return cargs
+
+
 def ants_registration_transform_bspline_displacement_field(
     gradient_step: float,
     update_field_mesh_size_at_base_level: float,
-    total_field_mesh_size_at_base_level: float | None = None,
-    spline_order: float | None = None,
+    total_field_mesh_size_at_base_level: AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict | None = None,
 ) -> AntsRegistrationTransformBsplineDisplacementFieldParamsDictTagged:
     """
     Build parameters.
@@ -1283,7 +1669,6 @@ def ants_registration_transform_bspline_displacement_field(
         gradient_step:.
         update_field_mesh_size_at_base_level:.
         total_field_mesh_size_at_base_level:.
-        spline_order:.
     Returns:
         Parameter dictionary
     """
@@ -1294,8 +1679,6 @@ def ants_registration_transform_bspline_displacement_field(
     }
     if total_field_mesh_size_at_base_level is not None:
         params["total_field_mesh_size_at_base_level"] = total_field_mesh_size_at_base_level
-    if spline_order is not None:
-        params["spline_order"] = spline_order
     return params
 
 
@@ -1320,11 +1703,7 @@ def ants_registration_transform_bspline_displacement_field_validate(
     if not isinstance(params["update_field_mesh_size_at_base_level"], (float, int)):
         raise StyxValidationError(f'`update_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("update_field_mesh_size_at_base_level", None))}` expected `float`')
     if params.get("total_field_mesh_size_at_base_level", None) is not None:
-        if not isinstance(params["total_field_mesh_size_at_base_level"], (float, int)):
-            raise StyxValidationError(f'`total_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("total_field_mesh_size_at_base_level", None))}` expected `float | None`')
-    if params.get("spline_order", None) is not None:
-        if not isinstance(params["spline_order"], (float, int)):
-            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
+        ants_registration_total_field_mesh_size_at_base_level_validate(params["total_field_mesh_size_at_base_level"])
 
 
 def ants_registration_transform_bspline_displacement_field_cargs(
@@ -1341,8 +1720,8 @@ def ants_registration_transform_bspline_displacement_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("total_field_mesh_size_at_base_level", None) is not None or params.get("spline_order", None) is not None:
-        cargs.append("BSplineDisplacementField[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "," + (str(params.get("total_field_mesh_size_at_base_level", None)) if (params.get("total_field_mesh_size_at_base_level", None) is not None) else "") + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
+    if params.get("total_field_mesh_size_at_base_level", None) is not None:
+        cargs.append("BSplineDisplacementField[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join(ants_registration_total_field_mesh_size_at_base_level_cargs(params.get("total_field_mesh_size_at_base_level", None), execution)) + "]")
     return cargs
 
 
@@ -1435,11 +1814,65 @@ def ants_registration_transform_time_varying_velocity_field_cargs(
     return cargs
 
 
+def ants_registration_number_of_time_point_samples(
+    spline_order_value: float | None = None,
+) -> AntsRegistrationNumberOfTimePointSamplesParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        spline_order_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_time_point_samples",
+    }
+    if spline_order_value is not None:
+        params["spline_order_value"] = spline_order_value
+    return params
+
+
+def ants_registration_number_of_time_point_samples_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationNumberOfTimePointSamplesParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spline_order_value", None) is not None:
+        if not isinstance(params["spline_order_value"], (float, int)):
+            raise StyxValidationError(f'`spline_order_value` has the wrong type: Received `{type(params.get("spline_order_value", None))}` expected `float | None`')
+
+
+def ants_registration_number_of_time_point_samples_cargs(
+    params: AntsRegistrationNumberOfTimePointSamplesParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("spline_order_value", None) is not None:
+        cargs.append("," + str(params.get("spline_order_value", None)))
+    return cargs
+
+
 def ants_registration_transform_time_varying_bspline_velocity_field(
     gradient_step: float,
     velocity_field_mesh_size: float,
-    number_of_time_point_samples: float | None = None,
-    spline_order: float | None = None,
+    number_of_time_point_samples: AntsRegistrationNumberOfTimePointSamplesParamsDict | None = None,
 ) -> AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParamsDictTagged:
     """
     Build parameters.
@@ -1448,7 +1881,6 @@ def ants_registration_transform_time_varying_bspline_velocity_field(
         gradient_step:.
         velocity_field_mesh_size:.
         number_of_time_point_samples:.
-        spline_order:.
     Returns:
         Parameter dictionary
     """
@@ -1459,8 +1891,6 @@ def ants_registration_transform_time_varying_bspline_velocity_field(
     }
     if number_of_time_point_samples is not None:
         params["number_of_time_point_samples"] = number_of_time_point_samples
-    if spline_order is not None:
-        params["spline_order"] = spline_order
     return params
 
 
@@ -1485,11 +1915,7 @@ def ants_registration_transform_time_varying_bspline_velocity_field_validate(
     if not isinstance(params["velocity_field_mesh_size"], (float, int)):
         raise StyxValidationError(f'`velocity_field_mesh_size` has the wrong type: Received `{type(params.get("velocity_field_mesh_size", None))}` expected `float`')
     if params.get("number_of_time_point_samples", None) is not None:
-        if not isinstance(params["number_of_time_point_samples"], (float, int)):
-            raise StyxValidationError(f'`number_of_time_point_samples` has the wrong type: Received `{type(params.get("number_of_time_point_samples", None))}` expected `float | None`')
-    if params.get("spline_order", None) is not None:
-        if not isinstance(params["spline_order"], (float, int)):
-            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
+        ants_registration_number_of_time_point_samples_validate(params["number_of_time_point_samples"])
 
 
 def ants_registration_transform_time_varying_bspline_velocity_field_cargs(
@@ -1506,15 +1932,69 @@ def ants_registration_transform_time_varying_bspline_velocity_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_time_point_samples", None) is not None or params.get("spline_order", None) is not None:
-        cargs.append("TimeVaryingBSplineVelocityField[" + str(params.get("gradient_step", None)) + "," + str(params.get("velocity_field_mesh_size", None)) + "," + (str(params.get("number_of_time_point_samples", None)) if (params.get("number_of_time_point_samples", None) is not None) else "") + "," + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
+    if params.get("number_of_time_point_samples", None) is not None:
+        cargs.append("TimeVaryingBSplineVelocityField[" + str(params.get("gradient_step", None)) + "," + str(params.get("velocity_field_mesh_size", None)) + "".join(ants_registration_number_of_time_point_samples_cargs(params.get("number_of_time_point_samples", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_update_field_variance_in_voxel_space(
+    total_field_variance_in_voxel_space_value: float | None = None,
+) -> AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        total_field_variance_in_voxel_space_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "update_field_variance_in_voxel_space",
+    }
+    if total_field_variance_in_voxel_space_value is not None:
+        params["total_field_variance_in_voxel_space_value"] = total_field_variance_in_voxel_space_value
+    return params
+
+
+def ants_registration_update_field_variance_in_voxel_space_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("total_field_variance_in_voxel_space_value", None) is not None:
+        if not isinstance(params["total_field_variance_in_voxel_space_value"], (float, int)):
+            raise StyxValidationError(f'`total_field_variance_in_voxel_space_value` has the wrong type: Received `{type(params.get("total_field_variance_in_voxel_space_value", None))}` expected `float | None`')
+
+
+def ants_registration_update_field_variance_in_voxel_space_cargs(
+    params: AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("total_field_variance_in_voxel_space_value", None) is not None:
+        cargs.append("," + str(params.get("total_field_variance_in_voxel_space_value", None)))
     return cargs
 
 
 def ants_registration_transform_syn(
     gradient_step: float,
-    update_field_variance_in_voxel_space: float,
-    total_field_variance_in_voxel_space: float,
+    update_field_variance_in_voxel_space: AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict | None = None,
 ) -> AntsRegistrationTransformSynParamsDictTagged:
     """
     Build parameters.
@@ -1522,16 +2002,15 @@ def ants_registration_transform_syn(
     Args:
         gradient_step:.
         update_field_variance_in_voxel_space:.
-        total_field_variance_in_voxel_space:.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "transform_syn",
         "gradient_step": gradient_step,
-        "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
-        "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
     }
+    if update_field_variance_in_voxel_space is not None:
+        params["update_field_variance_in_voxel_space"] = update_field_variance_in_voxel_space
     return params
 
 
@@ -1551,14 +2030,8 @@ def ants_registration_transform_syn_validate(
         raise StyxValidationError("`gradient_step` must not be None")
     if not isinstance(params["gradient_step"], (float, int)):
         raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
-    if params.get("update_field_variance_in_voxel_space", None) is None:
-        raise StyxValidationError("`update_field_variance_in_voxel_space` must not be None")
-    if not isinstance(params["update_field_variance_in_voxel_space"], (float, int)):
-        raise StyxValidationError(f'`update_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("update_field_variance_in_voxel_space", None))}` expected `float`')
-    if params.get("total_field_variance_in_voxel_space", None) is None:
-        raise StyxValidationError("`total_field_variance_in_voxel_space` must not be None")
-    if not isinstance(params["total_field_variance_in_voxel_space"], (float, int)):
-        raise StyxValidationError(f'`total_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("total_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("update_field_variance_in_voxel_space", None) is not None:
+        ants_registration_update_field_variance_in_voxel_space_validate(params["update_field_variance_in_voxel_space"])
 
 
 def ants_registration_transform_syn_cargs(
@@ -1575,15 +2048,70 @@ def ants_registration_transform_syn_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("SyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("total_field_variance_in_voxel_space", None)) + "]")
+    if params.get("update_field_variance_in_voxel_space", None) is not None:
+        cargs.append("SyN[" + str(params.get("gradient_step", None)) + "".join(ants_registration_update_field_variance_in_voxel_space_cargs(params.get("update_field_variance_in_voxel_space", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_total_field_mesh_size_at_base_level_1(
+    spline_order_value: float | None = None,
+) -> AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        spline_order_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "total_field_mesh_size_at_base_level_1",
+    }
+    if spline_order_value is not None:
+        params["spline_order_value"] = spline_order_value
+    return params
+
+
+def ants_registration_total_field_mesh_size_at_base_level_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spline_order_value", None) is not None:
+        if not isinstance(params["spline_order_value"], (float, int)):
+            raise StyxValidationError(f'`spline_order_value` has the wrong type: Received `{type(params.get("spline_order_value", None))}` expected `float | None`')
+
+
+def ants_registration_total_field_mesh_size_at_base_level_1_cargs(
+    params: AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("spline_order_value", None) is not None:
+        cargs.append("," + str(params.get("spline_order_value", None)))
     return cargs
 
 
 def ants_registration_transform_bspline_syn(
     gradient_step: float,
     update_field_mesh_size_at_base_level: float,
-    total_field_mesh_size_at_base_level: float | None = None,
-    spline_order: float | None = None,
+    total_field_mesh_size_at_base_level: AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict | None = None,
 ) -> AntsRegistrationTransformBsplineSynParamsDictTagged:
     """
     Build parameters.
@@ -1592,7 +2120,6 @@ def ants_registration_transform_bspline_syn(
         gradient_step:.
         update_field_mesh_size_at_base_level:.
         total_field_mesh_size_at_base_level:.
-        spline_order:.
     Returns:
         Parameter dictionary
     """
@@ -1603,8 +2130,6 @@ def ants_registration_transform_bspline_syn(
     }
     if total_field_mesh_size_at_base_level is not None:
         params["total_field_mesh_size_at_base_level"] = total_field_mesh_size_at_base_level
-    if spline_order is not None:
-        params["spline_order"] = spline_order
     return params
 
 
@@ -1629,11 +2154,7 @@ def ants_registration_transform_bspline_syn_validate(
     if not isinstance(params["update_field_mesh_size_at_base_level"], (float, int)):
         raise StyxValidationError(f'`update_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("update_field_mesh_size_at_base_level", None))}` expected `float`')
     if params.get("total_field_mesh_size_at_base_level", None) is not None:
-        if not isinstance(params["total_field_mesh_size_at_base_level"], (float, int)):
-            raise StyxValidationError(f'`total_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("total_field_mesh_size_at_base_level", None))}` expected `float | None`')
-    if params.get("spline_order", None) is not None:
-        if not isinstance(params["spline_order"], (float, int)):
-            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
+        ants_registration_total_field_mesh_size_at_base_level_1_validate(params["total_field_mesh_size_at_base_level"])
 
 
 def ants_registration_transform_bspline_syn_cargs(
@@ -1650,35 +2171,27 @@ def ants_registration_transform_bspline_syn_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("total_field_mesh_size_at_base_level", None) is not None or params.get("spline_order", None) is not None:
-        cargs.append("BSplineSyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "," + (str(params.get("total_field_mesh_size_at_base_level", None)) if (params.get("total_field_mesh_size_at_base_level", None) is not None) else "") + "," + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
+    if params.get("total_field_mesh_size_at_base_level", None) is not None:
+        cargs.append("BSplineSyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join(ants_registration_total_field_mesh_size_at_base_level_1_cargs(params.get("total_field_mesh_size_at_base_level", None), execution)) + "]")
     return cargs
 
 
 def ants_registration_transform_exponential(
-    gradient_step: float,
-    update_field_variance_in_voxel_space: float,
-    velocity_field_variance_in_voxel_space: float,
-    number_of_integration_steps: float,
+    number_of_integration_steps_value: float | None = None,
 ) -> AntsRegistrationTransformExponentialParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        gradient_step:.
-        update_field_variance_in_voxel_space:.
-        velocity_field_variance_in_voxel_space:.
-        number_of_integration_steps:.
+        number_of_integration_steps_value:.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "transform_exponential",
-        "gradient_step": gradient_step,
-        "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
-        "velocity_field_variance_in_voxel_space": velocity_field_variance_in_voxel_space,
-        "number_of_integration_steps": number_of_integration_steps,
     }
+    if number_of_integration_steps_value is not None:
+        params["number_of_integration_steps_value"] = number_of_integration_steps_value
     return params
 
 
@@ -1694,22 +2207,9 @@ def ants_registration_transform_exponential_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("gradient_step", None) is None:
-        raise StyxValidationError("`gradient_step` must not be None")
-    if not isinstance(params["gradient_step"], (float, int)):
-        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
-    if params.get("update_field_variance_in_voxel_space", None) is None:
-        raise StyxValidationError("`update_field_variance_in_voxel_space` must not be None")
-    if not isinstance(params["update_field_variance_in_voxel_space"], (float, int)):
-        raise StyxValidationError(f'`update_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("update_field_variance_in_voxel_space", None))}` expected `float`')
-    if params.get("velocity_field_variance_in_voxel_space", None) is None:
-        raise StyxValidationError("`velocity_field_variance_in_voxel_space` must not be None")
-    if not isinstance(params["velocity_field_variance_in_voxel_space"], (float, int)):
-        raise StyxValidationError(f'`velocity_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("velocity_field_variance_in_voxel_space", None))}` expected `float`')
-    if params.get("number_of_integration_steps", None) is None:
-        raise StyxValidationError("`number_of_integration_steps` must not be None")
-    if not isinstance(params["number_of_integration_steps"], (float, int)):
-        raise StyxValidationError(f'`number_of_integration_steps` has the wrong type: Received `{type(params.get("number_of_integration_steps", None))}` expected `float`')
+    if params.get("number_of_integration_steps_value", None) is not None:
+        if not isinstance(params["number_of_integration_steps_value"], (float, int)):
+            raise StyxValidationError(f'`number_of_integration_steps_value` has the wrong type: Received `{type(params.get("number_of_integration_steps_value", None))}` expected `float | None`')
 
 
 def ants_registration_transform_exponential_cargs(
@@ -1726,16 +2226,131 @@ def ants_registration_transform_exponential_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Exponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("velocity_field_variance_in_voxel_space", None)) + "," + str(params.get("number_of_integration_steps", None)) + "]")
+    if params.get("number_of_integration_steps_value", None) is not None:
+        cargs.append("," + str(params.get("number_of_integration_steps_value", None)))
+    return cargs
+
+
+def ants_registration_number_of_integration_steps_1(
+    spline_order_value: float | None = None,
+) -> AntsRegistrationNumberOfIntegrationSteps1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        spline_order_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_integration_steps_1",
+    }
+    if spline_order_value is not None:
+        params["spline_order_value"] = spline_order_value
+    return params
+
+
+def ants_registration_number_of_integration_steps_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationNumberOfIntegrationSteps1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spline_order_value", None) is not None:
+        if not isinstance(params["spline_order_value"], (float, int)):
+            raise StyxValidationError(f'`spline_order_value` has the wrong type: Received `{type(params.get("spline_order_value", None))}` expected `float | None`')
+
+
+def ants_registration_number_of_integration_steps_1_cargs(
+    params: AntsRegistrationNumberOfIntegrationSteps1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("spline_order_value", None) is not None:
+        cargs.append("," + str(params.get("spline_order_value", None)))
+    return cargs
+
+
+def ants_registration_velocity_field_mesh_size_at_base_level(
+    velocity_field_mesh_size_at_base_level_value: float,
+    number_of_integration_steps: AntsRegistrationNumberOfIntegrationSteps1ParamsDict | None = None,
+) -> AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        velocity_field_mesh_size_at_base_level_value:.
+        number_of_integration_steps:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "velocity_field_mesh_size_at_base_level",
+        "velocity_field_mesh_size_at_base_level_value": velocity_field_mesh_size_at_base_level_value,
+    }
+    if number_of_integration_steps is not None:
+        params["number_of_integration_steps"] = number_of_integration_steps
+    return params
+
+
+def ants_registration_velocity_field_mesh_size_at_base_level_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("velocity_field_mesh_size_at_base_level_value", None) is None:
+        raise StyxValidationError("`velocity_field_mesh_size_at_base_level_value` must not be None")
+    if not isinstance(params["velocity_field_mesh_size_at_base_level_value"], (float, int)):
+        raise StyxValidationError(f'`velocity_field_mesh_size_at_base_level_value` has the wrong type: Received `{type(params.get("velocity_field_mesh_size_at_base_level_value", None))}` expected `float`')
+    if params.get("number_of_integration_steps", None) is not None:
+        ants_registration_number_of_integration_steps_1_validate(params["number_of_integration_steps"])
+
+
+def ants_registration_velocity_field_mesh_size_at_base_level_cargs(
+    params: AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("number_of_integration_steps", None) is not None:
+        cargs.append("," + str(params.get("velocity_field_mesh_size_at_base_level_value", None)) + "".join(ants_registration_number_of_integration_steps_1_cargs(params.get("number_of_integration_steps", None), execution)))
     return cargs
 
 
 def ants_registration_transform_bspline_exponential(
     gradient_step: float,
     update_field_mesh_size_at_base_level: float,
-    velocity_field_mesh_size_at_base_level: float | None = None,
-    number_of_integration_steps: float | None = None,
-    spline_order: float | None = None,
+    velocity_field_mesh_size_at_base_level: AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict | None = None,
 ) -> AntsRegistrationTransformBsplineExponentialParamsDictTagged:
     """
     Build parameters.
@@ -1744,8 +2359,6 @@ def ants_registration_transform_bspline_exponential(
         gradient_step:.
         update_field_mesh_size_at_base_level:.
         velocity_field_mesh_size_at_base_level:.
-        number_of_integration_steps:.
-        spline_order:.
     Returns:
         Parameter dictionary
     """
@@ -1756,10 +2369,6 @@ def ants_registration_transform_bspline_exponential(
     }
     if velocity_field_mesh_size_at_base_level is not None:
         params["velocity_field_mesh_size_at_base_level"] = velocity_field_mesh_size_at_base_level
-    if number_of_integration_steps is not None:
-        params["number_of_integration_steps"] = number_of_integration_steps
-    if spline_order is not None:
-        params["spline_order"] = spline_order
     return params
 
 
@@ -1784,14 +2393,7 @@ def ants_registration_transform_bspline_exponential_validate(
     if not isinstance(params["update_field_mesh_size_at_base_level"], (float, int)):
         raise StyxValidationError(f'`update_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("update_field_mesh_size_at_base_level", None))}` expected `float`')
     if params.get("velocity_field_mesh_size_at_base_level", None) is not None:
-        if not isinstance(params["velocity_field_mesh_size_at_base_level"], (float, int)):
-            raise StyxValidationError(f'`velocity_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("velocity_field_mesh_size_at_base_level", None))}` expected `float | None`')
-    if params.get("number_of_integration_steps", None) is not None:
-        if not isinstance(params["number_of_integration_steps"], (float, int)):
-            raise StyxValidationError(f'`number_of_integration_steps` has the wrong type: Received `{type(params.get("number_of_integration_steps", None))}` expected `float | None`')
-    if params.get("spline_order", None) is not None:
-        if not isinstance(params["spline_order"], (float, int)):
-            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
+        ants_registration_velocity_field_mesh_size_at_base_level_validate(params["velocity_field_mesh_size_at_base_level"])
 
 
 def ants_registration_transform_bspline_exponential_cargs(
@@ -1808,8 +2410,187 @@ def ants_registration_transform_bspline_exponential_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("velocity_field_mesh_size_at_base_level", None) is not None or params.get("number_of_integration_steps", None) is not None or params.get("spline_order", None) is not None:
-        cargs.append("BSplineExponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "," + (str(params.get("velocity_field_mesh_size_at_base_level", None)) if (params.get("velocity_field_mesh_size_at_base_level", None) is not None) else "") + "," + (str(params.get("number_of_integration_steps", None)) if (params.get("number_of_integration_steps", None) is not None) else "") + "," + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
+    if params.get("velocity_field_mesh_size_at_base_level", None) is not None:
+        cargs.append("BSplineExponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join(ants_registration_velocity_field_mesh_size_at_base_level_cargs(params.get("velocity_field_mesh_size_at_base_level", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage(
+    use_gradient_filter_value: bool | None = None,
+) -> AntsRegistrationSamplingPercentageParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        use_gradient_filter_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage",
+    }
+    if use_gradient_filter_value is not None:
+        params["use_gradient_filter_value"] = use_gradient_filter_value
+    return params
+
+
+def ants_registration_sampling_percentage_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentageParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_gradient_filter_value", None) is not None:
+        if not isinstance(params["use_gradient_filter_value"], bool):
+            raise StyxValidationError(f'`use_gradient_filter_value` has the wrong type: Received `{type(params.get("use_gradient_filter_value", None))}` expected `bool | None`')
+
+
+def ants_registration_sampling_percentage_cargs(
+    params: AntsRegistrationSamplingPercentageParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("use_gradient_filter_value", None) is not None:
+        cargs.append("," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    return cargs
+
+
+def ants_registration_sampling_strategy(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsRegistrationSamplingPercentageParamsDict | None = None,
+) -> AntsRegistrationSamplingStrategyParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_registration_sampling_strategy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingStrategyParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_registration_sampling_percentage_validate(params["sampling_percentage"])
+
+
+def ants_registration_sampling_strategy_cargs(
+    params: AntsRegistrationSamplingStrategyParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_cargs(params.get("sampling_percentage", None), execution)))
+    return cargs
+
+
+def ants_registration_radius(
+    radius_value: float,
+    sampling_strategy: AntsRegistrationSamplingStrategyParamsDict | None = None,
+) -> AntsRegistrationRadiusParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        radius_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "radius",
+        "radius_value": radius_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_registration_radius_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationRadiusParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("radius_value", None) is None:
+        raise StyxValidationError("`radius_value` must not be None")
+    if not isinstance(params["radius_value"], (float, int)):
+        raise StyxValidationError(f'`radius_value` has the wrong type: Received `{type(params.get("radius_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_registration_sampling_strategy_validate(params["sampling_strategy"])
+
+
+def ants_registration_radius_cargs(
+    params: AntsRegistrationRadiusParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_strategy", None) is not None:
+        cargs.append("," + str(params.get("radius_value", None)) + "".join(ants_registration_sampling_strategy_cargs(params.get("sampling_strategy", None), execution)))
     return cargs
 
 
@@ -1817,10 +2598,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation(
     fixed_image: str,
     moving_image: str,
     metric_weight: float,
-    radius: float | None = None,
-    sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
-    sampling_percentage: float | None = None,
-    use_gradient_filter: bool | None = None,
+    radius: AntsRegistrationRadiusParamsDict | None = None,
 ) -> AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged:
     """
     Build parameters.
@@ -1830,9 +2608,6 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation(
         moving_image:.
         metric_weight:.
         radius:.
-        sampling_strategy:.
-        sampling_percentage:.
-        use_gradient_filter:.
     Returns:
         Parameter dictionary
     """
@@ -1844,12 +2619,6 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation(
     }
     if radius is not None:
         params["radius"] = radius
-    if sampling_strategy is not None:
-        params["sampling_strategy"] = sampling_strategy
-    if sampling_percentage is not None:
-        params["sampling_percentage"] = sampling_percentage
-    if use_gradient_filter is not None:
-        params["use_gradient_filter"] = use_gradient_filter
     return params
 
 
@@ -1878,21 +2647,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("radius", None) is not None:
-        if not isinstance(params["radius"], (float, int)):
-            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
-    if params.get("sampling_strategy", None) is not None:
-        if not isinstance(params["sampling_strategy"], str):
-            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
-        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
-            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
-    if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("use_gradient_filter", None) is not None:
-        if not isinstance(params["use_gradient_filter"], bool):
-            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+        ants_registration_radius_validate(params["radius"])
 
 
 def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
@@ -1909,8 +2664,187 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+    if params.get("radius", None) is not None:
+        cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_radius_cargs(params.get("radius", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage_1(
+    use_gradient_filter_value: bool | None = None,
+) -> AntsRegistrationSamplingPercentage1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        use_gradient_filter_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_1",
+    }
+    if use_gradient_filter_value is not None:
+        params["use_gradient_filter_value"] = use_gradient_filter_value
+    return params
+
+
+def ants_registration_sampling_percentage_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_gradient_filter_value", None) is not None:
+        if not isinstance(params["use_gradient_filter_value"], bool):
+            raise StyxValidationError(f'`use_gradient_filter_value` has the wrong type: Received `{type(params.get("use_gradient_filter_value", None))}` expected `bool | None`')
+
+
+def ants_registration_sampling_percentage_1_cargs(
+    params: AntsRegistrationSamplingPercentage1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("use_gradient_filter_value", None) is not None:
+        cargs.append("," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    return cargs
+
+
+def ants_registration_sampling_strategy_1(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsRegistrationSamplingPercentage1ParamsDict | None = None,
+) -> AntsRegistrationSamplingStrategy1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_1",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_registration_sampling_strategy_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingStrategy1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_registration_sampling_percentage_1_validate(params["sampling_percentage"])
+
+
+def ants_registration_sampling_strategy_1_cargs(
+    params: AntsRegistrationSamplingStrategy1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_1_cargs(params.get("sampling_percentage", None), execution)))
+    return cargs
+
+
+def ants_registration_number_of_bins(
+    number_of_bins_value: float,
+    sampling_strategy: AntsRegistrationSamplingStrategy1ParamsDict | None = None,
+) -> AntsRegistrationNumberOfBinsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_bins_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_bins",
+        "number_of_bins_value": number_of_bins_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_registration_number_of_bins_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationNumberOfBinsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_bins_value", None) is None:
+        raise StyxValidationError("`number_of_bins_value` must not be None")
+    if not isinstance(params["number_of_bins_value"], (float, int)):
+        raise StyxValidationError(f'`number_of_bins_value` has the wrong type: Received `{type(params.get("number_of_bins_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_registration_sampling_strategy_1_validate(params["sampling_strategy"])
+
+
+def ants_registration_number_of_bins_cargs(
+    params: AntsRegistrationNumberOfBinsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_strategy", None) is not None:
+        cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join(ants_registration_sampling_strategy_1_cargs(params.get("sampling_strategy", None), execution)))
     return cargs
 
 
@@ -1918,10 +2852,7 @@ def ants_registration_metric_mutual_information(
     fixed_image: str,
     moving_image: str,
     metric_weight: float,
-    number_of_bins: float | None = None,
-    sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
-    sampling_percentage: float | None = None,
-    use_gradient_filter: bool | None = None,
+    number_of_bins: AntsRegistrationNumberOfBinsParamsDict | None = None,
 ) -> AntsRegistrationMetricMutualInformationParamsDictTagged:
     """
     Build parameters.
@@ -1931,9 +2862,6 @@ def ants_registration_metric_mutual_information(
         moving_image:.
         metric_weight:.
         number_of_bins:.
-        sampling_strategy:.
-        sampling_percentage:.
-        use_gradient_filter:.
     Returns:
         Parameter dictionary
     """
@@ -1945,12 +2873,6 @@ def ants_registration_metric_mutual_information(
     }
     if number_of_bins is not None:
         params["number_of_bins"] = number_of_bins
-    if sampling_strategy is not None:
-        params["sampling_strategy"] = sampling_strategy
-    if sampling_percentage is not None:
-        params["sampling_percentage"] = sampling_percentage
-    if use_gradient_filter is not None:
-        params["use_gradient_filter"] = use_gradient_filter
     return params
 
 
@@ -1979,21 +2901,7 @@ def ants_registration_metric_mutual_information_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("number_of_bins", None) is not None:
-        if not isinstance(params["number_of_bins"], (float, int)):
-            raise StyxValidationError(f'`number_of_bins` has the wrong type: Received `{type(params.get("number_of_bins", None))}` expected `float | None`')
-    if params.get("sampling_strategy", None) is not None:
-        if not isinstance(params["sampling_strategy"], str):
-            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
-        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
-            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
-    if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("use_gradient_filter", None) is not None:
-        if not isinstance(params["use_gradient_filter"], bool):
-            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+        ants_registration_number_of_bins_validate(params["number_of_bins"])
 
 
 def ants_registration_metric_mutual_information_cargs(
@@ -2010,8 +2918,187 @@ def ants_registration_metric_mutual_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+    if params.get("number_of_bins", None) is not None:
+        cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_number_of_bins_cargs(params.get("number_of_bins", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage_2(
+    use_gradient_filter_value: bool | None = None,
+) -> AntsRegistrationSamplingPercentage2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        use_gradient_filter_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_2",
+    }
+    if use_gradient_filter_value is not None:
+        params["use_gradient_filter_value"] = use_gradient_filter_value
+    return params
+
+
+def ants_registration_sampling_percentage_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_gradient_filter_value", None) is not None:
+        if not isinstance(params["use_gradient_filter_value"], bool):
+            raise StyxValidationError(f'`use_gradient_filter_value` has the wrong type: Received `{type(params.get("use_gradient_filter_value", None))}` expected `bool | None`')
+
+
+def ants_registration_sampling_percentage_2_cargs(
+    params: AntsRegistrationSamplingPercentage2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("use_gradient_filter_value", None) is not None:
+        cargs.append("," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    return cargs
+
+
+def ants_registration_sampling_strategy_2(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsRegistrationSamplingPercentage2ParamsDict | None = None,
+) -> AntsRegistrationSamplingStrategy2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_2",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_registration_sampling_strategy_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingStrategy2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_registration_sampling_percentage_2_validate(params["sampling_percentage"])
+
+
+def ants_registration_sampling_strategy_2_cargs(
+    params: AntsRegistrationSamplingStrategy2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_2_cargs(params.get("sampling_percentage", None), execution)))
+    return cargs
+
+
+def ants_registration_number_of_bins_1(
+    number_of_bins_value: float,
+    sampling_strategy: AntsRegistrationSamplingStrategy2ParamsDict | None = None,
+) -> AntsRegistrationNumberOfBins1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_bins_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_bins_1",
+        "number_of_bins_value": number_of_bins_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_registration_number_of_bins_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationNumberOfBins1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_bins_value", None) is None:
+        raise StyxValidationError("`number_of_bins_value` must not be None")
+    if not isinstance(params["number_of_bins_value"], (float, int)):
+        raise StyxValidationError(f'`number_of_bins_value` has the wrong type: Received `{type(params.get("number_of_bins_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_registration_sampling_strategy_2_validate(params["sampling_strategy"])
+
+
+def ants_registration_number_of_bins_1_cargs(
+    params: AntsRegistrationNumberOfBins1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_strategy", None) is not None:
+        cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join(ants_registration_sampling_strategy_2_cargs(params.get("sampling_strategy", None), execution)))
     return cargs
 
 
@@ -2019,10 +3106,7 @@ def ants_registration_metric_mattes(
     fixed_image: str,
     moving_image: str,
     metric_weight: float,
-    number_of_bins: float | None = None,
-    sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
-    sampling_percentage: float | None = None,
-    use_gradient_filter: bool | None = None,
+    number_of_bins: AntsRegistrationNumberOfBins1ParamsDict | None = None,
 ) -> AntsRegistrationMetricMattesParamsDictTagged:
     """
     Build parameters.
@@ -2032,9 +3116,6 @@ def ants_registration_metric_mattes(
         moving_image:.
         metric_weight:.
         number_of_bins:.
-        sampling_strategy:.
-        sampling_percentage:.
-        use_gradient_filter:.
     Returns:
         Parameter dictionary
     """
@@ -2046,12 +3127,6 @@ def ants_registration_metric_mattes(
     }
     if number_of_bins is not None:
         params["number_of_bins"] = number_of_bins
-    if sampling_strategy is not None:
-        params["sampling_strategy"] = sampling_strategy
-    if sampling_percentage is not None:
-        params["sampling_percentage"] = sampling_percentage
-    if use_gradient_filter is not None:
-        params["use_gradient_filter"] = use_gradient_filter
     return params
 
 
@@ -2080,21 +3155,7 @@ def ants_registration_metric_mattes_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("number_of_bins", None) is not None:
-        if not isinstance(params["number_of_bins"], (float, int)):
-            raise StyxValidationError(f'`number_of_bins` has the wrong type: Received `{type(params.get("number_of_bins", None))}` expected `float | None`')
-    if params.get("sampling_strategy", None) is not None:
-        if not isinstance(params["sampling_strategy"], str):
-            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
-        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
-            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
-    if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("use_gradient_filter", None) is not None:
-        if not isinstance(params["use_gradient_filter"], bool):
-            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+        ants_registration_number_of_bins_1_validate(params["number_of_bins"])
 
 
 def ants_registration_metric_mattes_cargs(
@@ -2111,8 +3172,187 @@ def ants_registration_metric_mattes_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+    if params.get("number_of_bins", None) is not None:
+        cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_number_of_bins_1_cargs(params.get("number_of_bins", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage_3(
+    use_gradient_filter_value: bool | None = None,
+) -> AntsRegistrationSamplingPercentage3ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        use_gradient_filter_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_3",
+    }
+    if use_gradient_filter_value is not None:
+        params["use_gradient_filter_value"] = use_gradient_filter_value
+    return params
+
+
+def ants_registration_sampling_percentage_3_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage3ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_gradient_filter_value", None) is not None:
+        if not isinstance(params["use_gradient_filter_value"], bool):
+            raise StyxValidationError(f'`use_gradient_filter_value` has the wrong type: Received `{type(params.get("use_gradient_filter_value", None))}` expected `bool | None`')
+
+
+def ants_registration_sampling_percentage_3_cargs(
+    params: AntsRegistrationSamplingPercentage3ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("use_gradient_filter_value", None) is not None:
+        cargs.append("," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    return cargs
+
+
+def ants_registration_sampling_strategy_3(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsRegistrationSamplingPercentage3ParamsDict | None = None,
+) -> AntsRegistrationSamplingStrategy3ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_3",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_registration_sampling_strategy_3_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingStrategy3ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_registration_sampling_percentage_3_validate(params["sampling_percentage"])
+
+
+def ants_registration_sampling_strategy_3_cargs(
+    params: AntsRegistrationSamplingStrategy3ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_3_cargs(params.get("sampling_percentage", None), execution)))
+    return cargs
+
+
+def ants_registration_radius_1(
+    radius_value: float,
+    sampling_strategy: AntsRegistrationSamplingStrategy3ParamsDict | None = None,
+) -> AntsRegistrationRadius1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        radius_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "radius_1",
+        "radius_value": radius_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_registration_radius_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationRadius1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("radius_value", None) is None:
+        raise StyxValidationError("`radius_value` must not be None")
+    if not isinstance(params["radius_value"], (float, int)):
+        raise StyxValidationError(f'`radius_value` has the wrong type: Received `{type(params.get("radius_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_registration_sampling_strategy_3_validate(params["sampling_strategy"])
+
+
+def ants_registration_radius_1_cargs(
+    params: AntsRegistrationRadius1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_strategy", None) is not None:
+        cargs.append("," + str(params.get("radius_value", None)) + "".join(ants_registration_sampling_strategy_3_cargs(params.get("sampling_strategy", None), execution)))
     return cargs
 
 
@@ -2120,10 +3360,7 @@ def ants_registration_metric_mean_squares(
     fixed_image: str,
     moving_image: str,
     metric_weight: float,
-    radius: float | None = None,
-    sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
-    sampling_percentage: float | None = None,
-    use_gradient_filter: bool | None = None,
+    radius: AntsRegistrationRadius1ParamsDict | None = None,
 ) -> AntsRegistrationMetricMeanSquaresParamsDictTagged:
     """
     Build parameters.
@@ -2133,9 +3370,6 @@ def ants_registration_metric_mean_squares(
         moving_image:.
         metric_weight:.
         radius:.
-        sampling_strategy:.
-        sampling_percentage:.
-        use_gradient_filter:.
     Returns:
         Parameter dictionary
     """
@@ -2147,12 +3381,6 @@ def ants_registration_metric_mean_squares(
     }
     if radius is not None:
         params["radius"] = radius
-    if sampling_strategy is not None:
-        params["sampling_strategy"] = sampling_strategy
-    if sampling_percentage is not None:
-        params["sampling_percentage"] = sampling_percentage
-    if use_gradient_filter is not None:
-        params["use_gradient_filter"] = use_gradient_filter
     return params
 
 
@@ -2181,21 +3409,7 @@ def ants_registration_metric_mean_squares_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("radius", None) is not None:
-        if not isinstance(params["radius"], (float, int)):
-            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
-    if params.get("sampling_strategy", None) is not None:
-        if not isinstance(params["sampling_strategy"], str):
-            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
-        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
-            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
-    if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("use_gradient_filter", None) is not None:
-        if not isinstance(params["use_gradient_filter"], bool):
-            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+        ants_registration_radius_1_validate(params["radius"])
 
 
 def ants_registration_metric_mean_squares_cargs(
@@ -2212,8 +3426,187 @@ def ants_registration_metric_mean_squares_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+    if params.get("radius", None) is not None:
+        cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_radius_1_cargs(params.get("radius", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage_4(
+    use_gradient_filter_value: bool | None = None,
+) -> AntsRegistrationSamplingPercentage4ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        use_gradient_filter_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_4",
+    }
+    if use_gradient_filter_value is not None:
+        params["use_gradient_filter_value"] = use_gradient_filter_value
+    return params
+
+
+def ants_registration_sampling_percentage_4_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage4ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_gradient_filter_value", None) is not None:
+        if not isinstance(params["use_gradient_filter_value"], bool):
+            raise StyxValidationError(f'`use_gradient_filter_value` has the wrong type: Received `{type(params.get("use_gradient_filter_value", None))}` expected `bool | None`')
+
+
+def ants_registration_sampling_percentage_4_cargs(
+    params: AntsRegistrationSamplingPercentage4ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("use_gradient_filter_value", None) is not None:
+        cargs.append("," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    return cargs
+
+
+def ants_registration_sampling_strategy_4(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsRegistrationSamplingPercentage4ParamsDict | None = None,
+) -> AntsRegistrationSamplingStrategy4ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_4",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_registration_sampling_strategy_4_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingStrategy4ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_registration_sampling_percentage_4_validate(params["sampling_percentage"])
+
+
+def ants_registration_sampling_strategy_4_cargs(
+    params: AntsRegistrationSamplingStrategy4ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_4_cargs(params.get("sampling_percentage", None), execution)))
+    return cargs
+
+
+def ants_registration_number_of_bins_2(
+    number_of_bins_value: float,
+    sampling_strategy: AntsRegistrationSamplingStrategy4ParamsDict | None = None,
+) -> AntsRegistrationNumberOfBins2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_bins_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_bins_2",
+        "number_of_bins_value": number_of_bins_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_registration_number_of_bins_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationNumberOfBins2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_bins_value", None) is None:
+        raise StyxValidationError("`number_of_bins_value` must not be None")
+    if not isinstance(params["number_of_bins_value"], (float, int)):
+        raise StyxValidationError(f'`number_of_bins_value` has the wrong type: Received `{type(params.get("number_of_bins_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_registration_sampling_strategy_4_validate(params["sampling_strategy"])
+
+
+def ants_registration_number_of_bins_2_cargs(
+    params: AntsRegistrationNumberOfBins2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_strategy", None) is not None:
+        cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join(ants_registration_sampling_strategy_4_cargs(params.get("sampling_strategy", None), execution)))
     return cargs
 
 
@@ -2221,10 +3614,7 @@ def ants_registration_metric_demons(
     fixed_image: str,
     moving_image: str,
     metric_weight: float,
-    number_of_bins: float | None = None,
-    sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
-    sampling_percentage: float | None = None,
-    use_gradient_filter: bool | None = None,
+    number_of_bins: AntsRegistrationNumberOfBins2ParamsDict | None = None,
 ) -> AntsRegistrationMetricDemonsParamsDictTagged:
     """
     Build parameters.
@@ -2234,9 +3624,6 @@ def ants_registration_metric_demons(
         moving_image:.
         metric_weight:.
         number_of_bins:.
-        sampling_strategy:.
-        sampling_percentage:.
-        use_gradient_filter:.
     Returns:
         Parameter dictionary
     """
@@ -2248,12 +3635,6 @@ def ants_registration_metric_demons(
     }
     if number_of_bins is not None:
         params["number_of_bins"] = number_of_bins
-    if sampling_strategy is not None:
-        params["sampling_strategy"] = sampling_strategy
-    if sampling_percentage is not None:
-        params["sampling_percentage"] = sampling_percentage
-    if use_gradient_filter is not None:
-        params["use_gradient_filter"] = use_gradient_filter
     return params
 
 
@@ -2282,21 +3663,7 @@ def ants_registration_metric_demons_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("number_of_bins", None) is not None:
-        if not isinstance(params["number_of_bins"], (float, int)):
-            raise StyxValidationError(f'`number_of_bins` has the wrong type: Received `{type(params.get("number_of_bins", None))}` expected `float | None`')
-    if params.get("sampling_strategy", None) is not None:
-        if not isinstance(params["sampling_strategy"], str):
-            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
-        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
-            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
-    if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("use_gradient_filter", None) is not None:
-        if not isinstance(params["use_gradient_filter"], bool):
-            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+        ants_registration_number_of_bins_2_validate(params["number_of_bins"])
 
 
 def ants_registration_metric_demons_cargs(
@@ -2313,8 +3680,187 @@ def ants_registration_metric_demons_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+    if params.get("number_of_bins", None) is not None:
+        cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_number_of_bins_2_cargs(params.get("number_of_bins", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage_5(
+    use_gradient_filter_value: bool | None = None,
+) -> AntsRegistrationSamplingPercentage5ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        use_gradient_filter_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_5",
+    }
+    if use_gradient_filter_value is not None:
+        params["use_gradient_filter_value"] = use_gradient_filter_value
+    return params
+
+
+def ants_registration_sampling_percentage_5_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage5ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_gradient_filter_value", None) is not None:
+        if not isinstance(params["use_gradient_filter_value"], bool):
+            raise StyxValidationError(f'`use_gradient_filter_value` has the wrong type: Received `{type(params.get("use_gradient_filter_value", None))}` expected `bool | None`')
+
+
+def ants_registration_sampling_percentage_5_cargs(
+    params: AntsRegistrationSamplingPercentage5ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("use_gradient_filter_value", None) is not None:
+        cargs.append("," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    return cargs
+
+
+def ants_registration_sampling_strategy_5(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsRegistrationSamplingPercentage5ParamsDict | None = None,
+) -> AntsRegistrationSamplingStrategy5ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_5",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_registration_sampling_strategy_5_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingStrategy5ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_registration_sampling_percentage_5_validate(params["sampling_percentage"])
+
+
+def ants_registration_sampling_strategy_5_cargs(
+    params: AntsRegistrationSamplingStrategy5ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_5_cargs(params.get("sampling_percentage", None), execution)))
+    return cargs
+
+
+def ants_registration_radius_2(
+    radius_value: float,
+    sampling_strategy: AntsRegistrationSamplingStrategy5ParamsDict | None = None,
+) -> AntsRegistrationRadius2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        radius_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "radius_2",
+        "radius_value": radius_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_registration_radius_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationRadius2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("radius_value", None) is None:
+        raise StyxValidationError("`radius_value` must not be None")
+    if not isinstance(params["radius_value"], (float, int)):
+        raise StyxValidationError(f'`radius_value` has the wrong type: Received `{type(params.get("radius_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_registration_sampling_strategy_5_validate(params["sampling_strategy"])
+
+
+def ants_registration_radius_2_cargs(
+    params: AntsRegistrationRadius2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("sampling_strategy", None) is not None:
+        cargs.append("," + str(params.get("radius_value", None)) + "".join(ants_registration_sampling_strategy_5_cargs(params.get("sampling_strategy", None), execution)))
     return cargs
 
 
@@ -2322,10 +3868,7 @@ def ants_registration_metric_global_correlation(
     fixed_image: str,
     moving_image: str,
     metric_weight: float,
-    radius: float | None = None,
-    sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
-    sampling_percentage: float | None = None,
-    use_gradient_filter: bool | None = None,
+    radius: AntsRegistrationRadius2ParamsDict | None = None,
 ) -> AntsRegistrationMetricGlobalCorrelationParamsDictTagged:
     """
     Build parameters.
@@ -2335,9 +3878,6 @@ def ants_registration_metric_global_correlation(
         moving_image:.
         metric_weight:.
         radius:.
-        sampling_strategy:.
-        sampling_percentage:.
-        use_gradient_filter:.
     Returns:
         Parameter dictionary
     """
@@ -2349,12 +3889,6 @@ def ants_registration_metric_global_correlation(
     }
     if radius is not None:
         params["radius"] = radius
-    if sampling_strategy is not None:
-        params["sampling_strategy"] = sampling_strategy
-    if sampling_percentage is not None:
-        params["sampling_percentage"] = sampling_percentage
-    if use_gradient_filter is not None:
-        params["use_gradient_filter"] = use_gradient_filter
     return params
 
 
@@ -2383,21 +3917,7 @@ def ants_registration_metric_global_correlation_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("radius", None) is not None:
-        if not isinstance(params["radius"], (float, int)):
-            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
-    if params.get("sampling_strategy", None) is not None:
-        if not isinstance(params["sampling_strategy"], str):
-            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
-        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
-            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
-    if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("use_gradient_filter", None) is not None:
-        if not isinstance(params["use_gradient_filter"], bool):
-            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+        ants_registration_radius_2_validate(params["radius"])
 
 
 def ants_registration_metric_global_correlation_cargs(
@@ -2414,8 +3934,65 @@ def ants_registration_metric_global_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+    if params.get("radius", None) is not None:
+        cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_radius_2_cargs(params.get("radius", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_sampling_percentage_6(
+    boundary_points_only_value: typing.Literal["0"] | None = None,
+) -> AntsRegistrationSamplingPercentage6ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        boundary_points_only_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_6",
+    }
+    if boundary_points_only_value is not None:
+        params["boundary_points_only_value"] = boundary_points_only_value
+    return params
+
+
+def ants_registration_sampling_percentage_6_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage6ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("boundary_points_only_value", None) is not None:
+        if not isinstance(params["boundary_points_only_value"], str):
+            raise StyxValidationError(f'`boundary_points_only_value` has the wrong type: Received `{type(params.get("boundary_points_only_value", None))}` expected `typing.Literal["0"] | None`')
+        if params["boundary_points_only_value"] not in ["0"]:
+            raise StyxValidationError("Parameter `boundary_points_only_value` must be one of [\"0\"]")
+
+
+def ants_registration_sampling_percentage_6_cargs(
+    params: AntsRegistrationSamplingPercentage6ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("boundary_points_only_value", None) is not None:
+        cargs.append("," + params.get("boundary_points_only_value", None))
     return cargs
 
 
@@ -2423,8 +4000,7 @@ def ants_registration_metric_euclidean_icp(
     fixed_point_set: str,
     moving_point_set: str,
     metric_weight: float,
-    sampling_percentage: float | None = None,
-    boundary_points_only: typing.Literal["0"] | None = None,
+    sampling_percentage: AntsRegistrationSamplingPercentage6ParamsDict | None = None,
 ) -> AntsRegistrationMetricEuclideanIcpParamsDictTagged:
     """
     Build parameters.
@@ -2434,7 +4010,6 @@ def ants_registration_metric_euclidean_icp(
         moving_point_set:.
         metric_weight:.
         sampling_percentage:.
-        boundary_points_only:.
     Returns:
         Parameter dictionary
     """
@@ -2446,8 +4021,6 @@ def ants_registration_metric_euclidean_icp(
     }
     if sampling_percentage is not None:
         params["sampling_percentage"] = sampling_percentage
-    if boundary_points_only is not None:
-        params["boundary_points_only"] = boundary_points_only
     return params
 
 
@@ -2476,15 +4049,7 @@ def ants_registration_metric_euclidean_icp_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("boundary_points_only", None) is not None:
-        if not isinstance(params["boundary_points_only"], str):
-            raise StyxValidationError(f'`boundary_points_only` has the wrong type: Received `{type(params.get("boundary_points_only", None))}` expected `typing.Literal["0"] | None`')
-        if params["boundary_points_only"] not in ["0"]:
-            raise StyxValidationError("Parameter `boundary_points_only` must be one of [\"0\"]")
+        ants_registration_sampling_percentage_6_validate(params["sampling_percentage"])
 
 
 def ants_registration_metric_euclidean_icp_cargs(
@@ -2501,32 +4066,215 @@ def ants_registration_metric_euclidean_icp_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sampling_percentage", None) is not None or params.get("boundary_points_only", None) is not None:
-        cargs.append("ICP[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("boundary_points_only", None) if (params.get("boundary_points_only", None) is not None) else "") + "]")
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("ICP[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_sampling_percentage_6_cargs(params.get("sampling_percentage", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_point_set_sigma(
+    k_neighborhood_value: float | None = None,
+) -> AntsRegistrationPointSetSigmaParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        k_neighborhood_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "point_set_sigma",
+    }
+    if k_neighborhood_value is not None:
+        params["k_neighborhood_value"] = k_neighborhood_value
+    return params
+
+
+def ants_registration_point_set_sigma_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationPointSetSigmaParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("k_neighborhood_value", None) is not None:
+        if not isinstance(params["k_neighborhood_value"], (float, int)):
+            raise StyxValidationError(f'`k_neighborhood_value` has the wrong type: Received `{type(params.get("k_neighborhood_value", None))}` expected `float | None`')
+
+
+def ants_registration_point_set_sigma_cargs(
+    params: AntsRegistrationPointSetSigmaParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("k_neighborhood_value", None) is not None:
+        cargs.append("," + str(params.get("k_neighborhood_value", None)))
+    return cargs
+
+
+def ants_registration_boundary_points_only_1(
+    boundary_points_only_value: typing.Literal["0"],
+    point_set_sigma: AntsRegistrationPointSetSigmaParamsDict | None = None,
+) -> AntsRegistrationBoundaryPointsOnly1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        boundary_points_only_value:.
+        point_set_sigma:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "boundary_points_only_1",
+        "boundary_points_only_value": boundary_points_only_value,
+    }
+    if point_set_sigma is not None:
+        params["point_set_sigma"] = point_set_sigma
+    return params
+
+
+def ants_registration_boundary_points_only_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationBoundaryPointsOnly1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("boundary_points_only_value", None) is None:
+        raise StyxValidationError("`boundary_points_only_value` must not be None")
+    if not isinstance(params["boundary_points_only_value"], str):
+        raise StyxValidationError(f'`boundary_points_only_value` has the wrong type: Received `{type(params.get("boundary_points_only_value", None))}` expected `typing.Literal["0"]`')
+    if params["boundary_points_only_value"] not in ["0"]:
+        raise StyxValidationError("Parameter `boundary_points_only_value` must be one of [\"0\"]")
+    if params.get("point_set_sigma", None) is not None:
+        ants_registration_point_set_sigma_validate(params["point_set_sigma"])
+
+
+def ants_registration_boundary_points_only_1_cargs(
+    params: AntsRegistrationBoundaryPointsOnly1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("point_set_sigma", None) is not None:
+        cargs.append("," + params.get("boundary_points_only_value", None) + "".join(ants_registration_point_set_sigma_cargs(params.get("point_set_sigma", None), execution)))
+    return cargs
+
+
+def ants_registration_sampling_percentage_7(
+    sampling_percentage_value: float,
+    boundary_points_only: AntsRegistrationBoundaryPointsOnly1ParamsDict | None = None,
+) -> AntsRegistrationSamplingPercentage7ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_percentage_value:.
+        boundary_points_only:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_7",
+        "sampling_percentage_value": sampling_percentage_value,
+    }
+    if boundary_points_only is not None:
+        params["boundary_points_only"] = boundary_points_only
+    return params
+
+
+def ants_registration_sampling_percentage_7_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage7ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_percentage_value", None) is None:
+        raise StyxValidationError("`sampling_percentage_value` must not be None")
+    if not isinstance(params["sampling_percentage_value"], (float, int)):
+        raise StyxValidationError(f'`sampling_percentage_value` has the wrong type: Received `{type(params.get("sampling_percentage_value", None))}` expected `float`')
+    if not (0 <= params["sampling_percentage_value"] <= 1):
+        raise StyxValidationError("Parameter `sampling_percentage_value` must be between 0 and 1 (inclusive)")
+    if params.get("boundary_points_only", None) is not None:
+        ants_registration_boundary_points_only_1_validate(params["boundary_points_only"])
+
+
+def ants_registration_sampling_percentage_7_cargs(
+    params: AntsRegistrationSamplingPercentage7ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("boundary_points_only", None) is not None:
+        cargs.append("," + str(params.get("sampling_percentage_value", None)) + "".join(ants_registration_boundary_points_only_1_cargs(params.get("boundary_points_only", None), execution)))
     return cargs
 
 
 def ants_registration_metric_point_set_expectation(
+    fixed_point_set: str,
+    moving_point_set: str,
     metric_weight: float,
-    point_set_sigma: float | None = None,
-    sampling_percentage: float | None = None,
+    sampling_percentage: AntsRegistrationSamplingPercentage7ParamsDict | None = None,
 ) -> AntsRegistrationMetricPointSetExpectationParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        fixed_point_set:.
+        moving_point_set:.
         metric_weight:.
-        point_set_sigma:.
         sampling_percentage:.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "metric_point_set_expectation",
+        "fixed_point_set": fixed_point_set,
+        "moving_point_set": moving_point_set,
         "metric_weight": metric_weight,
     }
-    if point_set_sigma is not None:
-        params["point_set_sigma"] = point_set_sigma
     if sampling_percentage is not None:
         params["sampling_percentage"] = sampling_percentage
     return params
@@ -2544,18 +4292,20 @@ def ants_registration_metric_point_set_expectation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_point_set", None) is None:
+        raise StyxValidationError("`fixed_point_set` must not be None")
+    if not isinstance(params["fixed_point_set"], str):
+        raise StyxValidationError(f'`fixed_point_set` has the wrong type: Received `{type(params.get("fixed_point_set", None))}` expected `str`')
+    if params.get("moving_point_set", None) is None:
+        raise StyxValidationError("`moving_point_set` must not be None")
+    if not isinstance(params["moving_point_set"], str):
+        raise StyxValidationError(f'`moving_point_set` has the wrong type: Received `{type(params.get("moving_point_set", None))}` expected `str`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
-    if params.get("point_set_sigma", None) is not None:
-        if not isinstance(params["point_set_sigma"], (float, int)):
-            raise StyxValidationError(f'`point_set_sigma` has the wrong type: Received `{type(params.get("point_set_sigma", None))}` expected `float | None`')
     if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+        ants_registration_sampling_percentage_7_validate(params["sampling_percentage"])
 
 
 def ants_registration_metric_point_set_expectation_cargs(
@@ -2572,8 +4322,189 @@ def ants_registration_metric_point_set_expectation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("point_set_sigma", None) is not None or params.get("sampling_percentage", None) is not None:
-        cargs.append("PSE[[FIXED_IMAGE],[MOVING_IMAGE]," + str(params.get("metric_weight", None)) + ",," + (str(params.get("point_set_sigma", None)) if (params.get("point_set_sigma", None) is not None) else "") + "[SAMPLING_STRATEGY]," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "[USE_GRADIENT_FILTER]]")
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("PSE[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_sampling_percentage_7_cargs(params.get("sampling_percentage", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_point_set_sigma_1(
+    k_neighborhood_value: float | None = None,
+) -> AntsRegistrationPointSetSigma1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        k_neighborhood_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "point_set_sigma_1",
+    }
+    if k_neighborhood_value is not None:
+        params["k_neighborhood_value"] = k_neighborhood_value
+    return params
+
+
+def ants_registration_point_set_sigma_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationPointSetSigma1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("k_neighborhood_value", None) is not None:
+        if not isinstance(params["k_neighborhood_value"], (float, int)):
+            raise StyxValidationError(f'`k_neighborhood_value` has the wrong type: Received `{type(params.get("k_neighborhood_value", None))}` expected `float | None`')
+
+
+def ants_registration_point_set_sigma_1_cargs(
+    params: AntsRegistrationPointSetSigma1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("k_neighborhood_value", None) is not None:
+        cargs.append("," + str(params.get("k_neighborhood_value", None)))
+    return cargs
+
+
+def ants_registration_boundary_points_only_2(
+    boundary_points_only_value: typing.Literal["0"],
+    point_set_sigma: AntsRegistrationPointSetSigma1ParamsDict | None = None,
+) -> AntsRegistrationBoundaryPointsOnly2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        boundary_points_only_value:.
+        point_set_sigma:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "boundary_points_only_2",
+        "boundary_points_only_value": boundary_points_only_value,
+    }
+    if point_set_sigma is not None:
+        params["point_set_sigma"] = point_set_sigma
+    return params
+
+
+def ants_registration_boundary_points_only_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationBoundaryPointsOnly2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("boundary_points_only_value", None) is None:
+        raise StyxValidationError("`boundary_points_only_value` must not be None")
+    if not isinstance(params["boundary_points_only_value"], str):
+        raise StyxValidationError(f'`boundary_points_only_value` has the wrong type: Received `{type(params.get("boundary_points_only_value", None))}` expected `typing.Literal["0"]`')
+    if params["boundary_points_only_value"] not in ["0"]:
+        raise StyxValidationError("Parameter `boundary_points_only_value` must be one of [\"0\"]")
+    if params.get("point_set_sigma", None) is not None:
+        ants_registration_point_set_sigma_1_validate(params["point_set_sigma"])
+
+
+def ants_registration_boundary_points_only_2_cargs(
+    params: AntsRegistrationBoundaryPointsOnly2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("point_set_sigma", None) is not None:
+        cargs.append("," + params.get("boundary_points_only_value", None) + "".join(ants_registration_point_set_sigma_1_cargs(params.get("point_set_sigma", None), execution)))
+    return cargs
+
+
+def ants_registration_sampling_percentage_8(
+    sampling_percentage_value: float,
+    boundary_points_only: AntsRegistrationBoundaryPointsOnly2ParamsDict | None = None,
+) -> AntsRegistrationSamplingPercentage8ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_percentage_value:.
+        boundary_points_only:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_8",
+        "sampling_percentage_value": sampling_percentage_value,
+    }
+    if boundary_points_only is not None:
+        params["boundary_points_only"] = boundary_points_only
+    return params
+
+
+def ants_registration_sampling_percentage_8_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSamplingPercentage8ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_percentage_value", None) is None:
+        raise StyxValidationError("`sampling_percentage_value` must not be None")
+    if not isinstance(params["sampling_percentage_value"], (float, int)):
+        raise StyxValidationError(f'`sampling_percentage_value` has the wrong type: Received `{type(params.get("sampling_percentage_value", None))}` expected `float`')
+    if not (0 <= params["sampling_percentage_value"] <= 1):
+        raise StyxValidationError("Parameter `sampling_percentage_value` must be between 0 and 1 (inclusive)")
+    if params.get("boundary_points_only", None) is not None:
+        ants_registration_boundary_points_only_2_validate(params["boundary_points_only"])
+
+
+def ants_registration_sampling_percentage_8_cargs(
+    params: AntsRegistrationSamplingPercentage8ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("boundary_points_only", None) is not None:
+        cargs.append("," + str(params.get("sampling_percentage_value", None)) + "".join(ants_registration_boundary_points_only_2_cargs(params.get("boundary_points_only", None), execution)))
     return cargs
 
 
@@ -2581,10 +4512,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis(
     fixed_point_set: str,
     moving_point_set: str,
     metric_weight: float,
-    sampling_percentage: float | None = None,
-    boundary_points_only: typing.Literal["0"] | None = None,
-    point_set_sigma: float | None = None,
-    k_neighborhood: float | None = None,
+    sampling_percentage: AntsRegistrationSamplingPercentage8ParamsDict | None = None,
 ) -> AntsRegistrationMetricJensenHavrdaCharvetTsallisParamsDictTagged:
     """
     Build parameters.
@@ -2594,9 +4522,6 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis(
         moving_point_set:.
         metric_weight:.
         sampling_percentage:.
-        boundary_points_only:.
-        point_set_sigma:.
-        k_neighborhood:.
     Returns:
         Parameter dictionary
     """
@@ -2608,12 +4533,6 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis(
     }
     if sampling_percentage is not None:
         params["sampling_percentage"] = sampling_percentage
-    if boundary_points_only is not None:
-        params["boundary_points_only"] = boundary_points_only
-    if point_set_sigma is not None:
-        params["point_set_sigma"] = point_set_sigma
-    if k_neighborhood is not None:
-        params["k_neighborhood"] = k_neighborhood
     return params
 
 
@@ -2642,21 +4561,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_validate(
     if not isinstance(params["metric_weight"], (float, int)):
         raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
     if params.get("sampling_percentage", None) is not None:
-        if not isinstance(params["sampling_percentage"], (float, int)):
-            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
-        if not (0 <= params["sampling_percentage"] <= 1):
-            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
-    if params.get("boundary_points_only", None) is not None:
-        if not isinstance(params["boundary_points_only"], str):
-            raise StyxValidationError(f'`boundary_points_only` has the wrong type: Received `{type(params.get("boundary_points_only", None))}` expected `typing.Literal["0"] | None`')
-        if params["boundary_points_only"] not in ["0"]:
-            raise StyxValidationError("Parameter `boundary_points_only` must be one of [\"0\"]")
-    if params.get("point_set_sigma", None) is not None:
-        if not isinstance(params["point_set_sigma"], (float, int)):
-            raise StyxValidationError(f'`point_set_sigma` has the wrong type: Received `{type(params.get("point_set_sigma", None))}` expected `float | None`')
-    if params.get("k_neighborhood", None) is not None:
-        if not isinstance(params["k_neighborhood"], (float, int)):
-            raise StyxValidationError(f'`k_neighborhood` has the wrong type: Received `{type(params.get("k_neighborhood", None))}` expected `float | None`')
+        ants_registration_sampling_percentage_8_validate(params["sampling_percentage"])
 
 
 def ants_registration_metric_jensen_havrda_charvet_tsallis_cargs(
@@ -2673,23 +4578,280 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sampling_percentage", None) is not None or params.get("boundary_points_only", None) is not None or params.get("point_set_sigma", None) is not None or params.get("k_neighborhood", None) is not None:
-        cargs.append("JHCT[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("boundary_points_only", None) if (params.get("boundary_points_only", None) is not None) else "") + "," + (str(params.get("point_set_sigma", None)) if (params.get("point_set_sigma", None) is not None) else "") + "," + (str(params.get("k_neighborhood", None)) if (params.get("k_neighborhood", None) is not None) else "") + "]")
+    if params.get("sampling_percentage", None) is not None:
+        cargs.append("JHCT[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_sampling_percentage_8_cargs(params.get("sampling_percentage", None), execution)) + "]")
+    return cargs
+
+
+def ants_registration_k_neighborhood_2(
+    gradient_sigma_value: float | None = None,
+) -> AntsRegistrationKNeighborhood2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        gradient_sigma_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "k_neighborhood_2",
+    }
+    if gradient_sigma_value is not None:
+        params["gradient_sigma_value"] = gradient_sigma_value
+    return params
+
+
+def ants_registration_k_neighborhood_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationKNeighborhood2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_sigma_value", None) is not None:
+        if not isinstance(params["gradient_sigma_value"], (float, int)):
+            raise StyxValidationError(f'`gradient_sigma_value` has the wrong type: Received `{type(params.get("gradient_sigma_value", None))}` expected `float | None`')
+
+
+def ants_registration_k_neighborhood_2_cargs(
+    params: AntsRegistrationKNeighborhood2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("gradient_sigma_value", None) is not None:
+        cargs.append("," + str(params.get("gradient_sigma_value", None)))
+    return cargs
+
+
+def ants_registration_distance_sigma(
+    distance_sigma_value: float,
+    k_neighborhood: AntsRegistrationKNeighborhood2ParamsDict | None = None,
+) -> AntsRegistrationDistanceSigmaParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        distance_sigma_value:.
+        k_neighborhood:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "distance_sigma",
+        "distance_sigma_value": distance_sigma_value,
+    }
+    if k_neighborhood is not None:
+        params["k_neighborhood"] = k_neighborhood
+    return params
+
+
+def ants_registration_distance_sigma_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationDistanceSigmaParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("distance_sigma_value", None) is None:
+        raise StyxValidationError("`distance_sigma_value` must not be None")
+    if not isinstance(params["distance_sigma_value"], (float, int)):
+        raise StyxValidationError(f'`distance_sigma_value` has the wrong type: Received `{type(params.get("distance_sigma_value", None))}` expected `float`')
+    if params.get("k_neighborhood", None) is not None:
+        ants_registration_k_neighborhood_2_validate(params["k_neighborhood"])
+
+
+def ants_registration_distance_sigma_cargs(
+    params: AntsRegistrationDistanceSigmaParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("k_neighborhood", None) is not None:
+        cargs.append("," + str(params.get("distance_sigma_value", None)) + "".join(ants_registration_k_neighborhood_2_cargs(params.get("k_neighborhood", None), execution)))
+    return cargs
+
+
+def ants_registration_intensity_sigma(
+    intensity_sigma_value: float,
+    distance_sigma: AntsRegistrationDistanceSigmaParamsDict | None = None,
+) -> AntsRegistrationIntensitySigmaParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        intensity_sigma_value:.
+        distance_sigma:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "intensity_sigma",
+        "intensity_sigma_value": intensity_sigma_value,
+    }
+    if distance_sigma is not None:
+        params["distance_sigma"] = distance_sigma
+    return params
+
+
+def ants_registration_intensity_sigma_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationIntensitySigmaParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("intensity_sigma_value", None) is None:
+        raise StyxValidationError("`intensity_sigma_value` must not be None")
+    if not isinstance(params["intensity_sigma_value"], (float, int)):
+        raise StyxValidationError(f'`intensity_sigma_value` has the wrong type: Received `{type(params.get("intensity_sigma_value", None))}` expected `float`')
+    if params.get("distance_sigma", None) is not None:
+        ants_registration_distance_sigma_validate(params["distance_sigma"])
+
+
+def ants_registration_intensity_sigma_cargs(
+    params: AntsRegistrationIntensitySigmaParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("distance_sigma", None) is not None:
+        cargs.append("," + str(params.get("intensity_sigma_value", None)) + "".join(ants_registration_distance_sigma_cargs(params.get("distance_sigma", None), execution)))
+    return cargs
+
+
+def ants_registration_neighborhood_radius(
+    neighborhood_radius_value: str,
+    intensity_sigma: AntsRegistrationIntensitySigmaParamsDict | None = None,
+) -> AntsRegistrationNeighborhoodRadiusParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        neighborhood_radius_value:.
+        intensity_sigma:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "neighborhood_radius",
+        "neighborhood_radius_value": neighborhood_radius_value,
+    }
+    if intensity_sigma is not None:
+        params["intensity_sigma"] = intensity_sigma
+    return params
+
+
+def ants_registration_neighborhood_radius_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationNeighborhoodRadiusParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("neighborhood_radius_value", None) is None:
+        raise StyxValidationError("`neighborhood_radius_value` must not be None")
+    if not isinstance(params["neighborhood_radius_value"], str):
+        raise StyxValidationError(f'`neighborhood_radius_value` has the wrong type: Received `{type(params.get("neighborhood_radius_value", None))}` expected `str`')
+    if params.get("intensity_sigma", None) is not None:
+        ants_registration_intensity_sigma_validate(params["intensity_sigma"])
+
+
+def ants_registration_neighborhood_radius_cargs(
+    params: AntsRegistrationNeighborhoodRadiusParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("intensity_sigma", None) is not None:
+        cargs.append("," + params.get("neighborhood_radius_value", None) + "".join(ants_registration_intensity_sigma_cargs(params.get("intensity_sigma", None), execution)))
     return cargs
 
 
 def ants_registration_metric_igdm(
+    fixed_image: str,
+    moving_image: str,
+    metric_weight: float,
+    fixed_mask: str,
+    moving_mask: str,
+    neighborhood_radius: AntsRegistrationNeighborhoodRadiusParamsDict | None = None,
 ) -> AntsRegistrationMetricIgdmParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        fixed_image:.
+        moving_image:.
+        metric_weight:.
+        fixed_mask:.
+        moving_mask:.
+        neighborhood_radius:.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "metric_igdm",
+        "fixed_image": fixed_image,
+        "moving_image": moving_image,
+        "metric_weight": metric_weight,
+        "fixed_mask": fixed_mask,
+        "moving_mask": moving_mask,
     }
+    if neighborhood_radius is not None:
+        params["neighborhood_radius"] = neighborhood_radius
     return params
 
 
@@ -2705,6 +4867,28 @@ def ants_registration_metric_igdm_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("fixed_mask", None) is None:
+        raise StyxValidationError("`fixed_mask` must not be None")
+    if not isinstance(params["fixed_mask"], str):
+        raise StyxValidationError(f'`fixed_mask` has the wrong type: Received `{type(params.get("fixed_mask", None))}` expected `str`')
+    if params.get("moving_mask", None) is None:
+        raise StyxValidationError("`moving_mask` must not be None")
+    if not isinstance(params["moving_mask"], str):
+        raise StyxValidationError(f'`moving_mask` has the wrong type: Received `{type(params.get("moving_mask", None))}` expected `str`')
+    if params.get("neighborhood_radius", None) is not None:
+        ants_registration_neighborhood_radius_validate(params["neighborhood_radius"])
 
 
 def ants_registration_metric_igdm_cargs(
@@ -2721,7 +4905,8 @@ def ants_registration_metric_igdm_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("IGDM[")
+    if params.get("neighborhood_radius", None) is not None:
+        cargs.append("IGDM[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + params.get("fixed_mask", None) + "," + params.get("moving_mask", None) + "".join(ants_registration_neighborhood_radius_cargs(params.get("neighborhood_radius", None), execution)) + "]")
     return cargs
 
 
@@ -3003,25 +5188,21 @@ def ants_registration_winsorize_image_intensities_cargs(
 
 
 def ants_registration_masks(
-    fixed_mask: str | None = None,
-    moving_mask: str | None = None,
+    moving_mask_value: str | None = None,
 ) -> AntsRegistrationMasksParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        fixed_mask:.
-        moving_mask:.
+        moving_mask_value:.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "masks",
     }
-    if fixed_mask is not None:
-        params["fixed_mask"] = fixed_mask
-    if moving_mask is not None:
-        params["moving_mask"] = moving_mask
+    if moving_mask_value is not None:
+        params["moving_mask_value"] = moving_mask_value
     return params
 
 
@@ -3037,12 +5218,9 @@ def ants_registration_masks_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("fixed_mask", None) is not None:
-        if not isinstance(params["fixed_mask"], str):
-            raise StyxValidationError(f'`fixed_mask` has the wrong type: Received `{type(params.get("fixed_mask", None))}` expected `str | None`')
-    if params.get("moving_mask", None) is not None:
-        if not isinstance(params["moving_mask"], str):
-            raise StyxValidationError(f'`moving_mask` has the wrong type: Received `{type(params.get("moving_mask", None))}` expected `str | None`')
+    if params.get("moving_mask_value", None) is not None:
+        if not isinstance(params["moving_mask_value"], str):
+            raise StyxValidationError(f'`moving_mask_value` has the wrong type: Received `{type(params.get("moving_mask_value", None))}` expected `str | None`')
 
 
 def ants_registration_masks_cargs(
@@ -3059,8 +5237,8 @@ def ants_registration_masks_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fixed_mask", None) is not None or params.get("moving_mask", None) is not None:
-        cargs.append("[" + (params.get("fixed_mask", None) if (params.get("fixed_mask", None) is not None) else "") + (params.get("moving_mask", None) if (params.get("moving_mask", None) is not None) else "") + "]")
+    if params.get("moving_mask_value", None) is not None:
+        cargs.append("," + params.get("moving_mask_value", None))
     return cargs
 
 
@@ -3704,14 +5882,24 @@ def ants_registration(
 
 __all__ = [
     "ANTS_REGISTRATION_METADATA",
+    "AntsRegistrationBoundaryPointsOnly1ParamsDict",
+    "AntsRegistrationBoundaryPointsOnly1ParamsDictTagged",
+    "AntsRegistrationBoundaryPointsOnly2ParamsDict",
+    "AntsRegistrationBoundaryPointsOnly2ParamsDictTagged",
     "AntsRegistrationConvergenceParamsDict",
     "AntsRegistrationConvergenceParamsDictTagged",
+    "AntsRegistrationDistanceSigmaParamsDict",
+    "AntsRegistrationDistanceSigmaParamsDictTagged",
     "AntsRegistrationInitialMovingTransformInitializationFeatureParamsDict",
     "AntsRegistrationInitialMovingTransformInitializationFeatureParamsDictTagged",
     "AntsRegistrationInitialMovingTransformParamsDict",
     "AntsRegistrationInitialMovingTransformParamsDictTagged",
     "AntsRegistrationInitialMovingTransformUseInverseParamsDict",
     "AntsRegistrationInitialMovingTransformUseInverseParamsDictTagged",
+    "AntsRegistrationIntensitySigmaParamsDict",
+    "AntsRegistrationIntensitySigmaParamsDictTagged",
+    "AntsRegistrationKNeighborhood2ParamsDict",
+    "AntsRegistrationKNeighborhood2ParamsDictTagged",
     "AntsRegistrationMasksParamsDict",
     "AntsRegistrationMasksParamsDictTagged",
     "AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDict",
@@ -3734,11 +5922,67 @@ __all__ = [
     "AntsRegistrationMetricMutualInformationParamsDictTagged",
     "AntsRegistrationMetricPointSetExpectationParamsDict",
     "AntsRegistrationMetricPointSetExpectationParamsDictTagged",
+    "AntsRegistrationNeighborhoodRadiusParamsDict",
+    "AntsRegistrationNeighborhoodRadiusParamsDictTagged",
+    "AntsRegistrationNumberOfBins1ParamsDict",
+    "AntsRegistrationNumberOfBins1ParamsDictTagged",
+    "AntsRegistrationNumberOfBins2ParamsDict",
+    "AntsRegistrationNumberOfBins2ParamsDictTagged",
+    "AntsRegistrationNumberOfBinsParamsDict",
+    "AntsRegistrationNumberOfBinsParamsDictTagged",
+    "AntsRegistrationNumberOfIntegrationSteps1ParamsDict",
+    "AntsRegistrationNumberOfIntegrationSteps1ParamsDictTagged",
+    "AntsRegistrationNumberOfTimePointSamplesParamsDict",
+    "AntsRegistrationNumberOfTimePointSamplesParamsDictTagged",
     "AntsRegistrationOutputs",
     "AntsRegistrationParamsDict",
     "AntsRegistrationParamsDictTagged",
+    "AntsRegistrationPointSetSigma1ParamsDict",
+    "AntsRegistrationPointSetSigma1ParamsDictTagged",
+    "AntsRegistrationPointSetSigmaParamsDict",
+    "AntsRegistrationPointSetSigmaParamsDictTagged",
+    "AntsRegistrationRadius1ParamsDict",
+    "AntsRegistrationRadius1ParamsDictTagged",
+    "AntsRegistrationRadius2ParamsDict",
+    "AntsRegistrationRadius2ParamsDictTagged",
+    "AntsRegistrationRadiusParamsDict",
+    "AntsRegistrationRadiusParamsDictTagged",
+    "AntsRegistrationSamplingPercentage1ParamsDict",
+    "AntsRegistrationSamplingPercentage1ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage2ParamsDict",
+    "AntsRegistrationSamplingPercentage2ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage3ParamsDict",
+    "AntsRegistrationSamplingPercentage3ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage4ParamsDict",
+    "AntsRegistrationSamplingPercentage4ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage5ParamsDict",
+    "AntsRegistrationSamplingPercentage5ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage6ParamsDict",
+    "AntsRegistrationSamplingPercentage6ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage7ParamsDict",
+    "AntsRegistrationSamplingPercentage7ParamsDictTagged",
+    "AntsRegistrationSamplingPercentage8ParamsDict",
+    "AntsRegistrationSamplingPercentage8ParamsDictTagged",
+    "AntsRegistrationSamplingPercentageParamsDict",
+    "AntsRegistrationSamplingPercentageParamsDictTagged",
+    "AntsRegistrationSamplingStrategy1ParamsDict",
+    "AntsRegistrationSamplingStrategy1ParamsDictTagged",
+    "AntsRegistrationSamplingStrategy2ParamsDict",
+    "AntsRegistrationSamplingStrategy2ParamsDictTagged",
+    "AntsRegistrationSamplingStrategy3ParamsDict",
+    "AntsRegistrationSamplingStrategy3ParamsDictTagged",
+    "AntsRegistrationSamplingStrategy4ParamsDict",
+    "AntsRegistrationSamplingStrategy4ParamsDictTagged",
+    "AntsRegistrationSamplingStrategy5ParamsDict",
+    "AntsRegistrationSamplingStrategy5ParamsDictTagged",
+    "AntsRegistrationSamplingStrategyParamsDict",
+    "AntsRegistrationSamplingStrategyParamsDictTagged",
     "AntsRegistrationStageParamsDict",
     "AntsRegistrationStageParamsDictTagged",
+    "AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDict",
+    "AntsRegistrationTotalFieldMeshSizeAtBaseLevel1ParamsDictTagged",
+    "AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDict",
+    "AntsRegistrationTotalFieldMeshSizeAtBaseLevelParamsDictTagged",
     "AntsRegistrationTransformAffineParamsDict",
     "AntsRegistrationTransformAffineParamsDictTagged",
     "AntsRegistrationTransformBsplineDisplacementFieldParamsDict",
@@ -3767,14 +6011,23 @@ __all__ = [
     "AntsRegistrationTransformTimeVaryingVelocityFieldParamsDictTagged",
     "AntsRegistrationTransformTranslationParamsDict",
     "AntsRegistrationTransformTranslationParamsDictTagged",
+    "AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDict",
+    "AntsRegistrationUpdateFieldVarianceInVoxelSpaceParamsDictTagged",
+    "AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDict",
+    "AntsRegistrationVelocityFieldMeshSizeAtBaseLevelParamsDictTagged",
     "AntsRegistrationWinsorizeImageIntensitiesParamsDict",
     "AntsRegistrationWinsorizeImageIntensitiesParamsDictTagged",
     "ants_registration",
+    "ants_registration_boundary_points_only_1",
+    "ants_registration_boundary_points_only_2",
     "ants_registration_convergence",
+    "ants_registration_distance_sigma",
     "ants_registration_execute",
     "ants_registration_initial_moving_transform",
     "ants_registration_initial_moving_transform_initialization_feature",
     "ants_registration_initial_moving_transform_use_inverse",
+    "ants_registration_intensity_sigma",
+    "ants_registration_k_neighborhood_2",
     "ants_registration_masks",
     "ants_registration_metric_ants_neighbourhood_cross_correlation",
     "ants_registration_metric_demons",
@@ -3786,8 +6039,36 @@ __all__ = [
     "ants_registration_metric_mean_squares",
     "ants_registration_metric_mutual_information",
     "ants_registration_metric_point_set_expectation",
+    "ants_registration_neighborhood_radius",
+    "ants_registration_number_of_bins",
+    "ants_registration_number_of_bins_1",
+    "ants_registration_number_of_bins_2",
+    "ants_registration_number_of_integration_steps_1",
+    "ants_registration_number_of_time_point_samples",
     "ants_registration_params",
+    "ants_registration_point_set_sigma",
+    "ants_registration_point_set_sigma_1",
+    "ants_registration_radius",
+    "ants_registration_radius_1",
+    "ants_registration_radius_2",
+    "ants_registration_sampling_percentage",
+    "ants_registration_sampling_percentage_1",
+    "ants_registration_sampling_percentage_2",
+    "ants_registration_sampling_percentage_3",
+    "ants_registration_sampling_percentage_4",
+    "ants_registration_sampling_percentage_5",
+    "ants_registration_sampling_percentage_6",
+    "ants_registration_sampling_percentage_7",
+    "ants_registration_sampling_percentage_8",
+    "ants_registration_sampling_strategy",
+    "ants_registration_sampling_strategy_1",
+    "ants_registration_sampling_strategy_2",
+    "ants_registration_sampling_strategy_3",
+    "ants_registration_sampling_strategy_4",
+    "ants_registration_sampling_strategy_5",
     "ants_registration_stage",
+    "ants_registration_total_field_mesh_size_at_base_level",
+    "ants_registration_total_field_mesh_size_at_base_level_1",
     "ants_registration_transform_affine",
     "ants_registration_transform_bspline",
     "ants_registration_transform_bspline_displacement_field",
@@ -3802,5 +6083,7 @@ __all__ = [
     "ants_registration_transform_time_varying_bspline_velocity_field",
     "ants_registration_transform_time_varying_velocity_field",
     "ants_registration_transform_translation",
+    "ants_registration_update_field_variance_in_voxel_space",
+    "ants_registration_velocity_field_mesh_size_at_base_level",
     "ants_registration_winsorize_image_intensities",
 ]

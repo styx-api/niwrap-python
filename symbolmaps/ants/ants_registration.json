@@ -51,11 +51,8 @@
         "initial_moving_transform_use_inverse": {
           "fn_struct_make_params": "ants_registration_initial_moving_transform_use_inverse",
           "properties": {
-            "initial_moving_transform": {
-              "var_param": "initial_moving_transform"
-            },
-            "use_inverse": {
-              "var_param": "use_inverse"
+            "use_inverse_value": {
+              "var_param": "use_inverse_value"
             }
           }
         },
@@ -157,10 +154,13 @@
                   "var_param": "update_field_mesh_size_at_base_level"
                 },
                 "total_field_mesh_size_at_base_level": {
-                  "var_param": "total_field_mesh_size_at_base_level"
-                },
-                "spline_order": {
-                  "var_param": "spline_order"
+                  "var_param": "total_field_mesh_size_at_base_level",
+                  "fn_struct_make_params": "ants_registration_total_field_mesh_size_at_base_level",
+                  "properties": {
+                    "spline_order_value": {
+                      "var_param": "spline_order_value"
+                    }
+                  }
                 }
               }
             },
@@ -197,10 +197,13 @@
                   "var_param": "velocity_field_mesh_size"
                 },
                 "number_of_time_point_samples": {
-                  "var_param": "number_of_time_point_samples"
-                },
-                "spline_order": {
-                  "var_param": "spline_order"
+                  "var_param": "number_of_time_point_samples",
+                  "fn_struct_make_params": "ants_registration_number_of_time_point_samples",
+                  "properties": {
+                    "spline_order_value": {
+                      "var_param": "spline_order_value"
+                    }
+                  }
                 }
               }
             },
@@ -211,10 +214,13 @@
                   "var_param": "gradient_step"
                 },
                 "update_field_variance_in_voxel_space": {
-                  "var_param": "update_field_variance_in_voxel_space"
-                },
-                "total_field_variance_in_voxel_space": {
-                  "var_param": "total_field_variance_in_voxel_space"
+                  "var_param": "update_field_variance_in_voxel_space",
+                  "fn_struct_make_params": "ants_registration_update_field_variance_in_voxel_space",
+                  "properties": {
+                    "total_field_variance_in_voxel_space_value": {
+                      "var_param": "total_field_variance_in_voxel_space_value"
+                    }
+                  }
                 }
               }
             },
@@ -228,27 +234,21 @@
                   "var_param": "update_field_mesh_size_at_base_level"
                 },
                 "total_field_mesh_size_at_base_level": {
-                  "var_param": "total_field_mesh_size_at_base_level"
-                },
-                "spline_order": {
-                  "var_param": "spline_order"
+                  "var_param": "total_field_mesh_size_at_base_level",
+                  "fn_struct_make_params": "ants_registration_total_field_mesh_size_at_base_level_1",
+                  "properties": {
+                    "spline_order_value": {
+                      "var_param": "spline_order_value"
+                    }
+                  }
                 }
               }
             },
             "transform_exponential": {
               "fn_struct_make_params": "ants_registration_transform_exponential",
               "properties": {
-                "gradient_step": {
-                  "var_param": "gradient_step"
-                },
-                "update_field_variance_in_voxel_space": {
-                  "var_param": "update_field_variance_in_voxel_space"
-                },
-                "velocity_field_variance_in_voxel_space": {
-                  "var_param": "velocity_field_variance_in_voxel_space"
-                },
-                "number_of_integration_steps": {
-                  "var_param": "number_of_integration_steps"
+                "number_of_integration_steps_value": {
+                  "var_param": "number_of_integration_steps_value"
                 }
               }
             },
@@ -262,13 +262,22 @@
                   "var_param": "update_field_mesh_size_at_base_level"
                 },
                 "velocity_field_mesh_size_at_base_level": {
-                  "var_param": "velocity_field_mesh_size_at_base_level"
-                },
-                "number_of_integration_steps": {
-                  "var_param": "number_of_integration_steps"
-                },
-                "spline_order": {
-                  "var_param": "spline_order"
+                  "var_param": "velocity_field_mesh_size_at_base_level",
+                  "fn_struct_make_params": "ants_registration_velocity_field_mesh_size_at_base_level",
+                  "properties": {
+                    "velocity_field_mesh_size_at_base_level_value": {
+                      "var_param": "velocity_field_mesh_size_at_base_level_value"
+                    },
+                    "number_of_integration_steps": {
+                      "var_param": "number_of_integration_steps",
+                      "fn_struct_make_params": "ants_registration_number_of_integration_steps_1",
+                      "properties": {
+                        "spline_order_value": {
+                          "var_param": "spline_order_value"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -290,16 +299,31 @@
                   "var_param": "metric_weight"
                 },
                 "radius": {
-                  "var_param": "radius"
-                },
-                "sampling_strategy": {
-                  "var_param": "sampling_strategy"
-                },
-                "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "use_gradient_filter": {
-                  "var_param": "use_gradient_filter"
+                  "var_param": "radius",
+                  "fn_struct_make_params": "ants_registration_radius",
+                  "properties": {
+                    "radius_value": {
+                      "var_param": "radius_value"
+                    },
+                    "sampling_strategy": {
+                      "var_param": "sampling_strategy",
+                      "fn_struct_make_params": "ants_registration_sampling_strategy",
+                      "properties": {
+                        "sampling_strategy_value": {
+                          "var_param": "sampling_strategy_value"
+                        },
+                        "sampling_percentage": {
+                          "var_param": "sampling_percentage",
+                          "fn_struct_make_params": "ants_registration_sampling_percentage",
+                          "properties": {
+                            "use_gradient_filter_value": {
+                              "var_param": "use_gradient_filter_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -316,16 +340,31 @@
                   "var_param": "metric_weight"
                 },
                 "number_of_bins": {
-                  "var_param": "number_of_bins"
-                },
-                "sampling_strategy": {
-                  "var_param": "sampling_strategy"
-                },
-                "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "use_gradient_filter": {
-                  "var_param": "use_gradient_filter"
+                  "var_param": "number_of_bins",
+                  "fn_struct_make_params": "ants_registration_number_of_bins",
+                  "properties": {
+                    "number_of_bins_value": {
+                      "var_param": "number_of_bins_value"
+                    },
+                    "sampling_strategy": {
+                      "var_param": "sampling_strategy",
+                      "fn_struct_make_params": "ants_registration_sampling_strategy_1",
+                      "properties": {
+                        "sampling_strategy_value": {
+                          "var_param": "sampling_strategy_value"
+                        },
+                        "sampling_percentage": {
+                          "var_param": "sampling_percentage",
+                          "fn_struct_make_params": "ants_registration_sampling_percentage_1",
+                          "properties": {
+                            "use_gradient_filter_value": {
+                              "var_param": "use_gradient_filter_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -342,16 +381,31 @@
                   "var_param": "metric_weight"
                 },
                 "number_of_bins": {
-                  "var_param": "number_of_bins"
-                },
-                "sampling_strategy": {
-                  "var_param": "sampling_strategy"
-                },
-                "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "use_gradient_filter": {
-                  "var_param": "use_gradient_filter"
+                  "var_param": "number_of_bins",
+                  "fn_struct_make_params": "ants_registration_number_of_bins_1",
+                  "properties": {
+                    "number_of_bins_value": {
+                      "var_param": "number_of_bins_value"
+                    },
+                    "sampling_strategy": {
+                      "var_param": "sampling_strategy",
+                      "fn_struct_make_params": "ants_registration_sampling_strategy_2",
+                      "properties": {
+                        "sampling_strategy_value": {
+                          "var_param": "sampling_strategy_value"
+                        },
+                        "sampling_percentage": {
+                          "var_param": "sampling_percentage",
+                          "fn_struct_make_params": "ants_registration_sampling_percentage_2",
+                          "properties": {
+                            "use_gradient_filter_value": {
+                              "var_param": "use_gradient_filter_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -368,16 +422,31 @@
                   "var_param": "metric_weight"
                 },
                 "radius": {
-                  "var_param": "radius"
-                },
-                "sampling_strategy": {
-                  "var_param": "sampling_strategy"
-                },
-                "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "use_gradient_filter": {
-                  "var_param": "use_gradient_filter"
+                  "var_param": "radius",
+                  "fn_struct_make_params": "ants_registration_radius_1",
+                  "properties": {
+                    "radius_value": {
+                      "var_param": "radius_value"
+                    },
+                    "sampling_strategy": {
+                      "var_param": "sampling_strategy",
+                      "fn_struct_make_params": "ants_registration_sampling_strategy_3",
+                      "properties": {
+                        "sampling_strategy_value": {
+                          "var_param": "sampling_strategy_value"
+                        },
+                        "sampling_percentage": {
+                          "var_param": "sampling_percentage",
+                          "fn_struct_make_params": "ants_registration_sampling_percentage_3",
+                          "properties": {
+                            "use_gradient_filter_value": {
+                              "var_param": "use_gradient_filter_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -394,16 +463,31 @@
                   "var_param": "metric_weight"
                 },
                 "number_of_bins": {
-                  "var_param": "number_of_bins"
-                },
-                "sampling_strategy": {
-                  "var_param": "sampling_strategy"
-                },
-                "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "use_gradient_filter": {
-                  "var_param": "use_gradient_filter"
+                  "var_param": "number_of_bins",
+                  "fn_struct_make_params": "ants_registration_number_of_bins_2",
+                  "properties": {
+                    "number_of_bins_value": {
+                      "var_param": "number_of_bins_value"
+                    },
+                    "sampling_strategy": {
+                      "var_param": "sampling_strategy",
+                      "fn_struct_make_params": "ants_registration_sampling_strategy_4",
+                      "properties": {
+                        "sampling_strategy_value": {
+                          "var_param": "sampling_strategy_value"
+                        },
+                        "sampling_percentage": {
+                          "var_param": "sampling_percentage",
+                          "fn_struct_make_params": "ants_registration_sampling_percentage_4",
+                          "properties": {
+                            "use_gradient_filter_value": {
+                              "var_param": "use_gradient_filter_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -420,16 +504,31 @@
                   "var_param": "metric_weight"
                 },
                 "radius": {
-                  "var_param": "radius"
-                },
-                "sampling_strategy": {
-                  "var_param": "sampling_strategy"
-                },
-                "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "use_gradient_filter": {
-                  "var_param": "use_gradient_filter"
+                  "var_param": "radius",
+                  "fn_struct_make_params": "ants_registration_radius_2",
+                  "properties": {
+                    "radius_value": {
+                      "var_param": "radius_value"
+                    },
+                    "sampling_strategy": {
+                      "var_param": "sampling_strategy",
+                      "fn_struct_make_params": "ants_registration_sampling_strategy_5",
+                      "properties": {
+                        "sampling_strategy_value": {
+                          "var_param": "sampling_strategy_value"
+                        },
+                        "sampling_percentage": {
+                          "var_param": "sampling_percentage",
+                          "fn_struct_make_params": "ants_registration_sampling_percentage_5",
+                          "properties": {
+                            "use_gradient_filter_value": {
+                              "var_param": "use_gradient_filter_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -446,24 +545,54 @@
                   "var_param": "metric_weight"
                 },
                 "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "boundary_points_only": {
-                  "var_param": "boundary_points_only"
+                  "var_param": "sampling_percentage",
+                  "fn_struct_make_params": "ants_registration_sampling_percentage_6",
+                  "properties": {
+                    "boundary_points_only_value": {
+                      "var_param": "boundary_points_only_value"
+                    }
+                  }
                 }
               }
             },
             "metric_point_set_expectation": {
               "fn_struct_make_params": "ants_registration_metric_point_set_expectation",
               "properties": {
+                "fixed_point_set": {
+                  "var_param": "fixed_point_set"
+                },
+                "moving_point_set": {
+                  "var_param": "moving_point_set"
+                },
                 "metric_weight": {
                   "var_param": "metric_weight"
                 },
-                "point_set_sigma": {
-                  "var_param": "point_set_sigma"
-                },
                 "sampling_percentage": {
-                  "var_param": "sampling_percentage"
+                  "var_param": "sampling_percentage",
+                  "fn_struct_make_params": "ants_registration_sampling_percentage_7",
+                  "properties": {
+                    "sampling_percentage_value": {
+                      "var_param": "sampling_percentage_value"
+                    },
+                    "boundary_points_only": {
+                      "var_param": "boundary_points_only",
+                      "fn_struct_make_params": "ants_registration_boundary_points_only_1",
+                      "properties": {
+                        "boundary_points_only_value": {
+                          "var_param": "boundary_points_only_value"
+                        },
+                        "point_set_sigma": {
+                          "var_param": "point_set_sigma",
+                          "fn_struct_make_params": "ants_registration_point_set_sigma",
+                          "properties": {
+                            "k_neighborhood_value": {
+                              "var_param": "k_neighborhood_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -480,22 +609,89 @@
                   "var_param": "metric_weight"
                 },
                 "sampling_percentage": {
-                  "var_param": "sampling_percentage"
-                },
-                "boundary_points_only": {
-                  "var_param": "boundary_points_only"
-                },
-                "point_set_sigma": {
-                  "var_param": "point_set_sigma"
-                },
-                "k_neighborhood": {
-                  "var_param": "k_neighborhood"
+                  "var_param": "sampling_percentage",
+                  "fn_struct_make_params": "ants_registration_sampling_percentage_8",
+                  "properties": {
+                    "sampling_percentage_value": {
+                      "var_param": "sampling_percentage_value"
+                    },
+                    "boundary_points_only": {
+                      "var_param": "boundary_points_only",
+                      "fn_struct_make_params": "ants_registration_boundary_points_only_2",
+                      "properties": {
+                        "boundary_points_only_value": {
+                          "var_param": "boundary_points_only_value"
+                        },
+                        "point_set_sigma": {
+                          "var_param": "point_set_sigma",
+                          "fn_struct_make_params": "ants_registration_point_set_sigma_1",
+                          "properties": {
+                            "k_neighborhood_value": {
+                              "var_param": "k_neighborhood_value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
             "metric_igdm": {
               "fn_struct_make_params": "ants_registration_metric_igdm",
-              "properties": {}
+              "properties": {
+                "fixed_image": {
+                  "var_param": "fixed_image"
+                },
+                "moving_image": {
+                  "var_param": "moving_image"
+                },
+                "metric_weight": {
+                  "var_param": "metric_weight"
+                },
+                "fixed_mask": {
+                  "var_param": "fixed_mask"
+                },
+                "moving_mask": {
+                  "var_param": "moving_mask"
+                },
+                "neighborhood_radius": {
+                  "var_param": "neighborhood_radius",
+                  "fn_struct_make_params": "ants_registration_neighborhood_radius",
+                  "properties": {
+                    "neighborhood_radius_value": {
+                      "var_param": "neighborhood_radius_value"
+                    },
+                    "intensity_sigma": {
+                      "var_param": "intensity_sigma",
+                      "fn_struct_make_params": "ants_registration_intensity_sigma",
+                      "properties": {
+                        "intensity_sigma_value": {
+                          "var_param": "intensity_sigma_value"
+                        },
+                        "distance_sigma": {
+                          "var_param": "distance_sigma",
+                          "fn_struct_make_params": "ants_registration_distance_sigma",
+                          "properties": {
+                            "distance_sigma_value": {
+                              "var_param": "distance_sigma_value"
+                            },
+                            "k_neighborhood": {
+                              "var_param": "k_neighborhood",
+                              "fn_struct_make_params": "ants_registration_k_neighborhood_2",
+                              "properties": {
+                                "gradient_sigma_value": {
+                                  "var_param": "gradient_sigma_value"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -541,11 +737,8 @@
       "var_param": "masks",
       "fn_struct_make_params": "ants_registration_masks",
       "properties": {
-        "fixed_mask": {
-          "var_param": "fixed_mask"
-        },
-        "moving_mask": {
-          "var_param": "moving_mask"
+        "moving_mask_value": {
+          "var_param": "moving_mask_value"
         }
       }
     },
