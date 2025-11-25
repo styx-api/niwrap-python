@@ -327,7 +327,9 @@ def cifti_average_roi_correlation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-average-roi-correlation",
+        "-cifti-average-roi-correlation"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_average_roi_correlation_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
         "-left-roi",

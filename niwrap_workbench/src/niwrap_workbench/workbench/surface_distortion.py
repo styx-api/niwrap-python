@@ -298,7 +298,9 @@ def surface_distortion_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-distortion",
+        "-surface-distortion"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         *(surface_distortion_smooth_cargs(params.get("smooth", None), execution) if (params.get("smooth", None) is not None) else []),
         *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else []),

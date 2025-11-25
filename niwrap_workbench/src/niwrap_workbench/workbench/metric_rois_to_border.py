@@ -134,7 +134,9 @@ def metric_rois_to_border_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-rois-to-border",
+        "-metric-rois-to-border"
+    ])
+    cargs.extend([
         params.get("border-out", None),
         "-placement",
         (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),

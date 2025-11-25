@@ -127,7 +127,9 @@ def gifti_label_to_roi_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-gifti-label-to-roi",
+        "-gifti-label-to-roi"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-name",
         (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),

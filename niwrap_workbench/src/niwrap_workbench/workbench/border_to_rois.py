@@ -132,7 +132,9 @@ def border_to_rois_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-border-to-rois",
+        "-border-to-rois"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-border",
         (params.get("name", None) if (params.get("name", None) is not None) else ""),

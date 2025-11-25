@@ -116,7 +116,9 @@ def surface_generate_inflated_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-generate-inflated",
+        "-surface-generate-inflated"
+    ])
+    cargs.extend([
         params.get("inflated-surface-out", None),
         params.get("very-inflated-surface-out", None),
         "-iterations-scale",

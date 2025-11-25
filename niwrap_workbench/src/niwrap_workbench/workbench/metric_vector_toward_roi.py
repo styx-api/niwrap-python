@@ -114,7 +114,9 @@ def metric_vector_toward_roi_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-vector-toward-roi",
+        "-metric-vector-toward-roi"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")

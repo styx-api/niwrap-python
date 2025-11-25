@@ -536,7 +536,9 @@ def cifti_create_label_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-create-label",
+        "-cifti-create-label"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_create_label_volume_cargs(params.get("volume", None), execution) if (params.get("volume", None) is not None) else []),
         *(cifti_create_label_left_label_cargs(params.get("left-label", None), execution) if (params.get("left-label", None) is not None) else []),

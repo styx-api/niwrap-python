@@ -210,7 +210,9 @@ def surface_to_surface_3d_distance_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-to-surface-3d-distance",
+        "-surface-to-surface-3d-distance"
+    ])
+    cargs.extend([
         params.get("dists-out", None),
         *(surface_to_surface_3d_distance_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else [])
     ])

@@ -637,7 +637,9 @@ def cifti_palette_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-palette",
+        "-cifti-palette"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-column",
         (params.get("column", None) if (params.get("column", None) is not None) else ""),

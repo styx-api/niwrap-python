@@ -304,7 +304,9 @@ def surface_resample_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-resample",
+        "-surface-resample"
+    ])
+    cargs.extend([
         params.get("surface-out", None),
         *(surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
         *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),

@@ -94,9 +94,9 @@ def surface_coordinates_to_metric_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-coordinates-to-metric",
-        params.get("metric-out", None)
+        "-surface-coordinates-to-metric"
     ])
+    cargs.append(params.get("metric-out", None))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 

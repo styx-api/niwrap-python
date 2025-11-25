@@ -105,7 +105,9 @@ def cifti_transpose_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-transpose",
+        "-cifti-transpose"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-mem-limit",
         (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")

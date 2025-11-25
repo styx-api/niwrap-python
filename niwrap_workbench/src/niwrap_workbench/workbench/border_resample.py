@@ -114,9 +114,9 @@ def border_resample_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-border-resample",
-        params.get("border-out", None)
+        "-border-resample"
     ])
+    cargs.append(params.get("border-out", None))
     cargs.append(execution.input_file(params.get("border-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))

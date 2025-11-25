@@ -275,7 +275,9 @@ def cifti_correlation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-correlation",
+        "-cifti-correlation"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else []),
         "-weights",

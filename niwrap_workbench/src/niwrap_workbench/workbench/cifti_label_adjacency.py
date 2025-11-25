@@ -127,7 +127,9 @@ def cifti_label_adjacency_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-label-adjacency",
+        "-cifti-label-adjacency"
+    ])
+    cargs.extend([
         params.get("adjacency-out", None),
         "-left-surface",
         (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),

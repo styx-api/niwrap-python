@@ -232,7 +232,9 @@ def convert_fiber_orientations_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-convert-fiber-orientations",
+        "-convert-fiber-orientations"
+    ])
+    cargs.extend([
         params.get("fiber-out", None),
         *([a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c] if (params.get("fiber", None) is not None) else [])
     ])

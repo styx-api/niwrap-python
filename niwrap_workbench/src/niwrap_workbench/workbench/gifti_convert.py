@@ -103,6 +103,8 @@ def gifti_convert_cargs(
         "wb_command",
         "-gifti-convert"
     ])
+    cargs.extend([
+    ])
     cargs.append(params.get("gifti-encoding", None))
     cargs.append(params.get("input-gifti-file", None))
     cargs.append(params.get("output-gifti-file", None))

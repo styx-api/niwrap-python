@@ -249,10 +249,12 @@ def metric_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-metric-weighted-stats"
+    ])
     if params.get("area-surface", None) is not None or params.get("weight-metric", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
-            "wb_command",
-            "-metric-weighted-stats",
             "-area-surface",
             (execution.input_file(params.get("area-surface", None)) if (params.get("area-surface", None) is not None) else ""),
             "-weight-metric",

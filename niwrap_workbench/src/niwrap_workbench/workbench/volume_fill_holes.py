@@ -94,9 +94,9 @@ def volume_fill_holes_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-fill-holes",
-        params.get("volume-out", None)
+        "-volume-fill-holes"
     ])
+    cargs.append(params.get("volume-out", None))
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 

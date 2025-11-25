@@ -139,9 +139,9 @@ def surface_inflation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-inflation",
-        params.get("surface-out", None)
+        "-surface-inflation"
     ])
+    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("anatomical-surface-in", None)))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(str(params.get("number-of-smoothing-cycles", None)))

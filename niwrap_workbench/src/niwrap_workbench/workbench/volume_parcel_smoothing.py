@@ -142,7 +142,9 @@ def volume_parcel_smoothing_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-parcel-smoothing",
+        "-volume-parcel-smoothing"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         ("-fwhm" if (params.get("fwhm", False)) else ""),
         ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),

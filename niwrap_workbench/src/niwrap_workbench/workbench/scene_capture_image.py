@@ -570,10 +570,12 @@ def scene_capture_image_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-scene-capture-image"
+    ])
     if params.get("size-window", False) or params.get("size-capture", False) or params.get("size-width-height", None) is not None or params.get("width", None) is not None or params.get("height", None) is not None or params.get("units", None) is not None or params.get("resolution", None) is not None or params.get("size", None) is not None or params.get("no-scene-colors", False) or params.get("set-map-yoke", None) is not None or params.get("conn-db-login", None) is not None or params.get("show-capture-settings", False) or params.get("Renderer", None) is not None or params.get("print-image-info", False):
         cargs.extend([
-            "wb_command",
-            "-scene-capture-image",
             ("-size-window" if (params.get("size-window", False)) else ""),
             ("-size-capture" if (params.get("size-capture", False)) else ""),
             *(scene_capture_image_size_width_height_cargs(params.get("size-width-height", None), execution) if (params.get("size-width-height", None) is not None) else []),

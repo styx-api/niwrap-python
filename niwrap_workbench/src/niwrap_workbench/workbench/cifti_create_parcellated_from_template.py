@@ -194,7 +194,9 @@ def cifti_create_parcellated_from_template_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-create-parcellated-from-template",
+        "-cifti-create-parcellated-from-template"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-fill-value",
         (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),

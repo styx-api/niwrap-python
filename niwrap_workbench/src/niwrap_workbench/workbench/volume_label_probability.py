@@ -104,7 +104,9 @@ def volume_label_probability_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-label-probability",
+        "-volume-label-probability"
+    ])
+    cargs.extend([
         params.get("probability-out", None),
         ("-exclude-unlabeled" if (params.get("exclude-unlabeled", False)) else "")
     ])

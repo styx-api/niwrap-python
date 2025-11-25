@@ -216,7 +216,9 @@ def volume_math_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-math",
+        "-volume-math"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-fixnan",
         (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),

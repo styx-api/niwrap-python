@@ -123,10 +123,12 @@ def metric_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-metric-estimate-fwhm"
+    ])
     if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("demean", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-metric-estimate-fwhm",
             "-roi",
             (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-column",

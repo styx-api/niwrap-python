@@ -114,7 +114,9 @@ def cifti_label_modify_keys_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-label-modify-keys",
+        "-cifti-label-modify-keys"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-column",
         (params.get("column", None) if (params.get("column", None) is not None) else "")

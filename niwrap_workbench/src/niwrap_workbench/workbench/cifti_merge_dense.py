@@ -184,7 +184,9 @@ def cifti_merge_dense_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-merge-dense",
+        "-cifti-merge-dense"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-label-collision",
         (params.get("action", None) if (params.get("action", None) is not None) else ""),

@@ -94,9 +94,9 @@ def volume_remove_islands_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-remove-islands",
-        params.get("volume-out", None)
+        "-volume-remove-islands"
     ])
+    cargs.append(params.get("volume-out", None))
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 

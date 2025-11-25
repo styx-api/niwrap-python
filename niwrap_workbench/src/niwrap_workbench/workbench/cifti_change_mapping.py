@@ -365,7 +365,9 @@ def cifti_change_mapping_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-change-mapping",
+        "-cifti-change-mapping"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_change_mapping_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
         *(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution) if (params.get("scalar", None) is not None) else []),

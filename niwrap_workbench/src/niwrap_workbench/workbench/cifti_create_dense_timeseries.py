@@ -570,7 +570,9 @@ def cifti_create_dense_timeseries_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-create-dense-timeseries",
+        "-cifti-create-dense-timeseries"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_create_dense_timeseries_volume_cargs(params.get("volume", None), execution) if (params.get("volume", None) is not None) else []),
         *(cifti_create_dense_timeseries_left_metric_cargs(params.get("left-metric", None), execution) if (params.get("left-metric", None) is not None) else []),

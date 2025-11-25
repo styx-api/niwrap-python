@@ -216,7 +216,9 @@ def metric_math_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-math",
+        "-metric-math"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-fixnan",
         (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),

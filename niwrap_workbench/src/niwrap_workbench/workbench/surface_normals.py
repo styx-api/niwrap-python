@@ -94,9 +94,9 @@ def surface_normals_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-normals",
-        params.get("metric-out", None)
+        "-surface-normals"
     ])
+    cargs.append(params.get("metric-out", None))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 

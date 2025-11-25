@@ -122,7 +122,9 @@ def cifti_pairwise_correlation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-pairwise-correlation",
+        "-cifti-pairwise-correlation"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-fisher-z" if (params.get("fisher-z", False)) else ""),
         ("-override-mapping-check" if (params.get("override-mapping-check", False)) else "")

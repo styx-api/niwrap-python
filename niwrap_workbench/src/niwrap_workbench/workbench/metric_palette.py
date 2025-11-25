@@ -624,10 +624,12 @@ def metric_palette_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-metric-palette"
+    ])
     if params.get("column", None) is not None or params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("interpolate", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("name", None) is not None or params.get("thresholding", None) is not None or params.get("type", None) is not None or params.get("type", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-metric-palette",
             "-column",
             (params.get("column", None) if (params.get("column", None) is not None) else ""),
             *(metric_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),

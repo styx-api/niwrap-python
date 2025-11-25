@@ -103,9 +103,9 @@ def surface_wedge_volume_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-wedge-volume",
-        params.get("metric", None)
+        "-surface-wedge-volume"
     ])
+    cargs.append(params.get("metric", None))
     cargs.append(execution.input_file(params.get("inner-surface", None)))
     cargs.append(execution.input_file(params.get("outer-surface", None)))
     return cargs

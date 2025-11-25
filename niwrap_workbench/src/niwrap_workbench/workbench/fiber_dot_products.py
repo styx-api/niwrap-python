@@ -134,7 +134,9 @@ def fiber_dot_products_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-fiber-dot-products",
+        "-fiber-dot-products"
+    ])
+    cargs.extend([
         params.get("dot-metric", None),
         params.get("f-metric", None)
     ])

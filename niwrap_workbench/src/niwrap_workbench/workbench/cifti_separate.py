@@ -1127,10 +1127,12 @@ def cifti_separate_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-separate"
+    ])
     if params.get("volume-all", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-separate",
             *(cifti_separate_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
             *([a for c in [cifti_separate_label_cargs_(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
             *([a for c in [cifti_separate_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),

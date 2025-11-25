@@ -1535,7 +1535,9 @@ def cifti_resample_dconn_memory_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-resample-dconn-memory",
+        "-cifti-resample-dconn-memory"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-surface-largest" if (params.get("surface-largest", False)) else ""),
         *(cifti_resample_dconn_memory_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),

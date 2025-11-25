@@ -103,9 +103,9 @@ def volume_all_labels_to_rois_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-all-labels-to-rois",
-        params.get("volume-out", None)
+        "-volume-all-labels-to-rois"
     ])
+    cargs.append(params.get("volume-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
     return cargs

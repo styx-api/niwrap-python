@@ -94,9 +94,9 @@ def surface_flip_lr_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-flip-lr",
-        params.get("surface-out", None)
+        "-surface-flip-lr"
     ])
+    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 

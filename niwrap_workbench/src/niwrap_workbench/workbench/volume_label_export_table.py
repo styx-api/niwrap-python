@@ -110,10 +110,12 @@ def volume_label_export_table_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-label-export-table"
+    ])
     if params.get("json-out", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-volume-label-export-table",
             "-hierarchy",
             params.get("json-out", None)
         ])

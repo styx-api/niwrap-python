@@ -123,7 +123,9 @@ def volume_distortion_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-distortion",
+        "-volume-distortion"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-fnirt",
         (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),

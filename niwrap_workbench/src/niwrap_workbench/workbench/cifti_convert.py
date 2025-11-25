@@ -1221,10 +1221,12 @@ def cifti_convert_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-convert"
+    ])
     if params.get("to-gifti-ext", None) is not None or params.get("from-gifti-ext", None) is not None or params.get("to-nifti", None) is not None or params.get("from-nifti", None) is not None or params.get("to-text", None) is not None or params.get("from-text", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-convert",
             *(cifti_convert_to_gifti_ext_cargs(params.get("to-gifti-ext", None), execution) if (params.get("to-gifti-ext", None) is not None) else []),
             *(cifti_convert_from_gifti_ext_cargs(params.get("from-gifti-ext", None), execution) if (params.get("from-gifti-ext", None) is not None) else []),
             *(cifti_convert_to_nifti_cargs(params.get("to-nifti", None), execution) if (params.get("to-nifti", None) is not None) else []),

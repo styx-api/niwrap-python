@@ -458,10 +458,12 @@ def convert_affine_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-convert-affine"
+    ])
     if params.get("from-world", None) is not None or params.get("input", None) is not None or params.get("from-flirt", None) is not None or params.get("to-world", None) is not None or params.get("output", None) is not None or params.get("to-flirt", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-convert-affine",
             *(convert_affine_from_world_cargs(params.get("from-world", None), execution) if (params.get("from-world", None) is not None) else []),
             "-from-itk",
             (params.get("input", None) if (params.get("input", None) is not None) else ""),

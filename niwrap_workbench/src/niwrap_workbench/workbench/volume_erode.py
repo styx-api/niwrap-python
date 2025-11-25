@@ -125,7 +125,9 @@ def volume_erode_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-erode",
+        "-volume-erode"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-roi",
         (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),

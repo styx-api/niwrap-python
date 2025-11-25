@@ -220,7 +220,9 @@ def surface_cortex_layer_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-cortex-layer",
+        "-surface-cortex-layer"
+    ])
+    cargs.extend([
         params.get("out-surface", None),
         *(surface_cortex_layer_placement_out_cargs(params.get("placement-out", None), execution) if (params.get("placement-out", None) is not None) else [])
     ])

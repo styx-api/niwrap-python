@@ -179,7 +179,9 @@ def volume_find_clusters_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-find-clusters",
+        "-volume-find-clusters"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         ("-less-than" if (params.get("less-than", False)) else ""),
         "-roi",

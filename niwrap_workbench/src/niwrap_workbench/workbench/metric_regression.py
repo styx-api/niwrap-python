@@ -298,7 +298,9 @@ def metric_regression_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-regression",
+        "-metric-regression"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),

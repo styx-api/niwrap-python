@@ -328,7 +328,9 @@ def label_merge_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-merge",
+        "-label-merge"
+    ])
+    cargs.extend([
         params.get("label-out", None),
         *([a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else [])
     ])

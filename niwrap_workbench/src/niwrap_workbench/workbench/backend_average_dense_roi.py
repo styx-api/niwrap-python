@@ -94,6 +94,8 @@ def backend_average_dense_roi_cargs(
         "wb_command",
         "-backend-average-dense-roi"
     ])
+    cargs.extend([
+    ])
     cargs.append(params.get("index-list", None))
     cargs.append(params.get("out-file", None))
     return cargs

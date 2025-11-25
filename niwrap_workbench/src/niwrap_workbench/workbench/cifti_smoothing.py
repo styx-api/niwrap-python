@@ -539,7 +539,9 @@ def cifti_smoothing_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-smoothing",
+        "-cifti-smoothing"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-fwhm" if (params.get("fwhm", False)) else ""),
         *(cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),

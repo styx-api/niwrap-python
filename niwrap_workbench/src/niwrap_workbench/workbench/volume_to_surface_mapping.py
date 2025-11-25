@@ -826,7 +826,9 @@ def volume_to_surface_mapping_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-to-surface-mapping",
+        "-volume-to-surface-mapping"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         ("-trilinear" if (params.get("trilinear", False)) else ""),
         ("-enclosing" if (params.get("enclosing", False)) else ""),

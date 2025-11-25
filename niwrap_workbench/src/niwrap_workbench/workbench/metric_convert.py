@@ -316,10 +316,12 @@ def metric_convert_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-metric-convert"
+    ])
     if params.get("to-nifti", None) is not None or params.get("from-nifti", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-metric-convert",
             *(metric_convert_to_nifti_cargs(params.get("to-nifti", None), execution) if (params.get("to-nifti", None) is not None) else []),
             *(metric_convert_from_nifti_cargs(params.get("from-nifti", None), execution) if (params.get("from-nifti", None) is not None) else [])
         ])

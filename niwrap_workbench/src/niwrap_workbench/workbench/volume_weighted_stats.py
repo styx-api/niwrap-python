@@ -313,10 +313,12 @@ def volume_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-weighted-stats"
+    ])
     if params.get("weight-volume", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
-            "wb_command",
-            "-volume-weighted-stats",
             *(volume_weighted_stats_weight_volume_cargs(params.get("weight-volume", None), execution) if (params.get("weight-volume", None) is not None) else []),
             "-subvolume",
             (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),

@@ -148,7 +148,9 @@ def label_dilate_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-dilate",
+        "-label-dilate"
+    ])
+    cargs.extend([
         params.get("label-out", None),
         "-bad-vertex-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),

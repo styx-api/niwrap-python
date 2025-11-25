@@ -146,7 +146,9 @@ def label_erode_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-erode",
+        "-label-erode"
+    ])
+    cargs.extend([
         params.get("label-out", None),
         "-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),

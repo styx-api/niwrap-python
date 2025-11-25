@@ -188,7 +188,9 @@ def surface_apply_affine_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-apply-affine",
+        "-surface-apply-affine"
+    ])
+    cargs.extend([
         params.get("out-surf", None),
         *(surface_apply_affine_flirt_cargs(params.get("flirt", None), execution) if (params.get("flirt", None) is not None) else [])
     ])

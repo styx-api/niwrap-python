@@ -287,7 +287,9 @@ def volume_tfce_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-tfce",
+        "-volume-tfce"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         *(volume_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
         "-roi",

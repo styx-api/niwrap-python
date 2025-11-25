@@ -103,9 +103,9 @@ def gifti_label_add_prefix_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-gifti-label-add-prefix",
-        params.get("label-out", None)
+        "-gifti-label-add-prefix"
     ])
+    cargs.append(params.get("label-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("prefix", None))
     return cargs

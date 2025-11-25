@@ -103,9 +103,9 @@ def surface_set_coordinates_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-set-coordinates",
-        params.get("surface-out", None)
+        "-surface-set-coordinates"
     ])
+    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("coord-metric", None)))
     return cargs

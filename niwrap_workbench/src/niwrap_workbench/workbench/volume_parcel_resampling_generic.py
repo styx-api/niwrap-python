@@ -151,7 +151,9 @@ def volume_parcel_resampling_generic_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-parcel-resampling-generic",
+        "-volume-parcel-resampling-generic"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         ("-fwhm" if (params.get("fwhm", False)) else ""),
         ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),

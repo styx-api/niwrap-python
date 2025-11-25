@@ -260,7 +260,9 @@ def cifti_rois_from_extrema_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-rois-from-extrema",
+        "-cifti-rois-from-extrema"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-left-surface",
         (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),

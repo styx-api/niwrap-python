@@ -114,7 +114,9 @@ def metric_mask_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-mask",
+        "-metric-mask"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-column",
         (params.get("column", None) if (params.get("column", None) is not None) else "")

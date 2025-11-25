@@ -624,10 +624,12 @@ def volume_palette_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-palette"
+    ])
     if params.get("subvolume", None) is not None or params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("interpolate", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("name", None) is not None or params.get("thresholding", None) is not None or params.get("type", None) is not None or params.get("type", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-volume-palette",
             "-subvolume",
             (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
             *(volume_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),

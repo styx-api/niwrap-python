@@ -103,6 +103,8 @@ def spec_file_merge_cargs(
         "wb_command",
         "-spec-file-merge"
     ])
+    cargs.extend([
+    ])
     cargs.append(params.get("spec-1", None))
     cargs.append(params.get("spec-2", None))
     cargs.append(params.get("out-spec", None))

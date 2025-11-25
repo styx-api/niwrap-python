@@ -496,10 +496,12 @@ def volume_set_space_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-set-space"
+    ])
     if params.get("plumb", None) is not None or params.get("sform", None) is not None or params.get("file", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-volume-set-space",
             *(volume_set_space_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
             *(volume_set_space_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else []),
             *(volume_set_space_file_cargs(params.get("file", None), execution) if (params.get("file", None) is not None) else [])

@@ -99,12 +99,12 @@ def border_export_color_table_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-border-export-color-table"
+    ])
     if params.get("class-colors", False):
-        cargs.extend([
-            "wb_command",
-            "-border-export-color-table",
-            "-class-colors"
-        ])
+        cargs.append("-class-colors")
     cargs.append(execution.input_file(params.get("border-file", None)))
     cargs.append(params.get("table-out", None))
     return cargs

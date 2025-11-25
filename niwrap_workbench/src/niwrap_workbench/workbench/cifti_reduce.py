@@ -209,7 +209,9 @@ def cifti_reduce_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-reduce",
+        "-cifti-reduce"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-direction",
         (params.get("direction", None) if (params.get("direction", None) is not None) else ""),

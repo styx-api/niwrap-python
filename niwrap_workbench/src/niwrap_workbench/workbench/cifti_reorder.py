@@ -112,9 +112,9 @@ def cifti_reorder_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-reorder",
-        params.get("cifti-out", None)
+        "-cifti-reorder"
     ])
+    cargs.append(params.get("cifti-out", None))
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(params.get("reorder-list", None))

@@ -209,10 +209,12 @@ def volume_stats_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-stats"
+    ])
     if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
         cargs.extend([
-            "wb_command",
-            "-volume-stats",
             "-reduce",
             (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
             "-percentile",

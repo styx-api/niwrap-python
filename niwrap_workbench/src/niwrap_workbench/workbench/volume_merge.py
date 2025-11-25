@@ -328,7 +328,9 @@ def volume_merge_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-merge",
+        "-volume-merge"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         *([a for c in [volume_merge_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
     ])

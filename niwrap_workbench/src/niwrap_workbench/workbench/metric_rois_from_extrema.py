@@ -156,7 +156,9 @@ def metric_rois_from_extrema_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-rois-from-extrema",
+        "-metric-rois-from-extrema"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-gaussian",
         (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),

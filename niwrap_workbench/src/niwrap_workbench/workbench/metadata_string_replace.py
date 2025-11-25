@@ -117,12 +117,12 @@ def metadata_string_replace_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-metadata-string-replace"
+    ])
     if params.get("case-insensitive", False):
-        cargs.extend([
-            "wb_command",
-            "-metadata-string-replace",
-            "-case-insensitive"
-        ])
+        cargs.append("-case-insensitive")
     cargs.append(params.get("input-file", None))
     cargs.append(params.get("find-string", None))
     cargs.append(params.get("replace-string", None))

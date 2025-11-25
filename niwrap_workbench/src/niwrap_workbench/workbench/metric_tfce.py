@@ -308,7 +308,9 @@ def metric_tfce_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-tfce",
+        "-metric-tfce"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         *(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
         "-roi",

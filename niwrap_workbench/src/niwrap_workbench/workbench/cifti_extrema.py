@@ -322,7 +322,9 @@ def cifti_extrema_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-extrema",
+        "-cifti-extrema"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-left-surface",
         (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),

@@ -112,9 +112,9 @@ def surface_smoothing_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-smoothing",
-        params.get("surface-out", None)
+        "-surface-smoothing"
     ])
+    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(str(params.get("smoothing-strength", None)))
     cargs.append(str(params.get("smoothing-iterations", None)))

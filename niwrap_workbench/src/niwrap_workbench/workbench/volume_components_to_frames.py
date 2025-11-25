@@ -94,9 +94,9 @@ def volume_components_to_frames_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-components-to-frames",
-        params.get("output", None)
+        "-volume-components-to-frames"
     ])
+    cargs.append(params.get("output", None))
     cargs.append(execution.input_file(params.get("input", None)))
     return cargs
 

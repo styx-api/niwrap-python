@@ -224,10 +224,12 @@ def cifti_label_to_border_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-label-to-border"
+    ])
     if params.get("fraction", None) is not None or params.get("column", None) is not None or params.get("border", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-label-to-border",
             "-placement",
             (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
             "-column",

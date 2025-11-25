@@ -471,10 +471,12 @@ def cifti_replace_structure_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-replace-structure"
+    ])
     if params.get("volume-all", None) is not None or params.get("discard-unused-labels", False) or params.get("action", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-replace-structure",
             *(cifti_replace_structure_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
             ("-discard-unused-labels" if (params.get("discard-unused-labels", False)) else ""),
             "-label-collision",

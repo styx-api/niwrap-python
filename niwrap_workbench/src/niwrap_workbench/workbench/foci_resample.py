@@ -369,7 +369,9 @@ def foci_resample_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-foci-resample",
+        "-foci-resample"
+    ])
+    cargs.extend([
         params.get("foci-out", None),
         *(foci_resample_left_surfaces_cargs(params.get("left-surfaces", None), execution) if (params.get("left-surfaces", None) is not None) else []),
         *(foci_resample_right_surfaces_cargs(params.get("right-surfaces", None), execution) if (params.get("right-surfaces", None) is not None) else []),

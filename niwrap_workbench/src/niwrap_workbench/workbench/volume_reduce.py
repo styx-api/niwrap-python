@@ -198,7 +198,9 @@ def volume_reduce_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-reduce",
+        "-volume-reduce"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         *(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
         ("-only-numeric" if (params.get("only-numeric", False)) else "")

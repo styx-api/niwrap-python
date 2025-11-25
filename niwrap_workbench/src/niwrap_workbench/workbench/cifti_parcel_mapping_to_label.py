@@ -113,9 +113,9 @@ def cifti_parcel_mapping_to_label_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-parcel-mapping-to-label",
-        params.get("dlabel-out", None)
+        "-cifti-parcel-mapping-to-label"
     ])
+    cargs.append(params.get("dlabel-out", None))
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(execution.input_file(params.get("template-cifti", None)))

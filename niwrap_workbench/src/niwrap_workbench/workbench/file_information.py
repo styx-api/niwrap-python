@@ -236,10 +236,12 @@ def file_information_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-file-information"
+    ])
     if params.get("no-map-info", False) or params.get("only-step-interval", False) or params.get("only-number-of-maps", False) or params.get("only-map-names", False) or params.get("only-metadata", None) is not None or params.get("only-cifti-xml", False) or params.get("czi", False) or params.get("czi-all-sub-blocks", False) or params.get("czi-xml", False):
         cargs.extend([
-            "wb_command",
-            "-file-information",
             ("-no-map-info" if (params.get("no-map-info", False)) else ""),
             ("-only-step-interval" if (params.get("only-step-interval", False)) else ""),
             ("-only-number-of-maps" if (params.get("only-number-of-maps", False)) else ""),

@@ -175,9 +175,9 @@ def estimate_fiber_binghams_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-estimate-fiber-binghams",
-        params.get("cifti-out", None)
+        "-estimate-fiber-binghams"
     ])
+    cargs.append(params.get("cifti-out", None))
     cargs.append(execution.input_file(params.get("merged_f1samples", None)))
     cargs.append(execution.input_file(params.get("merged_th1samples", None)))
     cargs.append(execution.input_file(params.get("merged_ph1samples", None)))

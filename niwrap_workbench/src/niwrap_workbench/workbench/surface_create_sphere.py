@@ -94,9 +94,9 @@ def surface_create_sphere_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-create-sphere",
-        params.get("sphere-out", None)
+        "-surface-create-sphere"
     ])
+    cargs.append(params.get("sphere-out", None))
     cargs.append(str(params.get("num-vertices", None)))
     return cargs
 

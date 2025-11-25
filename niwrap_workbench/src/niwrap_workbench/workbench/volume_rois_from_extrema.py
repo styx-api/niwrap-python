@@ -147,7 +147,9 @@ def volume_rois_from_extrema_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-rois-from-extrema",
+        "-volume-rois-from-extrema"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-gaussian",
         (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),

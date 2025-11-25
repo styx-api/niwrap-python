@@ -303,7 +303,9 @@ def cifti_math_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-math",
+        "-cifti-math"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-fixnan",
         (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),

@@ -127,7 +127,9 @@ def cifti_label_to_roi_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-label-to-roi",
+        "-cifti-label-to-roi"
+    ])
+    cargs.extend([
         params.get("scalar-out", None),
         "-name",
         (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),

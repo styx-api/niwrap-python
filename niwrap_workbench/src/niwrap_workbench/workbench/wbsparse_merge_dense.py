@@ -168,12 +168,12 @@ def wbsparse_merge_dense_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-wbsparse-merge-dense"
+    ])
     if params.get("wbsparse", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-wbsparse-merge-dense",
-            *[a for c in [wbsparse_merge_dense_wbsparse_cargs(s, execution) for s in params.get("wbsparse", None)] for a in c]
-        ])
+        cargs.extend([a for c in [wbsparse_merge_dense_wbsparse_cargs(s, execution) for s in params.get("wbsparse", None)] for a in c])
     cargs.append(params.get("direction", None))
     cargs.append(params.get("wbsparse-out", None))
     return cargs

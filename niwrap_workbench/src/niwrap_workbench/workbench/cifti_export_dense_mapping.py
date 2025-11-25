@@ -381,10 +381,12 @@ def cifti_export_dense_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-export-dense-mapping"
+    ])
     if params.get("volume-all", None) is not None or params.get("surface", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-export-dense-mapping",
             *(cifti_export_dense_mapping_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
             *([a for c in [cifti_export_dense_mapping_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else []),
             *([a for c in [cifti_export_dense_mapping_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])

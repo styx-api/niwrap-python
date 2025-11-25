@@ -158,7 +158,9 @@ def surface_geodesic_rois_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-geodesic-rois",
+        "-surface-geodesic-rois"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-gaussian",
         (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),

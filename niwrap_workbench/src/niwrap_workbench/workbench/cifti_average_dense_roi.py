@@ -327,7 +327,9 @@ def cifti_average_dense_roi_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-average-dense-roi",
+        "-cifti-average-dense-roi"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_average_dense_roi_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
         "-left-roi",

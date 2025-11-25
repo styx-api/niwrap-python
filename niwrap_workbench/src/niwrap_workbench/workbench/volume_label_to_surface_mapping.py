@@ -248,7 +248,9 @@ def volume_label_to_surface_mapping_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-label-to-surface-mapping",
+        "-volume-label-to-surface-mapping"
+    ])
+    cargs.extend([
         params.get("label-out", None),
         *(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
         "-subvol-select",

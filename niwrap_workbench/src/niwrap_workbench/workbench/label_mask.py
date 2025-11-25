@@ -114,7 +114,9 @@ def label_mask_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-mask",
+        "-label-mask"
+    ])
+    cargs.extend([
         params.get("label-out", None),
         "-column",
         (params.get("column", None) if (params.get("column", None) is not None) else "")

@@ -114,7 +114,9 @@ def volume_label_modify_keys_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-label-modify-keys",
+        "-volume-label-modify-keys"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-subvolume",
         (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")

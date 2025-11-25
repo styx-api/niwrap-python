@@ -149,7 +149,9 @@ def metric_vector_operation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-vector-operation",
+        "-metric-vector-operation"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         ("-normalize-a" if (params.get("normalize-a", False)) else ""),
         ("-normalize-b" if (params.get("normalize-b", False)) else ""),

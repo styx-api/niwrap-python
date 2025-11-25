@@ -622,7 +622,9 @@ def cifti_find_clusters_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-find-clusters",
+        "-cifti-find-clusters"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-less-than" if (params.get("less-than", False)) else ""),
         *(cifti_find_clusters_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),

@@ -104,6 +104,8 @@ def surface_sphere_triangular_patches_cargs(
         "wb_command",
         "-surface-sphere-triangular-patches"
     ])
+    cargs.extend([
+    ])
     cargs.append(execution.input_file(params.get("sphere", None)))
     cargs.append(str(params.get("divisions", None)))
     cargs.append(params.get("text-out", None))

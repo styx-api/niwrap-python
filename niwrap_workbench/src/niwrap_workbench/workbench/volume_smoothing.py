@@ -144,7 +144,9 @@ def volume_smoothing_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-smoothing",
+        "-volume-smoothing"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         ("-fwhm" if (params.get("fwhm", False)) else ""),
         "-roi",

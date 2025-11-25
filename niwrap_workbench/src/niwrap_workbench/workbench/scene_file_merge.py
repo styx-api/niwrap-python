@@ -324,12 +324,12 @@ def scene_file_merge_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-scene-file-merge"
+    ])
     if params.get("scene-file", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-scene-file-merge",
-            *[a for c in [scene_file_merge_scene_file_cargs(s, execution) for s in params.get("scene-file", None)] for a in c]
-        ])
+        cargs.extend([a for c in [scene_file_merge_scene_file_cargs(s, execution) for s in params.get("scene-file", None)] for a in c])
     cargs.append(params.get("scene-file-out", None))
     return cargs
 

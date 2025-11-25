@@ -134,7 +134,9 @@ def cifti_cross_correlation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-cross-correlation",
+        "-cifti-cross-correlation"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-weights",
         (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),

@@ -191,10 +191,12 @@ def set_map_names_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-set-map-names"
+    ])
     if params.get("file", None) is not None or params.get("file", None) is not None or params.get("map", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-set-map-names",
             "-name-file",
             (params.get("file", None) if (params.get("file", None) is not None) else ""),
             "-from-data-file",

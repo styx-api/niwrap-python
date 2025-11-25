@@ -135,7 +135,9 @@ def surface_geodesic_distance_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-geodesic-distance",
+        "-surface-geodesic-distance"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         ("-naive" if (params.get("naive", False)) else ""),
         "-limit",

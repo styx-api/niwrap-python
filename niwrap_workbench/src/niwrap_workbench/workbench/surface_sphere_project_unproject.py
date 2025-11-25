@@ -113,9 +113,9 @@ def surface_sphere_project_unproject_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-sphere-project-unproject",
-        params.get("sphere-out", None)
+        "-surface-sphere-project-unproject"
     ])
+    cargs.append(params.get("sphere-out", None))
     cargs.append(execution.input_file(params.get("sphere-in", None)))
     cargs.append(execution.input_file(params.get("sphere-project-to", None)))
     cargs.append(execution.input_file(params.get("sphere-unproject-from", None)))

@@ -433,7 +433,9 @@ def volume_create_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-create",
+        "-volume-create"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         *(volume_create_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
         *(volume_create_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else [])

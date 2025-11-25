@@ -114,9 +114,9 @@ def surface_cut_resample_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-cut-resample",
-        params.get("surface-out", None)
+        "-surface-cut-resample"
     ])
+    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))

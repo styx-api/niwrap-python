@@ -137,7 +137,9 @@ def surface_geodesic_distance_all_to_all_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-geodesic-distance-all-to-all",
+        "-surface-geodesic-distance-all-to-all"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),

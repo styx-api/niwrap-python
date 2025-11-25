@@ -152,7 +152,9 @@ def metric_false_correlation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-false-correlation",
+        "-metric-false-correlation"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),

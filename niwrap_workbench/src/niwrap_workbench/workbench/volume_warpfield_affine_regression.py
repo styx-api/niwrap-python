@@ -199,10 +199,12 @@ def volume_warpfield_affine_regression_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-warpfield-affine-regression"
+    ])
     if params.get("roi-vol", None) is not None or params.get("source-volume", None) is not None or params.get("flirt-out", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-volume-warpfield-affine-regression",
             "-roi",
             (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
             "-fnirt",

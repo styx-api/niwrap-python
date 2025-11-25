@@ -113,10 +113,12 @@ def set_structure_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-set-structure"
+    ])
     if params.get("type", None) is not None or params.get("secondary type", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-set-structure",
             "-surface-type",
             (params.get("type", None) if (params.get("type", None) is not None) else ""),
             "-surface-secondary-type",

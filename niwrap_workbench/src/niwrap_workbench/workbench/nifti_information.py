@@ -181,10 +181,12 @@ def nifti_information_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-nifti-information"
+    ])
     if params.get("allow-truncated", None) is not None or params.get("print-matrix", False) or params.get("print-xml", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-nifti-information",
             "-print-header",
             ("-allow-truncated" if (params.get("allow-truncated", None) is not None) else ""),
             ("-print-matrix" if (params.get("print-matrix", False)) else ""),

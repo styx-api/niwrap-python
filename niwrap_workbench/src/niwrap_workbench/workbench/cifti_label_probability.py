@@ -105,7 +105,9 @@ def cifti_label_probability_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-label-probability",
+        "-cifti-label-probability"
+    ])
+    cargs.extend([
         params.get("probability-dscalar-out", None),
         ("-exclude-unlabeled" if (params.get("exclude-unlabeled", False)) else "")
     ])

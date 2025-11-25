@@ -324,7 +324,9 @@ def volume_dilate_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-dilate",
+        "-volume-dilate"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-exponent",
         (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),

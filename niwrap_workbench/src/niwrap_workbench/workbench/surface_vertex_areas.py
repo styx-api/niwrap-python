@@ -94,9 +94,9 @@ def surface_vertex_areas_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-surface-vertex-areas",
-        params.get("metric", None)
+        "-surface-vertex-areas"
     ])
+    cargs.append(params.get("metric", None))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 

@@ -1545,7 +1545,9 @@ def cifti_resample_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-resample",
+        "-cifti-resample"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-surface-largest" if (params.get("surface-largest", False)) else ""),
         *(cifti_resample_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),

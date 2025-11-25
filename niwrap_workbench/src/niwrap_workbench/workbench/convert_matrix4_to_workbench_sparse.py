@@ -225,10 +225,12 @@ def convert_matrix4_to_workbench_sparse_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-convert-matrix4-to-workbench-sparse"
+    ])
     if params.get("seed-roi", None) is not None or params.get("volume-seeds", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-convert-matrix4-to-workbench-sparse",
             "-surface-seeds",
             (execution.input_file(params.get("seed-roi", None)) if (params.get("seed-roi", None) is not None) else ""),
             *(convert_matrix4_to_workbench_sparse_volume_seeds_cargs(params.get("volume-seeds", None), execution) if (params.get("volume-seeds", None) is not None) else [])

@@ -273,7 +273,9 @@ def cifti_average_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-average",
+        "-cifti-average"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_average_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
         "-mem-limit",

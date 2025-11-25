@@ -115,10 +115,12 @@ def volume_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-volume-estimate-fwhm"
+    ])
     if params.get("roivol", None) is not None or params.get("subvol", None) is not None or params.get("demean", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-volume-estimate-fwhm",
             "-roi",
             (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
             "-subvolume",

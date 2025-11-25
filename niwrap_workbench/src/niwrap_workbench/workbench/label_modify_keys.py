@@ -114,7 +114,9 @@ def label_modify_keys_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-modify-keys",
+        "-label-modify-keys"
+    ])
+    cargs.extend([
         params.get("label-out", None),
         "-column",
         (params.get("column", None) if (params.get("column", None) is not None) else "")

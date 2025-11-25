@@ -242,7 +242,9 @@ def label_to_volume_mapping_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-to-volume-mapping",
+        "-label-to-volume-mapping"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-nearest-vertex",
         (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),

@@ -398,7 +398,9 @@ def cifti_erode_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-erode",
+        "-cifti-erode"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_erode_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_erode_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),

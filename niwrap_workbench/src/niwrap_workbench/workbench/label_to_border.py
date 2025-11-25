@@ -125,7 +125,9 @@ def label_to_border_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-to-border",
+        "-label-to-border"
+    ])
+    cargs.extend([
         params.get("border-out", None),
         "-placement",
         (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),

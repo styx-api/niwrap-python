@@ -94,6 +94,8 @@ def spec_file_relocate_cargs(
         "wb_command",
         "-spec-file-relocate"
     ])
+    cargs.extend([
+    ])
     cargs.append(params.get("input-spec", None))
     cargs.append(params.get("output-spec", None))
     return cargs

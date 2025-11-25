@@ -267,7 +267,9 @@ def create_signed_distance_volume_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-create-signed-distance-volume",
+        "-create-signed-distance-volume"
+    ])
+    cargs.extend([
         params.get("outvol", None),
         *(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution) if (params.get("roi-out", None) is not None) else []),
         "-fill-value",

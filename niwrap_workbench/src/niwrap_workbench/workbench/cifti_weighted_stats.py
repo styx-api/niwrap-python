@@ -382,10 +382,12 @@ def cifti_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-weighted-stats"
+    ])
     if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
-            "wb_command",
-            "-cifti-weighted-stats",
             *(cifti_weighted_stats_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
             "-cifti-weights",
             (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),

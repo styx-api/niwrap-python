@@ -251,7 +251,9 @@ def metric_smoothing_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-smoothing",
+        "-metric-smoothing"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         ("-fwhm" if (params.get("fwhm", False)) else ""),
         *(metric_smoothing_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),

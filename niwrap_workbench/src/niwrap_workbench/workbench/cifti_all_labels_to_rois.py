@@ -103,9 +103,9 @@ def cifti_all_labels_to_rois_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-all-labels-to-rois",
-        params.get("cifti-out", None)
+        "-cifti-all-labels-to-rois"
     ])
+    cargs.append(params.get("cifti-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
     return cargs

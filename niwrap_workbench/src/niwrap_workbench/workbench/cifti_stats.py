@@ -209,10 +209,12 @@ def cifti_stats_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-stats"
+    ])
     if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
         cargs.extend([
-            "wb_command",
-            "-cifti-stats",
             "-reduce",
             (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
             "-percentile",

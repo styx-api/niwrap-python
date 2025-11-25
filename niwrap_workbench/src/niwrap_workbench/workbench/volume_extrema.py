@@ -335,7 +335,9 @@ def volume_extrema_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-extrema",
+        "-volume-extrema"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         *(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
         "-roi",

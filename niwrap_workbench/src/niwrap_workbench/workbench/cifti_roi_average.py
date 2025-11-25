@@ -145,10 +145,12 @@ def cifti_roi_average_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-roi-average"
+    ])
     if params.get("roi-cifti", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-vol", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-roi-average",
             "-cifti-roi",
             (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
             "-left-roi",

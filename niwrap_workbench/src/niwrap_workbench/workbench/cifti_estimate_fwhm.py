@@ -201,10 +201,12 @@ def cifti_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-cifti-estimate-fwhm"
+    ])
     if params.get("merged-volume", False) or params.get("column", None) is not None or params.get("demean", None) is not None or params.get("surface", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-cifti-estimate-fwhm",
             ("-merged-volume" if (params.get("merged-volume", False)) else ""),
             "-column",
             (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),

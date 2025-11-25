@@ -388,10 +388,12 @@ def scene_file_update_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-scene-file-update"
+    ])
     if params.get("fix-map-palette-settings", False) or params.get("remove-missing-files", False) or params.get("error", False) or params.get("verbose", False) or params.get("copy-map-one-palette", None) is not None or params.get("data-file-add", None) is not None or params.get("data-file-remove", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-scene-file-update",
             ("-fix-map-palette-settings" if (params.get("fix-map-palette-settings", False)) else ""),
             ("-remove-missing-files" if (params.get("remove-missing-files", False)) else ""),
             ("-error" if (params.get("error", False)) else ""),

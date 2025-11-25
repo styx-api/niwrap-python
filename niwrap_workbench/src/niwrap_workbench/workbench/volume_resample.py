@@ -544,7 +544,9 @@ def volume_resample_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-resample",
+        "-volume-resample"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         "-background",
         (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),

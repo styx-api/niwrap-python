@@ -169,12 +169,12 @@ def border_file_export_to_caret5_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-border-file-export-to-caret5"
+    ])
     if params.get("surface", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-border-file-export-to-caret5",
-            *[a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c]
-        ])
+        cargs.extend([a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
     cargs.append(params.get("border-file", None))
     cargs.append(params.get("output-file-prefix", None))
     return cargs

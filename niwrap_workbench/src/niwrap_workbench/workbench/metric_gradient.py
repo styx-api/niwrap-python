@@ -415,7 +415,9 @@ def metric_gradient_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-gradient",
+        "-metric-gradient"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         *(metric_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
         *(metric_gradient_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),

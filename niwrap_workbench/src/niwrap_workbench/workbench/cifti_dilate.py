@@ -429,7 +429,9 @@ def cifti_dilate_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-dilate",
+        "-cifti-dilate"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),

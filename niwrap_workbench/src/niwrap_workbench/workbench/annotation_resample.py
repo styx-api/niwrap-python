@@ -181,12 +181,12 @@ def annotation_resample_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-annotation-resample"
+    ])
     if params.get("surface-pair", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-annotation-resample",
-            *[a for c in [annotation_resample_surface_pair_cargs(s, execution) for s in params.get("surface-pair", None)] for a in c]
-        ])
+        cargs.extend([a for c in [annotation_resample_surface_pair_cargs(s, execution) for s in params.get("surface-pair", None)] for a in c])
     cargs.append(execution.input_file(params.get("annotation-in", None)))
     cargs.append(params.get("annotation-out", None))
     return cargs

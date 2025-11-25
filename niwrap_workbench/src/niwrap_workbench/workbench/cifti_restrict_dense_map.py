@@ -159,7 +159,9 @@ def cifti_restrict_dense_map_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-restrict-dense-map",
+        "-cifti-restrict-dense-map"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         "-cifti-roi",
         (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),

@@ -515,7 +515,9 @@ def cifti_parcellate_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-parcellate",
+        "-cifti-parcellate"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
         "-cifti-weights",

@@ -115,7 +115,9 @@ def metric_fill_holes_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-fill-holes",
+        "-metric-fill-holes"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-corrected-areas",
         (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")

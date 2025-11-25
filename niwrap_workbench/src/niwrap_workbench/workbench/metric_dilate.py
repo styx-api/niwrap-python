@@ -200,7 +200,9 @@ def metric_dilate_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-dilate",
+        "-metric-dilate"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-bad-vertex-roi",
         (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),

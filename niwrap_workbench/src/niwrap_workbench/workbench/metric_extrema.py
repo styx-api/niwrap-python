@@ -344,7 +344,9 @@ def metric_extrema_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-extrema",
+        "-metric-extrema"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
         "-roi",

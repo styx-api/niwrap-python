@@ -200,7 +200,9 @@ def metric_find_clusters_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-metric-find-clusters",
+        "-metric-find-clusters"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         ("-less-than" if (params.get("less-than", False)) else ""),
         "-roi",

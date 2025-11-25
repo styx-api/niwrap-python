@@ -295,10 +295,12 @@ def surface_curvature_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-surface-curvature"
+    ])
     if params.get("mean", None) is not None or params.get("gauss", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-surface-curvature",
             *(surface_curvature_mean_cargs(params.get("mean", None), execution) if (params.get("mean", None) is not None) else []),
             *(surface_curvature_gauss_cargs(params.get("gauss", None), execution) if (params.get("gauss", None) is not None) else [])
         ])

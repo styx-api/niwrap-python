@@ -210,7 +210,9 @@ def cifti_create_scalar_series_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-create-scalar-series",
+        "-cifti-create-scalar-series"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-transpose" if (params.get("transpose", False)) else ""),
         "-name-file",

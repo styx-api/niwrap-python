@@ -101,10 +101,12 @@ def foci_list_coords_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-foci-list-coords"
+    ])
     if params.get("names-file-out", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-foci-list-coords",
             "-names-out",
             params.get("names-file-out", None)
         ])

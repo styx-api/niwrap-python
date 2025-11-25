@@ -114,7 +114,9 @@ def border_to_vertices_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-border-to-vertices",
+        "-border-to-vertices"
+    ])
+    cargs.extend([
         params.get("metric-out", None),
         "-border",
         (params.get("name", None) if (params.get("name", None) is not None) else "")

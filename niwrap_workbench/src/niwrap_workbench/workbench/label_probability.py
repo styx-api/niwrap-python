@@ -105,7 +105,9 @@ def label_probability_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-label-probability",
+        "-label-probability"
+    ])
+    cargs.extend([
         params.get("probability-metric-out", None),
         ("-exclude-unlabeled" if (params.get("exclude-unlabeled", False)) else "")
     ])

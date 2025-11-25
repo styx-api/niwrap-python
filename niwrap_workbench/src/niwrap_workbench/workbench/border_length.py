@@ -121,10 +121,12 @@ def border_length_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-border-length"
+    ])
     if params.get("area-metric", None) is not None or params.get("separate-pieces", False) or params.get("hide-border-name", False):
         cargs.extend([
-            "wb_command",
-            "-border-length",
             "-corrected-areas",
             (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
             ("-separate-pieces" if (params.get("separate-pieces", False)) else ""),

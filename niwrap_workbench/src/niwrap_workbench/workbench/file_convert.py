@@ -371,10 +371,12 @@ def file_convert_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-file-convert"
+    ])
     if params.get("border-version-convert", None) is not None or params.get("nifti-version-convert", None) is not None or params.get("cifti-version-convert", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-file-convert",
             *(file_convert_border_version_convert_cargs(params.get("border-version-convert", None), execution) if (params.get("border-version-convert", None) is not None) else []),
             *(file_convert_nifti_version_convert_cargs(params.get("nifti-version-convert", None), execution) if (params.get("nifti-version-convert", None) is not None) else []),
             *(file_convert_cifti_version_convert_cargs(params.get("cifti-version-convert", None), execution) if (params.get("cifti-version-convert", None) is not None) else [])

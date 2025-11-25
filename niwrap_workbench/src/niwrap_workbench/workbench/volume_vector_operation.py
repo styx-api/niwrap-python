@@ -149,7 +149,9 @@ def volume_vector_operation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-vector-operation",
+        "-volume-vector-operation"
+    ])
+    cargs.extend([
         params.get("volume-out", None),
         ("-normalize-a" if (params.get("normalize-a", False)) else ""),
         ("-normalize-b" if (params.get("normalize-b", False)) else ""),

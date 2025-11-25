@@ -622,7 +622,9 @@ def cifti_gradient_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-gradient",
+        "-cifti-gradient"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),

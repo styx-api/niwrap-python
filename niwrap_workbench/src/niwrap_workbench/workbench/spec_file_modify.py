@@ -269,10 +269,12 @@ def spec_file_modify_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.extend([
+        "wb_command",
+        "-spec-file-modify"
+    ])
     if params.get("add", None) is not None or params.get("remove", None) is not None:
         cargs.extend([
-            "wb_command",
-            "-spec-file-modify",
             *([a for c in [spec_file_modify_add_cargs(s, execution) for s in params.get("add", None)] for a in c] if (params.get("add", None) is not None) else []),
             *([a for c in [spec_file_modify_remove_cargs(s, execution) for s in params.get("remove", None)] for a in c] if (params.get("remove", None) is not None) else [])
         ])

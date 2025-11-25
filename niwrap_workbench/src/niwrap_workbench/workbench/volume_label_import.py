@@ -155,7 +155,9 @@ def volume_label_import_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-volume-label-import",
+        "-volume-label-import"
+    ])
+    cargs.extend([
         params.get("output", None),
         ("-discard-others" if (params.get("discard-others", False)) else ""),
         "-unlabeled-value",

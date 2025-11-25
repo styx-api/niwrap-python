@@ -149,7 +149,9 @@ def cifti_vector_operation_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-cifti-vector-operation",
+        "-cifti-vector-operation"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         ("-normalize-a" if (params.get("normalize-a", False)) else ""),
         ("-normalize-b" if (params.get("normalize-b", False)) else ""),

@@ -476,7 +476,9 @@ def probtrackx_dot_convert_cargs(
     cargs = []
     cargs.extend([
         "wb_command",
-        "-probtrackx-dot-convert",
+        "-probtrackx-dot-convert"
+    ])
+    cargs.extend([
         params.get("cifti-out", None),
         *(probtrackx_dot_convert_row_voxels_cargs(params.get("row-voxels", None), execution) if (params.get("row-voxels", None) is not None) else []),
         "-row-surface",
