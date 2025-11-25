@@ -147,7 +147,7 @@ def cifti_replace_structure_volume_all_cargs(
     cargs.extend([
         "-volume-all",
         execution.input_file(params.get("volume", None)),
-        "-from-cropped"
+        ("-from-cropped" if (params.get("from-cropped", False)) else "")
     ])
     return cargs
 
@@ -350,7 +350,7 @@ def cifti_replace_structure_volume_cargs(
         "-volume",
         params.get("structure", None),
         execution.input_file(params.get("volume", None)),
-        "-from-cropped"
+        ("-from-cropped" if (params.get("from-cropped", False)) else "")
     ])
     return cargs
 

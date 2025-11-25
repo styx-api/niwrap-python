@@ -169,7 +169,7 @@ def cifti_gradient_left_surface_cargs(
         "-left-surface",
         execution.input_file(params.get("surface", None)),
         "-left-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -238,7 +238,7 @@ def cifti_gradient_right_surface_cargs(
         "-right-surface",
         execution.input_file(params.get("surface", None)),
         "-right-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -307,7 +307,7 @@ def cifti_gradient_cerebellum_surface_cargs(
         "-cerebellum-surface",
         execution.input_file(params.get("surface", None)),
         "-cerebellum-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -471,7 +471,7 @@ def cifti_gradient_surface_cargs(
         params.get("structure", None),
         execution.input_file(params.get("surface", None)),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -624,17 +624,17 @@ def cifti_gradient_cargs(
         "wb_command",
         "-cifti-gradient",
         params.get("cifti-out", None),
-        *cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution),
-        *cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution),
-        *cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution),
+        *(cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+        *(cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+        *(cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
         "-surface-presmooth",
-        str(params.get("surface-kernel", None)),
+        (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
         "-volume-presmooth",
-        str(params.get("volume-kernel", None)),
-        "-presmooth-fwhm",
-        "-average-output",
-        *cifti_gradient_vectors_cargs(params.get("vectors", None), execution),
-        *[a for c in [cifti_gradient_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c]
+        (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
+        ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
+        ("-average-output" if (params.get("average-output", False)) else ""),
+        *(cifti_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
+        *([a for c in [cifti_gradient_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(params.get("direction", None))

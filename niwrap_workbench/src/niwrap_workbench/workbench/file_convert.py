@@ -151,7 +151,7 @@ def file_convert_border_version_convert_cargs(
         str(params.get("out-version", None)),
         params.get("border-out", None),
         "-surface",
-        execution.input_file(params.get("surface", None))
+        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else "")
     ])
     return cargs
 

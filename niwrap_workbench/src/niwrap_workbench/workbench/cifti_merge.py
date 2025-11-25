@@ -125,7 +125,7 @@ def cifti_merge_up_to_cargs(
     cargs.extend([
         "-up-to",
         params.get("last-index", None),
-        "-reverse"
+        ("-reverse" if (params.get("reverse", False)) else "")
     ])
     return cargs
 
@@ -189,7 +189,7 @@ def cifti_merge_index_cargs(
     cargs.extend([
         "-index",
         params.get("index", None),
-        *cifti_merge_up_to_cargs(params.get("up-to", None), execution)
+        *(cifti_merge_up_to_cargs(params.get("up-to", None), execution) if (params.get("up-to", None) is not None) else [])
     ])
     return cargs
 
@@ -256,7 +256,7 @@ def cifti_merge_cifti_cargs(
     cargs.extend([
         "-cifti",
         execution.input_file(params.get("cifti-in", None)),
-        *[a for c in [cifti_merge_index_cargs(s, execution) for s in params.get("index", None)] for a in c]
+        *([a for c in [cifti_merge_index_cargs(s, execution) for s in params.get("index", None)] for a in c] if (params.get("index", None) is not None) else [])
     ])
     return cargs
 
@@ -353,10 +353,10 @@ def cifti_merge_cargs(
         "-cifti-merge",
         params.get("cifti-out", None),
         "-direction",
-        params.get("direction", None),
+        (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
         "-mem-limit",
-        str(params.get("limit-GB", None)),
-        *[a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+        (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
+        *([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
     ])
     return cargs
 

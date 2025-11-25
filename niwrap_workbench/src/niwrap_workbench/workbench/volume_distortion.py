@@ -126,9 +126,9 @@ def volume_distortion_cargs(
         "-volume-distortion",
         params.get("volume-out", None),
         "-fnirt",
-        params.get("source-volume", None),
-        "-circular",
-        "-log2"
+        (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
+        ("-circular" if (params.get("circular", False)) else ""),
+        ("-log2" if (params.get("log2", False)) else "")
     ])
     cargs.append(params.get("warpfield", None))
     return cargs

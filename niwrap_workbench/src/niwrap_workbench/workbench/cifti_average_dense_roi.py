@@ -124,7 +124,7 @@ def cifti_average_dense_roi_cifti_roi_cargs(
     cargs.extend([
         "-cifti-roi",
         execution.input_file(params.get("roi-cifti", None)),
-        "-in-memory"
+        ("-in-memory" if (params.get("in-memory", False)) else "")
     ])
     return cargs
 
@@ -329,22 +329,22 @@ def cifti_average_dense_roi_cargs(
         "wb_command",
         "-cifti-average-dense-roi",
         params.get("cifti-out", None),
-        *cifti_average_dense_roi_cifti_roi_cargs(params.get("cifti-roi", None), execution),
+        *(cifti_average_dense_roi_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
         "-left-roi",
-        execution.input_file(params.get("roi-metric", None)),
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         "-right-roi",
-        execution.input_file(params.get("roi-metric", None)),
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         "-cerebellum-roi",
-        execution.input_file(params.get("roi-metric", None)),
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         "-vol-roi",
-        execution.input_file(params.get("roi-vol", None)),
+        (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
         "-left-area-surf",
-        execution.input_file(params.get("left-surf", None)),
+        (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
         "-right-area-surf",
-        execution.input_file(params.get("right-surf", None)),
+        (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
         "-cerebellum-area-surf",
-        execution.input_file(params.get("cerebellum-surf", None)),
-        *[a for c in [cifti_average_dense_roi_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+        (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
+        *([a for c in [cifti_average_dense_roi_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
     ])
     return cargs
 

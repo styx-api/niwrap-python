@@ -136,7 +136,7 @@ def cifti_false_correlation_left_surface_cargs(
         "-left-surface",
         execution.input_file(params.get("surface", None)),
         "-dump-text",
-        params.get("text-out", None)
+        (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
     ])
     return cargs
 
@@ -204,7 +204,7 @@ def cifti_false_correlation_right_surface_cargs(
         "-right-surface",
         execution.input_file(params.get("surface", None)),
         "-dump-text",
-        params.get("text-out", None)
+        (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
     ])
     return cargs
 
@@ -272,7 +272,7 @@ def cifti_false_correlation_cerebellum_surface_cargs(
         "-cerebellum-surface",
         execution.input_file(params.get("surface", None)),
         "-dump-text",
-        params.get("text-out", None)
+        (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
     ])
     return cargs
 
@@ -387,9 +387,9 @@ def cifti_false_correlation_cargs(
         "wb_command",
         "-cifti-false-correlation",
         params.get("cifti-out", None),
-        *cifti_false_correlation_left_surface_cargs(params.get("left-surface", None), execution),
-        *cifti_false_correlation_right_surface_cargs(params.get("right-surface", None), execution),
-        *cifti_false_correlation_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution)
+        *(cifti_false_correlation_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+        *(cifti_false_correlation_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+        *(cifti_false_correlation_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(str(params.get("3D-dist", None)))

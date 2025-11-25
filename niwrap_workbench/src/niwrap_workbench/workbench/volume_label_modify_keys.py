@@ -117,7 +117,7 @@ def volume_label_modify_keys_cargs(
         "-volume-label-modify-keys",
         params.get("volume-out", None),
         "-subvolume",
-        params.get("subvolume", None)
+        (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("remap-file", None))

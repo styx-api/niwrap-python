@@ -161,7 +161,7 @@ def v_3d_tcorr1_d_cargs(
         cargs.append("-pearson")
     if params.get("quadrant", False):
         cargs.append("-quadrant")
-    cargs.append("-spearman" + execution.input_file(params.get("xset", None)) + execution.input_file(params.get("y_1d", None)))
+    cargs.append(("-spearman" if (params.get("spearman", False)) else "") + execution.input_file(params.get("xset", None)) + execution.input_file(params.get("y_1d", None)))
     return cargs
 
 

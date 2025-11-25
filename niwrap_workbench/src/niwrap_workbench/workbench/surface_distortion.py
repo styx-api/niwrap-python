@@ -119,7 +119,7 @@ def surface_distortion_smooth_cargs(
     cargs.extend([
         "-smooth",
         str(params.get("sigma", None)),
-        "-fwhm"
+        ("-fwhm" if (params.get("fwhm", False)) else "")
     ])
     return cargs
 
@@ -300,12 +300,12 @@ def surface_distortion_cargs(
         "wb_command",
         "-surface-distortion",
         params.get("metric-out", None),
-        *surface_distortion_smooth_cargs(params.get("smooth", None), execution),
-        *surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution),
-        "-caret5-method",
-        "-edge-method",
+        *(surface_distortion_smooth_cargs(params.get("smooth", None), execution) if (params.get("smooth", None) is not None) else []),
+        *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else []),
+        ("-caret5-method" if (params.get("caret5-method", False)) else ""),
+        ("-edge-method" if (params.get("edge-method", False)) else ""),
         "-local-affine-method",
-        "-log2"
+        ("-log2" if (params.get("log2", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface-reference", None)))
     cargs.append(execution.input_file(params.get("surface-distorted", None)))

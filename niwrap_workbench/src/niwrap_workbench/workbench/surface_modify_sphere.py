@@ -114,7 +114,7 @@ def surface_modify_sphere_cargs(
         "wb_command",
         "-surface-modify-sphere",
         params.get("sphere-out", None),
-        "-recenter"
+        ("-recenter" if (params.get("recenter", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("sphere-in", None)))
     cargs.append(str(params.get("radius", None)))

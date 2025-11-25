@@ -121,7 +121,7 @@ def scene_file_merge_up_to_cargs(
     cargs.extend([
         "-up-to",
         params.get("last-column", None),
-        "-reverse"
+        ("-reverse" if (params.get("reverse", False)) else "")
     ])
     return cargs
 
@@ -185,7 +185,7 @@ def scene_file_merge_scene_cargs(
     cargs.extend([
         "-scene",
         params.get("scene", None),
-        *scene_file_merge_up_to_cargs(params.get("up-to", None), execution)
+        *(scene_file_merge_up_to_cargs(params.get("up-to", None), execution) if (params.get("up-to", None) is not None) else [])
     ])
     return cargs
 
@@ -252,7 +252,7 @@ def scene_file_merge_scene_file_cargs(
     cargs.extend([
         "-scene-file",
         params.get("scene-file", None),
-        *[a for c in [scene_file_merge_scene_cargs(s, execution) for s in params.get("scene", None)] for a in c]
+        *([a for c in [scene_file_merge_scene_cargs(s, execution) for s in params.get("scene", None)] for a in c] if (params.get("scene", None) is not None) else [])
     ])
     return cargs
 

@@ -106,7 +106,7 @@ def volume_stats_roi_cargs(
     cargs.extend([
         "-roi",
         execution.input_file(params.get("roi-volume", None)),
-        "-match-maps"
+        ("-match-maps" if (params.get("match-maps", False)) else "")
     ])
     return cargs
 

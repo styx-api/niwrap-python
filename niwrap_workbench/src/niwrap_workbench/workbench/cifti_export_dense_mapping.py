@@ -140,8 +140,8 @@ def cifti_export_dense_mapping_volume_all_cargs(
     cargs.extend([
         "-volume-all",
         params.get("text-out", None),
-        "-no-cifti-index",
-        "-structure"
+        ("-no-cifti-index" if (params.get("no-cifti-index", False)) else ""),
+        ("-structure" if (params.get("structure", False)) else "")
     ])
     return cargs
 
@@ -214,7 +214,7 @@ def cifti_export_dense_mapping_surface_cargs(
         "-surface",
         params.get("structure", None),
         params.get("text-out", None),
-        "-no-cifti-index"
+        ("-no-cifti-index" if (params.get("no-cifti-index", False)) else "")
     ])
     return cargs
 
@@ -287,7 +287,7 @@ def cifti_export_dense_mapping_volume_cargs(
         "-volume",
         params.get("structure", None),
         params.get("text-out", None),
-        "-no-cifti-index"
+        ("-no-cifti-index" if (params.get("no-cifti-index", False)) else "")
     ])
     return cargs
 

@@ -298,7 +298,7 @@ def surface_average_surf_cargs(
         "-surf",
         execution.input_file(params.get("surface", None)),
         "-weight",
-        str(params.get("weight", None))
+        (str(params.get("weight", None)) if (params.get("weight", None) is not None) else "")
     ])
     return cargs
 
@@ -392,9 +392,9 @@ def surface_average_cargs(
         "wb_command",
         "-surface-average",
         params.get("surface-out", None),
-        *surface_average_stddev_cargs(params.get("stddev", None), execution),
-        *surface_average_uncertainty_cargs(params.get("uncertainty", None), execution),
-        *[a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c]
+        *(surface_average_stddev_cargs(params.get("stddev", None), execution) if (params.get("stddev", None) is not None) else []),
+        *(surface_average_uncertainty_cargs(params.get("uncertainty", None), execution) if (params.get("uncertainty", None) is not None) else []),
+        *([a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c] if (params.get("surf", None) is not None) else [])
     ])
     return cargs
 

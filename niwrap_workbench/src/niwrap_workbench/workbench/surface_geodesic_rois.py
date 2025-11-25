@@ -161,13 +161,13 @@ def surface_geodesic_rois_cargs(
         "-surface-geodesic-rois",
         params.get("metric-out", None),
         "-gaussian",
-        str(params.get("sigma", None)),
+        (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
         "-overlap-logic",
-        params.get("method", None),
+        (params.get("method", None) if (params.get("method", None) is not None) else ""),
         "-names",
-        params.get("name-list-file", None),
+        (params.get("name-list-file", None) if (params.get("name-list-file", None) is not None) else ""),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("limit", None)))

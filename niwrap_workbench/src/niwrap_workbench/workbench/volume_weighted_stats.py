@@ -124,7 +124,7 @@ def volume_weighted_stats_weight_volume_cargs(
     cargs.extend([
         "-weight-volume",
         execution.input_file(params.get("weight-volume", None)),
-        "-match-maps"
+        ("-match-maps" if (params.get("match-maps", False)) else "")
     ])
     return cargs
 
@@ -190,7 +190,7 @@ def volume_weighted_stats_roi_cargs(
     cargs.extend([
         "-roi",
         execution.input_file(params.get("roi-volume", None)),
-        "-match-maps"
+        ("-match-maps" if (params.get("match-maps", False)) else "")
     ])
     return cargs
 

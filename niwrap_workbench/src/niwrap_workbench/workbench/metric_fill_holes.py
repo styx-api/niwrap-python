@@ -118,7 +118,7 @@ def metric_fill_holes_cargs(
         "-metric-fill-holes",
         params.get("metric-out", None),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

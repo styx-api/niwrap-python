@@ -190,7 +190,7 @@ def surface_apply_affine_cargs(
         "wb_command",
         "-surface-apply-affine",
         params.get("out-surf", None),
-        *surface_apply_affine_flirt_cargs(params.get("flirt", None), execution)
+        *(surface_apply_affine_flirt_cargs(params.get("flirt", None), execution) if (params.get("flirt", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("in-surf", None)))
     cargs.append(params.get("affine", None))

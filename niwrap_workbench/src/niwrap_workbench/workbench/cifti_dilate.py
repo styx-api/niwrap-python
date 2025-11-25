@@ -145,7 +145,7 @@ def cifti_dilate_left_surface_cargs(
         "-left-surface",
         execution.input_file(params.get("surface", None)),
         "-left-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -214,7 +214,7 @@ def cifti_dilate_right_surface_cargs(
         "-right-surface",
         execution.input_file(params.get("surface", None)),
         "-right-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -283,7 +283,7 @@ def cifti_dilate_cerebellum_surface_cargs(
         "-cerebellum-surface",
         execution.input_file(params.get("surface", None)),
         "-cerebellum-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -431,14 +431,14 @@ def cifti_dilate_cargs(
         "wb_command",
         "-cifti-dilate",
         params.get("cifti-out", None),
-        *cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution),
-        *cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution),
-        *cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution),
+        *(cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+        *(cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+        *(cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
         "-bad-brainordinate-roi",
-        execution.input_file(params.get("roi-cifti", None)),
-        "-nearest",
-        "-merged-volume",
-        "-legacy-mode"
+        (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
+        ("-nearest" if (params.get("nearest", False)) else ""),
+        ("-merged-volume" if (params.get("merged-volume", False)) else ""),
+        ("-legacy-mode" if (params.get("legacy-mode", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))

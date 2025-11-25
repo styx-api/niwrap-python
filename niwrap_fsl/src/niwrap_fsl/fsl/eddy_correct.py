@@ -115,7 +115,7 @@ def eddy_correct_cargs(
     cargs.append("eddy_correct")
     cargs.append(execution.input_file(params.get("4d_input", None)))
     cargs.append(params.get("4d_output", None))
-    cargs.append(str(params.get("reference_no", None)) + params.get("interp_method", None))
+    cargs.append(str(params.get("reference_no", None)) + (params.get("interp_method", None) if (params.get("interp_method", None) is not None) else ""))
     return cargs
 
 

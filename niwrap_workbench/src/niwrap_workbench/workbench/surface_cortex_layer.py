@@ -222,7 +222,7 @@ def surface_cortex_layer_cargs(
         "wb_command",
         "-surface-cortex-layer",
         params.get("out-surface", None),
-        *surface_cortex_layer_placement_out_cargs(params.get("placement-out", None), execution)
+        *(surface_cortex_layer_placement_out_cargs(params.get("placement-out", None), execution) if (params.get("placement-out", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("white-surface", None)))
     cargs.append(execution.input_file(params.get("pial-surface", None)))

@@ -187,8 +187,8 @@ def cifti_merge_dense_cargs(
         "-cifti-merge-dense",
         params.get("cifti-out", None),
         "-label-collision",
-        params.get("action", None),
-        *[a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+        (params.get("action", None) if (params.get("action", None) is not None) else ""),
+        *([a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
     ])
     cargs.append(params.get("direction", None))
     return cargs

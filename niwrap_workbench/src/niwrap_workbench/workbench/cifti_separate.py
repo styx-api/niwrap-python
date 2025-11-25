@@ -404,9 +404,9 @@ def cifti_separate_volume_all_cargs(
     cargs.extend([
         "-volume-all",
         params.get("volume-out", None),
-        *cifti_separate_roi_cargs(params.get("roi", None), execution),
-        *cifti_separate_label_cargs(params.get("label", None), execution),
-        "-crop"
+        *(cifti_separate_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+        *(cifti_separate_label_cargs(params.get("label", None), execution) if (params.get("label", None) is not None) else []),
+        ("-crop" if (params.get("crop", False)) else "")
     ])
     return cargs
 
@@ -599,7 +599,7 @@ def cifti_separate_label_cargs_(
         "-label",
         params.get("structure", None),
         params.get("label-out", None),
-        *cifti_separate_roi_cargs_(params.get("roi", None), execution)
+        *(cifti_separate_roi_cargs_(params.get("roi", None), execution) if (params.get("roi", None) is not None) else [])
     ])
     return cargs
 
@@ -791,7 +791,7 @@ def cifti_separate_metric_cargs(
         "-metric",
         params.get("structure", None),
         params.get("metric-out", None),
-        *cifti_separate_roi_cargs_2(params.get("roi", None), execution)
+        *(cifti_separate_roi_cargs_2(params.get("roi", None), execution) if (params.get("roi", None) is not None) else [])
     ])
     return cargs
 
@@ -991,8 +991,8 @@ def cifti_separate_volume_cargs(
         "-volume",
         params.get("structure", None),
         params.get("volume-out", None),
-        *cifti_separate_roi_cargs_3(params.get("roi", None), execution),
-        "-crop"
+        *(cifti_separate_roi_cargs_3(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+        ("-crop" if (params.get("crop", False)) else "")
     ])
     return cargs
 

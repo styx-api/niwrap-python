@@ -135,9 +135,9 @@ def border_to_rois_cargs(
         "-border-to-rois",
         params.get("metric-out", None),
         "-border",
-        params.get("name", None),
-        "-inverse",
-        "-include-border"
+        (params.get("name", None) if (params.get("name", None) is not None) else ""),
+        ("-inverse" if (params.get("inverse", False)) else ""),
+        ("-include-border" if (params.get("include-border", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("border-file", None)))

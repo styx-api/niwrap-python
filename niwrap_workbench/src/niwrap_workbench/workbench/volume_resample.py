@@ -221,7 +221,7 @@ def volume_resample_affine_cargs(
     cargs.extend([
         "-affine",
         params.get("affine", None),
-        *volume_resample_flirt_cargs(params.get("flirt", None), execution)
+        *(volume_resample_flirt_cargs(params.get("flirt", None), execution) if (params.get("flirt", None) is not None) else [])
     ])
     return cargs
 
@@ -351,7 +351,7 @@ def volume_resample_affine_series_cargs(
     cargs.extend([
         "-affine-series",
         params.get("affine-series", None),
-        *volume_resample_flirt_cargs_(params.get("flirt", None), execution)
+        *(volume_resample_flirt_cargs_(params.get("flirt", None), execution) if (params.get("flirt", None) is not None) else [])
     ])
     return cargs
 
@@ -419,7 +419,7 @@ def volume_resample_warp_cargs(
         "-warp",
         params.get("warpfield", None),
         "-fnirt",
-        params.get("source-volume", None)
+        (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else "")
     ])
     return cargs
 
@@ -547,10 +547,10 @@ def volume_resample_cargs(
         "-volume-resample",
         params.get("volume-out", None),
         "-background",
-        str(params.get("value", None)),
-        *[a for c in [volume_resample_affine_cargs(s, execution) for s in params.get("affine", None)] for a in c],
-        *[a for c in [volume_resample_affine_series_cargs(s, execution) for s in params.get("affine-series", None)] for a in c],
-        *[a for c in [volume_resample_warp_cargs(s, execution) for s in params.get("warp", None)] for a in c]
+        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+        *([a for c in [volume_resample_affine_cargs(s, execution) for s in params.get("affine", None)] for a in c] if (params.get("affine", None) is not None) else []),
+        *([a for c in [volume_resample_affine_series_cargs(s, execution) for s in params.get("affine-series", None)] for a in c] if (params.get("affine-series", None) is not None) else []),
+        *([a for c in [volume_resample_warp_cargs(s, execution) for s in params.get("warp", None)] for a in c] if (params.get("warp", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("volume-space", None))

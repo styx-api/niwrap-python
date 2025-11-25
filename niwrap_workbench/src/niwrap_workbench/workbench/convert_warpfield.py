@@ -132,7 +132,7 @@ def convert_warpfield_from_world_cargs(
     cargs.extend([
         "-from-world",
         params.get("input", None),
-        "-absolute"
+        ("-absolute" if (params.get("absolute", False)) else "")
     ])
     return cargs
 
@@ -207,7 +207,7 @@ def convert_warpfield_from_fnirt_cargs(
         "-from-fnirt",
         params.get("input", None),
         params.get("source-volume", None),
-        "-absolute"
+        ("-absolute" if (params.get("absolute", False)) else "")
     ])
     return cargs
 

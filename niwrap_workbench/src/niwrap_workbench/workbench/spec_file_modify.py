@@ -187,8 +187,8 @@ def spec_file_modify_remove_cargs(
     cargs.extend([
         "-remove",
         params.get("filename", None),
-        "-recursive",
-        "-suffix"
+        ("-recursive" if (params.get("recursive", False)) else ""),
+        ("-suffix" if (params.get("suffix", False)) else "")
     ])
     return cargs
 

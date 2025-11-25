@@ -139,7 +139,7 @@ def v_3d_tcat_cargs(
     cargs.append("3dTcat")
     cargs.extend([
         "-rlt",
-        params.get("rlt", None) + execution.input_file(params.get("in_files", None))
+        (params.get("rlt", None) if (params.get("rlt", None) is not None) else "") + execution.input_file(params.get("in_files", None))
     ])
     if params.get("out_file", None) is not None:
         cargs.extend([

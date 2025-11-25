@@ -277,14 +277,14 @@ def cifti_correlation_cargs(
         "wb_command",
         "-cifti-correlation",
         params.get("cifti-out", None),
-        *cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution),
+        *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else []),
         "-weights",
-        params.get("weight-file", None),
-        "-fisher-z",
-        "-no-demean",
-        "-covariance",
+        (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
+        ("-fisher-z" if (params.get("fisher-z", False)) else ""),
+        ("-no-demean" if (params.get("no-demean", False)) else ""),
+        ("-covariance" if (params.get("covariance", False)) else ""),
         "-mem-limit",
-        str(params.get("limit-GB", None))
+        (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs

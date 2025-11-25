@@ -121,7 +121,7 @@ def volume_merge_up_to_cargs(
     cargs.extend([
         "-up-to",
         params.get("last-subvol", None),
-        "-reverse"
+        ("-reverse" if (params.get("reverse", False)) else "")
     ])
     return cargs
 
@@ -185,7 +185,7 @@ def volume_merge_subvolume_cargs(
     cargs.extend([
         "-subvolume",
         params.get("subvol", None),
-        *volume_merge_up_to_cargs(params.get("up-to", None), execution)
+        *(volume_merge_up_to_cargs(params.get("up-to", None), execution) if (params.get("up-to", None) is not None) else [])
     ])
     return cargs
 
@@ -252,7 +252,7 @@ def volume_merge_volume_cargs(
     cargs.extend([
         "-volume",
         execution.input_file(params.get("volume-in", None)),
-        *[a for c in [volume_merge_subvolume_cargs(s, execution) for s in params.get("subvolume", None)] for a in c]
+        *([a for c in [volume_merge_subvolume_cargs(s, execution) for s in params.get("subvolume", None)] for a in c] if (params.get("subvolume", None) is not None) else [])
     ])
     return cargs
 
@@ -330,7 +330,7 @@ def volume_merge_cargs(
         "wb_command",
         "-volume-merge",
         params.get("volume-out", None),
-        *[a for c in [volume_merge_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c]
+        *([a for c in [volume_merge_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
     ])
     return cargs
 

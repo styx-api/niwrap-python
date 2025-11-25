@@ -153,10 +153,10 @@ def volume_parcel_resampling_generic_cargs(
         "wb_command",
         "-volume-parcel-resampling-generic",
         params.get("volume-out", None),
-        "-fwhm",
-        "-fix-zeros",
+        ("-fwhm" if (params.get("fwhm", False)) else ""),
+        ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
         "-subvolume",
-        params.get("subvol", None)
+        (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(execution.input_file(params.get("cur-parcels", None)))

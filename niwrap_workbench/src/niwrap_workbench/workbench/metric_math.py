@@ -123,8 +123,8 @@ def metric_math_var_cargs(
         params.get("name", None),
         execution.input_file(params.get("metric", None)),
         "-column",
-        params.get("column", None),
-        "-repeat"
+        (params.get("column", None) if (params.get("column", None) is not None) else ""),
+        ("-repeat" if (params.get("repeat", False)) else "")
     ])
     return cargs
 
@@ -219,8 +219,8 @@ def metric_math_cargs(
         "-metric-math",
         params.get("metric-out", None),
         "-fixnan",
-        str(params.get("replace", None)),
-        *[a for c in [metric_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c]
+        (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
+        *([a for c in [metric_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
     ])
     cargs.append(params.get("expression", None))
     return cargs

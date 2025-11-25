@@ -212,9 +212,9 @@ def cifti_reduce_cargs(
         "-cifti-reduce",
         params.get("cifti-out", None),
         "-direction",
-        params.get("direction", None),
-        *cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution),
-        "-only-numeric"
+        (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
+        *(cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
+        ("-only-numeric" if (params.get("only-numeric", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("operation", None))

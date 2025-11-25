@@ -130,11 +130,11 @@ def volume_label_to_roi_cargs(
         "-volume-label-to-roi",
         params.get("volume-out", None),
         "-name",
-        params.get("label-name", None),
+        (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
         "-key",
-        str(params.get("label-key", None)),
+        (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
         "-map",
-        params.get("map", None)
+        (params.get("map", None) if (params.get("map", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs

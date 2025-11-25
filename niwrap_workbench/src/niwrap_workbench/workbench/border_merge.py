@@ -121,7 +121,7 @@ def border_merge_up_to_cargs(
     cargs.extend([
         "-up-to",
         params.get("last-border", None),
-        "-reverse"
+        ("-reverse" if (params.get("reverse", False)) else "")
     ])
     return cargs
 
@@ -185,7 +185,7 @@ def border_merge_select_cargs(
     cargs.extend([
         "-select",
         params.get("border", None),
-        *border_merge_up_to_cargs(params.get("up-to", None), execution)
+        *(border_merge_up_to_cargs(params.get("up-to", None), execution) if (params.get("up-to", None) is not None) else [])
     ])
     return cargs
 
@@ -252,7 +252,7 @@ def border_merge_border_cargs(
     cargs.extend([
         "-border",
         execution.input_file(params.get("border-file-in", None)),
-        *[a for c in [border_merge_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
+        *([a for c in [border_merge_select_cargs(s, execution) for s in params.get("select", None)] for a in c] if (params.get("select", None) is not None) else [])
     ])
     return cargs
 
@@ -330,7 +330,7 @@ def border_merge_cargs(
         "wb_command",
         "-border-merge",
         params.get("border-file-out", None),
-        *[a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c]
+        *([a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c] if (params.get("border", None) is not None) else [])
     ])
     return cargs
 

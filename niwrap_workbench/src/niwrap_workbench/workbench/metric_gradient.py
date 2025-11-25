@@ -134,7 +134,7 @@ def metric_gradient_presmooth_cargs(
     cargs.extend([
         "-presmooth",
         str(params.get("kernel", None)),
-        "-fwhm"
+        ("-fwhm" if (params.get("fwhm", False)) else "")
     ])
     return cargs
 
@@ -200,7 +200,7 @@ def metric_gradient_roi_cargs(
     cargs.extend([
         "-roi",
         execution.input_file(params.get("roi-metric", None)),
-        "-match-columns"
+        ("-match-columns" if (params.get("match-columns", False)) else "")
     ])
     return cargs
 
@@ -417,14 +417,14 @@ def metric_gradient_cargs(
         "wb_command",
         "-metric-gradient",
         params.get("metric-out", None),
-        *metric_gradient_presmooth_cargs(params.get("presmooth", None), execution),
-        *metric_gradient_roi_cargs(params.get("roi", None), execution),
-        *metric_gradient_vectors_cargs(params.get("vectors", None), execution),
+        *(metric_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
+        *(metric_gradient_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+        *(metric_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
         "-column",
-        params.get("column", None),
+        (params.get("column", None) if (params.get("column", None) is not None) else ""),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None)),
-        "-average-normals"
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+        ("-average-normals" if (params.get("average-normals", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

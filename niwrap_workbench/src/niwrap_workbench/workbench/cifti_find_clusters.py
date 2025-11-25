@@ -177,7 +177,7 @@ def cifti_find_clusters_left_surface_cargs(
         "-left-surface",
         execution.input_file(params.get("surface", None)),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -246,7 +246,7 @@ def cifti_find_clusters_right_surface_cargs(
         "-right-surface",
         execution.input_file(params.get("surface", None)),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -315,7 +315,7 @@ def cifti_find_clusters_cerebellum_surface_cargs(
         "-cerebellum-surface",
         execution.input_file(params.get("surface", None)),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     return cargs
 
@@ -624,17 +624,17 @@ def cifti_find_clusters_cargs(
         "wb_command",
         "-cifti-find-clusters",
         params.get("cifti-out", None),
-        "-less-than",
-        *cifti_find_clusters_left_surface_cargs(params.get("left-surface", None), execution),
-        *cifti_find_clusters_right_surface_cargs(params.get("right-surface", None), execution),
-        *cifti_find_clusters_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution),
+        ("-less-than" if (params.get("less-than", False)) else ""),
+        *(cifti_find_clusters_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+        *(cifti_find_clusters_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+        *(cifti_find_clusters_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
         "-cifti-roi",
-        execution.input_file(params.get("roi-cifti", None)),
-        "-merged-volume",
-        *cifti_find_clusters_size_ratio_cargs(params.get("size-ratio", None), execution),
-        *cifti_find_clusters_distance_cargs(params.get("distance", None), execution),
+        (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
+        ("-merged-volume" if (params.get("merged-volume", False)) else ""),
+        *(cifti_find_clusters_size_ratio_cargs(params.get("size-ratio", None), execution) if (params.get("size-ratio", None) is not None) else []),
+        *(cifti_find_clusters_distance_cargs(params.get("distance", None), execution) if (params.get("distance", None) is not None) else []),
         "-start",
-        str(params.get("startval", None))
+        (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(str(params.get("surface-value-threshold", None)))

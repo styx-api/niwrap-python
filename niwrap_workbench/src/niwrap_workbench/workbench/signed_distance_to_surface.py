@@ -118,7 +118,7 @@ def signed_distance_to_surface_cargs(
         "-signed-distance-to-surface",
         params.get("metric", None),
         "-winding",
-        params.get("method", None)
+        (params.get("method", None) if (params.get("method", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface-comp", None)))
     cargs.append(execution.input_file(params.get("surface-ref", None)))

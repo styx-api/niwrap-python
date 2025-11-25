@@ -140,12 +140,12 @@ def surface_geodesic_distance_all_to_all_cargs(
         "-surface-geodesic-distance-all-to-all",
         params.get("cifti-out", None),
         "-roi",
-        execution.input_file(params.get("roi-metric", None)),
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         "-limit",
-        str(params.get("limit-mm", None)),
+        (str(params.get("limit-mm", None)) if (params.get("limit-mm", None) is not None) else ""),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None)),
-        "-naive"
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+        ("-naive" if (params.get("naive", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs

@@ -536,7 +536,7 @@ def ants_apply_transforms_composite_displacement_field_output_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + params.get("compositeDisplacementField", None) + ",printOutCompositeWarpFile=" + ("1" if params.get("printOutCompositeWarpFile", None) else "0") + "]")
+    cargs.append("[" + params.get("compositeDisplacementField", None) + ",printOutCompositeWarpFile=" + (("1" if params.get("printOutCompositeWarpFile", None) else "0") if (params.get("printOutCompositeWarpFile", None) is not None) else "") + "]")
     return cargs
 
 
@@ -627,7 +627,7 @@ def ants_apply_transforms_generic_affine_transform_output_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Linear[" + params.get("genericAffineTransformFile", None) + ",calculateInverse=" + ("1" if params.get("calculateInverse", None) else "0") + "]")
+    cargs.append("Linear[" + params.get("genericAffineTransformFile", None) + ",calculateInverse=" + (("1" if params.get("calculateInverse", None) else "0") if (params.get("calculateInverse", None) is not None) else "") + "]")
     return cargs
 
 

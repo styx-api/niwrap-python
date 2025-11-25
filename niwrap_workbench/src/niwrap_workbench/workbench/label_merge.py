@@ -121,7 +121,7 @@ def label_merge_up_to_cargs(
     cargs.extend([
         "-up-to",
         params.get("last-column", None),
-        "-reverse"
+        ("-reverse" if (params.get("reverse", False)) else "")
     ])
     return cargs
 
@@ -185,7 +185,7 @@ def label_merge_column_cargs(
     cargs.extend([
         "-column",
         params.get("column", None),
-        *label_merge_up_to_cargs(params.get("up-to", None), execution)
+        *(label_merge_up_to_cargs(params.get("up-to", None), execution) if (params.get("up-to", None) is not None) else [])
     ])
     return cargs
 
@@ -252,7 +252,7 @@ def label_merge_label_cargs(
     cargs.extend([
         "-label",
         execution.input_file(params.get("label-in", None)),
-        *[a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
+        *([a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c] if (params.get("column", None) is not None) else [])
     ])
     return cargs
 
@@ -330,7 +330,7 @@ def label_merge_cargs(
         "wb_command",
         "-label-merge",
         params.get("label-out", None),
-        *[a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c]
+        *([a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else [])
     ])
     return cargs
 

@@ -1174,7 +1174,7 @@ def ants_registration_initial_moving_transform_use_inverse_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("initial_moving_transform", None)) + "," + ("1" if params.get("use_inverse_value", None) else "0"))
+    cargs.append(execution.input_file(params.get("initial_moving_transform", None)) + "," + (("1" if params.get("use_inverse_value", None) else "0") if (params.get("use_inverse_value", None) is not None) else ""))
     return cargs
 
 
@@ -1705,7 +1705,7 @@ def ants_registration_total_field_mesh_size_at_base_level_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("total_field_mesh_size_at_base_level_value", None)) + "," + str(params.get("spline_order_value", None)))
+    cargs.append("," + str(params.get("total_field_mesh_size_at_base_level_value", None)) + "," + (str(params.get("spline_order_value", None)) if (params.get("spline_order_value", None) is not None) else ""))
     return cargs
 
 
@@ -1772,7 +1772,7 @@ def ants_registration_transform_bspline_displacement_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("BSplineDisplacementField[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join(ants_registration_total_field_mesh_size_at_base_level_cargs(params.get("total_field_mesh_size_at_base_level", None), execution)) + "]")
+    cargs.append("BSplineDisplacementField[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join((ants_registration_total_field_mesh_size_at_base_level_cargs(params.get("total_field_mesh_size_at_base_level", None), execution) if (params.get("total_field_mesh_size_at_base_level", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -1922,7 +1922,7 @@ def ants_registration_number_of_time_point_samples_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("number_of_time_point_samples_value", None)) + "," + str(params.get("spline_order_value", None)))
+    cargs.append("," + str(params.get("number_of_time_point_samples_value", None)) + "," + (str(params.get("spline_order_value", None)) if (params.get("spline_order_value", None) is not None) else ""))
     return cargs
 
 
@@ -1989,7 +1989,7 @@ def ants_registration_transform_time_varying_bspline_velocity_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("TimeVaryingBSplineVelocityField[" + str(params.get("gradient_step", None)) + "," + str(params.get("velocity_field_mesh_size", None)) + "".join(ants_registration_number_of_time_point_samples_cargs(params.get("number_of_time_point_samples", None), execution)) + "]")
+    cargs.append("TimeVaryingBSplineVelocityField[" + str(params.get("gradient_step", None)) + "," + str(params.get("velocity_field_mesh_size", None)) + "".join((ants_registration_number_of_time_point_samples_cargs(params.get("number_of_time_point_samples", None), execution) if (params.get("number_of_time_point_samples", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -2050,7 +2050,7 @@ def ants_registration_update_field_variance_in_voxel_space_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("update_field_variance_in_voxel_space_value", None)) + "," + str(params.get("total_field_variance_in_voxel_space_value", None)))
+    cargs.append("," + str(params.get("update_field_variance_in_voxel_space_value", None)) + "," + (str(params.get("total_field_variance_in_voxel_space_value", None)) if (params.get("total_field_variance_in_voxel_space_value", None) is not None) else ""))
     return cargs
 
 
@@ -2110,7 +2110,7 @@ def ants_registration_transform_syn_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("SyN[" + str(params.get("gradient_step", None)) + "".join(ants_registration_update_field_variance_in_voxel_space_cargs(params.get("update_field_variance_in_voxel_space", None), execution)) + "]")
+    cargs.append("SyN[" + str(params.get("gradient_step", None)) + "".join((ants_registration_update_field_variance_in_voxel_space_cargs(params.get("update_field_variance_in_voxel_space", None), execution) if (params.get("update_field_variance_in_voxel_space", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -2171,7 +2171,7 @@ def ants_registration_total_field_mesh_size_at_base_level_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("total_field_mesh_size_at_base_level_value", None)) + "," + str(params.get("spline_order_value", None)))
+    cargs.append("," + str(params.get("total_field_mesh_size_at_base_level_value", None)) + "," + (str(params.get("spline_order_value", None)) if (params.get("spline_order_value", None) is not None) else ""))
     return cargs
 
 
@@ -2238,7 +2238,7 @@ def ants_registration_transform_bspline_syn_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("BSplineSyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join(ants_registration_total_field_mesh_size_at_base_level_1_cargs(params.get("total_field_mesh_size_at_base_level", None), execution)) + "]")
+    cargs.append("BSplineSyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join((ants_registration_total_field_mesh_size_at_base_level_1_cargs(params.get("total_field_mesh_size_at_base_level", None), execution) if (params.get("total_field_mesh_size_at_base_level", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -2313,7 +2313,7 @@ def ants_registration_transform_exponential_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Exponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("velocity_field_variance_in_voxel_space", None)) + "," + str(params.get("number_of_integration_steps_value", None)) + "]")
+    cargs.append("Exponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("velocity_field_variance_in_voxel_space", None)) + "," + (str(params.get("number_of_integration_steps_value", None)) if (params.get("number_of_integration_steps_value", None) is not None) else "") + "]")
     return cargs
 
 
@@ -2374,7 +2374,7 @@ def ants_registration_number_of_integration_steps_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("number_of_integration_steps_value", None)) + "," + str(params.get("spline_order_value", None)))
+    cargs.append("," + str(params.get("number_of_integration_steps_value", None)) + "," + (str(params.get("spline_order_value", None)) if (params.get("spline_order_value", None) is not None) else ""))
     return cargs
 
 
@@ -2434,7 +2434,7 @@ def ants_registration_velocity_field_mesh_size_at_base_level_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("velocity_field_mesh_size_at_base_level_value", None)) + "".join(ants_registration_number_of_integration_steps_1_cargs(params.get("number_of_integration_steps", None), execution)))
+    cargs.append("," + str(params.get("velocity_field_mesh_size_at_base_level_value", None)) + "".join((ants_registration_number_of_integration_steps_1_cargs(params.get("number_of_integration_steps", None), execution) if (params.get("number_of_integration_steps", None) is not None) else [])))
     return cargs
 
 
@@ -2501,7 +2501,7 @@ def ants_registration_transform_bspline_exponential_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("BSplineExponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join(ants_registration_velocity_field_mesh_size_at_base_level_cargs(params.get("velocity_field_mesh_size_at_base_level", None), execution)) + "]")
+    cargs.append("BSplineExponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "".join((ants_registration_velocity_field_mesh_size_at_base_level_cargs(params.get("velocity_field_mesh_size_at_base_level", None), execution) if (params.get("velocity_field_mesh_size_at_base_level", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -2564,7 +2564,7 @@ def ants_registration_sampling_percentage_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (("true" if params.get("use_gradient_filter_value", None) else "false") if (params.get("use_gradient_filter_value", None) is not None) else ""))
     return cargs
 
 
@@ -2626,7 +2626,7 @@ def ants_registration_sampling_strategy_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_cargs(params.get("sampling_percentage", None), execution)))
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_registration_sampling_percentage_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
     return cargs
 
 
@@ -2686,7 +2686,7 @@ def ants_registration_radius_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("radius_value", None)) + "".join(ants_registration_sampling_strategy_cargs(params.get("sampling_strategy", None), execution)))
+    cargs.append("," + str(params.get("radius_value", None)) + "".join((ants_registration_sampling_strategy_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
     return cargs
 
 
@@ -2760,7 +2760,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_radius_cargs(params.get("radius", None), execution)) + "]")
+    cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -2823,7 +2823,7 @@ def ants_registration_sampling_percentage_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (("true" if params.get("use_gradient_filter_value", None) else "false") if (params.get("use_gradient_filter_value", None) is not None) else ""))
     return cargs
 
 
@@ -2885,7 +2885,7 @@ def ants_registration_sampling_strategy_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_1_cargs(params.get("sampling_percentage", None), execution)))
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_registration_sampling_percentage_1_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
     return cargs
 
 
@@ -2945,7 +2945,7 @@ def ants_registration_number_of_bins_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join(ants_registration_sampling_strategy_1_cargs(params.get("sampling_strategy", None), execution)))
+    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join((ants_registration_sampling_strategy_1_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
     return cargs
 
 
@@ -3019,7 +3019,7 @@ def ants_registration_metric_mutual_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_number_of_bins_cargs(params.get("number_of_bins", None), execution)) + "]")
+    cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -3082,7 +3082,7 @@ def ants_registration_sampling_percentage_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (("true" if params.get("use_gradient_filter_value", None) else "false") if (params.get("use_gradient_filter_value", None) is not None) else ""))
     return cargs
 
 
@@ -3144,7 +3144,7 @@ def ants_registration_sampling_strategy_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_2_cargs(params.get("sampling_percentage", None), execution)))
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_registration_sampling_percentage_2_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
     return cargs
 
 
@@ -3204,7 +3204,7 @@ def ants_registration_number_of_bins_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join(ants_registration_sampling_strategy_2_cargs(params.get("sampling_strategy", None), execution)))
+    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join((ants_registration_sampling_strategy_2_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
     return cargs
 
 
@@ -3278,7 +3278,7 @@ def ants_registration_metric_mattes_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_number_of_bins_1_cargs(params.get("number_of_bins", None), execution)) + "]")
+    cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_1_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -3341,7 +3341,7 @@ def ants_registration_sampling_percentage_3_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (("true" if params.get("use_gradient_filter_value", None) else "false") if (params.get("use_gradient_filter_value", None) is not None) else ""))
     return cargs
 
 
@@ -3403,7 +3403,7 @@ def ants_registration_sampling_strategy_3_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_3_cargs(params.get("sampling_percentage", None), execution)))
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_registration_sampling_percentage_3_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
     return cargs
 
 
@@ -3463,7 +3463,7 @@ def ants_registration_radius_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("radius_value", None)) + "".join(ants_registration_sampling_strategy_3_cargs(params.get("sampling_strategy", None), execution)))
+    cargs.append("," + str(params.get("radius_value", None)) + "".join((ants_registration_sampling_strategy_3_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
     return cargs
 
 
@@ -3537,7 +3537,7 @@ def ants_registration_metric_mean_squares_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_radius_1_cargs(params.get("radius", None), execution)) + "]")
+    cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_1_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -3600,7 +3600,7 @@ def ants_registration_sampling_percentage_4_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (("true" if params.get("use_gradient_filter_value", None) else "false") if (params.get("use_gradient_filter_value", None) is not None) else ""))
     return cargs
 
 
@@ -3662,7 +3662,7 @@ def ants_registration_sampling_strategy_4_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_4_cargs(params.get("sampling_percentage", None), execution)))
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_registration_sampling_percentage_4_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
     return cargs
 
 
@@ -3722,7 +3722,7 @@ def ants_registration_number_of_bins_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join(ants_registration_sampling_strategy_4_cargs(params.get("sampling_strategy", None), execution)))
+    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join((ants_registration_sampling_strategy_4_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
     return cargs
 
 
@@ -3796,7 +3796,7 @@ def ants_registration_metric_demons_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_number_of_bins_2_cargs(params.get("number_of_bins", None), execution)) + "]")
+    cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_2_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -3859,7 +3859,7 @@ def ants_registration_sampling_percentage_5_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + ("true" if params.get("use_gradient_filter_value", None) else "false"))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (("true" if params.get("use_gradient_filter_value", None) else "false") if (params.get("use_gradient_filter_value", None) is not None) else ""))
     return cargs
 
 
@@ -3921,7 +3921,7 @@ def ants_registration_sampling_strategy_5_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("sampling_strategy_value", None) + "".join(ants_registration_sampling_percentage_5_cargs(params.get("sampling_percentage", None), execution)))
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_registration_sampling_percentage_5_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
     return cargs
 
 
@@ -3981,7 +3981,7 @@ def ants_registration_radius_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("radius_value", None)) + "".join(ants_registration_sampling_strategy_5_cargs(params.get("sampling_strategy", None), execution)))
+    cargs.append("," + str(params.get("radius_value", None)) + "".join((ants_registration_sampling_strategy_5_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
     return cargs
 
 
@@ -4055,7 +4055,7 @@ def ants_registration_metric_global_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_radius_2_cargs(params.get("radius", None), execution)) + "]")
+    cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_2_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4120,7 +4120,7 @@ def ants_registration_sampling_percentage_6_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + params.get("boundary_points_only_value", None))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "," + (params.get("boundary_points_only_value", None) if (params.get("boundary_points_only_value", None) is not None) else ""))
     return cargs
 
 
@@ -4194,7 +4194,7 @@ def ants_registration_metric_euclidean_icp_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("ICP[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_sampling_percentage_6_cargs(params.get("sampling_percentage", None), execution)) + "]")
+    cargs.append("ICP[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_sampling_percentage_6_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4255,7 +4255,7 @@ def ants_registration_point_set_sigma_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("point_set_sigma_value", None)) + "," + str(params.get("k_neighborhood_value", None)))
+    cargs.append("," + str(params.get("point_set_sigma_value", None)) + "," + (str(params.get("k_neighborhood_value", None)) if (params.get("k_neighborhood_value", None) is not None) else ""))
     return cargs
 
 
@@ -4317,7 +4317,7 @@ def ants_registration_boundary_points_only_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("boundary_points_only_value", None) + "".join(ants_registration_point_set_sigma_cargs(params.get("point_set_sigma", None), execution)))
+    cargs.append("," + params.get("boundary_points_only_value", None) + "".join((ants_registration_point_set_sigma_cargs(params.get("point_set_sigma", None), execution) if (params.get("point_set_sigma", None) is not None) else [])))
     return cargs
 
 
@@ -4379,7 +4379,7 @@ def ants_registration_sampling_percentage_7_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "".join(ants_registration_boundary_points_only_1_cargs(params.get("boundary_points_only", None), execution)))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "".join((ants_registration_boundary_points_only_1_cargs(params.get("boundary_points_only", None), execution) if (params.get("boundary_points_only", None) is not None) else [])))
     return cargs
 
 
@@ -4453,7 +4453,7 @@ def ants_registration_metric_point_set_expectation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("PSE[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_sampling_percentage_7_cargs(params.get("sampling_percentage", None), execution)) + "]")
+    cargs.append("PSE[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_sampling_percentage_7_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4514,7 +4514,7 @@ def ants_registration_point_set_sigma_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("point_set_sigma_value", None)) + "," + str(params.get("k_neighborhood_value", None)))
+    cargs.append("," + str(params.get("point_set_sigma_value", None)) + "," + (str(params.get("k_neighborhood_value", None)) if (params.get("k_neighborhood_value", None) is not None) else ""))
     return cargs
 
 
@@ -4576,7 +4576,7 @@ def ants_registration_boundary_points_only_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("boundary_points_only_value", None) + "".join(ants_registration_point_set_sigma_1_cargs(params.get("point_set_sigma", None), execution)))
+    cargs.append("," + params.get("boundary_points_only_value", None) + "".join((ants_registration_point_set_sigma_1_cargs(params.get("point_set_sigma", None), execution) if (params.get("point_set_sigma", None) is not None) else [])))
     return cargs
 
 
@@ -4638,7 +4638,7 @@ def ants_registration_sampling_percentage_8_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "".join(ants_registration_boundary_points_only_2_cargs(params.get("boundary_points_only", None), execution)))
+    cargs.append("," + str(params.get("sampling_percentage_value", None)) + "".join((ants_registration_boundary_points_only_2_cargs(params.get("boundary_points_only", None), execution) if (params.get("boundary_points_only", None) is not None) else [])))
     return cargs
 
 
@@ -4712,7 +4712,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("JHCT[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join(ants_registration_sampling_percentage_8_cargs(params.get("sampling_percentage", None), execution)) + "]")
+    cargs.append("JHCT[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_sampling_percentage_8_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4773,7 +4773,7 @@ def ants_registration_k_neighborhood_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("k_neighborhood_value", None)) + "," + str(params.get("gradient_sigma_value", None)))
+    cargs.append("," + str(params.get("k_neighborhood_value", None)) + "," + (str(params.get("gradient_sigma_value", None)) if (params.get("gradient_sigma_value", None) is not None) else ""))
     return cargs
 
 
@@ -4833,7 +4833,7 @@ def ants_registration_distance_sigma_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("distance_sigma_value", None)) + "".join(ants_registration_k_neighborhood_2_cargs(params.get("k_neighborhood", None), execution)))
+    cargs.append("," + str(params.get("distance_sigma_value", None)) + "".join((ants_registration_k_neighborhood_2_cargs(params.get("k_neighborhood", None), execution) if (params.get("k_neighborhood", None) is not None) else [])))
     return cargs
 
 
@@ -4893,7 +4893,7 @@ def ants_registration_intensity_sigma_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + str(params.get("intensity_sigma_value", None)) + "".join(ants_registration_distance_sigma_cargs(params.get("distance_sigma", None), execution)))
+    cargs.append("," + str(params.get("intensity_sigma_value", None)) + "".join((ants_registration_distance_sigma_cargs(params.get("distance_sigma", None), execution) if (params.get("distance_sigma", None) is not None) else [])))
     return cargs
 
 
@@ -4953,7 +4953,7 @@ def ants_registration_neighborhood_radius_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("," + params.get("neighborhood_radius_value", None) + "".join(ants_registration_intensity_sigma_cargs(params.get("intensity_sigma", None), execution)))
+    cargs.append("," + params.get("neighborhood_radius_value", None) + "".join((ants_registration_intensity_sigma_cargs(params.get("intensity_sigma", None), execution) if (params.get("intensity_sigma", None) is not None) else [])))
     return cargs
 
 
@@ -5041,7 +5041,7 @@ def ants_registration_metric_igdm_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("IGDM[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + params.get("fixed_mask", None) + "," + params.get("moving_mask", None) + "".join(ants_registration_neighborhood_radius_cargs(params.get("neighborhood_radius", None), execution)) + "]")
+    cargs.append("IGDM[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + params.get("fixed_mask", None) + "," + params.get("moving_mask", None) + "".join((ants_registration_neighborhood_radius_cargs(params.get("neighborhood_radius", None), execution) if (params.get("neighborhood_radius", None) is not None) else [])) + "]")
     return cargs
 
 

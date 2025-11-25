@@ -106,7 +106,7 @@ def volume_label_probability_cargs(
         "wb_command",
         "-volume-label-probability",
         params.get("probability-out", None),
-        "-exclude-unlabeled"
+        ("-exclude-unlabeled" if (params.get("exclude-unlabeled", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs

@@ -200,8 +200,8 @@ def metric_reduce_cargs(
         "wb_command",
         "-metric-reduce",
         params.get("metric-out", None),
-        *metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution),
-        "-only-numeric"
+        *(metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
+        ("-only-numeric" if (params.get("only-numeric", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(params.get("operation", None))

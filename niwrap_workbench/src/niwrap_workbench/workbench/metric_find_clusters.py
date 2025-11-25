@@ -202,19 +202,19 @@ def metric_find_clusters_cargs(
         "wb_command",
         "-metric-find-clusters",
         params.get("metric-out", None),
-        "-less-than",
+        ("-less-than" if (params.get("less-than", False)) else ""),
         "-roi",
-        execution.input_file(params.get("roi-metric", None)),
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None)),
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
         "-column",
-        params.get("column", None),
+        (params.get("column", None) if (params.get("column", None) is not None) else ""),
         "-size-ratio",
-        str(params.get("ratio", None)),
+        (str(params.get("ratio", None)) if (params.get("ratio", None) is not None) else ""),
         "-distance",
-        str(params.get("distance", None)),
+        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
         "-start",
-        str(params.get("startval", None))
+        (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

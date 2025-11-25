@@ -125,7 +125,7 @@ def v_3dcopy_cargs(
         cargs.append("-denote")
     cargs.extend([
         "+",
-        params.get("old_prefix", None) + params.get("view", None)
+        params.get("old_prefix", None) + (params.get("view", None) if (params.get("view", None) is not None) else "")
     ])
     cargs.append(params.get("new_prefix", None))
     return cargs

@@ -140,7 +140,7 @@ def cifti_change_mapping_series_cargs(
         str(params.get("step", None)),
         str(params.get("start", None)),
         "-unit",
-        params.get("unit", None)
+        (params.get("unit", None) if (params.get("unit", None) is not None) else "")
     ])
     return cargs
 
@@ -367,9 +367,9 @@ def cifti_change_mapping_cargs(
         "wb_command",
         "-cifti-change-mapping",
         params.get("cifti-out", None),
-        *cifti_change_mapping_series_cargs(params.get("series", None), execution),
-        *cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution),
-        *cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution)
+        *(cifti_change_mapping_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
+        *(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution) if (params.get("scalar", None) is not None) else []),
+        *(cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution) if (params.get("from-cifti", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("data-cifti", None)))
     cargs.append(params.get("direction", None))

@@ -149,11 +149,11 @@ def label_erode_cargs(
         "-label-erode",
         params.get("label-out", None),
         "-roi",
-        execution.input_file(params.get("roi-metric", None)),
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         "-column",
-        params.get("column", None),
+        (params.get("column", None) if (params.get("column", None) is not None) else ""),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None))
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))

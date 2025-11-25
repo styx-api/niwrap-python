@@ -117,7 +117,7 @@ def label_modify_keys_cargs(
         "-label-modify-keys",
         params.get("label-out", None),
         "-column",
-        params.get("column", None)
+        (params.get("column", None) if (params.get("column", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("remap-file", None))

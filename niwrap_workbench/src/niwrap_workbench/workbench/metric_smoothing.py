@@ -114,7 +114,7 @@ def metric_smoothing_roi_cargs(
     cargs.extend([
         "-roi",
         execution.input_file(params.get("roi-metric", None)),
-        "-match-columns"
+        ("-match-columns" if (params.get("match-columns", False)) else "")
     ])
     return cargs
 
@@ -253,15 +253,15 @@ def metric_smoothing_cargs(
         "wb_command",
         "-metric-smoothing",
         params.get("metric-out", None),
-        "-fwhm",
-        *metric_smoothing_roi_cargs(params.get("roi", None), execution),
-        "-fix-zeros",
+        ("-fwhm" if (params.get("fwhm", False)) else ""),
+        *(metric_smoothing_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+        ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
         "-column",
-        params.get("column", None),
+        (params.get("column", None) if (params.get("column", None) is not None) else ""),
         "-corrected-areas",
-        execution.input_file(params.get("area-metric", None)),
+        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
         "-method",
-        params.get("method", None)
+        (params.get("method", None) if (params.get("method", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))

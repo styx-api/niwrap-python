@@ -117,7 +117,7 @@ def surface_apply_warpfield_cargs(
         "-surface-apply-warpfield",
         params.get("out-surf", None),
         "-fnirt",
-        params.get("forward-warp", None)
+        (params.get("forward-warp", None) if (params.get("forward-warp", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("in-surf", None)))
     cargs.append(params.get("warpfield", None))

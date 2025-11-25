@@ -157,14 +157,14 @@ def metric_label_import_cargs(
         "wb_command",
         "-metric-label-import",
         params.get("output", None),
-        "-discard-others",
+        ("-discard-others" if (params.get("discard-others", False)) else ""),
         "-unlabeled-value",
-        str(params.get("value", None)),
+        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
         "-column",
-        params.get("column", None),
-        "-drop-unused-labels",
+        (params.get("column", None) if (params.get("column", None) is not None) else ""),
+        ("-drop-unused-labels" if (params.get("drop-unused-labels", False)) else ""),
         "-hierarchy",
-        params.get("file", None)
+        (params.get("file", None) if (params.get("file", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("input", None)))
     cargs.append(params.get("label-list-file", None))

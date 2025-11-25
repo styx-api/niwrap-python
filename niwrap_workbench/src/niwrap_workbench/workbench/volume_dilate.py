@@ -124,7 +124,7 @@ def volume_dilate_presmooth_cargs(
     cargs.extend([
         "-presmooth",
         str(params.get("kernel", None)),
-        "-fwhm"
+        ("-fwhm" if (params.get("fwhm", False)) else "")
     ])
     return cargs
 
@@ -327,15 +327,15 @@ def volume_dilate_cargs(
         "-volume-dilate",
         params.get("volume-out", None),
         "-exponent",
-        str(params.get("exponent", None)),
+        (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
         "-bad-voxel-roi",
-        execution.input_file(params.get("roi-volume", None)),
+        (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
         "-data-roi",
-        execution.input_file(params.get("roi-volume", None)),
+        (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
         "-subvolume",
-        params.get("subvol", None),
-        "-legacy-cutoff",
-        *volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution)
+        (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+        ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else ""),
+        *(volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution) if (params.get("grad-extrapolate", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(str(params.get("distance", None)))

@@ -137,9 +137,9 @@ def label_to_volume_mapping_ribbon_constrained_cargs(
         execution.input_file(params.get("inner-surf", None)),
         execution.input_file(params.get("outer-surf", None)),
         "-voxel-subdiv",
-        str(params.get("subdiv-num", None)),
-        "-greedy",
-        "-thick-columns"
+        (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+        ("-greedy" if (params.get("greedy", False)) else ""),
+        ("-thick-columns" if (params.get("thick-columns", False)) else "")
     ])
     return cargs
 
@@ -245,8 +245,8 @@ def label_to_volume_mapping_cargs(
         "-label-to-volume-mapping",
         params.get("volume-out", None),
         "-nearest-vertex",
-        str(params.get("distance", None)),
-        *label_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution)
+        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
+        *(label_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else [])
     ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))

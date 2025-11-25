@@ -121,7 +121,7 @@ def metric_merge_up_to_cargs(
     cargs.extend([
         "-up-to",
         params.get("last-column", None),
-        "-reverse"
+        ("-reverse" if (params.get("reverse", False)) else "")
     ])
     return cargs
 
@@ -185,7 +185,7 @@ def metric_merge_column_cargs(
     cargs.extend([
         "-column",
         params.get("column", None),
-        *metric_merge_up_to_cargs(params.get("up-to", None), execution)
+        *(metric_merge_up_to_cargs(params.get("up-to", None), execution) if (params.get("up-to", None) is not None) else [])
     ])
     return cargs
 
@@ -252,7 +252,7 @@ def metric_merge_metric_cargs(
     cargs.extend([
         "-metric",
         execution.input_file(params.get("metric-in", None)),
-        *[a for c in [metric_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
+        *([a for c in [metric_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c] if (params.get("column", None) is not None) else [])
     ])
     return cargs
 
@@ -330,7 +330,7 @@ def metric_merge_cargs(
         "wb_command",
         "-metric-merge",
         params.get("metric-out", None),
-        *[a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c]
+        *([a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
     ])
     return cargs
 

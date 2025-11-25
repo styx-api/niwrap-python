@@ -435,13 +435,13 @@ def metric_resample_cargs(
         "wb_command",
         "-metric-resample",
         params.get("metric-out", None),
-        *metric_resample_area_surfs_cargs(params.get("area-surfs", None), execution),
-        *metric_resample_area_metrics_cargs(params.get("area-metrics", None), execution),
+        *(metric_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+        *(metric_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
         "-current-roi",
-        execution.input_file(params.get("roi-metric", None)),
-        *metric_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution),
-        "-largest",
-        "-bypass-sphere-check"
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+        *(metric_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else []),
+        ("-largest" if (params.get("largest", False)) else ""),
+        ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))

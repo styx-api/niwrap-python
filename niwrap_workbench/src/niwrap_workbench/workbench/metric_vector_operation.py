@@ -151,10 +151,10 @@ def metric_vector_operation_cargs(
         "wb_command",
         "-metric-vector-operation",
         params.get("metric-out", None),
-        "-normalize-a",
-        "-normalize-b",
-        "-normalize-output",
-        "-magnitude"
+        ("-normalize-a" if (params.get("normalize-a", False)) else ""),
+        ("-normalize-b" if (params.get("normalize-b", False)) else ""),
+        ("-normalize-output" if (params.get("normalize-output", False)) else ""),
+        ("-magnitude" if (params.get("magnitude", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("vectors-a", None)))
     cargs.append(execution.input_file(params.get("vectors-b", None)))

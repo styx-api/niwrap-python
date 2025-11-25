@@ -145,7 +145,7 @@ def convert_affine_from_world_cargs(
     cargs.extend([
         "-from-world",
         params.get("input", None),
-        "-inverse"
+        ("-inverse" if (params.get("inverse", False)) else "")
     ])
     return cargs
 
@@ -283,7 +283,7 @@ def convert_affine_to_world_cargs(
     cargs.extend([
         "-to-world",
         params.get("output", None),
-        "-inverse"
+        ("-inverse" if (params.get("inverse", False)) else "")
     ])
     return cargs
 

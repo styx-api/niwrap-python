@@ -117,7 +117,7 @@ def metric_vector_toward_roi_cargs(
         "-metric-vector-toward-roi",
         params.get("metric-out", None),
         "-roi",
-        execution.input_file(params.get("roi-metric", None))
+        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
     ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("target-roi", None)))

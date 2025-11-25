@@ -371,11 +371,11 @@ def foci_resample_cargs(
         "wb_command",
         "-foci-resample",
         params.get("foci-out", None),
-        *foci_resample_left_surfaces_cargs(params.get("left-surfaces", None), execution),
-        *foci_resample_right_surfaces_cargs(params.get("right-surfaces", None), execution),
-        *foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum-surfaces", None), execution),
-        "-discard-distance-from-surface",
-        "-restore-xyz"
+        *(foci_resample_left_surfaces_cargs(params.get("left-surfaces", None), execution) if (params.get("left-surfaces", None) is not None) else []),
+        *(foci_resample_right_surfaces_cargs(params.get("right-surfaces", None), execution) if (params.get("right-surfaces", None) is not None) else []),
+        *(foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum-surfaces", None), execution) if (params.get("cerebellum-surfaces", None) is not None) else []),
+        ("-discard-distance-from-surface" if (params.get("discard-distance-from-surface", False)) else ""),
+        ("-restore-xyz" if (params.get("restore-xyz", False)) else "")
     ])
     cargs.append(execution.input_file(params.get("foci-in", None)))
     return cargs
