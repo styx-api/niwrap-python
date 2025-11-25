@@ -88,12 +88,22 @@ AntsApplyTransformsAlphaParamsDictTagged = typing.TypedDict('AntsApplyTransforms
 AntsApplyTransformsAlphaParamsDict = _AntsApplyTransformsAlphaParamsDictNoTag | AntsApplyTransformsAlphaParamsDictTagged
 
 
-_AntsApplyTransformsMultiLabelParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsMultiLabelParamsDictNoTag', {
+_AntsApplyTransformsParamParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsParamParamsDictNoTag', {
     "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
+})
+AntsApplyTransformsParamParamsDictTagged = typing.TypedDict('AntsApplyTransformsParamParamsDictTagged', {
+    "@type": typing.Literal["param"],
+    "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
+})
+AntsApplyTransformsParamParamsDict = _AntsApplyTransformsParamParamsDictNoTag | AntsApplyTransformsParamParamsDictTagged
+
+
+_AntsApplyTransformsMultiLabelParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsMultiLabelParamsDictNoTag', {
+    "params": AntsApplyTransformsParamParamsDict,
 })
 AntsApplyTransformsMultiLabelParamsDictTagged = typing.TypedDict('AntsApplyTransformsMultiLabelParamsDictTagged', {
     "@type": typing.Literal["multiLabel"],
-    "params": list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
+    "params": AntsApplyTransformsParamParamsDict,
 })
 AntsApplyTransformsMultiLabelParamsDict = _AntsApplyTransformsMultiLabelParamsDictNoTag | AntsApplyTransformsMultiLabelParamsDictTagged
 
@@ -900,8 +910,70 @@ def ants_apply_transforms_alpha_cargs(
     return cargs
 
 
-def ants_apply_transforms_multi_label(
+def ants_apply_transforms_param(
     params_: list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]],
+) -> AntsApplyTransformsParamParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        params_:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "param",
+        "params": params_,
+    }
+    return params
+
+
+def ants_apply_transforms_param_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsParamParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("params", None) is None:
+        raise StyxValidationError("`params` must not be None")
+    if not isinstance(params["params"], list):
+        raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]]`')
+    for e in params["params"]:
+        if not isinstance(e, dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
+        if "@type" not in e:
+            raise StyxValidationError("Params object is missing `@type`")
+        if e["@type"] not in ["sigma", "alpha"]:
+            raise StyxValidationError("Parameter `params`s `@type` must be one of [\"sigma\", \"alpha\"]")
+        ants_apply_transforms_params_validate_dyn_fn(e["@type"])(e)
+
+
+def ants_apply_transforms_param_cargs(
+    params: AntsApplyTransformsParamParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("[" + ",".join([a for c in [ants_apply_transforms_params_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("params", None)] for a in c]) + "]")
+    return cargs
+
+
+def ants_apply_transforms_multi_label(
+    params_: AntsApplyTransformsParamParamsDict,
 ) -> AntsApplyTransformsMultiLabelParamsDictTagged:
     """
     Build parameters.
@@ -932,16 +1004,7 @@ def ants_apply_transforms_multi_label_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("params", None) is None:
         raise StyxValidationError("`params` must not be None")
-    if not isinstance(params["params"], list):
-        raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[typing.Union[AntsApplyTransformsSigmaParamsDictTagged, AntsApplyTransformsAlphaParamsDictTagged]]`')
-    for e in params["params"]:
-        if not isinstance(e, dict):
-            raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
-        if "@type" not in e:
-            raise StyxValidationError("Params object is missing `@type`")
-        if e["@type"] not in ["sigma", "alpha"]:
-            raise StyxValidationError("Parameter `params`s `@type` must be one of [\"sigma\", \"alpha\"]")
-        ants_apply_transforms_params_validate_dyn_fn(e["@type"])(e)
+    ants_apply_transforms_param_validate(params["params"])
 
 
 def ants_apply_transforms_multi_label_cargs(
@@ -958,7 +1021,7 @@ def ants_apply_transforms_multi_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("MultiLabel" + "[" + ",".join([a for c in [ants_apply_transforms_params_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("params", None)] for a in c]) + "]")
+    cargs.append("MultiLabel" + "".join(ants_apply_transforms_param_cargs(params.get("params", None), execution)))
     return cargs
 
 
@@ -1861,6 +1924,8 @@ __all__ = [
     "AntsApplyTransformsNearestNeighborParamsDict",
     "AntsApplyTransformsNearestNeighborParamsDictTagged",
     "AntsApplyTransformsOutputs",
+    "AntsApplyTransformsParamParamsDict",
+    "AntsApplyTransformsParamParamsDictTagged",
     "AntsApplyTransformsParamsDict",
     "AntsApplyTransformsParamsDictTagged",
     "AntsApplyTransformsSigmaParamsDict",
@@ -1889,6 +1954,7 @@ __all__ = [
     "ants_apply_transforms_multi_label",
     "ants_apply_transforms_multi_labelnoparams",
     "ants_apply_transforms_nearest_neighbor",
+    "ants_apply_transforms_param",
     "ants_apply_transforms_params",
     "ants_apply_transforms_sigma",
     "ants_apply_transforms_transform_file_name",

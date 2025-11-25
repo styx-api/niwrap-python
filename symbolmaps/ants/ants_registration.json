@@ -54,8 +54,14 @@
             "initial_moving_transform": {
               "var_param": "initial_moving_transform"
             },
-            "use_inverse_value": {
-              "var_param": "use_inverse_value"
+            "use_inverse": {
+              "var_param": "use_inverse",
+              "fn_struct_make_params": "ants_registration_use_inverse",
+              "properties": {
+                "use_inverse_value": {
+                  "var_param": "use_inverse_value"
+                }
+              }
             }
           }
         },
@@ -163,8 +169,14 @@
                     "total_field_mesh_size_at_base_level_value": {
                       "var_param": "total_field_mesh_size_at_base_level_value"
                     },
-                    "spline_order_value": {
-                      "var_param": "spline_order_value"
+                    "spline_order": {
+                      "var_param": "spline_order",
+                      "fn_struct_make_params": "ants_registration_spline_order",
+                      "properties": {
+                        "spline_order_value": {
+                          "var_param": "spline_order_value"
+                        }
+                      }
                     }
                   }
                 }
@@ -209,8 +221,14 @@
                     "number_of_time_point_samples_value": {
                       "var_param": "number_of_time_point_samples_value"
                     },
-                    "spline_order_value": {
-                      "var_param": "spline_order_value"
+                    "spline_order": {
+                      "var_param": "spline_order",
+                      "fn_struct_make_params": "ants_registration_spline_order_1",
+                      "properties": {
+                        "spline_order_value": {
+                          "var_param": "spline_order_value"
+                        }
+                      }
                     }
                   }
                 }
@@ -229,8 +247,14 @@
                     "update_field_variance_in_voxel_space_value": {
                       "var_param": "update_field_variance_in_voxel_space_value"
                     },
-                    "total_field_variance_in_voxel_space_value": {
-                      "var_param": "total_field_variance_in_voxel_space_value"
+                    "total_field_variance_in_voxel_space": {
+                      "var_param": "total_field_variance_in_voxel_space",
+                      "fn_struct_make_params": "ants_registration_total_field_variance_in_voxel_space",
+                      "properties": {
+                        "total_field_variance_in_voxel_space_value": {
+                          "var_param": "total_field_variance_in_voxel_space_value"
+                        }
+                      }
                     }
                   }
                 }
@@ -252,8 +276,14 @@
                     "total_field_mesh_size_at_base_level_value": {
                       "var_param": "total_field_mesh_size_at_base_level_value"
                     },
-                    "spline_order_value": {
-                      "var_param": "spline_order_value"
+                    "spline_order": {
+                      "var_param": "spline_order",
+                      "fn_struct_make_params": "ants_registration_spline_order_2",
+                      "properties": {
+                        "spline_order_value": {
+                          "var_param": "spline_order_value"
+                        }
+                      }
                     }
                   }
                 }
@@ -271,8 +301,14 @@
                 "velocity_field_variance_in_voxel_space": {
                   "var_param": "velocity_field_variance_in_voxel_space"
                 },
-                "number_of_integration_steps_value": {
-                  "var_param": "number_of_integration_steps_value"
+                "number_of_integration_steps": {
+                  "var_param": "number_of_integration_steps",
+                  "fn_struct_make_params": "ants_registration_number_of_integration_steps",
+                  "properties": {
+                    "number_of_integration_steps_value": {
+                      "var_param": "number_of_integration_steps_value"
+                    }
+                  }
                 }
               }
             },
@@ -299,8 +335,14 @@
                         "number_of_integration_steps_value": {
                           "var_param": "number_of_integration_steps_value"
                         },
-                        "spline_order_value": {
-                          "var_param": "spline_order_value"
+                        "spline_order": {
+                          "var_param": "spline_order",
+                          "fn_struct_make_params": "ants_registration_spline_order_3",
+                          "properties": {
+                            "spline_order_value": {
+                              "var_param": "spline_order_value"
+                            }
+                          }
                         }
                       }
                     }
@@ -346,8 +388,14 @@
                             "sampling_percentage_value": {
                               "var_param": "sampling_percentage_value"
                             },
-                            "use_gradient_filter_value": {
-                              "var_param": "use_gradient_filter_value"
+                            "use_gradient_filter": {
+                              "var_param": "use_gradient_filter",
+                              "fn_struct_make_params": "ants_registration_use_gradient_filter",
+                              "properties": {
+                                "use_gradient_filter_value": {
+                                  "var_param": "use_gradient_filter_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -390,8 +438,14 @@
                             "sampling_percentage_value": {
                               "var_param": "sampling_percentage_value"
                             },
-                            "use_gradient_filter_value": {
-                              "var_param": "use_gradient_filter_value"
+                            "use_gradient_filter": {
+                              "var_param": "use_gradient_filter",
+                              "fn_struct_make_params": "ants_registration_use_gradient_filter_1",
+                              "properties": {
+                                "use_gradient_filter_value": {
+                                  "var_param": "use_gradient_filter_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -434,8 +488,14 @@
                             "sampling_percentage_value": {
                               "var_param": "sampling_percentage_value"
                             },
-                            "use_gradient_filter_value": {
-                              "var_param": "use_gradient_filter_value"
+                            "use_gradient_filter": {
+                              "var_param": "use_gradient_filter",
+                              "fn_struct_make_params": "ants_registration_use_gradient_filter_2",
+                              "properties": {
+                                "use_gradient_filter_value": {
+                                  "var_param": "use_gradient_filter_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -478,8 +538,14 @@
                             "sampling_percentage_value": {
                               "var_param": "sampling_percentage_value"
                             },
-                            "use_gradient_filter_value": {
-                              "var_param": "use_gradient_filter_value"
+                            "use_gradient_filter": {
+                              "var_param": "use_gradient_filter",
+                              "fn_struct_make_params": "ants_registration_use_gradient_filter_3",
+                              "properties": {
+                                "use_gradient_filter_value": {
+                                  "var_param": "use_gradient_filter_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -522,8 +588,14 @@
                             "sampling_percentage_value": {
                               "var_param": "sampling_percentage_value"
                             },
-                            "use_gradient_filter_value": {
-                              "var_param": "use_gradient_filter_value"
+                            "use_gradient_filter": {
+                              "var_param": "use_gradient_filter",
+                              "fn_struct_make_params": "ants_registration_use_gradient_filter_4",
+                              "properties": {
+                                "use_gradient_filter_value": {
+                                  "var_param": "use_gradient_filter_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -566,8 +638,14 @@
                             "sampling_percentage_value": {
                               "var_param": "sampling_percentage_value"
                             },
-                            "use_gradient_filter_value": {
-                              "var_param": "use_gradient_filter_value"
+                            "use_gradient_filter": {
+                              "var_param": "use_gradient_filter",
+                              "fn_struct_make_params": "ants_registration_use_gradient_filter_5",
+                              "properties": {
+                                "use_gradient_filter_value": {
+                                  "var_param": "use_gradient_filter_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -596,8 +674,14 @@
                     "sampling_percentage_value": {
                       "var_param": "sampling_percentage_value"
                     },
-                    "boundary_points_only_value": {
-                      "var_param": "boundary_points_only_value"
+                    "boundary_points_only": {
+                      "var_param": "boundary_points_only",
+                      "fn_struct_make_params": "ants_registration_boundary_points_only",
+                      "properties": {
+                        "boundary_points_only_value": {
+                          "var_param": "boundary_points_only_value"
+                        }
+                      }
                     }
                   }
                 }
@@ -636,8 +720,14 @@
                             "point_set_sigma_value": {
                               "var_param": "point_set_sigma_value"
                             },
-                            "k_neighborhood_value": {
-                              "var_param": "k_neighborhood_value"
+                            "k_neighborhood": {
+                              "var_param": "k_neighborhood",
+                              "fn_struct_make_params": "ants_registration_k_neighborhood",
+                              "properties": {
+                                "k_neighborhood_value": {
+                                  "var_param": "k_neighborhood_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -680,8 +770,14 @@
                             "point_set_sigma_value": {
                               "var_param": "point_set_sigma_value"
                             },
-                            "k_neighborhood_value": {
-                              "var_param": "k_neighborhood_value"
+                            "k_neighborhood": {
+                              "var_param": "k_neighborhood",
+                              "fn_struct_make_params": "ants_registration_k_neighborhood_1",
+                              "properties": {
+                                "k_neighborhood_value": {
+                                  "var_param": "k_neighborhood_value"
+                                }
+                              }
                             }
                           }
                         }
@@ -737,8 +833,14 @@
                                 "k_neighborhood_value": {
                                   "var_param": "k_neighborhood_value"
                                 },
-                                "gradient_sigma_value": {
-                                  "var_param": "gradient_sigma_value"
+                                "gradient_sigma": {
+                                  "var_param": "gradient_sigma",
+                                  "fn_struct_make_params": "ants_registration_gradient_sigma",
+                                  "properties": {
+                                    "gradient_sigma_value": {
+                                      "var_param": "gradient_sigma_value"
+                                    }
+                                  }
                                 }
                               }
                             }
@@ -797,8 +899,14 @@
         "fixed_mask": {
           "var_param": "fixed_mask"
         },
-        "moving_mask_value": {
-          "var_param": "moving_mask_value"
+        "moving_mask": {
+          "var_param": "moving_mask",
+          "fn_struct_make_params": "ants_registration_moving_mask",
+          "properties": {
+            "moving_mask_value": {
+              "var_param": "moving_mask_value"
+            }
+          }
         }
       }
     },
