@@ -115,12 +115,11 @@ def volume_tfce_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False):
-        cargs.extend([
-            "-presmooth",
-            str(params.get("kernel", None)),
-            "-fwhm"
-        ])
+    cargs.extend([
+        "-presmooth",
+        str(params.get("kernel", None)),
+        "-fwhm"
+    ])
     return cargs
 
 
@@ -286,18 +285,17 @@ def volume_tfce_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("presmooth", None) is not None or params.get("roi-volume", None) is not None or params.get("parameters", None) is not None or params.get("subvolume", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-tfce",
-            params.get("volume-out", None),
-            *(volume_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            *(volume_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else []),
-            "-subvolume",
-            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-tfce",
+        params.get("volume-out", None),
+        *volume_tfce_presmooth_cargs(params.get("presmooth", None), execution),
+        "-roi",
+        execution.input_file(params.get("roi-volume", None)),
+        *volume_tfce_parameters_cargs(params.get("parameters", None), execution),
+        "-subvolume",
+        params.get("subvolume", None)
+    ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 

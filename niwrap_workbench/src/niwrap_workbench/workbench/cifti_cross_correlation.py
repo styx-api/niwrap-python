@@ -132,17 +132,16 @@ def cifti_cross_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("weight-file", None) is not None or params.get("fisher-z", False) or params.get("limit-GB", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-cross-correlation",
-            params.get("cifti-out", None),
-            "-weights",
-            (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
-            ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-            "-mem-limit",
-            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-cross-correlation",
+        params.get("cifti-out", None),
+        "-weights",
+        params.get("weight-file", None),
+        "-fisher-z",
+        "-mem-limit",
+        str(params.get("limit-GB", None))
+    ])
     cargs.append(execution.input_file(params.get("cifti-a", None)))
     cargs.append(execution.input_file(params.get("cifti-b", None)))
     return cargs

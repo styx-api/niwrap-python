@@ -118,15 +118,14 @@ def volume_math_var_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("subvol", None) is not None or params.get("repeat", False):
-        cargs.extend([
-            "-var",
-            params.get("name", None),
-            execution.input_file(params.get("volume", None)),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
-            ("-repeat" if (params.get("repeat", False)) else "")
-        ])
+    cargs.extend([
+        "-var",
+        params.get("name", None),
+        execution.input_file(params.get("volume", None)),
+        "-subvolume",
+        params.get("subvol", None),
+        "-repeat"
+    ])
     return cargs
 
 
@@ -215,15 +214,14 @@ def volume_math_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("replace", None) is not None or params.get("var", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-math",
-            params.get("volume-out", None),
-            "-fixnan",
-            (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
-            *([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-math",
+        params.get("volume-out", None),
+        "-fixnan",
+        str(params.get("replace", None)),
+        *[a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c]
+    ])
     cargs.append(params.get("expression", None))
     return cargs
 

@@ -302,15 +302,14 @@ def surface_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("bypass-sphere-check", False):
-        cargs.extend([
-            "wb_command",
-            "-surface-resample",
-            params.get("surface-out", None),
-            *(surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
-            *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
-            ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-surface-resample",
+        params.get("surface-out", None),
+        *surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution),
+        *surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution),
+        "-bypass-sphere-check"
+    ])
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))

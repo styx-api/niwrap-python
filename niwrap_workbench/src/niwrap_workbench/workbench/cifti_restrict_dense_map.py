@@ -157,22 +157,21 @@ def cifti_restrict_dense_map_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-cifti", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-vol", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-restrict-dense-map",
-            params.get("cifti-out", None),
-            "-cifti-roi",
-            (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
-            "-left-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-right-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-cerebellum-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-vol-roi",
-            (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-restrict-dense-map",
+        params.get("cifti-out", None),
+        "-cifti-roi",
+        execution.input_file(params.get("roi-cifti", None)),
+        "-left-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-right-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-cerebellum-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-vol-roi",
+        execution.input_file(params.get("roi-vol", None))
+    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     return cargs

@@ -141,13 +141,12 @@ def cifti_dilate_left_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-left-surface",
-            execution.input_file(params.get("surface", None)),
-            "-left-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-left-surface",
+        execution.input_file(params.get("surface", None)),
+        "-left-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -211,13 +210,12 @@ def cifti_dilate_right_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-right-surface",
-            execution.input_file(params.get("surface", None)),
-            "-right-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-right-surface",
+        execution.input_file(params.get("surface", None)),
+        "-right-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -281,13 +279,12 @@ def cifti_dilate_cerebellum_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-cerebellum-surface",
-            execution.input_file(params.get("surface", None)),
-            "-cerebellum-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-cerebellum-surface",
+        execution.input_file(params.get("surface", None)),
+        "-cerebellum-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -430,20 +427,19 @@ def cifti_dilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("roi-cifti", None) is not None or params.get("nearest", False) or params.get("merged-volume", False) or params.get("legacy-mode", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-dilate",
-            params.get("cifti-out", None),
-            *(cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-            *(cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-            *(cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-            "-bad-brainordinate-roi",
-            (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
-            ("-nearest" if (params.get("nearest", False)) else ""),
-            ("-merged-volume" if (params.get("merged-volume", False)) else ""),
-            ("-legacy-mode" if (params.get("legacy-mode", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-dilate",
+        params.get("cifti-out", None),
+        *cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution),
+        *cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution),
+        *cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution),
+        "-bad-brainordinate-roi",
+        execution.input_file(params.get("roi-cifti", None)),
+        "-nearest",
+        "-merged-volume",
+        "-legacy-mode"
+    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(str(params.get("surface-distance", None)))

@@ -513,24 +513,23 @@ def cifti_parcellate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("method", None) is not None or params.get("exclude-outliers", None) is not None or params.get("only-numeric", False) or params.get("value", None) is not None or params.get("nonempty-mask-out", None) is not None or params.get("legacy-mode", False) or params.get("include-empty", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-parcellate",
-            params.get("cifti-out", None),
-            *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
-            "-cifti-weights",
-            (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
-            "-method",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
-            *(cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-            ("-only-numeric" if (params.get("only-numeric", False)) else ""),
-            "-fill-value",
-            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-            *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else []),
-            ("-legacy-mode" if (params.get("legacy-mode", False)) else ""),
-            ("-include-empty" if (params.get("include-empty", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-parcellate",
+        params.get("cifti-out", None),
+        *cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution),
+        "-cifti-weights",
+        execution.input_file(params.get("weight-cifti", None)),
+        "-method",
+        params.get("method", None),
+        *cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution),
+        "-only-numeric",
+        "-fill-value",
+        str(params.get("value", None)),
+        *cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution),
+        "-legacy-mode",
+        "-include-empty"
+    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(execution.input_file(params.get("cifti-label", None)))
     cargs.append(params.get("direction", None))

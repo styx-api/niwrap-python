@@ -111,12 +111,11 @@ def metric_smoothing_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("match-columns", False):
-        cargs.extend([
-            "-roi",
-            execution.input_file(params.get("roi-metric", None)),
-            "-match-columns"
-        ])
+    cargs.extend([
+        "-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-match-columns"
+    ])
     return cargs
 
 
@@ -250,21 +249,20 @@ def metric_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False) or params.get("roi", None) is not None or params.get("fix-zeros", False) or params.get("column", None) is not None or params.get("area-metric", None) is not None or params.get("method", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-metric-smoothing",
-            params.get("metric-out", None),
-            ("-fwhm" if (params.get("fwhm", False)) else ""),
-            *(metric_smoothing_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-            "-method",
-            (params.get("method", None) if (params.get("method", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-smoothing",
+        params.get("metric-out", None),
+        "-fwhm",
+        *metric_smoothing_roi_cargs(params.get("roi", None), execution),
+        "-fix-zeros",
+        "-column",
+        params.get("column", None),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None)),
+        "-method",
+        params.get("method", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(str(params.get("smoothing-kernel", None)))

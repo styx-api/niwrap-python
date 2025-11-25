@@ -474,22 +474,21 @@ def probtrackx_dot_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("row-voxels", None) is not None or params.get("roi-metric", None) is not None or params.get("row-cifti", None) is not None or params.get("col-voxels", None) is not None or params.get("roi-metric", None) is not None or params.get("col-cifti", None) is not None or params.get("transpose", False) or params.get("make-symmetric", False):
-        cargs.extend([
-            "wb_command",
-            "-probtrackx-dot-convert",
-            params.get("cifti-out", None),
-            *(probtrackx_dot_convert_row_voxels_cargs(params.get("row-voxels", None), execution) if (params.get("row-voxels", None) is not None) else []),
-            "-row-surface",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            *(probtrackx_dot_convert_row_cifti_cargs(params.get("row-cifti", None), execution) if (params.get("row-cifti", None) is not None) else []),
-            *(probtrackx_dot_convert_col_voxels_cargs(params.get("col-voxels", None), execution) if (params.get("col-voxels", None) is not None) else []),
-            "-col-surface",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            *(probtrackx_dot_convert_col_cifti_cargs(params.get("col-cifti", None), execution) if (params.get("col-cifti", None) is not None) else []),
-            ("-transpose" if (params.get("transpose", False)) else ""),
-            ("-make-symmetric" if (params.get("make-symmetric", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-probtrackx-dot-convert",
+        params.get("cifti-out", None),
+        *probtrackx_dot_convert_row_voxels_cargs(params.get("row-voxels", None), execution),
+        "-row-surface",
+        execution.input_file(params.get("roi-metric", None)),
+        *probtrackx_dot_convert_row_cifti_cargs(params.get("row-cifti", None), execution),
+        *probtrackx_dot_convert_col_voxels_cargs(params.get("col-voxels", None), execution),
+        "-col-surface",
+        execution.input_file(params.get("roi-metric", None)),
+        *probtrackx_dot_convert_col_cifti_cargs(params.get("col-cifti", None), execution),
+        "-transpose",
+        "-make-symmetric"
+    ])
     cargs.append(params.get("dot-file", None))
     return cargs
 

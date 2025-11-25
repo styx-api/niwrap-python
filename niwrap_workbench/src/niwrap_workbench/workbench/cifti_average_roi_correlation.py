@@ -121,12 +121,11 @@ def cifti_average_roi_correlation_cifti_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("in-memory", False):
-        cargs.extend([
-            "-cifti-roi",
-            execution.input_file(params.get("roi-cifti", None)),
-            "-in-memory"
-        ])
+    cargs.extend([
+        "-cifti-roi",
+        execution.input_file(params.get("roi-cifti", None)),
+        "-in-memory"
+    ])
     return cargs
 
 
@@ -326,28 +325,27 @@ def cifti_average_roi_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("cifti-roi", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-vol", None) is not None or params.get("left-surf", None) is not None or params.get("right-surf", None) is not None or params.get("cerebellum-surf", None) is not None or params.get("cifti", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-average-roi-correlation",
-            params.get("cifti-out", None),
-            *(cifti_average_roi_correlation_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
-            "-left-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-right-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-cerebellum-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-vol-roi",
-            (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
-            "-left-area-surf",
-            (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
-            "-right-area-surf",
-            (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
-            "-cerebellum-area-surf",
-            (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
-            *([a for c in [cifti_average_roi_correlation_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-average-roi-correlation",
+        params.get("cifti-out", None),
+        *cifti_average_roi_correlation_cifti_roi_cargs(params.get("cifti-roi", None), execution),
+        "-left-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-right-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-cerebellum-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-vol-roi",
+        execution.input_file(params.get("roi-vol", None)),
+        "-left-area-surf",
+        execution.input_file(params.get("left-surf", None)),
+        "-right-area-surf",
+        execution.input_file(params.get("right-surf", None)),
+        "-cerebellum-area-surf",
+        execution.input_file(params.get("cerebellum-surf", None)),
+        *[a for c in [cifti_average_roi_correlation_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+    ])
     return cargs
 
 

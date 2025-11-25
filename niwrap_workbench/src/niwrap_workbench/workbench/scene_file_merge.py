@@ -118,12 +118,11 @@ def scene_file_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reverse", False):
-        cargs.extend([
-            "-up-to",
-            params.get("last-column", None),
-            "-reverse"
-        ])
+    cargs.extend([
+        "-up-to",
+        params.get("last-column", None),
+        "-reverse"
+    ])
     return cargs
 
 
@@ -183,12 +182,11 @@ def scene_file_merge_scene_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("up-to", None) is not None:
-        cargs.extend([
-            "-scene",
-            params.get("scene", None),
-            *scene_file_merge_up_to_cargs(params.get("up-to", None), execution)
-        ])
+    cargs.extend([
+        "-scene",
+        params.get("scene", None),
+        *scene_file_merge_up_to_cargs(params.get("up-to", None), execution)
+    ])
     return cargs
 
 
@@ -251,12 +249,11 @@ def scene_file_merge_scene_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("scene", None) is not None:
-        cargs.extend([
-            "-scene-file",
-            params.get("scene-file", None),
-            *[a for c in [scene_file_merge_scene_cargs(s, execution) for s in params.get("scene", None)] for a in c]
-        ])
+    cargs.extend([
+        "-scene-file",
+        params.get("scene-file", None),
+        *[a for c in [scene_file_merge_scene_cargs(s, execution) for s in params.get("scene", None)] for a in c]
+    ])
     return cargs
 
 

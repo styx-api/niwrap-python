@@ -184,13 +184,12 @@ def spec_file_modify_remove_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("recursive", False) or params.get("suffix", False):
-        cargs.extend([
-            "-remove",
-            params.get("filename", None),
-            ("-recursive" if (params.get("recursive", False)) else ""),
-            ("-suffix" if (params.get("suffix", False)) else "")
-        ])
+    cargs.extend([
+        "-remove",
+        params.get("filename", None),
+        "-recursive",
+        "-suffix"
+    ])
     return cargs
 
 

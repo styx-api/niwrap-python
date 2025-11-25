@@ -123,16 +123,15 @@ def label_to_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fraction", None) is not None or params.get("column", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-label-to-border",
-            params.get("border-out", None),
-            "-placement",
-            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-label-to-border",
+        params.get("border-out", None),
+        "-placement",
+        str(params.get("fraction", None)),
+        "-column",
+        params.get("column", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs

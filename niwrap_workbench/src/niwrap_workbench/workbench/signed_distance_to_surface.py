@@ -113,14 +113,13 @@ def signed_distance_to_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("method", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-signed-distance-to-surface",
-            params.get("metric", None),
-            "-winding",
-            params.get("method", None)
-        ])
+    cargs.extend([
+        "wb_command",
+        "-signed-distance-to-surface",
+        params.get("metric", None),
+        "-winding",
+        params.get("method", None)
+    ])
     cargs.append(execution.input_file(params.get("surface-comp", None)))
     cargs.append(execution.input_file(params.get("surface-ref", None)))
     return cargs

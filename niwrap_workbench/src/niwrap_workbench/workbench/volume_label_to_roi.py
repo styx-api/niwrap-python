@@ -125,18 +125,17 @@ def volume_label_to_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("label-name", None) is not None or params.get("label-key", None) is not None or params.get("map", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-label-to-roi",
-            params.get("volume-out", None),
-            "-name",
-            (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
-            "-key",
-            (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
-            "-map",
-            (params.get("map", None) if (params.get("map", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-label-to-roi",
+        params.get("volume-out", None),
+        "-name",
+        params.get("label-name", None),
+        "-key",
+        str(params.get("label-key", None)),
+        "-map",
+        params.get("map", None)
+    ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 

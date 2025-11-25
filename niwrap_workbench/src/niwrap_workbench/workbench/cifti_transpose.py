@@ -103,14 +103,13 @@ def cifti_transpose_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("limit-GB", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-transpose",
-            params.get("cifti-out", None),
-            "-mem-limit",
-            str(params.get("limit-GB", None))
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-transpose",
+        params.get("cifti-out", None),
+        "-mem-limit",
+        str(params.get("limit-GB", None))
+    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 

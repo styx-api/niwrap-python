@@ -103,13 +103,12 @@ def cifti_label_probability_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exclude-unlabeled", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-label-probability",
-            params.get("probability-dscalar-out", None),
-            "-exclude-unlabeled"
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-label-probability",
+        params.get("probability-dscalar-out", None),
+        "-exclude-unlabeled"
+    ])
     cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 

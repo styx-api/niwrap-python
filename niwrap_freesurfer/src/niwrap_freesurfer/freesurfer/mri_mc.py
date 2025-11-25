@@ -115,8 +115,7 @@ def mri_mc_cargs(
     cargs.append("mri_mc")
     cargs.append(execution.input_file(params.get("input_volume", None)))
     cargs.append(str(params.get("label_value", None)))
-    if params.get("connectivity", None) is not None:
-        cargs.append(params.get("output_surface", None) + str(params.get("connectivity", None)))
+    cargs.append(params.get("output_surface", None) + str(params.get("connectivity", None)))
     return cargs
 
 

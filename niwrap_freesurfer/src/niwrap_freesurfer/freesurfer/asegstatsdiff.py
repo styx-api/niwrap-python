@@ -104,8 +104,7 @@ def asegstatsdiff_cargs(
     cargs = []
     cargs.append("asegstatsdiff")
     cargs.append(params.get("subject1", None))
-    if params.get("outdir", None) is not None:
-        cargs.append(params.get("subject2", None) + params.get("outdir", None))
+    cargs.append(params.get("subject2", None) + params.get("outdir", None))
     return cargs
 
 

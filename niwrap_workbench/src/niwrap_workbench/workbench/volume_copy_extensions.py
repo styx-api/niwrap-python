@@ -110,13 +110,12 @@ def volume_copy_extensions_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("drop-unknown", False):
-        cargs.extend([
-            "wb_command",
-            "-volume-copy-extensions",
-            params.get("volume-out", None),
-            "-drop-unknown"
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-copy-extensions",
+        params.get("volume-out", None),
+        "-drop-unknown"
+    ])
     cargs.append(execution.input_file(params.get("data-volume", None)))
     cargs.append(execution.input_file(params.get("extension-volume", None)))
     return cargs

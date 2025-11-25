@@ -112,14 +112,13 @@ def metric_vector_toward_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-metric-vector-toward-roi",
-            params.get("metric-out", None),
-            "-roi",
-            execution.input_file(params.get("roi-metric", None))
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-vector-toward-roi",
+        params.get("metric-out", None),
+        "-roi",
+        execution.input_file(params.get("roi-metric", None))
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("target-roi", None)))
     return cargs

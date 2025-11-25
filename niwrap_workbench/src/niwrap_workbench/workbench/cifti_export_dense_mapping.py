@@ -137,13 +137,12 @@ def cifti_export_dense_mapping_volume_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("no-cifti-index", False) or params.get("structure", False):
-        cargs.extend([
-            "-volume-all",
-            params.get("text-out", None),
-            ("-no-cifti-index" if (params.get("no-cifti-index", False)) else ""),
-            ("-structure" if (params.get("structure", False)) else "")
-        ])
+    cargs.extend([
+        "-volume-all",
+        params.get("text-out", None),
+        "-no-cifti-index",
+        "-structure"
+    ])
     return cargs
 
 
@@ -211,13 +210,12 @@ def cifti_export_dense_mapping_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("no-cifti-index", False):
-        cargs.extend([
-            "-surface",
-            params.get("structure", None),
-            params.get("text-out", None),
-            "-no-cifti-index"
-        ])
+    cargs.extend([
+        "-surface",
+        params.get("structure", None),
+        params.get("text-out", None),
+        "-no-cifti-index"
+    ])
     return cargs
 
 
@@ -285,13 +283,12 @@ def cifti_export_dense_mapping_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("no-cifti-index", False):
-        cargs.extend([
-            "-volume",
-            params.get("structure", None),
-            params.get("text-out", None),
-            "-no-cifti-index"
-        ])
+    cargs.extend([
+        "-volume",
+        params.get("structure", None),
+        params.get("text-out", None),
+        "-no-cifti-index"
+    ])
     return cargs
 
 

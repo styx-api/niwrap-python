@@ -119,8 +119,7 @@ def mri_mark_temporal_lobe_cargs(
             "-spacing",
             params.get("spacing", None)
         ])
-    if params.get("use_gradient", False):
-        cargs.append("-gradient" + "".join([execution.input_file(f) for f in params.get("subjects", None)]) + params.get("output_file", None))
+    cargs.append("-gradient" + "".join([execution.input_file(f) for f in params.get("subjects", None)]) + params.get("output_file", None))
     return cargs
 
 

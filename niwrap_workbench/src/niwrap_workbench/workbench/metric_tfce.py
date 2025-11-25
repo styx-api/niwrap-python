@@ -119,12 +119,11 @@ def metric_tfce_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False):
-        cargs.extend([
-            "-presmooth",
-            str(params.get("kernel", None)),
-            "-fwhm"
-        ])
+    cargs.extend([
+        "-presmooth",
+        str(params.get("kernel", None)),
+        "-fwhm"
+    ])
     return cargs
 
 
@@ -307,20 +306,19 @@ def metric_tfce_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("presmooth", None) is not None or params.get("roi-metric", None) is not None or params.get("parameters", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-metric-tfce",
-            params.get("metric-out", None),
-            *(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            *(metric_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else []),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-tfce",
+        params.get("metric-out", None),
+        *metric_tfce_presmooth_cargs(params.get("presmooth", None), execution),
+        "-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        *metric_tfce_parameters_cargs(params.get("parameters", None), execution),
+        "-column",
+        params.get("column", None),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs

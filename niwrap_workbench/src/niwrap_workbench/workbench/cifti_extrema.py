@@ -320,29 +320,28 @@ def cifti_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("surface", None) is not None or params.get("surface", None) is not None or params.get("surface", None) is not None or params.get("surface-kernel", None) is not None or params.get("volume-kernel", None) is not None or params.get("presmooth-fwhm", False) or params.get("threshold", None) is not None or params.get("merged-volume", False) or params.get("sum-maps", False) or params.get("consolidate-mode", False) or params.get("only-maxima", False) or params.get("only-minima", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-extrema",
-            params.get("cifti-out", None),
-            "-left-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-right-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-cerebellum-surface",
-            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-            "-surface-presmooth",
-            (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
-            "-volume-presmooth",
-            (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
-            ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
-            *(cifti_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
-            ("-merged-volume" if (params.get("merged-volume", False)) else ""),
-            ("-sum-maps" if (params.get("sum-maps", False)) else ""),
-            ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
-            ("-only-maxima" if (params.get("only-maxima", False)) else ""),
-            ("-only-minima" if (params.get("only-minima", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-extrema",
+        params.get("cifti-out", None),
+        "-left-surface",
+        execution.input_file(params.get("surface", None)),
+        "-right-surface",
+        execution.input_file(params.get("surface", None)),
+        "-cerebellum-surface",
+        execution.input_file(params.get("surface", None)),
+        "-surface-presmooth",
+        str(params.get("surface-kernel", None)),
+        "-volume-presmooth",
+        str(params.get("volume-kernel", None)),
+        "-presmooth-fwhm",
+        *cifti_extrema_threshold_cargs(params.get("threshold", None), execution),
+        "-merged-volume",
+        "-sum-maps",
+        "-consolidate-mode",
+        "-only-maxima",
+        "-only-minima"
+    ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(str(params.get("surface-distance", None)))
     cargs.append(str(params.get("volume-distance", None)))

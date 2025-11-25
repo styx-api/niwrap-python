@@ -112,14 +112,13 @@ def label_modify_keys_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("column", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-label-modify-keys",
-            params.get("label-out", None),
-            "-column",
-            params.get("column", None)
-        ])
+    cargs.extend([
+        "wb_command",
+        "-label-modify-keys",
+        params.get("label-out", None),
+        "-column",
+        params.get("column", None)
+    ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("remap-file", None))
     return cargs

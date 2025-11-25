@@ -198,25 +198,24 @@ def metric_find_clusters_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("less-than", False) or params.get("roi-metric", None) is not None or params.get("area-metric", None) is not None or params.get("column", None) is not None or params.get("ratio", None) is not None or params.get("distance", None) is not None or params.get("startval", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-metric-find-clusters",
-            params.get("metric-out", None),
-            ("-less-than" if (params.get("less-than", False)) else ""),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-size-ratio",
-            (str(params.get("ratio", None)) if (params.get("ratio", None) is not None) else ""),
-            "-distance",
-            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
-            "-start",
-            (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-find-clusters",
+        params.get("metric-out", None),
+        "-less-than",
+        "-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None)),
+        "-column",
+        params.get("column", None),
+        "-size-ratio",
+        str(params.get("ratio", None)),
+        "-distance",
+        str(params.get("distance", None)),
+        "-start",
+        str(params.get("startval", None))
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(str(params.get("value-threshold", None)))

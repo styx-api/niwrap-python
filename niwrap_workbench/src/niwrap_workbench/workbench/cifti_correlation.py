@@ -273,20 +273,19 @@ def cifti_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-override", None) is not None or params.get("weight-file", None) is not None or params.get("fisher-z", False) or params.get("no-demean", False) or params.get("covariance", False) or params.get("limit-GB", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-correlation",
-            params.get("cifti-out", None),
-            *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else []),
-            "-weights",
-            (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
-            ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-            ("-no-demean" if (params.get("no-demean", False)) else ""),
-            ("-covariance" if (params.get("covariance", False)) else ""),
-            "-mem-limit",
-            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-correlation",
+        params.get("cifti-out", None),
+        *cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution),
+        "-weights",
+        params.get("weight-file", None),
+        "-fisher-z",
+        "-no-demean",
+        "-covariance",
+        "-mem-limit",
+        str(params.get("limit-GB", None))
+    ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 

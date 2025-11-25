@@ -122,12 +122,11 @@ def cifti_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reverse", False):
-        cargs.extend([
-            "-up-to",
-            params.get("last-index", None),
-            "-reverse"
-        ])
+    cargs.extend([
+        "-up-to",
+        params.get("last-index", None),
+        "-reverse"
+    ])
     return cargs
 
 
@@ -187,12 +186,11 @@ def cifti_merge_index_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("up-to", None) is not None:
-        cargs.extend([
-            "-index",
-            params.get("index", None),
-            *cifti_merge_up_to_cargs(params.get("up-to", None), execution)
-        ])
+    cargs.extend([
+        "-index",
+        params.get("index", None),
+        *cifti_merge_up_to_cargs(params.get("up-to", None), execution)
+    ])
     return cargs
 
 
@@ -255,12 +253,11 @@ def cifti_merge_cifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("index", None) is not None:
-        cargs.extend([
-            "-cifti",
-            execution.input_file(params.get("cifti-in", None)),
-            *[a for c in [cifti_merge_index_cargs(s, execution) for s in params.get("index", None)] for a in c]
-        ])
+    cargs.extend([
+        "-cifti",
+        execution.input_file(params.get("cifti-in", None)),
+        *[a for c in [cifti_merge_index_cargs(s, execution) for s in params.get("index", None)] for a in c]
+    ])
     return cargs
 
 
@@ -351,17 +348,16 @@ def cifti_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("direction", None) is not None or params.get("limit-GB", None) is not None or params.get("cifti", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-merge",
-            params.get("cifti-out", None),
-            "-direction",
-            (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
-            "-mem-limit",
-            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
-            *([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-merge",
+        params.get("cifti-out", None),
+        "-direction",
+        params.get("direction", None),
+        "-mem-limit",
+        str(params.get("limit-GB", None)),
+        *[a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+    ])
     return cargs
 
 

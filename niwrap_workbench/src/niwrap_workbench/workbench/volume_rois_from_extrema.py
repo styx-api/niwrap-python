@@ -145,20 +145,19 @@ def volume_rois_from_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sigma", None) is not None or params.get("roi-volume", None) is not None or params.get("method", None) is not None or params.get("subvol", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-rois-from-extrema",
-            params.get("volume-out", None),
-            "-gaussian",
-            (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-            "-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-overlap-logic",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-rois-from-extrema",
+        params.get("volume-out", None),
+        "-gaussian",
+        str(params.get("sigma", None)),
+        "-roi",
+        execution.input_file(params.get("roi-volume", None)),
+        "-overlap-logic",
+        params.get("method", None),
+        "-subvolume",
+        params.get("subvol", None)
+    ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("limit", None)))
     return cargs

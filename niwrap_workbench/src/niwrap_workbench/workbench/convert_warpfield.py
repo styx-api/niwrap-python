@@ -129,12 +129,11 @@ def convert_warpfield_from_world_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("absolute", False):
-        cargs.extend([
-            "-from-world",
-            params.get("input", None),
-            "-absolute"
-        ])
+    cargs.extend([
+        "-from-world",
+        params.get("input", None),
+        "-absolute"
+    ])
     return cargs
 
 
@@ -204,13 +203,12 @@ def convert_warpfield_from_fnirt_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("absolute", False):
-        cargs.extend([
-            "-from-fnirt",
-            params.get("input", None),
-            params.get("source-volume", None),
-            "-absolute"
-        ])
+    cargs.extend([
+        "-from-fnirt",
+        params.get("input", None),
+        params.get("source-volume", None),
+        "-absolute"
+    ])
     return cargs
 
 

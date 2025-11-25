@@ -207,16 +207,15 @@ def cifti_reduce_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("direction", None) is not None or params.get("exclude-outliers", None) is not None or params.get("only-numeric", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-reduce",
-            params.get("cifti-out", None),
-            "-direction",
-            (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
-            *(cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-            ("-only-numeric" if (params.get("only-numeric", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-reduce",
+        params.get("cifti-out", None),
+        "-direction",
+        params.get("direction", None),
+        *cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution),
+        "-only-numeric"
+    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("operation", None))
     return cargs

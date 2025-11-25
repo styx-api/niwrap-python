@@ -112,14 +112,13 @@ def label_mask_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("column", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-label-mask",
-            params.get("label-out", None),
-            "-column",
-            params.get("column", None)
-        ])
+    cargs.extend([
+        "wb_command",
+        "-label-mask",
+        params.get("label-out", None),
+        "-column",
+        params.get("column", None)
+    ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("mask", None)))
     return cargs

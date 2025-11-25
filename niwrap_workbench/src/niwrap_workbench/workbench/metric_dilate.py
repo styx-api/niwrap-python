@@ -198,25 +198,24 @@ def metric_dilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("nearest", False) or params.get("linear", False) or params.get("exponent", None) is not None or params.get("area-metric", None) is not None or params.get("legacy-cutoff", False):
-        cargs.extend([
-            "wb_command",
-            "-metric-dilate",
-            params.get("metric-out", None),
-            "-bad-vertex-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-data-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            ("-nearest" if (params.get("nearest", False)) else ""),
-            ("-linear" if (params.get("linear", False)) else ""),
-            "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-dilate",
+        params.get("metric-out", None),
+        "-bad-vertex-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-data-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-column",
+        params.get("column", None),
+        "-nearest",
+        "-linear",
+        "-exponent",
+        str(params.get("exponent", None)),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None)),
+        "-legacy-cutoff"
+    ])
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("distance", None)))

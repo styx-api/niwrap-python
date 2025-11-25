@@ -120,14 +120,13 @@ def cifti_pairwise_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fisher-z", False) or params.get("override-mapping-check", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-pairwise-correlation",
-            params.get("cifti-out", None),
-            ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-            ("-override-mapping-check" if (params.get("override-mapping-check", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-pairwise-correlation",
+        params.get("cifti-out", None),
+        "-fisher-z",
+        "-override-mapping-check"
+    ])
     cargs.append(execution.input_file(params.get("cifti-a", None)))
     cargs.append(execution.input_file(params.get("cifti-b", None)))
     return cargs

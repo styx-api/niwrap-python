@@ -392,13 +392,12 @@ def cifti_resample_dconn_memory_volume_predilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("nearest", False) or params.get("weighted", None) is not None:
-        cargs.extend([
-            "-volume-predilate",
-            str(params.get("dilate-mm", None)),
-            ("-nearest" if (params.get("nearest", False)) else ""),
-            *(cifti_resample_dconn_memory_weighted_cargs(params.get("weighted", None), execution) if (params.get("weighted", None) is not None) else [])
-        ])
+    cargs.extend([
+        "-volume-predilate",
+        str(params.get("dilate-mm", None)),
+        "-nearest",
+        *cifti_resample_dconn_memory_weighted_cargs(params.get("weighted", None), execution)
+    ])
     return cargs
 
 
@@ -542,14 +541,13 @@ def cifti_resample_dconn_memory_surface_postdilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("nearest", False) or params.get("linear", False) or params.get("weighted", None) is not None:
-        cargs.extend([
-            "-surface-postdilate",
-            str(params.get("dilate-mm", None)),
-            ("-nearest" if (params.get("nearest", False)) else ""),
-            ("-linear" if (params.get("linear", False)) else ""),
-            *(cifti_resample_dconn_memory_weighted_cargs_(params.get("weighted", None), execution) if (params.get("weighted", None) is not None) else [])
-        ])
+    cargs.extend([
+        "-surface-postdilate",
+        str(params.get("dilate-mm", None)),
+        "-nearest",
+        "-linear",
+        *cifti_resample_dconn_memory_weighted_cargs_(params.get("weighted", None), execution)
+    ])
     return cargs
 
 
@@ -674,12 +672,11 @@ def cifti_resample_dconn_memory_affine_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("flirt", None) is not None:
-        cargs.extend([
-            "-affine",
-            params.get("affine-file", None),
-            *cifti_resample_dconn_memory_flirt_cargs(params.get("flirt", None), execution)
-        ])
+    cargs.extend([
+        "-affine",
+        params.get("affine-file", None),
+        *cifti_resample_dconn_memory_flirt_cargs(params.get("flirt", None), execution)
+    ])
     return cargs
 
 
@@ -742,13 +739,12 @@ def cifti_resample_dconn_memory_warpfield_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("source-volume", None) is not None:
-        cargs.extend([
-            "-warpfield",
-            params.get("warpfield", None),
-            "-fnirt",
-            params.get("source-volume", None)
-        ])
+    cargs.extend([
+        "-warpfield",
+        params.get("warpfield", None),
+        "-fnirt",
+        params.get("source-volume", None)
+    ])
     return cargs
 
 
@@ -954,14 +950,13 @@ def cifti_resample_dconn_memory_left_spheres_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("left-area-surfs", None) is not None or params.get("left-area-metrics", None) is not None:
-        cargs.extend([
-            "-left-spheres",
-            execution.input_file(params.get("current-sphere", None)),
-            execution.input_file(params.get("new-sphere", None)),
-            *(cifti_resample_dconn_memory_left_area_surfs_cargs(params.get("left-area-surfs", None), execution) if (params.get("left-area-surfs", None) is not None) else []),
-            *(cifti_resample_dconn_memory_left_area_metrics_cargs(params.get("left-area-metrics", None), execution) if (params.get("left-area-metrics", None) is not None) else [])
-        ])
+    cargs.extend([
+        "-left-spheres",
+        execution.input_file(params.get("current-sphere", None)),
+        execution.input_file(params.get("new-sphere", None)),
+        *cifti_resample_dconn_memory_left_area_surfs_cargs(params.get("left-area-surfs", None), execution),
+        *cifti_resample_dconn_memory_left_area_metrics_cargs(params.get("left-area-metrics", None), execution)
+    ])
     return cargs
 
 
@@ -1168,14 +1163,13 @@ def cifti_resample_dconn_memory_right_spheres_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("right-area-surfs", None) is not None or params.get("right-area-metrics", None) is not None:
-        cargs.extend([
-            "-right-spheres",
-            execution.input_file(params.get("current-sphere", None)),
-            execution.input_file(params.get("new-sphere", None)),
-            *(cifti_resample_dconn_memory_right_area_surfs_cargs(params.get("right-area-surfs", None), execution) if (params.get("right-area-surfs", None) is not None) else []),
-            *(cifti_resample_dconn_memory_right_area_metrics_cargs(params.get("right-area-metrics", None), execution) if (params.get("right-area-metrics", None) is not None) else [])
-        ])
+    cargs.extend([
+        "-right-spheres",
+        execution.input_file(params.get("current-sphere", None)),
+        execution.input_file(params.get("new-sphere", None)),
+        *cifti_resample_dconn_memory_right_area_surfs_cargs(params.get("right-area-surfs", None), execution),
+        *cifti_resample_dconn_memory_right_area_metrics_cargs(params.get("right-area-metrics", None), execution)
+    ])
     return cargs
 
 
@@ -1383,14 +1377,13 @@ def cifti_resample_dconn_memory_cerebellum_spheres_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("cerebellum-area-surfs", None) is not None or params.get("cerebellum-area-metrics", None) is not None:
-        cargs.extend([
-            "-cerebellum-spheres",
-            execution.input_file(params.get("current-sphere", None)),
-            execution.input_file(params.get("new-sphere", None)),
-            *(cifti_resample_dconn_memory_cerebellum_area_surfs_cargs(params.get("cerebellum-area-surfs", None), execution) if (params.get("cerebellum-area-surfs", None) is not None) else []),
-            *(cifti_resample_dconn_memory_cerebellum_area_metrics_cargs(params.get("cerebellum-area-metrics", None), execution) if (params.get("cerebellum-area-metrics", None) is not None) else [])
-        ])
+    cargs.extend([
+        "-cerebellum-spheres",
+        execution.input_file(params.get("current-sphere", None)),
+        execution.input_file(params.get("new-sphere", None)),
+        *cifti_resample_dconn_memory_cerebellum_area_surfs_cargs(params.get("cerebellum-area-surfs", None), execution),
+        *cifti_resample_dconn_memory_cerebellum_area_metrics_cargs(params.get("cerebellum-area-metrics", None), execution)
+    ])
     return cargs
 
 
@@ -1540,20 +1533,19 @@ def cifti_resample_dconn_memory_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("surface-largest", False) or params.get("volume-predilate", None) is not None or params.get("surface-postdilate", None) is not None or params.get("affine", None) is not None or params.get("warpfield", None) is not None or params.get("left-spheres", None) is not None or params.get("right-spheres", None) is not None or params.get("cerebellum-spheres", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-resample-dconn-memory",
-            params.get("cifti-out", None),
-            ("-surface-largest" if (params.get("surface-largest", False)) else ""),
-            *(cifti_resample_dconn_memory_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),
-            *(cifti_resample_dconn_memory_surface_postdilate_cargs(params.get("surface-postdilate", None), execution) if (params.get("surface-postdilate", None) is not None) else []),
-            *(cifti_resample_dconn_memory_affine_cargs(params.get("affine", None), execution) if (params.get("affine", None) is not None) else []),
-            *(cifti_resample_dconn_memory_warpfield_cargs(params.get("warpfield", None), execution) if (params.get("warpfield", None) is not None) else []),
-            *(cifti_resample_dconn_memory_left_spheres_cargs(params.get("left-spheres", None), execution) if (params.get("left-spheres", None) is not None) else []),
-            *(cifti_resample_dconn_memory_right_spheres_cargs(params.get("right-spheres", None), execution) if (params.get("right-spheres", None) is not None) else []),
-            *(cifti_resample_dconn_memory_cerebellum_spheres_cargs(params.get("cerebellum-spheres", None), execution) if (params.get("cerebellum-spheres", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-resample-dconn-memory",
+        params.get("cifti-out", None),
+        "-surface-largest",
+        *cifti_resample_dconn_memory_volume_predilate_cargs(params.get("volume-predilate", None), execution),
+        *cifti_resample_dconn_memory_surface_postdilate_cargs(params.get("surface-postdilate", None), execution),
+        *cifti_resample_dconn_memory_affine_cargs(params.get("affine", None), execution),
+        *cifti_resample_dconn_memory_warpfield_cargs(params.get("warpfield", None), execution),
+        *cifti_resample_dconn_memory_left_spheres_cargs(params.get("left-spheres", None), execution),
+        *cifti_resample_dconn_memory_right_spheres_cargs(params.get("right-spheres", None), execution),
+        *cifti_resample_dconn_memory_cerebellum_spheres_cargs(params.get("cerebellum-spheres", None), execution)
+    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(execution.input_file(params.get("cifti-template", None)))
     cargs.append(params.get("template-direction", None))

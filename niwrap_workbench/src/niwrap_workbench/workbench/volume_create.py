@@ -431,14 +431,13 @@ def volume_create_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("plumb", None) is not None or params.get("sform", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-create",
-            params.get("volume-out", None),
-            *(volume_create_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
-            *(volume_create_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-create",
+        params.get("volume-out", None),
+        *volume_create_plumb_cargs(params.get("plumb", None), execution),
+        *volume_create_sform_cargs(params.get("sform", None), execution)
+    ])
     cargs.append(str(params.get("i-dim", None)))
     cargs.append(str(params.get("j-dim", None)))
     cargs.append(str(params.get("k-dim", None)))

@@ -265,8 +265,7 @@ def denoise_image_corrected_output_noise_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("noiseFile", None) is not None:
-        cargs.append("[" + params.get("correctedOutputFileName", None) + "," + params.get("noiseFile", None) + "]")
+    cargs.append("[" + params.get("correctedOutputFileName", None) + "," + params.get("noiseFile", None) + "]")
     return cargs
 
 

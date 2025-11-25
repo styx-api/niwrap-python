@@ -103,12 +103,11 @@ def metric_stats_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("match-maps", False):
-        cargs.extend([
-            "-roi",
-            execution.input_file(params.get("roi-metric", None)),
-            "-match-maps"
-        ])
+    cargs.extend([
+        "-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        "-match-maps"
+    ])
     return cargs
 
 

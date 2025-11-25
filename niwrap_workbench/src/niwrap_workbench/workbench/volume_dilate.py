@@ -121,12 +121,11 @@ def volume_dilate_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False):
-        cargs.extend([
-            "-presmooth",
-            str(params.get("kernel", None)),
-            "-fwhm"
-        ])
+    cargs.extend([
+        "-presmooth",
+        str(params.get("kernel", None)),
+        "-fwhm"
+    ])
     return cargs
 
 
@@ -323,22 +322,21 @@ def volume_dilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exponent", None) is not None or params.get("roi-volume", None) is not None or params.get("roi-volume", None) is not None or params.get("subvol", None) is not None or params.get("legacy-cutoff", False) or params.get("grad-extrapolate", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-dilate",
-            params.get("volume-out", None),
-            "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            "-bad-voxel-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-data-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
-            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else ""),
-            *(volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution) if (params.get("grad-extrapolate", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-dilate",
+        params.get("volume-out", None),
+        "-exponent",
+        str(params.get("exponent", None)),
+        "-bad-voxel-roi",
+        execution.input_file(params.get("roi-volume", None)),
+        "-data-roi",
+        execution.input_file(params.get("roi-volume", None)),
+        "-subvolume",
+        params.get("subvol", None),
+        "-legacy-cutoff",
+        *volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution)
+    ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(str(params.get("distance", None)))
     cargs.append(params.get("method", None))

@@ -208,16 +208,15 @@ def cifti_create_scalar_series_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("transpose", False) or params.get("file", None) is not None or params.get("series", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-create-scalar-series",
-            params.get("cifti-out", None),
-            ("-transpose" if (params.get("transpose", False)) else ""),
-            "-name-file",
-            (params.get("file", None) if (params.get("file", None) is not None) else ""),
-            *(cifti_create_scalar_series_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-create-scalar-series",
+        params.get("cifti-out", None),
+        "-transpose",
+        "-name-file",
+        params.get("file", None),
+        *cifti_create_scalar_series_series_cargs(params.get("series", None), execution)
+    ])
     cargs.append(params.get("input", None))
     return cargs
 

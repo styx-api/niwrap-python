@@ -170,13 +170,12 @@ def cifti_merge_parcels_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("cifti", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-merge-parcels",
-            params.get("cifti-out", None),
-            *[a for c in [cifti_merge_parcels_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-merge-parcels",
+        params.get("cifti-out", None),
+        *[a for c in [cifti_merge_parcels_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+    ])
     cargs.append(params.get("direction", None))
     return cargs
 

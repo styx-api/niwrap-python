@@ -118,12 +118,11 @@ def metric_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reverse", False):
-        cargs.extend([
-            "-up-to",
-            params.get("last-column", None),
-            "-reverse"
-        ])
+    cargs.extend([
+        "-up-to",
+        params.get("last-column", None),
+        "-reverse"
+    ])
     return cargs
 
 
@@ -183,12 +182,11 @@ def metric_merge_column_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("up-to", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("column", None),
-            *metric_merge_up_to_cargs(params.get("up-to", None), execution)
-        ])
+    cargs.extend([
+        "-column",
+        params.get("column", None),
+        *metric_merge_up_to_cargs(params.get("up-to", None), execution)
+    ])
     return cargs
 
 
@@ -251,12 +249,11 @@ def metric_merge_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("column", None) is not None:
-        cargs.extend([
-            "-metric",
-            execution.input_file(params.get("metric-in", None)),
-            *[a for c in [metric_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
-        ])
+    cargs.extend([
+        "-metric",
+        execution.input_file(params.get("metric-in", None)),
+        *[a for c in [metric_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
+    ])
     return cargs
 
 
@@ -329,13 +326,12 @@ def metric_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("metric", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-metric-merge",
-            params.get("metric-out", None),
-            *[a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c]
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-merge",
+        params.get("metric-out", None),
+        *[a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c]
+    ])
     return cargs
 
 

@@ -118,12 +118,11 @@ def border_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reverse", False):
-        cargs.extend([
-            "-up-to",
-            params.get("last-border", None),
-            "-reverse"
-        ])
+    cargs.extend([
+        "-up-to",
+        params.get("last-border", None),
+        "-reverse"
+    ])
     return cargs
 
 
@@ -183,12 +182,11 @@ def border_merge_select_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("up-to", None) is not None:
-        cargs.extend([
-            "-select",
-            params.get("border", None),
-            *border_merge_up_to_cargs(params.get("up-to", None), execution)
-        ])
+    cargs.extend([
+        "-select",
+        params.get("border", None),
+        *border_merge_up_to_cargs(params.get("up-to", None), execution)
+    ])
     return cargs
 
 
@@ -251,12 +249,11 @@ def border_merge_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("select", None) is not None:
-        cargs.extend([
-            "-border",
-            execution.input_file(params.get("border-file-in", None)),
-            *[a for c in [border_merge_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
-        ])
+    cargs.extend([
+        "-border",
+        execution.input_file(params.get("border-file-in", None)),
+        *[a for c in [border_merge_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
+    ])
     return cargs
 
 
@@ -329,13 +326,12 @@ def border_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("border", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-border-merge",
-            params.get("border-file-out", None),
-            *[a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c]
-        ])
+    cargs.extend([
+        "wb_command",
+        "-border-merge",
+        params.get("border-file-out", None),
+        *[a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c]
+    ])
     return cargs
 
 

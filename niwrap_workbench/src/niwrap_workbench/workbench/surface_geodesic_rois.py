@@ -156,20 +156,19 @@ def surface_geodesic_rois_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sigma", None) is not None or params.get("method", None) is not None or params.get("name-list-file", None) is not None or params.get("area-metric", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-surface-geodesic-rois",
-            params.get("metric-out", None),
-            "-gaussian",
-            (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-            "-overlap-logic",
-            (params.get("method", None) if (params.get("method", None) is not None) else ""),
-            "-names",
-            (params.get("name-list-file", None) if (params.get("name-list-file", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-surface-geodesic-rois",
+        params.get("metric-out", None),
+        "-gaussian",
+        str(params.get("sigma", None)),
+        "-overlap-logic",
+        params.get("method", None),
+        "-names",
+        params.get("name-list-file", None),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("limit", None)))
     cargs.append(params.get("vertex-list-file", None))

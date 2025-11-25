@@ -142,18 +142,17 @@ def volume_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False) or params.get("roivol", None) is not None or params.get("fix-zeros", False) or params.get("subvol", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-smoothing",
-            params.get("volume-out", None),
-            ("-fwhm" if (params.get("fwhm", False)) else ""),
-            "-roi",
-            (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
-            ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-smoothing",
+        params.get("volume-out", None),
+        "-fwhm",
+        "-roi",
+        execution.input_file(params.get("roivol", None)),
+        "-fix-zeros",
+        "-subvolume",
+        params.get("subvol", None)
+    ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("kernel", None)))
     return cargs

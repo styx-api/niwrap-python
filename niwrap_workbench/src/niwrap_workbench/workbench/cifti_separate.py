@@ -401,14 +401,13 @@ def cifti_separate_volume_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi", None) is not None or params.get("label", None) is not None or params.get("crop", False):
-        cargs.extend([
-            "-volume-all",
-            params.get("volume-out", None),
-            *(cifti_separate_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            *(cifti_separate_label_cargs(params.get("label", None), execution) if (params.get("label", None) is not None) else []),
-            ("-crop" if (params.get("crop", False)) else "")
-        ])
+    cargs.extend([
+        "-volume-all",
+        params.get("volume-out", None),
+        *cifti_separate_roi_cargs(params.get("roi", None), execution),
+        *cifti_separate_label_cargs(params.get("label", None), execution),
+        "-crop"
+    ])
     return cargs
 
 
@@ -596,13 +595,12 @@ def cifti_separate_label_cargs_(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi", None) is not None:
-        cargs.extend([
-            "-label",
-            params.get("structure", None),
-            params.get("label-out", None),
-            *cifti_separate_roi_cargs_(params.get("roi", None), execution)
-        ])
+    cargs.extend([
+        "-label",
+        params.get("structure", None),
+        params.get("label-out", None),
+        *cifti_separate_roi_cargs_(params.get("roi", None), execution)
+    ])
     return cargs
 
 
@@ -789,13 +787,12 @@ def cifti_separate_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi", None) is not None:
-        cargs.extend([
-            "-metric",
-            params.get("structure", None),
-            params.get("metric-out", None),
-            *cifti_separate_roi_cargs_2(params.get("roi", None), execution)
-        ])
+    cargs.extend([
+        "-metric",
+        params.get("structure", None),
+        params.get("metric-out", None),
+        *cifti_separate_roi_cargs_2(params.get("roi", None), execution)
+    ])
     return cargs
 
 
@@ -990,14 +987,13 @@ def cifti_separate_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi", None) is not None or params.get("crop", False):
-        cargs.extend([
-            "-volume",
-            params.get("structure", None),
-            params.get("volume-out", None),
-            *(cifti_separate_roi_cargs_3(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            ("-crop" if (params.get("crop", False)) else "")
-        ])
+    cargs.extend([
+        "-volume",
+        params.get("structure", None),
+        params.get("volume-out", None),
+        *cifti_separate_roi_cargs_3(params.get("roi", None), execution),
+        "-crop"
+    ])
     return cargs
 
 

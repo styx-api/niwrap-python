@@ -214,8 +214,7 @@ def n4_bias_field_correction_convergence_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("convergence_threshold", None) is not None:
-        cargs.append("[" + "x".join(map(str, params.get("convergence", None))) + "," + str(params.get("convergence_threshold", None)) + "]")
+    cargs.append("[" + "x".join(map(str, params.get("convergence", None))) + "," + str(params.get("convergence_threshold", None)) + "]")
     return cargs
 
 
@@ -279,8 +278,7 @@ def n4_bias_field_correction_bspline_fitting_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("spline_order", None) is not None:
-        cargs.append("[" + "x".join(map(str, params.get("spline_distance", None))) + "," + str(params.get("spline_order", None)) + "]")
+    cargs.append("[" + "x".join(map(str, params.get("spline_distance", None))) + "," + str(params.get("spline_order", None)) + "]")
     return cargs
 
 
@@ -506,8 +504,7 @@ def n4_bias_field_correction_corrected_output_noise_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("biasFile", None) is not None:
-        cargs.append("[" + params.get("correctedOutputFileName", None) + "," + params.get("biasFile", None) + "]")
+    cargs.append("[" + params.get("correctedOutputFileName", None) + "," + params.get("biasFile", None) + "]")
     return cargs
 
 

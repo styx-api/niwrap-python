@@ -145,15 +145,14 @@ def file_convert_border_version_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("surface", None) is not None:
-        cargs.extend([
-            "-border-version-convert",
-            execution.input_file(params.get("border-in", None)),
-            str(params.get("out-version", None)),
-            params.get("border-out", None),
-            "-surface",
-            execution.input_file(params.get("surface", None))
-        ])
+    cargs.extend([
+        "-border-version-convert",
+        execution.input_file(params.get("border-in", None)),
+        str(params.get("out-version", None)),
+        params.get("border-out", None),
+        "-surface",
+        execution.input_file(params.get("surface", None))
+    ])
     return cargs
 
 

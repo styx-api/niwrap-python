@@ -196,14 +196,13 @@ def metric_reduce_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exclude-outliers", None) is not None or params.get("only-numeric", False):
-        cargs.extend([
-            "wb_command",
-            "-metric-reduce",
-            params.get("metric-out", None),
-            *(metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-            ("-only-numeric" if (params.get("only-numeric", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-reduce",
+        params.get("metric-out", None),
+        *metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution),
+        "-only-numeric"
+    ])
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(params.get("operation", None))
     return cargs

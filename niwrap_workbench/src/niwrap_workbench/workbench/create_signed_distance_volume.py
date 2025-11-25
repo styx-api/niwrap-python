@@ -265,23 +265,22 @@ def create_signed_distance_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-out", None) is not None or params.get("value", None) is not None or params.get("dist", None) is not None or params.get("dist", None) is not None or params.get("num", None) is not None or params.get("method", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-create-signed-distance-volume",
-            params.get("outvol", None),
-            *(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution) if (params.get("roi-out", None) is not None) else []),
-            "-fill-value",
-            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-            "-exact-limit",
-            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-            "-approx-limit",
-            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-            "-approx-neighborhood",
-            (str(params.get("num", None)) if (params.get("num", None) is not None) else ""),
-            "-winding",
-            (params.get("method", None) if (params.get("method", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-create-signed-distance-volume",
+        params.get("outvol", None),
+        *create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution),
+        "-fill-value",
+        str(params.get("value", None)),
+        "-exact-limit",
+        str(params.get("dist", None)),
+        "-approx-limit",
+        str(params.get("dist", None)),
+        "-approx-neighborhood",
+        str(params.get("num", None)),
+        "-winding",
+        params.get("method", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("refspace", None))
     return cargs

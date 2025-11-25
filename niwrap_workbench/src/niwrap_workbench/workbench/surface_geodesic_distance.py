@@ -133,17 +133,16 @@ def surface_geodesic_distance_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("naive", False) or params.get("limit-mm", None) is not None or params.get("area-metric", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-surface-geodesic-distance",
-            params.get("metric-out", None),
-            ("-naive" if (params.get("naive", False)) else ""),
-            "-limit",
-            (str(params.get("limit-mm", None)) if (params.get("limit-mm", None) is not None) else ""),
-            "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-surface-geodesic-distance",
+        params.get("metric-out", None),
+        "-naive",
+        "-limit",
+        str(params.get("limit-mm", None)),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("vertex", None)))
     return cargs

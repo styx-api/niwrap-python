@@ -124,13 +124,12 @@ def cifti_math_select_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("repeat", False):
-        cargs.extend([
-            "-select",
-            str(params.get("dim", None)),
-            params.get("index", None),
-            "-repeat"
-        ])
+    cargs.extend([
+        "-select",
+        str(params.get("dim", None)),
+        params.get("index", None),
+        "-repeat"
+    ])
     return cargs
 
 
@@ -200,13 +199,12 @@ def cifti_math_var_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("select", None) is not None:
-        cargs.extend([
-            "-var",
-            params.get("name", None),
-            execution.input_file(params.get("cifti", None)),
-            *[a for c in [cifti_math_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
-        ])
+    cargs.extend([
+        "-var",
+        params.get("name", None),
+        execution.input_file(params.get("cifti", None)),
+        *[a for c in [cifti_math_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
+    ])
     return cargs
 
 
@@ -303,16 +301,15 @@ def cifti_math_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("replace", None) is not None or params.get("override-mapping-check", False) or params.get("var", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-math",
-            params.get("cifti-out", None),
-            "-fixnan",
-            (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
-            ("-override-mapping-check" if (params.get("override-mapping-check", False)) else ""),
-            *([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-math",
+        params.get("cifti-out", None),
+        "-fixnan",
+        str(params.get("replace", None)),
+        "-override-mapping-check",
+        *[a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c]
+    ])
     cargs.append(params.get("expression", None))
     return cargs
 

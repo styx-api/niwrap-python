@@ -123,16 +123,15 @@ def volume_erode_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-volume", None) is not None or params.get("subvol", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-volume-erode",
-            params.get("volume-out", None),
-            "-roi",
-            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-erode",
+        params.get("volume-out", None),
+        "-roi",
+        execution.input_file(params.get("roi-volume", None)),
+        "-subvolume",
+        params.get("subvol", None)
+    ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(str(params.get("distance", None)))
     return cargs

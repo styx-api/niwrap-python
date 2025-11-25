@@ -135,14 +135,13 @@ def cifti_change_mapping_series_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("unit", None) is not None:
-        cargs.extend([
-            "-series",
-            str(params.get("step", None)),
-            str(params.get("start", None)),
-            "-unit",
-            params.get("unit", None)
-        ])
+    cargs.extend([
+        "-series",
+        str(params.get("step", None)),
+        str(params.get("start", None)),
+        "-unit",
+        params.get("unit", None)
+    ])
     return cargs
 
 
@@ -364,15 +363,14 @@ def cifti_change_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("series", None) is not None or params.get("scalar", None) is not None or params.get("from-cifti", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-change-mapping",
-            params.get("cifti-out", None),
-            *(cifti_change_mapping_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
-            *(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution) if (params.get("scalar", None) is not None) else []),
-            *(cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution) if (params.get("from-cifti", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-change-mapping",
+        params.get("cifti-out", None),
+        *cifti_change_mapping_series_cargs(params.get("series", None), execution),
+        *cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution),
+        *cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution)
+    ])
     cargs.append(execution.input_file(params.get("data-cifti", None)))
     cargs.append(params.get("direction", None))
     return cargs

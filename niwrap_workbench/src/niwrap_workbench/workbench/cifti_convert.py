@@ -320,14 +320,13 @@ def cifti_convert_reset_timepoints_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("unit", None) is not None:
-        cargs.extend([
-            "-reset-timepoints",
-            str(params.get("timestep", None)),
-            str(params.get("timestart", None)),
-            "-unit",
-            params.get("unit", None)
-        ])
+    cargs.extend([
+        "-reset-timepoints",
+        str(params.get("timestep", None)),
+        str(params.get("timestart", None)),
+        "-unit",
+        params.get("unit", None)
+    ])
     return cargs
 
 
@@ -395,13 +394,12 @@ def cifti_convert_replace_binary_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("flip-endian", False) or params.get("transpose", False):
-        cargs.extend([
-            "-replace-binary",
-            params.get("binary-in", None),
-            ("-flip-endian" if (params.get("flip-endian", False)) else ""),
-            ("-transpose" if (params.get("transpose", False)) else "")
-        ])
+    cargs.extend([
+        "-replace-binary",
+        params.get("binary-in", None),
+        "-flip-endian",
+        "-transpose"
+    ])
     return cargs
 
 
@@ -501,16 +499,15 @@ def cifti_convert_from_gifti_ext_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reset-timepoints", None) is not None or params.get("reset-scalars", False) or params.get("column-reset-scalars", False) or params.get("replace-binary", None) is not None:
-        cargs.extend([
-            "-from-gifti-ext",
-            params.get("gifti-in", None),
-            params.get("cifti-out", None),
-            *(cifti_convert_reset_timepoints_cargs(params.get("reset-timepoints", None), execution) if (params.get("reset-timepoints", None) is not None) else []),
-            ("-reset-scalars" if (params.get("reset-scalars", False)) else ""),
-            ("-column-reset-scalars" if (params.get("column-reset-scalars", False)) else ""),
-            *(cifti_convert_replace_binary_cargs(params.get("replace-binary", None), execution) if (params.get("replace-binary", None) is not None) else [])
-        ])
+    cargs.extend([
+        "-from-gifti-ext",
+        params.get("gifti-in", None),
+        params.get("cifti-out", None),
+        *cifti_convert_reset_timepoints_cargs(params.get("reset-timepoints", None), execution),
+        "-reset-scalars",
+        "-column-reset-scalars",
+        *cifti_convert_replace_binary_cargs(params.get("replace-binary", None), execution)
+    ])
     return cargs
 
 
@@ -616,14 +613,13 @@ def cifti_convert_to_nifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("smaller-file", False) or params.get("smaller-dims", False):
-        cargs.extend([
-            "-to-nifti",
-            execution.input_file(params.get("cifti-in", None)),
-            params.get("nifti-out", None),
-            ("-smaller-file" if (params.get("smaller-file", False)) else ""),
-            ("-smaller-dims" if (params.get("smaller-dims", False)) else "")
-        ])
+    cargs.extend([
+        "-to-nifti",
+        execution.input_file(params.get("cifti-in", None)),
+        params.get("nifti-out", None),
+        "-smaller-file",
+        "-smaller-dims"
+    ])
     return cargs
 
 
@@ -713,14 +709,13 @@ def cifti_convert_reset_timepoints_cargs_(
         Command-line arguments.
     """
     cargs = []
-    if params.get("unit", None) is not None:
-        cargs.extend([
-            "-reset-timepoints",
-            str(params.get("timestep", None)),
-            str(params.get("timestart", None)),
-            "-unit",
-            params.get("unit", None)
-        ])
+    cargs.extend([
+        "-reset-timepoints",
+        str(params.get("timestep", None)),
+        str(params.get("timestart", None)),
+        "-unit",
+        params.get("unit", None)
+    ])
     return cargs
 
 
@@ -814,15 +809,14 @@ def cifti_convert_from_nifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reset-timepoints", None) is not None or params.get("reset-scalars", False):
-        cargs.extend([
-            "-from-nifti",
-            execution.input_file(params.get("nifti-in", None)),
-            execution.input_file(params.get("cifti-template", None)),
-            params.get("cifti-out", None),
-            *(cifti_convert_reset_timepoints_cargs_(params.get("reset-timepoints", None), execution) if (params.get("reset-timepoints", None) is not None) else []),
-            ("-reset-scalars" if (params.get("reset-scalars", False)) else "")
-        ])
+    cargs.extend([
+        "-from-nifti",
+        execution.input_file(params.get("nifti-in", None)),
+        execution.input_file(params.get("cifti-template", None)),
+        params.get("cifti-out", None),
+        *cifti_convert_reset_timepoints_cargs_(params.get("reset-timepoints", None), execution),
+        "-reset-scalars"
+    ])
     return cargs
 
 
@@ -912,14 +906,13 @@ def cifti_convert_to_text_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("delim-string", None) is not None:
-        cargs.extend([
-            "-to-text",
-            execution.input_file(params.get("cifti-in", None)),
-            params.get("text-out", None),
-            "-col-delim",
-            params.get("delim-string", None)
-        ])
+    cargs.extend([
+        "-to-text",
+        execution.input_file(params.get("cifti-in", None)),
+        params.get("text-out", None),
+        "-col-delim",
+        params.get("delim-string", None)
+    ])
     return cargs
 
 
@@ -989,14 +982,13 @@ def cifti_convert_reset_timepoints_cargs_2(
         Command-line arguments.
     """
     cargs = []
-    if params.get("unit", None) is not None:
-        cargs.extend([
-            "-reset-timepoints",
-            str(params.get("timestep", None)),
-            str(params.get("timestart", None)),
-            "-unit",
-            params.get("unit", None)
-        ])
+    cargs.extend([
+        "-reset-timepoints",
+        str(params.get("timestep", None)),
+        str(params.get("timestart", None)),
+        "-unit",
+        params.get("unit", None)
+    ])
     return cargs
 
 
@@ -1099,17 +1091,16 @@ def cifti_convert_from_text_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("delim-string", None) is not None or params.get("reset-timepoints", None) is not None or params.get("reset-scalars", False):
-        cargs.extend([
-            "-from-text",
-            params.get("text-in", None),
-            execution.input_file(params.get("cifti-template", None)),
-            params.get("cifti-out", None),
-            "-col-delim",
-            (params.get("delim-string", None) if (params.get("delim-string", None) is not None) else ""),
-            *(cifti_convert_reset_timepoints_cargs_2(params.get("reset-timepoints", None), execution) if (params.get("reset-timepoints", None) is not None) else []),
-            ("-reset-scalars" if (params.get("reset-scalars", False)) else "")
-        ])
+    cargs.extend([
+        "-from-text",
+        params.get("text-in", None),
+        execution.input_file(params.get("cifti-template", None)),
+        params.get("cifti-out", None),
+        "-col-delim",
+        params.get("delim-string", None),
+        *cifti_convert_reset_timepoints_cargs_2(params.get("reset-timepoints", None), execution),
+        "-reset-scalars"
+    ])
     return cargs
 
 

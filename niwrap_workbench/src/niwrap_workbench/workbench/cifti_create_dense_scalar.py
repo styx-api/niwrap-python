@@ -223,13 +223,12 @@ def cifti_create_dense_scalar_left_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None:
-        cargs.extend([
-            "-left-metric",
-            execution.input_file(params.get("metric", None)),
-            "-roi-left",
-            execution.input_file(params.get("roi-metric", None))
-        ])
+    cargs.extend([
+        "-left-metric",
+        execution.input_file(params.get("metric", None)),
+        "-roi-left",
+        execution.input_file(params.get("roi-metric", None))
+    ])
     return cargs
 
 
@@ -292,13 +291,12 @@ def cifti_create_dense_scalar_right_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None:
-        cargs.extend([
-            "-right-metric",
-            execution.input_file(params.get("metric", None)),
-            "-roi-right",
-            execution.input_file(params.get("roi-metric", None))
-        ])
+    cargs.extend([
+        "-right-metric",
+        execution.input_file(params.get("metric", None)),
+        "-roi-right",
+        execution.input_file(params.get("roi-metric", None))
+    ])
     return cargs
 
 
@@ -361,13 +359,12 @@ def cifti_create_dense_scalar_cerebellum_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None:
-        cargs.extend([
-            "-cerebellum-metric",
-            execution.input_file(params.get("metric", None)),
-            "-roi-cerebellum",
-            execution.input_file(params.get("roi-metric", None))
-        ])
+    cargs.extend([
+        "-cerebellum-metric",
+        execution.input_file(params.get("metric", None)),
+        "-roi-cerebellum",
+        execution.input_file(params.get("roi-metric", None))
+    ])
     return cargs
 
 
@@ -437,14 +434,13 @@ def cifti_create_dense_scalar_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None:
-        cargs.extend([
-            "-metric",
-            params.get("structure", None),
-            execution.input_file(params.get("metric", None)),
-            "-roi",
-            execution.input_file(params.get("roi-metric", None))
-        ])
+    cargs.extend([
+        "-metric",
+        params.get("structure", None),
+        execution.input_file(params.get("metric", None)),
+        "-roi",
+        execution.input_file(params.get("roi-metric", None))
+    ])
     return cargs
 
 
@@ -550,19 +546,18 @@ def cifti_create_dense_scalar_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("volume", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None or params.get("file", None) is not None or params.get("metric", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-create-dense-scalar",
-            params.get("cifti-out", None),
-            *(cifti_create_dense_scalar_volume_cargs(params.get("volume", None), execution) if (params.get("volume", None) is not None) else []),
-            *(cifti_create_dense_scalar_left_metric_cargs(params.get("left-metric", None), execution) if (params.get("left-metric", None) is not None) else []),
-            *(cifti_create_dense_scalar_right_metric_cargs(params.get("right-metric", None), execution) if (params.get("right-metric", None) is not None) else []),
-            *(cifti_create_dense_scalar_cerebellum_metric_cargs(params.get("cerebellum-metric", None), execution) if (params.get("cerebellum-metric", None) is not None) else []),
-            "-name-file",
-            (params.get("file", None) if (params.get("file", None) is not None) else ""),
-            *([a for c in [cifti_create_dense_scalar_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-create-dense-scalar",
+        params.get("cifti-out", None),
+        *cifti_create_dense_scalar_volume_cargs(params.get("volume", None), execution),
+        *cifti_create_dense_scalar_left_metric_cargs(params.get("left-metric", None), execution),
+        *cifti_create_dense_scalar_right_metric_cargs(params.get("right-metric", None), execution),
+        *cifti_create_dense_scalar_cerebellum_metric_cargs(params.get("cerebellum-metric", None), execution),
+        "-name-file",
+        params.get("file", None),
+        *[a for c in [cifti_create_dense_scalar_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c]
+    ])
     return cargs
 
 

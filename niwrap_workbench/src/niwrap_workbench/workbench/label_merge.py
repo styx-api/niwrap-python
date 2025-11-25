@@ -118,12 +118,11 @@ def label_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("reverse", False):
-        cargs.extend([
-            "-up-to",
-            params.get("last-column", None),
-            "-reverse"
-        ])
+    cargs.extend([
+        "-up-to",
+        params.get("last-column", None),
+        "-reverse"
+    ])
     return cargs
 
 
@@ -183,12 +182,11 @@ def label_merge_column_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("up-to", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("column", None),
-            *label_merge_up_to_cargs(params.get("up-to", None), execution)
-        ])
+    cargs.extend([
+        "-column",
+        params.get("column", None),
+        *label_merge_up_to_cargs(params.get("up-to", None), execution)
+    ])
     return cargs
 
 
@@ -251,12 +249,11 @@ def label_merge_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("column", None) is not None:
-        cargs.extend([
-            "-label",
-            execution.input_file(params.get("label-in", None)),
-            *[a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
-        ])
+    cargs.extend([
+        "-label",
+        execution.input_file(params.get("label-in", None)),
+        *[a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
+    ])
     return cargs
 
 
@@ -329,13 +326,12 @@ def label_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("label", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-label-merge",
-            params.get("label-out", None),
-            *[a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c]
-        ])
+    cargs.extend([
+        "wb_command",
+        "-label-merge",
+        params.get("label-out", None),
+        *[a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c]
+    ])
     return cargs
 
 

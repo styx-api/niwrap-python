@@ -196,14 +196,13 @@ def volume_reduce_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exclude-outliers", None) is not None or params.get("only-numeric", False):
-        cargs.extend([
-            "wb_command",
-            "-volume-reduce",
-            params.get("volume-out", None),
-            *(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-            ("-only-numeric" if (params.get("only-numeric", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-reduce",
+        params.get("volume-out", None),
+        *volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution),
+        "-only-numeric"
+    ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("operation", None))
     return cargs

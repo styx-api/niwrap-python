@@ -130,16 +130,15 @@ def border_to_rois_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("name", None) is not None or params.get("inverse", False) or params.get("include-border", False):
-        cargs.extend([
-            "wb_command",
-            "-border-to-rois",
-            params.get("metric-out", None),
-            "-border",
-            (params.get("name", None) if (params.get("name", None) is not None) else ""),
-            ("-inverse" if (params.get("inverse", False)) else ""),
-            ("-include-border" if (params.get("include-border", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-border-to-rois",
+        params.get("metric-out", None),
+        "-border",
+        params.get("name", None),
+        "-inverse",
+        "-include-border"
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("border-file", None)))
     return cargs

@@ -159,13 +159,12 @@ def cifti_smoothing_left_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-left-surface",
-            execution.input_file(params.get("surface", None)),
-            "-left-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-left-surface",
+        execution.input_file(params.get("surface", None)),
+        "-left-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -229,13 +228,12 @@ def cifti_smoothing_right_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-right-surface",
-            execution.input_file(params.get("surface", None)),
-            "-right-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-right-surface",
+        execution.input_file(params.get("surface", None)),
+        "-right-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -299,13 +297,12 @@ def cifti_smoothing_cerebellum_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-cerebellum-surface",
-            execution.input_file(params.get("surface", None)),
-            "-cerebellum-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-cerebellum-surface",
+        execution.input_file(params.get("surface", None)),
+        "-cerebellum-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -376,14 +373,13 @@ def cifti_smoothing_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("area-metric", None) is not None:
-        cargs.extend([
-            "-surface",
-            params.get("structure", None),
-            execution.input_file(params.get("surface", None)),
-            "-corrected-areas",
-            execution.input_file(params.get("area-metric", None))
-        ])
+    cargs.extend([
+        "-surface",
+        params.get("structure", None),
+        execution.input_file(params.get("surface", None)),
+        "-corrected-areas",
+        execution.input_file(params.get("area-metric", None))
+    ])
     return cargs
 
 
@@ -541,22 +537,21 @@ def cifti_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False) or params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("roi-cifti", None) is not None or params.get("fix-zeros-volume", False) or params.get("fix-zeros-surface", False) or params.get("merged-volume", False) or params.get("surface", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-smoothing",
-            params.get("cifti-out", None),
-            ("-fwhm" if (params.get("fwhm", False)) else ""),
-            *(cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-            *(cifti_smoothing_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-            *(cifti_smoothing_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-            "-cifti-roi",
-            (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
-            ("-fix-zeros-volume" if (params.get("fix-zeros-volume", False)) else ""),
-            ("-fix-zeros-surface" if (params.get("fix-zeros-surface", False)) else ""),
-            ("-merged-volume" if (params.get("merged-volume", False)) else ""),
-            *([a for c in [cifti_smoothing_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-smoothing",
+        params.get("cifti-out", None),
+        "-fwhm",
+        *cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution),
+        *cifti_smoothing_right_surface_cargs(params.get("right-surface", None), execution),
+        *cifti_smoothing_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution),
+        "-cifti-roi",
+        execution.input_file(params.get("roi-cifti", None)),
+        "-fix-zeros-volume",
+        "-fix-zeros-surface",
+        "-merged-volume",
+        *[a for c in [cifti_smoothing_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c]
+    ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(str(params.get("surface-kernel", None)))
     cargs.append(str(params.get("volume-kernel", None)))

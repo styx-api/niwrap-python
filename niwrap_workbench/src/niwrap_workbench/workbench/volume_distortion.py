@@ -121,16 +121,15 @@ def volume_distortion_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("source-volume", None) is not None or params.get("circular", False) or params.get("log2", False):
-        cargs.extend([
-            "wb_command",
-            "-volume-distortion",
-            params.get("volume-out", None),
-            "-fnirt",
-            (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
-            ("-circular" if (params.get("circular", False)) else ""),
-            ("-log2" if (params.get("log2", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-volume-distortion",
+        params.get("volume-out", None),
+        "-fnirt",
+        params.get("source-volume", None),
+        "-circular",
+        "-log2"
+    ])
     cargs.append(params.get("warpfield", None))
     return cargs
 

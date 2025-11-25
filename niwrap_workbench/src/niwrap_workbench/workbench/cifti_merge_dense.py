@@ -182,15 +182,14 @@ def cifti_merge_dense_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("action", None) is not None or params.get("cifti", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-merge-dense",
-            params.get("cifti-out", None),
-            "-label-collision",
-            (params.get("action", None) if (params.get("action", None) is not None) else ""),
-            *([a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-merge-dense",
+        params.get("cifti-out", None),
+        "-label-collision",
+        params.get("action", None),
+        *[a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c]
+    ])
     cargs.append(params.get("direction", None))
     return cargs
 

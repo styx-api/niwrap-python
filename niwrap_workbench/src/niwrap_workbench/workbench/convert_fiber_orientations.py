@@ -230,13 +230,12 @@ def convert_fiber_orientations_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fiber", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-convert-fiber-orientations",
-            params.get("fiber-out", None),
-            *[a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c]
-        ])
+    cargs.extend([
+        "wb_command",
+        "-convert-fiber-orientations",
+        params.get("fiber-out", None),
+        *[a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c]
+    ])
     cargs.append(execution.input_file(params.get("label-volume", None)))
     return cargs
 

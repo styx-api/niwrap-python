@@ -179,14 +179,13 @@ def cifti_create_dense_from_template_series_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("unit", None) is not None:
-        cargs.extend([
-            "-series",
-            str(params.get("step", None)),
-            str(params.get("start", None)),
-            "-unit",
-            params.get("unit", None)
-        ])
+    cargs.extend([
+        "-series",
+        str(params.get("step", None)),
+        str(params.get("start", None)),
+        "-unit",
+        params.get("unit", None)
+    ])
     return cargs
 
 
@@ -248,12 +247,11 @@ def cifti_create_dense_from_template_volume_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("from-cropped", False):
-        cargs.extend([
-            "-volume-all",
-            execution.input_file(params.get("volume-in", None)),
-            "-from-cropped"
-        ])
+    cargs.extend([
+        "-volume-all",
+        execution.input_file(params.get("volume-in", None)),
+        "-from-cropped"
+    ])
     return cargs
 
 
@@ -508,13 +506,12 @@ def cifti_create_dense_from_template_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("from-cropped", False):
-        cargs.extend([
-            "-volume",
-            params.get("structure", None),
-            execution.input_file(params.get("volume-in", None)),
-            "-from-cropped"
-        ])
+    cargs.extend([
+        "-volume",
+        params.get("structure", None),
+        execution.input_file(params.get("volume-in", None)),
+        "-from-cropped"
+    ])
     return cargs
 
 
@@ -643,20 +640,19 @@ def cifti_create_dense_from_template_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("series", None) is not None or params.get("volume-all", None) is not None or params.get("action", None) is not None or params.get("cifti", None) is not None or params.get("metric", None) is not None or params.get("label", None) is not None or params.get("volume", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-cifti-create-dense-from-template",
-            params.get("cifti-out", None),
-            *(cifti_create_dense_from_template_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
-            *(cifti_create_dense_from_template_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
-            "-label-collision",
-            (params.get("action", None) if (params.get("action", None) is not None) else ""),
-            *([a for c in [cifti_create_dense_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else []),
-            *([a for c in [cifti_create_dense_from_template_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
-            *([a for c in [cifti_create_dense_from_template_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
-            *([a for c in [cifti_create_dense_from_template_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-create-dense-from-template",
+        params.get("cifti-out", None),
+        *cifti_create_dense_from_template_series_cargs(params.get("series", None), execution),
+        *cifti_create_dense_from_template_volume_all_cargs(params.get("volume-all", None), execution),
+        "-label-collision",
+        params.get("action", None),
+        *[a for c in [cifti_create_dense_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c],
+        *[a for c in [cifti_create_dense_from_template_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c],
+        *[a for c in [cifti_create_dense_from_template_label_cargs(s, execution) for s in params.get("label", None)] for a in c],
+        *[a for c in [cifti_create_dense_from_template_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c]
+    ])
     cargs.append(execution.input_file(params.get("template-cifti", None)))
     return cargs
 

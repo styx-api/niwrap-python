@@ -182,13 +182,12 @@ def foci_create_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("class", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-foci-create",
-            params.get("output", None),
-            *[a for c in [foci_create_class_cargs(s, execution) for s in params.get("class", None)] for a in c]
-        ])
+    cargs.extend([
+        "wb_command",
+        "-foci-create",
+        params.get("output", None),
+        *[a for c in [foci_create_class_cargs(s, execution) for s in params.get("class", None)] for a in c]
+    ])
     return cargs
 
 

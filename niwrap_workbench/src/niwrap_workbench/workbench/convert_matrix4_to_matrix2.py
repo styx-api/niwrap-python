@@ -332,14 +332,13 @@ def convert_matrix4_to_matrix2_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("distances", None) is not None or params.get("individual-fibers", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-convert-matrix4-to-matrix2",
-            params.get("counts-out", None),
-            *(convert_matrix4_to_matrix2_distances_cargs(params.get("distances", None), execution) if (params.get("distances", None) is not None) else []),
-            *(convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual-fibers", None), execution) if (params.get("individual-fibers", None) is not None) else [])
-        ])
+    cargs.extend([
+        "wb_command",
+        "-convert-matrix4-to-matrix2",
+        params.get("counts-out", None),
+        *convert_matrix4_to_matrix2_distances_cargs(params.get("distances", None), execution),
+        *convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual-fibers", None), execution)
+    ])
     cargs.append(params.get("matrix4-wbsparse", None))
     return cargs
 

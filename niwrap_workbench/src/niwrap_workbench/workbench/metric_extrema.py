@@ -127,12 +127,11 @@ def metric_extrema_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fwhm", False):
-        cargs.extend([
-            "-presmooth",
-            str(params.get("kernel", None)),
-            "-fwhm"
-        ])
+    cargs.extend([
+        "-presmooth",
+        str(params.get("kernel", None)),
+        "-fwhm"
+    ])
     return cargs
 
 
@@ -343,22 +342,21 @@ def metric_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("presmooth", None) is not None or params.get("roi-metric", None) is not None or params.get("threshold", None) is not None or params.get("sum-columns", False) or params.get("consolidate-mode", False) or params.get("only-maxima", False) or params.get("only-minima", False) or params.get("column", None) is not None:
-        cargs.extend([
-            "wb_command",
-            "-metric-extrema",
-            params.get("metric-out", None),
-            *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-            "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
-            ("-sum-columns" if (params.get("sum-columns", False)) else ""),
-            ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
-            ("-only-maxima" if (params.get("only-maxima", False)) else ""),
-            ("-only-minima" if (params.get("only-minima", False)) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-metric-extrema",
+        params.get("metric-out", None),
+        *metric_extrema_presmooth_cargs(params.get("presmooth", None), execution),
+        "-roi",
+        execution.input_file(params.get("roi-metric", None)),
+        *metric_extrema_threshold_cargs(params.get("threshold", None), execution),
+        "-sum-columns",
+        "-consolidate-mode",
+        "-only-maxima",
+        "-only-minima",
+        "-column",
+        params.get("column", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(str(params.get("distance", None)))

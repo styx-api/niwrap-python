@@ -147,16 +147,15 @@ def cifti_vector_operation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("normalize-a", False) or params.get("normalize-b", False) or params.get("normalize-output", False) or params.get("magnitude", False):
-        cargs.extend([
-            "wb_command",
-            "-cifti-vector-operation",
-            params.get("cifti-out", None),
-            ("-normalize-a" if (params.get("normalize-a", False)) else ""),
-            ("-normalize-b" if (params.get("normalize-b", False)) else ""),
-            ("-normalize-output" if (params.get("normalize-output", False)) else ""),
-            ("-magnitude" if (params.get("magnitude", False)) else "")
-        ])
+    cargs.extend([
+        "wb_command",
+        "-cifti-vector-operation",
+        params.get("cifti-out", None),
+        "-normalize-a",
+        "-normalize-b",
+        "-normalize-output",
+        "-magnitude"
+    ])
     cargs.append(execution.input_file(params.get("vectors-a", None)))
     cargs.append(execution.input_file(params.get("vectors-b", None)))
     cargs.append(params.get("operation", None))
