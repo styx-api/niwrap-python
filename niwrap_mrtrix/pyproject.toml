@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_mrtrix"
-version = "0.8.0"
+version = "0.8.1"
 description = "Neuroimaging wrappers."
 license = "MIT"
 authors = [{ name = "CMI DAIR" }]
