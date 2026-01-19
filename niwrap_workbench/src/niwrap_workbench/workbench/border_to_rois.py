@@ -16,8 +16,8 @@ BORDER_TO_ROIS_METADATA = Metadata(
 _BorderToRoisParamsDictNoTag = typing.TypedDict('_BorderToRoisParamsDictNoTag', {
     "metric-out": str,
     "name": typing.NotRequired[str | None],
-    "inverse": bool,
     "include-border": bool,
+    "inverse": bool,
     "surface": InputPathType,
     "border-file": InputPathType,
 })
@@ -25,8 +25,8 @@ BorderToRoisParamsDictTagged = typing.TypedDict('BorderToRoisParamsDictTagged', 
     "@type": typing.Literal["workbench/border-to-rois"],
     "metric-out": str,
     "name": typing.NotRequired[str | None],
-    "inverse": bool,
     "include-border": bool,
+    "inverse": bool,
     "surface": InputPathType,
     "border-file": InputPathType,
 })
@@ -48,8 +48,8 @@ def border_to_rois_params(
     surface: InputPathType,
     border_file: InputPathType,
     name: str | None = None,
-    inverse: bool = False,
     include_border: bool = False,
+    inverse: bool = False,
 ) -> BorderToRoisParamsDictTagged:
     """
     Build parameters.
@@ -61,16 +61,16 @@ def border_to_rois_params(
         name: create ROI for only one border\
             \
             the name of the border.
-        inverse: use inverse selection (outside border).
         include_border: include vertices the border is closest to.
+        inverse: use inverse selection (outside border).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-to-rois",
         "metric-out": metric_out,
-        "inverse": inverse,
         "include-border": include_border,
+        "inverse": inverse,
         "surface": surface,
         "border-file": border_file,
     }
@@ -98,14 +98,14 @@ def border_to_rois_validate(
     if params.get("name", None) is not None:
         if not isinstance(params["name"], str):
             raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
-    if params.get("inverse", False) is None:
-        raise StyxValidationError("`inverse` must not be None")
-    if not isinstance(params["inverse"], bool):
-        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
     if params.get("include-border", False) is None:
         raise StyxValidationError("`include-border` must not be None")
     if not isinstance(params["include-border"], bool):
         raise StyxValidationError(f'`include-border` has the wrong type: Received `{type(params.get("include-border", False))}` expected `bool`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -134,13 +134,16 @@ def border_to_rois_cargs(
         "wb_command",
         "-border-to-rois"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-border",
-        (params.get("name", None) if (params.get("name", None) is not None) else ""),
-        ("-inverse" if (params.get("inverse", False)) else ""),
-        ("-include-border" if (params.get("include-border", False)) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("name", None) is not None:
+        cargs.extend([
+            "-border",
+            params.get("name", None)
+        ])
+    if params.get("include-border", False):
+        cargs.append("-include-border")
+    if params.get("inverse", False):
+        cargs.append("-inverse")
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("border-file", None)))
     return cargs
@@ -197,8 +200,8 @@ def border_to_rois(
     surface: InputPathType,
     border_file: InputPathType,
     name: str | None = None,
-    inverse: bool = False,
     include_border: bool = False,
+    inverse: bool = False,
     runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
@@ -214,8 +217,8 @@ def border_to_rois(
         name: create ROI for only one border\
             \
             the name of the border.
-        inverse: use inverse selection (outside border).
         include_border: include vertices the border is closest to.
+        inverse: use inverse selection (outside border).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderToRoisOutputs`).
@@ -223,8 +226,8 @@ def border_to_rois(
     params = border_to_rois_params(
         metric_out=metric_out,
         name=name,
-        inverse=inverse,
         include_border=include_border,
+        inverse=inverse,
         surface=surface,
         border_file=border_file,
     )

@@ -25,14 +25,14 @@
         }
       }
     },
-    "caret5-method": {
-      "var_param": "caret5_method"
+    "log2": {
+      "var_param": "log2"
     },
     "edge-method": {
       "var_param": "edge_method"
     },
-    "log2": {
-      "var_param": "log2"
+    "caret5-method": {
+      "var_param": "caret5_method"
     },
     "surface-reference": {
       "var_param": "surface_reference"

@@ -120,9 +120,10 @@ def metric_merge_up_to_cargs(
     cargs = []
     cargs.extend([
         "-up-to",
-        params.get("last-column", None),
-        ("-reverse" if (params.get("reverse", False)) else "")
+        params.get("last-column", None)
     ])
+    if params.get("reverse", False):
+        cargs.append("-reverse")
     return cargs
 
 

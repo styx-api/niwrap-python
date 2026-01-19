@@ -1,12 +1,6 @@
 {
   "fn_root_make_params_and_execute": "volume_warpfield_affine_regression",
   "properties": {
-    "roi-vol": {
-      "var_param": "roi_vol"
-    },
-    "source-volume": {
-      "var_param": "source_volume"
-    },
     "flirt-out": {
       "var_param": "flirt_out",
       "fn_struct_make_params": "volume_warpfield_affine_regression_flirt_out",
@@ -18,6 +12,12 @@
           "var_param": "target_volume"
         }
       }
+    },
+    "source-volume": {
+      "var_param": "source_volume"
+    },
+    "roi-vol": {
+      "var_param": "roi_vol"
     },
     "warpfield": {
       "var_param": "warpfield"

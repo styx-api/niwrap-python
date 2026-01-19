@@ -31,15 +31,15 @@ VolumeMathVarParamsDict = _VolumeMathVarParamsDictNoTag | VolumeMathVarParamsDic
 
 _VolumeMathParamsDictNoTag = typing.TypedDict('_VolumeMathParamsDictNoTag', {
     "volume-out": str,
-    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
+    "replace": typing.NotRequired[float | None],
     "expression": str,
 })
 VolumeMathParamsDictTagged = typing.TypedDict('VolumeMathParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-math"],
     "volume-out": str,
-    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
+    "replace": typing.NotRequired[float | None],
     "expression": str,
 })
 VolumeMathParamsDict = _VolumeMathParamsDictNoTag | VolumeMathParamsDictTagged
@@ -121,11 +121,15 @@ def volume_math_var_cargs(
     cargs.extend([
         "-var",
         params.get("name", None),
-        execution.input_file(params.get("volume", None)),
-        "-subvolume",
-        (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
-        ("-repeat" if (params.get("repeat", False)) else "")
+        execution.input_file(params.get("volume", None))
     ])
+    if params.get("subvol", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvol", None)
+        ])
+    if params.get("repeat", False):
+        cargs.append("-repeat")
     return cargs
 
 
@@ -142,8 +146,8 @@ class VolumeMathOutputs(typing.NamedTuple):
 def volume_math_params(
     volume_out: str,
     expression: str,
-    replace: float | None = None,
     var: list[VolumeMathVarParamsDict] | None = None,
+    replace: float | None = None,
 ) -> VolumeMathParamsDictTagged:
     """
     Build parameters.
@@ -151,10 +155,10 @@ def volume_math_params(
     Args:
         volume_out: the output volume.
         expression: the expression to evaluate, in quotes.
+        var: a volume file to use as a variable.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        var: a volume file to use as a variable.
     Returns:
         Parameter dictionary
     """
@@ -163,10 +167,10 @@ def volume_math_params(
         "volume-out": volume_out,
         "expression": expression,
     }
-    if replace is not None:
-        params["replace"] = replace
     if var is not None:
         params["var"] = var
+    if replace is not None:
+        params["replace"] = replace
     return params
 
 
@@ -186,14 +190,14 @@ def volume_math_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("replace", None) is not None:
-        if not isinstance(params["replace"], (float, int)):
-            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
     if params.get("var", None) is not None:
         if not isinstance(params["var"], list):
             raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[VolumeMathVarParamsDict] | None`')
         for e in params["var"]:
             volume_math_var_validate(e)
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (float, int)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
     if params.get("expression", None) is None:
         raise StyxValidationError("`expression` must not be None")
     if not isinstance(params["expression"], str):
@@ -220,10 +224,13 @@ def volume_math_cargs(
     ])
     cargs.extend([
         params.get("volume-out", None),
-        "-fixnan",
-        (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
         *([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
     ])
+    if params.get("replace", None) is not None:
+        cargs.extend([
+            "-fixnan",
+            str(params.get("replace", None))
+        ])
     cargs.append(params.get("expression", None))
     return cargs
 
@@ -343,8 +350,8 @@ def volume_math_execute(
 def volume_math(
     volume_out: str,
     expression: str,
-    replace: float | None = None,
     var: list[VolumeMathVarParamsDict] | None = None,
+    replace: float | None = None,
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
@@ -422,18 +429,18 @@ def volume_math(
     Args:
         volume_out: the output volume.
         expression: the expression to evaluate, in quotes.
+        var: a volume file to use as a variable.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        var: a volume file to use as a variable.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeMathOutputs`).
     """
     params = volume_math_params(
         volume_out=volume_out,
-        replace=replace,
         var=var,
+        replace=replace,
         expression=expression,
     )
     return volume_math_execute(params, runner)

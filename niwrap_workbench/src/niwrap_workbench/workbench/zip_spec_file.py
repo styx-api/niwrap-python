@@ -126,12 +126,13 @@ def zip_spec_file_cargs(
         "wb_command",
         "-zip-spec-file"
     ])
-    if params.get("directory", None) is not None or params.get("skip-missing", False):
+    if params.get("directory", None) is not None:
         cargs.extend([
             "-base-dir",
-            (params.get("directory", None) if (params.get("directory", None) is not None) else ""),
-            ("-skip-missing" if (params.get("skip-missing", False)) else "")
+            params.get("directory", None)
         ])
+    if params.get("skip-missing", False):
+        cargs.append("-skip-missing")
     cargs.append(params.get("spec-file", None))
     cargs.append(params.get("extract-folder", None))
     cargs.append(params.get("zip-file", None))

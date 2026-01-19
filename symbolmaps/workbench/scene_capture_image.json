@@ -1,12 +1,6 @@
 {
   "fn_root_make_params_and_execute": "scene_capture_image",
   "properties": {
-    "size-window": {
-      "var_param": "size_window"
-    },
-    "size-capture": {
-      "var_param": "size_capture"
-    },
     "size-width-height": {
       "var_param": "size_width_height",
       "fn_struct_make_params": "scene_capture_image_size_width_height",
@@ -19,15 +13,6 @@
         }
       }
     },
-    "width": {
-      "var_param": "width"
-    },
-    "height": {
-      "var_param": "height"
-    },
-    "units": {
-      "var_param": "units"
-    },
     "resolution": {
       "var_param": "resolution",
       "fn_struct_make_params": "scene_capture_image_resolution",
@@ -39,12 +24,6 @@
           "var_param": "units_name"
         }
       }
-    },
-    "size": {
-      "var_param": "size"
-    },
-    "no-scene-colors": {
-      "var_param": "no_scene_colors"
     },
     "set-map-yoke": {
       "var_param": "set_map_yoke",
@@ -70,14 +49,35 @@
         }
       }
     },
-    "show-capture-settings": {
-      "var_param": "show_capture_settings"
-    },
     "Renderer": {
       "var_param": "renderer"
     },
+    "size": {
+      "var_param": "size"
+    },
+    "units": {
+      "var_param": "units"
+    },
+    "height": {
+      "var_param": "height"
+    },
+    "width": {
+      "var_param": "width"
+    },
     "print-image-info": {
       "var_param": "print_image_info"
+    },
+    "show-capture-settings": {
+      "var_param": "show_capture_settings"
+    },
+    "no-scene-colors": {
+      "var_param": "no_scene_colors"
+    },
+    "size-capture": {
+      "var_param": "size_capture"
+    },
+    "size-window": {
+      "var_param": "size_window"
     },
     "scene-file": {
       "var_param": "scene_file"

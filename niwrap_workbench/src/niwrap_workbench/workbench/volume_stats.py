@@ -26,19 +26,19 @@ VolumeStatsRoiParamsDict = _VolumeStatsRoiParamsDictNoTag | VolumeStatsRoiParams
 
 
 _VolumeStatsParamsDictNoTag = typing.TypedDict('_VolumeStatsParamsDictNoTag', {
-    "operation": typing.NotRequired[str | None],
-    "percent": typing.NotRequired[float | None],
-    "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeStatsRoiParamsDict | None],
+    "subvolume": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
 VolumeStatsParamsDictTagged = typing.TypedDict('VolumeStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-stats"],
-    "operation": typing.NotRequired[str | None],
-    "percent": typing.NotRequired[float | None],
-    "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeStatsRoiParamsDict | None],
+    "subvolume": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
     "volume-in": InputPathType,
 })
@@ -105,9 +105,10 @@ def volume_stats_roi_cargs(
     cargs = []
     cargs.extend([
         "-roi",
-        execution.input_file(params.get("roi-volume", None)),
-        ("-match-maps" if (params.get("match-maps", False)) else "")
+        execution.input_file(params.get("roi-volume", None))
     ])
+    if params.get("match-maps", False):
+        cargs.append("-match-maps")
     return cargs
 
 
@@ -121,10 +122,10 @@ class VolumeStatsOutputs(typing.NamedTuple):
 
 def volume_stats_params(
     volume_in: InputPathType,
-    operation: str | None = None,
-    percent: float | None = None,
-    subvolume: str | None = None,
     roi: VolumeStatsRoiParamsDict | None = None,
+    subvolume: str | None = None,
+    percent: float | None = None,
+    operation: str | None = None,
     show_map_name: bool = False,
 ) -> VolumeStatsParamsDictTagged:
     """
@@ -132,16 +133,16 @@ def volume_stats_params(
     
     Args:
         volume_in: the input volume.
-        operation: use a reduction operation\
-            \
-            the reduction operation.
-        percent: give the value at a percentile\
-            \
-            the percentile to find, must be between 0 and 100.
+        roi: only consider data inside an roi.
         subvolume: only display output for one subvolume\
             \
             the subvolume number or name.
-        roi: only consider data inside an roi.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        operation: use a reduction operation\
+            \
+            the reduction operation.
         show_map_name: print map index and name before each output.
     Returns:
         Parameter dictionary
@@ -151,14 +152,14 @@ def volume_stats_params(
         "show-map-name": show_map_name,
         "volume-in": volume_in,
     }
-    if operation is not None:
-        params["operation"] = operation
-    if percent is not None:
-        params["percent"] = percent
-    if subvolume is not None:
-        params["subvolume"] = subvolume
     if roi is not None:
         params["roi"] = roi
+    if subvolume is not None:
+        params["subvolume"] = subvolume
+    if percent is not None:
+        params["percent"] = percent
+    if operation is not None:
+        params["operation"] = operation
     return params
 
 
@@ -174,17 +175,17 @@ def volume_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("operation", None) is not None:
-        if not isinstance(params["operation"], str):
-            raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str | None`')
-    if params.get("percent", None) is not None:
-        if not isinstance(params["percent"], (float, int)):
-            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("roi", None) is not None:
+        volume_stats_roi_validate(params["roi"])
     if params.get("subvolume", None) is not None:
         if not isinstance(params["subvolume"], str):
             raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
-    if params.get("roi", None) is not None:
-        volume_stats_roi_validate(params["roi"])
+    if params.get("percent", None) is not None:
+        if not isinstance(params["percent"], (float, int)):
+            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("operation", None) is not None:
+        if not isinstance(params["operation"], str):
+            raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str | None`')
     if params.get("show-map-name", False) is None:
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
@@ -213,17 +214,25 @@ def volume_stats_cargs(
         "wb_command",
         "-volume-stats"
     ])
-    if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
+    if params.get("roi", None) is not None:
+        cargs.extend(volume_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("subvolume", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvolume", None)
+        ])
+    if params.get("percent", None) is not None:
+        cargs.extend([
+            "-percentile",
+            str(params.get("percent", None))
+        ])
+    if params.get("operation", None) is not None:
         cargs.extend([
             "-reduce",
-            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
-            "-percentile",
-            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
-            "-subvolume",
-            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
-            *(volume_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            ("-show-map-name" if (params.get("show-map-name", False)) else "")
+            params.get("operation", None)
         ])
+    if params.get("show-map-name", False):
+        cargs.append("-show-map-name")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
@@ -299,10 +308,10 @@ def volume_stats_execute(
 
 def volume_stats(
     volume_in: InputPathType,
-    operation: str | None = None,
-    percent: float | None = None,
-    subvolume: str | None = None,
     roi: VolumeStatsRoiParamsDict | None = None,
+    subvolume: str | None = None,
+    percent: float | None = None,
+    operation: str | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
@@ -338,26 +347,26 @@ def volume_stats(
     
     Args:
         volume_in: the input volume.
-        operation: use a reduction operation\
-            \
-            the reduction operation.
-        percent: give the value at a percentile\
-            \
-            the percentile to find, must be between 0 and 100.
+        roi: only consider data inside an roi.
         subvolume: only display output for one subvolume\
             \
             the subvolume number or name.
-        roi: only consider data inside an roi.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        operation: use a reduction operation\
+            \
+            the reduction operation.
         show_map_name: print map index and name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeStatsOutputs`).
     """
     params = volume_stats_params(
-        operation=operation,
-        percent=percent,
-        subvolume=subvolume,
         roi=roi,
+        subvolume=subvolume,
+        percent=percent,
+        operation=operation,
         show_map_name=show_map_name,
         volume_in=volume_in,
     )

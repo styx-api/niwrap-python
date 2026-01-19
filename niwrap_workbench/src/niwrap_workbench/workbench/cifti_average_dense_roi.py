@@ -38,27 +38,27 @@ CiftiAverageDenseRoiCiftiParamsDict = _CiftiAverageDenseRoiCiftiParamsDictNoTag 
 _CiftiAverageDenseRoiParamsDictNoTag = typing.TypedDict('_CiftiAverageDenseRoiParamsDictNoTag', {
     "cifti-out": str,
     "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-vol": typing.NotRequired[InputPathType | None],
-    "left-surf": typing.NotRequired[InputPathType | None],
-    "right-surf": typing.NotRequired[InputPathType | None],
-    "cerebellum-surf": typing.NotRequired[InputPathType | None],
     "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParamsDict] | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "left-surf": typing.NotRequired[InputPathType | None],
+    "roi-vol": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiAverageDenseRoiParamsDictTagged = typing.TypedDict('CiftiAverageDenseRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-average-dense-roi"],
     "cifti-out": str,
     "cifti-roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-vol": typing.NotRequired[InputPathType | None],
-    "left-surf": typing.NotRequired[InputPathType | None],
-    "right-surf": typing.NotRequired[InputPathType | None],
-    "cerebellum-surf": typing.NotRequired[InputPathType | None],
     "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParamsDict] | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "left-surf": typing.NotRequired[InputPathType | None],
+    "roi-vol": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiAverageDenseRoiParamsDict = _CiftiAverageDenseRoiParamsDictNoTag | CiftiAverageDenseRoiParamsDictTagged
 
@@ -123,9 +123,10 @@ def cifti_average_dense_roi_cifti_roi_cargs(
     cargs = []
     cargs.extend([
         "-cifti-roi",
-        execution.input_file(params.get("roi-cifti", None)),
-        ("-in-memory" if (params.get("in-memory", False)) else "")
+        execution.input_file(params.get("roi-cifti", None))
     ])
+    if params.get("in-memory", False):
+        cargs.append("-in-memory")
     return cargs
 
 
@@ -199,14 +200,14 @@ class CiftiAverageDenseRoiOutputs(typing.NamedTuple):
 def cifti_average_dense_roi_params(
     cifti_out: str,
     cifti_roi: CiftiAverageDenseRoiCiftiRoiParamsDict | None = None,
+    cifti: list[CiftiAverageDenseRoiCiftiParamsDict] | None = None,
+    cerebellum_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    left_surf: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
     roi_metric_2: InputPathType | None = None,
-    roi_vol: InputPathType | None = None,
-    left_surf: InputPathType | None = None,
-    right_surf: InputPathType | None = None,
-    cerebellum_surf: InputPathType | None = None,
-    cifti: list[CiftiAverageDenseRoiCiftiParamsDict] | None = None,
 ) -> CiftiAverageDenseRoiParamsDictTagged:
     """
     Build parameters.
@@ -214,29 +215,29 @@ def cifti_average_dense_roi_params(
     Args:
         cifti_out: output cifti dscalar file.
         cifti_roi: cifti file containing combined weights.
-        roi_metric: weights to use for left hempsphere\
-            \
-            the left roi as a metric file.
-        roi_metric_: weights to use for right hempsphere\
-            \
-            the right roi as a metric file.
-        roi_metric_2: weights to use for cerebellum surface\
-            \
-            the cerebellum roi as a metric file.
-        roi_vol: voxel weights to use\
-            \
-            the roi volume file.
-        left_surf: specify the left surface for vertex area correction\
-            \
-            the left surface file.
-        right_surf: specify the right surface for vertex area correction\
-            \
-            the right surface file.
+        cifti: specify an input cifti file.
         cerebellum_surf: specify the cerebellum surface for vertex area\
             correction\
             \
             the cerebellum surface file.
-        cifti: specify an input cifti file.
+        right_surf: specify the right surface for vertex area correction\
+            \
+            the right surface file.
+        left_surf: specify the left surface for vertex area correction\
+            \
+            the left surface file.
+        roi_vol: voxel weights to use\
+            \
+            the roi volume file.
+        roi_metric: weights to use for cerebellum surface\
+            \
+            the cerebellum roi as a metric file.
+        roi_metric_: weights to use for right hempsphere\
+            \
+            the right roi as a metric file.
+        roi_metric_2: weights to use for left hempsphere\
+            \
+            the left roi as a metric file.
     Returns:
         Parameter dictionary
     """
@@ -246,22 +247,22 @@ def cifti_average_dense_roi_params(
     }
     if cifti_roi is not None:
         params["cifti-roi"] = cifti_roi
+    if cifti is not None:
+        params["cifti"] = cifti
+    if cerebellum_surf is not None:
+        params["cerebellum-surf"] = cerebellum_surf
+    if right_surf is not None:
+        params["right-surf"] = right_surf
+    if left_surf is not None:
+        params["left-surf"] = left_surf
+    if roi_vol is not None:
+        params["roi-vol"] = roi_vol
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     if roi_metric_ is not None:
         params["roi-metric"] = roi_metric_
     if roi_metric_2 is not None:
         params["roi-metric"] = roi_metric_2
-    if roi_vol is not None:
-        params["roi-vol"] = roi_vol
-    if left_surf is not None:
-        params["left-surf"] = left_surf
-    if right_surf is not None:
-        params["right-surf"] = right_surf
-    if cerebellum_surf is not None:
-        params["cerebellum-surf"] = cerebellum_surf
-    if cifti is not None:
-        params["cifti"] = cifti
     return params
 
 
@@ -283,32 +284,32 @@ def cifti_average_dense_roi_validate(
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("cifti-roi", None) is not None:
         cifti_average_dense_roi_cifti_roi_validate(params["cifti-roi"])
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-vol", None) is not None:
-        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
-    if params.get("left-surf", None) is not None:
-        if not isinstance(params["left-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
-    if params.get("right-surf", None) is not None:
-        if not isinstance(params["right-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
-    if params.get("cerebellum-surf", None) is not None:
-        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
             raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageDenseRoiCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_average_dense_roi_cifti_validate(e)
+    if params.get("cerebellum-surf", None) is not None:
+        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
+    if params.get("right-surf", None) is not None:
+        if not isinstance(params["right-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
+    if params.get("left-surf", None) is not None:
+        if not isinstance(params["left-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_average_dense_roi_cargs(
@@ -332,22 +333,43 @@ def cifti_average_dense_roi_cargs(
     cargs.extend([
         params.get("cifti-out", None),
         *(cifti_average_dense_roi_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
-        "-left-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-right-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-cerebellum-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-vol-roi",
-        (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
-        "-left-area-surf",
-        (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
-        "-right-area-surf",
-        (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
-        "-cerebellum-area-surf",
-        (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
         *([a for c in [cifti_average_dense_roi_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
     ])
+    if params.get("cerebellum-surf", None) is not None:
+        cargs.extend([
+            "-cerebellum-area-surf",
+            execution.input_file(params.get("cerebellum-surf", None))
+        ])
+    if params.get("right-surf", None) is not None:
+        cargs.extend([
+            "-right-area-surf",
+            execution.input_file(params.get("right-surf", None))
+        ])
+    if params.get("left-surf", None) is not None:
+        cargs.extend([
+            "-left-area-surf",
+            execution.input_file(params.get("left-surf", None))
+        ])
+    if params.get("roi-vol", None) is not None:
+        cargs.extend([
+            "-vol-roi",
+            execution.input_file(params.get("roi-vol", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-right-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-left-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -404,14 +426,14 @@ def cifti_average_dense_roi_execute(
 def cifti_average_dense_roi(
     cifti_out: str,
     cifti_roi: CiftiAverageDenseRoiCiftiRoiParamsDict | None = None,
+    cifti: list[CiftiAverageDenseRoiCiftiParamsDict] | None = None,
+    cerebellum_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    left_surf: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
     roi_metric_2: InputPathType | None = None,
-    roi_vol: InputPathType | None = None,
-    left_surf: InputPathType | None = None,
-    right_surf: InputPathType | None = None,
-    cerebellum_surf: InputPathType | None = None,
-    cifti: list[CiftiAverageDenseRoiCiftiParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiAverageDenseRoiOutputs:
     """
@@ -427,29 +449,29 @@ def cifti_average_dense_roi(
     Args:
         cifti_out: output cifti dscalar file.
         cifti_roi: cifti file containing combined weights.
-        roi_metric: weights to use for left hempsphere\
-            \
-            the left roi as a metric file.
-        roi_metric_: weights to use for right hempsphere\
-            \
-            the right roi as a metric file.
-        roi_metric_2: weights to use for cerebellum surface\
-            \
-            the cerebellum roi as a metric file.
-        roi_vol: voxel weights to use\
-            \
-            the roi volume file.
-        left_surf: specify the left surface for vertex area correction\
-            \
-            the left surface file.
-        right_surf: specify the right surface for vertex area correction\
-            \
-            the right surface file.
+        cifti: specify an input cifti file.
         cerebellum_surf: specify the cerebellum surface for vertex area\
             correction\
             \
             the cerebellum surface file.
-        cifti: specify an input cifti file.
+        right_surf: specify the right surface for vertex area correction\
+            \
+            the right surface file.
+        left_surf: specify the left surface for vertex area correction\
+            \
+            the left surface file.
+        roi_vol: voxel weights to use\
+            \
+            the roi volume file.
+        roi_metric: weights to use for cerebellum surface\
+            \
+            the cerebellum roi as a metric file.
+        roi_metric_: weights to use for right hempsphere\
+            \
+            the right roi as a metric file.
+        roi_metric_2: weights to use for left hempsphere\
+            \
+            the left roi as a metric file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAverageDenseRoiOutputs`).
@@ -457,14 +479,14 @@ def cifti_average_dense_roi(
     params = cifti_average_dense_roi_params(
         cifti_out=cifti_out,
         cifti_roi=cifti_roi,
+        cifti=cifti,
+        cerebellum_surf=cerebellum_surf,
+        right_surf=right_surf,
+        left_surf=left_surf,
+        roi_vol=roi_vol,
         roi_metric=roi_metric,
         roi_metric_=roi_metric_,
         roi_metric_2=roi_metric_2,
-        roi_vol=roi_vol,
-        left_surf=left_surf,
-        right_surf=right_surf,
-        cerebellum_surf=cerebellum_surf,
-        cifti=cifti,
     )
     return cifti_average_dense_roi_execute(params, runner)
 

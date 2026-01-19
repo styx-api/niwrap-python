@@ -222,10 +222,13 @@ def cifti_create_label_left_label_cargs(
     cargs = []
     cargs.extend([
         "-left-label",
-        execution.input_file(params.get("label", None)),
-        "-roi-left",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("label", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-left",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -290,10 +293,13 @@ def cifti_create_label_right_label_cargs(
     cargs = []
     cargs.extend([
         "-right-label",
-        execution.input_file(params.get("label", None)),
-        "-roi-right",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("label", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-right",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -358,10 +364,13 @@ def cifti_create_label_cerebellum_label_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-label",
-        execution.input_file(params.get("label", None)),
-        "-roi-cerebellum",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("label", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-cerebellum",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -434,10 +443,13 @@ def cifti_create_label_label_cargs(
     cargs.extend([
         "-label",
         params.get("structure", None),
-        execution.input_file(params.get("label", None)),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("label", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 

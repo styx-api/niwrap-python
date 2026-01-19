@@ -13,12 +13,6 @@
         }
       }
     },
-    "discard-unused-labels": {
-      "var_param": "discard_unused_labels"
-    },
-    "action": {
-      "var_param": "action"
-    },
     "label": {
       "var_param": "label",
       "fn_struct_make_params": "cifti_replace_structure_label",
@@ -57,6 +51,12 @@
           "var_param": "from_cropped"
         }
       }
+    },
+    "action": {
+      "var_param": "action"
+    },
+    "discard-unused-labels": {
+      "var_param": "discard_unused_labels"
     },
     "cifti": {
       "var_param": "cifti"

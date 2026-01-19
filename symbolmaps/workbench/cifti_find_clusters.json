@@ -4,9 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "less-than": {
-      "var_param": "less_than"
-    },
     "left-surface": {
       "var_param": "left_surface",
       "fn_struct_make_params": "cifti_find_clusters_left_surface",
@@ -43,12 +40,6 @@
         }
       }
     },
-    "roi-cifti": {
-      "var_param": "roi_cifti"
-    },
-    "merged-volume": {
-      "var_param": "merged_volume"
-    },
     "size-ratio": {
       "var_param": "size_ratio",
       "fn_struct_make_params": "cifti_find_clusters_size_ratio",
@@ -75,6 +66,15 @@
     },
     "startval": {
       "var_param": "startval"
+    },
+    "roi-cifti": {
+      "var_param": "roi_cifti"
+    },
+    "merged-volume": {
+      "var_param": "merged_volume"
+    },
+    "less-than": {
+      "var_param": "less_than"
     },
     "cifti": {
       "var_param": "cifti"

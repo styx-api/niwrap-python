@@ -27,18 +27,18 @@ CiftiExtremaThresholdParamsDict = _CiftiExtremaThresholdParamsDictNoTag | CiftiE
 
 _CiftiExtremaParamsDictNoTag = typing.TypedDict('_CiftiExtremaParamsDictNoTag', {
     "cifti-out": str,
-    "surface": typing.NotRequired[InputPathType | None],
-    "surface": typing.NotRequired[InputPathType | None],
-    "surface": typing.NotRequired[InputPathType | None],
-    "surface-kernel": typing.NotRequired[float | None],
-    "volume-kernel": typing.NotRequired[float | None],
-    "presmooth-fwhm": bool,
     "threshold": typing.NotRequired[CiftiExtremaThresholdParamsDict | None],
-    "merged-volume": bool,
-    "sum-maps": bool,
-    "consolidate-mode": bool,
-    "only-maxima": bool,
+    "volume-kernel": typing.NotRequired[float | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
     "only-minima": bool,
+    "only-maxima": bool,
+    "consolidate-mode": bool,
+    "sum-maps": bool,
+    "merged-volume": bool,
+    "presmooth-fwhm": bool,
     "cifti": InputPathType,
     "surface-distance": float,
     "volume-distance": float,
@@ -47,18 +47,18 @@ _CiftiExtremaParamsDictNoTag = typing.TypedDict('_CiftiExtremaParamsDictNoTag', 
 CiftiExtremaParamsDictTagged = typing.TypedDict('CiftiExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-extrema"],
     "cifti-out": str,
-    "surface": typing.NotRequired[InputPathType | None],
-    "surface": typing.NotRequired[InputPathType | None],
-    "surface": typing.NotRequired[InputPathType | None],
-    "surface-kernel": typing.NotRequired[float | None],
-    "volume-kernel": typing.NotRequired[float | None],
-    "presmooth-fwhm": bool,
     "threshold": typing.NotRequired[CiftiExtremaThresholdParamsDict | None],
-    "merged-volume": bool,
-    "sum-maps": bool,
-    "consolidate-mode": bool,
-    "only-maxima": bool,
+    "volume-kernel": typing.NotRequired[float | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
     "only-minima": bool,
+    "only-maxima": bool,
+    "consolidate-mode": bool,
+    "sum-maps": bool,
+    "merged-volume": bool,
+    "presmooth-fwhm": bool,
     "cifti": InputPathType,
     "surface-distance": float,
     "volume-distance": float,
@@ -148,18 +148,18 @@ def cifti_extrema_params(
     surface_distance: float,
     volume_distance: float,
     direction: str,
+    threshold: CiftiExtremaThresholdParamsDict | None = None,
+    volume_kernel: float | None = None,
+    surface_kernel: float | None = None,
     surface: InputPathType | None = None,
     surface_: InputPathType | None = None,
     surface_2: InputPathType | None = None,
-    surface_kernel: float | None = None,
-    volume_kernel: float | None = None,
-    presmooth_fwhm: bool = False,
-    threshold: CiftiExtremaThresholdParamsDict | None = None,
-    merged_volume: bool = False,
-    sum_maps: bool = False,
-    consolidate_mode: bool = False,
-    only_maxima: bool = False,
     only_minima: bool = False,
+    only_maxima: bool = False,
+    consolidate_mode: bool = False,
+    sum_maps: bool = False,
+    merged_volume: bool = False,
+    presmooth_fwhm: bool = False,
 ) -> CiftiExtremaParamsDictTagged:
     """
     Build parameters.
@@ -172,62 +172,62 @@ def cifti_extrema_params(
         volume_distance: the minimum distance between extrema of the same type,\
             for volume components.
         direction: which dimension to find extrema along, ROW or COLUMN.
-        surface: specify the left surface to use\
-            \
-            the left surface file.
-        surface_: specify the right surface to use\
-            \
-            the right surface file.
-        surface_2: specify the cerebellum surface to use\
-            \
-            the cerebellum surface file.
-        surface_kernel: smooth on the surface before finding extrema\
-            \
-            the size of the gaussian surface smoothing kernel in mm, as sigma\
-            by default.
+        threshold: ignore small extrema.
         volume_kernel: smooth volume components before finding extrema\
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        presmooth_fwhm: smoothing kernel distances are FWHM, not sigma.
-        threshold: ignore small extrema.
-        merged_volume: treat volume components as if they were a single\
-            component.
-        sum_maps: output the sum of the extrema maps instead of each map\
-            separately.
+        surface_kernel: smooth on the surface before finding extrema\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        surface: specify the cerebellum surface to use\
+            \
+            the cerebellum surface file.
+        surface_: specify the right surface to use\
+            \
+            the right surface file.
+        surface_2: specify the left surface to use\
+            \
+            the left surface file.
+        only_minima: only find the minima.
+        only_maxima: only find the maxima.
         consolidate_mode: use consolidation of local minima instead of a large\
             neighborhood.
-        only_maxima: only find the maxima.
-        only_minima: only find the minima.
+        sum_maps: output the sum of the extrema maps instead of each map\
+            separately.
+        merged_volume: treat volume components as if they were a single\
+            component.
+        presmooth_fwhm: smoothing kernel distances are FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-extrema",
         "cifti-out": cifti_out,
-        "presmooth-fwhm": presmooth_fwhm,
-        "merged-volume": merged_volume,
-        "sum-maps": sum_maps,
-        "consolidate-mode": consolidate_mode,
-        "only-maxima": only_maxima,
         "only-minima": only_minima,
+        "only-maxima": only_maxima,
+        "consolidate-mode": consolidate_mode,
+        "sum-maps": sum_maps,
+        "merged-volume": merged_volume,
+        "presmooth-fwhm": presmooth_fwhm,
         "cifti": cifti,
         "surface-distance": surface_distance,
         "volume-distance": volume_distance,
         "direction": direction,
     }
+    if threshold is not None:
+        params["threshold"] = threshold
+    if volume_kernel is not None:
+        params["volume-kernel"] = volume_kernel
+    if surface_kernel is not None:
+        params["surface-kernel"] = surface_kernel
     if surface is not None:
         params["surface"] = surface
     if surface_ is not None:
         params["surface"] = surface_
     if surface_2 is not None:
         params["surface"] = surface_2
-    if surface_kernel is not None:
-        params["surface-kernel"] = surface_kernel
-    if volume_kernel is not None:
-        params["volume-kernel"] = volume_kernel
-    if threshold is not None:
-        params["threshold"] = threshold
     return params
 
 
@@ -247,47 +247,47 @@ def cifti_extrema_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("surface", None) is not None:
-        if not isinstance(params["surface"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
-    if params.get("surface", None) is not None:
-        if not isinstance(params["surface"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
-    if params.get("surface", None) is not None:
-        if not isinstance(params["surface"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
-    if params.get("surface-kernel", None) is not None:
-        if not isinstance(params["surface-kernel"], (float, int)):
-            raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        cifti_extrema_threshold_validate(params["threshold"])
     if params.get("volume-kernel", None) is not None:
         if not isinstance(params["volume-kernel"], (float, int)):
             raise StyxValidationError(f'`volume-kernel` has the wrong type: Received `{type(params.get("volume-kernel", None))}` expected `float | None`')
-    if params.get("presmooth-fwhm", False) is None:
-        raise StyxValidationError("`presmooth-fwhm` must not be None")
-    if not isinstance(params["presmooth-fwhm"], bool):
-        raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
-    if params.get("threshold", None) is not None:
-        cifti_extrema_threshold_validate(params["threshold"])
-    if params.get("merged-volume", False) is None:
-        raise StyxValidationError("`merged-volume` must not be None")
-    if not isinstance(params["merged-volume"], bool):
-        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
-    if params.get("sum-maps", False) is None:
-        raise StyxValidationError("`sum-maps` must not be None")
-    if not isinstance(params["sum-maps"], bool):
-        raise StyxValidationError(f'`sum-maps` has the wrong type: Received `{type(params.get("sum-maps", False))}` expected `bool`')
-    if params.get("consolidate-mode", False) is None:
-        raise StyxValidationError("`consolidate-mode` must not be None")
-    if not isinstance(params["consolidate-mode"], bool):
-        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
-    if params.get("only-maxima", False) is None:
-        raise StyxValidationError("`only-maxima` must not be None")
-    if not isinstance(params["only-maxima"], bool):
-        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("surface-kernel", None) is not None:
+        if not isinstance(params["surface-kernel"], (float, int)):
+            raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
     if params.get("only-minima", False) is None:
         raise StyxValidationError("`only-minima` must not be None")
     if not isinstance(params["only-minima"], bool):
         raise StyxValidationError(f'`only-minima` has the wrong type: Received `{type(params.get("only-minima", False))}` expected `bool`')
+    if params.get("only-maxima", False) is None:
+        raise StyxValidationError("`only-maxima` must not be None")
+    if not isinstance(params["only-maxima"], bool):
+        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("consolidate-mode", False) is None:
+        raise StyxValidationError("`consolidate-mode` must not be None")
+    if not isinstance(params["consolidate-mode"], bool):
+        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
+    if params.get("sum-maps", False) is None:
+        raise StyxValidationError("`sum-maps` must not be None")
+    if not isinstance(params["sum-maps"], bool):
+        raise StyxValidationError(f'`sum-maps` has the wrong type: Received `{type(params.get("sum-maps", False))}` expected `bool`')
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("presmooth-fwhm", False) is None:
+        raise StyxValidationError("`presmooth-fwhm` must not be None")
+    if not isinstance(params["presmooth-fwhm"], bool):
+        raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
     if params.get("cifti", None) is None:
         raise StyxValidationError("`cifti` must not be None")
     if not isinstance(params["cifti"], (pathlib.Path, str)):
@@ -326,24 +326,45 @@ def cifti_extrema_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        "-left-surface",
-        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-        "-right-surface",
-        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-        "-cerebellum-surface",
-        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-        "-surface-presmooth",
-        (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
-        "-volume-presmooth",
-        (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
-        ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
-        *(cifti_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
-        ("-merged-volume" if (params.get("merged-volume", False)) else ""),
-        ("-sum-maps" if (params.get("sum-maps", False)) else ""),
-        ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
-        ("-only-maxima" if (params.get("only-maxima", False)) else ""),
-        ("-only-minima" if (params.get("only-minima", False)) else "")
+        *(cifti_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
     ])
+    if params.get("volume-kernel", None) is not None:
+        cargs.extend([
+            "-volume-presmooth",
+            str(params.get("volume-kernel", None))
+        ])
+    if params.get("surface-kernel", None) is not None:
+        cargs.extend([
+            "-surface-presmooth",
+            str(params.get("surface-kernel", None))
+        ])
+    if params.get("surface", None) is not None:
+        cargs.extend([
+            "-cerebellum-surface",
+            execution.input_file(params.get("surface", None))
+        ])
+    if params.get("surface", None) is not None:
+        cargs.extend([
+            "-right-surface",
+            execution.input_file(params.get("surface", None))
+        ])
+    if params.get("surface", None) is not None:
+        cargs.extend([
+            "-left-surface",
+            execution.input_file(params.get("surface", None))
+        ])
+    if params.get("only-minima", False):
+        cargs.append("-only-minima")
+    if params.get("only-maxima", False):
+        cargs.append("-only-maxima")
+    if params.get("consolidate-mode", False):
+        cargs.append("-consolidate-mode")
+    if params.get("sum-maps", False):
+        cargs.append("-sum-maps")
+    if params.get("merged-volume", False):
+        cargs.append("-merged-volume")
+    if params.get("presmooth-fwhm", False):
+        cargs.append("-presmooth-fwhm")
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(str(params.get("surface-distance", None)))
     cargs.append(str(params.get("volume-distance", None)))
@@ -406,18 +427,18 @@ def cifti_extrema(
     surface_distance: float,
     volume_distance: float,
     direction: str,
+    threshold: CiftiExtremaThresholdParamsDict | None = None,
+    volume_kernel: float | None = None,
+    surface_kernel: float | None = None,
     surface: InputPathType | None = None,
     surface_: InputPathType | None = None,
     surface_2: InputPathType | None = None,
-    surface_kernel: float | None = None,
-    volume_kernel: float | None = None,
-    presmooth_fwhm: bool = False,
-    threshold: CiftiExtremaThresholdParamsDict | None = None,
-    merged_volume: bool = False,
-    sum_maps: bool = False,
-    consolidate_mode: bool = False,
-    only_maxima: bool = False,
     only_minima: bool = False,
+    only_maxima: bool = False,
+    consolidate_mode: bool = False,
+    sum_maps: bool = False,
+    merged_volume: bool = False,
+    presmooth_fwhm: bool = False,
     runner: Runner | None = None,
 ) -> CiftiExtremaOutputs:
     """
@@ -437,51 +458,51 @@ def cifti_extrema(
         volume_distance: the minimum distance between extrema of the same type,\
             for volume components.
         direction: which dimension to find extrema along, ROW or COLUMN.
-        surface: specify the left surface to use\
-            \
-            the left surface file.
-        surface_: specify the right surface to use\
-            \
-            the right surface file.
-        surface_2: specify the cerebellum surface to use\
-            \
-            the cerebellum surface file.
-        surface_kernel: smooth on the surface before finding extrema\
-            \
-            the size of the gaussian surface smoothing kernel in mm, as sigma\
-            by default.
+        threshold: ignore small extrema.
         volume_kernel: smooth volume components before finding extrema\
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        presmooth_fwhm: smoothing kernel distances are FWHM, not sigma.
-        threshold: ignore small extrema.
-        merged_volume: treat volume components as if they were a single\
-            component.
-        sum_maps: output the sum of the extrema maps instead of each map\
-            separately.
+        surface_kernel: smooth on the surface before finding extrema\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        surface: specify the cerebellum surface to use\
+            \
+            the cerebellum surface file.
+        surface_: specify the right surface to use\
+            \
+            the right surface file.
+        surface_2: specify the left surface to use\
+            \
+            the left surface file.
+        only_minima: only find the minima.
+        only_maxima: only find the maxima.
         consolidate_mode: use consolidation of local minima instead of a large\
             neighborhood.
-        only_maxima: only find the maxima.
-        only_minima: only find the minima.
+        sum_maps: output the sum of the extrema maps instead of each map\
+            separately.
+        merged_volume: treat volume components as if they were a single\
+            component.
+        presmooth_fwhm: smoothing kernel distances are FWHM, not sigma.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiExtremaOutputs`).
     """
     params = cifti_extrema_params(
         cifti_out=cifti_out,
+        threshold=threshold,
+        volume_kernel=volume_kernel,
+        surface_kernel=surface_kernel,
         surface=surface,
         surface_=surface_,
         surface_2=surface_2,
-        surface_kernel=surface_kernel,
-        volume_kernel=volume_kernel,
-        presmooth_fwhm=presmooth_fwhm,
-        threshold=threshold,
-        merged_volume=merged_volume,
-        sum_maps=sum_maps,
-        consolidate_mode=consolidate_mode,
-        only_maxima=only_maxima,
         only_minima=only_minima,
+        only_maxima=only_maxima,
+        consolidate_mode=consolidate_mode,
+        sum_maps=sum_maps,
+        merged_volume=merged_volume,
+        presmooth_fwhm=presmooth_fwhm,
         cifti=cifti,
         surface_distance=surface_distance,
         volume_distance=volume_distance,

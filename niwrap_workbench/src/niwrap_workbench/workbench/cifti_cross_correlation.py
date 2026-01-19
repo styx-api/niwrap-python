@@ -15,18 +15,18 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 
 _CiftiCrossCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCrossCorrelationParamsDictNoTag', {
     "cifti-out": str,
+    "limit-GB": typing.NotRequired[float | None],
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
-    "limit-GB": typing.NotRequired[float | None],
     "cifti-a": InputPathType,
     "cifti-b": InputPathType,
 })
 CiftiCrossCorrelationParamsDictTagged = typing.TypedDict('CiftiCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-cross-correlation"],
     "cifti-out": str,
+    "limit-GB": typing.NotRequired[float | None],
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
-    "limit-GB": typing.NotRequired[float | None],
     "cifti-a": InputPathType,
     "cifti-b": InputPathType,
 })
@@ -47,9 +47,9 @@ def cifti_cross_correlation_params(
     cifti_out: str,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
+    limit_gb: float | None = None,
     weight_file: str | None = None,
     fisher_z: bool = False,
-    limit_gb: float | None = None,
 ) -> CiftiCrossCorrelationParamsDictTagged:
     """
     Build parameters.
@@ -58,13 +58,13 @@ def cifti_cross_correlation_params(
         cifti_out: output cifti file.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
         weight_file: specify column weights\
             \
             text file containing one weight per column.
         fisher_z: apply fisher small z transform (ie, artanh) to correlation.
-        limit_gb: restrict memory usage\
-            \
-            memory limit in gigabytes.
     Returns:
         Parameter dictionary
     """
@@ -75,10 +75,10 @@ def cifti_cross_correlation_params(
         "cifti-a": cifti_a,
         "cifti-b": cifti_b,
     }
-    if weight_file is not None:
-        params["weight-file"] = weight_file
     if limit_gb is not None:
         params["limit-GB"] = limit_gb
+    if weight_file is not None:
+        params["weight-file"] = weight_file
     return params
 
 
@@ -98,6 +98,9 @@ def cifti_cross_correlation_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
     if params.get("weight-file", None) is not None:
         if not isinstance(params["weight-file"], str):
             raise StyxValidationError(f'`weight-file` has the wrong type: Received `{type(params.get("weight-file", None))}` expected `str | None`')
@@ -105,9 +108,6 @@ def cifti_cross_correlation_validate(
         raise StyxValidationError("`fisher-z` must not be None")
     if not isinstance(params["fisher-z"], bool):
         raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
-    if params.get("limit-GB", None) is not None:
-        if not isinstance(params["limit-GB"], (float, int)):
-            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
     if params.get("cifti-a", None) is None:
         raise StyxValidationError("`cifti-a` must not be None")
     if not isinstance(params["cifti-a"], (pathlib.Path, str)):
@@ -136,14 +136,19 @@ def cifti_cross_correlation_cargs(
         "wb_command",
         "-cifti-cross-correlation"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        "-weights",
-        (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
-        ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-        "-mem-limit",
-        (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
-    ])
+    cargs.append(params.get("cifti-out", None))
+    if params.get("limit-GB", None) is not None:
+        cargs.extend([
+            "-mem-limit",
+            str(params.get("limit-GB", None))
+        ])
+    if params.get("weight-file", None) is not None:
+        cargs.extend([
+            "-weights",
+            params.get("weight-file", None)
+        ])
+    if params.get("fisher-z", False):
+        cargs.append("-fisher-z")
     cargs.append(execution.input_file(params.get("cifti-a", None)))
     cargs.append(execution.input_file(params.get("cifti-b", None)))
     return cargs
@@ -205,9 +210,9 @@ def cifti_cross_correlation(
     cifti_out: str,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
+    limit_gb: float | None = None,
     weight_file: str | None = None,
     fisher_z: bool = False,
-    limit_gb: float | None = None,
     runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
@@ -226,22 +231,22 @@ def cifti_cross_correlation(
         cifti_out: output cifti file.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
         weight_file: specify column weights\
             \
             text file containing one weight per column.
         fisher_z: apply fisher small z transform (ie, artanh) to correlation.
-        limit_gb: restrict memory usage\
-            \
-            memory limit in gigabytes.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCrossCorrelationOutputs`).
     """
     params = cifti_cross_correlation_params(
         cifti_out=cifti_out,
+        limit_gb=limit_gb,
         weight_file=weight_file,
         fisher_z=fisher_z,
-        limit_gb=limit_gb,
         cifti_a=cifti_a,
         cifti_b=cifti_b,
     )

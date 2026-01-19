@@ -4,26 +4,26 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "less-than": {
-      "var_param": "less_than"
-    },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
-    "area-metric": {
-      "var_param": "area_metric"
-    },
-    "column": {
-      "var_param": "column"
-    },
-    "ratio": {
-      "var_param": "ratio"
+    "startval": {
+      "var_param": "startval"
     },
     "distance": {
       "var_param": "distance"
     },
-    "startval": {
-      "var_param": "startval"
+    "ratio": {
+      "var_param": "ratio"
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "area-metric": {
+      "var_param": "area_metric"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric"
+    },
+    "less-than": {
+      "var_param": "less_than"
     },
     "surface": {
       "var_param": "surface"

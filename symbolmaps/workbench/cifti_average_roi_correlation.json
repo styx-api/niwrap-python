@@ -16,21 +16,6 @@
         }
       }
     },
-    "roi-metric": {
-      "var_param": "roi_metric_2"
-    },
-    "roi-vol": {
-      "var_param": "roi_vol"
-    },
-    "left-surf": {
-      "var_param": "left_surf"
-    },
-    "right-surf": {
-      "var_param": "right_surf"
-    },
-    "cerebellum-surf": {
-      "var_param": "cerebellum_surf"
-    },
     "cifti": {
       "var_param": "cifti",
       "fn_struct_make_params": "cifti_average_roi_correlation_cifti",
@@ -39,6 +24,21 @@
           "var_param": "cifti_in"
         }
       }
+    },
+    "cerebellum-surf": {
+      "var_param": "cerebellum_surf"
+    },
+    "right-surf": {
+      "var_param": "right_surf"
+    },
+    "left-surf": {
+      "var_param": "left_surf"
+    },
+    "roi-vol": {
+      "var_param": "roi_vol"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric_2"
     }
   }
 }

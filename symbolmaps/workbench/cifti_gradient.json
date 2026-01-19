@@ -40,18 +40,6 @@
         }
       }
     },
-    "surface-kernel": {
-      "var_param": "surface_kernel"
-    },
-    "volume-kernel": {
-      "var_param": "volume_kernel"
-    },
-    "presmooth-fwhm": {
-      "var_param": "presmooth_fwhm"
-    },
-    "average-output": {
-      "var_param": "average_output"
-    },
     "vectors": {
       "var_param": "vectors",
       "fn_struct_make_params": "cifti_gradient_vectors",
@@ -75,6 +63,18 @@
           "var_param": "area_metric"
         }
       }
+    },
+    "volume-kernel": {
+      "var_param": "volume_kernel"
+    },
+    "surface-kernel": {
+      "var_param": "surface_kernel"
+    },
+    "average-output": {
+      "var_param": "average_output"
+    },
+    "presmooth-fwhm": {
+      "var_param": "presmooth_fwhm"
     },
     "cifti": {
       "var_param": "cifti"

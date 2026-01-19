@@ -15,12 +15,12 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 
 _VolumeFindClustersParamsDictNoTag = typing.TypedDict('_VolumeFindClustersParamsDictNoTag', {
     "volume-out": str,
-    "less-than": bool,
-    "roi-volume": typing.NotRequired[InputPathType | None],
-    "subvol": typing.NotRequired[str | None],
-    "ratio": typing.NotRequired[float | None],
-    "distance": typing.NotRequired[float | None],
     "startval": typing.NotRequired[int | None],
+    "distance": typing.NotRequired[float | None],
+    "ratio": typing.NotRequired[float | None],
+    "subvol": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "less-than": bool,
     "volume-in": InputPathType,
     "value-threshold": float,
     "minimum-volume": float,
@@ -28,12 +28,12 @@ _VolumeFindClustersParamsDictNoTag = typing.TypedDict('_VolumeFindClustersParams
 VolumeFindClustersParamsDictTagged = typing.TypedDict('VolumeFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-find-clusters"],
     "volume-out": str,
-    "less-than": bool,
-    "roi-volume": typing.NotRequired[InputPathType | None],
-    "subvol": typing.NotRequired[str | None],
-    "ratio": typing.NotRequired[float | None],
-    "distance": typing.NotRequired[float | None],
     "startval": typing.NotRequired[int | None],
+    "distance": typing.NotRequired[float | None],
+    "ratio": typing.NotRequired[float | None],
+    "subvol": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "less-than": bool,
     "volume-in": InputPathType,
     "value-threshold": float,
     "minimum-volume": float,
@@ -56,12 +56,12 @@ def volume_find_clusters_params(
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
-    less_than: bool = False,
-    roi_volume: InputPathType | None = None,
-    subvol: str | None = None,
-    ratio: float | None = None,
-    distance: float | None = None,
     startval: int | None = None,
+    distance: float | None = None,
+    ratio: float | None = None,
+    subvol: str | None = None,
+    roi_volume: InputPathType | None = None,
+    less_than: bool = False,
 ) -> VolumeFindClustersParamsDictTagged:
     """
     Build parameters.
@@ -71,25 +71,25 @@ def volume_find_clusters_params(
         volume_in: the input volume.
         value_threshold: threshold for data values.
         minimum_volume: threshold for cluster volume, in mm^3.
-        less_than: find values less than <value-threshold>, rather than greater.
-        roi_volume: select a region of interest\
+        startval: start labeling clusters from a value other than 1\
             \
-            the roi, as a volume file.
-        subvol: select a single subvolume\
-            \
-            the subvolume number or name.
-        ratio: ignore clusters smaller than a given fraction of the largest\
-            cluster in map\
-            \
-            fraction of the largest cluster's volume.
+            the value to give the first cluster found.
         distance: ignore clusters further than a given distance from the\
             largest cluster\
             \
             how far from the largest cluster a cluster can be, edge to edge, in\
             mm.
-        startval: start labeling clusters from a value other than 1\
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
             \
-            the value to give the first cluster found.
+            fraction of the largest cluster's volume.
+        subvol: select a single subvolume\
+            \
+            the subvolume number or name.
+        roi_volume: select a region of interest\
+            \
+            the roi, as a volume file.
+        less_than: find values less than <value-threshold>, rather than greater.
     Returns:
         Parameter dictionary
     """
@@ -101,16 +101,16 @@ def volume_find_clusters_params(
         "value-threshold": value_threshold,
         "minimum-volume": minimum_volume,
     }
-    if roi_volume is not None:
-        params["roi-volume"] = roi_volume
-    if subvol is not None:
-        params["subvol"] = subvol
-    if ratio is not None:
-        params["ratio"] = ratio
-    if distance is not None:
-        params["distance"] = distance
     if startval is not None:
         params["startval"] = startval
+    if distance is not None:
+        params["distance"] = distance
+    if ratio is not None:
+        params["ratio"] = ratio
+    if subvol is not None:
+        params["subvol"] = subvol
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
     return params
 
 
@@ -130,25 +130,25 @@ def volume_find_clusters_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("startval", None) is not None:
+        if not isinstance(params["startval"], int):
+            raise StyxValidationError(f'`startval` has the wrong type: Received `{type(params.get("startval", None))}` expected `int | None`')
+    if params.get("distance", None) is not None:
+        if not isinstance(params["distance"], (float, int)):
+            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
+    if params.get("ratio", None) is not None:
+        if not isinstance(params["ratio"], (float, int)):
+            raise StyxValidationError(f'`ratio` has the wrong type: Received `{type(params.get("ratio", None))}` expected `float | None`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
     if params.get("less-than", False) is None:
         raise StyxValidationError("`less-than` must not be None")
     if not isinstance(params["less-than"], bool):
         raise StyxValidationError(f'`less-than` has the wrong type: Received `{type(params.get("less-than", False))}` expected `bool`')
-    if params.get("roi-volume", None) is not None:
-        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("subvol", None) is not None:
-        if not isinstance(params["subvol"], str):
-            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
-    if params.get("ratio", None) is not None:
-        if not isinstance(params["ratio"], (float, int)):
-            raise StyxValidationError(f'`ratio` has the wrong type: Received `{type(params.get("ratio", None))}` expected `float | None`')
-    if params.get("distance", None) is not None:
-        if not isinstance(params["distance"], (float, int)):
-            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
-    if params.get("startval", None) is not None:
-        if not isinstance(params["startval"], int):
-            raise StyxValidationError(f'`startval` has the wrong type: Received `{type(params.get("startval", None))}` expected `int | None`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -181,20 +181,34 @@ def volume_find_clusters_cargs(
         "wb_command",
         "-volume-find-clusters"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        ("-less-than" if (params.get("less-than", False)) else ""),
-        "-roi",
-        (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-        "-subvolume",
-        (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
-        "-size-ratio",
-        (str(params.get("ratio", None)) if (params.get("ratio", None) is not None) else ""),
-        "-distance",
-        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
-        "-start",
-        (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
-    ])
+    cargs.append(params.get("volume-out", None))
+    if params.get("startval", None) is not None:
+        cargs.extend([
+            "-start",
+            str(params.get("startval", None))
+        ])
+    if params.get("distance", None) is not None:
+        cargs.extend([
+            "-distance",
+            str(params.get("distance", None))
+        ])
+    if params.get("ratio", None) is not None:
+        cargs.extend([
+            "-size-ratio",
+            str(params.get("ratio", None))
+        ])
+    if params.get("subvol", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvol", None)
+        ])
+    if params.get("roi-volume", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-volume", None))
+        ])
+    if params.get("less-than", False):
+        cargs.append("-less-than")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("value-threshold", None)))
     cargs.append(str(params.get("minimum-volume", None)))
@@ -258,12 +272,12 @@ def volume_find_clusters(
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
-    less_than: bool = False,
-    roi_volume: InputPathType | None = None,
-    subvol: str | None = None,
-    ratio: float | None = None,
-    distance: float | None = None,
     startval: int | None = None,
+    distance: float | None = None,
+    ratio: float | None = None,
+    subvol: str | None = None,
+    roi_volume: InputPathType | None = None,
+    less_than: bool = False,
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
@@ -283,37 +297,37 @@ def volume_find_clusters(
         volume_in: the input volume.
         value_threshold: threshold for data values.
         minimum_volume: threshold for cluster volume, in mm^3.
-        less_than: find values less than <value-threshold>, rather than greater.
-        roi_volume: select a region of interest\
+        startval: start labeling clusters from a value other than 1\
             \
-            the roi, as a volume file.
-        subvol: select a single subvolume\
-            \
-            the subvolume number or name.
-        ratio: ignore clusters smaller than a given fraction of the largest\
-            cluster in map\
-            \
-            fraction of the largest cluster's volume.
+            the value to give the first cluster found.
         distance: ignore clusters further than a given distance from the\
             largest cluster\
             \
             how far from the largest cluster a cluster can be, edge to edge, in\
             mm.
-        startval: start labeling clusters from a value other than 1\
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
             \
-            the value to give the first cluster found.
+            fraction of the largest cluster's volume.
+        subvol: select a single subvolume\
+            \
+            the subvolume number or name.
+        roi_volume: select a region of interest\
+            \
+            the roi, as a volume file.
+        less_than: find values less than <value-threshold>, rather than greater.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeFindClustersOutputs`).
     """
     params = volume_find_clusters_params(
         volume_out=volume_out,
-        less_than=less_than,
-        roi_volume=roi_volume,
-        subvol=subvol,
-        ratio=ratio,
-        distance=distance,
         startval=startval,
+        distance=distance,
+        ratio=ratio,
+        subvol=subvol,
+        roi_volume=roi_volume,
+        less_than=less_than,
         volume_in=volume_in,
         value_threshold=value_threshold,
         minimum_volume=minimum_volume,

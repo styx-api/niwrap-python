@@ -43,14 +43,14 @@
     "roi-cifti": {
       "var_param": "roi_cifti"
     },
-    "nearest": {
-      "var_param": "nearest"
+    "legacy-mode": {
+      "var_param": "legacy_mode"
     },
     "merged-volume": {
       "var_param": "merged_volume"
     },
-    "legacy-mode": {
-      "var_param": "legacy_mode"
+    "nearest": {
+      "var_param": "nearest"
     },
     "cifti-in": {
       "var_param": "cifti_in"

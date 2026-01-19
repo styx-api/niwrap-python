@@ -64,26 +64,26 @@ ProbtrackxDotConvertColCiftiParamsDict = _ProbtrackxDotConvertColCiftiParamsDict
 _ProbtrackxDotConvertParamsDictNoTag = typing.TypedDict('_ProbtrackxDotConvertParamsDictNoTag', {
     "cifti-out": str,
     "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "row-cifti": typing.NotRequired[ProbtrackxDotConvertRowCiftiParamsDict | None],
     "col-voxels": typing.NotRequired[ProbtrackxDotConvertColVoxelsParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "col-cifti": typing.NotRequired[ProbtrackxDotConvertColCiftiParamsDict | None],
-    "transpose": bool,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "make-symmetric": bool,
+    "transpose": bool,
     "dot-file": str,
 })
 ProbtrackxDotConvertParamsDictTagged = typing.TypedDict('ProbtrackxDotConvertParamsDictTagged', {
     "@type": typing.Literal["workbench/probtrackx-dot-convert"],
     "cifti-out": str,
     "row-voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "row-cifti": typing.NotRequired[ProbtrackxDotConvertRowCiftiParamsDict | None],
     "col-voxels": typing.NotRequired[ProbtrackxDotConvertColVoxelsParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "col-cifti": typing.NotRequired[ProbtrackxDotConvertColCiftiParamsDict | None],
-    "transpose": bool,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "make-symmetric": bool,
+    "transpose": bool,
     "dot-file": str,
 })
 ProbtrackxDotConvertParamsDict = _ProbtrackxDotConvertParamsDictNoTag | ProbtrackxDotConvertParamsDictTagged
@@ -365,13 +365,13 @@ def probtrackx_dot_convert_params(
     cifti_out: str,
     dot_file: str,
     row_voxels: ProbtrackxDotConvertRowVoxelsParamsDict | None = None,
-    roi_metric: InputPathType | None = None,
     row_cifti: ProbtrackxDotConvertRowCiftiParamsDict | None = None,
     col_voxels: ProbtrackxDotConvertColVoxelsParamsDict | None = None,
-    roi_metric_: InputPathType | None = None,
     col_cifti: ProbtrackxDotConvertColCiftiParamsDict | None = None,
-    transpose: bool = False,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
     make_symmetric: bool = False,
+    transpose: bool = False,
 ) -> ProbtrackxDotConvertParamsDictTagged:
     """
     Build parameters.
@@ -380,39 +380,39 @@ def probtrackx_dot_convert_params(
         cifti_out: output cifti file.
         dot_file: input .dot file.
         row_voxels: the output mapping along a row will be voxels.
-        roi_metric: the output mapping along a row will be surface vertices\
-            \
-            a metric file with positive values on all vertices used.
         row_cifti: take the mapping along a row from a cifti file.
         col_voxels: the output mapping along a column will be voxels.
-        roi_metric_: the output mapping along a column will be surface vertices\
+        col_cifti: take the mapping along a column from a cifti file.
+        roi_metric: the output mapping along a column will be surface vertices\
             \
             a metric file with positive values on all vertices used.
-        col_cifti: take the mapping along a column from a cifti file.
-        transpose: transpose the input matrix.
+        roi_metric_: the output mapping along a row will be surface vertices\
+            \
+            a metric file with positive values on all vertices used.
         make_symmetric: transform half-square input into full matrix output.
+        transpose: transpose the input matrix.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/probtrackx-dot-convert",
         "cifti-out": cifti_out,
-        "transpose": transpose,
         "make-symmetric": make_symmetric,
+        "transpose": transpose,
         "dot-file": dot_file,
     }
     if row_voxels is not None:
         params["row-voxels"] = row_voxels
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
     if row_cifti is not None:
         params["row-cifti"] = row_cifti
     if col_voxels is not None:
         params["col-voxels"] = col_voxels
-    if roi_metric_ is not None:
-        params["roi-metric"] = roi_metric_
     if col_cifti is not None:
         params["col-cifti"] = col_cifti
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if roi_metric_ is not None:
+        params["roi-metric"] = roi_metric_
     return params
 
 
@@ -434,26 +434,26 @@ def probtrackx_dot_convert_validate(
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("row-voxels", None) is not None:
         probtrackx_dot_convert_row_voxels_validate(params["row-voxels"])
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("row-cifti", None) is not None:
         probtrackx_dot_convert_row_cifti_validate(params["row-cifti"])
     if params.get("col-voxels", None) is not None:
         probtrackx_dot_convert_col_voxels_validate(params["col-voxels"])
+    if params.get("col-cifti", None) is not None:
+        probtrackx_dot_convert_col_cifti_validate(params["col-cifti"])
     if params.get("roi-metric", None) is not None:
         if not isinstance(params["roi-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("col-cifti", None) is not None:
-        probtrackx_dot_convert_col_cifti_validate(params["col-cifti"])
-    if params.get("transpose", False) is None:
-        raise StyxValidationError("`transpose` must not be None")
-    if not isinstance(params["transpose"], bool):
-        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("make-symmetric", False) is None:
         raise StyxValidationError("`make-symmetric` must not be None")
     if not isinstance(params["make-symmetric"], bool):
         raise StyxValidationError(f'`make-symmetric` has the wrong type: Received `{type(params.get("make-symmetric", False))}` expected `bool`')
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
     if params.get("dot-file", None) is None:
         raise StyxValidationError("`dot-file` must not be None")
     if not isinstance(params["dot-file"], str):
@@ -481,16 +481,24 @@ def probtrackx_dot_convert_cargs(
     cargs.extend([
         params.get("cifti-out", None),
         *(probtrackx_dot_convert_row_voxels_cargs(params.get("row-voxels", None), execution) if (params.get("row-voxels", None) is not None) else []),
-        "-row-surface",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
         *(probtrackx_dot_convert_row_cifti_cargs(params.get("row-cifti", None), execution) if (params.get("row-cifti", None) is not None) else []),
         *(probtrackx_dot_convert_col_voxels_cargs(params.get("col-voxels", None), execution) if (params.get("col-voxels", None) is not None) else []),
-        "-col-surface",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        *(probtrackx_dot_convert_col_cifti_cargs(params.get("col-cifti", None), execution) if (params.get("col-cifti", None) is not None) else []),
-        ("-transpose" if (params.get("transpose", False)) else ""),
-        ("-make-symmetric" if (params.get("make-symmetric", False)) else "")
+        *(probtrackx_dot_convert_col_cifti_cargs(params.get("col-cifti", None), execution) if (params.get("col-cifti", None) is not None) else [])
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-col-surface",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-row-surface",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("make-symmetric", False):
+        cargs.append("-make-symmetric")
+    if params.get("transpose", False):
+        cargs.append("-transpose")
     cargs.append(params.get("dot-file", None))
     return cargs
 
@@ -590,13 +598,13 @@ def probtrackx_dot_convert(
     cifti_out: str,
     dot_file: str,
     row_voxels: ProbtrackxDotConvertRowVoxelsParamsDict | None = None,
-    roi_metric: InputPathType | None = None,
     row_cifti: ProbtrackxDotConvertRowCiftiParamsDict | None = None,
     col_voxels: ProbtrackxDotConvertColVoxelsParamsDict | None = None,
-    roi_metric_: InputPathType | None = None,
     col_cifti: ProbtrackxDotConvertColCiftiParamsDict | None = None,
-    transpose: bool = False,
+    roi_metric: InputPathType | None = None,
+    roi_metric_: InputPathType | None = None,
     make_symmetric: bool = False,
+    transpose: bool = False,
     runner: Runner | None = None,
 ) -> ProbtrackxDotConvertOutputs:
     """
@@ -654,17 +662,17 @@ def probtrackx_dot_convert(
         cifti_out: output cifti file.
         dot_file: input .dot file.
         row_voxels: the output mapping along a row will be voxels.
-        roi_metric: the output mapping along a row will be surface vertices\
-            \
-            a metric file with positive values on all vertices used.
         row_cifti: take the mapping along a row from a cifti file.
         col_voxels: the output mapping along a column will be voxels.
-        roi_metric_: the output mapping along a column will be surface vertices\
+        col_cifti: take the mapping along a column from a cifti file.
+        roi_metric: the output mapping along a column will be surface vertices\
             \
             a metric file with positive values on all vertices used.
-        col_cifti: take the mapping along a column from a cifti file.
-        transpose: transpose the input matrix.
+        roi_metric_: the output mapping along a row will be surface vertices\
+            \
+            a metric file with positive values on all vertices used.
         make_symmetric: transform half-square input into full matrix output.
+        transpose: transpose the input matrix.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ProbtrackxDotConvertOutputs`).
@@ -672,13 +680,13 @@ def probtrackx_dot_convert(
     params = probtrackx_dot_convert_params(
         cifti_out=cifti_out,
         row_voxels=row_voxels,
-        roi_metric=roi_metric,
         row_cifti=row_cifti,
         col_voxels=col_voxels,
-        roi_metric_=roi_metric_,
         col_cifti=col_cifti,
-        transpose=transpose,
+        roi_metric=roi_metric,
+        roi_metric_=roi_metric_,
         make_symmetric=make_symmetric,
+        transpose=transpose,
         dot_file=dot_file,
     )
     return probtrackx_dot_convert_execute(params, runner)

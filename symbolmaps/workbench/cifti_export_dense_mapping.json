@@ -8,11 +8,11 @@
         "text-out": {
           "var_param": "text_out"
         },
-        "no-cifti-index": {
-          "var_param": "no_cifti_index"
-        },
         "structure": {
           "var_param": "structure"
+        },
+        "no-cifti-index": {
+          "var_param": "no_cifti_index"
         }
       }
     },

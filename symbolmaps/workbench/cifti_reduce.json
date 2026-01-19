@@ -4,9 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "direction": {
-      "var_param": "direction"
-    },
     "exclude-outliers": {
       "var_param": "exclude_outliers",
       "fn_struct_make_params": "cifti_reduce_exclude_outliers",
@@ -18,6 +15,9 @@
           "var_param": "sigma_above"
         }
       }
+    },
+    "direction": {
+      "var_param": "direction"
     },
     "only-numeric": {
       "var_param": "only_numeric"

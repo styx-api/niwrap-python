@@ -4,17 +4,17 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "sigma": {
-      "var_param": "sigma"
-    },
-    "roi-volume": {
-      "var_param": "roi_volume"
+    "subvol": {
+      "var_param": "subvol"
     },
     "method": {
       "var_param": "method"
     },
-    "subvol": {
-      "var_param": "subvol"
+    "roi-volume": {
+      "var_param": "roi_volume"
+    },
+    "sigma": {
+      "var_param": "sigma"
     },
     "volume-in": {
       "var_param": "volume_in"

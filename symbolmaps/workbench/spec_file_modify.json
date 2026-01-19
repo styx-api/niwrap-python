@@ -20,11 +20,11 @@
         "filename": {
           "var_param": "filename"
         },
-        "recursive": {
-          "var_param": "recursive"
-        },
         "suffix": {
           "var_param": "suffix"
+        },
+        "recursive": {
+          "var_param": "recursive"
         }
       }
     },

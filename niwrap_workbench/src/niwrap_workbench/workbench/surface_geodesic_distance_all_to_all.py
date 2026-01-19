@@ -15,18 +15,18 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 
 _SurfaceGeodesicDistanceAllToAllParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceAllToAllParamsDictNoTag', {
     "cifti-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "limit-mm": typing.NotRequired[float | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "limit-mm": typing.NotRequired[float | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
     "surface": InputPathType,
 })
 SurfaceGeodesicDistanceAllToAllParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance-all-to-all"],
     "cifti-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "limit-mm": typing.NotRequired[float | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "limit-mm": typing.NotRequired[float | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
     "surface": InputPathType,
 })
@@ -46,9 +46,9 @@ class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):
 def surface_geodesic_distance_all_to_all_params(
     cifti_out: str,
     surface: InputPathType,
-    roi_metric: InputPathType | None = None,
-    limit_mm: float | None = None,
     area_metric: InputPathType | None = None,
+    limit_mm: float | None = None,
+    roi_metric: InputPathType | None = None,
     naive: bool = False,
 ) -> SurfaceGeodesicDistanceAllToAllParamsDictTagged:
     """
@@ -57,16 +57,16 @@ def surface_geodesic_distance_all_to_all_params(
     Args:
         cifti_out: single-hemisphere dconn containing the distances.
         surface: the surface to compute on.
-        roi_metric: only output distances for vertices inside an ROI\
-            \
-            the ROI as a metric file.
-        limit_mm: stop at a specified distance\
-            \
-            distance in mm to stop at.
         area_metric: vertex areas to use to correct the distances on a\
             group-average surface\
             \
             the corrected vertex areas, as a metric.
+        limit_mm: stop at a specified distance\
+            \
+            distance in mm to stop at.
+        roi_metric: only output distances for vertices inside an ROI\
+            \
+            the ROI as a metric file.
         naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
@@ -77,12 +77,12 @@ def surface_geodesic_distance_all_to_all_params(
         "naive": naive,
         "surface": surface,
     }
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if limit_mm is not None:
-        params["limit-mm"] = limit_mm
     if area_metric is not None:
         params["area-metric"] = area_metric
+    if limit_mm is not None:
+        params["limit-mm"] = limit_mm
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -102,15 +102,15 @@ def surface_geodesic_distance_all_to_all_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("limit-mm", None) is not None:
-        if not isinstance(params["limit-mm"], (float, int)):
-            raise StyxValidationError(f'`limit-mm` has the wrong type: Received `{type(params.get("limit-mm", None))}` expected `float | None`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("limit-mm", None) is not None:
+        if not isinstance(params["limit-mm"], (float, int)):
+            raise StyxValidationError(f'`limit-mm` has the wrong type: Received `{type(params.get("limit-mm", None))}` expected `float | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("naive", False) is None:
         raise StyxValidationError("`naive` must not be None")
     if not isinstance(params["naive"], bool):
@@ -139,16 +139,24 @@ def surface_geodesic_distance_all_to_all_cargs(
         "wb_command",
         "-surface-geodesic-distance-all-to-all"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-limit",
-        (str(params.get("limit-mm", None)) if (params.get("limit-mm", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-        ("-naive" if (params.get("naive", False)) else "")
-    ])
+    cargs.append(params.get("cifti-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("limit-mm", None) is not None:
+        cargs.extend([
+            "-limit",
+            str(params.get("limit-mm", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("naive", False):
+        cargs.append("-naive")
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
@@ -219,9 +227,9 @@ def surface_geodesic_distance_all_to_all_execute(
 def surface_geodesic_distance_all_to_all(
     cifti_out: str,
     surface: InputPathType,
-    roi_metric: InputPathType | None = None,
-    limit_mm: float | None = None,
     area_metric: InputPathType | None = None,
+    limit_mm: float | None = None,
+    roi_metric: InputPathType | None = None,
     naive: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
@@ -251,16 +259,16 @@ def surface_geodesic_distance_all_to_all(
     Args:
         cifti_out: single-hemisphere dconn containing the distances.
         surface: the surface to compute on.
-        roi_metric: only output distances for vertices inside an ROI\
-            \
-            the ROI as a metric file.
-        limit_mm: stop at a specified distance\
-            \
-            distance in mm to stop at.
         area_metric: vertex areas to use to correct the distances on a\
             group-average surface\
             \
             the corrected vertex areas, as a metric.
+        limit_mm: stop at a specified distance\
+            \
+            distance in mm to stop at.
+        roi_metric: only output distances for vertices inside an ROI\
+            \
+            the ROI as a metric file.
         naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:
@@ -268,9 +276,9 @@ def surface_geodesic_distance_all_to_all(
     """
     params = surface_geodesic_distance_all_to_all_params(
         cifti_out=cifti_out,
-        roi_metric=roi_metric,
-        limit_mm=limit_mm,
         area_metric=area_metric,
+        limit_mm=limit_mm,
+        roi_metric=roi_metric,
         naive=naive,
         surface=surface,
     )

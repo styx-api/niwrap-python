@@ -4,14 +4,14 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "naive": {
-      "var_param": "naive"
+    "area-metric": {
+      "var_param": "area_metric"
     },
     "limit-mm": {
       "var_param": "limit_mm"
     },
-    "area-metric": {
-      "var_param": "area_metric"
+    "naive": {
+      "var_param": "naive"
     },
     "surface": {
       "var_param": "surface"

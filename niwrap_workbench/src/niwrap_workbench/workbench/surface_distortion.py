@@ -39,9 +39,9 @@ _SurfaceDistortionParamsDictNoTag = typing.TypedDict('_SurfaceDistortionParamsDi
     "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
     "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
-    "caret5-method": bool,
-    "edge-method": bool,
     "log2": typing.NotRequired[bool | None],
+    "edge-method": bool,
+    "caret5-method": bool,
     "surface-reference": InputPathType,
     "surface-distorted": InputPathType,
 })
@@ -50,9 +50,9 @@ SurfaceDistortionParamsDictTagged = typing.TypedDict('SurfaceDistortionParamsDic
     "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
     "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
-    "caret5-method": bool,
-    "edge-method": bool,
     "log2": typing.NotRequired[bool | None],
+    "edge-method": bool,
+    "caret5-method": bool,
     "surface-reference": InputPathType,
     "surface-distorted": InputPathType,
 })
@@ -118,9 +118,10 @@ def surface_distortion_smooth_cargs(
     cargs = []
     cargs.extend([
         "-smooth",
-        str(params.get("sigma", None)),
-        ("-fwhm" if (params.get("fwhm", False)) else "")
+        str(params.get("sigma", None))
     ])
+    if params.get("fwhm", False):
+        cargs.append("-fwhm")
     return cargs
 
 
@@ -177,9 +178,9 @@ def surface_distortion_match_surface_area_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("-match-surface-area")
     if params.get("roi-metric", None) is not None:
         cargs.extend([
-            "-match-surface-area",
             "-roi",
             execution.input_file(params.get("roi-metric", None))
         ])
@@ -202,9 +203,9 @@ def surface_distortion_params(
     surface_distorted: InputPathType,
     smooth: SurfaceDistortionSmoothParamsDict | None = None,
     match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
-    caret5_method: bool = False,
-    edge_method: bool = False,
     log2: bool | None = None,
+    edge_method: bool = False,
+    caret5_method: bool = False,
 ) -> SurfaceDistortionParamsDictTagged:
     """
     Build parameters.
@@ -216,19 +217,19 @@ def surface_distortion_params(
         smooth: smooth the area data.
         match_surface_area: isotropically rescale the distorted surface so that\
             it has the same surface area as the reference surface.
-        caret5_method: use the surface distortion method from caret5.
-        edge_method: calculate distortion of edge lengths rather than areas.
         log2: calculate distortion by the local affines between triangles\
             \
             apply base-2 log transform.
+        edge_method: calculate distortion of edge lengths rather than areas.
+        caret5_method: use the surface distortion method from caret5.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-distortion",
         "metric-out": metric_out,
-        "caret5-method": caret5_method,
         "edge-method": edge_method,
+        "caret5-method": caret5_method,
         "surface-reference": surface_reference,
         "surface-distorted": surface_distorted,
     }
@@ -261,17 +262,17 @@ def surface_distortion_validate(
         surface_distortion_smooth_validate(params["smooth"])
     if params.get("match-surface-area", None) is not None:
         surface_distortion_match_surface_area_validate(params["match-surface-area"])
-    if params.get("caret5-method", False) is None:
-        raise StyxValidationError("`caret5-method` must not be None")
-    if not isinstance(params["caret5-method"], bool):
-        raise StyxValidationError(f'`caret5-method` has the wrong type: Received `{type(params.get("caret5-method", False))}` expected `bool`')
+    if params.get("log2", None) is not None:
+        if not isinstance(params["log2"], bool):
+            raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", None))}` expected `bool | None`')
     if params.get("edge-method", False) is None:
         raise StyxValidationError("`edge-method` must not be None")
     if not isinstance(params["edge-method"], bool):
         raise StyxValidationError(f'`edge-method` has the wrong type: Received `{type(params.get("edge-method", False))}` expected `bool`')
-    if params.get("log2", None) is not None:
-        if not isinstance(params["log2"], bool):
-            raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", None))}` expected `bool | None`')
+    if params.get("caret5-method", False) is None:
+        raise StyxValidationError("`caret5-method` must not be None")
+    if not isinstance(params["caret5-method"], bool):
+        raise StyxValidationError(f'`caret5-method` has the wrong type: Received `{type(params.get("caret5-method", False))}` expected `bool`')
     if params.get("surface-reference", None) is None:
         raise StyxValidationError("`surface-reference` must not be None")
     if not isinstance(params["surface-reference"], (pathlib.Path, str)):
@@ -303,12 +304,17 @@ def surface_distortion_cargs(
     cargs.extend([
         params.get("metric-out", None),
         *(surface_distortion_smooth_cargs(params.get("smooth", None), execution) if (params.get("smooth", None) is not None) else []),
-        *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else []),
-        ("-caret5-method" if (params.get("caret5-method", False)) else ""),
-        ("-edge-method" if (params.get("edge-method", False)) else ""),
-        "-local-affine-method",
-        ("-log2" if (params.get("log2", None) is not None) else "")
+        *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else [])
     ])
+    if params.get("log2", None) is not None:
+        cargs.extend([
+            "-local-affine-method",
+            "-log2"
+        ])
+    if params.get("edge-method", False):
+        cargs.append("-edge-method")
+    if params.get("caret5-method", False):
+        cargs.append("-caret5-method")
     cargs.append(execution.input_file(params.get("surface-reference", None)))
     cargs.append(execution.input_file(params.get("surface-distorted", None)))
     return cargs
@@ -383,9 +389,9 @@ def surface_distortion(
     surface_distorted: InputPathType,
     smooth: SurfaceDistortionSmoothParamsDict | None = None,
     match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
-    caret5_method: bool = False,
-    edge_method: bool = False,
     log2: bool | None = None,
+    edge_method: bool = False,
+    caret5_method: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
@@ -418,11 +424,11 @@ def surface_distortion(
         smooth: smooth the area data.
         match_surface_area: isotropically rescale the distorted surface so that\
             it has the same surface area as the reference surface.
-        caret5_method: use the surface distortion method from caret5.
-        edge_method: calculate distortion of edge lengths rather than areas.
         log2: calculate distortion by the local affines between triangles\
             \
             apply base-2 log transform.
+        edge_method: calculate distortion of edge lengths rather than areas.
+        caret5_method: use the surface distortion method from caret5.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceDistortionOutputs`).
@@ -431,9 +437,9 @@ def surface_distortion(
         metric_out=metric_out,
         smooth=smooth,
         match_surface_area=match_surface_area,
-        caret5_method=caret5_method,
-        edge_method=edge_method,
         log2=log2,
+        edge_method=edge_method,
+        caret5_method=caret5_method,
         surface_reference=surface_reference,
         surface_distorted=surface_distorted,
     )

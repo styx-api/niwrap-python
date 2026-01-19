@@ -31,15 +31,15 @@ MetricMathVarParamsDict = _MetricMathVarParamsDictNoTag | MetricMathVarParamsDic
 
 _MetricMathParamsDictNoTag = typing.TypedDict('_MetricMathParamsDictNoTag', {
     "metric-out": str,
-    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[MetricMathVarParamsDict] | None],
+    "replace": typing.NotRequired[float | None],
     "expression": str,
 })
 MetricMathParamsDictTagged = typing.TypedDict('MetricMathParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-math"],
     "metric-out": str,
-    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[MetricMathVarParamsDict] | None],
+    "replace": typing.NotRequired[float | None],
     "expression": str,
 })
 MetricMathParamsDict = _MetricMathParamsDictNoTag | MetricMathParamsDictTagged
@@ -121,11 +121,15 @@ def metric_math_var_cargs(
     cargs.extend([
         "-var",
         params.get("name", None),
-        execution.input_file(params.get("metric", None)),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else ""),
-        ("-repeat" if (params.get("repeat", False)) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("repeat", False):
+        cargs.append("-repeat")
     return cargs
 
 
@@ -142,8 +146,8 @@ class MetricMathOutputs(typing.NamedTuple):
 def metric_math_params(
     metric_out: str,
     expression: str,
-    replace: float | None = None,
     var: list[MetricMathVarParamsDict] | None = None,
+    replace: float | None = None,
 ) -> MetricMathParamsDictTagged:
     """
     Build parameters.
@@ -151,10 +155,10 @@ def metric_math_params(
     Args:
         metric_out: the output metric.
         expression: the expression to evaluate, in quotes.
+        var: a metric to use as a variable.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        var: a metric to use as a variable.
     Returns:
         Parameter dictionary
     """
@@ -163,10 +167,10 @@ def metric_math_params(
         "metric-out": metric_out,
         "expression": expression,
     }
-    if replace is not None:
-        params["replace"] = replace
     if var is not None:
         params["var"] = var
+    if replace is not None:
+        params["replace"] = replace
     return params
 
 
@@ -186,14 +190,14 @@ def metric_math_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("replace", None) is not None:
-        if not isinstance(params["replace"], (float, int)):
-            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
     if params.get("var", None) is not None:
         if not isinstance(params["var"], list):
             raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[MetricMathVarParamsDict] | None`')
         for e in params["var"]:
             metric_math_var_validate(e)
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (float, int)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
     if params.get("expression", None) is None:
         raise StyxValidationError("`expression` must not be None")
     if not isinstance(params["expression"], str):
@@ -220,10 +224,13 @@ def metric_math_cargs(
     ])
     cargs.extend([
         params.get("metric-out", None),
-        "-fixnan",
-        (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
         *([a for c in [metric_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
     ])
+    if params.get("replace", None) is not None:
+        cargs.extend([
+            "-fixnan",
+            str(params.get("replace", None))
+        ])
     cargs.append(params.get("expression", None))
     return cargs
 
@@ -344,8 +351,8 @@ def metric_math_execute(
 def metric_math(
     metric_out: str,
     expression: str,
-    replace: float | None = None,
     var: list[MetricMathVarParamsDict] | None = None,
+    replace: float | None = None,
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
@@ -424,18 +431,18 @@ def metric_math(
     Args:
         metric_out: the output metric.
         expression: the expression to evaluate, in quotes.
+        var: a metric to use as a variable.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
-        var: a metric to use as a variable.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricMathOutputs`).
     """
     params = metric_math_params(
         metric_out=metric_out,
-        replace=replace,
         var=var,
+        replace=replace,
         expression=expression,
     )
     return metric_math_execute(params, runner)

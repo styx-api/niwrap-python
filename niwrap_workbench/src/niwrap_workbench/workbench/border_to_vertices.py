@@ -116,11 +116,12 @@ def border_to_vertices_cargs(
         "wb_command",
         "-border-to-vertices"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-border",
-        (params.get("name", None) if (params.get("name", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("name", None) is not None:
+        cargs.extend([
+            "-border",
+            params.get("name", None)
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("border-file", None)))
     return cargs

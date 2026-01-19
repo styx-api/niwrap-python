@@ -15,10 +15,10 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
 
 _MetricVectorOperationParamsDictNoTag = typing.TypedDict('_MetricVectorOperationParamsDictNoTag', {
     "metric-out": str,
-    "normalize-a": bool,
-    "normalize-b": bool,
-    "normalize-output": bool,
     "magnitude": bool,
+    "normalize-output": bool,
+    "normalize-b": bool,
+    "normalize-a": bool,
     "vectors-a": InputPathType,
     "vectors-b": InputPathType,
     "operation": str,
@@ -26,10 +26,10 @@ _MetricVectorOperationParamsDictNoTag = typing.TypedDict('_MetricVectorOperation
 MetricVectorOperationParamsDictTagged = typing.TypedDict('MetricVectorOperationParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-vector-operation"],
     "metric-out": str,
-    "normalize-a": bool,
-    "normalize-b": bool,
-    "normalize-output": bool,
     "magnitude": bool,
+    "normalize-output": bool,
+    "normalize-b": bool,
+    "normalize-a": bool,
     "vectors-a": InputPathType,
     "vectors-b": InputPathType,
     "operation": str,
@@ -52,10 +52,10 @@ def metric_vector_operation_params(
     vectors_a: InputPathType,
     vectors_b: InputPathType,
     operation: str,
-    normalize_a: bool = False,
-    normalize_b: bool = False,
-    normalize_output: bool = False,
     magnitude: bool = False,
+    normalize_output: bool = False,
+    normalize_b: bool = False,
+    normalize_a: bool = False,
 ) -> MetricVectorOperationParamsDictTagged:
     """
     Build parameters.
@@ -65,21 +65,21 @@ def metric_vector_operation_params(
         vectors_a: first vector input file.
         vectors_b: second vector input file.
         operation: what vector operation to do.
-        normalize_a: normalize vectors of first input.
-        normalize_b: normalize vectors of second input.
-        normalize_output: normalize output vectors (not valid for dot product).
         magnitude: output the magnitude of the result (not valid for dot\
             product).
+        normalize_output: normalize output vectors (not valid for dot product).
+        normalize_b: normalize vectors of second input.
+        normalize_a: normalize vectors of first input.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-vector-operation",
         "metric-out": metric_out,
-        "normalize-a": normalize_a,
-        "normalize-b": normalize_b,
-        "normalize-output": normalize_output,
         "magnitude": magnitude,
+        "normalize-output": normalize_output,
+        "normalize-b": normalize_b,
+        "normalize-a": normalize_a,
         "vectors-a": vectors_a,
         "vectors-b": vectors_b,
         "operation": operation,
@@ -103,22 +103,22 @@ def metric_vector_operation_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("normalize-a", False) is None:
-        raise StyxValidationError("`normalize-a` must not be None")
-    if not isinstance(params["normalize-a"], bool):
-        raise StyxValidationError(f'`normalize-a` has the wrong type: Received `{type(params.get("normalize-a", False))}` expected `bool`')
-    if params.get("normalize-b", False) is None:
-        raise StyxValidationError("`normalize-b` must not be None")
-    if not isinstance(params["normalize-b"], bool):
-        raise StyxValidationError(f'`normalize-b` has the wrong type: Received `{type(params.get("normalize-b", False))}` expected `bool`')
-    if params.get("normalize-output", False) is None:
-        raise StyxValidationError("`normalize-output` must not be None")
-    if not isinstance(params["normalize-output"], bool):
-        raise StyxValidationError(f'`normalize-output` has the wrong type: Received `{type(params.get("normalize-output", False))}` expected `bool`')
     if params.get("magnitude", False) is None:
         raise StyxValidationError("`magnitude` must not be None")
     if not isinstance(params["magnitude"], bool):
         raise StyxValidationError(f'`magnitude` has the wrong type: Received `{type(params.get("magnitude", False))}` expected `bool`')
+    if params.get("normalize-output", False) is None:
+        raise StyxValidationError("`normalize-output` must not be None")
+    if not isinstance(params["normalize-output"], bool):
+        raise StyxValidationError(f'`normalize-output` has the wrong type: Received `{type(params.get("normalize-output", False))}` expected `bool`')
+    if params.get("normalize-b", False) is None:
+        raise StyxValidationError("`normalize-b` must not be None")
+    if not isinstance(params["normalize-b"], bool):
+        raise StyxValidationError(f'`normalize-b` has the wrong type: Received `{type(params.get("normalize-b", False))}` expected `bool`')
+    if params.get("normalize-a", False) is None:
+        raise StyxValidationError("`normalize-a` must not be None")
+    if not isinstance(params["normalize-a"], bool):
+        raise StyxValidationError(f'`normalize-a` has the wrong type: Received `{type(params.get("normalize-a", False))}` expected `bool`')
     if params.get("vectors-a", None) is None:
         raise StyxValidationError("`vectors-a` must not be None")
     if not isinstance(params["vectors-a"], (pathlib.Path, str)):
@@ -151,13 +151,15 @@ def metric_vector_operation_cargs(
         "wb_command",
         "-metric-vector-operation"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        ("-normalize-a" if (params.get("normalize-a", False)) else ""),
-        ("-normalize-b" if (params.get("normalize-b", False)) else ""),
-        ("-normalize-output" if (params.get("normalize-output", False)) else ""),
-        ("-magnitude" if (params.get("magnitude", False)) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("magnitude", False):
+        cargs.append("-magnitude")
+    if params.get("normalize-output", False):
+        cargs.append("-normalize-output")
+    if params.get("normalize-b", False):
+        cargs.append("-normalize-b")
+    if params.get("normalize-a", False):
+        cargs.append("-normalize-a")
     cargs.append(execution.input_file(params.get("vectors-a", None)))
     cargs.append(execution.input_file(params.get("vectors-b", None)))
     cargs.append(params.get("operation", None))
@@ -224,10 +226,10 @@ def metric_vector_operation(
     vectors_a: InputPathType,
     vectors_b: InputPathType,
     operation: str,
-    normalize_a: bool = False,
-    normalize_b: bool = False,
-    normalize_output: bool = False,
     magnitude: bool = False,
+    normalize_output: bool = False,
+    normalize_b: bool = False,
+    normalize_a: bool = False,
     runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
@@ -250,21 +252,21 @@ def metric_vector_operation(
         vectors_a: first vector input file.
         vectors_b: second vector input file.
         operation: what vector operation to do.
-        normalize_a: normalize vectors of first input.
-        normalize_b: normalize vectors of second input.
-        normalize_output: normalize output vectors (not valid for dot product).
         magnitude: output the magnitude of the result (not valid for dot\
             product).
+        normalize_output: normalize output vectors (not valid for dot product).
+        normalize_b: normalize vectors of second input.
+        normalize_a: normalize vectors of first input.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricVectorOperationOutputs`).
     """
     params = metric_vector_operation_params(
         metric_out=metric_out,
-        normalize_a=normalize_a,
-        normalize_b=normalize_b,
-        normalize_output=normalize_output,
         magnitude=magnitude,
+        normalize_output=normalize_output,
+        normalize_b=normalize_b,
+        normalize_a=normalize_a,
         vectors_a=vectors_a,
         vectors_b=vectors_b,
         operation=operation,

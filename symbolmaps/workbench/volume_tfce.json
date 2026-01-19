@@ -16,9 +16,6 @@
         }
       }
     },
-    "roi-volume": {
-      "var_param": "roi_volume"
-    },
     "parameters": {
       "var_param": "parameters",
       "fn_struct_make_params": "volume_tfce_parameters",
@@ -33,6 +30,9 @@
     },
     "subvolume": {
       "var_param": "subvolume"
+    },
+    "roi-volume": {
+      "var_param": "roi_volume"
     },
     "volume-in": {
       "var_param": "volume_in"

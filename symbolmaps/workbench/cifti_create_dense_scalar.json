@@ -52,9 +52,6 @@
         }
       }
     },
-    "file": {
-      "var_param": "file"
-    },
     "metric": {
       "var_param": "metric",
       "fn_struct_make_params": "cifti_create_dense_scalar_metric",
@@ -69,6 +66,9 @@
           "var_param": "roi_metric"
         }
       }
+    },
+    "file": {
+      "var_param": "file"
     }
   }
 }

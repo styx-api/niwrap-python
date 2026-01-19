@@ -1,11 +1,11 @@
 {
   "fn_root_make_params_and_execute": "set_structure",
   "properties": {
-    "type": {
-      "var_param": "type_"
-    },
     "secondary type": {
       "var_param": "secondary_type"
+    },
+    "type": {
+      "var_param": "type_"
     },
     "data-file": {
       "var_param": "data_file"

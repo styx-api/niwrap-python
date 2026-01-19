@@ -7,11 +7,11 @@
     "source-volume": {
       "var_param": "source_volume"
     },
-    "circular": {
-      "var_param": "circular"
-    },
     "log2": {
       "var_param": "log2"
+    },
+    "circular": {
+      "var_param": "circular"
     },
     "warpfield": {
       "var_param": "warpfield"

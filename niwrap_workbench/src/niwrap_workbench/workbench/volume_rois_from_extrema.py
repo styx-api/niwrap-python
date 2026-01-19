@@ -15,20 +15,20 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 _VolumeRoisFromExtremaParamsDictNoTag = typing.TypedDict('_VolumeRoisFromExtremaParamsDictNoTag', {
     "volume-out": str,
-    "sigma": typing.NotRequired[float | None],
-    "roi-volume": typing.NotRequired[InputPathType | None],
-    "method": typing.NotRequired[str | None],
     "subvol": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "sigma": typing.NotRequired[float | None],
     "volume-in": InputPathType,
     "limit": float,
 })
 VolumeRoisFromExtremaParamsDictTagged = typing.TypedDict('VolumeRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-rois-from-extrema"],
     "volume-out": str,
-    "sigma": typing.NotRequired[float | None],
-    "roi-volume": typing.NotRequired[InputPathType | None],
-    "method": typing.NotRequired[str | None],
     "subvol": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "sigma": typing.NotRequired[float | None],
     "volume-in": InputPathType,
     "limit": float,
 })
@@ -49,10 +49,10 @@ def volume_rois_from_extrema_params(
     volume_out: str,
     volume_in: InputPathType,
     limit: float,
-    sigma: float | None = None,
-    roi_volume: InputPathType | None = None,
-    method: str | None = None,
     subvol: str | None = None,
+    method: str | None = None,
+    roi_volume: InputPathType | None = None,
+    sigma: float | None = None,
 ) -> VolumeRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
@@ -61,18 +61,18 @@ def volume_rois_from_extrema_params(
         volume_out: the output volume.
         volume_in: the input volume.
         limit: distance limit from voxel center, in mm.
-        sigma: generate a gaussian kernel instead of a flat ROI\
-            \
-            the sigma for the gaussian kernel, in mm.
-        roi_volume: select a region of interest to use\
-            \
-            the region to use.
-        method: how to handle overlapping ROIs, default ALLOW\
-            \
-            the method of resolving overlaps.
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        roi_volume: select a region of interest to use\
+            \
+            the region to use.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
     Returns:
         Parameter dictionary
     """
@@ -82,14 +82,14 @@ def volume_rois_from_extrema_params(
         "volume-in": volume_in,
         "limit": limit,
     }
-    if sigma is not None:
-        params["sigma"] = sigma
-    if roi_volume is not None:
-        params["roi-volume"] = roi_volume
-    if method is not None:
-        params["method"] = method
     if subvol is not None:
         params["subvol"] = subvol
+    if method is not None:
+        params["method"] = method
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if sigma is not None:
+        params["sigma"] = sigma
     return params
 
 
@@ -109,18 +109,18 @@ def volume_rois_from_extrema_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("sigma", None) is not None:
-        if not isinstance(params["sigma"], (float, int)):
-            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
-    if params.get("roi-volume", None) is not None:
-        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("method", None) is not None:
-        if not isinstance(params["method"], str):
-            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
     if params.get("subvol", None) is not None:
         if not isinstance(params["subvol"], str):
             raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -149,17 +149,27 @@ def volume_rois_from_extrema_cargs(
         "wb_command",
         "-volume-rois-from-extrema"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        "-gaussian",
-        (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-        "-roi",
-        (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-        "-overlap-logic",
-        (params.get("method", None) if (params.get("method", None) is not None) else ""),
-        "-subvolume",
-        (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
-    ])
+    cargs.append(params.get("volume-out", None))
+    if params.get("subvol", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvol", None)
+        ])
+    if params.get("method", None) is not None:
+        cargs.extend([
+            "-overlap-logic",
+            params.get("method", None)
+        ])
+    if params.get("roi-volume", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-volume", None))
+        ])
+    if params.get("sigma", None) is not None:
+        cargs.extend([
+            "-gaussian",
+            str(params.get("sigma", None))
+        ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("limit", None)))
     return cargs
@@ -221,10 +231,10 @@ def volume_rois_from_extrema(
     volume_out: str,
     volume_in: InputPathType,
     limit: float,
-    sigma: float | None = None,
-    roi_volume: InputPathType | None = None,
-    method: str | None = None,
     subvol: str | None = None,
+    method: str | None = None,
+    roi_volume: InputPathType | None = None,
+    sigma: float | None = None,
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
@@ -243,28 +253,28 @@ def volume_rois_from_extrema(
         volume_out: the output volume.
         volume_in: the input volume.
         limit: distance limit from voxel center, in mm.
-        sigma: generate a gaussian kernel instead of a flat ROI\
-            \
-            the sigma for the gaussian kernel, in mm.
-        roi_volume: select a region of interest to use\
-            \
-            the region to use.
-        method: how to handle overlapping ROIs, default ALLOW\
-            \
-            the method of resolving overlaps.
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        roi_volume: select a region of interest to use\
+            \
+            the region to use.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).
     """
     params = volume_rois_from_extrema_params(
         volume_out=volume_out,
-        sigma=sigma,
-        roi_volume=roi_volume,
-        method=method,
         subvol=subvol,
+        method=method,
+        roi_volume=roi_volume,
+        sigma=sigma,
         volume_in=volume_in,
         limit=limit,
     )

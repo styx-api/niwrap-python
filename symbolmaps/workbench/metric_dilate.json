@@ -4,26 +4,26 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "roi-metric": {
-      "var_param": "roi_metric_"
-    },
-    "column": {
-      "var_param": "column"
-    },
-    "nearest": {
-      "var_param": "nearest"
-    },
-    "linear": {
-      "var_param": "linear"
+    "area-metric": {
+      "var_param": "area_metric"
     },
     "exponent": {
       "var_param": "exponent"
     },
-    "area-metric": {
-      "var_param": "area_metric"
+    "column": {
+      "var_param": "column"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric_"
     },
     "legacy-cutoff": {
       "var_param": "legacy_cutoff"
+    },
+    "linear": {
+      "var_param": "linear"
+    },
+    "nearest": {
+      "var_param": "nearest"
     },
     "metric": {
       "var_param": "metric"

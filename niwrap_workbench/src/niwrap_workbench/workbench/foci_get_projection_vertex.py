@@ -116,11 +116,12 @@ def foci_get_projection_vertex_cargs(
         "wb_command",
         "-foci-get-projection-vertex"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-name",
-        (params.get("name", None) if (params.get("name", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("name", None) is not None:
+        cargs.extend([
+            "-name",
+            params.get("name", None)
+        ])
     cargs.append(execution.input_file(params.get("foci", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs

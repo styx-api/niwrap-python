@@ -27,14 +27,14 @@ CiftiResampleDconnMemoryWeightedParamsDict = _CiftiResampleDconnMemoryWeightedPa
 
 _CiftiResampleDconnMemoryVolumePredilateParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryVolumePredilateParamsDictNoTag', {
     "dilate-mm": float,
-    "nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict | None],
+    "nearest": bool,
 })
 CiftiResampleDconnMemoryVolumePredilateParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParamsDictTagged', {
     "@type": typing.Literal["volume-predilate"],
     "dilate-mm": float,
-    "nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict | None],
+    "nearest": bool,
 })
 CiftiResampleDconnMemoryVolumePredilateParamsDict = _CiftiResampleDconnMemoryVolumePredilateParamsDictNoTag | CiftiResampleDconnMemoryVolumePredilateParamsDictTagged
 
@@ -53,16 +53,16 @@ CiftiResampleDconnMemoryWeightedParamsDict_ = _CiftiResampleDconnMemoryWeightedP
 
 _CiftiResampleDconnMemorySurfacePostdilateParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemorySurfacePostdilateParamsDictNoTag', {
     "dilate-mm": float,
-    "nearest": bool,
-    "linear": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict_ | None],
+    "linear": bool,
+    "nearest": bool,
 })
 CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged', {
     "@type": typing.Literal["surface-postdilate"],
     "dilate-mm": float,
-    "nearest": bool,
-    "linear": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParamsDict_ | None],
+    "linear": bool,
+    "nearest": bool,
 })
 CiftiResampleDconnMemorySurfacePostdilateParamsDict = _CiftiResampleDconnMemorySurfacePostdilateParamsDictNoTag | CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged
 
@@ -225,7 +225,6 @@ CiftiResampleDconnMemoryCerebellumSpheresParamsDict = _CiftiResampleDconnMemoryC
 
 _CiftiResampleDconnMemoryParamsDictNoTag = typing.TypedDict('_CiftiResampleDconnMemoryParamsDictNoTag', {
     "cifti-out": str,
-    "surface-largest": bool,
     "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParamsDict | None],
     "surface-postdilate": typing.NotRequired[CiftiResampleDconnMemorySurfacePostdilateParamsDict | None],
     "affine": typing.NotRequired[CiftiResampleDconnMemoryAffineParamsDict | None],
@@ -233,6 +232,7 @@ _CiftiResampleDconnMemoryParamsDictNoTag = typing.TypedDict('_CiftiResampleDconn
     "left-spheres": typing.NotRequired[CiftiResampleDconnMemoryLeftSpheresParamsDict | None],
     "right-spheres": typing.NotRequired[CiftiResampleDconnMemoryRightSpheresParamsDict | None],
     "cerebellum-spheres": typing.NotRequired[CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None],
+    "surface-largest": bool,
     "cifti-in": InputPathType,
     "cifti-template": InputPathType,
     "template-direction": str,
@@ -242,7 +242,6 @@ _CiftiResampleDconnMemoryParamsDictNoTag = typing.TypedDict('_CiftiResampleDconn
 CiftiResampleDconnMemoryParamsDictTagged = typing.TypedDict('CiftiResampleDconnMemoryParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-resample-dconn-memory"],
     "cifti-out": str,
-    "surface-largest": bool,
     "volume-predilate": typing.NotRequired[CiftiResampleDconnMemoryVolumePredilateParamsDict | None],
     "surface-postdilate": typing.NotRequired[CiftiResampleDconnMemorySurfacePostdilateParamsDict | None],
     "affine": typing.NotRequired[CiftiResampleDconnMemoryAffineParamsDict | None],
@@ -250,6 +249,7 @@ CiftiResampleDconnMemoryParamsDictTagged = typing.TypedDict('CiftiResampleDconnM
     "left-spheres": typing.NotRequired[CiftiResampleDconnMemoryLeftSpheresParamsDict | None],
     "right-spheres": typing.NotRequired[CiftiResampleDconnMemoryRightSpheresParamsDict | None],
     "cerebellum-spheres": typing.NotRequired[CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None],
+    "surface-largest": bool,
     "cifti-in": InputPathType,
     "cifti-template": InputPathType,
     "template-direction": str,
@@ -319,28 +319,29 @@ def cifti_resample_dconn_memory_weighted_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exponent", None) is not None or params.get("legacy-cutoff", False):
+    cargs.append("-weighted")
+    if params.get("exponent", None) is not None:
         cargs.extend([
-            "-weighted",
             "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
+            str(params.get("exponent", None))
         ])
+    if params.get("legacy-cutoff", False):
+        cargs.append("-legacy-cutoff")
     return cargs
 
 
 def cifti_resample_dconn_memory_volume_predilate(
     dilate_mm: float,
-    nearest: bool = False,
     weighted: CiftiResampleDconnMemoryWeightedParamsDict | None = None,
+    nearest: bool = False,
 ) -> CiftiResampleDconnMemoryVolumePredilateParamsDictTagged:
     """
     Build parameters.
     
     Args:
         dilate_mm: distance, in mm, to dilate.
-        nearest: use nearest value dilation.
         weighted: use weighted dilation (default).
+        nearest: use nearest value dilation.
     Returns:
         Parameter dictionary
     """
@@ -370,12 +371,12 @@ def cifti_resample_dconn_memory_volume_predilate_validate(
         raise StyxValidationError("`dilate-mm` must not be None")
     if not isinstance(params["dilate-mm"], (float, int)):
         raise StyxValidationError(f'`dilate-mm` has the wrong type: Received `{type(params.get("dilate-mm", None))}` expected `float`')
+    if params.get("weighted", None) is not None:
+        cifti_resample_dconn_memory_weighted_validate(params["weighted"])
     if params.get("nearest", False) is None:
         raise StyxValidationError("`nearest` must not be None")
     if not isinstance(params["nearest"], bool):
         raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
-    if params.get("weighted", None) is not None:
-        cifti_resample_dconn_memory_weighted_validate(params["weighted"])
 
 
 def cifti_resample_dconn_memory_volume_predilate_cargs(
@@ -395,9 +396,10 @@ def cifti_resample_dconn_memory_volume_predilate_cargs(
     cargs.extend([
         "-volume-predilate",
         str(params.get("dilate-mm", None)),
-        ("-nearest" if (params.get("nearest", False)) else ""),
         *(cifti_resample_dconn_memory_weighted_cargs(params.get("weighted", None), execution) if (params.get("weighted", None) is not None) else [])
     ])
+    if params.get("nearest", False):
+        cargs.append("-nearest")
     return cargs
 
 
@@ -461,38 +463,39 @@ def cifti_resample_dconn_memory_weighted_cargs_(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exponent", None) is not None or params.get("legacy-cutoff", False):
+    cargs.append("-weighted")
+    if params.get("exponent", None) is not None:
         cargs.extend([
-            "-weighted",
             "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
+            str(params.get("exponent", None))
         ])
+    if params.get("legacy-cutoff", False):
+        cargs.append("-legacy-cutoff")
     return cargs
 
 
 def cifti_resample_dconn_memory_surface_postdilate(
     dilate_mm: float,
-    nearest: bool = False,
-    linear: bool = False,
     weighted: CiftiResampleDconnMemoryWeightedParamsDict_ | None = None,
+    linear: bool = False,
+    nearest: bool = False,
 ) -> CiftiResampleDconnMemorySurfacePostdilateParamsDictTagged:
     """
     Build parameters.
     
     Args:
         dilate_mm: distance, in mm, to dilate.
-        nearest: use nearest value dilation.
-        linear: use linear dilation.
         weighted: use weighted dilation (default).
+        linear: use linear dilation.
+        nearest: use nearest value dilation.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "surface-postdilate",
         "dilate-mm": dilate_mm,
-        "nearest": nearest,
         "linear": linear,
+        "nearest": nearest,
     }
     if weighted is not None:
         params["weighted"] = weighted
@@ -515,16 +518,16 @@ def cifti_resample_dconn_memory_surface_postdilate_validate(
         raise StyxValidationError("`dilate-mm` must not be None")
     if not isinstance(params["dilate-mm"], (float, int)):
         raise StyxValidationError(f'`dilate-mm` has the wrong type: Received `{type(params.get("dilate-mm", None))}` expected `float`')
-    if params.get("nearest", False) is None:
-        raise StyxValidationError("`nearest` must not be None")
-    if not isinstance(params["nearest"], bool):
-        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
+    if params.get("weighted", None) is not None:
+        cifti_resample_dconn_memory_weighted_validate_(params["weighted"])
     if params.get("linear", False) is None:
         raise StyxValidationError("`linear` must not be None")
     if not isinstance(params["linear"], bool):
         raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
-    if params.get("weighted", None) is not None:
-        cifti_resample_dconn_memory_weighted_validate_(params["weighted"])
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
 
 
 def cifti_resample_dconn_memory_surface_postdilate_cargs(
@@ -544,10 +547,12 @@ def cifti_resample_dconn_memory_surface_postdilate_cargs(
     cargs.extend([
         "-surface-postdilate",
         str(params.get("dilate-mm", None)),
-        ("-nearest" if (params.get("nearest", False)) else ""),
-        ("-linear" if (params.get("linear", False)) else ""),
         *(cifti_resample_dconn_memory_weighted_cargs_(params.get("weighted", None), execution) if (params.get("weighted", None) is not None) else [])
     ])
+    if params.get("linear", False):
+        cargs.append("-linear")
+    if params.get("nearest", False):
+        cargs.append("-nearest")
     return cargs
 
 
@@ -741,10 +746,13 @@ def cifti_resample_dconn_memory_warpfield_cargs(
     cargs = []
     cargs.extend([
         "-warpfield",
-        params.get("warpfield", None),
-        "-fnirt",
-        (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else "")
+        params.get("warpfield", None)
     ])
+    if params.get("source-volume", None) is not None:
+        cargs.extend([
+            "-fnirt",
+            params.get("source-volume", None)
+        ])
     return cargs
 
 
@@ -1404,7 +1412,6 @@ def cifti_resample_dconn_memory_params(
     template_direction: str,
     surface_method: str,
     volume_method: str,
-    surface_largest: bool = False,
     volume_predilate: CiftiResampleDconnMemoryVolumePredilateParamsDict | None = None,
     surface_postdilate: CiftiResampleDconnMemorySurfacePostdilateParamsDict | None = None,
     affine: CiftiResampleDconnMemoryAffineParamsDict | None = None,
@@ -1412,6 +1419,7 @@ def cifti_resample_dconn_memory_params(
     left_spheres: CiftiResampleDconnMemoryLeftSpheresParamsDict | None = None,
     right_spheres: CiftiResampleDconnMemoryRightSpheresParamsDict | None = None,
     cerebellum_spheres: CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None = None,
+    surface_largest: bool = False,
 ) -> CiftiResampleDconnMemoryParamsDictTagged:
     """
     Build parameters.
@@ -1424,8 +1432,6 @@ def cifti_resample_dconn_memory_params(
             resampling space, ROW or COLUMN.
         surface_method: specify a surface resampling method.
         volume_method: specify a volume interpolation method.
-        surface_largest: use largest weight instead of weighted average when\
-            doing surface resampling.
         volume_predilate: dilate the volume components before resampling.
         surface_postdilate: dilate the surface components after resampling.
         affine: use an affine transformation on the volume components.
@@ -1433,6 +1439,8 @@ def cifti_resample_dconn_memory_params(
         left_spheres: specify spheres for left surface resampling.
         right_spheres: specify spheres for right surface resampling.
         cerebellum_spheres: specify spheres for cerebellum surface resampling.
+        surface_largest: use largest weight instead of weighted average when\
+            doing surface resampling.
     Returns:
         Parameter dictionary
     """
@@ -1479,10 +1487,6 @@ def cifti_resample_dconn_memory_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("surface-largest", False) is None:
-        raise StyxValidationError("`surface-largest` must not be None")
-    if not isinstance(params["surface-largest"], bool):
-        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
     if params.get("volume-predilate", None) is not None:
         cifti_resample_dconn_memory_volume_predilate_validate(params["volume-predilate"])
     if params.get("surface-postdilate", None) is not None:
@@ -1497,6 +1501,10 @@ def cifti_resample_dconn_memory_validate(
         cifti_resample_dconn_memory_right_spheres_validate(params["right-spheres"])
     if params.get("cerebellum-spheres", None) is not None:
         cifti_resample_dconn_memory_cerebellum_spheres_validate(params["cerebellum-spheres"])
+    if params.get("surface-largest", False) is None:
+        raise StyxValidationError("`surface-largest` must not be None")
+    if not isinstance(params["surface-largest"], bool):
+        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -1539,7 +1547,6 @@ def cifti_resample_dconn_memory_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        ("-surface-largest" if (params.get("surface-largest", False)) else ""),
         *(cifti_resample_dconn_memory_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),
         *(cifti_resample_dconn_memory_surface_postdilate_cargs(params.get("surface-postdilate", None), execution) if (params.get("surface-postdilate", None) is not None) else []),
         *(cifti_resample_dconn_memory_affine_cargs(params.get("affine", None), execution) if (params.get("affine", None) is not None) else []),
@@ -1548,6 +1555,8 @@ def cifti_resample_dconn_memory_cargs(
         *(cifti_resample_dconn_memory_right_spheres_cargs(params.get("right-spheres", None), execution) if (params.get("right-spheres", None) is not None) else []),
         *(cifti_resample_dconn_memory_cerebellum_spheres_cargs(params.get("cerebellum-spheres", None), execution) if (params.get("cerebellum-spheres", None) is not None) else [])
     ])
+    if params.get("surface-largest", False):
+        cargs.append("-surface-largest")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(execution.input_file(params.get("cifti-template", None)))
     cargs.append(params.get("template-direction", None))
@@ -1635,7 +1644,6 @@ def cifti_resample_dconn_memory(
     template_direction: str,
     surface_method: str,
     volume_method: str,
-    surface_largest: bool = False,
     volume_predilate: CiftiResampleDconnMemoryVolumePredilateParamsDict | None = None,
     surface_postdilate: CiftiResampleDconnMemorySurfacePostdilateParamsDict | None = None,
     affine: CiftiResampleDconnMemoryAffineParamsDict | None = None,
@@ -1643,6 +1651,7 @@ def cifti_resample_dconn_memory(
     left_spheres: CiftiResampleDconnMemoryLeftSpheresParamsDict | None = None,
     right_spheres: CiftiResampleDconnMemoryRightSpheresParamsDict | None = None,
     cerebellum_spheres: CiftiResampleDconnMemoryCerebellumSpheresParamsDict | None = None,
+    surface_largest: bool = False,
     runner: Runner | None = None,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
@@ -1685,8 +1694,6 @@ def cifti_resample_dconn_memory(
             resampling space, ROW or COLUMN.
         surface_method: specify a surface resampling method.
         volume_method: specify a volume interpolation method.
-        surface_largest: use largest weight instead of weighted average when\
-            doing surface resampling.
         volume_predilate: dilate the volume components before resampling.
         surface_postdilate: dilate the surface components after resampling.
         affine: use an affine transformation on the volume components.
@@ -1694,13 +1701,14 @@ def cifti_resample_dconn_memory(
         left_spheres: specify spheres for left surface resampling.
         right_spheres: specify spheres for right surface resampling.
         cerebellum_spheres: specify spheres for cerebellum surface resampling.
+        surface_largest: use largest weight instead of weighted average when\
+            doing surface resampling.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiResampleDconnMemoryOutputs`).
     """
     params = cifti_resample_dconn_memory_params(
         cifti_out=cifti_out,
-        surface_largest=surface_largest,
         volume_predilate=volume_predilate,
         surface_postdilate=surface_postdilate,
         affine=affine,
@@ -1708,6 +1716,7 @@ def cifti_resample_dconn_memory(
         left_spheres=left_spheres,
         right_spheres=right_spheres,
         cerebellum_spheres=cerebellum_spheres,
+        surface_largest=surface_largest,
         cifti_in=cifti_in,
         cifti_template=cifti_template,
         template_direction=template_direction,

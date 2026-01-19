@@ -78,37 +78,37 @@ VolumePaletteThresholdingParamsDict = _VolumePaletteThresholdingParamsDictNoTag 
 
 
 _VolumePaletteParamsDictNoTag = typing.TypedDict('_VolumePaletteParamsDictNoTag', {
-    "subvolume": typing.NotRequired[str | None],
     "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
     "pos-user": typing.NotRequired[VolumePalettePosUserParamsDict | None],
     "neg-user": typing.NotRequired[VolumePaletteNegUserParamsDict | None],
-    "interpolate": typing.NotRequired[bool | None],
-    "display": typing.NotRequired[bool | None],
-    "display": typing.NotRequired[bool | None],
-    "display": typing.NotRequired[bool | None],
-    "name": typing.NotRequired[str | None],
     "thresholding": typing.NotRequired[VolumePaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
+    "name": typing.NotRequired[str | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "interpolate": typing.NotRequired[bool | None],
+    "subvolume": typing.NotRequired[str | None],
     "volume": str,
     "mode": str,
 })
 VolumePaletteParamsDictTagged = typing.TypedDict('VolumePaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-palette"],
-    "subvolume": typing.NotRequired[str | None],
     "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
     "pos-user": typing.NotRequired[VolumePalettePosUserParamsDict | None],
     "neg-user": typing.NotRequired[VolumePaletteNegUserParamsDict | None],
-    "interpolate": typing.NotRequired[bool | None],
-    "display": typing.NotRequired[bool | None],
-    "display": typing.NotRequired[bool | None],
-    "display": typing.NotRequired[bool | None],
-    "name": typing.NotRequired[str | None],
     "thresholding": typing.NotRequired[VolumePaletteThresholdingParamsDict | None],
     "type": typing.NotRequired[str | None],
     "type": typing.NotRequired[str | None],
+    "name": typing.NotRequired[str | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "interpolate": typing.NotRequired[bool | None],
+    "subvolume": typing.NotRequired[str | None],
     "volume": str,
     "mode": str,
 })
@@ -467,19 +467,19 @@ class VolumePaletteOutputs(typing.NamedTuple):
 def volume_palette_params(
     volume: str,
     mode: str,
-    subvolume: str | None = None,
     pos_percent: VolumePalettePosPercentParamsDict | None = None,
     neg_percent: VolumePaletteNegPercentParamsDict | None = None,
     pos_user: VolumePalettePosUserParamsDict | None = None,
     neg_user: VolumePaletteNegUserParamsDict | None = None,
-    interpolate: bool | None = None,
-    display: bool | None = None,
-    display_: bool | None = None,
-    display_2: bool | None = None,
-    name: str | None = None,
     thresholding: VolumePaletteThresholdingParamsDict | None = None,
     type_: str | None = None,
     type_2: str | None = None,
+    name: str | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    interpolate: bool | None = None,
+    subvolume: str | None = None,
 ) -> VolumePaletteParamsDictTagged:
     """
     Build parameters.
@@ -487,36 +487,36 @@ def volume_palette_params(
     Args:
         volume: the volume file to modify.
         mode: the mapping mode.
-        subvolume: select a single subvolume\
-            \
-            the subvolume number or name.
         pos_percent: percentage min/max for positive data coloring.
         neg_percent: percentage min/max for negative data coloring.
         pos_user: user min/max values for positive data coloring.
         neg_user: user min/max values for negative data coloring.
-        interpolate: interpolate colors\
+        thresholding: set the thresholding.
+        type_: specify normalization mode (NOTE: this is always a file-wide\
+            setting, NOT per-map)\
             \
-            boolean, whether to interpolate.
-        display: display positive data\
+            the normalization mode.
+        type_2: specify palette inversion\
+            \
+            the type of inversion.
+        name: set the palette used\
+            \
+            the name of the palette.
+        display: display data closer to zero than the min cutoff\
             \
             boolean, whether to display.
         display_: display positive data\
             \
             boolean, whether to display.
-        display_2: display data closer to zero than the min cutoff\
+        display_2: display positive data\
             \
             boolean, whether to display.
-        name: set the palette used\
+        interpolate: interpolate colors\
             \
-            the name of the palette.
-        thresholding: set the thresholding.
-        type_: specify palette inversion\
+            boolean, whether to interpolate.
+        subvolume: select a single subvolume\
             \
-            the type of inversion.
-        type_2: specify normalization mode (NOTE: this is always a file-wide\
-            setting, NOT per-map)\
-            \
-            the normalization mode.
+            the subvolume number or name.
     Returns:
         Parameter dictionary
     """
@@ -525,8 +525,6 @@ def volume_palette_params(
         "volume": volume,
         "mode": mode,
     }
-    if subvolume is not None:
-        params["subvolume"] = subvolume
     if pos_percent is not None:
         params["pos-percent"] = pos_percent
     if neg_percent is not None:
@@ -535,22 +533,24 @@ def volume_palette_params(
         params["pos-user"] = pos_user
     if neg_user is not None:
         params["neg-user"] = neg_user
-    if interpolate is not None:
-        params["interpolate"] = interpolate
-    if display is not None:
-        params["display"] = display
-    if display_ is not None:
-        params["display"] = display_
-    if display_2 is not None:
-        params["display"] = display_2
-    if name is not None:
-        params["name"] = name
     if thresholding is not None:
         params["thresholding"] = thresholding
     if type_ is not None:
         params["type"] = type_
     if type_2 is not None:
         params["type"] = type_2
+    if name is not None:
+        params["name"] = name
+    if display is not None:
+        params["display"] = display
+    if display_ is not None:
+        params["display"] = display_
+    if display_2 is not None:
+        params["display"] = display_2
+    if interpolate is not None:
+        params["interpolate"] = interpolate
+    if subvolume is not None:
+        params["subvolume"] = subvolume
     return params
 
 
@@ -566,9 +566,6 @@ def volume_palette_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("subvolume", None) is not None:
-        if not isinstance(params["subvolume"], str):
-            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
     if params.get("pos-percent", None) is not None:
         volume_palette_pos_percent_validate(params["pos-percent"])
     if params.get("neg-percent", None) is not None:
@@ -577,21 +574,6 @@ def volume_palette_validate(
         volume_palette_pos_user_validate(params["pos-user"])
     if params.get("neg-user", None) is not None:
         volume_palette_neg_user_validate(params["neg-user"])
-    if params.get("interpolate", None) is not None:
-        if not isinstance(params["interpolate"], bool):
-            raise StyxValidationError(f'`interpolate` has the wrong type: Received `{type(params.get("interpolate", None))}` expected `bool | None`')
-    if params.get("display", None) is not None:
-        if not isinstance(params["display"], bool):
-            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
-    if params.get("display", None) is not None:
-        if not isinstance(params["display"], bool):
-            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
-    if params.get("display", None) is not None:
-        if not isinstance(params["display"], bool):
-            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
-    if params.get("name", None) is not None:
-        if not isinstance(params["name"], str):
-            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
     if params.get("thresholding", None) is not None:
         volume_palette_thresholding_validate(params["thresholding"])
     if params.get("type", None) is not None:
@@ -600,6 +582,24 @@ def volume_palette_validate(
     if params.get("type", None) is not None:
         if not isinstance(params["type"], str):
             raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("display", None) is not None:
+        if not isinstance(params["display"], bool):
+            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
+    if params.get("display", None) is not None:
+        if not isinstance(params["display"], bool):
+            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
+    if params.get("display", None) is not None:
+        if not isinstance(params["display"], bool):
+            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
+    if params.get("interpolate", None) is not None:
+        if not isinstance(params["interpolate"], bool):
+            raise StyxValidationError(f'`interpolate` has the wrong type: Received `{type(params.get("interpolate", None))}` expected `bool | None`')
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
     if params.get("volume", None) is None:
         raise StyxValidationError("`volume` must not be None")
     if not isinstance(params["volume"], str):
@@ -628,29 +628,53 @@ def volume_palette_cargs(
         "wb_command",
         "-volume-palette"
     ])
-    if params.get("subvolume", None) is not None or params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("interpolate", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("name", None) is not None or params.get("thresholding", None) is not None or params.get("type", None) is not None or params.get("type", None) is not None:
+    if params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("thresholding", None) is not None:
         cargs.extend([
-            "-subvolume",
-            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
             *(volume_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
             *(volume_palette_neg_percent_cargs(params.get("neg-percent", None), execution) if (params.get("neg-percent", None) is not None) else []),
             *(volume_palette_pos_user_cargs(params.get("pos-user", None), execution) if (params.get("pos-user", None) is not None) else []),
             *(volume_palette_neg_user_cargs(params.get("neg-user", None), execution) if (params.get("neg-user", None) is not None) else []),
-            "-interpolate",
-            (("true" if params.get("interpolate", None) else "false") if (params.get("interpolate", None) is not None) else ""),
-            "-disp-pos",
-            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
-            "-disp-neg",
-            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
-            "-disp-zero",
-            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
-            "-palette-name",
-            (params.get("name", None) if (params.get("name", None) is not None) else ""),
-            *(volume_palette_thresholding_cargs(params.get("thresholding", None), execution) if (params.get("thresholding", None) is not None) else []),
-            "-inversion",
-            (params.get("type", None) if (params.get("type", None) is not None) else ""),
+            *(volume_palette_thresholding_cargs(params.get("thresholding", None), execution) if (params.get("thresholding", None) is not None) else [])
+        ])
+    if params.get("type", None) is not None:
+        cargs.extend([
             "-normalization",
-            (params.get("type", None) if (params.get("type", None) is not None) else "")
+            params.get("type", None)
+        ])
+    if params.get("type", None) is not None:
+        cargs.extend([
+            "-inversion",
+            params.get("type", None)
+        ])
+    if params.get("name", None) is not None:
+        cargs.extend([
+            "-palette-name",
+            params.get("name", None)
+        ])
+    if params.get("display", None) is not None:
+        cargs.extend([
+            "-disp-zero",
+            ("true" if params.get("display", None) else "false")
+        ])
+    if params.get("display", None) is not None:
+        cargs.extend([
+            "-disp-neg",
+            ("true" if params.get("display", None) else "false")
+        ])
+    if params.get("display", None) is not None:
+        cargs.extend([
+            "-disp-pos",
+            ("true" if params.get("display", None) else "false")
+        ])
+    if params.get("interpolate", None) is not None:
+        cargs.extend([
+            "-interpolate",
+            ("true" if params.get("interpolate", None) else "false")
+        ])
+    if params.get("subvolume", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvolume", None)
         ])
     cargs.append(params.get("volume", None))
     cargs.append(params.get("mode", None))
@@ -783,19 +807,19 @@ def volume_palette_execute(
 def volume_palette(
     volume: str,
     mode: str,
-    subvolume: str | None = None,
     pos_percent: VolumePalettePosPercentParamsDict | None = None,
     neg_percent: VolumePaletteNegPercentParamsDict | None = None,
     pos_user: VolumePalettePosUserParamsDict | None = None,
     neg_user: VolumePaletteNegUserParamsDict | None = None,
-    interpolate: bool | None = None,
-    display: bool | None = None,
-    display_: bool | None = None,
-    display_2: bool | None = None,
-    name: str | None = None,
     thresholding: VolumePaletteThresholdingParamsDict | None = None,
     type_: str | None = None,
     type_2: str | None = None,
+    name: str | None = None,
+    display: bool | None = None,
+    display_: bool | None = None,
+    display_2: bool | None = None,
+    interpolate: bool | None = None,
+    subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
@@ -885,54 +909,54 @@ def volume_palette(
     Args:
         volume: the volume file to modify.
         mode: the mapping mode.
-        subvolume: select a single subvolume\
-            \
-            the subvolume number or name.
         pos_percent: percentage min/max for positive data coloring.
         neg_percent: percentage min/max for negative data coloring.
         pos_user: user min/max values for positive data coloring.
         neg_user: user min/max values for negative data coloring.
-        interpolate: interpolate colors\
+        thresholding: set the thresholding.
+        type_: specify normalization mode (NOTE: this is always a file-wide\
+            setting, NOT per-map)\
             \
-            boolean, whether to interpolate.
-        display: display positive data\
+            the normalization mode.
+        type_2: specify palette inversion\
+            \
+            the type of inversion.
+        name: set the palette used\
+            \
+            the name of the palette.
+        display: display data closer to zero than the min cutoff\
             \
             boolean, whether to display.
         display_: display positive data\
             \
             boolean, whether to display.
-        display_2: display data closer to zero than the min cutoff\
+        display_2: display positive data\
             \
             boolean, whether to display.
-        name: set the palette used\
+        interpolate: interpolate colors\
             \
-            the name of the palette.
-        thresholding: set the thresholding.
-        type_: specify palette inversion\
+            boolean, whether to interpolate.
+        subvolume: select a single subvolume\
             \
-            the type of inversion.
-        type_2: specify normalization mode (NOTE: this is always a file-wide\
-            setting, NOT per-map)\
-            \
-            the normalization mode.
+            the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumePaletteOutputs`).
     """
     params = volume_palette_params(
-        subvolume=subvolume,
         pos_percent=pos_percent,
         neg_percent=neg_percent,
         pos_user=pos_user,
         neg_user=neg_user,
-        interpolate=interpolate,
-        display=display,
-        display_=display_,
-        display_2=display_2,
-        name=name,
         thresholding=thresholding,
         type_=type_,
         type_2=type_2,
+        name=name,
+        display=display,
+        display_=display_,
+        display_2=display_2,
+        interpolate=interpolate,
+        subvolume=subvolume,
         volume=volume,
         mode=mode,
     )

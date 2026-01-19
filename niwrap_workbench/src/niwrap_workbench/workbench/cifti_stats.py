@@ -26,19 +26,19 @@ CiftiStatsRoiParamsDict = _CiftiStatsRoiParamsDictNoTag | CiftiStatsRoiParamsDic
 
 
 _CiftiStatsParamsDictNoTag = typing.TypedDict('_CiftiStatsParamsDictNoTag', {
-    "operation": typing.NotRequired[str | None],
-    "percent": typing.NotRequired[float | None],
-    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiStatsRoiParamsDict | None],
+    "column": typing.NotRequired[int | None],
+    "percent": typing.NotRequired[float | None],
+    "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
 CiftiStatsParamsDictTagged = typing.TypedDict('CiftiStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-stats"],
-    "operation": typing.NotRequired[str | None],
-    "percent": typing.NotRequired[float | None],
-    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiStatsRoiParamsDict | None],
+    "column": typing.NotRequired[int | None],
+    "percent": typing.NotRequired[float | None],
+    "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
     "cifti-in": InputPathType,
 })
@@ -105,9 +105,10 @@ def cifti_stats_roi_cargs(
     cargs = []
     cargs.extend([
         "-roi",
-        execution.input_file(params.get("roi-cifti", None)),
-        ("-match-maps" if (params.get("match-maps", False)) else "")
+        execution.input_file(params.get("roi-cifti", None))
     ])
+    if params.get("match-maps", False):
+        cargs.append("-match-maps")
     return cargs
 
 
@@ -121,10 +122,10 @@ class CiftiStatsOutputs(typing.NamedTuple):
 
 def cifti_stats_params(
     cifti_in: InputPathType,
-    operation: str | None = None,
-    percent: float | None = None,
-    column: int | None = None,
     roi: CiftiStatsRoiParamsDict | None = None,
+    column: int | None = None,
+    percent: float | None = None,
+    operation: str | None = None,
     show_map_name: bool = False,
 ) -> CiftiStatsParamsDictTagged:
     """
@@ -132,16 +133,16 @@ def cifti_stats_params(
     
     Args:
         cifti_in: the input cifti.
-        operation: use a reduction operation\
-            \
-            the reduction operation.
-        percent: give the value at a percentile\
-            \
-            the percentile to find, must be between 0 and 100.
+        roi: only consider data inside an roi.
         column: only display output for one column\
             \
             the column index (starting from 1).
-        roi: only consider data inside an roi.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        operation: use a reduction operation\
+            \
+            the reduction operation.
         show_map_name: print column index and name before each output.
     Returns:
         Parameter dictionary
@@ -151,14 +152,14 @@ def cifti_stats_params(
         "show-map-name": show_map_name,
         "cifti-in": cifti_in,
     }
-    if operation is not None:
-        params["operation"] = operation
-    if percent is not None:
-        params["percent"] = percent
-    if column is not None:
-        params["column"] = column
     if roi is not None:
         params["roi"] = roi
+    if column is not None:
+        params["column"] = column
+    if percent is not None:
+        params["percent"] = percent
+    if operation is not None:
+        params["operation"] = operation
     return params
 
 
@@ -174,17 +175,17 @@ def cifti_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("operation", None) is not None:
-        if not isinstance(params["operation"], str):
-            raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str | None`')
-    if params.get("percent", None) is not None:
-        if not isinstance(params["percent"], (float, int)):
-            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("roi", None) is not None:
+        cifti_stats_roi_validate(params["roi"])
     if params.get("column", None) is not None:
         if not isinstance(params["column"], int):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `int | None`')
-    if params.get("roi", None) is not None:
-        cifti_stats_roi_validate(params["roi"])
+    if params.get("percent", None) is not None:
+        if not isinstance(params["percent"], (float, int)):
+            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("operation", None) is not None:
+        if not isinstance(params["operation"], str):
+            raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str | None`')
     if params.get("show-map-name", False) is None:
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
@@ -213,17 +214,25 @@ def cifti_stats_cargs(
         "wb_command",
         "-cifti-stats"
     ])
-    if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
+    if params.get("roi", None) is not None:
+        cargs.extend(cifti_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            str(params.get("column", None))
+        ])
+    if params.get("percent", None) is not None:
+        cargs.extend([
+            "-percentile",
+            str(params.get("percent", None))
+        ])
+    if params.get("operation", None) is not None:
         cargs.extend([
             "-reduce",
-            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
-            "-percentile",
-            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
-            "-column",
-            (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
-            *(cifti_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            ("-show-map-name" if (params.get("show-map-name", False)) else "")
+            params.get("operation", None)
         ])
+    if params.get("show-map-name", False):
+        cargs.append("-show-map-name")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
@@ -299,10 +308,10 @@ def cifti_stats_execute(
 
 def cifti_stats(
     cifti_in: InputPathType,
-    operation: str | None = None,
-    percent: float | None = None,
-    column: int | None = None,
     roi: CiftiStatsRoiParamsDict | None = None,
+    column: int | None = None,
+    percent: float | None = None,
+    operation: str | None = None,
     show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
@@ -338,26 +347,26 @@ def cifti_stats(
     
     Args:
         cifti_in: the input cifti.
-        operation: use a reduction operation\
-            \
-            the reduction operation.
-        percent: give the value at a percentile\
-            \
-            the percentile to find, must be between 0 and 100.
+        roi: only consider data inside an roi.
         column: only display output for one column\
             \
             the column index (starting from 1).
-        roi: only consider data inside an roi.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        operation: use a reduction operation\
+            \
+            the reduction operation.
         show_map_name: print column index and name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiStatsOutputs`).
     """
     params = cifti_stats_params(
-        operation=operation,
-        percent=percent,
-        column=column,
         roi=roi,
+        column=column,
+        percent=percent,
+        operation=operation,
         show_map_name=show_map_name,
         cifti_in=cifti_in,
     )

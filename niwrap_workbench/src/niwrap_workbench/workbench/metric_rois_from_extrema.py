@@ -15,10 +15,10 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 _MetricRoisFromExtremaParamsDictNoTag = typing.TypedDict('_MetricRoisFromExtremaParamsDictNoTag', {
     "metric-out": str,
-    "sigma": typing.NotRequired[float | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "method": typing.NotRequired[str | None],
     "column": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "sigma": typing.NotRequired[float | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,
@@ -26,10 +26,10 @@ _MetricRoisFromExtremaParamsDictNoTag = typing.TypedDict('_MetricRoisFromExtrema
 MetricRoisFromExtremaParamsDictTagged = typing.TypedDict('MetricRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-rois-from-extrema"],
     "metric-out": str,
-    "sigma": typing.NotRequired[float | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "method": typing.NotRequired[str | None],
     "column": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "sigma": typing.NotRequired[float | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,
@@ -52,10 +52,10 @@ def metric_rois_from_extrema_params(
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
-    sigma: float | None = None,
-    roi_metric: InputPathType | None = None,
-    method: str | None = None,
     column: str | None = None,
+    method: str | None = None,
+    roi_metric: InputPathType | None = None,
+    sigma: float | None = None,
 ) -> MetricRoisFromExtremaParamsDictTagged:
     """
     Build parameters.
@@ -65,18 +65,18 @@ def metric_rois_from_extrema_params(
         surface: the surface to use for geodesic distance.
         metric: the input metric file.
         limit: geodesic distance limit from vertex, in mm.
-        sigma: generate a gaussian kernel instead of a flat ROI\
-            \
-            the sigma for the gaussian kernel, in mm.
-        roi_metric: select a region of interest to use\
-            \
-            the area to use, as a metric.
-        method: how to handle overlapping ROIs, default ALLOW\
-            \
-            the method of resolving overlaps.
         column: select a single input column to use\
             \
             the column number or name.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        roi_metric: select a region of interest to use\
+            \
+            the area to use, as a metric.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
     Returns:
         Parameter dictionary
     """
@@ -87,14 +87,14 @@ def metric_rois_from_extrema_params(
         "metric": metric,
         "limit": limit,
     }
-    if sigma is not None:
-        params["sigma"] = sigma
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if method is not None:
-        params["method"] = method
     if column is not None:
         params["column"] = column
+    if method is not None:
+        params["method"] = method
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if sigma is not None:
+        params["sigma"] = sigma
     return params
 
 
@@ -114,18 +114,18 @@ def metric_rois_from_extrema_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("sigma", None) is not None:
-        if not isinstance(params["sigma"], (float, int)):
-            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("method", None) is not None:
-        if not isinstance(params["method"], str):
-            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -158,17 +158,27 @@ def metric_rois_from_extrema_cargs(
         "wb_command",
         "-metric-rois-from-extrema"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-gaussian",
-        (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-overlap-logic",
-        (params.get("method", None) if (params.get("method", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("method", None) is not None:
+        cargs.extend([
+            "-overlap-logic",
+            params.get("method", None)
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("sigma", None) is not None:
+        cargs.extend([
+            "-gaussian",
+            str(params.get("sigma", None))
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(str(params.get("limit", None)))
@@ -232,10 +242,10 @@ def metric_rois_from_extrema(
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
-    sigma: float | None = None,
-    roi_metric: InputPathType | None = None,
-    method: str | None = None,
     column: str | None = None,
+    method: str | None = None,
+    roi_metric: InputPathType | None = None,
+    sigma: float | None = None,
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
@@ -255,28 +265,28 @@ def metric_rois_from_extrema(
         surface: the surface to use for geodesic distance.
         metric: the input metric file.
         limit: geodesic distance limit from vertex, in mm.
-        sigma: generate a gaussian kernel instead of a flat ROI\
-            \
-            the sigma for the gaussian kernel, in mm.
-        roi_metric: select a region of interest to use\
-            \
-            the area to use, as a metric.
-        method: how to handle overlapping ROIs, default ALLOW\
-            \
-            the method of resolving overlaps.
         column: select a single input column to use\
             \
             the column number or name.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        roi_metric: select a region of interest to use\
+            \
+            the area to use, as a metric.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisFromExtremaOutputs`).
     """
     params = metric_rois_from_extrema_params(
         metric_out=metric_out,
-        sigma=sigma,
-        roi_metric=roi_metric,
-        method=method,
         column=column,
+        method=method,
+        roi_metric=roi_metric,
+        sigma=sigma,
         surface=surface,
         metric=metric,
         limit=limit,

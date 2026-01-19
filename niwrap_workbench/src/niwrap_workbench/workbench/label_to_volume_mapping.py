@@ -17,24 +17,24 @@ _LabelToVolumeMappingRibbonConstrainedParamsDictNoTag = typing.TypedDict('_Label
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
     "subdiv-num": typing.NotRequired[int | None],
-    "greedy": bool,
     "thick-columns": bool,
+    "greedy": bool,
 })
 LabelToVolumeMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParamsDictTagged', {
     "@type": typing.Literal["ribbon-constrained"],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
     "subdiv-num": typing.NotRequired[int | None],
-    "greedy": bool,
     "thick-columns": bool,
+    "greedy": bool,
 })
 LabelToVolumeMappingRibbonConstrainedParamsDict = _LabelToVolumeMappingRibbonConstrainedParamsDictNoTag | LabelToVolumeMappingRibbonConstrainedParamsDictTagged
 
 
 _LabelToVolumeMappingParamsDictNoTag = typing.TypedDict('_LabelToVolumeMappingParamsDictNoTag', {
     "volume-out": str,
-    "distance": typing.NotRequired[float | None],
     "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParamsDict | None],
+    "distance": typing.NotRequired[float | None],
     "label": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
@@ -42,8 +42,8 @@ _LabelToVolumeMappingParamsDictNoTag = typing.TypedDict('_LabelToVolumeMappingPa
 LabelToVolumeMappingParamsDictTagged = typing.TypedDict('LabelToVolumeMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/label-to-volume-mapping"],
     "volume-out": str,
-    "distance": typing.NotRequired[float | None],
     "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParamsDict | None],
+    "distance": typing.NotRequired[float | None],
     "label": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
@@ -55,8 +55,8 @@ def label_to_volume_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
     subdiv_num: int | None = None,
-    greedy: bool = False,
     thick_columns: bool = False,
+    greedy: bool = False,
 ) -> LabelToVolumeMappingRibbonConstrainedParamsDictTagged:
     """
     Build parameters.
@@ -67,9 +67,9 @@ def label_to_volume_mapping_ribbon_constrained(
         subdiv_num: voxel divisions while estimating voxel weights\
             \
             number of subdivisions, default 3.
+        thick_columns: use overlapping columns (legacy method).
         greedy: also put labels in voxels with less than 50% partial volume\
             (legacy behavior).
-        thick_columns: use overlapping columns (legacy method).
     Returns:
         Parameter dictionary
     """
@@ -77,8 +77,8 @@ def label_to_volume_mapping_ribbon_constrained(
         "@type": "ribbon-constrained",
         "inner-surf": inner_surf,
         "outer-surf": outer_surf,
-        "greedy": greedy,
         "thick-columns": thick_columns,
+        "greedy": greedy,
     }
     if subdiv_num is not None:
         params["subdiv-num"] = subdiv_num
@@ -108,14 +108,14 @@ def label_to_volume_mapping_ribbon_constrained_validate(
     if params.get("subdiv-num", None) is not None:
         if not isinstance(params["subdiv-num"], int):
             raise StyxValidationError(f'`subdiv-num` has the wrong type: Received `{type(params.get("subdiv-num", None))}` expected `int | None`')
-    if params.get("greedy", False) is None:
-        raise StyxValidationError("`greedy` must not be None")
-    if not isinstance(params["greedy"], bool):
-        raise StyxValidationError(f'`greedy` has the wrong type: Received `{type(params.get("greedy", False))}` expected `bool`')
     if params.get("thick-columns", False) is None:
         raise StyxValidationError("`thick-columns` must not be None")
     if not isinstance(params["thick-columns"], bool):
         raise StyxValidationError(f'`thick-columns` has the wrong type: Received `{type(params.get("thick-columns", False))}` expected `bool`')
+    if params.get("greedy", False) is None:
+        raise StyxValidationError("`greedy` must not be None")
+    if not isinstance(params["greedy"], bool):
+        raise StyxValidationError(f'`greedy` has the wrong type: Received `{type(params.get("greedy", False))}` expected `bool`')
 
 
 def label_to_volume_mapping_ribbon_constrained_cargs(
@@ -135,12 +135,17 @@ def label_to_volume_mapping_ribbon_constrained_cargs(
     cargs.extend([
         "-ribbon-constrained",
         execution.input_file(params.get("inner-surf", None)),
-        execution.input_file(params.get("outer-surf", None)),
-        "-voxel-subdiv",
-        (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
-        ("-greedy" if (params.get("greedy", False)) else ""),
-        ("-thick-columns" if (params.get("thick-columns", False)) else "")
+        execution.input_file(params.get("outer-surf", None))
     ])
+    if params.get("subdiv-num", None) is not None:
+        cargs.extend([
+            "-voxel-subdiv",
+            str(params.get("subdiv-num", None))
+        ])
+    if params.get("thick-columns", False):
+        cargs.append("-thick-columns")
+    if params.get("greedy", False):
+        cargs.append("-greedy")
     return cargs
 
 
@@ -159,8 +164,8 @@ def label_to_volume_mapping_params(
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    distance: float | None = None,
     ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParamsDict | None = None,
+    distance: float | None = None,
 ) -> LabelToVolumeMappingParamsDictTagged:
     """
     Build parameters.
@@ -170,10 +175,10 @@ def label_to_volume_mapping_params(
         label: the input label file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
+        ribbon_constrained: use ribbon constrained mapping algorithm.
         distance: use the label from the vertex closest to the voxel center\
             \
             how far from the surface to map labels to voxels, in mm.
-        ribbon_constrained: use ribbon constrained mapping algorithm.
     Returns:
         Parameter dictionary
     """
@@ -184,10 +189,10 @@ def label_to_volume_mapping_params(
         "surface": surface,
         "volume-space": volume_space,
     }
-    if distance is not None:
-        params["distance"] = distance
     if ribbon_constrained is not None:
         params["ribbon-constrained"] = ribbon_constrained
+    if distance is not None:
+        params["distance"] = distance
     return params
 
 
@@ -207,11 +212,11 @@ def label_to_volume_mapping_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("ribbon-constrained", None) is not None:
+        label_to_volume_mapping_ribbon_constrained_validate(params["ribbon-constrained"])
     if params.get("distance", None) is not None:
         if not isinstance(params["distance"], (float, int)):
             raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
-    if params.get("ribbon-constrained", None) is not None:
-        label_to_volume_mapping_ribbon_constrained_validate(params["ribbon-constrained"])
     if params.get("label", None) is None:
         raise StyxValidationError("`label` must not be None")
     if not isinstance(params["label"], (pathlib.Path, str)):
@@ -246,10 +251,13 @@ def label_to_volume_mapping_cargs(
     ])
     cargs.extend([
         params.get("volume-out", None),
-        "-nearest-vertex",
-        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
         *(label_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else [])
     ])
+    if params.get("distance", None) is not None:
+        cargs.extend([
+            "-nearest-vertex",
+            str(params.get("distance", None))
+        ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("volume-space", None)))
@@ -310,8 +318,8 @@ def label_to_volume_mapping(
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    distance: float | None = None,
     ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParamsDict | None = None,
+    distance: float | None = None,
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
@@ -328,18 +336,18 @@ def label_to_volume_mapping(
         label: the input label file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
+        ribbon_constrained: use ribbon constrained mapping algorithm.
         distance: use the label from the vertex closest to the voxel center\
             \
             how far from the surface to map labels to voxels, in mm.
-        ribbon_constrained: use ribbon constrained mapping algorithm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToVolumeMappingOutputs`).
     """
     params = label_to_volume_mapping_params(
         volume_out=volume_out,
-        distance=distance,
         ribbon_constrained=ribbon_constrained,
+        distance=distance,
         label=label,
         surface=surface,
         volume_space=volume_space,

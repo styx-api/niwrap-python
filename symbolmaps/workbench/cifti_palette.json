@@ -4,9 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "column": {
-      "var_param": "column"
-    },
     "pos-percent": {
       "var_param": "pos_percent",
       "fn_struct_make_params": "cifti_palette_pos_percent",
@@ -55,15 +52,6 @@
         }
       }
     },
-    "interpolate": {
-      "var_param": "interpolate"
-    },
-    "display": {
-      "var_param": "display_2"
-    },
-    "name": {
-      "var_param": "name"
-    },
     "thresholding": {
       "var_param": "thresholding",
       "fn_struct_make_params": "cifti_palette_thresholding",
@@ -84,6 +72,18 @@
     },
     "type": {
       "var_param": "type_2"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "display": {
+      "var_param": "display_2"
+    },
+    "interpolate": {
+      "var_param": "interpolate"
+    },
+    "column": {
+      "var_param": "column"
     },
     "cifti-in": {
       "var_param": "cifti_in"

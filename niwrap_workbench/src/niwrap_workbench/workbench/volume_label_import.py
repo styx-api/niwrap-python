@@ -15,22 +15,22 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 
 _VolumeLabelImportParamsDictNoTag = typing.TypedDict('_VolumeLabelImportParamsDictNoTag', {
     "output": str,
-    "discard-others": bool,
-    "value": typing.NotRequired[int | None],
-    "subvol": typing.NotRequired[str | None],
-    "drop-unused-labels": bool,
     "file": typing.NotRequired[str | None],
+    "subvol": typing.NotRequired[str | None],
+    "value": typing.NotRequired[int | None],
+    "drop-unused-labels": bool,
+    "discard-others": bool,
     "input": InputPathType,
     "label-list-file": str,
 })
 VolumeLabelImportParamsDictTagged = typing.TypedDict('VolumeLabelImportParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-import"],
     "output": str,
-    "discard-others": bool,
-    "value": typing.NotRequired[int | None],
-    "subvol": typing.NotRequired[str | None],
-    "drop-unused-labels": bool,
     "file": typing.NotRequired[str | None],
+    "subvol": typing.NotRequired[str | None],
+    "value": typing.NotRequired[int | None],
+    "drop-unused-labels": bool,
+    "discard-others": bool,
     "input": InputPathType,
     "label-list-file": str,
 })
@@ -51,11 +51,11 @@ def volume_label_import_params(
     output: str,
     input_: InputPathType,
     label_list_file: str,
-    discard_others: bool = False,
-    value: int | None = None,
-    subvol: str | None = None,
-    drop_unused_labels: bool = False,
     file: str | None = None,
+    subvol: str | None = None,
+    value: int | None = None,
+    drop_unused_labels: bool = False,
+    discard_others: bool = False,
 ) -> VolumeLabelImportParamsDictTagged:
     """
     Build parameters.
@@ -64,35 +64,35 @@ def volume_label_import_params(
         output: the output workbench label volume.
         input_: the input volume file.
         label_list_file: text file containing the values and names for labels.
-        discard_others: set any voxels with values not mentioned in the label\
-            list to the ??? label.
-        value: set the value that will be interpreted as unlabeled\
-            \
-            the numeric value for unlabeled (default 0).
-        subvol: select a single subvolume to import\
-            \
-            the subvolume number or name.
-        drop_unused_labels: remove any unused label values from the label table.
         file: read label name hierarchy from a json file\
             \
             the input json file.
+        subvol: select a single subvolume to import\
+            \
+            the subvolume number or name.
+        value: set the value that will be interpreted as unlabeled\
+            \
+            the numeric value for unlabeled (default 0).
+        drop_unused_labels: remove any unused label values from the label table.
+        discard_others: set any voxels with values not mentioned in the label\
+            list to the ??? label.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-import",
         "output": output,
-        "discard-others": discard_others,
         "drop-unused-labels": drop_unused_labels,
+        "discard-others": discard_others,
         "input": input_,
         "label-list-file": label_list_file,
     }
-    if value is not None:
-        params["value"] = value
-    if subvol is not None:
-        params["subvol"] = subvol
     if file is not None:
         params["file"] = file
+    if subvol is not None:
+        params["subvol"] = subvol
+    if value is not None:
+        params["value"] = value
     return params
 
 
@@ -112,23 +112,23 @@ def volume_label_import_validate(
         raise StyxValidationError("`output` must not be None")
     if not isinstance(params["output"], str):
         raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
-    if params.get("discard-others", False) is None:
-        raise StyxValidationError("`discard-others` must not be None")
-    if not isinstance(params["discard-others"], bool):
-        raise StyxValidationError(f'`discard-others` has the wrong type: Received `{type(params.get("discard-others", False))}` expected `bool`')
-    if params.get("value", None) is not None:
-        if not isinstance(params["value"], int):
-            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `int | None`')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("subvol", None) is not None:
         if not isinstance(params["subvol"], str):
             raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], int):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `int | None`')
     if params.get("drop-unused-labels", False) is None:
         raise StyxValidationError("`drop-unused-labels` must not be None")
     if not isinstance(params["drop-unused-labels"], bool):
         raise StyxValidationError(f'`drop-unused-labels` has the wrong type: Received `{type(params.get("drop-unused-labels", False))}` expected `bool`')
-    if params.get("file", None) is not None:
-        if not isinstance(params["file"], str):
-            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("discard-others", False) is None:
+        raise StyxValidationError("`discard-others` must not be None")
+    if not isinstance(params["discard-others"], bool):
+        raise StyxValidationError(f'`discard-others` has the wrong type: Received `{type(params.get("discard-others", False))}` expected `bool`')
     if params.get("input", None) is None:
         raise StyxValidationError("`input` must not be None")
     if not isinstance(params["input"], (pathlib.Path, str)):
@@ -157,17 +157,26 @@ def volume_label_import_cargs(
         "wb_command",
         "-volume-label-import"
     ])
-    cargs.extend([
-        params.get("output", None),
-        ("-discard-others" if (params.get("discard-others", False)) else ""),
-        "-unlabeled-value",
-        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-        "-subvolume",
-        (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
-        ("-drop-unused-labels" if (params.get("drop-unused-labels", False)) else ""),
-        "-hierarchy",
-        (params.get("file", None) if (params.get("file", None) is not None) else "")
-    ])
+    cargs.append(params.get("output", None))
+    if params.get("file", None) is not None:
+        cargs.extend([
+            "-hierarchy",
+            params.get("file", None)
+        ])
+    if params.get("subvol", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvol", None)
+        ])
+    if params.get("value", None) is not None:
+        cargs.extend([
+            "-unlabeled-value",
+            str(params.get("value", None))
+        ])
+    if params.get("drop-unused-labels", False):
+        cargs.append("-drop-unused-labels")
+    if params.get("discard-others", False):
+        cargs.append("-discard-others")
     cargs.append(execution.input_file(params.get("input", None)))
     cargs.append(params.get("label-list-file", None))
     return cargs
@@ -246,11 +255,11 @@ def volume_label_import(
     output: str,
     input_: InputPathType,
     label_list_file: str,
-    discard_others: bool = False,
-    value: int | None = None,
-    subvol: str | None = None,
-    drop_unused_labels: bool = False,
     file: str | None = None,
+    subvol: str | None = None,
+    value: int | None = None,
+    drop_unused_labels: bool = False,
+    discard_others: bool = False,
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
@@ -286,29 +295,29 @@ def volume_label_import(
         output: the output workbench label volume.
         input_: the input volume file.
         label_list_file: text file containing the values and names for labels.
-        discard_others: set any voxels with values not mentioned in the label\
-            list to the ??? label.
-        value: set the value that will be interpreted as unlabeled\
-            \
-            the numeric value for unlabeled (default 0).
-        subvol: select a single subvolume to import\
-            \
-            the subvolume number or name.
-        drop_unused_labels: remove any unused label values from the label table.
         file: read label name hierarchy from a json file\
             \
             the input json file.
+        subvol: select a single subvolume to import\
+            \
+            the subvolume number or name.
+        value: set the value that will be interpreted as unlabeled\
+            \
+            the numeric value for unlabeled (default 0).
+        drop_unused_labels: remove any unused label values from the label table.
+        discard_others: set any voxels with values not mentioned in the label\
+            list to the ??? label.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).
     """
     params = volume_label_import_params(
         output=output,
-        discard_others=discard_others,
-        value=value,
-        subvol=subvol,
-        drop_unused_labels=drop_unused_labels,
         file=file,
+        subvol=subvol,
+        value=value,
+        drop_unused_labels=drop_unused_labels,
+        discard_others=discard_others,
         input_=input_,
         label_list_file=label_list_file,
     )

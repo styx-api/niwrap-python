@@ -55,9 +55,9 @@ _CiftiDilateParamsDictNoTag = typing.TypedDict('_CiftiDilateParamsDictNoTag', {
     "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiDilateCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
-    "nearest": bool,
-    "merged-volume": bool,
     "legacy-mode": bool,
+    "merged-volume": bool,
+    "nearest": bool,
     "cifti-in": InputPathType,
     "direction": str,
     "surface-distance": float,
@@ -70,9 +70,9 @@ CiftiDilateParamsDictTagged = typing.TypedDict('CiftiDilateParamsDictTagged', {
     "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiDilateCerebellumSurfaceParamsDict | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
-    "nearest": bool,
-    "merged-volume": bool,
     "legacy-mode": bool,
+    "merged-volume": bool,
+    "nearest": bool,
     "cifti-in": InputPathType,
     "direction": str,
     "surface-distance": float,
@@ -143,10 +143,13 @@ def cifti_dilate_left_surface_cargs(
     cargs = []
     cargs.extend([
         "-left-surface",
-        execution.input_file(params.get("surface", None)),
-        "-left-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-left-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -212,10 +215,13 @@ def cifti_dilate_right_surface_cargs(
     cargs = []
     cargs.extend([
         "-right-surface",
-        execution.input_file(params.get("surface", None)),
-        "-right-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-right-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -281,10 +287,13 @@ def cifti_dilate_cerebellum_surface_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-surface",
-        execution.input_file(params.get("surface", None)),
-        "-cerebellum-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -308,9 +317,9 @@ def cifti_dilate_params(
     right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
     roi_cifti: InputPathType | None = None,
-    nearest: bool = False,
-    merged_volume: bool = False,
     legacy_mode: bool = False,
+    merged_volume: bool = False,
+    nearest: bool = False,
 ) -> CiftiDilateParamsDictTagged:
     """
     Build parameters.
@@ -329,19 +338,19 @@ def cifti_dilate_params(
             \
             cifti dscalar or dtseries file, positive values denote\
             brainordinates to have their values replaced.
-        nearest: use nearest good value instead of a weighted average.
+        legacy_mode: use the math from v1.3.2 and earlier for weighted dilation.
         merged_volume: treat volume components as if they were a single\
             component.
-        legacy_mode: use the math from v1.3.2 and earlier for weighted dilation.
+        nearest: use nearest good value instead of a weighted average.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-dilate",
         "cifti-out": cifti_out,
-        "nearest": nearest,
-        "merged-volume": merged_volume,
         "legacy-mode": legacy_mode,
+        "merged-volume": merged_volume,
+        "nearest": nearest,
         "cifti-in": cifti_in,
         "direction": direction,
         "surface-distance": surface_distance,
@@ -383,18 +392,18 @@ def cifti_dilate_validate(
     if params.get("roi-cifti", None) is not None:
         if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
-    if params.get("nearest", False) is None:
-        raise StyxValidationError("`nearest` must not be None")
-    if not isinstance(params["nearest"], bool):
-        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
-    if params.get("merged-volume", False) is None:
-        raise StyxValidationError("`merged-volume` must not be None")
-    if not isinstance(params["merged-volume"], bool):
-        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
     if params.get("legacy-mode", False) is None:
         raise StyxValidationError("`legacy-mode` must not be None")
     if not isinstance(params["legacy-mode"], bool):
         raise StyxValidationError(f'`legacy-mode` has the wrong type: Received `{type(params.get("legacy-mode", False))}` expected `bool`')
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -435,13 +444,19 @@ def cifti_dilate_cargs(
         params.get("cifti-out", None),
         *(cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        "-bad-brainordinate-roi",
-        (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
-        ("-nearest" if (params.get("nearest", False)) else ""),
-        ("-merged-volume" if (params.get("merged-volume", False)) else ""),
-        ("-legacy-mode" if (params.get("legacy-mode", False)) else "")
+        *(cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
     ])
+    if params.get("roi-cifti", None) is not None:
+        cargs.extend([
+            "-bad-brainordinate-roi",
+            execution.input_file(params.get("roi-cifti", None))
+        ])
+    if params.get("legacy-mode", False):
+        cargs.append("-legacy-mode")
+    if params.get("merged-volume", False):
+        cargs.append("-merged-volume")
+    if params.get("nearest", False):
+        cargs.append("-nearest")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(str(params.get("surface-distance", None)))
@@ -518,9 +533,9 @@ def cifti_dilate(
     right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
     roi_cifti: InputPathType | None = None,
-    nearest: bool = False,
-    merged_volume: bool = False,
     legacy_mode: bool = False,
+    merged_volume: bool = False,
+    nearest: bool = False,
     runner: Runner | None = None,
 ) -> CiftiDilateOutputs:
     """
@@ -556,10 +571,10 @@ def cifti_dilate(
             \
             cifti dscalar or dtseries file, positive values denote\
             brainordinates to have their values replaced.
-        nearest: use nearest good value instead of a weighted average.
+        legacy_mode: use the math from v1.3.2 and earlier for weighted dilation.
         merged_volume: treat volume components as if they were a single\
             component.
-        legacy_mode: use the math from v1.3.2 and earlier for weighted dilation.
+        nearest: use nearest good value instead of a weighted average.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiDilateOutputs`).
@@ -570,9 +585,9 @@ def cifti_dilate(
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
         roi_cifti=roi_cifti,
-        nearest=nearest,
-        merged_volume=merged_volume,
         legacy_mode=legacy_mode,
+        merged_volume=merged_volume,
+        nearest=nearest,
         cifti_in=cifti_in,
         direction=direction,
         surface_distance=surface_distance,

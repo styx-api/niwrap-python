@@ -38,12 +38,6 @@
             }
           }
         },
-        "reset-scalars": {
-          "var_param": "reset_scalars"
-        },
-        "column-reset-scalars": {
-          "var_param": "column_reset_scalars"
-        },
         "replace-binary": {
           "var_param": "replace_binary",
           "fn_struct_make_params": "cifti_convert_replace_binary",
@@ -51,13 +45,19 @@
             "binary-in": {
               "var_param": "binary_in"
             },
-            "flip-endian": {
-              "var_param": "flip_endian"
-            },
             "transpose": {
               "var_param": "transpose"
+            },
+            "flip-endian": {
+              "var_param": "flip_endian"
             }
           }
+        },
+        "column-reset-scalars": {
+          "var_param": "column_reset_scalars"
+        },
+        "reset-scalars": {
+          "var_param": "reset_scalars"
         }
       }
     },
@@ -71,11 +71,11 @@
         "nifti-out": {
           "var_param": "nifti_out"
         },
-        "smaller-file": {
-          "var_param": "smaller_file"
-        },
         "smaller-dims": {
           "var_param": "smaller_dims"
+        },
+        "smaller-file": {
+          "var_param": "smaller_file"
         }
       }
     },
@@ -140,9 +140,6 @@
         "cifti-out": {
           "var_param": "cifti_out"
         },
-        "delim-string": {
-          "var_param": "delim_string"
-        },
         "reset-timepoints": {
           "var_param": "reset_timepoints",
           "fn_struct_make_params": "cifti_convert_reset_timepoints_2",
@@ -157,6 +154,9 @@
               "var_param": "unit"
             }
           }
+        },
+        "delim-string": {
+          "var_param": "delim_string"
         },
         "reset-scalars": {
           "var_param": "reset_scalars"

@@ -65,22 +65,22 @@ CiftiReplaceStructureVolumeParamsDict = _CiftiReplaceStructureVolumeParamsDictNo
 
 _CiftiReplaceStructureParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureParamsDictNoTag', {
     "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
-    "discard-unused-labels": bool,
-    "action": typing.NotRequired[str | None],
     "label": typing.NotRequired[list[CiftiReplaceStructureLabelParamsDict] | None],
     "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParamsDict] | None],
+    "action": typing.NotRequired[str | None],
+    "discard-unused-labels": bool,
     "cifti": str,
     "direction": str,
 })
 CiftiReplaceStructureParamsDictTagged = typing.TypedDict('CiftiReplaceStructureParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-replace-structure"],
     "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
-    "discard-unused-labels": bool,
-    "action": typing.NotRequired[str | None],
     "label": typing.NotRequired[list[CiftiReplaceStructureLabelParamsDict] | None],
     "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParamsDict] | None],
+    "action": typing.NotRequired[str | None],
+    "discard-unused-labels": bool,
     "cifti": str,
     "direction": str,
 })
@@ -146,9 +146,10 @@ def cifti_replace_structure_volume_all_cargs(
     cargs = []
     cargs.extend([
         "-volume-all",
-        execution.input_file(params.get("volume", None)),
-        ("-from-cropped" if (params.get("from-cropped", False)) else "")
+        execution.input_file(params.get("volume", None))
     ])
+    if params.get("from-cropped", False):
+        cargs.append("-from-cropped")
     return cargs
 
 
@@ -349,9 +350,10 @@ def cifti_replace_structure_volume_cargs(
     cargs.extend([
         "-volume",
         params.get("structure", None),
-        execution.input_file(params.get("volume", None)),
-        ("-from-cropped" if (params.get("from-cropped", False)) else "")
+        execution.input_file(params.get("volume", None))
     ])
+    if params.get("from-cropped", False):
+        cargs.append("-from-cropped")
     return cargs
 
 
@@ -367,11 +369,11 @@ def cifti_replace_structure_params(
     cifti: str,
     direction: str,
     volume_all: CiftiReplaceStructureVolumeAllParamsDict | None = None,
-    discard_unused_labels: bool = False,
-    action: str | None = None,
     label: list[CiftiReplaceStructureLabelParamsDict] | None = None,
     metric: list[CiftiReplaceStructureMetricParamsDict] | None = None,
     volume: list[CiftiReplaceStructureVolumeParamsDict] | None = None,
+    action: str | None = None,
+    discard_unused_labels: bool = False,
 ) -> CiftiReplaceStructureParamsDictTagged:
     """
     Build parameters.
@@ -380,15 +382,15 @@ def cifti_replace_structure_params(
         cifti: the cifti to modify.
         direction: which dimension to interpret as a single map, ROW or COLUMN.
         volume_all: replace the data in all volume components.
-        discard_unused_labels: when operating on a dlabel file, drop any unused\
-            label keys from the label table.
+        label: replace the data in a surface label component.
+        metric: replace the data in a surface component.
+        volume: replace the data in a volume component.
         action: how to handle conflicts between label keys\
             \
             'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
             'LEGACY' to match v1.4.2 and earlier.
-        label: replace the data in a surface label component.
-        metric: replace the data in a surface component.
-        volume: replace the data in a volume component.
+        discard_unused_labels: when operating on a dlabel file, drop any unused\
+            label keys from the label table.
     Returns:
         Parameter dictionary
     """
@@ -400,14 +402,14 @@ def cifti_replace_structure_params(
     }
     if volume_all is not None:
         params["volume-all"] = volume_all
-    if action is not None:
-        params["action"] = action
     if label is not None:
         params["label"] = label
     if metric is not None:
         params["metric"] = metric
     if volume is not None:
         params["volume"] = volume
+    if action is not None:
+        params["action"] = action
     return params
 
 
@@ -425,13 +427,6 @@ def cifti_replace_structure_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("volume-all", None) is not None:
         cifti_replace_structure_volume_all_validate(params["volume-all"])
-    if params.get("discard-unused-labels", False) is None:
-        raise StyxValidationError("`discard-unused-labels` must not be None")
-    if not isinstance(params["discard-unused-labels"], bool):
-        raise StyxValidationError(f'`discard-unused-labels` has the wrong type: Received `{type(params.get("discard-unused-labels", False))}` expected `bool`')
-    if params.get("action", None) is not None:
-        if not isinstance(params["action"], str):
-            raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
     if params.get("label", None) is not None:
         if not isinstance(params["label"], list):
             raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiReplaceStructureLabelParamsDict] | None`')
@@ -447,6 +442,13 @@ def cifti_replace_structure_validate(
             raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiReplaceStructureVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_replace_structure_volume_validate(e)
+    if params.get("action", None) is not None:
+        if not isinstance(params["action"], str):
+            raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
+    if params.get("discard-unused-labels", False) is None:
+        raise StyxValidationError("`discard-unused-labels` must not be None")
+    if not isinstance(params["discard-unused-labels"], bool):
+        raise StyxValidationError(f'`discard-unused-labels` has the wrong type: Received `{type(params.get("discard-unused-labels", False))}` expected `bool`')
     if params.get("cifti", None) is None:
         raise StyxValidationError("`cifti` must not be None")
     if not isinstance(params["cifti"], str):
@@ -475,16 +477,20 @@ def cifti_replace_structure_cargs(
         "wb_command",
         "-cifti-replace-structure"
     ])
-    if params.get("volume-all", None) is not None or params.get("discard-unused-labels", False) or params.get("action", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
+    if params.get("volume-all", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
             *(cifti_replace_structure_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
-            ("-discard-unused-labels" if (params.get("discard-unused-labels", False)) else ""),
-            "-label-collision",
-            (params.get("action", None) if (params.get("action", None) is not None) else ""),
             *([a for c in [cifti_replace_structure_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
             *([a for c in [cifti_replace_structure_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
             *([a for c in [cifti_replace_structure_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
         ])
+    if params.get("action", None) is not None:
+        cargs.extend([
+            "-label-collision",
+            params.get("action", None)
+        ])
+    if params.get("discard-unused-labels", False):
+        cargs.append("-discard-unused-labels")
     cargs.append(params.get("cifti", None))
     cargs.append(params.get("direction", None))
     return cargs
@@ -584,11 +590,11 @@ def cifti_replace_structure(
     cifti: str,
     direction: str,
     volume_all: CiftiReplaceStructureVolumeAllParamsDict | None = None,
-    discard_unused_labels: bool = False,
-    action: str | None = None,
     label: list[CiftiReplaceStructureLabelParamsDict] | None = None,
     metric: list[CiftiReplaceStructureMetricParamsDict] | None = None,
     volume: list[CiftiReplaceStructureVolumeParamsDict] | None = None,
+    action: str | None = None,
+    discard_unused_labels: bool = False,
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
@@ -646,26 +652,26 @@ def cifti_replace_structure(
         cifti: the cifti to modify.
         direction: which dimension to interpret as a single map, ROW or COLUMN.
         volume_all: replace the data in all volume components.
-        discard_unused_labels: when operating on a dlabel file, drop any unused\
-            label keys from the label table.
+        label: replace the data in a surface label component.
+        metric: replace the data in a surface component.
+        volume: replace the data in a volume component.
         action: how to handle conflicts between label keys\
             \
             'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
             'LEGACY' to match v1.4.2 and earlier.
-        label: replace the data in a surface label component.
-        metric: replace the data in a surface component.
-        volume: replace the data in a volume component.
+        discard_unused_labels: when operating on a dlabel file, drop any unused\
+            label keys from the label table.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiReplaceStructureOutputs`).
     """
     params = cifti_replace_structure_params(
         volume_all=volume_all,
-        discard_unused_labels=discard_unused_labels,
-        action=action,
         label=label,
         metric=metric,
         volume=volume,
+        action=action,
+        discard_unused_labels=discard_unused_labels,
         cifti=cifti,
         direction=direction,
     )

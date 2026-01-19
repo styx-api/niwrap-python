@@ -124,12 +124,13 @@ def surface_geodesic_distance_sparse_text_cargs(
         "wb_command",
         "-surface-geodesic-distance-sparse-text"
     ])
-    if params.get("area-metric", None) is not None or params.get("naive", False):
+    if params.get("area-metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-            ("-naive" if (params.get("naive", False)) else "")
+            execution.input_file(params.get("area-metric", None))
         ])
+    if params.get("naive", False):
+        cargs.append("-naive")
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("limit", None)))
     cargs.append(params.get("text-out", None))

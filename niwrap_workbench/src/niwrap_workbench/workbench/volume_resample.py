@@ -75,10 +75,10 @@ VolumeResampleWarpParamsDict = _VolumeResampleWarpParamsDictNoTag | VolumeResamp
 
 _VolumeResampleParamsDictNoTag = typing.TypedDict('_VolumeResampleParamsDictNoTag', {
     "volume-out": str,
-    "value": typing.NotRequired[float | None],
     "affine": typing.NotRequired[list[VolumeResampleAffineParamsDict] | None],
     "affine-series": typing.NotRequired[list[VolumeResampleAffineSeriesParamsDict] | None],
     "warp": typing.NotRequired[list[VolumeResampleWarpParamsDict] | None],
+    "value": typing.NotRequired[float | None],
     "volume-in": InputPathType,
     "volume-space": str,
     "method": str,
@@ -86,10 +86,10 @@ _VolumeResampleParamsDictNoTag = typing.TypedDict('_VolumeResampleParamsDictNoTa
 VolumeResampleParamsDictTagged = typing.TypedDict('VolumeResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-resample"],
     "volume-out": str,
-    "value": typing.NotRequired[float | None],
     "affine": typing.NotRequired[list[VolumeResampleAffineParamsDict] | None],
     "affine-series": typing.NotRequired[list[VolumeResampleAffineSeriesParamsDict] | None],
     "warp": typing.NotRequired[list[VolumeResampleWarpParamsDict] | None],
+    "value": typing.NotRequired[float | None],
     "volume-in": InputPathType,
     "volume-space": str,
     "method": str,
@@ -417,10 +417,13 @@ def volume_resample_warp_cargs(
     cargs = []
     cargs.extend([
         "-warp",
-        params.get("warpfield", None),
-        "-fnirt",
-        (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else "")
+        params.get("warpfield", None)
     ])
+    if params.get("source-volume", None) is not None:
+        cargs.extend([
+            "-fnirt",
+            params.get("source-volume", None)
+        ])
     return cargs
 
 
@@ -439,10 +442,10 @@ def volume_resample_params(
     volume_in: InputPathType,
     volume_space: str,
     method: str,
-    value: float | None = None,
     affine: list[VolumeResampleAffineParamsDict] | None = None,
     affine_series: list[VolumeResampleAffineSeriesParamsDict] | None = None,
     warp: list[VolumeResampleWarpParamsDict] | None = None,
+    value: float | None = None,
 ) -> VolumeResampleParamsDictTagged:
     """
     Build parameters.
@@ -452,13 +455,13 @@ def volume_resample_params(
         volume_in: volume to resample.
         volume_space: a volume file in the volume space you want for the output.
         method: the resampling method.
+        affine: add an affine transform.
+        affine_series: add an independent affine per-frame.
+        warp: add a nonlinear warpfield transform.
         value: use a specified value for locations outside the FoV of the input\
             image or warpfield(s)\
             \
             the value to use (default 0).
-        affine: add an affine transform.
-        affine_series: add an independent affine per-frame.
-        warp: add a nonlinear warpfield transform.
     Returns:
         Parameter dictionary
     """
@@ -469,14 +472,14 @@ def volume_resample_params(
         "volume-space": volume_space,
         "method": method,
     }
-    if value is not None:
-        params["value"] = value
     if affine is not None:
         params["affine"] = affine
     if affine_series is not None:
         params["affine-series"] = affine_series
     if warp is not None:
         params["warp"] = warp
+    if value is not None:
+        params["value"] = value
     return params
 
 
@@ -496,9 +499,6 @@ def volume_resample_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("value", None) is not None:
-        if not isinstance(params["value"], (float, int)):
-            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
     if params.get("affine", None) is not None:
         if not isinstance(params["affine"], list):
             raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `list[VolumeResampleAffineParamsDict] | None`')
@@ -514,6 +514,9 @@ def volume_resample_validate(
             raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `list[VolumeResampleWarpParamsDict] | None`')
         for e in params["warp"]:
             volume_resample_warp_validate(e)
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (float, int)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -548,12 +551,15 @@ def volume_resample_cargs(
     ])
     cargs.extend([
         params.get("volume-out", None),
-        "-background",
-        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
         *([a for c in [volume_resample_affine_cargs(s, execution) for s in params.get("affine", None)] for a in c] if (params.get("affine", None) is not None) else []),
         *([a for c in [volume_resample_affine_series_cargs(s, execution) for s in params.get("affine-series", None)] for a in c] if (params.get("affine-series", None) is not None) else []),
         *([a for c in [volume_resample_warp_cargs(s, execution) for s in params.get("warp", None)] for a in c] if (params.get("warp", None) is not None) else [])
     ])
+    if params.get("value", None) is not None:
+        cargs.extend([
+            "-background",
+            str(params.get("value", None))
+        ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("volume-space", None))
     cargs.append(params.get("method", None))
@@ -620,10 +626,10 @@ def volume_resample(
     volume_in: InputPathType,
     volume_space: str,
     method: str,
-    value: float | None = None,
     affine: list[VolumeResampleAffineParamsDict] | None = None,
     affine_series: list[VolumeResampleAffineSeriesParamsDict] | None = None,
     warp: list[VolumeResampleWarpParamsDict] | None = None,
+    value: float | None = None,
     runner: Runner | None = None,
 ) -> VolumeResampleOutputs:
     """
@@ -646,23 +652,23 @@ def volume_resample(
         volume_in: volume to resample.
         volume_space: a volume file in the volume space you want for the output.
         method: the resampling method.
+        affine: add an affine transform.
+        affine_series: add an independent affine per-frame.
+        warp: add a nonlinear warpfield transform.
         value: use a specified value for locations outside the FoV of the input\
             image or warpfield(s)\
             \
             the value to use (default 0).
-        affine: add an affine transform.
-        affine_series: add an independent affine per-frame.
-        warp: add a nonlinear warpfield transform.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeResampleOutputs`).
     """
     params = volume_resample_params(
         volume_out=volume_out,
-        value=value,
         affine=affine,
         affine_series=affine_series,
         warp=warp,
+        value=value,
         volume_in=volume_in,
         volume_space=volume_space,
         method=method,

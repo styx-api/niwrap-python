@@ -81,8 +81,8 @@ _CiftiCreateDenseScalarParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseScal
     "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParamsDict | None],
     "right-metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParamsDict | None],
     "cerebellum-metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParamsDict | None],
-    "file": typing.NotRequired[str | None],
     "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParamsDict] | None],
+    "file": typing.NotRequired[str | None],
 })
 CiftiCreateDenseScalarParamsDictTagged = typing.TypedDict('CiftiCreateDenseScalarParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-scalar"],
@@ -91,8 +91,8 @@ CiftiCreateDenseScalarParamsDictTagged = typing.TypedDict('CiftiCreateDenseScala
     "left-metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParamsDict | None],
     "right-metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParamsDict | None],
     "cerebellum-metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParamsDict | None],
-    "file": typing.NotRequired[str | None],
     "metric": typing.NotRequired[list[CiftiCreateDenseScalarMetricParamsDict] | None],
+    "file": typing.NotRequired[str | None],
 })
 CiftiCreateDenseScalarParamsDict = _CiftiCreateDenseScalarParamsDictNoTag | CiftiCreateDenseScalarParamsDictTagged
 
@@ -225,10 +225,13 @@ def cifti_create_dense_scalar_left_metric_cargs(
     cargs = []
     cargs.extend([
         "-left-metric",
-        execution.input_file(params.get("metric", None)),
-        "-roi-left",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-left",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -293,10 +296,13 @@ def cifti_create_dense_scalar_right_metric_cargs(
     cargs = []
     cargs.extend([
         "-right-metric",
-        execution.input_file(params.get("metric", None)),
-        "-roi-right",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-right",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -361,10 +367,13 @@ def cifti_create_dense_scalar_cerebellum_metric_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-metric",
-        execution.input_file(params.get("metric", None)),
-        "-roi-cerebellum",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-cerebellum",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -437,10 +446,13 @@ def cifti_create_dense_scalar_metric_cargs(
     cargs.extend([
         "-metric",
         params.get("structure", None),
-        execution.input_file(params.get("metric", None)),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -460,8 +472,8 @@ def cifti_create_dense_scalar_params(
     left_metric: CiftiCreateDenseScalarLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseScalarRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParamsDict | None = None,
-    file: str | None = None,
     metric: list[CiftiCreateDenseScalarMetricParamsDict] | None = None,
+    file: str | None = None,
 ) -> CiftiCreateDenseScalarParamsDictTagged:
     """
     Build parameters.
@@ -472,10 +484,10 @@ def cifti_create_dense_scalar_params(
         left_metric: metric for the left cortical surface.
         right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
+        metric: metric for a specified surface structure.
         file: use a text file to set all map names\
             \
             text file containing map names, one per line.
-        metric: metric for a specified surface structure.
     Returns:
         Parameter dictionary
     """
@@ -491,10 +503,10 @@ def cifti_create_dense_scalar_params(
         params["right-metric"] = right_metric
     if cerebellum_metric is not None:
         params["cerebellum-metric"] = cerebellum_metric
-    if file is not None:
-        params["file"] = file
     if metric is not None:
         params["metric"] = metric
+    if file is not None:
+        params["file"] = file
     return params
 
 
@@ -522,14 +534,14 @@ def cifti_create_dense_scalar_validate(
         cifti_create_dense_scalar_right_metric_validate(params["right-metric"])
     if params.get("cerebellum-metric", None) is not None:
         cifti_create_dense_scalar_cerebellum_metric_validate(params["cerebellum-metric"])
-    if params.get("file", None) is not None:
-        if not isinstance(params["file"], str):
-            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
             raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseScalarMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_create_dense_scalar_metric_validate(e)
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
 
 
 def cifti_create_dense_scalar_cargs(
@@ -556,10 +568,13 @@ def cifti_create_dense_scalar_cargs(
         *(cifti_create_dense_scalar_left_metric_cargs(params.get("left-metric", None), execution) if (params.get("left-metric", None) is not None) else []),
         *(cifti_create_dense_scalar_right_metric_cargs(params.get("right-metric", None), execution) if (params.get("right-metric", None) is not None) else []),
         *(cifti_create_dense_scalar_cerebellum_metric_cargs(params.get("cerebellum-metric", None), execution) if (params.get("cerebellum-metric", None) is not None) else []),
-        "-name-file",
-        (params.get("file", None) if (params.get("file", None) is not None) else ""),
         *([a for c in [cifti_create_dense_scalar_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
     ])
+    if params.get("file", None) is not None:
+        cargs.extend([
+            "-name-file",
+            params.get("file", None)
+        ])
     return cargs
 
 
@@ -657,8 +672,8 @@ def cifti_create_dense_scalar(
     left_metric: CiftiCreateDenseScalarLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseScalarRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParamsDict | None = None,
-    file: str | None = None,
     metric: list[CiftiCreateDenseScalarMetricParamsDict] | None = None,
+    file: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseScalarOutputs:
     """
@@ -715,10 +730,10 @@ def cifti_create_dense_scalar(
         left_metric: metric for the left cortical surface.
         right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
+        metric: metric for a specified surface structure.
         file: use a text file to set all map names\
             \
             text file containing map names, one per line.
-        metric: metric for a specified surface structure.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseScalarOutputs`).
@@ -729,8 +744,8 @@ def cifti_create_dense_scalar(
         left_metric=left_metric,
         right_metric=right_metric,
         cerebellum_metric=cerebellum_metric,
-        file=file,
         metric=metric,
+        file=file,
     )
     return cifti_create_dense_scalar_execute(params, runner)
 

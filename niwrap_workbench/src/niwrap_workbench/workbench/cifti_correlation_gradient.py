@@ -50,15 +50,15 @@ CiftiCorrelationGradientCerebellumSurfaceParamsDict = _CiftiCorrelationGradientC
 
 
 _CiftiCorrelationGradientDoubleCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientDoubleCorrelationParamsDictNoTag', {
-    "fisher-z-first": bool,
-    "no-demean-first": bool,
     "covariance-first": bool,
+    "no-demean-first": bool,
+    "fisher-z-first": bool,
 })
 CiftiCorrelationGradientDoubleCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParamsDictTagged', {
     "@type": typing.Literal["double-correlation"],
-    "fisher-z-first": bool,
-    "no-demean-first": bool,
     "covariance-first": bool,
+    "no-demean-first": bool,
+    "fisher-z-first": bool,
 })
 CiftiCorrelationGradientDoubleCorrelationParamsDict = _CiftiCorrelationGradientDoubleCorrelationParamsDictNoTag | CiftiCorrelationGradientDoubleCorrelationParamsDictTagged
 
@@ -68,16 +68,16 @@ _CiftiCorrelationGradientParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGr
     "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParamsDict | None],
-    "surface-kernel": typing.NotRequired[float | None],
-    "volume-kernel": typing.NotRequired[float | None],
-    "presmooth-fwhm": bool,
-    "undo-fisher-z": bool,
-    "fisher-z": bool,
-    "distance": typing.NotRequired[float | None],
-    "distance": typing.NotRequired[float | None],
-    "covariance": bool,
-    "limit-GB": typing.NotRequired[float | None],
     "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParamsDict | None],
+    "limit-GB": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "volume-kernel": typing.NotRequired[float | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "covariance": bool,
+    "fisher-z": bool,
+    "undo-fisher-z": bool,
+    "presmooth-fwhm": bool,
     "cifti": InputPathType,
 })
 CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientParamsDictTagged', {
@@ -86,16 +86,16 @@ CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGra
     "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParamsDict | None],
-    "surface-kernel": typing.NotRequired[float | None],
-    "volume-kernel": typing.NotRequired[float | None],
-    "presmooth-fwhm": bool,
-    "undo-fisher-z": bool,
-    "fisher-z": bool,
-    "distance": typing.NotRequired[float | None],
-    "distance": typing.NotRequired[float | None],
-    "covariance": bool,
-    "limit-GB": typing.NotRequired[float | None],
     "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParamsDict | None],
+    "limit-GB": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "volume-kernel": typing.NotRequired[float | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "covariance": bool,
+    "fisher-z": bool,
+    "undo-fisher-z": bool,
+    "presmooth-fwhm": bool,
     "cifti": InputPathType,
 })
 CiftiCorrelationGradientParamsDict = _CiftiCorrelationGradientParamsDictNoTag | CiftiCorrelationGradientParamsDictTagged
@@ -163,10 +163,13 @@ def cifti_correlation_gradient_left_surface_cargs(
     cargs = []
     cargs.extend([
         "-left-surface",
-        execution.input_file(params.get("surface", None)),
-        "-left-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-left-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -232,10 +235,13 @@ def cifti_correlation_gradient_right_surface_cargs(
     cargs = []
     cargs.extend([
         "-right-surface",
-        execution.input_file(params.get("surface", None)),
-        "-right-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-right-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -301,36 +307,39 @@ def cifti_correlation_gradient_cerebellum_surface_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-surface",
-        execution.input_file(params.get("surface", None)),
-        "-cerebellum-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
 def cifti_correlation_gradient_double_correlation(
-    fisher_z_first: bool = False,
-    no_demean_first: bool = False,
     covariance_first: bool = False,
+    no_demean_first: bool = False,
+    fisher_z_first: bool = False,
 ) -> CiftiCorrelationGradientDoubleCorrelationParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        fisher_z_first: after the FIRST correlation, apply fisher small z\
-            transform (ie, artanh).
-        no_demean_first: instead of correlation for the FIRST operation, do dot\
-            product of rows, then normalize by diagonal.
         covariance_first: instead of correlation for the FIRST operation,\
             compute covariance.
+        no_demean_first: instead of correlation for the FIRST operation, do dot\
+            product of rows, then normalize by diagonal.
+        fisher_z_first: after the FIRST correlation, apply fisher small z\
+            transform (ie, artanh).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "double-correlation",
-        "fisher-z-first": fisher_z_first,
-        "no-demean-first": no_demean_first,
         "covariance-first": covariance_first,
+        "no-demean-first": no_demean_first,
+        "fisher-z-first": fisher_z_first,
     }
     return params
 
@@ -347,18 +356,18 @@ def cifti_correlation_gradient_double_correlation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("fisher-z-first", False) is None:
-        raise StyxValidationError("`fisher-z-first` must not be None")
-    if not isinstance(params["fisher-z-first"], bool):
-        raise StyxValidationError(f'`fisher-z-first` has the wrong type: Received `{type(params.get("fisher-z-first", False))}` expected `bool`')
-    if params.get("no-demean-first", False) is None:
-        raise StyxValidationError("`no-demean-first` must not be None")
-    if not isinstance(params["no-demean-first"], bool):
-        raise StyxValidationError(f'`no-demean-first` has the wrong type: Received `{type(params.get("no-demean-first", False))}` expected `bool`')
     if params.get("covariance-first", False) is None:
         raise StyxValidationError("`covariance-first` must not be None")
     if not isinstance(params["covariance-first"], bool):
         raise StyxValidationError(f'`covariance-first` has the wrong type: Received `{type(params.get("covariance-first", False))}` expected `bool`')
+    if params.get("no-demean-first", False) is None:
+        raise StyxValidationError("`no-demean-first` must not be None")
+    if not isinstance(params["no-demean-first"], bool):
+        raise StyxValidationError(f'`no-demean-first` has the wrong type: Received `{type(params.get("no-demean-first", False))}` expected `bool`')
+    if params.get("fisher-z-first", False) is None:
+        raise StyxValidationError("`fisher-z-first` must not be None")
+    if not isinstance(params["fisher-z-first"], bool):
+        raise StyxValidationError(f'`fisher-z-first` has the wrong type: Received `{type(params.get("fisher-z-first", False))}` expected `bool`')
 
 
 def cifti_correlation_gradient_double_correlation_cargs(
@@ -375,13 +384,13 @@ def cifti_correlation_gradient_double_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fisher-z-first", False) or params.get("no-demean-first", False) or params.get("covariance-first", False):
-        cargs.extend([
-            "-double-correlation",
-            ("-fisher-z-first" if (params.get("fisher-z-first", False)) else ""),
-            ("-no-demean-first" if (params.get("no-demean-first", False)) else ""),
-            ("-covariance-first" if (params.get("covariance-first", False)) else "")
-        ])
+    cargs.append("-double-correlation")
+    if params.get("covariance-first", False):
+        cargs.append("-covariance-first")
+    if params.get("no-demean-first", False):
+        cargs.append("-no-demean-first")
+    if params.get("fisher-z-first", False):
+        cargs.append("-fisher-z-first")
     return cargs
 
 
@@ -401,16 +410,16 @@ def cifti_correlation_gradient_params(
     left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
-    surface_kernel: float | None = None,
-    volume_kernel: float | None = None,
-    presmooth_fwhm: bool = False,
-    undo_fisher_z: bool = False,
-    fisher_z: bool = False,
+    double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
+    limit_gb: float | None = None,
     distance: float | None = None,
     distance_: float | None = None,
+    volume_kernel: float | None = None,
+    surface_kernel: float | None = None,
     covariance: bool = False,
-    limit_gb: float | None = None,
-    double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
+    fisher_z: bool = False,
+    undo_fisher_z: bool = False,
+    presmooth_fwhm: bool = False,
 ) -> CiftiCorrelationGradientParamsDictTagged:
     """
     Build parameters.
@@ -421,39 +430,39 @@ def cifti_correlation_gradient_params(
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
-        surface_kernel: smooth on the surface before computing the gradient\
+        double_correlation: do two correlations before taking the gradient.
+        limit_gb: restrict memory usage\
             \
-            the size of the gaussian surface smoothing kernel in mm, as sigma\
-            by default.
+            memory limit in gigabytes.
+        distance: exclude voxels near each seed voxel from computation\
+            \
+            distance from seed voxel for the exclusion zone, in mm.
+        distance_: exclude vertices near each seed vertex from computation\
+            \
+            geodesic distance from seed vertex for the exclusion zone, in mm.
         volume_kernel: smooth the volume before computing the gradient\
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        surface_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        covariance: compute covariance instead of correlation.
         fisher_z: apply the fisher small z transform to the correlations before\
             taking the gradient.
-        distance: exclude vertices near each seed vertex from computation\
-            \
-            geodesic distance from seed vertex for the exclusion zone, in mm.
-        distance_: exclude voxels near each seed voxel from computation\
-            \
-            distance from seed voxel for the exclusion zone, in mm.
-        covariance: compute covariance instead of correlation.
-        limit_gb: restrict memory usage\
-            \
-            memory limit in gigabytes.
-        double_correlation: do two correlations before taking the gradient.
+        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-correlation-gradient",
         "cifti-out": cifti_out,
-        "presmooth-fwhm": presmooth_fwhm,
-        "undo-fisher-z": undo_fisher_z,
-        "fisher-z": fisher_z,
         "covariance": covariance,
+        "fisher-z": fisher_z,
+        "undo-fisher-z": undo_fisher_z,
+        "presmooth-fwhm": presmooth_fwhm,
         "cifti": cifti,
     }
     if left_surface is not None:
@@ -462,18 +471,18 @@ def cifti_correlation_gradient_params(
         params["right-surface"] = right_surface
     if cerebellum_surface is not None:
         params["cerebellum-surface"] = cerebellum_surface
-    if surface_kernel is not None:
-        params["surface-kernel"] = surface_kernel
-    if volume_kernel is not None:
-        params["volume-kernel"] = volume_kernel
+    if double_correlation is not None:
+        params["double-correlation"] = double_correlation
+    if limit_gb is not None:
+        params["limit-GB"] = limit_gb
     if distance is not None:
         params["distance"] = distance
     if distance_ is not None:
         params["distance"] = distance_
-    if limit_gb is not None:
-        params["limit-GB"] = limit_gb
-    if double_correlation is not None:
-        params["double-correlation"] = double_correlation
+    if volume_kernel is not None:
+        params["volume-kernel"] = volume_kernel
+    if surface_kernel is not None:
+        params["surface-kernel"] = surface_kernel
     return params
 
 
@@ -499,39 +508,39 @@ def cifti_correlation_gradient_validate(
         cifti_correlation_gradient_right_surface_validate(params["right-surface"])
     if params.get("cerebellum-surface", None) is not None:
         cifti_correlation_gradient_cerebellum_surface_validate(params["cerebellum-surface"])
-    if params.get("surface-kernel", None) is not None:
-        if not isinstance(params["surface-kernel"], (float, int)):
-            raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float | None`')
+    if params.get("double-correlation", None) is not None:
+        cifti_correlation_gradient_double_correlation_validate(params["double-correlation"])
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("distance", None) is not None:
+        if not isinstance(params["distance"], (float, int)):
+            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
+    if params.get("distance", None) is not None:
+        if not isinstance(params["distance"], (float, int)):
+            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
     if params.get("volume-kernel", None) is not None:
         if not isinstance(params["volume-kernel"], (float, int)):
             raise StyxValidationError(f'`volume-kernel` has the wrong type: Received `{type(params.get("volume-kernel", None))}` expected `float | None`')
-    if params.get("presmooth-fwhm", False) is None:
-        raise StyxValidationError("`presmooth-fwhm` must not be None")
-    if not isinstance(params["presmooth-fwhm"], bool):
-        raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
-    if params.get("undo-fisher-z", False) is None:
-        raise StyxValidationError("`undo-fisher-z` must not be None")
-    if not isinstance(params["undo-fisher-z"], bool):
-        raise StyxValidationError(f'`undo-fisher-z` has the wrong type: Received `{type(params.get("undo-fisher-z", False))}` expected `bool`')
-    if params.get("fisher-z", False) is None:
-        raise StyxValidationError("`fisher-z` must not be None")
-    if not isinstance(params["fisher-z"], bool):
-        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
-    if params.get("distance", None) is not None:
-        if not isinstance(params["distance"], (float, int)):
-            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
-    if params.get("distance", None) is not None:
-        if not isinstance(params["distance"], (float, int)):
-            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
+    if params.get("surface-kernel", None) is not None:
+        if not isinstance(params["surface-kernel"], (float, int)):
+            raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float | None`')
     if params.get("covariance", False) is None:
         raise StyxValidationError("`covariance` must not be None")
     if not isinstance(params["covariance"], bool):
         raise StyxValidationError(f'`covariance` has the wrong type: Received `{type(params.get("covariance", False))}` expected `bool`')
-    if params.get("limit-GB", None) is not None:
-        if not isinstance(params["limit-GB"], (float, int)):
-            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
-    if params.get("double-correlation", None) is not None:
-        cifti_correlation_gradient_double_correlation_validate(params["double-correlation"])
+    if params.get("fisher-z", False) is None:
+        raise StyxValidationError("`fisher-z` must not be None")
+    if not isinstance(params["fisher-z"], bool):
+        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
+    if params.get("undo-fisher-z", False) is None:
+        raise StyxValidationError("`undo-fisher-z` must not be None")
+    if not isinstance(params["undo-fisher-z"], bool):
+        raise StyxValidationError(f'`undo-fisher-z` has the wrong type: Received `{type(params.get("undo-fisher-z", False))}` expected `bool`')
+    if params.get("presmooth-fwhm", False) is None:
+        raise StyxValidationError("`presmooth-fwhm` must not be None")
+    if not isinstance(params["presmooth-fwhm"], bool):
+        raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
     if params.get("cifti", None) is None:
         raise StyxValidationError("`cifti` must not be None")
     if not isinstance(params["cifti"], (pathlib.Path, str)):
@@ -561,22 +570,41 @@ def cifti_correlation_gradient_cargs(
         *(cifti_correlation_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_correlation_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
         *(cifti_correlation_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        "-surface-presmooth",
-        (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
-        "-volume-presmooth",
-        (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
-        ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
-        ("-undo-fisher-z" if (params.get("undo-fisher-z", False)) else ""),
-        ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-        "-surface-exclude",
-        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
-        "-volume-exclude",
-        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
-        ("-covariance" if (params.get("covariance", False)) else ""),
-        "-mem-limit",
-        (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
         *(cifti_correlation_gradient_double_correlation_cargs(params.get("double-correlation", None), execution) if (params.get("double-correlation", None) is not None) else [])
     ])
+    if params.get("limit-GB", None) is not None:
+        cargs.extend([
+            "-mem-limit",
+            str(params.get("limit-GB", None))
+        ])
+    if params.get("distance", None) is not None:
+        cargs.extend([
+            "-volume-exclude",
+            str(params.get("distance", None))
+        ])
+    if params.get("distance", None) is not None:
+        cargs.extend([
+            "-surface-exclude",
+            str(params.get("distance", None))
+        ])
+    if params.get("volume-kernel", None) is not None:
+        cargs.extend([
+            "-volume-presmooth",
+            str(params.get("volume-kernel", None))
+        ])
+    if params.get("surface-kernel", None) is not None:
+        cargs.extend([
+            "-surface-presmooth",
+            str(params.get("surface-kernel", None))
+        ])
+    if params.get("covariance", False):
+        cargs.append("-covariance")
+    if params.get("fisher-z", False):
+        cargs.append("-fisher-z")
+    if params.get("undo-fisher-z", False):
+        cargs.append("-undo-fisher-z")
+    if params.get("presmooth-fwhm", False):
+        cargs.append("-presmooth-fwhm")
     cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 
@@ -635,16 +663,16 @@ def cifti_correlation_gradient(
     left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
-    surface_kernel: float | None = None,
-    volume_kernel: float | None = None,
-    presmooth_fwhm: bool = False,
-    undo_fisher_z: bool = False,
-    fisher_z: bool = False,
+    double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
+    limit_gb: float | None = None,
     distance: float | None = None,
     distance_: float | None = None,
+    volume_kernel: float | None = None,
+    surface_kernel: float | None = None,
     covariance: bool = False,
-    limit_gb: float | None = None,
-    double_correlation: CiftiCorrelationGradientDoubleCorrelationParamsDict | None = None,
+    fisher_z: bool = False,
+    undo_fisher_z: bool = False,
+    presmooth_fwhm: bool = False,
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
@@ -661,29 +689,29 @@ def cifti_correlation_gradient(
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
-        surface_kernel: smooth on the surface before computing the gradient\
+        double_correlation: do two correlations before taking the gradient.
+        limit_gb: restrict memory usage\
             \
-            the size of the gaussian surface smoothing kernel in mm, as sigma\
-            by default.
+            memory limit in gigabytes.
+        distance: exclude voxels near each seed voxel from computation\
+            \
+            distance from seed voxel for the exclusion zone, in mm.
+        distance_: exclude vertices near each seed vertex from computation\
+            \
+            geodesic distance from seed vertex for the exclusion zone, in mm.
         volume_kernel: smooth the volume before computing the gradient\
             \
             the size of the gaussian volume smoothing kernel in mm, as sigma by\
             default.
-        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        surface_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        covariance: compute covariance instead of correlation.
         fisher_z: apply the fisher small z transform to the correlations before\
             taking the gradient.
-        distance: exclude vertices near each seed vertex from computation\
-            \
-            geodesic distance from seed vertex for the exclusion zone, in mm.
-        distance_: exclude voxels near each seed voxel from computation\
-            \
-            distance from seed voxel for the exclusion zone, in mm.
-        covariance: compute covariance instead of correlation.
-        limit_gb: restrict memory usage\
-            \
-            memory limit in gigabytes.
-        double_correlation: do two correlations before taking the gradient.
+        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationGradientOutputs`).
@@ -693,16 +721,16 @@ def cifti_correlation_gradient(
         left_surface=left_surface,
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
-        surface_kernel=surface_kernel,
-        volume_kernel=volume_kernel,
-        presmooth_fwhm=presmooth_fwhm,
-        undo_fisher_z=undo_fisher_z,
-        fisher_z=fisher_z,
+        double_correlation=double_correlation,
+        limit_gb=limit_gb,
         distance=distance,
         distance_=distance_,
+        volume_kernel=volume_kernel,
+        surface_kernel=surface_kernel,
         covariance=covariance,
-        limit_gb=limit_gb,
-        double_correlation=double_correlation,
+        fisher_z=fisher_z,
+        undo_fisher_z=undo_fisher_z,
+        presmooth_fwhm=presmooth_fwhm,
         cifti=cifti,
     )
     return cifti_correlation_gradient_execute(params, runner)

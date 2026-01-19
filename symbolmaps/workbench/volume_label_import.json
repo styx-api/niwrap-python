@@ -4,20 +4,20 @@
     "output": {
       "var_param": "output"
     },
-    "discard-others": {
-      "var_param": "discard_others"
-    },
-    "value": {
-      "var_param": "value"
+    "file": {
+      "var_param": "file"
     },
     "subvol": {
       "var_param": "subvol"
     },
+    "value": {
+      "var_param": "value"
+    },
     "drop-unused-labels": {
       "var_param": "drop_unused_labels"
     },
-    "file": {
-      "var_param": "file"
+    "discard-others": {
+      "var_param": "discard_others"
     },
     "input": {
       "var_param": "input_"

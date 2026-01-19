@@ -51,10 +51,10 @@ _MetricResampleParamsDictNoTag = typing.TypedDict('_MetricResampleParamsDictNoTa
     "metric-out": str,
     "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "valid-roi-out": typing.NotRequired[MetricResampleValidRoiOutParamsDict | None],
-    "largest": bool,
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "bypass-sphere-check": bool,
+    "largest": bool,
     "metric-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
@@ -65,10 +65,10 @@ MetricResampleParamsDictTagged = typing.TypedDict('MetricResampleParamsDictTagge
     "metric-out": str,
     "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "valid-roi-out": typing.NotRequired[MetricResampleValidRoiOutParamsDict | None],
-    "largest": bool,
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "bypass-sphere-check": bool,
+    "largest": bool,
     "metric-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
@@ -314,10 +314,10 @@ def metric_resample_params(
     method: str,
     area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
     area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
-    roi_metric: InputPathType | None = None,
     valid_roi_out: MetricResampleValidRoiOutParamsDict | None = None,
-    largest: bool = False,
+    roi_metric: InputPathType | None = None,
     bypass_sphere_check: bool = False,
+    largest: bool = False,
 ) -> MetricResampleParamsDictTagged:
     """
     Build parameters.
@@ -333,23 +333,23 @@ def metric_resample_params(
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
+        valid_roi_out: output the ROI of vertices that got data from valid\
+            source vertices.
         roi_metric: use an input roi on the current mesh to exclude non-data\
             vertices\
             \
             the roi, as a metric file.
-        valid_roi_out: output the ROI of vertices that got data from valid\
-            source vertices.
-        largest: use only the value of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.
+        largest: use only the value of the vertex with the largest weight.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-resample",
         "metric-out": metric_out,
-        "largest": largest,
         "bypass-sphere-check": bypass_sphere_check,
+        "largest": largest,
         "metric-in": metric_in,
         "current-sphere": current_sphere,
         "new-sphere": new_sphere,
@@ -359,10 +359,10 @@ def metric_resample_params(
         params["area-surfs"] = area_surfs
     if area_metrics is not None:
         params["area-metrics"] = area_metrics
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
     if valid_roi_out is not None:
         params["valid-roi-out"] = valid_roi_out
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -386,19 +386,19 @@ def metric_resample_validate(
         metric_resample_area_surfs_validate(params["area-surfs"])
     if params.get("area-metrics", None) is not None:
         metric_resample_area_metrics_validate(params["area-metrics"])
+    if params.get("valid-roi-out", None) is not None:
+        metric_resample_valid_roi_out_validate(params["valid-roi-out"])
     if params.get("roi-metric", None) is not None:
         if not isinstance(params["roi-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("valid-roi-out", None) is not None:
-        metric_resample_valid_roi_out_validate(params["valid-roi-out"])
-    if params.get("largest", False) is None:
-        raise StyxValidationError("`largest` must not be None")
-    if not isinstance(params["largest"], bool):
-        raise StyxValidationError(f'`largest` has the wrong type: Received `{type(params.get("largest", False))}` expected `bool`')
     if params.get("bypass-sphere-check", False) is None:
         raise StyxValidationError("`bypass-sphere-check` must not be None")
     if not isinstance(params["bypass-sphere-check"], bool):
         raise StyxValidationError(f'`bypass-sphere-check` has the wrong type: Received `{type(params.get("bypass-sphere-check", False))}` expected `bool`')
+    if params.get("largest", False) is None:
+        raise StyxValidationError("`largest` must not be None")
+    if not isinstance(params["largest"], bool):
+        raise StyxValidationError(f'`largest` has the wrong type: Received `{type(params.get("largest", False))}` expected `bool`')
     if params.get("metric-in", None) is None:
         raise StyxValidationError("`metric-in` must not be None")
     if not isinstance(params["metric-in"], (pathlib.Path, str)):
@@ -439,12 +439,17 @@ def metric_resample_cargs(
         params.get("metric-out", None),
         *(metric_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
         *(metric_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
-        "-current-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        *(metric_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else []),
-        ("-largest" if (params.get("largest", False)) else ""),
-        ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
+        *(metric_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else [])
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-current-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("bypass-sphere-check", False):
+        cargs.append("-bypass-sphere-check")
+    if params.get("largest", False):
+        cargs.append("-largest")
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))
@@ -528,10 +533,10 @@ def metric_resample(
     method: str,
     area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
     area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
-    roi_metric: InputPathType | None = None,
     valid_roi_out: MetricResampleValidRoiOutParamsDict | None = None,
-    largest: bool = False,
+    roi_metric: InputPathType | None = None,
     bypass_sphere_check: bool = False,
+    largest: bool = False,
     runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
@@ -572,15 +577,15 @@ def metric_resample(
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
+        valid_roi_out: output the ROI of vertices that got data from valid\
+            source vertices.
         roi_metric: use an input roi on the current mesh to exclude non-data\
             vertices\
             \
             the roi, as a metric file.
-        valid_roi_out: output the ROI of vertices that got data from valid\
-            source vertices.
-        largest: use only the value of the vertex with the largest weight.
         bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
             have arbitrary shape as long as they follow the same contour.
+        largest: use only the value of the vertex with the largest weight.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricResampleOutputs`).
@@ -589,10 +594,10 @@ def metric_resample(
         metric_out=metric_out,
         area_surfs=area_surfs,
         area_metrics=area_metrics,
-        roi_metric=roi_metric,
         valid_roi_out=valid_roi_out,
-        largest=largest,
+        roi_metric=roi_metric,
         bypass_sphere_check=bypass_sphere_check,
+        largest=largest,
         metric_in=metric_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,

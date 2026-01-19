@@ -16,9 +16,6 @@
         }
       }
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
     "parameters": {
       "var_param": "parameters",
       "fn_struct_make_params": "metric_tfce_parameters",
@@ -31,11 +28,14 @@
         }
       }
     },
+    "area-metric": {
+      "var_param": "area_metric"
+    },
     "column": {
       "var_param": "column"
     },
-    "area-metric": {
-      "var_param": "area_metric"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "surface": {
       "var_param": "surface"

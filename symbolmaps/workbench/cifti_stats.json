@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "cifti_stats",
   "properties": {
-    "operation": {
-      "var_param": "operation"
-    },
-    "percent": {
-      "var_param": "percent"
-    },
-    "column": {
-      "var_param": "column"
-    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "cifti_stats_roi",
@@ -21,6 +12,15 @@
           "var_param": "match_maps"
         }
       }
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "percent": {
+      "var_param": "percent"
+    },
+    "operation": {
+      "var_param": "operation"
     },
     "show-map-name": {
       "var_param": "show_map_name"

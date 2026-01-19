@@ -116,11 +116,12 @@ def volume_label_modify_keys_cargs(
         "wb_command",
         "-volume-label-modify-keys"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        "-subvolume",
-        (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
-    ])
+    cargs.append(params.get("volume-out", None))
+    if params.get("subvolume", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvolume", None)
+        ])
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("remap-file", None))
     return cargs

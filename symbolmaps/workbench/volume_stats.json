@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "volume_stats",
   "properties": {
-    "operation": {
-      "var_param": "operation"
-    },
-    "percent": {
-      "var_param": "percent"
-    },
-    "subvolume": {
-      "var_param": "subvolume"
-    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "volume_stats_roi",
@@ -21,6 +12,15 @@
           "var_param": "match_maps"
         }
       }
+    },
+    "subvolume": {
+      "var_param": "subvolume"
+    },
+    "percent": {
+      "var_param": "percent"
+    },
+    "operation": {
+      "var_param": "operation"
     },
     "show-map-name": {
       "var_param": "show_map_name"

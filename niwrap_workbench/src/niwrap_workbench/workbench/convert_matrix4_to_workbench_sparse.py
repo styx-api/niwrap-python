@@ -26,8 +26,8 @@ ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict = _ConvertMatrix4ToWorkbenc
 
 
 _ConvertMatrix4ToWorkbenchSparseParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToWorkbenchSparseParamsDictNoTag', {
-    "seed-roi": typing.NotRequired[InputPathType | None],
     "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
+    "seed-roi": typing.NotRequired[InputPathType | None],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
@@ -37,8 +37,8 @@ _ConvertMatrix4ToWorkbenchSparseParamsDictNoTag = typing.TypedDict('_ConvertMatr
 })
 ConvertMatrix4ToWorkbenchSparseParamsDictTagged = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-matrix4-to-workbench-sparse"],
-    "seed-roi": typing.NotRequired[InputPathType | None],
     "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
+    "seed-roi": typing.NotRequired[InputPathType | None],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
@@ -130,8 +130,8 @@ def convert_matrix4_to_workbench_sparse_params(
     orientation_file: InputPathType,
     voxel_list: str,
     wb_sparse_out: str,
-    seed_roi: InputPathType | None = None,
     volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None = None,
+    seed_roi: InputPathType | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseParamsDictTagged:
     """
     Build parameters.
@@ -145,10 +145,10 @@ def convert_matrix4_to_workbench_sparse_params(
         voxel_list: list of white matter voxel index triplets as used in the\
             trajectory matrix.
         wb_sparse_out: output - the output workbench sparse file.
+        volume_seeds: specify the volume seed space.
         seed_roi: specify the surface seed space\
             \
             metric roi file of all vertices used in the seed space.
-        volume_seeds: specify the volume seed space.
     Returns:
         Parameter dictionary
     """
@@ -161,10 +161,10 @@ def convert_matrix4_to_workbench_sparse_params(
         "voxel-list": voxel_list,
         "wb-sparse-out": wb_sparse_out,
     }
-    if seed_roi is not None:
-        params["seed-roi"] = seed_roi
     if volume_seeds is not None:
         params["volume-seeds"] = volume_seeds
+    if seed_roi is not None:
+        params["seed-roi"] = seed_roi
     return params
 
 
@@ -180,11 +180,11 @@ def convert_matrix4_to_workbench_sparse_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-seeds", None) is not None:
+        convert_matrix4_to_workbench_sparse_volume_seeds_validate(params["volume-seeds"])
     if params.get("seed-roi", None) is not None:
         if not isinstance(params["seed-roi"], (pathlib.Path, str)):
             raise StyxValidationError(f'`seed-roi` has the wrong type: Received `{type(params.get("seed-roi", None))}` expected `InputPathType | None`')
-    if params.get("volume-seeds", None) is not None:
-        convert_matrix4_to_workbench_sparse_volume_seeds_validate(params["volume-seeds"])
     if params.get("matrix4_1", None) is None:
         raise StyxValidationError("`matrix4_1` must not be None")
     if not isinstance(params["matrix4_1"], str):
@@ -229,11 +229,12 @@ def convert_matrix4_to_workbench_sparse_cargs(
         "wb_command",
         "-convert-matrix4-to-workbench-sparse"
     ])
-    if params.get("seed-roi", None) is not None or params.get("volume-seeds", None) is not None:
+    if params.get("volume-seeds", None) is not None:
+        cargs.extend(convert_matrix4_to_workbench_sparse_volume_seeds_cargs(params.get("volume-seeds", None), execution))
+    if params.get("seed-roi", None) is not None:
         cargs.extend([
             "-surface-seeds",
-            (execution.input_file(params.get("seed-roi", None)) if (params.get("seed-roi", None) is not None) else ""),
-            *(convert_matrix4_to_workbench_sparse_volume_seeds_cargs(params.get("volume-seeds", None), execution) if (params.get("volume-seeds", None) is not None) else [])
+            execution.input_file(params.get("seed-roi", None))
         ])
     cargs.append(params.get("matrix4_1", None))
     cargs.append(params.get("matrix4_2", None))
@@ -296,8 +297,8 @@ def convert_matrix4_to_workbench_sparse(
     orientation_file: InputPathType,
     voxel_list: str,
     wb_sparse_out: str,
-    seed_roi: InputPathType | None = None,
     volume_seeds: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None = None,
+    seed_roi: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
@@ -315,17 +316,17 @@ def convert_matrix4_to_workbench_sparse(
         voxel_list: list of white matter voxel index triplets as used in the\
             trajectory matrix.
         wb_sparse_out: output - the output workbench sparse file.
+        volume_seeds: specify the volume seed space.
         seed_roi: specify the surface seed space\
             \
             metric roi file of all vertices used in the seed space.
-        volume_seeds: specify the volume seed space.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToWorkbenchSparseOutputs`).
     """
     params = convert_matrix4_to_workbench_sparse_params(
-        seed_roi=seed_roi,
         volume_seeds=volume_seeds,
+        seed_roi=seed_roi,
         matrix4_1=matrix4_1,
         matrix4_2=matrix4_2,
         matrix4_3=matrix4_3,

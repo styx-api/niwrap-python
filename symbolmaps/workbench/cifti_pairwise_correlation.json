@@ -4,11 +4,11 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "fisher-z": {
-      "var_param": "fisher_z"
-    },
     "override-mapping-check": {
       "var_param": "override_mapping_check"
+    },
+    "fisher-z": {
+      "var_param": "fisher_z"
     },
     "cifti-a": {
       "var_param": "cifti_a"

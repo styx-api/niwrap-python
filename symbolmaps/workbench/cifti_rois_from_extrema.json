@@ -4,9 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "surface": {
-      "var_param": "surface_2"
-    },
     "gaussian": {
       "var_param": "gaussian",
       "fn_struct_make_params": "cifti_rois_from_extrema_gaussian",
@@ -21,6 +18,9 @@
     },
     "method": {
       "var_param": "method"
+    },
+    "surface": {
+      "var_param": "surface_2"
     },
     "merged-volume": {
       "var_param": "merged_volume"

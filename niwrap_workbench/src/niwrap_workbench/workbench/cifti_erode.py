@@ -137,10 +137,13 @@ def cifti_erode_left_surface_cargs(
     cargs = []
     cargs.extend([
         "-left-surface",
-        execution.input_file(params.get("surface", None)),
-        "-left-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-left-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -206,10 +209,13 @@ def cifti_erode_right_surface_cargs(
     cargs = []
     cargs.extend([
         "-right-surface",
-        execution.input_file(params.get("surface", None)),
-        "-right-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-right-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -275,10 +281,13 @@ def cifti_erode_cerebellum_surface_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-surface",
-        execution.input_file(params.get("surface", None)),
-        "-cerebellum-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -404,9 +413,10 @@ def cifti_erode_cargs(
         params.get("cifti-out", None),
         *(cifti_erode_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_erode_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_erode_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        ("-merged-volume" if (params.get("merged-volume", False)) else "")
+        *(cifti_erode_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
     ])
+    if params.get("merged-volume", False):
+        cargs.append("-merged-volume")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(str(params.get("surface-distance", None)))

@@ -15,10 +15,10 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 
 _SurfaceGeodesicRoisParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicRoisParamsDictNoTag', {
     "metric-out": str,
-    "sigma": typing.NotRequired[float | None],
-    "method": typing.NotRequired[str | None],
-    "name-list-file": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "name-list-file": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "sigma": typing.NotRequired[float | None],
     "surface": InputPathType,
     "limit": float,
     "vertex-list-file": str,
@@ -26,10 +26,10 @@ _SurfaceGeodesicRoisParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicRoisPara
 SurfaceGeodesicRoisParamsDictTagged = typing.TypedDict('SurfaceGeodesicRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-rois"],
     "metric-out": str,
-    "sigma": typing.NotRequired[float | None],
-    "method": typing.NotRequired[str | None],
-    "name-list-file": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "name-list-file": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "sigma": typing.NotRequired[float | None],
     "surface": InputPathType,
     "limit": float,
     "vertex-list-file": str,
@@ -52,10 +52,10 @@ def surface_geodesic_rois_params(
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
-    sigma: float | None = None,
-    method: str | None = None,
-    name_list_file: str | None = None,
     area_metric: InputPathType | None = None,
+    name_list_file: str | None = None,
+    method: str | None = None,
+    sigma: float | None = None,
 ) -> SurfaceGeodesicRoisParamsDictTagged:
     """
     Build parameters.
@@ -66,19 +66,19 @@ def surface_geodesic_rois_params(
         limit: geodesic distance limit from vertex, in mm.
         vertex_list_file: a text file containing the vertices to draw ROIs\
             around.
-        sigma: generate a gaussian kernel instead of a flat ROI\
-            \
-            the sigma for the gaussian kernel, in mm.
-        method: how to handle overlapping ROIs, default ALLOW\
-            \
-            the method of resolving overlaps.
-        name_list_file: name the columns from text file\
-            \
-            a text file containing column names, one per line.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        name_list_file: name the columns from text file\
+            \
+            a text file containing column names, one per line.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
     Returns:
         Parameter dictionary
     """
@@ -89,14 +89,14 @@ def surface_geodesic_rois_params(
         "limit": limit,
         "vertex-list-file": vertex_list_file,
     }
-    if sigma is not None:
-        params["sigma"] = sigma
-    if method is not None:
-        params["method"] = method
-    if name_list_file is not None:
-        params["name-list-file"] = name_list_file
     if area_metric is not None:
         params["area-metric"] = area_metric
+    if name_list_file is not None:
+        params["name-list-file"] = name_list_file
+    if method is not None:
+        params["method"] = method
+    if sigma is not None:
+        params["sigma"] = sigma
     return params
 
 
@@ -116,18 +116,18 @@ def surface_geodesic_rois_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("sigma", None) is not None:
-        if not isinstance(params["sigma"], (float, int)):
-            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
-    if params.get("method", None) is not None:
-        if not isinstance(params["method"], str):
-            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
-    if params.get("name-list-file", None) is not None:
-        if not isinstance(params["name-list-file"], str):
-            raise StyxValidationError(f'`name-list-file` has the wrong type: Received `{type(params.get("name-list-file", None))}` expected `str | None`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("name-list-file", None) is not None:
+        if not isinstance(params["name-list-file"], str):
+            raise StyxValidationError(f'`name-list-file` has the wrong type: Received `{type(params.get("name-list-file", None))}` expected `str | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -160,17 +160,27 @@ def surface_geodesic_rois_cargs(
         "wb_command",
         "-surface-geodesic-rois"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-gaussian",
-        (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
-        "-overlap-logic",
-        (params.get("method", None) if (params.get("method", None) is not None) else ""),
-        "-names",
-        (params.get("name-list-file", None) if (params.get("name-list-file", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("name-list-file", None) is not None:
+        cargs.extend([
+            "-names",
+            params.get("name-list-file", None)
+        ])
+    if params.get("method", None) is not None:
+        cargs.extend([
+            "-overlap-logic",
+            params.get("method", None)
+        ])
+    if params.get("sigma", None) is not None:
+        cargs.extend([
+            "-gaussian",
+            str(params.get("sigma", None))
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("limit", None)))
     cargs.append(params.get("vertex-list-file", None))
@@ -238,10 +248,10 @@ def surface_geodesic_rois(
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
-    sigma: float | None = None,
-    method: str | None = None,
-    name_list_file: str | None = None,
     area_metric: InputPathType | None = None,
+    name_list_file: str | None = None,
+    method: str | None = None,
+    sigma: float | None = None,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicRoisOutputs:
     """
@@ -266,29 +276,29 @@ def surface_geodesic_rois(
         limit: geodesic distance limit from vertex, in mm.
         vertex_list_file: a text file containing the vertices to draw ROIs\
             around.
-        sigma: generate a gaussian kernel instead of a flat ROI\
-            \
-            the sigma for the gaussian kernel, in mm.
-        method: how to handle overlapping ROIs, default ALLOW\
-            \
-            the method of resolving overlaps.
-        name_list_file: name the columns from text file\
-            \
-            a text file containing column names, one per line.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        name_list_file: name the columns from text file\
+            \
+            a text file containing column names, one per line.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicRoisOutputs`).
     """
     params = surface_geodesic_rois_params(
         metric_out=metric_out,
-        sigma=sigma,
-        method=method,
-        name_list_file=name_list_file,
         area_metric=area_metric,
+        name_list_file=name_list_file,
+        method=method,
+        sigma=sigma,
         surface=surface,
         limit=limit,
         vertex_list_file=vertex_list_file,

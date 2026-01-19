@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "metric_weighted_stats",
   "properties": {
-    "area-surface": {
-      "var_param": "area_surface"
-    },
-    "weight-metric": {
-      "var_param": "weight_metric"
-    },
-    "column": {
-      "var_param": "column"
-    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "metric_weighted_stats_roi",
@@ -22,20 +13,29 @@
         }
       }
     },
-    "mean": {
-      "var_param": "mean"
+    "percent": {
+      "var_param": "percent"
     },
     "sample": {
       "var_param": "sample"
     },
-    "percent": {
-      "var_param": "percent"
+    "column": {
+      "var_param": "column"
+    },
+    "weight-metric": {
+      "var_param": "weight_metric"
+    },
+    "area-surface": {
+      "var_param": "area_surface"
+    },
+    "show-map-name": {
+      "var_param": "show_map_name"
     },
     "sum": {
       "var_param": "sum_"
     },
-    "show-map-name": {
-      "var_param": "show_map_name"
+    "mean": {
+      "var_param": "mean"
     },
     "metric-in": {
       "var_param": "metric_in"

@@ -13,9 +13,6 @@
         }
       }
     },
-    "input": {
-      "var_param": "input_"
-    },
     "from-fnirt": {
       "var_param": "from_fnirt",
       "fn_struct_make_params": "convert_warpfield_from_fnirt",
@@ -31,9 +28,6 @@
         }
       }
     },
-    "output": {
-      "var_param": "output_"
-    },
     "to-fnirt": {
       "var_param": "to_fnirt",
       "fn_struct_make_params": "convert_warpfield_to_fnirt",
@@ -45,6 +39,12 @@
           "var_param": "source_volume"
         }
       }
+    },
+    "output": {
+      "var_param": "output_"
+    },
+    "input": {
+      "var_param": "input_"
     }
   }
 }

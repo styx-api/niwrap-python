@@ -4,11 +4,11 @@
     "directory": {
       "var_param": "directory"
     },
-    "skip-missing": {
-      "var_param": "skip_missing"
-    },
     "write-scene-file": {
       "var_param": "write_scene_file"
+    },
+    "skip-missing": {
+      "var_param": "skip_missing"
     },
     "scene-file": {
       "var_param": "scene_file"

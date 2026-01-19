@@ -4,17 +4,17 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "sigma": {
-      "var_param": "sigma"
-    },
-    "roi-metric": {
-      "var_param": "roi_metric"
+    "column": {
+      "var_param": "column"
     },
     "method": {
       "var_param": "method"
     },
-    "column": {
-      "var_param": "column"
+    "roi-metric": {
+      "var_param": "roi_metric"
+    },
+    "sigma": {
+      "var_param": "sigma"
     },
     "surface": {
       "var_param": "surface"

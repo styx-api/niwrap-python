@@ -4,14 +4,14 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "fix-zeros": {
-      "var_param": "fix_zeros"
+    "subvol": {
+      "var_param": "subvol"
     },
     "fwhm": {
       "var_param": "fwhm"
     },
-    "subvol": {
-      "var_param": "subvol"
+    "fix-zeros": {
+      "var_param": "fix_zeros"
     },
     "volume-in": {
       "var_param": "volume_in"

@@ -15,16 +15,16 @@ BORDER_LENGTH_METADATA = Metadata(
 
 _BorderLengthParamsDictNoTag = typing.TypedDict('_BorderLengthParamsDictNoTag', {
     "area-metric": typing.NotRequired[InputPathType | None],
-    "separate-pieces": bool,
     "hide-border-name": bool,
+    "separate-pieces": bool,
     "border": InputPathType,
     "surface": InputPathType,
 })
 BorderLengthParamsDictTagged = typing.TypedDict('BorderLengthParamsDictTagged', {
     "@type": typing.Literal["workbench/border-length"],
     "area-metric": typing.NotRequired[InputPathType | None],
-    "separate-pieces": bool,
     "hide-border-name": bool,
+    "separate-pieces": bool,
     "border": InputPathType,
     "surface": InputPathType,
 })
@@ -43,8 +43,8 @@ def border_length_params(
     border: InputPathType,
     surface: InputPathType,
     area_metric: InputPathType | None = None,
-    separate_pieces: bool = False,
     hide_border_name: bool = False,
+    separate_pieces: bool = False,
 ) -> BorderLengthParamsDictTagged:
     """
     Build parameters.
@@ -56,16 +56,16 @@ def border_length_params(
             surface\
             \
             the corrected vertex areas, as a metric.
+        hide_border_name: don't print border name before each output.
         separate_pieces: report lengths for multi-part borders as separate\
             numbers.
-        hide_border_name: don't print border name before each output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-length",
-        "separate-pieces": separate_pieces,
         "hide-border-name": hide_border_name,
+        "separate-pieces": separate_pieces,
         "border": border,
         "surface": surface,
     }
@@ -89,14 +89,14 @@ def border_length_validate(
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
-    if params.get("separate-pieces", False) is None:
-        raise StyxValidationError("`separate-pieces` must not be None")
-    if not isinstance(params["separate-pieces"], bool):
-        raise StyxValidationError(f'`separate-pieces` has the wrong type: Received `{type(params.get("separate-pieces", False))}` expected `bool`')
     if params.get("hide-border-name", False) is None:
         raise StyxValidationError("`hide-border-name` must not be None")
     if not isinstance(params["hide-border-name"], bool):
         raise StyxValidationError(f'`hide-border-name` has the wrong type: Received `{type(params.get("hide-border-name", False))}` expected `bool`')
+    if params.get("separate-pieces", False) is None:
+        raise StyxValidationError("`separate-pieces` must not be None")
+    if not isinstance(params["separate-pieces"], bool):
+        raise StyxValidationError(f'`separate-pieces` has the wrong type: Received `{type(params.get("separate-pieces", False))}` expected `bool`')
     if params.get("border", None) is None:
         raise StyxValidationError("`border` must not be None")
     if not isinstance(params["border"], (pathlib.Path, str)):
@@ -125,13 +125,15 @@ def border_length_cargs(
         "wb_command",
         "-border-length"
     ])
-    if params.get("area-metric", None) is not None or params.get("separate-pieces", False) or params.get("hide-border-name", False):
+    if params.get("area-metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-            ("-separate-pieces" if (params.get("separate-pieces", False)) else ""),
-            ("-hide-border-name" if (params.get("hide-border-name", False)) else "")
+            execution.input_file(params.get("area-metric", None))
         ])
+    if params.get("hide-border-name", False):
+        cargs.append("-hide-border-name")
+    if params.get("separate-pieces", False):
+        cargs.append("-separate-pieces")
     cargs.append(execution.input_file(params.get("border", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
@@ -191,8 +193,8 @@ def border_length(
     border: InputPathType,
     surface: InputPathType,
     area_metric: InputPathType | None = None,
-    separate_pieces: bool = False,
     hide_border_name: bool = False,
+    separate_pieces: bool = False,
     runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
@@ -213,17 +215,17 @@ def border_length(
             surface\
             \
             the corrected vertex areas, as a metric.
+        hide_border_name: don't print border name before each output.
         separate_pieces: report lengths for multi-part borders as separate\
             numbers.
-        hide_border_name: don't print border name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderLengthOutputs`).
     """
     params = border_length_params(
         area_metric=area_metric,
-        separate_pieces=separate_pieces,
         hide_border_name=hide_border_name,
+        separate_pieces=separate_pieces,
         border=border,
         surface=surface,
     )

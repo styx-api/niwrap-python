@@ -81,10 +81,10 @@ _CiftiCreateDenseTimeseriesParamsDictNoTag = typing.TypedDict('_CiftiCreateDense
     "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParamsDict | None],
     "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParamsDict | None],
     "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None],
-    "interval": typing.NotRequired[float | None],
-    "start": typing.NotRequired[float | None],
-    "unit": typing.NotRequired[str | None],
     "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParamsDict] | None],
+    "unit": typing.NotRequired[str | None],
+    "start": typing.NotRequired[float | None],
+    "interval": typing.NotRequired[float | None],
 })
 CiftiCreateDenseTimeseriesParamsDictTagged = typing.TypedDict('CiftiCreateDenseTimeseriesParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-timeseries"],
@@ -93,10 +93,10 @@ CiftiCreateDenseTimeseriesParamsDictTagged = typing.TypedDict('CiftiCreateDenseT
     "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParamsDict | None],
     "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParamsDict | None],
     "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None],
-    "interval": typing.NotRequired[float | None],
-    "start": typing.NotRequired[float | None],
-    "unit": typing.NotRequired[str | None],
     "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParamsDict] | None],
+    "unit": typing.NotRequired[str | None],
+    "start": typing.NotRequired[float | None],
+    "interval": typing.NotRequired[float | None],
 })
 CiftiCreateDenseTimeseriesParamsDict = _CiftiCreateDenseTimeseriesParamsDictNoTag | CiftiCreateDenseTimeseriesParamsDictTagged
 
@@ -229,10 +229,13 @@ def cifti_create_dense_timeseries_left_metric_cargs(
     cargs = []
     cargs.extend([
         "-left-metric",
-        execution.input_file(params.get("metric", None)),
-        "-roi-left",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-left",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -297,10 +300,13 @@ def cifti_create_dense_timeseries_right_metric_cargs(
     cargs = []
     cargs.extend([
         "-right-metric",
-        execution.input_file(params.get("metric", None)),
-        "-roi-right",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-right",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -365,10 +371,13 @@ def cifti_create_dense_timeseries_cerebellum_metric_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-metric",
-        execution.input_file(params.get("metric", None)),
-        "-roi-cerebellum",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi-cerebellum",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -441,10 +450,13 @@ def cifti_create_dense_timeseries_metric_cargs(
     cargs.extend([
         "-metric",
         params.get("structure", None),
-        execution.input_file(params.get("metric", None)),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else "")
+        execution.input_file(params.get("metric", None))
     ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -464,10 +476,10 @@ def cifti_create_dense_timeseries_params(
     left_metric: CiftiCreateDenseTimeseriesLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseTimeseriesRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None = None,
-    interval: float | None = None,
-    start: float | None = None,
-    unit: str | None = None,
     metric: list[CiftiCreateDenseTimeseriesMetricParamsDict] | None = None,
+    unit: str | None = None,
+    start: float | None = None,
+    interval: float | None = None,
 ) -> CiftiCreateDenseTimeseriesParamsDictTagged:
     """
     Build parameters.
@@ -478,16 +490,16 @@ def cifti_create_dense_timeseries_params(
         left_metric: metric for the left cortical surface.
         right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
-        interval: set the timestep\
-            \
-            the timestep, in seconds (default 1.0).
-        start: set the start time\
-            \
-            the time at the first frame, in seconds (default 0.0).
+        metric: metric for a specified surface structure.
         unit: use a unit other than time\
             \
             unit identifier (default SECOND).
-        metric: metric for a specified surface structure.
+        start: set the start time\
+            \
+            the time at the first frame, in seconds (default 0.0).
+        interval: set the timestep\
+            \
+            the timestep, in seconds (default 1.0).
     Returns:
         Parameter dictionary
     """
@@ -503,14 +515,14 @@ def cifti_create_dense_timeseries_params(
         params["right-metric"] = right_metric
     if cerebellum_metric is not None:
         params["cerebellum-metric"] = cerebellum_metric
-    if interval is not None:
-        params["interval"] = interval
-    if start is not None:
-        params["start"] = start
-    if unit is not None:
-        params["unit"] = unit
     if metric is not None:
         params["metric"] = metric
+    if unit is not None:
+        params["unit"] = unit
+    if start is not None:
+        params["start"] = start
+    if interval is not None:
+        params["interval"] = interval
     return params
 
 
@@ -538,20 +550,20 @@ def cifti_create_dense_timeseries_validate(
         cifti_create_dense_timeseries_right_metric_validate(params["right-metric"])
     if params.get("cerebellum-metric", None) is not None:
         cifti_create_dense_timeseries_cerebellum_metric_validate(params["cerebellum-metric"])
-    if params.get("interval", None) is not None:
-        if not isinstance(params["interval"], (float, int)):
-            raise StyxValidationError(f'`interval` has the wrong type: Received `{type(params.get("interval", None))}` expected `float | None`')
-    if params.get("start", None) is not None:
-        if not isinstance(params["start"], (float, int)):
-            raise StyxValidationError(f'`start` has the wrong type: Received `{type(params.get("start", None))}` expected `float | None`')
-    if params.get("unit", None) is not None:
-        if not isinstance(params["unit"], str):
-            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
     if params.get("metric", None) is not None:
         if not isinstance(params["metric"], list):
             raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseTimeseriesMetricParamsDict] | None`')
         for e in params["metric"]:
             cifti_create_dense_timeseries_metric_validate(e)
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
+    if params.get("start", None) is not None:
+        if not isinstance(params["start"], (float, int)):
+            raise StyxValidationError(f'`start` has the wrong type: Received `{type(params.get("start", None))}` expected `float | None`')
+    if params.get("interval", None) is not None:
+        if not isinstance(params["interval"], (float, int)):
+            raise StyxValidationError(f'`interval` has the wrong type: Received `{type(params.get("interval", None))}` expected `float | None`')
 
 
 def cifti_create_dense_timeseries_cargs(
@@ -578,14 +590,23 @@ def cifti_create_dense_timeseries_cargs(
         *(cifti_create_dense_timeseries_left_metric_cargs(params.get("left-metric", None), execution) if (params.get("left-metric", None) is not None) else []),
         *(cifti_create_dense_timeseries_right_metric_cargs(params.get("right-metric", None), execution) if (params.get("right-metric", None) is not None) else []),
         *(cifti_create_dense_timeseries_cerebellum_metric_cargs(params.get("cerebellum-metric", None), execution) if (params.get("cerebellum-metric", None) is not None) else []),
-        "-timestep",
-        (str(params.get("interval", None)) if (params.get("interval", None) is not None) else ""),
-        "-timestart",
-        (str(params.get("start", None)) if (params.get("start", None) is not None) else ""),
-        "-unit",
-        (params.get("unit", None) if (params.get("unit", None) is not None) else ""),
         *([a for c in [cifti_create_dense_timeseries_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
     ])
+    if params.get("unit", None) is not None:
+        cargs.extend([
+            "-unit",
+            params.get("unit", None)
+        ])
+    if params.get("start", None) is not None:
+        cargs.extend([
+            "-timestart",
+            str(params.get("start", None))
+        ])
+    if params.get("interval", None) is not None:
+        cargs.extend([
+            "-timestep",
+            str(params.get("interval", None))
+        ])
     return cargs
 
 
@@ -690,10 +711,10 @@ def cifti_create_dense_timeseries(
     left_metric: CiftiCreateDenseTimeseriesLeftMetricParamsDict | None = None,
     right_metric: CiftiCreateDenseTimeseriesRightMetricParamsDict | None = None,
     cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParamsDict | None = None,
-    interval: float | None = None,
-    start: float | None = None,
-    unit: str | None = None,
     metric: list[CiftiCreateDenseTimeseriesMetricParamsDict] | None = None,
+    unit: str | None = None,
+    start: float | None = None,
+    interval: float | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
@@ -757,16 +778,16 @@ def cifti_create_dense_timeseries(
         left_metric: metric for the left cortical surface.
         right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
-        interval: set the timestep\
-            \
-            the timestep, in seconds (default 1.0).
-        start: set the start time\
-            \
-            the time at the first frame, in seconds (default 0.0).
+        metric: metric for a specified surface structure.
         unit: use a unit other than time\
             \
             unit identifier (default SECOND).
-        metric: metric for a specified surface structure.
+        start: set the start time\
+            \
+            the time at the first frame, in seconds (default 0.0).
+        interval: set the timestep\
+            \
+            the timestep, in seconds (default 1.0).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseTimeseriesOutputs`).
@@ -777,10 +798,10 @@ def cifti_create_dense_timeseries(
         left_metric=left_metric,
         right_metric=right_metric,
         cerebellum_metric=cerebellum_metric,
-        interval=interval,
-        start=start,
-        unit=unit,
         metric=metric,
+        unit=unit,
+        start=start,
+        interval=interval,
     )
     return cifti_create_dense_timeseries_execute(params, runner)
 

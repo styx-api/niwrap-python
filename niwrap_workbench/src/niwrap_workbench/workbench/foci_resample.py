@@ -54,8 +54,8 @@ _FociResampleParamsDictNoTag = typing.TypedDict('_FociResampleParamsDictNoTag', 
     "left-surfaces": typing.NotRequired[FociResampleLeftSurfacesParamsDict | None],
     "right-surfaces": typing.NotRequired[FociResampleRightSurfacesParamsDict | None],
     "cerebellum-surfaces": typing.NotRequired[FociResampleCerebellumSurfacesParamsDict | None],
-    "discard-distance-from-surface": bool,
     "restore-xyz": bool,
+    "discard-distance-from-surface": bool,
     "foci-in": InputPathType,
 })
 FociResampleParamsDictTagged = typing.TypedDict('FociResampleParamsDictTagged', {
@@ -64,8 +64,8 @@ FociResampleParamsDictTagged = typing.TypedDict('FociResampleParamsDictTagged', 
     "left-surfaces": typing.NotRequired[FociResampleLeftSurfacesParamsDict | None],
     "right-surfaces": typing.NotRequired[FociResampleRightSurfacesParamsDict | None],
     "cerebellum-surfaces": typing.NotRequired[FociResampleCerebellumSurfacesParamsDict | None],
-    "discard-distance-from-surface": bool,
     "restore-xyz": bool,
+    "discard-distance-from-surface": bool,
     "foci-in": InputPathType,
 })
 FociResampleParamsDict = _FociResampleParamsDictNoTag | FociResampleParamsDictTagged
@@ -282,8 +282,8 @@ def foci_resample_params(
     left_surfaces: FociResampleLeftSurfacesParamsDict | None = None,
     right_surfaces: FociResampleRightSurfacesParamsDict | None = None,
     cerebellum_surfaces: FociResampleCerebellumSurfacesParamsDict | None = None,
-    discard_distance_from_surface: bool = False,
     restore_xyz: bool = False,
+    discard_distance_from_surface: bool = False,
 ) -> FociResampleParamsDictTagged:
     """
     Build parameters.
@@ -294,18 +294,18 @@ def foci_resample_params(
         left_surfaces: the left surfaces for resampling.
         right_surfaces: the right surfaces for resampling.
         cerebellum_surfaces: the cerebellum surfaces for resampling.
-        discard_distance_from_surface: ignore the distance the foci are above\
-            or below the current surface.
         restore_xyz: put the original xyz coordinates into the foci, rather\
             than the coordinates obtained from unprojection.
+        discard_distance_from_surface: ignore the distance the foci are above\
+            or below the current surface.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/foci-resample",
         "foci-out": foci_out,
-        "discard-distance-from-surface": discard_distance_from_surface,
         "restore-xyz": restore_xyz,
+        "discard-distance-from-surface": discard_distance_from_surface,
         "foci-in": foci_in,
     }
     if left_surfaces is not None:
@@ -339,14 +339,14 @@ def foci_resample_validate(
         foci_resample_right_surfaces_validate(params["right-surfaces"])
     if params.get("cerebellum-surfaces", None) is not None:
         foci_resample_cerebellum_surfaces_validate(params["cerebellum-surfaces"])
-    if params.get("discard-distance-from-surface", False) is None:
-        raise StyxValidationError("`discard-distance-from-surface` must not be None")
-    if not isinstance(params["discard-distance-from-surface"], bool):
-        raise StyxValidationError(f'`discard-distance-from-surface` has the wrong type: Received `{type(params.get("discard-distance-from-surface", False))}` expected `bool`')
     if params.get("restore-xyz", False) is None:
         raise StyxValidationError("`restore-xyz` must not be None")
     if not isinstance(params["restore-xyz"], bool):
         raise StyxValidationError(f'`restore-xyz` has the wrong type: Received `{type(params.get("restore-xyz", False))}` expected `bool`')
+    if params.get("discard-distance-from-surface", False) is None:
+        raise StyxValidationError("`discard-distance-from-surface` must not be None")
+    if not isinstance(params["discard-distance-from-surface"], bool):
+        raise StyxValidationError(f'`discard-distance-from-surface` has the wrong type: Received `{type(params.get("discard-distance-from-surface", False))}` expected `bool`')
     if params.get("foci-in", None) is None:
         raise StyxValidationError("`foci-in` must not be None")
     if not isinstance(params["foci-in"], (pathlib.Path, str)):
@@ -375,10 +375,12 @@ def foci_resample_cargs(
         params.get("foci-out", None),
         *(foci_resample_left_surfaces_cargs(params.get("left-surfaces", None), execution) if (params.get("left-surfaces", None) is not None) else []),
         *(foci_resample_right_surfaces_cargs(params.get("right-surfaces", None), execution) if (params.get("right-surfaces", None) is not None) else []),
-        *(foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum-surfaces", None), execution) if (params.get("cerebellum-surfaces", None) is not None) else []),
-        ("-discard-distance-from-surface" if (params.get("discard-distance-from-surface", False)) else ""),
-        ("-restore-xyz" if (params.get("restore-xyz", False)) else "")
+        *(foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum-surfaces", None), execution) if (params.get("cerebellum-surfaces", None) is not None) else [])
     ])
+    if params.get("restore-xyz", False):
+        cargs.append("-restore-xyz")
+    if params.get("discard-distance-from-surface", False):
+        cargs.append("-discard-distance-from-surface")
     cargs.append(execution.input_file(params.get("foci-in", None)))
     return cargs
 
@@ -438,8 +440,8 @@ def foci_resample(
     left_surfaces: FociResampleLeftSurfacesParamsDict | None = None,
     right_surfaces: FociResampleRightSurfacesParamsDict | None = None,
     cerebellum_surfaces: FociResampleCerebellumSurfacesParamsDict | None = None,
-    discard_distance_from_surface: bool = False,
     restore_xyz: bool = False,
+    discard_distance_from_surface: bool = False,
     runner: Runner | None = None,
 ) -> FociResampleOutputs:
     """
@@ -457,10 +459,10 @@ def foci_resample(
         left_surfaces: the left surfaces for resampling.
         right_surfaces: the right surfaces for resampling.
         cerebellum_surfaces: the cerebellum surfaces for resampling.
-        discard_distance_from_surface: ignore the distance the foci are above\
-            or below the current surface.
         restore_xyz: put the original xyz coordinates into the foci, rather\
             than the coordinates obtained from unprojection.
+        discard_distance_from_surface: ignore the distance the foci are above\
+            or below the current surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociResampleOutputs`).
@@ -470,8 +472,8 @@ def foci_resample(
         left_surfaces=left_surfaces,
         right_surfaces=right_surfaces,
         cerebellum_surfaces=cerebellum_surfaces,
-        discard_distance_from_surface=discard_distance_from_surface,
         restore_xyz=restore_xyz,
+        discard_distance_from_surface=discard_distance_from_surface,
         foci_in=foci_in,
     )
     return foci_resample_execute(params, runner)

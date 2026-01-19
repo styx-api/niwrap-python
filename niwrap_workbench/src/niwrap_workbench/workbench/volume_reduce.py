@@ -202,9 +202,10 @@ def volume_reduce_cargs(
     ])
     cargs.extend([
         params.get("volume-out", None),
-        *(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-        ("-only-numeric" if (params.get("only-numeric", False)) else "")
+        *(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else [])
     ])
+    if params.get("only-numeric", False):
+        cargs.append("-only-numeric")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("operation", None))
     return cargs

@@ -4,12 +4,6 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
-    "column": {
-      "var_param": "column"
-    },
     "remove": {
       "var_param": "remove",
       "fn_struct_make_params": "metric_regression_remove",
@@ -33,6 +27,12 @@
           "var_param": "column"
         }
       }
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "metric-in": {
       "var_param": "metric_in"

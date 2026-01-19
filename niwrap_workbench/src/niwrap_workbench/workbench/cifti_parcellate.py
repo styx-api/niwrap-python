@@ -14,21 +14,21 @@ CIFTI_PARCELLATE_METADATA = Metadata(
 
 
 _CiftiParcellateSpatialWeightsParamsDictNoTag = typing.TypedDict('_CiftiParcellateSpatialWeightsParamsDictNoTag', {
-    "left-surf": typing.NotRequired[InputPathType | None],
-    "right-surf": typing.NotRequired[InputPathType | None],
-    "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "left-metric": typing.NotRequired[InputPathType | None],
-    "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
+    "right-metric": typing.NotRequired[InputPathType | None],
+    "left-metric": typing.NotRequired[InputPathType | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "left-surf": typing.NotRequired[InputPathType | None],
 })
 CiftiParcellateSpatialWeightsParamsDictTagged = typing.TypedDict('CiftiParcellateSpatialWeightsParamsDictTagged', {
     "@type": typing.Literal["spatial-weights"],
-    "left-surf": typing.NotRequired[InputPathType | None],
-    "right-surf": typing.NotRequired[InputPathType | None],
-    "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "left-metric": typing.NotRequired[InputPathType | None],
-    "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
+    "right-metric": typing.NotRequired[InputPathType | None],
+    "left-metric": typing.NotRequired[InputPathType | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "left-surf": typing.NotRequired[InputPathType | None],
 })
 CiftiParcellateSpatialWeightsParamsDict = _CiftiParcellateSpatialWeightsParamsDictNoTag | CiftiParcellateSpatialWeightsParamsDictTagged
 
@@ -58,14 +58,14 @@ CiftiParcellateNonemptyMaskOutParamsDict = _CiftiParcellateNonemptyMaskOutParams
 _CiftiParcellateParamsDictNoTag = typing.TypedDict('_CiftiParcellateParamsDictNoTag', {
     "cifti-out": str,
     "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
-    "weight-cifti": typing.NotRequired[InputPathType | None],
-    "method": typing.NotRequired[str | None],
     "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
-    "only-numeric": bool,
-    "value": typing.NotRequired[float | None],
     "nonempty-mask-out": typing.NotRequired[CiftiParcellateNonemptyMaskOutParamsDict | None],
-    "legacy-mode": bool,
+    "value": typing.NotRequired[float | None],
+    "method": typing.NotRequired[str | None],
+    "weight-cifti": typing.NotRequired[InputPathType | None],
     "include-empty": bool,
+    "legacy-mode": bool,
+    "only-numeric": bool,
     "cifti-in": InputPathType,
     "cifti-label": InputPathType,
     "direction": str,
@@ -74,14 +74,14 @@ CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTag
     "@type": typing.Literal["workbench/cifti-parcellate"],
     "cifti-out": str,
     "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
-    "weight-cifti": typing.NotRequired[InputPathType | None],
-    "method": typing.NotRequired[str | None],
     "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
-    "only-numeric": bool,
-    "value": typing.NotRequired[float | None],
     "nonempty-mask-out": typing.NotRequired[CiftiParcellateNonemptyMaskOutParamsDict | None],
-    "legacy-mode": bool,
+    "value": typing.NotRequired[float | None],
+    "method": typing.NotRequired[str | None],
+    "weight-cifti": typing.NotRequired[InputPathType | None],
     "include-empty": bool,
+    "legacy-mode": bool,
+    "only-numeric": bool,
     "cifti-in": InputPathType,
     "cifti-label": InputPathType,
     "direction": str,
@@ -90,53 +90,53 @@ CiftiParcellateParamsDict = _CiftiParcellateParamsDictNoTag | CiftiParcellatePar
 
 
 def cifti_parcellate_spatial_weights(
-    left_surf: InputPathType | None = None,
-    right_surf: InputPathType | None = None,
-    cerebellum_surf: InputPathType | None = None,
-    left_metric: InputPathType | None = None,
-    right_metric: InputPathType | None = None,
     cerebellum_metric: InputPathType | None = None,
+    right_metric: InputPathType | None = None,
+    left_metric: InputPathType | None = None,
+    cerebellum_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    left_surf: InputPathType | None = None,
 ) -> CiftiParcellateSpatialWeightsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        left_surf: use a surface for left vertex areas\
-            \
-            the left surface to use, areas are in mm^2.
-        right_surf: use a surface for right vertex areas\
-            \
-            the right surface to use, areas are in mm^2.
-        cerebellum_surf: use a surface for cerebellum vertex areas\
-            \
-            the cerebellum surface to use, areas are in mm^2.
-        left_metric: use a metric file for left vertex weights\
-            \
-            metric file containing left vertex weights.
-        right_metric: use a metric file for right vertex weights\
-            \
-            metric file containing right vertex weights.
         cerebellum_metric: use a metric file for cerebellum vertex weights\
             \
             metric file containing cerebellum vertex weights.
+        right_metric: use a metric file for right vertex weights\
+            \
+            metric file containing right vertex weights.
+        left_metric: use a metric file for left vertex weights\
+            \
+            metric file containing left vertex weights.
+        cerebellum_surf: use a surface for cerebellum vertex areas\
+            \
+            the cerebellum surface to use, areas are in mm^2.
+        right_surf: use a surface for right vertex areas\
+            \
+            the right surface to use, areas are in mm^2.
+        left_surf: use a surface for left vertex areas\
+            \
+            the left surface to use, areas are in mm^2.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "spatial-weights",
     }
-    if left_surf is not None:
-        params["left-surf"] = left_surf
-    if right_surf is not None:
-        params["right-surf"] = right_surf
-    if cerebellum_surf is not None:
-        params["cerebellum-surf"] = cerebellum_surf
-    if left_metric is not None:
-        params["left-metric"] = left_metric
-    if right_metric is not None:
-        params["right-metric"] = right_metric
     if cerebellum_metric is not None:
         params["cerebellum-metric"] = cerebellum_metric
+    if right_metric is not None:
+        params["right-metric"] = right_metric
+    if left_metric is not None:
+        params["left-metric"] = left_metric
+    if cerebellum_surf is not None:
+        params["cerebellum-surf"] = cerebellum_surf
+    if right_surf is not None:
+        params["right-surf"] = right_surf
+    if left_surf is not None:
+        params["left-surf"] = left_surf
     return params
 
 
@@ -152,24 +152,24 @@ def cifti_parcellate_spatial_weights_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("left-surf", None) is not None:
-        if not isinstance(params["left-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
-    if params.get("right-surf", None) is not None:
-        if not isinstance(params["right-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
-    if params.get("cerebellum-surf", None) is not None:
-        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
-    if params.get("left-metric", None) is not None:
-        if not isinstance(params["left-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`left-metric` has the wrong type: Received `{type(params.get("left-metric", None))}` expected `InputPathType | None`')
-    if params.get("right-metric", None) is not None:
-        if not isinstance(params["right-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`right-metric` has the wrong type: Received `{type(params.get("right-metric", None))}` expected `InputPathType | None`')
     if params.get("cerebellum-metric", None) is not None:
         if not isinstance(params["cerebellum-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`cerebellum-metric` has the wrong type: Received `{type(params.get("cerebellum-metric", None))}` expected `InputPathType | None`')
+    if params.get("right-metric", None) is not None:
+        if not isinstance(params["right-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-metric` has the wrong type: Received `{type(params.get("right-metric", None))}` expected `InputPathType | None`')
+    if params.get("left-metric", None) is not None:
+        if not isinstance(params["left-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-metric` has the wrong type: Received `{type(params.get("left-metric", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-surf", None) is not None:
+        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
+    if params.get("right-surf", None) is not None:
+        if not isinstance(params["right-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
+    if params.get("left-surf", None) is not None:
+        if not isinstance(params["left-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
 
 
 def cifti_parcellate_spatial_weights_cargs(
@@ -186,21 +186,36 @@ def cifti_parcellate_spatial_weights_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("left-surf", None) is not None or params.get("right-surf", None) is not None or params.get("cerebellum-surf", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None:
+    cargs.append("-spatial-weights")
+    if params.get("cerebellum-metric", None) is not None:
         cargs.extend([
-            "-spatial-weights",
-            "-left-area-surf",
-            (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
-            "-right-area-surf",
-            (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
-            "-cerebellum-area-surf",
-            (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
-            "-left-area-metric",
-            (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
-            "-right-area-metric",
-            (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
             "-cerebellum-area-metric",
-            (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
+            execution.input_file(params.get("cerebellum-metric", None))
+        ])
+    if params.get("right-metric", None) is not None:
+        cargs.extend([
+            "-right-area-metric",
+            execution.input_file(params.get("right-metric", None))
+        ])
+    if params.get("left-metric", None) is not None:
+        cargs.extend([
+            "-left-area-metric",
+            execution.input_file(params.get("left-metric", None))
+        ])
+    if params.get("cerebellum-surf", None) is not None:
+        cargs.extend([
+            "-cerebellum-area-surf",
+            execution.input_file(params.get("cerebellum-surf", None))
+        ])
+    if params.get("right-surf", None) is not None:
+        cargs.extend([
+            "-right-area-surf",
+            execution.input_file(params.get("right-surf", None))
+        ])
+    if params.get("left-surf", None) is not None:
+        cargs.extend([
+            "-left-area-surf",
+            execution.input_file(params.get("left-surf", None))
         ])
     return cargs
 
@@ -375,14 +390,14 @@ def cifti_parcellate_params(
     cifti_label: InputPathType,
     direction: str,
     spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
-    weight_cifti: InputPathType | None = None,
-    method: str | None = None,
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
-    only_numeric: bool = False,
-    value: float | None = None,
     nonempty_mask_out: CiftiParcellateNonemptyMaskOutParamsDict | None = None,
-    legacy_mode: bool = False,
+    value: float | None = None,
+    method: str | None = None,
+    weight_cifti: InputPathType | None = None,
     include_empty: bool = False,
+    legacy_mode: bool = False,
+    only_numeric: bool = False,
 ) -> CiftiParcellateParamsDictTagged:
     """
     Build parameters.
@@ -394,51 +409,51 @@ def cifti_parcellate_params(
         direction: which mapping to parcellate (integer, ROW, or COLUMN).
         spatial_weights: use voxel volume and either vertex areas or metric\
             files as weights.
-        weight_cifti: use a cifti file containing weights\
+        exclude_outliers: exclude non-numeric values and outliers from each\
+            parcel by standard deviation.
+        nonempty_mask_out: output a matching pscalar file that has 0s in empty\
+            parcels, and 1s elsewhere.
+        value: specify value to use in empty parcels (default 0)\
             \
-            the weights to use, as a cifti file.
+            the value to fill empty parcels with.
         method: specify method of parcellation (default MEAN, or MODE if label\
             data)\
             \
             the method to use to assign parcel values from the values of member\
             brainordinates.
-        exclude_outliers: exclude non-numeric values and outliers from each\
-            parcel by standard deviation.
-        only_numeric: exclude non-numeric values.
-        value: specify value to use in empty parcels (default 0)\
+        weight_cifti: use a cifti file containing weights\
             \
-            the value to fill empty parcels with.
-        nonempty_mask_out: output a matching pscalar file that has 0s in empty\
-            parcels, and 1s elsewhere.
+            the weights to use, as a cifti file.
+        include_empty: deprecated: now the default behavior.
         legacy_mode: use the old behavior, parcels are defined by the\
             intersection between labels and valid data, and empty parcels are\
             discarded.
-        include_empty: deprecated: now the default behavior.
+        only_numeric: exclude non-numeric values.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-parcellate",
         "cifti-out": cifti_out,
-        "only-numeric": only_numeric,
-        "legacy-mode": legacy_mode,
         "include-empty": include_empty,
+        "legacy-mode": legacy_mode,
+        "only-numeric": only_numeric,
         "cifti-in": cifti_in,
         "cifti-label": cifti_label,
         "direction": direction,
     }
     if spatial_weights is not None:
         params["spatial-weights"] = spatial_weights
-    if weight_cifti is not None:
-        params["weight-cifti"] = weight_cifti
-    if method is not None:
-        params["method"] = method
     if exclude_outliers is not None:
         params["exclude-outliers"] = exclude_outliers
-    if value is not None:
-        params["value"] = value
     if nonempty_mask_out is not None:
         params["nonempty-mask-out"] = nonempty_mask_out
+    if value is not None:
+        params["value"] = value
+    if method is not None:
+        params["method"] = method
+    if weight_cifti is not None:
+        params["weight-cifti"] = weight_cifti
     return params
 
 
@@ -460,31 +475,31 @@ def cifti_parcellate_validate(
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("spatial-weights", None) is not None:
         cifti_parcellate_spatial_weights_validate(params["spatial-weights"])
-    if params.get("weight-cifti", None) is not None:
-        if not isinstance(params["weight-cifti"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`weight-cifti` has the wrong type: Received `{type(params.get("weight-cifti", None))}` expected `InputPathType | None`')
-    if params.get("method", None) is not None:
-        if not isinstance(params["method"], str):
-            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
     if params.get("exclude-outliers", None) is not None:
         cifti_parcellate_exclude_outliers_validate(params["exclude-outliers"])
-    if params.get("only-numeric", False) is None:
-        raise StyxValidationError("`only-numeric` must not be None")
-    if not isinstance(params["only-numeric"], bool):
-        raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
+    if params.get("nonempty-mask-out", None) is not None:
+        cifti_parcellate_nonempty_mask_out_validate(params["nonempty-mask-out"])
     if params.get("value", None) is not None:
         if not isinstance(params["value"], (float, int)):
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
-    if params.get("nonempty-mask-out", None) is not None:
-        cifti_parcellate_nonempty_mask_out_validate(params["nonempty-mask-out"])
-    if params.get("legacy-mode", False) is None:
-        raise StyxValidationError("`legacy-mode` must not be None")
-    if not isinstance(params["legacy-mode"], bool):
-        raise StyxValidationError(f'`legacy-mode` has the wrong type: Received `{type(params.get("legacy-mode", False))}` expected `bool`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("weight-cifti", None) is not None:
+        if not isinstance(params["weight-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight-cifti` has the wrong type: Received `{type(params.get("weight-cifti", None))}` expected `InputPathType | None`')
     if params.get("include-empty", False) is None:
         raise StyxValidationError("`include-empty` must not be None")
     if not isinstance(params["include-empty"], bool):
         raise StyxValidationError(f'`include-empty` has the wrong type: Received `{type(params.get("include-empty", False))}` expected `bool`')
+    if params.get("legacy-mode", False) is None:
+        raise StyxValidationError("`legacy-mode` must not be None")
+    if not isinstance(params["legacy-mode"], bool):
+        raise StyxValidationError(f'`legacy-mode` has the wrong type: Received `{type(params.get("legacy-mode", False))}` expected `bool`')
+    if params.get("only-numeric", False) is None:
+        raise StyxValidationError("`only-numeric` must not be None")
+    if not isinstance(params["only-numeric"], bool):
+        raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -520,18 +535,30 @@ def cifti_parcellate_cargs(
     cargs.extend([
         params.get("cifti-out", None),
         *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
-        "-cifti-weights",
-        (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
-        "-method",
-        (params.get("method", None) if (params.get("method", None) is not None) else ""),
         *(cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-        ("-only-numeric" if (params.get("only-numeric", False)) else ""),
-        "-fill-value",
-        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-        *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else []),
-        ("-legacy-mode" if (params.get("legacy-mode", False)) else ""),
-        ("-include-empty" if (params.get("include-empty", False)) else "")
+        *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else [])
     ])
+    if params.get("value", None) is not None:
+        cargs.extend([
+            "-fill-value",
+            str(params.get("value", None))
+        ])
+    if params.get("method", None) is not None:
+        cargs.extend([
+            "-method",
+            params.get("method", None)
+        ])
+    if params.get("weight-cifti", None) is not None:
+        cargs.extend([
+            "-cifti-weights",
+            execution.input_file(params.get("weight-cifti", None))
+        ])
+    if params.get("include-empty", False):
+        cargs.append("-include-empty")
+    if params.get("legacy-mode", False):
+        cargs.append("-legacy-mode")
+    if params.get("only-numeric", False):
+        cargs.append("-only-numeric")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(execution.input_file(params.get("cifti-label", None)))
     cargs.append(params.get("direction", None))
@@ -624,14 +651,14 @@ def cifti_parcellate(
     cifti_label: InputPathType,
     direction: str,
     spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
-    weight_cifti: InputPathType | None = None,
-    method: str | None = None,
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
-    only_numeric: bool = False,
-    value: float | None = None,
     nonempty_mask_out: CiftiParcellateNonemptyMaskOutParamsDict | None = None,
-    legacy_mode: bool = False,
+    value: float | None = None,
+    method: str | None = None,
+    weight_cifti: InputPathType | None = None,
     include_empty: bool = False,
+    legacy_mode: bool = False,
+    only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> CiftiParcellateOutputs:
     """
@@ -680,26 +707,26 @@ def cifti_parcellate(
         direction: which mapping to parcellate (integer, ROW, or COLUMN).
         spatial_weights: use voxel volume and either vertex areas or metric\
             files as weights.
-        weight_cifti: use a cifti file containing weights\
+        exclude_outliers: exclude non-numeric values and outliers from each\
+            parcel by standard deviation.
+        nonempty_mask_out: output a matching pscalar file that has 0s in empty\
+            parcels, and 1s elsewhere.
+        value: specify value to use in empty parcels (default 0)\
             \
-            the weights to use, as a cifti file.
+            the value to fill empty parcels with.
         method: specify method of parcellation (default MEAN, or MODE if label\
             data)\
             \
             the method to use to assign parcel values from the values of member\
             brainordinates.
-        exclude_outliers: exclude non-numeric values and outliers from each\
-            parcel by standard deviation.
-        only_numeric: exclude non-numeric values.
-        value: specify value to use in empty parcels (default 0)\
+        weight_cifti: use a cifti file containing weights\
             \
-            the value to fill empty parcels with.
-        nonempty_mask_out: output a matching pscalar file that has 0s in empty\
-            parcels, and 1s elsewhere.
+            the weights to use, as a cifti file.
+        include_empty: deprecated: now the default behavior.
         legacy_mode: use the old behavior, parcels are defined by the\
             intersection between labels and valid data, and empty parcels are\
             discarded.
-        include_empty: deprecated: now the default behavior.
+        only_numeric: exclude non-numeric values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiParcellateOutputs`).
@@ -707,14 +734,14 @@ def cifti_parcellate(
     params = cifti_parcellate_params(
         cifti_out=cifti_out,
         spatial_weights=spatial_weights,
-        weight_cifti=weight_cifti,
-        method=method,
         exclude_outliers=exclude_outliers,
-        only_numeric=only_numeric,
-        value=value,
         nonempty_mask_out=nonempty_mask_out,
-        legacy_mode=legacy_mode,
+        value=value,
+        method=method,
+        weight_cifti=weight_cifti,
         include_empty=include_empty,
+        legacy_mode=legacy_mode,
+        only_numeric=only_numeric,
         cifti_in=cifti_in,
         cifti_label=cifti_label,
         direction=direction,

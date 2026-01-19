@@ -4,12 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "direction": {
-      "var_param": "direction"
-    },
-    "limit-GB": {
-      "var_param": "limit_gb"
-    },
     "cifti": {
       "var_param": "cifti",
       "fn_struct_make_params": "cifti_merge_cifti",
@@ -39,6 +33,12 @@
           }
         }
       }
+    },
+    "limit-GB": {
+      "var_param": "limit_gb"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

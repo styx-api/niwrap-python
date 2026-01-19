@@ -51,16 +51,16 @@ CiftiMergeCiftiParamsDict = _CiftiMergeCiftiParamsDictNoTag | CiftiMergeCiftiPar
 
 _CiftiMergeParamsDictNoTag = typing.TypedDict('_CiftiMergeParamsDictNoTag', {
     "cifti-out": str,
-    "direction": typing.NotRequired[str | None],
-    "limit-GB": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiMergeCiftiParamsDict] | None],
+    "limit-GB": typing.NotRequired[float | None],
+    "direction": typing.NotRequired[str | None],
 })
 CiftiMergeParamsDictTagged = typing.TypedDict('CiftiMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-merge"],
     "cifti-out": str,
-    "direction": typing.NotRequired[str | None],
-    "limit-GB": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiMergeCiftiParamsDict] | None],
+    "limit-GB": typing.NotRequired[float | None],
+    "direction": typing.NotRequired[str | None],
 })
 CiftiMergeParamsDict = _CiftiMergeParamsDictNoTag | CiftiMergeParamsDictTagged
 
@@ -124,9 +124,10 @@ def cifti_merge_up_to_cargs(
     cargs = []
     cargs.extend([
         "-up-to",
-        params.get("last-index", None),
-        ("-reverse" if (params.get("reverse", False)) else "")
+        params.get("last-index", None)
     ])
+    if params.get("reverse", False):
+        cargs.append("-reverse")
     return cargs
 
 
@@ -273,22 +274,22 @@ class CiftiMergeOutputs(typing.NamedTuple):
 
 def cifti_merge_params(
     cifti_out: str,
-    direction: str | None = None,
-    limit_gb: float | None = None,
     cifti: list[CiftiMergeCiftiParamsDict] | None = None,
+    limit_gb: float | None = None,
+    direction: str | None = None,
 ) -> CiftiMergeParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: output cifti file.
-        direction: merge in a direction other than along rows\
-            \
-            the dimension to split/concatenate along, default ROW.
+        cifti: specify an input cifti file.
         limit_gb: restrict memory used for file reading efficiency\
             \
             memory limit in gigabytes.
-        cifti: specify an input cifti file.
+        direction: merge in a direction other than along rows\
+            \
+            the dimension to split/concatenate along, default ROW.
     Returns:
         Parameter dictionary
     """
@@ -296,12 +297,12 @@ def cifti_merge_params(
         "@type": "workbench/cifti-merge",
         "cifti-out": cifti_out,
     }
-    if direction is not None:
-        params["direction"] = direction
-    if limit_gb is not None:
-        params["limit-GB"] = limit_gb
     if cifti is not None:
         params["cifti"] = cifti
+    if limit_gb is not None:
+        params["limit-GB"] = limit_gb
+    if direction is not None:
+        params["direction"] = direction
     return params
 
 
@@ -321,17 +322,17 @@ def cifti_merge_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("direction", None) is not None:
-        if not isinstance(params["direction"], str):
-            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str | None`')
-    if params.get("limit-GB", None) is not None:
-        if not isinstance(params["limit-GB"], (float, int)):
-            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
     if params.get("cifti", None) is not None:
         if not isinstance(params["cifti"], list):
             raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeCiftiParamsDict] | None`')
         for e in params["cifti"]:
             cifti_merge_cifti_validate(e)
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], str):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str | None`')
 
 
 def cifti_merge_cargs(
@@ -354,12 +355,18 @@ def cifti_merge_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        "-direction",
-        (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
-        "-mem-limit",
-        (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
         *([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
     ])
+    if params.get("limit-GB", None) is not None:
+        cargs.extend([
+            "-mem-limit",
+            str(params.get("limit-GB", None))
+        ])
+    if params.get("direction", None) is not None:
+        cargs.extend([
+            "-direction",
+            params.get("direction", None)
+        ])
     return cargs
 
 
@@ -423,9 +430,9 @@ def cifti_merge_execute(
 
 def cifti_merge(
     cifti_out: str,
-    direction: str | None = None,
-    limit_gb: float | None = None,
     cifti: list[CiftiMergeCiftiParamsDict] | None = None,
+    limit_gb: float | None = None,
+    direction: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiMergeOutputs:
     """
@@ -448,22 +455,22 @@ def cifti_merge(
     
     Args:
         cifti_out: output cifti file.
-        direction: merge in a direction other than along rows\
-            \
-            the dimension to split/concatenate along, default ROW.
+        cifti: specify an input cifti file.
         limit_gb: restrict memory used for file reading efficiency\
             \
             memory limit in gigabytes.
-        cifti: specify an input cifti file.
+        direction: merge in a direction other than along rows\
+            \
+            the dimension to split/concatenate along, default ROW.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiMergeOutputs`).
     """
     params = cifti_merge_params(
         cifti_out=cifti_out,
-        direction=direction,
-        limit_gb=limit_gb,
         cifti=cifti,
+        limit_gb=limit_gb,
+        direction=direction,
     )
     return cifti_merge_execute(params, runner)
 

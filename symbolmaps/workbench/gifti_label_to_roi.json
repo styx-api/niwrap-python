@@ -4,14 +4,14 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "label-name": {
-      "var_param": "label_name"
+    "map": {
+      "var_param": "map_"
     },
     "label-key": {
       "var_param": "label_key"
     },
-    "map": {
-      "var_param": "map_"
+    "label-name": {
+      "var_param": "label_name"
     },
     "label-in": {
       "var_param": "label_in"

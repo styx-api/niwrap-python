@@ -14,19 +14,19 @@ CIFTI_CORRELATION_METADATA = Metadata(
 
 
 _CiftiCorrelationRoiOverrideParamsDictNoTag = typing.TypedDict('_CiftiCorrelationRoiOverrideParamsDictNoTag', {
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
+    "roi-vol": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCorrelationRoiOverrideParamsDictTagged = typing.TypedDict('CiftiCorrelationRoiOverrideParamsDictTagged', {
     "@type": typing.Literal["roi-override"],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
+    "roi-vol": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCorrelationRoiOverrideParamsDict = _CiftiCorrelationRoiOverrideParamsDictNoTag | CiftiCorrelationRoiOverrideParamsDictTagged
 
@@ -34,69 +34,69 @@ CiftiCorrelationRoiOverrideParamsDict = _CiftiCorrelationRoiOverrideParamsDictNo
 _CiftiCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCorrelationParamsDictNoTag', {
     "cifti-out": str,
     "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
-    "weight-file": typing.NotRequired[str | None],
-    "fisher-z": bool,
-    "no-demean": bool,
-    "covariance": bool,
     "limit-GB": typing.NotRequired[float | None],
+    "weight-file": typing.NotRequired[str | None],
+    "covariance": bool,
+    "no-demean": bool,
+    "fisher-z": bool,
     "cifti": InputPathType,
 })
 CiftiCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-correlation"],
     "cifti-out": str,
     "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
-    "weight-file": typing.NotRequired[str | None],
-    "fisher-z": bool,
-    "no-demean": bool,
-    "covariance": bool,
     "limit-GB": typing.NotRequired[float | None],
+    "weight-file": typing.NotRequired[str | None],
+    "covariance": bool,
+    "no-demean": bool,
+    "fisher-z": bool,
     "cifti": InputPathType,
 })
 CiftiCorrelationParamsDict = _CiftiCorrelationParamsDictNoTag | CiftiCorrelationParamsDictTagged
 
 
 def cifti_correlation_roi_override(
+    roi_cifti: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
     roi_metric_2: InputPathType | None = None,
-    roi_vol: InputPathType | None = None,
-    roi_cifti: InputPathType | None = None,
 ) -> CiftiCorrelationRoiOverrideParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        roi_metric: use an roi for left hempsphere\
-            \
-            the left roi as a metric file.
-        roi_metric_: use an roi for right hempsphere\
-            \
-            the right roi as a metric file.
-        roi_metric_2: use an roi for cerebellum\
-            \
-            the cerebellum roi as a metric file.
-        roi_vol: use an roi for volume\
-            \
-            the volume roi file.
         roi_cifti: use a cifti file for combined rois\
             \
             the cifti roi file.
+        roi_vol: use an roi for volume\
+            \
+            the volume roi file.
+        roi_metric: use an roi for cerebellum\
+            \
+            the cerebellum roi as a metric file.
+        roi_metric_: use an roi for right hempsphere\
+            \
+            the right roi as a metric file.
+        roi_metric_2: use an roi for left hempsphere\
+            \
+            the left roi as a metric file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "roi-override",
     }
+    if roi_cifti is not None:
+        params["roi-cifti"] = roi_cifti
+    if roi_vol is not None:
+        params["roi-vol"] = roi_vol
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     if roi_metric_ is not None:
         params["roi-metric"] = roi_metric_
     if roi_metric_2 is not None:
         params["roi-metric"] = roi_metric_2
-    if roi_vol is not None:
-        params["roi-vol"] = roi_vol
-    if roi_cifti is not None:
-        params["roi-cifti"] = roi_cifti
     return params
 
 
@@ -112,21 +112,21 @@ def cifti_correlation_roi_override_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-vol", None) is not None:
-        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
     if params.get("roi-cifti", None) is not None:
         if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_correlation_roi_override_cargs(
@@ -143,19 +143,31 @@ def cifti_correlation_roi_override_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-vol", None) is not None or params.get("roi-cifti", None) is not None:
+    cargs.append("-roi-override")
+    if params.get("roi-cifti", None) is not None:
         cargs.extend([
-            "-roi-override",
-            "-left-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-right-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-cerebellum-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-vol-roi",
-            (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else ""),
             "-cifti-roi",
-            (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else "")
+            execution.input_file(params.get("roi-cifti", None))
+        ])
+    if params.get("roi-vol", None) is not None:
+        cargs.extend([
+            "-vol-roi",
+            execution.input_file(params.get("roi-vol", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-right-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-left-roi",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -174,11 +186,11 @@ def cifti_correlation_params(
     cifti_out: str,
     cifti: InputPathType,
     roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
-    weight_file: str | None = None,
-    fisher_z: bool = False,
-    no_demean: bool = False,
-    covariance: bool = False,
     limit_gb: float | None = None,
+    weight_file: str | None = None,
+    covariance: bool = False,
+    no_demean: bool = False,
+    fisher_z: bool = False,
 ) -> CiftiCorrelationParamsDictTagged:
     """
     Build parameters.
@@ -187,33 +199,33 @@ def cifti_correlation_params(
         cifti_out: output cifti file.
         cifti: input cifti file.
         roi_override: perform correlation from a subset of rows to all rows.
-        weight_file: specify column weights\
-            \
-            text file containing one weight per column.
-        fisher_z: apply fisher small z transform (ie, artanh) to correlation.
-        no_demean: instead of correlation, do dot product of rows, then\
-            normalize by diagonal.
-        covariance: compute covariance instead of correlation.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
+        weight_file: specify column weights\
+            \
+            text file containing one weight per column.
+        covariance: compute covariance instead of correlation.
+        no_demean: instead of correlation, do dot product of rows, then\
+            normalize by diagonal.
+        fisher_z: apply fisher small z transform (ie, artanh) to correlation.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-correlation",
         "cifti-out": cifti_out,
-        "fisher-z": fisher_z,
-        "no-demean": no_demean,
         "covariance": covariance,
+        "no-demean": no_demean,
+        "fisher-z": fisher_z,
         "cifti": cifti,
     }
     if roi_override is not None:
         params["roi-override"] = roi_override
-    if weight_file is not None:
-        params["weight-file"] = weight_file
     if limit_gb is not None:
         params["limit-GB"] = limit_gb
+    if weight_file is not None:
+        params["weight-file"] = weight_file
     return params
 
 
@@ -235,24 +247,24 @@ def cifti_correlation_validate(
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("roi-override", None) is not None:
         cifti_correlation_roi_override_validate(params["roi-override"])
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
     if params.get("weight-file", None) is not None:
         if not isinstance(params["weight-file"], str):
             raise StyxValidationError(f'`weight-file` has the wrong type: Received `{type(params.get("weight-file", None))}` expected `str | None`')
-    if params.get("fisher-z", False) is None:
-        raise StyxValidationError("`fisher-z` must not be None")
-    if not isinstance(params["fisher-z"], bool):
-        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
-    if params.get("no-demean", False) is None:
-        raise StyxValidationError("`no-demean` must not be None")
-    if not isinstance(params["no-demean"], bool):
-        raise StyxValidationError(f'`no-demean` has the wrong type: Received `{type(params.get("no-demean", False))}` expected `bool`')
     if params.get("covariance", False) is None:
         raise StyxValidationError("`covariance` must not be None")
     if not isinstance(params["covariance"], bool):
         raise StyxValidationError(f'`covariance` has the wrong type: Received `{type(params.get("covariance", False))}` expected `bool`')
-    if params.get("limit-GB", None) is not None:
-        if not isinstance(params["limit-GB"], (float, int)):
-            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("no-demean", False) is None:
+        raise StyxValidationError("`no-demean` must not be None")
+    if not isinstance(params["no-demean"], bool):
+        raise StyxValidationError(f'`no-demean` has the wrong type: Received `{type(params.get("no-demean", False))}` expected `bool`')
+    if params.get("fisher-z", False) is None:
+        raise StyxValidationError("`fisher-z` must not be None")
+    if not isinstance(params["fisher-z"], bool):
+        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
     if params.get("cifti", None) is None:
         raise StyxValidationError("`cifti` must not be None")
     if not isinstance(params["cifti"], (pathlib.Path, str)):
@@ -279,15 +291,24 @@ def cifti_correlation_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else []),
-        "-weights",
-        (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
-        ("-fisher-z" if (params.get("fisher-z", False)) else ""),
-        ("-no-demean" if (params.get("no-demean", False)) else ""),
-        ("-covariance" if (params.get("covariance", False)) else ""),
-        "-mem-limit",
-        (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
+        *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else [])
     ])
+    if params.get("limit-GB", None) is not None:
+        cargs.extend([
+            "-mem-limit",
+            str(params.get("limit-GB", None))
+        ])
+    if params.get("weight-file", None) is not None:
+        cargs.extend([
+            "-weights",
+            params.get("weight-file", None)
+        ])
+    if params.get("covariance", False):
+        cargs.append("-covariance")
+    if params.get("no-demean", False):
+        cargs.append("-no-demean")
+    if params.get("fisher-z", False):
+        cargs.append("-fisher-z")
     cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 
@@ -354,11 +375,11 @@ def cifti_correlation(
     cifti_out: str,
     cifti: InputPathType,
     roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
-    weight_file: str | None = None,
-    fisher_z: bool = False,
-    no_demean: bool = False,
-    covariance: bool = False,
     limit_gb: float | None = None,
+    weight_file: str | None = None,
+    covariance: bool = False,
+    no_demean: bool = False,
+    fisher_z: bool = False,
     runner: Runner | None = None,
 ) -> CiftiCorrelationOutputs:
     """
@@ -383,16 +404,16 @@ def cifti_correlation(
         cifti_out: output cifti file.
         cifti: input cifti file.
         roi_override: perform correlation from a subset of rows to all rows.
-        weight_file: specify column weights\
-            \
-            text file containing one weight per column.
-        fisher_z: apply fisher small z transform (ie, artanh) to correlation.
-        no_demean: instead of correlation, do dot product of rows, then\
-            normalize by diagonal.
-        covariance: compute covariance instead of correlation.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
+        weight_file: specify column weights\
+            \
+            text file containing one weight per column.
+        covariance: compute covariance instead of correlation.
+        no_demean: instead of correlation, do dot product of rows, then\
+            normalize by diagonal.
+        fisher_z: apply fisher small z transform (ie, artanh) to correlation.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationOutputs`).
@@ -400,11 +421,11 @@ def cifti_correlation(
     params = cifti_correlation_params(
         cifti_out=cifti_out,
         roi_override=roi_override,
-        weight_file=weight_file,
-        fisher_z=fisher_z,
-        no_demean=no_demean,
-        covariance=covariance,
         limit_gb=limit_gb,
+        weight_file=weight_file,
+        covariance=covariance,
+        no_demean=no_demean,
+        fisher_z=fisher_z,
         cifti=cifti,
     )
     return cifti_correlation_execute(params, runner)

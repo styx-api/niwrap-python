@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "metric_estimate_fwhm",
   "properties": {
-    "roi-metric": {
-      "var_param": "roi_metric"
+    "demean": {
+      "var_param": "demean"
     },
     "column": {
       "var_param": "column"
     },
-    "demean": {
-      "var_param": "demean"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "surface": {
       "var_param": "surface"

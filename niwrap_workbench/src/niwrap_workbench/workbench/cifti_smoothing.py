@@ -65,15 +65,15 @@ CiftiSmoothingSurfaceParamsDict = _CiftiSmoothingSurfaceParamsDictNoTag | CiftiS
 
 _CiftiSmoothingParamsDictNoTag = typing.TypedDict('_CiftiSmoothingParamsDictNoTag', {
     "cifti-out": str,
-    "fwhm": bool,
     "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiSmoothingCerebellumSurfaceParamsDict | None],
-    "roi-cifti": typing.NotRequired[InputPathType | None],
-    "fix-zeros-volume": bool,
-    "fix-zeros-surface": bool,
-    "merged-volume": bool,
     "surface": typing.NotRequired[list[CiftiSmoothingSurfaceParamsDict] | None],
+    "roi-cifti": typing.NotRequired[InputPathType | None],
+    "merged-volume": bool,
+    "fix-zeros-surface": bool,
+    "fix-zeros-volume": bool,
+    "fwhm": bool,
     "cifti": InputPathType,
     "surface-kernel": float,
     "volume-kernel": float,
@@ -82,15 +82,15 @@ _CiftiSmoothingParamsDictNoTag = typing.TypedDict('_CiftiSmoothingParamsDictNoTa
 CiftiSmoothingParamsDictTagged = typing.TypedDict('CiftiSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-smoothing"],
     "cifti-out": str,
-    "fwhm": bool,
     "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiSmoothingCerebellumSurfaceParamsDict | None],
-    "roi-cifti": typing.NotRequired[InputPathType | None],
-    "fix-zeros-volume": bool,
-    "fix-zeros-surface": bool,
-    "merged-volume": bool,
     "surface": typing.NotRequired[list[CiftiSmoothingSurfaceParamsDict] | None],
+    "roi-cifti": typing.NotRequired[InputPathType | None],
+    "merged-volume": bool,
+    "fix-zeros-surface": bool,
+    "fix-zeros-volume": bool,
+    "fwhm": bool,
     "cifti": InputPathType,
     "surface-kernel": float,
     "volume-kernel": float,
@@ -161,10 +161,13 @@ def cifti_smoothing_left_surface_cargs(
     cargs = []
     cargs.extend([
         "-left-surface",
-        execution.input_file(params.get("surface", None)),
-        "-left-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-left-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -230,10 +233,13 @@ def cifti_smoothing_right_surface_cargs(
     cargs = []
     cargs.extend([
         "-right-surface",
-        execution.input_file(params.get("surface", None)),
-        "-right-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-right-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -299,10 +305,13 @@ def cifti_smoothing_cerebellum_surface_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-surface",
-        execution.input_file(params.get("surface", None)),
-        "-cerebellum-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -376,10 +385,13 @@ def cifti_smoothing_surface_cargs(
     cargs.extend([
         "-surface",
         params.get("structure", None),
-        execution.input_file(params.get("surface", None)),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     return cargs
 
 
@@ -399,15 +411,15 @@ def cifti_smoothing_params(
     surface_kernel: float,
     volume_kernel: float,
     direction: str,
-    fwhm: bool = False,
     left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
     right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
-    roi_cifti: InputPathType | None = None,
-    fix_zeros_volume: bool = False,
-    fix_zeros_surface: bool = False,
-    merged_volume: bool = False,
     surface: list[CiftiSmoothingSurfaceParamsDict] | None = None,
+    roi_cifti: InputPathType | None = None,
+    merged_volume: bool = False,
+    fix_zeros_surface: bool = False,
+    fix_zeros_volume: bool = False,
+    fwhm: bool = False,
 ) -> CiftiSmoothingParamsDictTagged:
     """
     Build parameters.
@@ -420,27 +432,27 @@ def cifti_smoothing_params(
         volume_kernel: the size of the gaussian volume smoothing kernel in mm,\
             as sigma by default.
         direction: which dimension to smooth along, ROW or COLUMN.
-        fwhm: kernel sizes are FWHM, not sigma.
         left_surface: specify the left cortical surface to use.
         right_surface: specify the right cortical surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        surface: specify a surface by structure name.
         roi_cifti: smooth only within regions of interest\
             \
             the regions to smooth within, as a cifti file.
-        fix_zeros_volume: treat values of zero in the volume as missing data.
-        fix_zeros_surface: treat values of zero on the surface as missing data.
         merged_volume: smooth across subcortical structure boundaries.
-        surface: specify a surface by structure name.
+        fix_zeros_surface: treat values of zero on the surface as missing data.
+        fix_zeros_volume: treat values of zero in the volume as missing data.
+        fwhm: kernel sizes are FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-smoothing",
         "cifti-out": cifti_out,
-        "fwhm": fwhm,
-        "fix-zeros-volume": fix_zeros_volume,
-        "fix-zeros-surface": fix_zeros_surface,
         "merged-volume": merged_volume,
+        "fix-zeros-surface": fix_zeros_surface,
+        "fix-zeros-volume": fix_zeros_volume,
+        "fwhm": fwhm,
         "cifti": cifti,
         "surface-kernel": surface_kernel,
         "volume-kernel": volume_kernel,
@@ -452,10 +464,10 @@ def cifti_smoothing_params(
         params["right-surface"] = right_surface
     if cerebellum_surface is not None:
         params["cerebellum-surface"] = cerebellum_surface
-    if roi_cifti is not None:
-        params["roi-cifti"] = roi_cifti
     if surface is not None:
         params["surface"] = surface
+    if roi_cifti is not None:
+        params["roi-cifti"] = roi_cifti
     return params
 
 
@@ -475,36 +487,36 @@ def cifti_smoothing_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("fwhm", False) is None:
-        raise StyxValidationError("`fwhm` must not be None")
-    if not isinstance(params["fwhm"], bool):
-        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
     if params.get("left-surface", None) is not None:
         cifti_smoothing_left_surface_validate(params["left-surface"])
     if params.get("right-surface", None) is not None:
         cifti_smoothing_right_surface_validate(params["right-surface"])
     if params.get("cerebellum-surface", None) is not None:
         cifti_smoothing_cerebellum_surface_validate(params["cerebellum-surface"])
-    if params.get("roi-cifti", None) is not None:
-        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
-    if params.get("fix-zeros-volume", False) is None:
-        raise StyxValidationError("`fix-zeros-volume` must not be None")
-    if not isinstance(params["fix-zeros-volume"], bool):
-        raise StyxValidationError(f'`fix-zeros-volume` has the wrong type: Received `{type(params.get("fix-zeros-volume", False))}` expected `bool`')
-    if params.get("fix-zeros-surface", False) is None:
-        raise StyxValidationError("`fix-zeros-surface` must not be None")
-    if not isinstance(params["fix-zeros-surface"], bool):
-        raise StyxValidationError(f'`fix-zeros-surface` has the wrong type: Received `{type(params.get("fix-zeros-surface", False))}` expected `bool`')
-    if params.get("merged-volume", False) is None:
-        raise StyxValidationError("`merged-volume` must not be None")
-    if not isinstance(params["merged-volume"], bool):
-        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], list):
             raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiSmoothingSurfaceParamsDict] | None`')
         for e in params["surface"]:
             cifti_smoothing_surface_validate(e)
+    if params.get("roi-cifti", None) is not None:
+        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("fix-zeros-surface", False) is None:
+        raise StyxValidationError("`fix-zeros-surface` must not be None")
+    if not isinstance(params["fix-zeros-surface"], bool):
+        raise StyxValidationError(f'`fix-zeros-surface` has the wrong type: Received `{type(params.get("fix-zeros-surface", False))}` expected `bool`')
+    if params.get("fix-zeros-volume", False) is None:
+        raise StyxValidationError("`fix-zeros-volume` must not be None")
+    if not isinstance(params["fix-zeros-volume"], bool):
+        raise StyxValidationError(f'`fix-zeros-volume` has the wrong type: Received `{type(params.get("fix-zeros-volume", False))}` expected `bool`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
     if params.get("cifti", None) is None:
         raise StyxValidationError("`cifti` must not be None")
     if not isinstance(params["cifti"], (pathlib.Path, str)):
@@ -543,17 +555,24 @@ def cifti_smoothing_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        ("-fwhm" if (params.get("fwhm", False)) else ""),
         *(cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
         *(cifti_smoothing_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
         *(cifti_smoothing_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        "-cifti-roi",
-        (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
-        ("-fix-zeros-volume" if (params.get("fix-zeros-volume", False)) else ""),
-        ("-fix-zeros-surface" if (params.get("fix-zeros-surface", False)) else ""),
-        ("-merged-volume" if (params.get("merged-volume", False)) else ""),
         *([a for c in [cifti_smoothing_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
     ])
+    if params.get("roi-cifti", None) is not None:
+        cargs.extend([
+            "-cifti-roi",
+            execution.input_file(params.get("roi-cifti", None))
+        ])
+    if params.get("merged-volume", False):
+        cargs.append("-merged-volume")
+    if params.get("fix-zeros-surface", False):
+        cargs.append("-fix-zeros-surface")
+    if params.get("fix-zeros-volume", False):
+        cargs.append("-fix-zeros-volume")
+    if params.get("fwhm", False):
+        cargs.append("-fwhm")
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(str(params.get("surface-kernel", None)))
     cargs.append(str(params.get("volume-kernel", None)))
@@ -666,15 +685,15 @@ def cifti_smoothing(
     surface_kernel: float,
     volume_kernel: float,
     direction: str,
-    fwhm: bool = False,
     left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
     right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
-    roi_cifti: InputPathType | None = None,
-    fix_zeros_volume: bool = False,
-    fix_zeros_surface: bool = False,
-    merged_volume: bool = False,
     surface: list[CiftiSmoothingSurfaceParamsDict] | None = None,
+    roi_cifti: InputPathType | None = None,
+    merged_volume: bool = False,
+    fix_zeros_surface: bool = False,
+    fix_zeros_volume: bool = False,
+    fwhm: bool = False,
     runner: Runner | None = None,
 ) -> CiftiSmoothingOutputs:
     """
@@ -744,32 +763,32 @@ def cifti_smoothing(
         volume_kernel: the size of the gaussian volume smoothing kernel in mm,\
             as sigma by default.
         direction: which dimension to smooth along, ROW or COLUMN.
-        fwhm: kernel sizes are FWHM, not sigma.
         left_surface: specify the left cortical surface to use.
         right_surface: specify the right cortical surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
+        surface: specify a surface by structure name.
         roi_cifti: smooth only within regions of interest\
             \
             the regions to smooth within, as a cifti file.
-        fix_zeros_volume: treat values of zero in the volume as missing data.
-        fix_zeros_surface: treat values of zero on the surface as missing data.
         merged_volume: smooth across subcortical structure boundaries.
-        surface: specify a surface by structure name.
+        fix_zeros_surface: treat values of zero on the surface as missing data.
+        fix_zeros_volume: treat values of zero in the volume as missing data.
+        fwhm: kernel sizes are FWHM, not sigma.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiSmoothingOutputs`).
     """
     params = cifti_smoothing_params(
         cifti_out=cifti_out,
-        fwhm=fwhm,
         left_surface=left_surface,
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
-        roi_cifti=roi_cifti,
-        fix_zeros_volume=fix_zeros_volume,
-        fix_zeros_surface=fix_zeros_surface,
-        merged_volume=merged_volume,
         surface=surface,
+        roi_cifti=roi_cifti,
+        merged_volume=merged_volume,
+        fix_zeros_surface=fix_zeros_surface,
+        fix_zeros_volume=fix_zeros_volume,
+        fwhm=fwhm,
         cifti=cifti,
         surface_kernel=surface_kernel,
         volume_kernel=volume_kernel,

@@ -52,15 +52,6 @@
         }
       }
     },
-    "interval": {
-      "var_param": "interval"
-    },
-    "start": {
-      "var_param": "start"
-    },
-    "unit": {
-      "var_param": "unit"
-    },
     "metric": {
       "var_param": "metric",
       "fn_struct_make_params": "cifti_create_dense_timeseries_metric",
@@ -75,6 +66,15 @@
           "var_param": "roi_metric"
         }
       }
+    },
+    "unit": {
+      "var_param": "unit"
+    },
+    "start": {
+      "var_param": "start"
+    },
+    "interval": {
+      "var_param": "interval"
     }
   }
 }

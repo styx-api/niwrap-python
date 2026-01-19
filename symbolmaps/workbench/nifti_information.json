@@ -1,12 +1,6 @@
 {
   "fn_root_make_params_and_execute": "nifti_information",
   "properties": {
-    "allow-truncated": {
-      "var_param": "allow_truncated"
-    },
-    "print-matrix": {
-      "var_param": "print_matrix"
-    },
     "print-xml": {
       "var_param": "print_xml",
       "fn_struct_make_params": "nifti_information_print_xml",
@@ -15,6 +9,12 @@
           "var_param": "version"
         }
       }
+    },
+    "allow-truncated": {
+      "var_param": "allow_truncated"
+    },
+    "print-matrix": {
+      "var_param": "print_matrix"
     },
     "nifti-file": {
       "var_param": "nifti_file"

@@ -4,17 +4,17 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "normalize-a": {
-      "var_param": "normalize_a"
-    },
-    "normalize-b": {
-      "var_param": "normalize_b"
+    "magnitude": {
+      "var_param": "magnitude"
     },
     "normalize-output": {
       "var_param": "normalize_output"
     },
-    "magnitude": {
-      "var_param": "magnitude"
+    "normalize-b": {
+      "var_param": "normalize_b"
+    },
+    "normalize-a": {
+      "var_param": "normalize_a"
     },
     "vectors-a": {
       "var_param": "vectors_a"

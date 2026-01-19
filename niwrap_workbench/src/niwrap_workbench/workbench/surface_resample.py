@@ -309,9 +309,10 @@ def surface_resample_cargs(
     cargs.extend([
         params.get("surface-out", None),
         *(surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
-        *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
-        ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
+        *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else [])
     ])
+    if params.get("bypass-sphere-check", False):
+        cargs.append("-bypass-sphere-check")
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))

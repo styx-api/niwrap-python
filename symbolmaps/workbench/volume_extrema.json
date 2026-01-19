@@ -16,9 +16,6 @@
         }
       }
     },
-    "roi-volume": {
-      "var_param": "roi_volume"
-    },
     "threshold": {
       "var_param": "threshold",
       "fn_struct_make_params": "volume_extrema_threshold",
@@ -31,20 +28,23 @@
         }
       }
     },
-    "sum-subvols": {
-      "var_param": "sum_subvols"
+    "subvolume": {
+      "var_param": "subvolume"
     },
-    "consolidate-mode": {
-      "var_param": "consolidate_mode"
-    },
-    "only-maxima": {
-      "var_param": "only_maxima"
+    "roi-volume": {
+      "var_param": "roi_volume"
     },
     "only-minima": {
       "var_param": "only_minima"
     },
-    "subvolume": {
-      "var_param": "subvolume"
+    "only-maxima": {
+      "var_param": "only_maxima"
+    },
+    "consolidate-mode": {
+      "var_param": "consolidate_mode"
+    },
+    "sum-subvols": {
+      "var_param": "sum_subvols"
     },
     "volume-in": {
       "var_param": "volume_in"

@@ -134,10 +134,13 @@ def cifti_false_correlation_left_surface_cargs(
     cargs = []
     cargs.extend([
         "-left-surface",
-        execution.input_file(params.get("surface", None)),
-        "-dump-text",
-        (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("text-out", None) is not None:
+        cargs.extend([
+            "-dump-text",
+            params.get("text-out", None)
+        ])
     return cargs
 
 
@@ -202,10 +205,13 @@ def cifti_false_correlation_right_surface_cargs(
     cargs = []
     cargs.extend([
         "-right-surface",
-        execution.input_file(params.get("surface", None)),
-        "-dump-text",
-        (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("text-out", None) is not None:
+        cargs.extend([
+            "-dump-text",
+            params.get("text-out", None)
+        ])
     return cargs
 
 
@@ -270,10 +276,13 @@ def cifti_false_correlation_cerebellum_surface_cargs(
     cargs = []
     cargs.extend([
         "-cerebellum-surface",
-        execution.input_file(params.get("surface", None)),
-        "-dump-text",
-        (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
+        execution.input_file(params.get("surface", None))
     ])
+    if params.get("text-out", None) is not None:
+        cargs.extend([
+            "-dump-text",
+            params.get("text-out", None)
+        ])
     return cargs
 
 

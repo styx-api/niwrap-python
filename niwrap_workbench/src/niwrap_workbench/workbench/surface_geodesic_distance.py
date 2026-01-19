@@ -15,18 +15,18 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 
 _SurfaceGeodesicDistanceParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceParamsDictNoTag', {
     "metric-out": str,
-    "naive": bool,
-    "limit-mm": typing.NotRequired[float | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "limit-mm": typing.NotRequired[float | None],
+    "naive": bool,
     "surface": InputPathType,
     "vertex": int,
 })
 SurfaceGeodesicDistanceParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance"],
     "metric-out": str,
-    "naive": bool,
-    "limit-mm": typing.NotRequired[float | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "limit-mm": typing.NotRequired[float | None],
+    "naive": bool,
     "surface": InputPathType,
     "vertex": int,
 })
@@ -47,9 +47,9 @@ def surface_geodesic_distance_params(
     metric_out: str,
     surface: InputPathType,
     vertex: int,
-    naive: bool = False,
-    limit_mm: float | None = None,
     area_metric: InputPathType | None = None,
+    limit_mm: float | None = None,
+    naive: bool = False,
 ) -> SurfaceGeodesicDistanceParamsDictTagged:
     """
     Build parameters.
@@ -58,14 +58,14 @@ def surface_geodesic_distance_params(
         metric_out: the output metric.
         surface: the surface to compute on.
         vertex: the vertex to compute geodesic distance from.
-        naive: use only neighbors, don't crawl triangles (not recommended).
-        limit_mm: stop at a certain distance\
-            \
-            distance in mm to stop at.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        limit_mm: stop at a certain distance\
+            \
+            distance in mm to stop at.
+        naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
     """
@@ -76,10 +76,10 @@ def surface_geodesic_distance_params(
         "surface": surface,
         "vertex": vertex,
     }
-    if limit_mm is not None:
-        params["limit-mm"] = limit_mm
     if area_metric is not None:
         params["area-metric"] = area_metric
+    if limit_mm is not None:
+        params["limit-mm"] = limit_mm
     return params
 
 
@@ -99,16 +99,16 @@ def surface_geodesic_distance_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("limit-mm", None) is not None:
+        if not isinstance(params["limit-mm"], (float, int)):
+            raise StyxValidationError(f'`limit-mm` has the wrong type: Received `{type(params.get("limit-mm", None))}` expected `float | None`')
     if params.get("naive", False) is None:
         raise StyxValidationError("`naive` must not be None")
     if not isinstance(params["naive"], bool):
         raise StyxValidationError(f'`naive` has the wrong type: Received `{type(params.get("naive", False))}` expected `bool`')
-    if params.get("limit-mm", None) is not None:
-        if not isinstance(params["limit-mm"], (float, int)):
-            raise StyxValidationError(f'`limit-mm` has the wrong type: Received `{type(params.get("limit-mm", None))}` expected `float | None`')
-    if params.get("area-metric", None) is not None:
-        if not isinstance(params["area-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -137,14 +137,19 @@ def surface_geodesic_distance_cargs(
         "wb_command",
         "-surface-geodesic-distance"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        ("-naive" if (params.get("naive", False)) else ""),
-        "-limit",
-        (str(params.get("limit-mm", None)) if (params.get("limit-mm", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("limit-mm", None) is not None:
+        cargs.extend([
+            "-limit",
+            str(params.get("limit-mm", None))
+        ])
+    if params.get("naive", False):
+        cargs.append("-naive")
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("vertex", None)))
     return cargs
@@ -213,9 +218,9 @@ def surface_geodesic_distance(
     metric_out: str,
     surface: InputPathType,
     vertex: int,
-    naive: bool = False,
-    limit_mm: float | None = None,
     area_metric: InputPathType | None = None,
+    limit_mm: float | None = None,
+    naive: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
@@ -241,23 +246,23 @@ def surface_geodesic_distance(
         metric_out: the output metric.
         surface: the surface to compute on.
         vertex: the vertex to compute geodesic distance from.
-        naive: use only neighbors, don't crawl triangles (not recommended).
-        limit_mm: stop at a certain distance\
-            \
-            distance in mm to stop at.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        limit_mm: stop at a certain distance\
+            \
+            distance in mm to stop at.
+        naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceOutputs`).
     """
     params = surface_geodesic_distance_params(
         metric_out=metric_out,
-        naive=naive,
-        limit_mm=limit_mm,
         area_metric=area_metric,
+        limit_mm=limit_mm,
+        naive=naive,
         surface=surface,
         vertex=vertex,
     )

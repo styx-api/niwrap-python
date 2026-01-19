@@ -4,18 +4,6 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "exponent": {
-      "var_param": "exponent"
-    },
-    "roi-volume": {
-      "var_param": "roi_volume_"
-    },
-    "subvol": {
-      "var_param": "subvol"
-    },
-    "legacy-cutoff": {
-      "var_param": "legacy_cutoff"
-    },
     "grad-extrapolate": {
       "var_param": "grad_extrapolate",
       "fn_struct_make_params": "volume_dilate_grad_extrapolate",
@@ -33,6 +21,18 @@
           }
         }
       }
+    },
+    "subvol": {
+      "var_param": "subvol"
+    },
+    "roi-volume": {
+      "var_param": "roi_volume_"
+    },
+    "exponent": {
+      "var_param": "exponent"
+    },
+    "legacy-cutoff": {
+      "var_param": "legacy_cutoff"
     },
     "volume": {
       "var_param": "volume"

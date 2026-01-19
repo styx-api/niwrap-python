@@ -15,14 +15,14 @@ METRIC_DILATE_METADATA = Metadata(
 
 _MetricDilateParamsDictNoTag = typing.TypedDict('_MetricDilateParamsDictNoTag', {
     "metric-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
-    "nearest": bool,
-    "linear": bool,
-    "exponent": typing.NotRequired[float | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "exponent": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "legacy-cutoff": bool,
+    "linear": bool,
+    "nearest": bool,
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -30,14 +30,14 @@ _MetricDilateParamsDictNoTag = typing.TypedDict('_MetricDilateParamsDictNoTag', 
 MetricDilateParamsDictTagged = typing.TypedDict('MetricDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-dilate"],
     "metric-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
-    "nearest": bool,
-    "linear": bool,
-    "exponent": typing.NotRequired[float | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "exponent": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "legacy-cutoff": bool,
+    "linear": bool,
+    "nearest": bool,
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -60,14 +60,14 @@ def metric_dilate_params(
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    area_metric: InputPathType | None = None,
+    exponent: float | None = None,
+    column: str | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
-    column: str | None = None,
-    nearest: bool = False,
-    linear: bool = False,
-    exponent: float | None = None,
-    area_metric: InputPathType | None = None,
     legacy_cutoff: bool = False,
+    linear: bool = False,
+    nearest: bool = False,
 ) -> MetricDilateParamsDictTagged:
     """
     Build parameters.
@@ -77,53 +77,53 @@ def metric_dilate_params(
         metric: the metric to dilate.
         surface: the surface to compute on.
         distance: distance in mm to dilate.
-        roi_metric: specify an roi of vertices to overwrite, rather than\
-            vertices with value zero\
-            \
-            metric file, positive values denote vertices to have their values\
-            replaced.
-        roi_metric_: specify an roi of where there is data\
-            \
-            metric file, positive values denote vertices that have data.
-        column: select a single column to dilate\
-            \
-            the column number or name.
-        nearest: use the nearest good value instead of a weighted average.
-        linear: fill in values with linear interpolation along strongest\
-            gradient.
-        exponent: use a different exponent in the weighting function\
-            \
-            exponent 'n' to use in (area / (distance ^ n)) as the weighting\
-            function (default 6).
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        exponent: use a different exponent in the weighting function\
+            \
+            exponent 'n' to use in (area / (distance ^ n)) as the weighting\
+            function (default 6).
+        column: select a single column to dilate\
+            \
+            the column number or name.
+        roi_metric: specify an roi of where there is data\
+            \
+            metric file, positive values denote vertices that have data.
+        roi_metric_: specify an roi of vertices to overwrite, rather than\
+            vertices with value zero\
+            \
+            metric file, positive values denote vertices to have their values\
+            replaced.
         legacy_cutoff: use the v1.3.2 method of choosing how many vertices to\
             use when calulating the dilated value with weighted method.
+        linear: fill in values with linear interpolation along strongest\
+            gradient.
+        nearest: use the nearest good value instead of a weighted average.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-dilate",
         "metric-out": metric_out,
-        "nearest": nearest,
-        "linear": linear,
         "legacy-cutoff": legacy_cutoff,
+        "linear": linear,
+        "nearest": nearest,
         "metric": metric,
         "surface": surface,
         "distance": distance,
     }
+    if area_metric is not None:
+        params["area-metric"] = area_metric
+    if exponent is not None:
+        params["exponent"] = exponent
+    if column is not None:
+        params["column"] = column
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     if roi_metric_ is not None:
         params["roi-metric"] = roi_metric_
-    if column is not None:
-        params["column"] = column
-    if exponent is not None:
-        params["exponent"] = exponent
-    if area_metric is not None:
-        params["area-metric"] = area_metric
     return params
 
 
@@ -143,33 +143,33 @@ def metric_dilate_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
-    if params.get("nearest", False) is None:
-        raise StyxValidationError("`nearest` must not be None")
-    if not isinstance(params["nearest"], bool):
-        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
-    if params.get("linear", False) is None:
-        raise StyxValidationError("`linear` must not be None")
-    if not isinstance(params["linear"], bool):
-        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
-    if params.get("exponent", None) is not None:
-        if not isinstance(params["exponent"], (float, int)):
-            raise StyxValidationError(f'`exponent` has the wrong type: Received `{type(params.get("exponent", None))}` expected `float | None`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("exponent", None) is not None:
+        if not isinstance(params["exponent"], (float, int)):
+            raise StyxValidationError(f'`exponent` has the wrong type: Received `{type(params.get("exponent", None))}` expected `float | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("legacy-cutoff", False) is None:
         raise StyxValidationError("`legacy-cutoff` must not be None")
     if not isinstance(params["legacy-cutoff"], bool):
         raise StyxValidationError(f'`legacy-cutoff` has the wrong type: Received `{type(params.get("legacy-cutoff", False))}` expected `bool`')
+    if params.get("linear", False) is None:
+        raise StyxValidationError("`linear` must not be None")
+    if not isinstance(params["linear"], bool):
+        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
     if params.get("metric", None) is None:
         raise StyxValidationError("`metric` must not be None")
     if not isinstance(params["metric"], (pathlib.Path, str)):
@@ -202,22 +202,38 @@ def metric_dilate_cargs(
         "wb_command",
         "-metric-dilate"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-bad-vertex-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-data-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else ""),
-        ("-nearest" if (params.get("nearest", False)) else ""),
-        ("-linear" if (params.get("linear", False)) else ""),
-        "-exponent",
-        (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-        ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("exponent", None) is not None:
+        cargs.extend([
+            "-exponent",
+            str(params.get("exponent", None))
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-data-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-bad-vertex-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("legacy-cutoff", False):
+        cargs.append("-legacy-cutoff")
+    if params.get("linear", False):
+        cargs.append("-linear")
+    if params.get("nearest", False):
+        cargs.append("-nearest")
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("distance", None)))
@@ -291,14 +307,14 @@ def metric_dilate(
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    area_metric: InputPathType | None = None,
+    exponent: float | None = None,
+    column: str | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
-    column: str | None = None,
-    nearest: bool = False,
-    linear: bool = False,
-    exponent: float | None = None,
-    area_metric: InputPathType | None = None,
     legacy_cutoff: bool = False,
+    linear: bool = False,
+    nearest: bool = False,
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
@@ -328,44 +344,44 @@ def metric_dilate(
         metric: the metric to dilate.
         surface: the surface to compute on.
         distance: distance in mm to dilate.
-        roi_metric: specify an roi of vertices to overwrite, rather than\
-            vertices with value zero\
-            \
-            metric file, positive values denote vertices to have their values\
-            replaced.
-        roi_metric_: specify an roi of where there is data\
-            \
-            metric file, positive values denote vertices that have data.
-        column: select a single column to dilate\
-            \
-            the column number or name.
-        nearest: use the nearest good value instead of a weighted average.
-        linear: fill in values with linear interpolation along strongest\
-            gradient.
-        exponent: use a different exponent in the weighting function\
-            \
-            exponent 'n' to use in (area / (distance ^ n)) as the weighting\
-            function (default 6).
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        exponent: use a different exponent in the weighting function\
+            \
+            exponent 'n' to use in (area / (distance ^ n)) as the weighting\
+            function (default 6).
+        column: select a single column to dilate\
+            \
+            the column number or name.
+        roi_metric: specify an roi of where there is data\
+            \
+            metric file, positive values denote vertices that have data.
+        roi_metric_: specify an roi of vertices to overwrite, rather than\
+            vertices with value zero\
+            \
+            metric file, positive values denote vertices to have their values\
+            replaced.
         legacy_cutoff: use the v1.3.2 method of choosing how many vertices to\
             use when calulating the dilated value with weighted method.
+        linear: fill in values with linear interpolation along strongest\
+            gradient.
+        nearest: use the nearest good value instead of a weighted average.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricDilateOutputs`).
     """
     params = metric_dilate_params(
         metric_out=metric_out,
+        area_metric=area_metric,
+        exponent=exponent,
+        column=column,
         roi_metric=roi_metric,
         roi_metric_=roi_metric_,
-        column=column,
-        nearest=nearest,
-        linear=linear,
-        exponent=exponent,
-        area_metric=area_metric,
         legacy_cutoff=legacy_cutoff,
+        linear=linear,
+        nearest=nearest,
         metric=metric,
         surface=surface,
         distance=distance,

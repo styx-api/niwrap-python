@@ -40,13 +40,13 @@ VolumeExtremaThresholdParamsDict = _VolumeExtremaThresholdParamsDictNoTag | Volu
 _VolumeExtremaParamsDictNoTag = typing.TypedDict('_VolumeExtremaParamsDictNoTag', {
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
-    "roi-volume": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[VolumeExtremaThresholdParamsDict | None],
-    "sum-subvols": bool,
-    "consolidate-mode": bool,
-    "only-maxima": bool,
-    "only-minima": bool,
     "subvolume": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "only-minima": bool,
+    "only-maxima": bool,
+    "consolidate-mode": bool,
+    "sum-subvols": bool,
     "volume-in": InputPathType,
     "distance": float,
 })
@@ -54,13 +54,13 @@ VolumeExtremaParamsDictTagged = typing.TypedDict('VolumeExtremaParamsDictTagged'
     "@type": typing.Literal["workbench/volume-extrema"],
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
-    "roi-volume": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[VolumeExtremaThresholdParamsDict | None],
-    "sum-subvols": bool,
-    "consolidate-mode": bool,
-    "only-maxima": bool,
-    "only-minima": bool,
     "subvolume": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "only-minima": bool,
+    "only-maxima": bool,
+    "consolidate-mode": bool,
+    "sum-subvols": bool,
     "volume-in": InputPathType,
     "distance": float,
 })
@@ -127,9 +127,10 @@ def volume_extrema_presmooth_cargs(
     cargs = []
     cargs.extend([
         "-presmooth",
-        str(params.get("kernel", None)),
-        ("-fwhm" if (params.get("fwhm", False)) else "")
+        str(params.get("kernel", None))
     ])
+    if params.get("fwhm", False):
+        cargs.append("-fwhm")
     return cargs
 
 
@@ -213,13 +214,13 @@ def volume_extrema_params(
     volume_in: InputPathType,
     distance: float,
     presmooth: VolumeExtremaPresmoothParamsDict | None = None,
-    roi_volume: InputPathType | None = None,
     threshold: VolumeExtremaThresholdParamsDict | None = None,
-    sum_subvols: bool = False,
-    consolidate_mode: bool = False,
-    only_maxima: bool = False,
-    only_minima: bool = False,
     subvolume: str | None = None,
+    roi_volume: InputPathType | None = None,
+    only_minima: bool = False,
+    only_maxima: bool = False,
+    consolidate_mode: bool = False,
+    sum_subvols: bool = False,
 ) -> VolumeExtremaParamsDictTagged:
     """
     Build parameters.
@@ -230,40 +231,40 @@ def volume_extrema_params(
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the volume before finding extrema.
-        roi_volume: ignore values outside the selected area\
-            \
-            the area to find extrema in.
         threshold: ignore small extrema.
-        sum_subvols: output the sum of the extrema subvolumes instead of each\
-            subvolume separately.
-        consolidate_mode: use consolidation of local minima instead of a large\
-            neighborhood.
-        only_maxima: only find the maxima.
-        only_minima: only find the minima.
         subvolume: select a single subvolume to find extrema in\
             \
             the subvolume number or name.
+        roi_volume: ignore values outside the selected area\
+            \
+            the area to find extrema in.
+        only_minima: only find the minima.
+        only_maxima: only find the maxima.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        sum_subvols: output the sum of the extrema subvolumes instead of each\
+            subvolume separately.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-extrema",
         "volume-out": volume_out,
-        "sum-subvols": sum_subvols,
-        "consolidate-mode": consolidate_mode,
-        "only-maxima": only_maxima,
         "only-minima": only_minima,
+        "only-maxima": only_maxima,
+        "consolidate-mode": consolidate_mode,
+        "sum-subvols": sum_subvols,
         "volume-in": volume_in,
         "distance": distance,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if roi_volume is not None:
-        params["roi-volume"] = roi_volume
     if threshold is not None:
         params["threshold"] = threshold
     if subvolume is not None:
         params["subvolume"] = subvolume
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
     return params
 
 
@@ -285,30 +286,30 @@ def volume_extrema_validate(
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
     if params.get("presmooth", None) is not None:
         volume_extrema_presmooth_validate(params["presmooth"])
+    if params.get("threshold", None) is not None:
+        volume_extrema_threshold_validate(params["threshold"])
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
     if params.get("roi-volume", None) is not None:
         if not isinstance(params["roi-volume"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("threshold", None) is not None:
-        volume_extrema_threshold_validate(params["threshold"])
-    if params.get("sum-subvols", False) is None:
-        raise StyxValidationError("`sum-subvols` must not be None")
-    if not isinstance(params["sum-subvols"], bool):
-        raise StyxValidationError(f'`sum-subvols` has the wrong type: Received `{type(params.get("sum-subvols", False))}` expected `bool`')
-    if params.get("consolidate-mode", False) is None:
-        raise StyxValidationError("`consolidate-mode` must not be None")
-    if not isinstance(params["consolidate-mode"], bool):
-        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
-    if params.get("only-maxima", False) is None:
-        raise StyxValidationError("`only-maxima` must not be None")
-    if not isinstance(params["only-maxima"], bool):
-        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
     if params.get("only-minima", False) is None:
         raise StyxValidationError("`only-minima` must not be None")
     if not isinstance(params["only-minima"], bool):
         raise StyxValidationError(f'`only-minima` has the wrong type: Received `{type(params.get("only-minima", False))}` expected `bool`')
-    if params.get("subvolume", None) is not None:
-        if not isinstance(params["subvolume"], str):
-            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
+    if params.get("only-maxima", False) is None:
+        raise StyxValidationError("`only-maxima` must not be None")
+    if not isinstance(params["only-maxima"], bool):
+        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("consolidate-mode", False) is None:
+        raise StyxValidationError("`consolidate-mode` must not be None")
+    if not isinstance(params["consolidate-mode"], bool):
+        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
+    if params.get("sum-subvols", False) is None:
+        raise StyxValidationError("`sum-subvols` must not be None")
+    if not isinstance(params["sum-subvols"], bool):
+        raise StyxValidationError(f'`sum-subvols` has the wrong type: Received `{type(params.get("sum-subvols", False))}` expected `bool`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -340,16 +341,26 @@ def volume_extrema_cargs(
     cargs.extend([
         params.get("volume-out", None),
         *(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-        "-roi",
-        (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-        *(volume_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
-        ("-sum-subvols" if (params.get("sum-subvols", False)) else ""),
-        ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
-        ("-only-maxima" if (params.get("only-maxima", False)) else ""),
-        ("-only-minima" if (params.get("only-minima", False)) else ""),
-        "-subvolume",
-        (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
+        *(volume_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
     ])
+    if params.get("subvolume", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvolume", None)
+        ])
+    if params.get("roi-volume", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-volume", None))
+        ])
+    if params.get("only-minima", False):
+        cargs.append("-only-minima")
+    if params.get("only-maxima", False):
+        cargs.append("-only-maxima")
+    if params.get("consolidate-mode", False):
+        cargs.append("-consolidate-mode")
+    if params.get("sum-subvols", False):
+        cargs.append("-sum-subvols")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("distance", None)))
     return cargs
@@ -424,13 +435,13 @@ def volume_extrema(
     volume_in: InputPathType,
     distance: float,
     presmooth: VolumeExtremaPresmoothParamsDict | None = None,
-    roi_volume: InputPathType | None = None,
     threshold: VolumeExtremaThresholdParamsDict | None = None,
-    sum_subvols: bool = False,
-    consolidate_mode: bool = False,
-    only_maxima: bool = False,
-    only_minima: bool = False,
     subvolume: str | None = None,
+    roi_volume: InputPathType | None = None,
+    only_minima: bool = False,
+    only_maxima: bool = False,
+    consolidate_mode: bool = False,
+    sum_subvols: bool = False,
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
@@ -463,19 +474,19 @@ def volume_extrema(
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the volume before finding extrema.
-        roi_volume: ignore values outside the selected area\
-            \
-            the area to find extrema in.
         threshold: ignore small extrema.
-        sum_subvols: output the sum of the extrema subvolumes instead of each\
-            subvolume separately.
-        consolidate_mode: use consolidation of local minima instead of a large\
-            neighborhood.
-        only_maxima: only find the maxima.
-        only_minima: only find the minima.
         subvolume: select a single subvolume to find extrema in\
             \
             the subvolume number or name.
+        roi_volume: ignore values outside the selected area\
+            \
+            the area to find extrema in.
+        only_minima: only find the minima.
+        only_maxima: only find the maxima.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        sum_subvols: output the sum of the extrema subvolumes instead of each\
+            subvolume separately.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).
@@ -483,13 +494,13 @@ def volume_extrema(
     params = volume_extrema_params(
         volume_out=volume_out,
         presmooth=presmooth,
-        roi_volume=roi_volume,
         threshold=threshold,
-        sum_subvols=sum_subvols,
-        consolidate_mode=consolidate_mode,
-        only_maxima=only_maxima,
-        only_minima=only_minima,
         subvolume=subvolume,
+        roi_volume=roi_volume,
+        only_minima=only_minima,
+        only_maxima=only_maxima,
+        consolidate_mode=consolidate_mode,
+        sum_subvols=sum_subvols,
         volume_in=volume_in,
         distance=distance,
     )

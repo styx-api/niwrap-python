@@ -4,11 +4,11 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "roi-volume": {
-      "var_param": "roi_volume"
-    },
     "subvol": {
       "var_param": "subvol"
+    },
+    "roi-volume": {
+      "var_param": "roi_volume"
     },
     "volume": {
       "var_param": "volume"

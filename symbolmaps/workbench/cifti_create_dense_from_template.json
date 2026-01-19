@@ -31,9 +31,6 @@
         }
       }
     },
-    "action": {
-      "var_param": "action"
-    },
     "cifti": {
       "var_param": "cifti",
       "fn_struct_make_params": "cifti_create_dense_from_template_cifti",
@@ -81,6 +78,9 @@
           "var_param": "from_cropped"
         }
       }
+    },
+    "action": {
+      "var_param": "action"
     },
     "template-cifti": {
       "var_param": "template_cifti"

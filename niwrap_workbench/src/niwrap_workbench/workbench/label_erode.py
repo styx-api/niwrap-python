@@ -15,9 +15,9 @@ LABEL_ERODE_METADATA = Metadata(
 
 _LabelErodeParamsDictNoTag = typing.TypedDict('_LabelErodeParamsDictNoTag', {
     "label-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
     "erode-dist": float,
@@ -25,9 +25,9 @@ _LabelErodeParamsDictNoTag = typing.TypedDict('_LabelErodeParamsDictNoTag', {
 LabelErodeParamsDictTagged = typing.TypedDict('LabelErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/label-erode"],
     "label-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
     "erode-dist": float,
@@ -50,9 +50,9 @@ def label_erode_params(
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     area_metric: InputPathType | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
 ) -> LabelErodeParamsDictTagged:
     """
     Build parameters.
@@ -62,16 +62,16 @@ def label_erode_params(
         label: the input label.
         surface: the surface to erode on.
         erode_dist: distance in mm to erode the labels.
-        roi_metric: assume values outside this roi are labeled\
-            \
-            metric file, positive values denote vertices that have data.
-        column: select a single column to erode\
-            \
-            the column number or name.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        roi_metric: assume values outside this roi are labeled\
+            \
+            metric file, positive values denote vertices that have data.
     Returns:
         Parameter dictionary
     """
@@ -82,12 +82,12 @@ def label_erode_params(
         "surface": surface,
         "erode-dist": erode_dist,
     }
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if column is not None:
-        params["column"] = column
     if area_metric is not None:
         params["area-metric"] = area_metric
+    if column is not None:
+        params["column"] = column
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -107,15 +107,15 @@ def label_erode_validate(
         raise StyxValidationError("`label-out` must not be None")
     if not isinstance(params["label-out"], str):
         raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("label", None) is None:
         raise StyxValidationError("`label` must not be None")
     if not isinstance(params["label"], (pathlib.Path, str)):
@@ -148,15 +148,22 @@ def label_erode_cargs(
         "wb_command",
         "-label-erode"
     ])
-    cargs.extend([
-        params.get("label-out", None),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-    ])
+    cargs.append(params.get("label-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("erode-dist", None)))
@@ -218,9 +225,9 @@ def label_erode(
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     area_metric: InputPathType | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
@@ -238,25 +245,25 @@ def label_erode(
         label: the input label.
         surface: the surface to erode on.
         erode_dist: distance in mm to erode the labels.
-        roi_metric: assume values outside this roi are labeled\
-            \
-            metric file, positive values denote vertices that have data.
-        column: select a single column to erode\
-            \
-            the column number or name.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        roi_metric: assume values outside this roi are labeled\
+            \
+            metric file, positive values denote vertices that have data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelErodeOutputs`).
     """
     params = label_erode_params(
         label_out=label_out,
-        roi_metric=roi_metric,
-        column=column,
         area_metric=area_metric,
+        column=column,
+        roi_metric=roi_metric,
         label=label,
         surface=surface,
         erode_dist=erode_dist,

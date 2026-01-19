@@ -39,25 +39,25 @@ VolumeWeightedStatsRoiParamsDict = _VolumeWeightedStatsRoiParamsDictNoTag | Volu
 
 _VolumeWeightedStatsParamsDictNoTag = typing.TypedDict('_VolumeWeightedStatsParamsDictNoTag', {
     "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
-    "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
-    "mean": bool,
-    "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
-    "sum": bool,
+    "sample": typing.NotRequired[bool | None],
+    "subvolume": typing.NotRequired[str | None],
     "show-map-name": bool,
+    "sum": bool,
+    "mean": bool,
     "volume-in": InputPathType,
 })
 VolumeWeightedStatsParamsDictTagged = typing.TypedDict('VolumeWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-weighted-stats"],
     "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
-    "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
-    "mean": bool,
-    "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
-    "sum": bool,
+    "sample": typing.NotRequired[bool | None],
+    "subvolume": typing.NotRequired[str | None],
     "show-map-name": bool,
+    "sum": bool,
+    "mean": bool,
     "volume-in": InputPathType,
 })
 VolumeWeightedStatsParamsDict = _VolumeWeightedStatsParamsDictNoTag | VolumeWeightedStatsParamsDictTagged
@@ -123,9 +123,10 @@ def volume_weighted_stats_weight_volume_cargs(
     cargs = []
     cargs.extend([
         "-weight-volume",
-        execution.input_file(params.get("weight-volume", None)),
-        ("-match-maps" if (params.get("match-maps", False)) else "")
+        execution.input_file(params.get("weight-volume", None))
     ])
+    if params.get("match-maps", False):
+        cargs.append("-match-maps")
     return cargs
 
 
@@ -189,9 +190,10 @@ def volume_weighted_stats_roi_cargs(
     cargs = []
     cargs.extend([
         "-roi",
-        execution.input_file(params.get("roi-volume", None)),
-        ("-match-maps" if (params.get("match-maps", False)) else "")
+        execution.input_file(params.get("roi-volume", None))
     ])
+    if params.get("match-maps", False):
+        cargs.append("-match-maps")
     return cargs
 
 
@@ -206,13 +208,13 @@ class VolumeWeightedStatsOutputs(typing.NamedTuple):
 def volume_weighted_stats_params(
     volume_in: InputPathType,
     weight_volume: VolumeWeightedStatsWeightVolumeParamsDict | None = None,
-    subvolume: str | None = None,
     roi: VolumeWeightedStatsRoiParamsDict | None = None,
-    mean: bool = False,
-    sample: bool | None = None,
     percent: float | None = None,
-    sum_: bool = False,
+    sample: bool | None = None,
+    subvolume: str | None = None,
     show_map_name: bool = False,
+    sum_: bool = False,
+    mean: bool = False,
 ) -> VolumeWeightedStatsParamsDictTagged:
     """
     Build parameters.
@@ -220,39 +222,39 @@ def volume_weighted_stats_params(
     Args:
         volume_in: the input volume.
         weight_volume: use weights from a volume file.
-        subvolume: only display output for one subvolume\
-            \
-            the subvolume number or name.
         roi: only consider data inside an roi.
-        mean: compute weighted mean.
-        sample: compute weighted standard deviation\
-            \
-            estimate population stdev from the sample.
         percent: compute weighted percentile\
             \
             the percentile to find, must be between 0 and 100.
-        sum_: compute weighted sum.
+        sample: compute weighted standard deviation\
+            \
+            estimate population stdev from the sample.
+        subvolume: only display output for one subvolume\
+            \
+            the subvolume number or name.
         show_map_name: print map index and name before each output.
+        sum_: compute weighted sum.
+        mean: compute weighted mean.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-weighted-stats",
-        "mean": mean,
-        "sum": sum_,
         "show-map-name": show_map_name,
+        "sum": sum_,
+        "mean": mean,
         "volume-in": volume_in,
     }
     if weight_volume is not None:
         params["weight-volume"] = weight_volume
-    if subvolume is not None:
-        params["subvolume"] = subvolume
     if roi is not None:
         params["roi"] = roi
-    if sample is not None:
-        params["sample"] = sample
     if percent is not None:
         params["percent"] = percent
+    if sample is not None:
+        params["sample"] = sample
+    if subvolume is not None:
+        params["subvolume"] = subvolume
     return params
 
 
@@ -270,29 +272,29 @@ def volume_weighted_stats_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("weight-volume", None) is not None:
         volume_weighted_stats_weight_volume_validate(params["weight-volume"])
-    if params.get("subvolume", None) is not None:
-        if not isinstance(params["subvolume"], str):
-            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
     if params.get("roi", None) is not None:
         volume_weighted_stats_roi_validate(params["roi"])
-    if params.get("mean", False) is None:
-        raise StyxValidationError("`mean` must not be None")
-    if not isinstance(params["mean"], bool):
-        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("sample", None) is not None:
-        if not isinstance(params["sample"], bool):
-            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
     if params.get("percent", None) is not None:
         if not isinstance(params["percent"], (float, int)):
             raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
-    if params.get("sum", False) is None:
-        raise StyxValidationError("`sum` must not be None")
-    if not isinstance(params["sum"], bool):
-        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("sample", None) is not None:
+        if not isinstance(params["sample"], bool):
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
     if params.get("show-map-name", False) is None:
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
         raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -317,20 +319,32 @@ def volume_weighted_stats_cargs(
         "wb_command",
         "-volume-weighted-stats"
     ])
-    if params.get("weight-volume", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
+    if params.get("weight-volume", None) is not None or params.get("roi", None) is not None:
         cargs.extend([
             *(volume_weighted_stats_weight_volume_cargs(params.get("weight-volume", None), execution) if (params.get("weight-volume", None) is not None) else []),
-            "-subvolume",
-            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
-            *(volume_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            ("-mean" if (params.get("mean", False)) else ""),
-            "-stdev",
-            ("-sample" if (params.get("sample", None) is not None) else ""),
-            "-percentile",
-            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
-            ("-sum" if (params.get("sum", False)) else ""),
-            ("-show-map-name" if (params.get("show-map-name", False)) else "")
+            *(volume_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else [])
         ])
+    if params.get("percent", None) is not None:
+        cargs.extend([
+            "-percentile",
+            str(params.get("percent", None))
+        ])
+    if params.get("sample", None) is not None:
+        cargs.extend([
+            "-stdev",
+            "-sample"
+        ])
+    if params.get("subvolume", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvolume", None)
+        ])
+    if params.get("show-map-name", False):
+        cargs.append("-show-map-name")
+    if params.get("sum", False):
+        cargs.append("-sum")
+    if params.get("mean", False):
+        cargs.append("-mean")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
@@ -391,13 +405,13 @@ def volume_weighted_stats_execute(
 def volume_weighted_stats(
     volume_in: InputPathType,
     weight_volume: VolumeWeightedStatsWeightVolumeParamsDict | None = None,
-    subvolume: str | None = None,
     roi: VolumeWeightedStatsRoiParamsDict | None = None,
-    mean: bool = False,
-    sample: bool | None = None,
     percent: float | None = None,
-    sum_: bool = False,
+    sample: bool | None = None,
+    subvolume: str | None = None,
     show_map_name: bool = False,
+    sum_: bool = False,
+    mean: bool = False,
     runner: Runner | None = None,
 ) -> VolumeWeightedStatsOutputs:
     """
@@ -417,32 +431,32 @@ def volume_weighted_stats(
     Args:
         volume_in: the input volume.
         weight_volume: use weights from a volume file.
-        subvolume: only display output for one subvolume\
-            \
-            the subvolume number or name.
         roi: only consider data inside an roi.
-        mean: compute weighted mean.
-        sample: compute weighted standard deviation\
-            \
-            estimate population stdev from the sample.
         percent: compute weighted percentile\
             \
             the percentile to find, must be between 0 and 100.
-        sum_: compute weighted sum.
+        sample: compute weighted standard deviation\
+            \
+            estimate population stdev from the sample.
+        subvolume: only display output for one subvolume\
+            \
+            the subvolume number or name.
         show_map_name: print map index and name before each output.
+        sum_: compute weighted sum.
+        mean: compute weighted mean.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeWeightedStatsOutputs`).
     """
     params = volume_weighted_stats_params(
         weight_volume=weight_volume,
-        subvolume=subvolume,
         roi=roi,
-        mean=mean,
-        sample=sample,
         percent=percent,
-        sum_=sum_,
+        sample=sample,
+        subvolume=subvolume,
         show_map_name=show_map_name,
+        sum_=sum_,
+        mean=mean,
         volume_in=volume_in,
     )
     return volume_weighted_stats_execute(params, runner)

@@ -15,20 +15,20 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
 
 _CiftiLabelImportParamsDictNoTag = typing.TypedDict('_CiftiLabelImportParamsDictNoTag', {
     "output": str,
-    "discard-others": bool,
+    "file": typing.NotRequired[str | None],
     "value": typing.NotRequired[int | None],
     "drop-unused-labels": bool,
-    "file": typing.NotRequired[str | None],
+    "discard-others": bool,
     "input": InputPathType,
     "label-list-file": str,
 })
 CiftiLabelImportParamsDictTagged = typing.TypedDict('CiftiLabelImportParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-import"],
     "output": str,
-    "discard-others": bool,
+    "file": typing.NotRequired[str | None],
     "value": typing.NotRequired[int | None],
     "drop-unused-labels": bool,
-    "file": typing.NotRequired[str | None],
+    "discard-others": bool,
     "input": InputPathType,
     "label-list-file": str,
 })
@@ -49,10 +49,10 @@ def cifti_label_import_params(
     output: str,
     input_: InputPathType,
     label_list_file: str,
-    discard_others: bool = False,
+    file: str | None = None,
     value: int | None = None,
     drop_unused_labels: bool = False,
-    file: str | None = None,
+    discard_others: bool = False,
 ) -> CiftiLabelImportParamsDictTagged:
     """
     Build parameters.
@@ -61,30 +61,30 @@ def cifti_label_import_params(
         output: the output cifti label file.
         input_: the input cifti file.
         label_list_file: text file containing the values and names for labels.
-        discard_others: set any values not mentioned in the label list to the\
-            ??? label.
+        file: read label name hierarchy from a json file\
+            \
+            the input json file.
         value: set the value that will be interpreted as unlabeled\
             \
             the numeric value for unlabeled (default 0).
         drop_unused_labels: remove any unused label values from the label table.
-        file: read label name hierarchy from a json file\
-            \
-            the input json file.
+        discard_others: set any values not mentioned in the label list to the\
+            ??? label.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-import",
         "output": output,
-        "discard-others": discard_others,
         "drop-unused-labels": drop_unused_labels,
+        "discard-others": discard_others,
         "input": input_,
         "label-list-file": label_list_file,
     }
-    if value is not None:
-        params["value"] = value
     if file is not None:
         params["file"] = file
+    if value is not None:
+        params["value"] = value
     return params
 
 
@@ -104,10 +104,9 @@ def cifti_label_import_validate(
         raise StyxValidationError("`output` must not be None")
     if not isinstance(params["output"], str):
         raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
-    if params.get("discard-others", False) is None:
-        raise StyxValidationError("`discard-others` must not be None")
-    if not isinstance(params["discard-others"], bool):
-        raise StyxValidationError(f'`discard-others` has the wrong type: Received `{type(params.get("discard-others", False))}` expected `bool`')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("value", None) is not None:
         if not isinstance(params["value"], int):
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `int | None`')
@@ -115,9 +114,10 @@ def cifti_label_import_validate(
         raise StyxValidationError("`drop-unused-labels` must not be None")
     if not isinstance(params["drop-unused-labels"], bool):
         raise StyxValidationError(f'`drop-unused-labels` has the wrong type: Received `{type(params.get("drop-unused-labels", False))}` expected `bool`')
-    if params.get("file", None) is not None:
-        if not isinstance(params["file"], str):
-            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("discard-others", False) is None:
+        raise StyxValidationError("`discard-others` must not be None")
+    if not isinstance(params["discard-others"], bool):
+        raise StyxValidationError(f'`discard-others` has the wrong type: Received `{type(params.get("discard-others", False))}` expected `bool`')
     if params.get("input", None) is None:
         raise StyxValidationError("`input` must not be None")
     if not isinstance(params["input"], (pathlib.Path, str)):
@@ -146,15 +146,21 @@ def cifti_label_import_cargs(
         "wb_command",
         "-cifti-label-import"
     ])
-    cargs.extend([
-        params.get("output", None),
-        ("-discard-others" if (params.get("discard-others", False)) else ""),
-        "-unlabeled-value",
-        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-        ("-drop-unused-labels" if (params.get("drop-unused-labels", False)) else ""),
-        "-hierarchy",
-        (params.get("file", None) if (params.get("file", None) is not None) else "")
-    ])
+    cargs.append(params.get("output", None))
+    if params.get("file", None) is not None:
+        cargs.extend([
+            "-hierarchy",
+            params.get("file", None)
+        ])
+    if params.get("value", None) is not None:
+        cargs.extend([
+            "-unlabeled-value",
+            str(params.get("value", None))
+        ])
+    if params.get("drop-unused-labels", False):
+        cargs.append("-drop-unused-labels")
+    if params.get("discard-others", False):
+        cargs.append("-discard-others")
     cargs.append(execution.input_file(params.get("input", None)))
     cargs.append(params.get("label-list-file", None))
     return cargs
@@ -231,10 +237,10 @@ def cifti_label_import(
     output: str,
     input_: InputPathType,
     label_list_file: str,
-    discard_others: bool = False,
+    file: str | None = None,
     value: int | None = None,
     drop_unused_labels: bool = False,
-    file: str | None = None,
+    discard_others: bool = False,
     runner: Runner | None = None,
 ) -> CiftiLabelImportOutputs:
     """
@@ -268,25 +274,25 @@ def cifti_label_import(
         output: the output cifti label file.
         input_: the input cifti file.
         label_list_file: text file containing the values and names for labels.
-        discard_others: set any values not mentioned in the label list to the\
-            ??? label.
+        file: read label name hierarchy from a json file\
+            \
+            the input json file.
         value: set the value that will be interpreted as unlabeled\
             \
             the numeric value for unlabeled (default 0).
         drop_unused_labels: remove any unused label values from the label table.
-        file: read label name hierarchy from a json file\
-            \
-            the input json file.
+        discard_others: set any values not mentioned in the label list to the\
+            ??? label.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelImportOutputs`).
     """
     params = cifti_label_import_params(
         output=output,
-        discard_others=discard_others,
+        file=file,
         value=value,
         drop_unused_labels=drop_unused_labels,
-        file=file,
+        discard_others=discard_others,
         input_=input_,
         label_list_file=label_list_file,
     )

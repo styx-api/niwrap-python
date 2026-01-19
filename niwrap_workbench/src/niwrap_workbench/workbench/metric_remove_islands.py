@@ -117,11 +117,12 @@ def metric_remove_islands_cargs(
         "wb_command",
         "-metric-remove-islands"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs

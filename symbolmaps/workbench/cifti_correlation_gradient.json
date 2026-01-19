@@ -40,44 +40,44 @@
         }
       }
     },
-    "surface-kernel": {
-      "var_param": "surface_kernel"
-    },
-    "volume-kernel": {
-      "var_param": "volume_kernel"
-    },
-    "presmooth-fwhm": {
-      "var_param": "presmooth_fwhm"
-    },
-    "undo-fisher-z": {
-      "var_param": "undo_fisher_z"
-    },
-    "fisher-z": {
-      "var_param": "fisher_z"
-    },
-    "distance": {
-      "var_param": "distance_"
-    },
-    "covariance": {
-      "var_param": "covariance"
-    },
-    "limit-GB": {
-      "var_param": "limit_gb"
-    },
     "double-correlation": {
       "var_param": "double_correlation",
       "fn_struct_make_params": "cifti_correlation_gradient_double_correlation",
       "properties": {
-        "fisher-z-first": {
-          "var_param": "fisher_z_first"
+        "covariance-first": {
+          "var_param": "covariance_first"
         },
         "no-demean-first": {
           "var_param": "no_demean_first"
         },
-        "covariance-first": {
-          "var_param": "covariance_first"
+        "fisher-z-first": {
+          "var_param": "fisher_z_first"
         }
       }
+    },
+    "limit-GB": {
+      "var_param": "limit_gb"
+    },
+    "distance": {
+      "var_param": "distance_"
+    },
+    "volume-kernel": {
+      "var_param": "volume_kernel"
+    },
+    "surface-kernel": {
+      "var_param": "surface_kernel"
+    },
+    "covariance": {
+      "var_param": "covariance"
+    },
+    "fisher-z": {
+      "var_param": "fisher_z"
+    },
+    "undo-fisher-z": {
+      "var_param": "undo_fisher_z"
+    },
+    "presmooth-fwhm": {
+      "var_param": "presmooth_fwhm"
     },
     "cifti": {
       "var_param": "cifti"

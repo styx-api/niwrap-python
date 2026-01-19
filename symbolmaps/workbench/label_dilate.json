@@ -4,14 +4,14 @@
     "label-out": {
       "var_param": "label_out"
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
+    "area-metric": {
+      "var_param": "area_metric"
     },
     "column": {
       "var_param": "column"
     },
-    "area-metric": {
-      "var_param": "area_metric"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "label": {
       "var_param": "label"

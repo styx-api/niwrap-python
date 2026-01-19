@@ -4,15 +4,6 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "trilinear": {
-      "var_param": "trilinear"
-    },
-    "enclosing": {
-      "var_param": "enclosing"
-    },
-    "cubic": {
-      "var_param": "cubic"
-    },
     "ribbon-constrained": {
       "var_param": "ribbon_constrained",
       "fn_struct_make_params": "volume_to_surface_mapping_ribbon_constrained",
@@ -47,18 +38,6 @@
             }
           }
         },
-        "subdiv-num": {
-          "var_param": "subdiv_num"
-        },
-        "thin-columns": {
-          "var_param": "thin_columns"
-        },
-        "scale": {
-          "var_param": "scale"
-        },
-        "method": {
-          "var_param": "method"
-        },
         "bad-vertices-out": {
           "var_param": "bad_vertices_out",
           "fn_struct_make_params": "volume_to_surface_mapping_bad_vertices_out",
@@ -82,6 +61,18 @@
         },
         "text-out": {
           "var_param": "text_out"
+        },
+        "method": {
+          "var_param": "method"
+        },
+        "scale": {
+          "var_param": "scale"
+        },
+        "subdiv-num": {
+          "var_param": "subdiv_num"
+        },
+        "thin-columns": {
+          "var_param": "thin_columns"
         }
       }
     },
@@ -105,6 +96,15 @@
     },
     "subvol": {
       "var_param": "subvol"
+    },
+    "cubic": {
+      "var_param": "cubic"
+    },
+    "enclosing": {
+      "var_param": "enclosing"
+    },
+    "trilinear": {
+      "var_param": "trilinear"
     },
     "volume": {
       "var_param": "volume"

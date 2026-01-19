@@ -27,8 +27,8 @@ CiftiReduceExcludeOutliersParamsDict = _CiftiReduceExcludeOutliersParamsDictNoTa
 
 _CiftiReduceParamsDictNoTag = typing.TypedDict('_CiftiReduceParamsDictNoTag', {
     "cifti-out": str,
-    "direction": typing.NotRequired[str | None],
     "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParamsDict | None],
+    "direction": typing.NotRequired[str | None],
     "only-numeric": bool,
     "cifti-in": InputPathType,
     "operation": str,
@@ -36,8 +36,8 @@ _CiftiReduceParamsDictNoTag = typing.TypedDict('_CiftiReduceParamsDictNoTag', {
 CiftiReduceParamsDictTagged = typing.TypedDict('CiftiReduceParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-reduce"],
     "cifti-out": str,
-    "direction": typing.NotRequired[str | None],
     "exclude-outliers": typing.NotRequired[CiftiReduceExcludeOutliersParamsDict | None],
+    "direction": typing.NotRequired[str | None],
     "only-numeric": bool,
     "cifti-in": InputPathType,
     "operation": str,
@@ -124,8 +124,8 @@ def cifti_reduce_params(
     cifti_out: str,
     cifti_in: InputPathType,
     operation: str,
-    direction: str | None = None,
     exclude_outliers: CiftiReduceExcludeOutliersParamsDict | None = None,
+    direction: str | None = None,
     only_numeric: bool = False,
 ) -> CiftiReduceParamsDictTagged:
     """
@@ -135,11 +135,11 @@ def cifti_reduce_params(
         cifti_out: the output cifti file.
         cifti_in: the cifti file to reduce.
         operation: the reduction operator to use.
+        exclude_outliers: exclude non-numeric values and outliers by standard\
+            deviation.
         direction: specify what direction to reduce along\
             \
             the direction (default ROW).
-        exclude_outliers: exclude non-numeric values and outliers by standard\
-            deviation.
         only_numeric: exclude non-numeric values.
     Returns:
         Parameter dictionary
@@ -151,10 +151,10 @@ def cifti_reduce_params(
         "cifti-in": cifti_in,
         "operation": operation,
     }
-    if direction is not None:
-        params["direction"] = direction
     if exclude_outliers is not None:
         params["exclude-outliers"] = exclude_outliers
+    if direction is not None:
+        params["direction"] = direction
     return params
 
 
@@ -174,11 +174,11 @@ def cifti_reduce_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("exclude-outliers", None) is not None:
+        cifti_reduce_exclude_outliers_validate(params["exclude-outliers"])
     if params.get("direction", None) is not None:
         if not isinstance(params["direction"], str):
             raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str | None`')
-    if params.get("exclude-outliers", None) is not None:
-        cifti_reduce_exclude_outliers_validate(params["exclude-outliers"])
     if params.get("only-numeric", False) is None:
         raise StyxValidationError("`only-numeric` must not be None")
     if not isinstance(params["only-numeric"], bool):
@@ -213,11 +213,15 @@ def cifti_reduce_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        "-direction",
-        (params.get("direction", None) if (params.get("direction", None) is not None) else ""),
-        *(cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-        ("-only-numeric" if (params.get("only-numeric", False)) else "")
+        *(cifti_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else [])
     ])
+    if params.get("direction", None) is not None:
+        cargs.extend([
+            "-direction",
+            params.get("direction", None)
+        ])
+    if params.get("only-numeric", False):
+        cargs.append("-only-numeric")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("operation", None))
     return cargs
@@ -292,8 +296,8 @@ def cifti_reduce(
     cifti_out: str,
     cifti_in: InputPathType,
     operation: str,
-    direction: str | None = None,
     exclude_outliers: CiftiReduceExcludeOutliersParamsDict | None = None,
+    direction: str | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> CiftiReduceOutputs:
@@ -326,11 +330,11 @@ def cifti_reduce(
         cifti_out: the output cifti file.
         cifti_in: the cifti file to reduce.
         operation: the reduction operator to use.
+        exclude_outliers: exclude non-numeric values and outliers by standard\
+            deviation.
         direction: specify what direction to reduce along\
             \
             the direction (default ROW).
-        exclude_outliers: exclude non-numeric values and outliers by standard\
-            deviation.
         only_numeric: exclude non-numeric values.
         runner: Command runner.
     Returns:
@@ -338,8 +342,8 @@ def cifti_reduce(
     """
     params = cifti_reduce_params(
         cifti_out=cifti_out,
-        direction=direction,
         exclude_outliers=exclude_outliers,
+        direction=direction,
         only_numeric=only_numeric,
         cifti_in=cifti_in,
         operation=operation,

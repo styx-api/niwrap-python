@@ -37,11 +37,11 @@
         }
       }
     },
-    "column": {
-      "var_param": "column"
-    },
     "area-metric": {
       "var_param": "area_metric"
+    },
+    "column": {
+      "var_param": "column"
     },
     "average-normals": {
       "var_param": "average_normals"

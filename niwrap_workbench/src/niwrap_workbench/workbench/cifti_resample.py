@@ -27,14 +27,14 @@ CiftiResampleWeightedParamsDict = _CiftiResampleWeightedParamsDictNoTag | CiftiR
 
 _CiftiResampleVolumePredilateParamsDictNoTag = typing.TypedDict('_CiftiResampleVolumePredilateParamsDictNoTag', {
     "dilate-mm": float,
-    "nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict | None],
+    "nearest": bool,
 })
 CiftiResampleVolumePredilateParamsDictTagged = typing.TypedDict('CiftiResampleVolumePredilateParamsDictTagged', {
     "@type": typing.Literal["volume-predilate"],
     "dilate-mm": float,
-    "nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict | None],
+    "nearest": bool,
 })
 CiftiResampleVolumePredilateParamsDict = _CiftiResampleVolumePredilateParamsDictNoTag | CiftiResampleVolumePredilateParamsDictTagged
 
@@ -53,16 +53,16 @@ CiftiResampleWeightedParamsDict_ = _CiftiResampleWeightedParamsDict_NoTag | Cift
 
 _CiftiResampleSurfacePostdilateParamsDictNoTag = typing.TypedDict('_CiftiResampleSurfacePostdilateParamsDictNoTag', {
     "dilate-mm": float,
-    "nearest": bool,
-    "linear": bool,
     "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict_ | None],
+    "linear": bool,
+    "nearest": bool,
 })
 CiftiResampleSurfacePostdilateParamsDictTagged = typing.TypedDict('CiftiResampleSurfacePostdilateParamsDictTagged', {
     "@type": typing.Literal["surface-postdilate"],
     "dilate-mm": float,
-    "nearest": bool,
-    "linear": bool,
     "weighted": typing.NotRequired[CiftiResampleWeightedParamsDict_ | None],
+    "linear": bool,
+    "nearest": bool,
 })
 CiftiResampleSurfacePostdilateParamsDict = _CiftiResampleSurfacePostdilateParamsDictNoTag | CiftiResampleSurfacePostdilateParamsDictTagged
 
@@ -225,7 +225,6 @@ CiftiResampleCerebellumSpheresParamsDict = _CiftiResampleCerebellumSpheresParams
 
 _CiftiResampleParamsDictNoTag = typing.TypedDict('_CiftiResampleParamsDictNoTag', {
     "cifti-out": str,
-    "surface-largest": bool,
     "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParamsDict | None],
     "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParamsDict | None],
     "affine": typing.NotRequired[CiftiResampleAffineParamsDict | None],
@@ -233,6 +232,7 @@ _CiftiResampleParamsDictNoTag = typing.TypedDict('_CiftiResampleParamsDictNoTag'
     "left-spheres": typing.NotRequired[CiftiResampleLeftSpheresParamsDict | None],
     "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParamsDict | None],
     "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParamsDict | None],
+    "surface-largest": bool,
     "cifti-in": InputPathType,
     "direction": str,
     "cifti-template": InputPathType,
@@ -243,7 +243,6 @@ _CiftiResampleParamsDictNoTag = typing.TypedDict('_CiftiResampleParamsDictNoTag'
 CiftiResampleParamsDictTagged = typing.TypedDict('CiftiResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-resample"],
     "cifti-out": str,
-    "surface-largest": bool,
     "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParamsDict | None],
     "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParamsDict | None],
     "affine": typing.NotRequired[CiftiResampleAffineParamsDict | None],
@@ -251,6 +250,7 @@ CiftiResampleParamsDictTagged = typing.TypedDict('CiftiResampleParamsDictTagged'
     "left-spheres": typing.NotRequired[CiftiResampleLeftSpheresParamsDict | None],
     "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParamsDict | None],
     "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParamsDict | None],
+    "surface-largest": bool,
     "cifti-in": InputPathType,
     "direction": str,
     "cifti-template": InputPathType,
@@ -321,28 +321,29 @@ def cifti_resample_weighted_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exponent", None) is not None or params.get("legacy-cutoff", False):
+    cargs.append("-weighted")
+    if params.get("exponent", None) is not None:
         cargs.extend([
-            "-weighted",
             "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
+            str(params.get("exponent", None))
         ])
+    if params.get("legacy-cutoff", False):
+        cargs.append("-legacy-cutoff")
     return cargs
 
 
 def cifti_resample_volume_predilate(
     dilate_mm: float,
-    nearest: bool = False,
     weighted: CiftiResampleWeightedParamsDict | None = None,
+    nearest: bool = False,
 ) -> CiftiResampleVolumePredilateParamsDictTagged:
     """
     Build parameters.
     
     Args:
         dilate_mm: distance, in mm, to dilate.
-        nearest: use nearest value dilation.
         weighted: use weighted dilation (default).
+        nearest: use nearest value dilation.
     Returns:
         Parameter dictionary
     """
@@ -372,12 +373,12 @@ def cifti_resample_volume_predilate_validate(
         raise StyxValidationError("`dilate-mm` must not be None")
     if not isinstance(params["dilate-mm"], (float, int)):
         raise StyxValidationError(f'`dilate-mm` has the wrong type: Received `{type(params.get("dilate-mm", None))}` expected `float`')
+    if params.get("weighted", None) is not None:
+        cifti_resample_weighted_validate(params["weighted"])
     if params.get("nearest", False) is None:
         raise StyxValidationError("`nearest` must not be None")
     if not isinstance(params["nearest"], bool):
         raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
-    if params.get("weighted", None) is not None:
-        cifti_resample_weighted_validate(params["weighted"])
 
 
 def cifti_resample_volume_predilate_cargs(
@@ -397,9 +398,10 @@ def cifti_resample_volume_predilate_cargs(
     cargs.extend([
         "-volume-predilate",
         str(params.get("dilate-mm", None)),
-        ("-nearest" if (params.get("nearest", False)) else ""),
         *(cifti_resample_weighted_cargs(params.get("weighted", None), execution) if (params.get("weighted", None) is not None) else [])
     ])
+    if params.get("nearest", False):
+        cargs.append("-nearest")
     return cargs
 
 
@@ -463,38 +465,39 @@ def cifti_resample_weighted_cargs_(
         Command-line arguments.
     """
     cargs = []
-    if params.get("exponent", None) is not None or params.get("legacy-cutoff", False):
+    cargs.append("-weighted")
+    if params.get("exponent", None) is not None:
         cargs.extend([
-            "-weighted",
             "-exponent",
-            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
-            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
+            str(params.get("exponent", None))
         ])
+    if params.get("legacy-cutoff", False):
+        cargs.append("-legacy-cutoff")
     return cargs
 
 
 def cifti_resample_surface_postdilate(
     dilate_mm: float,
-    nearest: bool = False,
-    linear: bool = False,
     weighted: CiftiResampleWeightedParamsDict_ | None = None,
+    linear: bool = False,
+    nearest: bool = False,
 ) -> CiftiResampleSurfacePostdilateParamsDictTagged:
     """
     Build parameters.
     
     Args:
         dilate_mm: distance, in mm, to dilate.
-        nearest: use nearest value dilation.
-        linear: use linear dilation.
         weighted: use weighted dilation (default for non-label data).
+        linear: use linear dilation.
+        nearest: use nearest value dilation.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "surface-postdilate",
         "dilate-mm": dilate_mm,
-        "nearest": nearest,
         "linear": linear,
+        "nearest": nearest,
     }
     if weighted is not None:
         params["weighted"] = weighted
@@ -517,16 +520,16 @@ def cifti_resample_surface_postdilate_validate(
         raise StyxValidationError("`dilate-mm` must not be None")
     if not isinstance(params["dilate-mm"], (float, int)):
         raise StyxValidationError(f'`dilate-mm` has the wrong type: Received `{type(params.get("dilate-mm", None))}` expected `float`')
-    if params.get("nearest", False) is None:
-        raise StyxValidationError("`nearest` must not be None")
-    if not isinstance(params["nearest"], bool):
-        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
+    if params.get("weighted", None) is not None:
+        cifti_resample_weighted_validate_(params["weighted"])
     if params.get("linear", False) is None:
         raise StyxValidationError("`linear` must not be None")
     if not isinstance(params["linear"], bool):
         raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
-    if params.get("weighted", None) is not None:
-        cifti_resample_weighted_validate_(params["weighted"])
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
 
 
 def cifti_resample_surface_postdilate_cargs(
@@ -546,10 +549,12 @@ def cifti_resample_surface_postdilate_cargs(
     cargs.extend([
         "-surface-postdilate",
         str(params.get("dilate-mm", None)),
-        ("-nearest" if (params.get("nearest", False)) else ""),
-        ("-linear" if (params.get("linear", False)) else ""),
         *(cifti_resample_weighted_cargs_(params.get("weighted", None), execution) if (params.get("weighted", None) is not None) else [])
     ])
+    if params.get("linear", False):
+        cargs.append("-linear")
+    if params.get("nearest", False):
+        cargs.append("-nearest")
     return cargs
 
 
@@ -743,10 +748,13 @@ def cifti_resample_warpfield_cargs(
     cargs = []
     cargs.extend([
         "-warpfield",
-        params.get("warpfield", None),
-        "-fnirt",
-        (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else "")
+        params.get("warpfield", None)
     ])
+    if params.get("source-volume", None) is not None:
+        cargs.extend([
+            "-fnirt",
+            params.get("source-volume", None)
+        ])
     return cargs
 
 
@@ -1407,7 +1415,6 @@ def cifti_resample_params(
     template_direction: str,
     surface_method: str,
     volume_method: str,
-    surface_largest: bool = False,
     volume_predilate: CiftiResampleVolumePredilateParamsDict | None = None,
     surface_postdilate: CiftiResampleSurfacePostdilateParamsDict | None = None,
     affine: CiftiResampleAffineParamsDict | None = None,
@@ -1415,6 +1422,7 @@ def cifti_resample_params(
     left_spheres: CiftiResampleLeftSpheresParamsDict | None = None,
     right_spheres: CiftiResampleRightSpheresParamsDict | None = None,
     cerebellum_spheres: CiftiResampleCerebellumSpheresParamsDict | None = None,
+    surface_largest: bool = False,
 ) -> CiftiResampleParamsDictTagged:
     """
     Build parameters.
@@ -1429,8 +1437,6 @@ def cifti_resample_params(
             resampling space, ROW or COLUMN.
         surface_method: specify a surface resampling method.
         volume_method: specify a volume interpolation method.
-        surface_largest: use largest weight instead of weighted average or\
-            popularity when doing surface resampling.
         volume_predilate: dilate the volume components before resampling.
         surface_postdilate: dilate the surface components after resampling.
         affine: use an affine transformation on the volume components.
@@ -1438,6 +1444,8 @@ def cifti_resample_params(
         left_spheres: specify spheres for left surface resampling.
         right_spheres: specify spheres for right surface resampling.
         cerebellum_spheres: specify spheres for cerebellum surface resampling.
+        surface_largest: use largest weight instead of weighted average or\
+            popularity when doing surface resampling.
     Returns:
         Parameter dictionary
     """
@@ -1485,10 +1493,6 @@ def cifti_resample_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("surface-largest", False) is None:
-        raise StyxValidationError("`surface-largest` must not be None")
-    if not isinstance(params["surface-largest"], bool):
-        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
     if params.get("volume-predilate", None) is not None:
         cifti_resample_volume_predilate_validate(params["volume-predilate"])
     if params.get("surface-postdilate", None) is not None:
@@ -1503,6 +1507,10 @@ def cifti_resample_validate(
         cifti_resample_right_spheres_validate(params["right-spheres"])
     if params.get("cerebellum-spheres", None) is not None:
         cifti_resample_cerebellum_spheres_validate(params["cerebellum-spheres"])
+    if params.get("surface-largest", False) is None:
+        raise StyxValidationError("`surface-largest` must not be None")
+    if not isinstance(params["surface-largest"], bool):
+        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -1549,7 +1557,6 @@ def cifti_resample_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        ("-surface-largest" if (params.get("surface-largest", False)) else ""),
         *(cifti_resample_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),
         *(cifti_resample_surface_postdilate_cargs(params.get("surface-postdilate", None), execution) if (params.get("surface-postdilate", None) is not None) else []),
         *(cifti_resample_affine_cargs(params.get("affine", None), execution) if (params.get("affine", None) is not None) else []),
@@ -1558,6 +1565,8 @@ def cifti_resample_cargs(
         *(cifti_resample_right_spheres_cargs(params.get("right-spheres", None), execution) if (params.get("right-spheres", None) is not None) else []),
         *(cifti_resample_cerebellum_spheres_cargs(params.get("cerebellum-spheres", None), execution) if (params.get("cerebellum-spheres", None) is not None) else [])
     ])
+    if params.get("surface-largest", False):
+        cargs.append("-surface-largest")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(execution.input_file(params.get("cifti-template", None)))
@@ -1651,7 +1660,6 @@ def cifti_resample(
     template_direction: str,
     surface_method: str,
     volume_method: str,
-    surface_largest: bool = False,
     volume_predilate: CiftiResampleVolumePredilateParamsDict | None = None,
     surface_postdilate: CiftiResampleSurfacePostdilateParamsDict | None = None,
     affine: CiftiResampleAffineParamsDict | None = None,
@@ -1659,6 +1667,7 @@ def cifti_resample(
     left_spheres: CiftiResampleLeftSpheresParamsDict | None = None,
     right_spheres: CiftiResampleRightSpheresParamsDict | None = None,
     cerebellum_spheres: CiftiResampleCerebellumSpheresParamsDict | None = None,
+    surface_largest: bool = False,
     runner: Runner | None = None,
 ) -> CiftiResampleOutputs:
     """
@@ -1707,8 +1716,6 @@ def cifti_resample(
             resampling space, ROW or COLUMN.
         surface_method: specify a surface resampling method.
         volume_method: specify a volume interpolation method.
-        surface_largest: use largest weight instead of weighted average or\
-            popularity when doing surface resampling.
         volume_predilate: dilate the volume components before resampling.
         surface_postdilate: dilate the surface components after resampling.
         affine: use an affine transformation on the volume components.
@@ -1716,13 +1723,14 @@ def cifti_resample(
         left_spheres: specify spheres for left surface resampling.
         right_spheres: specify spheres for right surface resampling.
         cerebellum_spheres: specify spheres for cerebellum surface resampling.
+        surface_largest: use largest weight instead of weighted average or\
+            popularity when doing surface resampling.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiResampleOutputs`).
     """
     params = cifti_resample_params(
         cifti_out=cifti_out,
-        surface_largest=surface_largest,
         volume_predilate=volume_predilate,
         surface_postdilate=surface_postdilate,
         affine=affine,
@@ -1730,6 +1738,7 @@ def cifti_resample(
         left_spheres=left_spheres,
         right_spheres=right_spheres,
         cerebellum_spheres=cerebellum_spheres,
+        surface_largest=surface_largest,
         cifti_in=cifti_in,
         direction=direction,
         cifti_template=cifti_template,

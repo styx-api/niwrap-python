@@ -4,9 +4,6 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "replace": {
-      "var_param": "replace"
-    },
     "var": {
       "var_param": "var",
       "fn_struct_make_params": "volume_math_var",
@@ -24,6 +21,9 @@
           "var_param": "repeat"
         }
       }
+    },
+    "replace": {
+      "var_param": "replace"
     },
     "expression": {
       "var_param": "expression"

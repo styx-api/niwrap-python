@@ -26,16 +26,16 @@ SetMapNamesMapParamsDict = _SetMapNamesMapParamsDictNoTag | SetMapNamesMapParams
 
 
 _SetMapNamesParamsDictNoTag = typing.TypedDict('_SetMapNamesParamsDictNoTag', {
-    "file": typing.NotRequired[str | None],
-    "file": typing.NotRequired[str | None],
     "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
+    "file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
     "data-file": str,
 })
 SetMapNamesParamsDictTagged = typing.TypedDict('SetMapNamesParamsDictTagged', {
     "@type": typing.Literal["workbench/set-map-names"],
-    "file": typing.NotRequired[str | None],
-    "file": typing.NotRequired[str | None],
     "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
+    "file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
     "data-file": str,
 })
 SetMapNamesParamsDict = _SetMapNamesParamsDictNoTag | SetMapNamesParamsDictTagged
@@ -116,22 +116,22 @@ class SetMapNamesOutputs(typing.NamedTuple):
 
 def set_map_names_params(
     data_file: str,
+    map_: list[SetMapNamesMapParamsDict] | None = None,
     file: str | None = None,
     file_: str | None = None,
-    map_: list[SetMapNamesMapParamsDict] | None = None,
 ) -> SetMapNamesParamsDictTagged:
     """
     Build parameters.
     
     Args:
         data_file: the file to set the map names of.
-        file: use a text file to replace all map names\
-            \
-            text file containing map names, one per line.
-        file_: use the map names from another data file\
+        map_: specify a map to set the name of.
+        file: use the map names from another data file\
             \
             a data file with the same number of maps.
-        map_: specify a map to set the name of.
+        file_: use a text file to replace all map names\
+            \
+            text file containing map names, one per line.
     Returns:
         Parameter dictionary
     """
@@ -139,12 +139,12 @@ def set_map_names_params(
         "@type": "workbench/set-map-names",
         "data-file": data_file,
     }
+    if map_ is not None:
+        params["map"] = map_
     if file is not None:
         params["file"] = file
     if file_ is not None:
         params["file"] = file_
-    if map_ is not None:
-        params["map"] = map_
     return params
 
 
@@ -160,17 +160,17 @@ def set_map_names_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("file", None) is not None:
-        if not isinstance(params["file"], str):
-            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
-    if params.get("file", None) is not None:
-        if not isinstance(params["file"], str):
-            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("map", None) is not None:
         if not isinstance(params["map"], list):
             raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `list[SetMapNamesMapParamsDict] | None`')
         for e in params["map"]:
             set_map_names_map_validate(e)
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("data-file", None) is None:
         raise StyxValidationError("`data-file` must not be None")
     if not isinstance(params["data-file"], str):
@@ -195,13 +195,17 @@ def set_map_names_cargs(
         "wb_command",
         "-set-map-names"
     ])
-    if params.get("file", None) is not None or params.get("file", None) is not None or params.get("map", None) is not None:
+    if params.get("map", None) is not None:
+        cargs.extend([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c])
+    if params.get("file", None) is not None:
+        cargs.extend([
+            "-from-data-file",
+            params.get("file", None)
+        ])
+    if params.get("file", None) is not None:
         cargs.extend([
             "-name-file",
-            (params.get("file", None) if (params.get("file", None) is not None) else ""),
-            "-from-data-file",
-            (params.get("file", None) if (params.get("file", None) is not None) else ""),
-            *([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c] if (params.get("map", None) is not None) else [])
+            params.get("file", None)
         ])
     cargs.append(params.get("data-file", None))
     return cargs
@@ -256,9 +260,9 @@ def set_map_names_execute(
 
 def set_map_names(
     data_file: str,
+    map_: list[SetMapNamesMapParamsDict] | None = None,
     file: str | None = None,
     file_: str | None = None,
-    map_: list[SetMapNamesMapParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
@@ -271,21 +275,21 @@ def set_map_names(
     
     Args:
         data_file: the file to set the map names of.
-        file: use a text file to replace all map names\
-            \
-            text file containing map names, one per line.
-        file_: use the map names from another data file\
+        map_: specify a map to set the name of.
+        file: use the map names from another data file\
             \
             a data file with the same number of maps.
-        map_: specify a map to set the name of.
+        file_: use a text file to replace all map names\
+            \
+            text file containing map names, one per line.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetMapNamesOutputs`).
     """
     params = set_map_names_params(
+        map_=map_,
         file=file,
         file_=file_,
-        map_=map_,
         data_file=data_file,
     )
     return set_map_names_execute(params, runner)

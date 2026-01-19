@@ -40,13 +40,13 @@ MetricExtremaThresholdParamsDict = _MetricExtremaThresholdParamsDictNoTag | Metr
 _MetricExtremaParamsDictNoTag = typing.TypedDict('_MetricExtremaParamsDictNoTag', {
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[MetricExtremaThresholdParamsDict | None],
-    "sum-columns": bool,
-    "consolidate-mode": bool,
-    "only-maxima": bool,
-    "only-minima": bool,
     "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "only-minima": bool,
+    "only-maxima": bool,
+    "consolidate-mode": bool,
+    "sum-columns": bool,
     "surface": InputPathType,
     "metric-in": InputPathType,
     "distance": float,
@@ -55,13 +55,13 @@ MetricExtremaParamsDictTagged = typing.TypedDict('MetricExtremaParamsDictTagged'
     "@type": typing.Literal["workbench/metric-extrema"],
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[MetricExtremaThresholdParamsDict | None],
-    "sum-columns": bool,
-    "consolidate-mode": bool,
-    "only-maxima": bool,
-    "only-minima": bool,
     "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "only-minima": bool,
+    "only-maxima": bool,
+    "consolidate-mode": bool,
+    "sum-columns": bool,
     "surface": InputPathType,
     "metric-in": InputPathType,
     "distance": float,
@@ -129,9 +129,10 @@ def metric_extrema_presmooth_cargs(
     cargs = []
     cargs.extend([
         "-presmooth",
-        str(params.get("kernel", None)),
-        ("-fwhm" if (params.get("fwhm", False)) else "")
+        str(params.get("kernel", None))
     ])
+    if params.get("fwhm", False):
+        cargs.append("-fwhm")
     return cargs
 
 
@@ -216,13 +217,13 @@ def metric_extrema_params(
     metric_in: InputPathType,
     distance: float,
     presmooth: MetricExtremaPresmoothParamsDict | None = None,
-    roi_metric: InputPathType | None = None,
     threshold: MetricExtremaThresholdParamsDict | None = None,
-    sum_columns: bool = False,
-    consolidate_mode: bool = False,
-    only_maxima: bool = False,
-    only_minima: bool = False,
     column: str | None = None,
+    roi_metric: InputPathType | None = None,
+    only_minima: bool = False,
+    only_maxima: bool = False,
+    consolidate_mode: bool = False,
+    sum_columns: bool = False,
 ) -> MetricExtremaParamsDictTagged:
     """
     Build parameters.
@@ -234,41 +235,41 @@ def metric_extrema_params(
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the metric before finding extrema.
-        roi_metric: ignore values outside the selected area\
-            \
-            the area to find extrema in, as a metric.
         threshold: ignore small extrema.
-        sum_columns: output the sum of the extrema columns instead of each\
-            column separately.
-        consolidate_mode: use consolidation of local minima instead of a large\
-            neighborhood.
-        only_maxima: only find the maxima.
-        only_minima: only find the minima.
         column: select a single column to find extrema in\
             \
             the column number or name.
+        roi_metric: ignore values outside the selected area\
+            \
+            the area to find extrema in, as a metric.
+        only_minima: only find the minima.
+        only_maxima: only find the maxima.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        sum_columns: output the sum of the extrema columns instead of each\
+            column separately.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-extrema",
         "metric-out": metric_out,
-        "sum-columns": sum_columns,
-        "consolidate-mode": consolidate_mode,
-        "only-maxima": only_maxima,
         "only-minima": only_minima,
+        "only-maxima": only_maxima,
+        "consolidate-mode": consolidate_mode,
+        "sum-columns": sum_columns,
         "surface": surface,
         "metric-in": metric_in,
         "distance": distance,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
     if threshold is not None:
         params["threshold"] = threshold
     if column is not None:
         params["column"] = column
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -290,30 +291,30 @@ def metric_extrema_validate(
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
     if params.get("presmooth", None) is not None:
         metric_extrema_presmooth_validate(params["presmooth"])
+    if params.get("threshold", None) is not None:
+        metric_extrema_threshold_validate(params["threshold"])
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("roi-metric", None) is not None:
         if not isinstance(params["roi-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("threshold", None) is not None:
-        metric_extrema_threshold_validate(params["threshold"])
-    if params.get("sum-columns", False) is None:
-        raise StyxValidationError("`sum-columns` must not be None")
-    if not isinstance(params["sum-columns"], bool):
-        raise StyxValidationError(f'`sum-columns` has the wrong type: Received `{type(params.get("sum-columns", False))}` expected `bool`')
-    if params.get("consolidate-mode", False) is None:
-        raise StyxValidationError("`consolidate-mode` must not be None")
-    if not isinstance(params["consolidate-mode"], bool):
-        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
-    if params.get("only-maxima", False) is None:
-        raise StyxValidationError("`only-maxima` must not be None")
-    if not isinstance(params["only-maxima"], bool):
-        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
     if params.get("only-minima", False) is None:
         raise StyxValidationError("`only-minima` must not be None")
     if not isinstance(params["only-minima"], bool):
         raise StyxValidationError(f'`only-minima` has the wrong type: Received `{type(params.get("only-minima", False))}` expected `bool`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("only-maxima", False) is None:
+        raise StyxValidationError("`only-maxima` must not be None")
+    if not isinstance(params["only-maxima"], bool):
+        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("consolidate-mode", False) is None:
+        raise StyxValidationError("`consolidate-mode` must not be None")
+    if not isinstance(params["consolidate-mode"], bool):
+        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
+    if params.get("sum-columns", False) is None:
+        raise StyxValidationError("`sum-columns` must not be None")
+    if not isinstance(params["sum-columns"], bool):
+        raise StyxValidationError(f'`sum-columns` has the wrong type: Received `{type(params.get("sum-columns", False))}` expected `bool`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -349,16 +350,26 @@ def metric_extrema_cargs(
     cargs.extend([
         params.get("metric-out", None),
         *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
-        ("-sum-columns" if (params.get("sum-columns", False)) else ""),
-        ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
-        ("-only-maxima" if (params.get("only-maxima", False)) else ""),
-        ("-only-minima" if (params.get("only-minima", False)) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else "")
+        *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
     ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("only-minima", False):
+        cargs.append("-only-minima")
+    if params.get("only-maxima", False):
+        cargs.append("-only-maxima")
+    if params.get("consolidate-mode", False):
+        cargs.append("-consolidate-mode")
+    if params.get("sum-columns", False):
+        cargs.append("-sum-columns")
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(str(params.get("distance", None)))
@@ -440,13 +451,13 @@ def metric_extrema(
     metric_in: InputPathType,
     distance: float,
     presmooth: MetricExtremaPresmoothParamsDict | None = None,
-    roi_metric: InputPathType | None = None,
     threshold: MetricExtremaThresholdParamsDict | None = None,
-    sum_columns: bool = False,
-    consolidate_mode: bool = False,
-    only_maxima: bool = False,
-    only_minima: bool = False,
     column: str | None = None,
+    roi_metric: InputPathType | None = None,
+    only_minima: bool = False,
+    only_maxima: bool = False,
+    consolidate_mode: bool = False,
+    sum_columns: bool = False,
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
@@ -485,19 +496,19 @@ def metric_extrema(
         distance: the minimum distance between identified extrema of the same\
             type.
         presmooth: smooth the metric before finding extrema.
-        roi_metric: ignore values outside the selected area\
-            \
-            the area to find extrema in, as a metric.
         threshold: ignore small extrema.
-        sum_columns: output the sum of the extrema columns instead of each\
-            column separately.
-        consolidate_mode: use consolidation of local minima instead of a large\
-            neighborhood.
-        only_maxima: only find the maxima.
-        only_minima: only find the minima.
         column: select a single column to find extrema in\
             \
             the column number or name.
+        roi_metric: ignore values outside the selected area\
+            \
+            the area to find extrema in, as a metric.
+        only_minima: only find the minima.
+        only_maxima: only find the maxima.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        sum_columns: output the sum of the extrema columns instead of each\
+            column separately.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricExtremaOutputs`).
@@ -505,13 +516,13 @@ def metric_extrema(
     params = metric_extrema_params(
         metric_out=metric_out,
         presmooth=presmooth,
-        roi_metric=roi_metric,
         threshold=threshold,
-        sum_columns=sum_columns,
-        consolidate_mode=consolidate_mode,
-        only_maxima=only_maxima,
-        only_minima=only_minima,
         column=column,
+        roi_metric=roi_metric,
+        only_minima=only_minima,
+        only_maxima=only_maxima,
+        consolidate_mode=consolidate_mode,
+        sum_columns=sum_columns,
         surface=surface,
         metric_in=metric_in,
         distance=distance,

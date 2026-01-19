@@ -14,15 +14,15 @@ SET_STRUCTURE_METADATA = Metadata(
 
 
 _SetStructureParamsDictNoTag = typing.TypedDict('_SetStructureParamsDictNoTag', {
-    "type": typing.NotRequired[str | None],
     "secondary type": typing.NotRequired[str | None],
+    "type": typing.NotRequired[str | None],
     "data-file": str,
     "structure": str,
 })
 SetStructureParamsDictTagged = typing.TypedDict('SetStructureParamsDictTagged', {
     "@type": typing.Literal["workbench/set-structure"],
-    "type": typing.NotRequired[str | None],
     "secondary type": typing.NotRequired[str | None],
+    "type": typing.NotRequired[str | None],
     "data-file": str,
     "structure": str,
 })
@@ -40,8 +40,8 @@ class SetStructureOutputs(typing.NamedTuple):
 def set_structure_params(
     data_file: str,
     structure: str,
-    type_: str | None = None,
     secondary_type: str | None = None,
+    type_: str | None = None,
 ) -> SetStructureParamsDictTagged:
     """
     Build parameters.
@@ -49,13 +49,13 @@ def set_structure_params(
     Args:
         data_file: the file to set the structure of.
         structure: the structure to set the file to.
-        type_: set the type of a surface (only used if file is a surface file)\
-            \
-            name of surface type.
         secondary_type: set the secondary type of a surface (only used if file\
             is a surface file)\
             \
             name of surface secondary type.
+        type_: set the type of a surface (only used if file is a surface file)\
+            \
+            name of surface type.
     Returns:
         Parameter dictionary
     """
@@ -64,10 +64,10 @@ def set_structure_params(
         "data-file": data_file,
         "structure": structure,
     }
-    if type_ is not None:
-        params["type"] = type_
     if secondary_type is not None:
         params["secondary type"] = secondary_type
+    if type_ is not None:
+        params["type"] = type_
     return params
 
 
@@ -83,12 +83,12 @@ def set_structure_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("type", None) is not None:
-        if not isinstance(params["type"], str):
-            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
     if params.get("secondary type", None) is not None:
         if not isinstance(params["secondary type"], str):
             raise StyxValidationError(f'`secondary type` has the wrong type: Received `{type(params.get("secondary type", None))}` expected `str | None`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
     if params.get("data-file", None) is None:
         raise StyxValidationError("`data-file` must not be None")
     if not isinstance(params["data-file"], str):
@@ -117,12 +117,15 @@ def set_structure_cargs(
         "wb_command",
         "-set-structure"
     ])
-    if params.get("type", None) is not None or params.get("secondary type", None) is not None:
+    if params.get("secondary type", None) is not None:
+        cargs.extend([
+            "-surface-secondary-type",
+            params.get("secondary type", None)
+        ])
+    if params.get("type", None) is not None:
         cargs.extend([
             "-surface-type",
-            (params.get("type", None) if (params.get("type", None) is not None) else ""),
-            "-surface-secondary-type",
-            (params.get("secondary type", None) if (params.get("secondary type", None) is not None) else "")
+            params.get("type", None)
         ])
     cargs.append(params.get("data-file", None))
     cargs.append(params.get("structure", None))
@@ -236,8 +239,8 @@ def set_structure_execute(
 def set_structure(
     data_file: str,
     structure: str,
-    type_: str | None = None,
     secondary_type: str | None = None,
+    type_: str | None = None,
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
@@ -308,20 +311,20 @@ def set_structure(
     Args:
         data_file: the file to set the structure of.
         structure: the structure to set the file to.
-        type_: set the type of a surface (only used if file is a surface file)\
-            \
-            name of surface type.
         secondary_type: set the secondary type of a surface (only used if file\
             is a surface file)\
             \
             name of surface secondary type.
+        type_: set the type of a surface (only used if file is a surface file)\
+            \
+            name of surface type.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetStructureOutputs`).
     """
     params = set_structure_params(
-        type_=type_,
         secondary_type=secondary_type,
+        type_=type_,
         data_file=data_file,
         structure=structure,
     )

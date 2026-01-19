@@ -14,21 +14,21 @@ CIFTI_WEIGHTED_STATS_METADATA = Metadata(
 
 
 _CiftiWeightedStatsSpatialWeightsParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsSpatialWeightsParamsDictNoTag', {
-    "left-surf": typing.NotRequired[InputPathType | None],
-    "right-surf": typing.NotRequired[InputPathType | None],
-    "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "left-metric": typing.NotRequired[InputPathType | None],
-    "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
+    "right-metric": typing.NotRequired[InputPathType | None],
+    "left-metric": typing.NotRequired[InputPathType | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "left-surf": typing.NotRequired[InputPathType | None],
 })
 CiftiWeightedStatsSpatialWeightsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParamsDictTagged', {
     "@type": typing.Literal["spatial-weights"],
-    "left-surf": typing.NotRequired[InputPathType | None],
-    "right-surf": typing.NotRequired[InputPathType | None],
-    "cerebellum-surf": typing.NotRequired[InputPathType | None],
-    "left-metric": typing.NotRequired[InputPathType | None],
-    "right-metric": typing.NotRequired[InputPathType | None],
     "cerebellum-metric": typing.NotRequired[InputPathType | None],
+    "right-metric": typing.NotRequired[InputPathType | None],
+    "left-metric": typing.NotRequired[InputPathType | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "left-surf": typing.NotRequired[InputPathType | None],
 })
 CiftiWeightedStatsSpatialWeightsParamsDict = _CiftiWeightedStatsSpatialWeightsParamsDictNoTag | CiftiWeightedStatsSpatialWeightsParamsDictTagged
 
@@ -47,80 +47,80 @@ CiftiWeightedStatsRoiParamsDict = _CiftiWeightedStatsRoiParamsDictNoTag | CiftiW
 
 _CiftiWeightedStatsParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsParamsDictNoTag', {
     "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
-    "weight-cifti": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiWeightedStatsRoiParamsDict | None],
-    "mean": bool,
-    "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
-    "sum": bool,
+    "sample": typing.NotRequired[bool | None],
+    "column": typing.NotRequired[int | None],
+    "weight-cifti": typing.NotRequired[InputPathType | None],
     "show-map-name": bool,
+    "sum": bool,
+    "mean": bool,
     "cifti-in": InputPathType,
 })
 CiftiWeightedStatsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-weighted-stats"],
     "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
-    "weight-cifti": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiWeightedStatsRoiParamsDict | None],
-    "mean": bool,
-    "sample": typing.NotRequired[bool | None],
     "percent": typing.NotRequired[float | None],
-    "sum": bool,
+    "sample": typing.NotRequired[bool | None],
+    "column": typing.NotRequired[int | None],
+    "weight-cifti": typing.NotRequired[InputPathType | None],
     "show-map-name": bool,
+    "sum": bool,
+    "mean": bool,
     "cifti-in": InputPathType,
 })
 CiftiWeightedStatsParamsDict = _CiftiWeightedStatsParamsDictNoTag | CiftiWeightedStatsParamsDictTagged
 
 
 def cifti_weighted_stats_spatial_weights(
-    left_surf: InputPathType | None = None,
-    right_surf: InputPathType | None = None,
-    cerebellum_surf: InputPathType | None = None,
-    left_metric: InputPathType | None = None,
-    right_metric: InputPathType | None = None,
     cerebellum_metric: InputPathType | None = None,
+    right_metric: InputPathType | None = None,
+    left_metric: InputPathType | None = None,
+    cerebellum_surf: InputPathType | None = None,
+    right_surf: InputPathType | None = None,
+    left_surf: InputPathType | None = None,
 ) -> CiftiWeightedStatsSpatialWeightsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        left_surf: use a surface for left vertex areas\
-            \
-            the left surface to use, areas are in mm^2.
-        right_surf: use a surface for right vertex areas\
-            \
-            the right surface to use, areas are in mm^2.
-        cerebellum_surf: use a surface for cerebellum vertex areas\
-            \
-            the cerebellum surface to use, areas are in mm^2.
-        left_metric: use a metric file for left vertex areas\
-            \
-            metric file containing left vertex areas.
-        right_metric: use a metric file for right vertex areas\
-            \
-            metric file containing right vertex areas.
         cerebellum_metric: use a metric file for cerebellum vertex areas\
             \
             metric file containing cerebellum vertex areas.
+        right_metric: use a metric file for right vertex areas\
+            \
+            metric file containing right vertex areas.
+        left_metric: use a metric file for left vertex areas\
+            \
+            metric file containing left vertex areas.
+        cerebellum_surf: use a surface for cerebellum vertex areas\
+            \
+            the cerebellum surface to use, areas are in mm^2.
+        right_surf: use a surface for right vertex areas\
+            \
+            the right surface to use, areas are in mm^2.
+        left_surf: use a surface for left vertex areas\
+            \
+            the left surface to use, areas are in mm^2.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "spatial-weights",
     }
-    if left_surf is not None:
-        params["left-surf"] = left_surf
-    if right_surf is not None:
-        params["right-surf"] = right_surf
-    if cerebellum_surf is not None:
-        params["cerebellum-surf"] = cerebellum_surf
-    if left_metric is not None:
-        params["left-metric"] = left_metric
-    if right_metric is not None:
-        params["right-metric"] = right_metric
     if cerebellum_metric is not None:
         params["cerebellum-metric"] = cerebellum_metric
+    if right_metric is not None:
+        params["right-metric"] = right_metric
+    if left_metric is not None:
+        params["left-metric"] = left_metric
+    if cerebellum_surf is not None:
+        params["cerebellum-surf"] = cerebellum_surf
+    if right_surf is not None:
+        params["right-surf"] = right_surf
+    if left_surf is not None:
+        params["left-surf"] = left_surf
     return params
 
 
@@ -136,24 +136,24 @@ def cifti_weighted_stats_spatial_weights_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("left-surf", None) is not None:
-        if not isinstance(params["left-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
-    if params.get("right-surf", None) is not None:
-        if not isinstance(params["right-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
-    if params.get("cerebellum-surf", None) is not None:
-        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
-    if params.get("left-metric", None) is not None:
-        if not isinstance(params["left-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`left-metric` has the wrong type: Received `{type(params.get("left-metric", None))}` expected `InputPathType | None`')
-    if params.get("right-metric", None) is not None:
-        if not isinstance(params["right-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`right-metric` has the wrong type: Received `{type(params.get("right-metric", None))}` expected `InputPathType | None`')
     if params.get("cerebellum-metric", None) is not None:
         if not isinstance(params["cerebellum-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`cerebellum-metric` has the wrong type: Received `{type(params.get("cerebellum-metric", None))}` expected `InputPathType | None`')
+    if params.get("right-metric", None) is not None:
+        if not isinstance(params["right-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-metric` has the wrong type: Received `{type(params.get("right-metric", None))}` expected `InputPathType | None`')
+    if params.get("left-metric", None) is not None:
+        if not isinstance(params["left-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-metric` has the wrong type: Received `{type(params.get("left-metric", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-surf", None) is not None:
+        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
+    if params.get("right-surf", None) is not None:
+        if not isinstance(params["right-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
+    if params.get("left-surf", None) is not None:
+        if not isinstance(params["left-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
 
 
 def cifti_weighted_stats_spatial_weights_cargs(
@@ -170,21 +170,36 @@ def cifti_weighted_stats_spatial_weights_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("left-surf", None) is not None or params.get("right-surf", None) is not None or params.get("cerebellum-surf", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None:
+    cargs.append("-spatial-weights")
+    if params.get("cerebellum-metric", None) is not None:
         cargs.extend([
-            "-spatial-weights",
-            "-left-area-surf",
-            (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
-            "-right-area-surf",
-            (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
-            "-cerebellum-area-surf",
-            (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
-            "-left-area-metric",
-            (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
-            "-right-area-metric",
-            (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
             "-cerebellum-area-metric",
-            (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
+            execution.input_file(params.get("cerebellum-metric", None))
+        ])
+    if params.get("right-metric", None) is not None:
+        cargs.extend([
+            "-right-area-metric",
+            execution.input_file(params.get("right-metric", None))
+        ])
+    if params.get("left-metric", None) is not None:
+        cargs.extend([
+            "-left-area-metric",
+            execution.input_file(params.get("left-metric", None))
+        ])
+    if params.get("cerebellum-surf", None) is not None:
+        cargs.extend([
+            "-cerebellum-area-surf",
+            execution.input_file(params.get("cerebellum-surf", None))
+        ])
+    if params.get("right-surf", None) is not None:
+        cargs.extend([
+            "-right-area-surf",
+            execution.input_file(params.get("right-surf", None))
+        ])
+    if params.get("left-surf", None) is not None:
+        cargs.extend([
+            "-left-area-surf",
+            execution.input_file(params.get("left-surf", None))
         ])
     return cargs
 
@@ -249,9 +264,10 @@ def cifti_weighted_stats_roi_cargs(
     cargs = []
     cargs.extend([
         "-roi",
-        execution.input_file(params.get("roi-cifti", None)),
-        ("-match-maps" if (params.get("match-maps", False)) else "")
+        execution.input_file(params.get("roi-cifti", None))
     ])
+    if params.get("match-maps", False):
+        cargs.append("-match-maps")
     return cargs
 
 
@@ -266,14 +282,14 @@ class CiftiWeightedStatsOutputs(typing.NamedTuple):
 def cifti_weighted_stats_params(
     cifti_in: InputPathType,
     spatial_weights: CiftiWeightedStatsSpatialWeightsParamsDict | None = None,
-    weight_cifti: InputPathType | None = None,
-    column: int | None = None,
     roi: CiftiWeightedStatsRoiParamsDict | None = None,
-    mean: bool = False,
-    sample: bool | None = None,
     percent: float | None = None,
-    sum_: bool = False,
+    sample: bool | None = None,
+    column: int | None = None,
+    weight_cifti: InputPathType | None = None,
     show_map_name: bool = False,
+    sum_: bool = False,
+    mean: bool = False,
 ) -> CiftiWeightedStatsParamsDictTagged:
     """
     Build parameters.
@@ -281,44 +297,44 @@ def cifti_weighted_stats_params(
     Args:
         cifti_in: the input cifti.
         spatial_weights: use vertex area and voxel volume as weights.
-        weight_cifti: use a cifti file containing weights\
-            \
-            the weights to use, as a cifti file.
-        column: only display output for one column\
-            \
-            the column to use (1-based).
         roi: only consider data inside an roi.
-        mean: compute weighted mean.
-        sample: compute weighted standard deviation\
-            \
-            estimate population stdev from the sample.
         percent: compute weighted percentile\
             \
             the percentile to find, must be between 0 and 100.
-        sum_: compute weighted sum.
+        sample: compute weighted standard deviation\
+            \
+            estimate population stdev from the sample.
+        column: only display output for one column\
+            \
+            the column to use (1-based).
+        weight_cifti: use a cifti file containing weights\
+            \
+            the weights to use, as a cifti file.
         show_map_name: print map index and name before each output.
+        sum_: compute weighted sum.
+        mean: compute weighted mean.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-weighted-stats",
-        "mean": mean,
-        "sum": sum_,
         "show-map-name": show_map_name,
+        "sum": sum_,
+        "mean": mean,
         "cifti-in": cifti_in,
     }
     if spatial_weights is not None:
         params["spatial-weights"] = spatial_weights
-    if weight_cifti is not None:
-        params["weight-cifti"] = weight_cifti
-    if column is not None:
-        params["column"] = column
     if roi is not None:
         params["roi"] = roi
-    if sample is not None:
-        params["sample"] = sample
     if percent is not None:
         params["percent"] = percent
+    if sample is not None:
+        params["sample"] = sample
+    if column is not None:
+        params["column"] = column
+    if weight_cifti is not None:
+        params["weight-cifti"] = weight_cifti
     return params
 
 
@@ -336,32 +352,32 @@ def cifti_weighted_stats_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("spatial-weights", None) is not None:
         cifti_weighted_stats_spatial_weights_validate(params["spatial-weights"])
-    if params.get("weight-cifti", None) is not None:
-        if not isinstance(params["weight-cifti"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`weight-cifti` has the wrong type: Received `{type(params.get("weight-cifti", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], int):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `int | None`')
     if params.get("roi", None) is not None:
         cifti_weighted_stats_roi_validate(params["roi"])
-    if params.get("mean", False) is None:
-        raise StyxValidationError("`mean` must not be None")
-    if not isinstance(params["mean"], bool):
-        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("sample", None) is not None:
-        if not isinstance(params["sample"], bool):
-            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
     if params.get("percent", None) is not None:
         if not isinstance(params["percent"], (float, int)):
             raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
-    if params.get("sum", False) is None:
-        raise StyxValidationError("`sum` must not be None")
-    if not isinstance(params["sum"], bool):
-        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("sample", None) is not None:
+        if not isinstance(params["sample"], bool):
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", None))}` expected `bool | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], int):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `int | None`')
+    if params.get("weight-cifti", None) is not None:
+        if not isinstance(params["weight-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight-cifti` has the wrong type: Received `{type(params.get("weight-cifti", None))}` expected `InputPathType | None`')
     if params.get("show-map-name", False) is None:
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
         raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -386,22 +402,37 @@ def cifti_weighted_stats_cargs(
         "wb_command",
         "-cifti-weighted-stats"
     ])
-    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", None) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
+    if params.get("spatial-weights", None) is not None or params.get("roi", None) is not None:
         cargs.extend([
             *(cifti_weighted_stats_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
-            "-cifti-weights",
-            (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
-            "-column",
-            (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
-            *(cifti_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
-            ("-mean" if (params.get("mean", False)) else ""),
-            "-stdev",
-            ("-sample" if (params.get("sample", None) is not None) else ""),
-            "-percentile",
-            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
-            ("-sum" if (params.get("sum", False)) else ""),
-            ("-show-map-name" if (params.get("show-map-name", False)) else "")
+            *(cifti_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else [])
         ])
+    if params.get("percent", None) is not None:
+        cargs.extend([
+            "-percentile",
+            str(params.get("percent", None))
+        ])
+    if params.get("sample", None) is not None:
+        cargs.extend([
+            "-stdev",
+            "-sample"
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            str(params.get("column", None))
+        ])
+    if params.get("weight-cifti", None) is not None:
+        cargs.extend([
+            "-cifti-weights",
+            execution.input_file(params.get("weight-cifti", None))
+        ])
+    if params.get("show-map-name", False):
+        cargs.append("-show-map-name")
+    if params.get("sum", False):
+        cargs.append("-sum")
+    if params.get("mean", False):
+        cargs.append("-mean")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
@@ -466,14 +497,14 @@ def cifti_weighted_stats_execute(
 def cifti_weighted_stats(
     cifti_in: InputPathType,
     spatial_weights: CiftiWeightedStatsSpatialWeightsParamsDict | None = None,
-    weight_cifti: InputPathType | None = None,
-    column: int | None = None,
     roi: CiftiWeightedStatsRoiParamsDict | None = None,
-    mean: bool = False,
-    sample: bool | None = None,
     percent: float | None = None,
-    sum_: bool = False,
+    sample: bool | None = None,
+    column: int | None = None,
+    weight_cifti: InputPathType | None = None,
     show_map_name: bool = False,
+    sum_: bool = False,
+    mean: bool = False,
     runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
@@ -497,36 +528,36 @@ def cifti_weighted_stats(
     Args:
         cifti_in: the input cifti.
         spatial_weights: use vertex area and voxel volume as weights.
-        weight_cifti: use a cifti file containing weights\
-            \
-            the weights to use, as a cifti file.
-        column: only display output for one column\
-            \
-            the column to use (1-based).
         roi: only consider data inside an roi.
-        mean: compute weighted mean.
-        sample: compute weighted standard deviation\
-            \
-            estimate population stdev from the sample.
         percent: compute weighted percentile\
             \
             the percentile to find, must be between 0 and 100.
-        sum_: compute weighted sum.
+        sample: compute weighted standard deviation\
+            \
+            estimate population stdev from the sample.
+        column: only display output for one column\
+            \
+            the column to use (1-based).
+        weight_cifti: use a cifti file containing weights\
+            \
+            the weights to use, as a cifti file.
         show_map_name: print map index and name before each output.
+        sum_: compute weighted sum.
+        mean: compute weighted mean.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiWeightedStatsOutputs`).
     """
     params = cifti_weighted_stats_params(
         spatial_weights=spatial_weights,
-        weight_cifti=weight_cifti,
-        column=column,
         roi=roi,
-        mean=mean,
-        sample=sample,
         percent=percent,
-        sum_=sum_,
+        sample=sample,
+        column=column,
+        weight_cifti=weight_cifti,
         show_map_name=show_map_name,
+        sum_=sum_,
+        mean=mean,
         cifti_in=cifti_in,
     )
     return cifti_weighted_stats_execute(params, runner)

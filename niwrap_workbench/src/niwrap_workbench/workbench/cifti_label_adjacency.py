@@ -54,15 +54,15 @@ def cifti_label_adjacency_params(
     Args:
         adjacency_out: the output cifti pconn adjacency matrix.
         label_in: the input cifti label file.
-        surface: specify the left surface to use\
+        surface: specify the cerebellum surface to use\
             \
-            the left surface file.
+            the cerebellum surface file.
         surface_: specify the right surface to use\
             \
             the right surface file.
-        surface_2: specify the cerebellum surface to use\
+        surface_2: specify the left surface to use\
             \
-            the cerebellum surface file.
+            the left surface file.
     Returns:
         Parameter dictionary
     """
@@ -129,15 +129,22 @@ def cifti_label_adjacency_cargs(
         "wb_command",
         "-cifti-label-adjacency"
     ])
-    cargs.extend([
-        params.get("adjacency-out", None),
-        "-left-surface",
-        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-        "-right-surface",
-        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
-        "-cerebellum-surface",
-        (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else "")
-    ])
+    cargs.append(params.get("adjacency-out", None))
+    if params.get("surface", None) is not None:
+        cargs.extend([
+            "-cerebellum-surface",
+            execution.input_file(params.get("surface", None))
+        ])
+    if params.get("surface", None) is not None:
+        cargs.extend([
+            "-right-surface",
+            execution.input_file(params.get("surface", None))
+        ])
+    if params.get("surface", None) is not None:
+        cargs.extend([
+            "-left-surface",
+            execution.input_file(params.get("surface", None))
+        ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
@@ -209,15 +216,15 @@ def cifti_label_adjacency(
     Args:
         adjacency_out: the output cifti pconn adjacency matrix.
         label_in: the input cifti label file.
-        surface: specify the left surface to use\
+        surface: specify the cerebellum surface to use\
             \
-            the left surface file.
+            the cerebellum surface file.
         surface_: specify the right surface to use\
             \
             the right surface file.
-        surface_2: specify the cerebellum surface to use\
+        surface_2: specify the left surface to use\
             \
-            the cerebellum surface file.
+            the left surface file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).

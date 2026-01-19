@@ -4,9 +4,6 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "distance": {
-      "var_param": "distance"
-    },
     "ribbon-constrained": {
       "var_param": "ribbon_constrained",
       "fn_struct_make_params": "label_to_volume_mapping_ribbon_constrained",
@@ -20,13 +17,16 @@
         "subdiv-num": {
           "var_param": "subdiv_num"
         },
-        "greedy": {
-          "var_param": "greedy"
-        },
         "thick-columns": {
           "var_param": "thick_columns"
+        },
+        "greedy": {
+          "var_param": "greedy"
         }
       }
+    },
+    "distance": {
+      "var_param": "distance"
     },
     "label": {
       "var_param": "label"

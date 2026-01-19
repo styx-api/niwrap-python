@@ -407,9 +407,10 @@ def volume_set_space_file_cargs(
     cargs = []
     cargs.extend([
         "-file",
-        params.get("volume-ref", None),
-        ("-ignore-dims" if (params.get("ignore-dims", False)) else "")
+        params.get("volume-ref", None)
     ])
+    if params.get("ignore-dims", False):
+        cargs.append("-ignore-dims")
     return cargs
 
 

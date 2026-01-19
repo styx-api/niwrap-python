@@ -4,18 +4,12 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "surface-largest": {
-      "var_param": "surface_largest"
-    },
     "volume-predilate": {
       "var_param": "volume_predilate",
       "fn_struct_make_params": "cifti_resample_volume_predilate",
       "properties": {
         "dilate-mm": {
           "var_param": "dilate_mm"
-        },
-        "nearest": {
-          "var_param": "nearest"
         },
         "weighted": {
           "var_param": "weighted",
@@ -28,6 +22,9 @@
               "var_param": "legacy_cutoff"
             }
           }
+        },
+        "nearest": {
+          "var_param": "nearest"
         }
       }
     },
@@ -37,12 +34,6 @@
       "properties": {
         "dilate-mm": {
           "var_param": "dilate_mm"
-        },
-        "nearest": {
-          "var_param": "nearest"
-        },
-        "linear": {
-          "var_param": "linear"
         },
         "weighted": {
           "var_param": "weighted",
@@ -55,6 +46,12 @@
               "var_param": "legacy_cutoff"
             }
           }
+        },
+        "linear": {
+          "var_param": "linear"
+        },
+        "nearest": {
+          "var_param": "nearest"
         }
       }
     },
@@ -198,6 +195,9 @@
           }
         }
       }
+    },
+    "surface-largest": {
+      "var_param": "surface_largest"
     },
     "cifti-in": {
       "var_param": "cifti_in"

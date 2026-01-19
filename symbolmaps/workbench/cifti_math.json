@@ -4,12 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "replace": {
-      "var_param": "replace"
-    },
-    "override-mapping-check": {
-      "var_param": "override_mapping_check"
-    },
     "var": {
       "var_param": "var",
       "fn_struct_make_params": "cifti_math_var",
@@ -36,6 +30,12 @@
           }
         }
       }
+    },
+    "replace": {
+      "var_param": "replace"
+    },
+    "override-mapping-check": {
+      "var_param": "override_mapping_check"
     },
     "expression": {
       "var_param": "expression"

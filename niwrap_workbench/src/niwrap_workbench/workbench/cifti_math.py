@@ -43,17 +43,17 @@ CiftiMathVarParamsDict = _CiftiMathVarParamsDictNoTag | CiftiMathVarParamsDictTa
 
 _CiftiMathParamsDictNoTag = typing.TypedDict('_CiftiMathParamsDictNoTag', {
     "cifti-out": str,
+    "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
-    "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "expression": str,
 })
 CiftiMathParamsDictTagged = typing.TypedDict('CiftiMathParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-math"],
     "cifti-out": str,
+    "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
-    "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "expression": str,
 })
 CiftiMathParamsDict = _CiftiMathParamsDictNoTag | CiftiMathParamsDictTagged
@@ -127,9 +127,10 @@ def cifti_math_select_cargs(
     cargs.extend([
         "-select",
         str(params.get("dim", None)),
-        params.get("index", None),
-        ("-repeat" if (params.get("repeat", False)) else "")
+        params.get("index", None)
     ])
+    if params.get("repeat", False):
+        cargs.append("-repeat")
     return cargs
 
 
@@ -221,9 +222,9 @@ class CiftiMathOutputs(typing.NamedTuple):
 def cifti_math_params(
     cifti_out: str,
     expression: str,
+    var: list[CiftiMathVarParamsDict] | None = None,
     replace: float | None = None,
     override_mapping_check: bool = False,
-    var: list[CiftiMathVarParamsDict] | None = None,
 ) -> CiftiMathParamsDictTagged:
     """
     Build parameters.
@@ -231,12 +232,12 @@ def cifti_math_params(
     Args:
         cifti_out: the output cifti file.
         expression: the expression to evaluate, in quotes.
+        var: a cifti file to use as a variable.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
         override_mapping_check: don't check the mappings for compatibility,\
             only check length.
-        var: a cifti file to use as a variable.
     Returns:
         Parameter dictionary
     """
@@ -246,10 +247,10 @@ def cifti_math_params(
         "override-mapping-check": override_mapping_check,
         "expression": expression,
     }
-    if replace is not None:
-        params["replace"] = replace
     if var is not None:
         params["var"] = var
+    if replace is not None:
+        params["replace"] = replace
     return params
 
 
@@ -269,6 +270,11 @@ def cifti_math_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("var", None) is not None:
+        if not isinstance(params["var"], list):
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[CiftiMathVarParamsDict] | None`')
+        for e in params["var"]:
+            cifti_math_var_validate(e)
     if params.get("replace", None) is not None:
         if not isinstance(params["replace"], (float, int)):
             raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
@@ -276,11 +282,6 @@ def cifti_math_validate(
         raise StyxValidationError("`override-mapping-check` must not be None")
     if not isinstance(params["override-mapping-check"], bool):
         raise StyxValidationError(f'`override-mapping-check` has the wrong type: Received `{type(params.get("override-mapping-check", False))}` expected `bool`')
-    if params.get("var", None) is not None:
-        if not isinstance(params["var"], list):
-            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[CiftiMathVarParamsDict] | None`')
-        for e in params["var"]:
-            cifti_math_var_validate(e)
     if params.get("expression", None) is None:
         raise StyxValidationError("`expression` must not be None")
     if not isinstance(params["expression"], str):
@@ -307,11 +308,15 @@ def cifti_math_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        "-fixnan",
-        (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
-        ("-override-mapping-check" if (params.get("override-mapping-check", False)) else ""),
         *([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
     ])
+    if params.get("replace", None) is not None:
+        cargs.extend([
+            "-fixnan",
+            str(params.get("replace", None))
+        ])
+    if params.get("override-mapping-check", False):
+        cargs.append("-override-mapping-check")
     cargs.append(params.get("expression", None))
     return cargs
 
@@ -435,9 +440,9 @@ def cifti_math_execute(
 def cifti_math(
     cifti_out: str,
     expression: str,
+    var: list[CiftiMathVarParamsDict] | None = None,
     replace: float | None = None,
     override_mapping_check: bool = False,
-    var: list[CiftiMathVarParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
@@ -519,21 +524,21 @@ def cifti_math(
     Args:
         cifti_out: the output cifti file.
         expression: the expression to evaluate, in quotes.
+        var: a cifti file to use as a variable.
         replace: replace NaN results with a value\
             \
             value to replace NaN with.
         override_mapping_check: don't check the mappings for compatibility,\
             only check length.
-        var: a cifti file to use as a variable.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiMathOutputs`).
     """
     params = cifti_math_params(
         cifti_out=cifti_out,
+        var=var,
         replace=replace,
         override_mapping_check=override_mapping_check,
-        var=var,
         expression=expression,
     )
     return cifti_math_execute(params, runner)

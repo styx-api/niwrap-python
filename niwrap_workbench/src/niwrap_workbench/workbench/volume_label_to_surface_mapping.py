@@ -16,18 +16,18 @@ VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA = Metadata(
 _VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictNoTag = typing.TypedDict('_VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictNoTag', {
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
-    "roi-volume": typing.NotRequired[InputPathType | None],
-    "dist": typing.NotRequired[float | None],
     "subdiv-num": typing.NotRequired[int | None],
+    "dist": typing.NotRequired[float | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
     "thin-columns": bool,
 })
 VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged', {
     "@type": typing.Literal["ribbon-constrained"],
     "inner-surf": InputPathType,
     "outer-surf": InputPathType,
-    "roi-volume": typing.NotRequired[InputPathType | None],
-    "dist": typing.NotRequired[float | None],
     "subdiv-num": typing.NotRequired[int | None],
+    "dist": typing.NotRequired[float | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
     "thin-columns": bool,
 })
 VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict = _VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictNoTag | VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged
@@ -54,9 +54,9 @@ VolumeLabelToSurfaceMappingParamsDict = _VolumeLabelToSurfaceMappingParamsDictNo
 def volume_label_to_surface_mapping_ribbon_constrained(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
-    roi_volume: InputPathType | None = None,
-    dist: float | None = None,
     subdiv_num: int | None = None,
+    dist: float | None = None,
+    roi_volume: InputPathType | None = None,
     thin_columns: bool = False,
 ) -> VolumeLabelToSurfaceMappingRibbonConstrainedParamsDictTagged:
     """
@@ -65,15 +65,15 @@ def volume_label_to_surface_mapping_ribbon_constrained(
     Args:
         inner_surf: the inner surface of the ribbon.
         outer_surf: the outer surface of the ribbon.
-        roi_volume: use a volume roi\
-            \
-            the volume file.
-        dist: use dilation for small vertices that 'missed' the geometry tests\
-            \
-            distance in mm for dilation (can be small, like 1mm).
         subdiv_num: voxel divisions while estimating voxel weights\
             \
             number of subdivisions, default 3.
+        dist: use dilation for small vertices that 'missed' the geometry tests\
+            \
+            distance in mm for dilation (can be small, like 1mm).
+        roi_volume: use a volume roi\
+            \
+            the volume file.
         thin_columns: use non-overlapping polyhedra.
     Returns:
         Parameter dictionary
@@ -84,12 +84,12 @@ def volume_label_to_surface_mapping_ribbon_constrained(
         "outer-surf": outer_surf,
         "thin-columns": thin_columns,
     }
-    if roi_volume is not None:
-        params["roi-volume"] = roi_volume
-    if dist is not None:
-        params["dist"] = dist
     if subdiv_num is not None:
         params["subdiv-num"] = subdiv_num
+    if dist is not None:
+        params["dist"] = dist
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
     return params
 
 
@@ -113,15 +113,15 @@ def volume_label_to_surface_mapping_ribbon_constrained_validate(
         raise StyxValidationError("`outer-surf` must not be None")
     if not isinstance(params["outer-surf"], (pathlib.Path, str)):
         raise StyxValidationError(f'`outer-surf` has the wrong type: Received `{type(params.get("outer-surf", None))}` expected `InputPathType`')
-    if params.get("roi-volume", None) is not None:
-        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("dist", None) is not None:
-        if not isinstance(params["dist"], (float, int)):
-            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
     if params.get("subdiv-num", None) is not None:
         if not isinstance(params["subdiv-num"], int):
             raise StyxValidationError(f'`subdiv-num` has the wrong type: Received `{type(params.get("subdiv-num", None))}` expected `int | None`')
+    if params.get("dist", None) is not None:
+        if not isinstance(params["dist"], (float, int)):
+            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
     if params.get("thin-columns", False) is None:
         raise StyxValidationError("`thin-columns` must not be None")
     if not isinstance(params["thin-columns"], bool):
@@ -145,15 +145,25 @@ def volume_label_to_surface_mapping_ribbon_constrained_cargs(
     cargs.extend([
         "-ribbon-constrained",
         execution.input_file(params.get("inner-surf", None)),
-        execution.input_file(params.get("outer-surf", None)),
-        "-volume-roi",
-        (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
-        "-dilate-missing",
-        (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-        "-voxel-subdiv",
-        (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
-        ("-thin-columns" if (params.get("thin-columns", False)) else "")
+        execution.input_file(params.get("outer-surf", None))
     ])
+    if params.get("subdiv-num", None) is not None:
+        cargs.extend([
+            "-voxel-subdiv",
+            str(params.get("subdiv-num", None))
+        ])
+    if params.get("dist", None) is not None:
+        cargs.extend([
+            "-dilate-missing",
+            str(params.get("dist", None))
+        ])
+    if params.get("roi-volume", None) is not None:
+        cargs.extend([
+            "-volume-roi",
+            execution.input_file(params.get("roi-volume", None))
+        ])
+    if params.get("thin-columns", False):
+        cargs.append("-thin-columns")
     return cargs
 
 
@@ -252,10 +262,13 @@ def volume_label_to_surface_mapping_cargs(
     ])
     cargs.extend([
         params.get("label-out", None),
-        *(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
-        "-subvol-select",
-        (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+        *(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else [])
     ])
+    if params.get("subvol", None) is not None:
+        cargs.extend([
+            "-subvol-select",
+            params.get("subvol", None)
+        ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     return cargs

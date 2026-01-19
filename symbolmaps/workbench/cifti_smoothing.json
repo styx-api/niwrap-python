@@ -4,9 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "fwhm": {
-      "var_param": "fwhm"
-    },
     "left-surface": {
       "var_param": "left_surface",
       "fn_struct_make_params": "cifti_smoothing_left_surface",
@@ -43,18 +40,6 @@
         }
       }
     },
-    "roi-cifti": {
-      "var_param": "roi_cifti"
-    },
-    "fix-zeros-volume": {
-      "var_param": "fix_zeros_volume"
-    },
-    "fix-zeros-surface": {
-      "var_param": "fix_zeros_surface"
-    },
-    "merged-volume": {
-      "var_param": "merged_volume"
-    },
     "surface": {
       "var_param": "surface",
       "fn_struct_make_params": "cifti_smoothing_surface",
@@ -69,6 +54,21 @@
           "var_param": "area_metric"
         }
       }
+    },
+    "roi-cifti": {
+      "var_param": "roi_cifti"
+    },
+    "merged-volume": {
+      "var_param": "merged_volume"
+    },
+    "fix-zeros-surface": {
+      "var_param": "fix_zeros_surface"
+    },
+    "fix-zeros-volume": {
+      "var_param": "fix_zeros_volume"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
     },
     "cifti": {
       "var_param": "cifti"

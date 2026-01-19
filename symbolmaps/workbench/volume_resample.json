@@ -4,9 +4,6 @@
     "volume-out": {
       "var_param": "volume_out"
     },
-    "value": {
-      "var_param": "value"
-    },
     "affine": {
       "var_param": "affine",
       "fn_struct_make_params": "volume_resample_affine",
@@ -60,6 +57,9 @@
           "var_param": "source_volume"
         }
       }
+    },
+    "value": {
+      "var_param": "value"
     },
     "volume-in": {
       "var_param": "volume_in"

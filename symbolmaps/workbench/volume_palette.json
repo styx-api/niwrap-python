@@ -1,9 +1,6 @@
 {
   "fn_root_make_params_and_execute": "volume_palette",
   "properties": {
-    "subvolume": {
-      "var_param": "subvolume"
-    },
     "pos-percent": {
       "var_param": "pos_percent",
       "fn_struct_make_params": "volume_palette_pos_percent",
@@ -52,15 +49,6 @@
         }
       }
     },
-    "interpolate": {
-      "var_param": "interpolate"
-    },
-    "display": {
-      "var_param": "display_2"
-    },
-    "name": {
-      "var_param": "name"
-    },
     "thresholding": {
       "var_param": "thresholding",
       "fn_struct_make_params": "volume_palette_thresholding",
@@ -81,6 +69,18 @@
     },
     "type": {
       "var_param": "type_2"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "display": {
+      "var_param": "display_2"
+    },
+    "interpolate": {
+      "var_param": "interpolate"
+    },
+    "subvolume": {
+      "var_param": "subvolume"
     },
     "volume": {
       "var_param": "volume"

@@ -15,17 +15,17 @@ GIFTI_LABEL_TO_ROI_METADATA = Metadata(
 
 _GiftiLabelToRoiParamsDictNoTag = typing.TypedDict('_GiftiLabelToRoiParamsDictNoTag', {
     "metric-out": str,
-    "label-name": typing.NotRequired[str | None],
-    "label-key": typing.NotRequired[int | None],
     "map": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "label-name": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
 GiftiLabelToRoiParamsDictTagged = typing.TypedDict('GiftiLabelToRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-label-to-roi"],
     "metric-out": str,
-    "label-name": typing.NotRequired[str | None],
-    "label-key": typing.NotRequired[int | None],
     "map": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "label-name": typing.NotRequired[str | None],
     "label-in": InputPathType,
 })
 GiftiLabelToRoiParamsDict = _GiftiLabelToRoiParamsDictNoTag | GiftiLabelToRoiParamsDictTagged
@@ -44,9 +44,9 @@ class GiftiLabelToRoiOutputs(typing.NamedTuple):
 def gifti_label_to_roi_params(
     metric_out: str,
     label_in: InputPathType,
-    label_name: str | None = None,
-    label_key: int | None = None,
     map_: str | None = None,
+    label_key: int | None = None,
+    label_name: str | None = None,
 ) -> GiftiLabelToRoiParamsDictTagged:
     """
     Build parameters.
@@ -54,15 +54,15 @@ def gifti_label_to_roi_params(
     Args:
         metric_out: the output metric file.
         label_in: the input gifti label file.
-        label_name: select label by name\
-            \
-            the label name that you want an roi of.
-        label_key: select label by key\
-            \
-            the label key that you want an roi of.
         map_: select a single label map to use\
             \
             the map number or name.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
     Returns:
         Parameter dictionary
     """
@@ -71,12 +71,12 @@ def gifti_label_to_roi_params(
         "metric-out": metric_out,
         "label-in": label_in,
     }
-    if label_name is not None:
-        params["label-name"] = label_name
-    if label_key is not None:
-        params["label-key"] = label_key
     if map_ is not None:
         params["map"] = map_
+    if label_key is not None:
+        params["label-key"] = label_key
+    if label_name is not None:
+        params["label-name"] = label_name
     return params
 
 
@@ -96,15 +96,15 @@ def gifti_label_to_roi_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("label-name", None) is not None:
-        if not isinstance(params["label-name"], str):
-            raise StyxValidationError(f'`label-name` has the wrong type: Received `{type(params.get("label-name", None))}` expected `str | None`')
-    if params.get("label-key", None) is not None:
-        if not isinstance(params["label-key"], int):
-            raise StyxValidationError(f'`label-key` has the wrong type: Received `{type(params.get("label-key", None))}` expected `int | None`')
     if params.get("map", None) is not None:
         if not isinstance(params["map"], str):
             raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str | None`')
+    if params.get("label-key", None) is not None:
+        if not isinstance(params["label-key"], int):
+            raise StyxValidationError(f'`label-key` has the wrong type: Received `{type(params.get("label-key", None))}` expected `int | None`')
+    if params.get("label-name", None) is not None:
+        if not isinstance(params["label-name"], str):
+            raise StyxValidationError(f'`label-name` has the wrong type: Received `{type(params.get("label-name", None))}` expected `str | None`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -129,15 +129,22 @@ def gifti_label_to_roi_cargs(
         "wb_command",
         "-gifti-label-to-roi"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-name",
-        (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
-        "-key",
-        (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
-        "-map",
-        (params.get("map", None) if (params.get("map", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("map", None) is not None:
+        cargs.extend([
+            "-map",
+            params.get("map", None)
+        ])
+    if params.get("label-key", None) is not None:
+        cargs.extend([
+            "-key",
+            str(params.get("label-key", None))
+        ])
+    if params.get("label-name", None) is not None:
+        cargs.extend([
+            "-name",
+            params.get("label-name", None)
+        ])
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
@@ -193,9 +200,9 @@ def gifti_label_to_roi_execute(
 def gifti_label_to_roi(
     metric_out: str,
     label_in: InputPathType,
-    label_name: str | None = None,
-    label_key: int | None = None,
     map_: str | None = None,
+    label_key: int | None = None,
+    label_name: str | None = None,
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
@@ -209,24 +216,24 @@ def gifti_label_to_roi(
     Args:
         metric_out: the output metric file.
         label_in: the input gifti label file.
-        label_name: select label by name\
-            \
-            the label name that you want an roi of.
-        label_key: select label by key\
-            \
-            the label key that you want an roi of.
         map_: select a single label map to use\
             \
             the map number or name.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelToRoiOutputs`).
     """
     params = gifti_label_to_roi_params(
         metric_out=metric_out,
-        label_name=label_name,
-        label_key=label_key,
         map_=map_,
+        label_key=label_key,
+        label_name=label_name,
         label_in=label_in,
     )
     return gifti_label_to_roi_execute(params, runner)

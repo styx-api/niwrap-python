@@ -13,17 +13,17 @@
         }
       }
     },
-    "value": {
-      "var_param": "value"
-    },
-    "dist": {
-      "var_param": "dist_"
+    "method": {
+      "var_param": "method"
     },
     "num": {
       "var_param": "num"
     },
-    "method": {
-      "var_param": "method"
+    "dist": {
+      "var_param": "dist_"
+    },
+    "value": {
+      "var_param": "value"
     },
     "surface": {
       "var_param": "surface"

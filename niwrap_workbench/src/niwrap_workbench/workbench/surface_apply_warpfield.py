@@ -116,11 +116,12 @@ def surface_apply_warpfield_cargs(
         "wb_command",
         "-surface-apply-warpfield"
     ])
-    cargs.extend([
-        params.get("out-surf", None),
-        "-fnirt",
-        (params.get("forward-warp", None) if (params.get("forward-warp", None) is not None) else "")
-    ])
+    cargs.append(params.get("out-surf", None))
+    if params.get("forward-warp", None) is not None:
+        cargs.extend([
+            "-fnirt",
+            params.get("forward-warp", None)
+        ])
     cargs.append(execution.input_file(params.get("in-surf", None)))
     cargs.append(params.get("warpfield", None))
     return cargs

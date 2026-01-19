@@ -15,14 +15,14 @@ CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
 
 _CiftiExportDenseMappingVolumeAllParamsDictNoTag = typing.TypedDict('_CiftiExportDenseMappingVolumeAllParamsDictNoTag', {
     "text-out": str,
-    "no-cifti-index": bool,
     "structure": bool,
+    "no-cifti-index": bool,
 })
 CiftiExportDenseMappingVolumeAllParamsDictTagged = typing.TypedDict('CiftiExportDenseMappingVolumeAllParamsDictTagged', {
     "@type": typing.Literal["volume-all"],
     "text-out": str,
-    "no-cifti-index": bool,
     "structure": bool,
+    "no-cifti-index": bool,
 })
 CiftiExportDenseMappingVolumeAllParamsDict = _CiftiExportDenseMappingVolumeAllParamsDictNoTag | CiftiExportDenseMappingVolumeAllParamsDictTagged
 
@@ -75,24 +75,24 @@ CiftiExportDenseMappingParamsDict = _CiftiExportDenseMappingParamsDictNoTag | Ci
 
 def cifti_export_dense_mapping_volume_all(
     text_out: str,
-    no_cifti_index: bool = False,
     structure: bool = False,
+    no_cifti_index: bool = False,
 ) -> CiftiExportDenseMappingVolumeAllParamsDictTagged:
     """
     Build parameters.
     
     Args:
         text_out: output - the output text file.
-        no_cifti_index: don't write the cifti index in the output file.
         structure: write the structure each voxel belongs to in the output file.
+        no_cifti_index: don't write the cifti index in the output file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "volume-all",
         "text-out": text_out,
-        "no-cifti-index": no_cifti_index,
         "structure": structure,
+        "no-cifti-index": no_cifti_index,
     }
     return params
 
@@ -113,14 +113,14 @@ def cifti_export_dense_mapping_volume_all_validate(
         raise StyxValidationError("`text-out` must not be None")
     if not isinstance(params["text-out"], str):
         raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
-    if params.get("no-cifti-index", False) is None:
-        raise StyxValidationError("`no-cifti-index` must not be None")
-    if not isinstance(params["no-cifti-index"], bool):
-        raise StyxValidationError(f'`no-cifti-index` has the wrong type: Received `{type(params.get("no-cifti-index", False))}` expected `bool`')
     if params.get("structure", False) is None:
         raise StyxValidationError("`structure` must not be None")
     if not isinstance(params["structure"], bool):
         raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", False))}` expected `bool`')
+    if params.get("no-cifti-index", False) is None:
+        raise StyxValidationError("`no-cifti-index` must not be None")
+    if not isinstance(params["no-cifti-index"], bool):
+        raise StyxValidationError(f'`no-cifti-index` has the wrong type: Received `{type(params.get("no-cifti-index", False))}` expected `bool`')
 
 
 def cifti_export_dense_mapping_volume_all_cargs(
@@ -139,10 +139,12 @@ def cifti_export_dense_mapping_volume_all_cargs(
     cargs = []
     cargs.extend([
         "-volume-all",
-        params.get("text-out", None),
-        ("-no-cifti-index" if (params.get("no-cifti-index", False)) else ""),
-        ("-structure" if (params.get("structure", False)) else "")
+        params.get("text-out", None)
     ])
+    if params.get("structure", False):
+        cargs.append("-structure")
+    if params.get("no-cifti-index", False):
+        cargs.append("-no-cifti-index")
     return cargs
 
 
@@ -213,9 +215,10 @@ def cifti_export_dense_mapping_surface_cargs(
     cargs.extend([
         "-surface",
         params.get("structure", None),
-        params.get("text-out", None),
-        ("-no-cifti-index" if (params.get("no-cifti-index", False)) else "")
+        params.get("text-out", None)
     ])
+    if params.get("no-cifti-index", False):
+        cargs.append("-no-cifti-index")
     return cargs
 
 
@@ -286,9 +289,10 @@ def cifti_export_dense_mapping_volume_cargs(
     cargs.extend([
         "-volume",
         params.get("structure", None),
-        params.get("text-out", None),
-        ("-no-cifti-index" if (params.get("no-cifti-index", False)) else "")
+        params.get("text-out", None)
     ])
+    if params.get("no-cifti-index", False):
+        cargs.append("-no-cifti-index")
     return cargs
 
 

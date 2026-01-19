@@ -4,12 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "transpose": {
-      "var_param": "transpose"
-    },
-    "file": {
-      "var_param": "file"
-    },
     "series": {
       "var_param": "series",
       "fn_struct_make_params": "cifti_create_scalar_series_series",
@@ -24,6 +18,12 @@
           "var_param": "step"
         }
       }
+    },
+    "file": {
+      "var_param": "file"
+    },
+    "transpose": {
+      "var_param": "transpose"
     },
     "input": {
       "var_param": "input_"

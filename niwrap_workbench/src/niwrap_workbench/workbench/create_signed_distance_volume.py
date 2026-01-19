@@ -26,11 +26,11 @@ CreateSignedDistanceVolumeRoiOutParamsDict = _CreateSignedDistanceVolumeRoiOutPa
 _CreateSignedDistanceVolumeParamsDictNoTag = typing.TypedDict('_CreateSignedDistanceVolumeParamsDictNoTag', {
     "outvol": str,
     "roi-out": typing.NotRequired[CreateSignedDistanceVolumeRoiOutParamsDict | None],
-    "value": typing.NotRequired[float | None],
-    "dist": typing.NotRequired[float | None],
-    "dist": typing.NotRequired[float | None],
-    "num": typing.NotRequired[int | None],
     "method": typing.NotRequired[str | None],
+    "num": typing.NotRequired[int | None],
+    "dist": typing.NotRequired[float | None],
+    "dist": typing.NotRequired[float | None],
+    "value": typing.NotRequired[float | None],
     "surface": InputPathType,
     "refspace": str,
 })
@@ -38,11 +38,11 @@ CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDista
     "@type": typing.Literal["workbench/create-signed-distance-volume"],
     "outvol": str,
     "roi-out": typing.NotRequired[CreateSignedDistanceVolumeRoiOutParamsDict | None],
-    "value": typing.NotRequired[float | None],
-    "dist": typing.NotRequired[float | None],
-    "dist": typing.NotRequired[float | None],
-    "num": typing.NotRequired[int | None],
     "method": typing.NotRequired[str | None],
+    "num": typing.NotRequired[int | None],
+    "dist": typing.NotRequired[float | None],
+    "dist": typing.NotRequired[float | None],
+    "value": typing.NotRequired[float | None],
     "surface": InputPathType,
     "refspace": str,
 })
@@ -153,11 +153,11 @@ def create_signed_distance_volume_params(
     surface: InputPathType,
     refspace: str,
     roi_out: CreateSignedDistanceVolumeRoiOutParamsDict | None = None,
-    value: float | None = None,
+    method: str | None = None,
+    num: int | None = None,
     dist: float | None = None,
     dist_: float | None = None,
-    num: int | None = None,
-    method: str | None = None,
+    value: float | None = None,
 ) -> CreateSignedDistanceVolumeParamsDictTagged:
     """
     Build parameters.
@@ -167,23 +167,23 @@ def create_signed_distance_volume_params(
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
         roi_out: output an roi volume of where the output has a computed value.
-        value: specify a value to put in all voxels that don't get assigned a\
-            distance\
+        method: winding method for point inside surface test\
             \
-            value to fill with (default 0).
-        dist: specify distance for exact output\
-            \
-            distance in mm (default 5).
-        dist_: specify distance for approximate output\
-            \
-            distance in mm (default 20).
+            name of the method (default EVEN_ODD).
         num: voxel neighborhood for approximate calculation\
             \
             size of neighborhood cube measured from center to face, in voxels\
             (default 2 = 5x5x5).
-        method: winding method for point inside surface test\
+        dist: specify distance for approximate output\
             \
-            name of the method (default EVEN_ODD).
+            distance in mm (default 20).
+        dist_: specify distance for exact output\
+            \
+            distance in mm (default 5).
+        value: specify a value to put in all voxels that don't get assigned a\
+            distance\
+            \
+            value to fill with (default 0).
     Returns:
         Parameter dictionary
     """
@@ -195,16 +195,16 @@ def create_signed_distance_volume_params(
     }
     if roi_out is not None:
         params["roi-out"] = roi_out
-    if value is not None:
-        params["value"] = value
+    if method is not None:
+        params["method"] = method
+    if num is not None:
+        params["num"] = num
     if dist is not None:
         params["dist"] = dist
     if dist_ is not None:
         params["dist"] = dist_
-    if num is not None:
-        params["num"] = num
-    if method is not None:
-        params["method"] = method
+    if value is not None:
+        params["value"] = value
     return params
 
 
@@ -226,21 +226,21 @@ def create_signed_distance_volume_validate(
         raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str`')
     if params.get("roi-out", None) is not None:
         create_signed_distance_volume_roi_out_validate(params["roi-out"])
-    if params.get("value", None) is not None:
-        if not isinstance(params["value"], (float, int)):
-            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
-    if params.get("dist", None) is not None:
-        if not isinstance(params["dist"], (float, int)):
-            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
-    if params.get("dist", None) is not None:
-        if not isinstance(params["dist"], (float, int)):
-            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
-    if params.get("num", None) is not None:
-        if not isinstance(params["num"], int):
-            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `int | None`')
     if params.get("method", None) is not None:
         if not isinstance(params["method"], str):
             raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("num", None) is not None:
+        if not isinstance(params["num"], int):
+            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `int | None`')
+    if params.get("dist", None) is not None:
+        if not isinstance(params["dist"], (float, int)):
+            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
+    if params.get("dist", None) is not None:
+        if not isinstance(params["dist"], (float, int)):
+            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (float, int)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -271,18 +271,33 @@ def create_signed_distance_volume_cargs(
     ])
     cargs.extend([
         params.get("outvol", None),
-        *(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution) if (params.get("roi-out", None) is not None) else []),
-        "-fill-value",
-        (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
-        "-exact-limit",
-        (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-        "-approx-limit",
-        (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
-        "-approx-neighborhood",
-        (str(params.get("num", None)) if (params.get("num", None) is not None) else ""),
-        "-winding",
-        (params.get("method", None) if (params.get("method", None) is not None) else "")
+        *(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution) if (params.get("roi-out", None) is not None) else [])
     ])
+    if params.get("method", None) is not None:
+        cargs.extend([
+            "-winding",
+            params.get("method", None)
+        ])
+    if params.get("num", None) is not None:
+        cargs.extend([
+            "-approx-neighborhood",
+            str(params.get("num", None))
+        ])
+    if params.get("dist", None) is not None:
+        cargs.extend([
+            "-approx-limit",
+            str(params.get("dist", None))
+        ])
+    if params.get("dist", None) is not None:
+        cargs.extend([
+            "-exact-limit",
+            str(params.get("dist", None))
+        ])
+    if params.get("value", None) is not None:
+        cargs.extend([
+            "-fill-value",
+            str(params.get("value", None))
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("refspace", None))
     return cargs
@@ -356,11 +371,11 @@ def create_signed_distance_volume(
     surface: InputPathType,
     refspace: str,
     roi_out: CreateSignedDistanceVolumeRoiOutParamsDict | None = None,
-    value: float | None = None,
+    method: str | None = None,
+    num: int | None = None,
     dist: float | None = None,
     dist_: float | None = None,
-    num: int | None = None,
-    method: str | None = None,
+    value: float | None = None,
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
@@ -390,23 +405,23 @@ def create_signed_distance_volume(
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
         roi_out: output an roi volume of where the output has a computed value.
-        value: specify a value to put in all voxels that don't get assigned a\
-            distance\
+        method: winding method for point inside surface test\
             \
-            value to fill with (default 0).
-        dist: specify distance for exact output\
-            \
-            distance in mm (default 5).
-        dist_: specify distance for approximate output\
-            \
-            distance in mm (default 20).
+            name of the method (default EVEN_ODD).
         num: voxel neighborhood for approximate calculation\
             \
             size of neighborhood cube measured from center to face, in voxels\
             (default 2 = 5x5x5).
-        method: winding method for point inside surface test\
+        dist: specify distance for approximate output\
             \
-            name of the method (default EVEN_ODD).
+            distance in mm (default 20).
+        dist_: specify distance for exact output\
+            \
+            distance in mm (default 5).
+        value: specify a value to put in all voxels that don't get assigned a\
+            distance\
+            \
+            value to fill with (default 0).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).
@@ -414,11 +429,11 @@ def create_signed_distance_volume(
     params = create_signed_distance_volume_params(
         outvol=outvol,
         roi_out=roi_out,
-        value=value,
+        method=method,
+        num=num,
         dist=dist,
         dist_=dist_,
-        num=num,
-        method=method,
+        value=value,
         surface=surface,
         refspace=refspace,
     )

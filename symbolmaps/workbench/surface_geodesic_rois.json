@@ -4,17 +4,17 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "sigma": {
-      "var_param": "sigma"
-    },
-    "method": {
-      "var_param": "method"
+    "area-metric": {
+      "var_param": "area_metric"
     },
     "name-list-file": {
       "var_param": "name_list_file"
     },
-    "area-metric": {
-      "var_param": "area_metric"
+    "method": {
+      "var_param": "method"
+    },
+    "sigma": {
+      "var_param": "sigma"
     },
     "surface": {
       "var_param": "surface"

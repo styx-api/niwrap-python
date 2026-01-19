@@ -14,17 +14,17 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 _MetricEstimateFwhmParamsDictNoTag = typing.TypedDict('_MetricEstimateFwhmParamsDictNoTag', {
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "demean": typing.NotRequired[bool | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
 MetricEstimateFwhmParamsDictTagged = typing.TypedDict('MetricEstimateFwhmParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-estimate-fwhm"],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "demean": typing.NotRequired[bool | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
 })
@@ -42,9 +42,9 @@ class MetricEstimateFwhmOutputs(typing.NamedTuple):
 def metric_estimate_fwhm_params(
     surface: InputPathType,
     metric_in: InputPathType,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     demean: bool | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
 ) -> MetricEstimateFwhmParamsDictTagged:
     """
     Build parameters.
@@ -52,15 +52,15 @@ def metric_estimate_fwhm_params(
     Args:
         surface: the surface to use for distance and neighbor information.
         metric_in: the input metric.
-        roi_metric: use only data within an ROI\
-            \
-            the metric file to use as an ROI.
-        column: select a single column to estimate smoothness of\
-            \
-            the column number or name.
         demean: estimate for the whole file at once, not each column separately\
             \
             subtract the mean image before estimating smoothness.
+        column: select a single column to estimate smoothness of\
+            \
+            the column number or name.
+        roi_metric: use only data within an ROI\
+            \
+            the metric file to use as an ROI.
     Returns:
         Parameter dictionary
     """
@@ -69,12 +69,12 @@ def metric_estimate_fwhm_params(
         "surface": surface,
         "metric-in": metric_in,
     }
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if column is not None:
-        params["column"] = column
     if demean is not None:
         params["demean"] = demean
+    if column is not None:
+        params["column"] = column
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -90,15 +90,15 @@ def metric_estimate_fwhm_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("demean", None) is not None:
         if not isinstance(params["demean"], bool):
             raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", None))}` expected `bool | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -127,14 +127,20 @@ def metric_estimate_fwhm_cargs(
         "wb_command",
         "-metric-estimate-fwhm"
     ])
-    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("demean", None) is not None:
+    if params.get("demean", None) is not None:
+        cargs.extend([
+            "-whole-file",
+            "-demean"
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("roi-metric", None) is not None:
         cargs.extend([
             "-roi",
-            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            "-whole-file",
-            ("-demean" if (params.get("demean", None) is not None) else "")
+            execution.input_file(params.get("roi-metric", None))
         ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
@@ -189,9 +195,9 @@ def metric_estimate_fwhm_execute(
 def metric_estimate_fwhm(
     surface: InputPathType,
     metric_in: InputPathType,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     demean: bool | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
@@ -203,23 +209,23 @@ def metric_estimate_fwhm(
     Args:
         surface: the surface to use for distance and neighbor information.
         metric_in: the input metric.
-        roi_metric: use only data within an ROI\
-            \
-            the metric file to use as an ROI.
-        column: select a single column to estimate smoothness of\
-            \
-            the column number or name.
         demean: estimate for the whole file at once, not each column separately\
             \
             subtract the mean image before estimating smoothness.
+        column: select a single column to estimate smoothness of\
+            \
+            the column number or name.
+        roi_metric: use only data within an ROI\
+            \
+            the metric file to use as an ROI.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricEstimateFwhmOutputs`).
     """
     params = metric_estimate_fwhm_params(
-        roi_metric=roi_metric,
-        column=column,
         demean=demean,
+        column=column,
+        roi_metric=roi_metric,
         surface=surface,
         metric_in=metric_in,
     )

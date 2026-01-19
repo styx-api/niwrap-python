@@ -27,14 +27,14 @@ SpecFileModifyAddParamsDict = _SpecFileModifyAddParamsDictNoTag | SpecFileModify
 
 _SpecFileModifyRemoveParamsDictNoTag = typing.TypedDict('_SpecFileModifyRemoveParamsDictNoTag', {
     "filename": str,
-    "recursive": bool,
     "suffix": bool,
+    "recursive": bool,
 })
 SpecFileModifyRemoveParamsDictTagged = typing.TypedDict('SpecFileModifyRemoveParamsDictTagged', {
     "@type": typing.Literal["remove"],
     "filename": str,
-    "recursive": bool,
     "suffix": bool,
+    "recursive": bool,
 })
 SpecFileModifyRemoveParamsDict = _SpecFileModifyRemoveParamsDictNoTag | SpecFileModifyRemoveParamsDictTagged
 
@@ -120,26 +120,26 @@ def spec_file_modify_add_cargs(
 
 def spec_file_modify_remove(
     filename: str,
-    recursive: bool = False,
     suffix: bool = False,
+    recursive: bool = False,
 ) -> SpecFileModifyRemoveParamsDictTagged:
     """
     Build parameters.
     
     Args:
         filename: the filename to remove.
-        recursive: remove all files that match the string starting from any\
-            folder.
         suffix: match any file that ends with the given string (if there are\
             multiple matches, error unless -recursive was also specified).
+        recursive: remove all files that match the string starting from any\
+            folder.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "remove",
         "filename": filename,
-        "recursive": recursive,
         "suffix": suffix,
+        "recursive": recursive,
     }
     return params
 
@@ -160,14 +160,14 @@ def spec_file_modify_remove_validate(
         raise StyxValidationError("`filename` must not be None")
     if not isinstance(params["filename"], str):
         raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str`')
-    if params.get("recursive", False) is None:
-        raise StyxValidationError("`recursive` must not be None")
-    if not isinstance(params["recursive"], bool):
-        raise StyxValidationError(f'`recursive` has the wrong type: Received `{type(params.get("recursive", False))}` expected `bool`')
     if params.get("suffix", False) is None:
         raise StyxValidationError("`suffix` must not be None")
     if not isinstance(params["suffix"], bool):
         raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", False))}` expected `bool`')
+    if params.get("recursive", False) is None:
+        raise StyxValidationError("`recursive` must not be None")
+    if not isinstance(params["recursive"], bool):
+        raise StyxValidationError(f'`recursive` has the wrong type: Received `{type(params.get("recursive", False))}` expected `bool`')
 
 
 def spec_file_modify_remove_cargs(
@@ -186,10 +186,12 @@ def spec_file_modify_remove_cargs(
     cargs = []
     cargs.extend([
         "-remove",
-        params.get("filename", None),
-        ("-recursive" if (params.get("recursive", False)) else ""),
-        ("-suffix" if (params.get("suffix", False)) else "")
+        params.get("filename", None)
     ])
+    if params.get("suffix", False):
+        cargs.append("-suffix")
+    if params.get("recursive", False):
+        cargs.append("-recursive")
     return cargs
 
 

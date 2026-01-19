@@ -15,8 +15,8 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
 
 _MetricRoisToBorderParamsDictNoTag = typing.TypedDict('_MetricRoisToBorderParamsDictNoTag', {
     "border-out": str,
-    "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "class-name": str,
@@ -24,8 +24,8 @@ _MetricRoisToBorderParamsDictNoTag = typing.TypedDict('_MetricRoisToBorderParams
 MetricRoisToBorderParamsDictTagged = typing.TypedDict('MetricRoisToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-rois-to-border"],
     "border-out": str,
-    "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "class-name": str,
@@ -48,8 +48,8 @@ def metric_rois_to_border_params(
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
-    fraction: float | None = None,
     column: str | None = None,
+    fraction: float | None = None,
 ) -> MetricRoisToBorderParamsDictTagged:
     """
     Build parameters.
@@ -59,12 +59,12 @@ def metric_rois_to_border_params(
         surface: the surface to use for neighbor information.
         metric: the input metric containing ROIs.
         class_name: the name to use for the class of the output borders.
-        fraction: set how far along the edge border points are drawn\
-            \
-            fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
     Returns:
         Parameter dictionary
     """
@@ -75,10 +75,10 @@ def metric_rois_to_border_params(
         "metric": metric,
         "class-name": class_name,
     }
-    if fraction is not None:
-        params["fraction"] = fraction
     if column is not None:
         params["column"] = column
+    if fraction is not None:
+        params["fraction"] = fraction
     return params
 
 
@@ -98,12 +98,12 @@ def metric_rois_to_border_validate(
         raise StyxValidationError("`border-out` must not be None")
     if not isinstance(params["border-out"], str):
         raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
-    if params.get("fraction", None) is not None:
-        if not isinstance(params["fraction"], (float, int)):
-            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("fraction", None) is not None:
+        if not isinstance(params["fraction"], (float, int)):
+            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -136,13 +136,17 @@ def metric_rois_to_border_cargs(
         "wb_command",
         "-metric-rois-to-border"
     ])
-    cargs.extend([
-        params.get("border-out", None),
-        "-placement",
-        (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else "")
-    ])
+    cargs.append(params.get("border-out", None))
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("fraction", None) is not None:
+        cargs.extend([
+            "-placement",
+            str(params.get("fraction", None))
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(params.get("class-name", None))
@@ -201,8 +205,8 @@ def metric_rois_to_border(
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
-    fraction: float | None = None,
     column: str | None = None,
+    fraction: float | None = None,
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
@@ -217,20 +221,20 @@ def metric_rois_to_border(
         surface: the surface to use for neighbor information.
         metric: the input metric containing ROIs.
         class_name: the name to use for the class of the output borders.
-        fraction: set how far along the edge border points are drawn\
-            \
-            fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).
     """
     params = metric_rois_to_border_params(
         border_out=border_out,
-        fraction=fraction,
         column=column,
+        fraction=fraction,
         surface=surface,
         metric=metric,
         class_name=class_name,

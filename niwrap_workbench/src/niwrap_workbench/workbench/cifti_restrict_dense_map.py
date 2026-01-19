@@ -15,22 +15,22 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 
 _CiftiRestrictDenseMapParamsDictNoTag = typing.TypedDict('_CiftiRestrictDenseMapParamsDictNoTag', {
     "cifti-out": str,
-    "roi-cifti": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-vol": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-cifti": typing.NotRequired[InputPathType | None],
     "cifti-in": InputPathType,
     "direction": str,
 })
 CiftiRestrictDenseMapParamsDictTagged = typing.TypedDict('CiftiRestrictDenseMapParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-restrict-dense-map"],
     "cifti-out": str,
-    "roi-cifti": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-vol": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-cifti": typing.NotRequired[InputPathType | None],
     "cifti-in": InputPathType,
     "direction": str,
 })
@@ -51,11 +51,11 @@ def cifti_restrict_dense_map_params(
     cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
-    roi_cifti: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
     roi_metric_2: InputPathType | None = None,
-    roi_vol: InputPathType | None = None,
+    roi_cifti: InputPathType | None = None,
 ) -> CiftiRestrictDenseMapParamsDictTagged:
     """
     Build parameters.
@@ -65,21 +65,21 @@ def cifti_restrict_dense_map_params(
         cifti_in: the input cifti.
         direction: which dimension to change the mapping on (integer, 'ROW', or\
             'COLUMN').
-        roi_cifti: cifti file containing combined rois\
-            \
-            the rois as a cifti file.
-        roi_metric: vertices to use from left hemisphere\
-            \
-            the left roi as a metric file.
-        roi_metric_: vertices to use from right hemisphere\
-            \
-            the right roi as a metric file.
-        roi_metric_2: vertices to use from cerebellum\
-            \
-            the cerebellum roi as a metric file.
         roi_vol: voxels to use\
             \
             the roi volume file.
+        roi_metric: vertices to use from cerebellum\
+            \
+            the cerebellum roi as a metric file.
+        roi_metric_: vertices to use from right hemisphere\
+            \
+            the right roi as a metric file.
+        roi_metric_2: vertices to use from left hemisphere\
+            \
+            the left roi as a metric file.
+        roi_cifti: cifti file containing combined rois\
+            \
+            the rois as a cifti file.
     Returns:
         Parameter dictionary
     """
@@ -89,16 +89,16 @@ def cifti_restrict_dense_map_params(
         "cifti-in": cifti_in,
         "direction": direction,
     }
-    if roi_cifti is not None:
-        params["roi-cifti"] = roi_cifti
+    if roi_vol is not None:
+        params["roi-vol"] = roi_vol
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     if roi_metric_ is not None:
         params["roi-metric"] = roi_metric_
     if roi_metric_2 is not None:
         params["roi-metric"] = roi_metric_2
-    if roi_vol is not None:
-        params["roi-vol"] = roi_vol
+    if roi_cifti is not None:
+        params["roi-cifti"] = roi_cifti
     return params
 
 
@@ -118,21 +118,21 @@ def cifti_restrict_dense_map_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("roi-cifti", None) is not None:
-        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("roi-vol", None) is not None:
         if not isinstance(params["roi-vol"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-cifti", None) is not None:
+        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -161,19 +161,32 @@ def cifti_restrict_dense_map_cargs(
         "wb_command",
         "-cifti-restrict-dense-map"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        "-cifti-roi",
-        (execution.input_file(params.get("roi-cifti", None)) if (params.get("roi-cifti", None) is not None) else ""),
-        "-left-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-right-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-cerebellum-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-vol-roi",
-        (execution.input_file(params.get("roi-vol", None)) if (params.get("roi-vol", None) is not None) else "")
-    ])
+    cargs.append(params.get("cifti-out", None))
+    if params.get("roi-vol", None) is not None:
+        cargs.extend([
+            "-vol-roi",
+            execution.input_file(params.get("roi-vol", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-cerebellum-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-right-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-left-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("roi-cifti", None) is not None:
+        cargs.extend([
+            "-cifti-roi",
+            execution.input_file(params.get("roi-cifti", None))
+        ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     return cargs
@@ -233,11 +246,11 @@ def cifti_restrict_dense_map(
     cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
-    roi_cifti: InputPathType | None = None,
+    roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
     roi_metric_2: InputPathType | None = None,
-    roi_vol: InputPathType | None = None,
+    roi_cifti: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> CiftiRestrictDenseMapOutputs:
     """
@@ -255,32 +268,32 @@ def cifti_restrict_dense_map(
         cifti_in: the input cifti.
         direction: which dimension to change the mapping on (integer, 'ROW', or\
             'COLUMN').
-        roi_cifti: cifti file containing combined rois\
-            \
-            the rois as a cifti file.
-        roi_metric: vertices to use from left hemisphere\
-            \
-            the left roi as a metric file.
-        roi_metric_: vertices to use from right hemisphere\
-            \
-            the right roi as a metric file.
-        roi_metric_2: vertices to use from cerebellum\
-            \
-            the cerebellum roi as a metric file.
         roi_vol: voxels to use\
             \
             the roi volume file.
+        roi_metric: vertices to use from cerebellum\
+            \
+            the cerebellum roi as a metric file.
+        roi_metric_: vertices to use from right hemisphere\
+            \
+            the right roi as a metric file.
+        roi_metric_2: vertices to use from left hemisphere\
+            \
+            the left roi as a metric file.
+        roi_cifti: cifti file containing combined rois\
+            \
+            the rois as a cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiRestrictDenseMapOutputs`).
     """
     params = cifti_restrict_dense_map_params(
         cifti_out=cifti_out,
-        roi_cifti=roi_cifti,
+        roi_vol=roi_vol,
         roi_metric=roi_metric,
         roi_metric_=roi_metric_,
         roi_metric_2=roi_metric_2,
-        roi_vol=roi_vol,
+        roi_cifti=roi_cifti,
         cifti_in=cifti_in,
         direction=direction,
     )

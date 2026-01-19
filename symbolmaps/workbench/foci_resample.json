@@ -40,11 +40,11 @@
         }
       }
     },
-    "discard-distance-from-surface": {
-      "var_param": "discard_distance_from_surface"
-    },
     "restore-xyz": {
       "var_param": "restore_xyz"
+    },
+    "discard-distance-from-surface": {
+      "var_param": "discard_distance_from_surface"
     },
     "foci-in": {
       "var_param": "foci_in"

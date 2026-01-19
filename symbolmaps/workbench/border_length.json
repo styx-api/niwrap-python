@@ -4,11 +4,11 @@
     "area-metric": {
       "var_param": "area_metric"
     },
-    "separate-pieces": {
-      "var_param": "separate_pieces"
-    },
     "hide-border-name": {
       "var_param": "hide_border_name"
+    },
+    "separate-pieces": {
+      "var_param": "separate_pieces"
     },
     "border": {
       "var_param": "border"

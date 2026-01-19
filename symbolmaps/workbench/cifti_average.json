@@ -16,9 +16,6 @@
         }
       }
     },
-    "limit-GB": {
-      "var_param": "limit_gb"
-    },
     "cifti": {
       "var_param": "cifti",
       "fn_struct_make_params": "cifti_average_cifti",
@@ -30,6 +27,9 @@
           "var_param": "weight"
         }
       }
+    },
+    "limit-GB": {
+      "var_param": "limit_gb"
     }
   }
 }

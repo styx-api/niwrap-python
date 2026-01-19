@@ -5,31 +5,25 @@
       "var_param": "spatial_weights",
       "fn_struct_make_params": "cifti_weighted_stats_spatial_weights",
       "properties": {
-        "left-surf": {
-          "var_param": "left_surf"
-        },
-        "right-surf": {
-          "var_param": "right_surf"
-        },
-        "cerebellum-surf": {
-          "var_param": "cerebellum_surf"
-        },
-        "left-metric": {
-          "var_param": "left_metric"
+        "cerebellum-metric": {
+          "var_param": "cerebellum_metric"
         },
         "right-metric": {
           "var_param": "right_metric"
         },
-        "cerebellum-metric": {
-          "var_param": "cerebellum_metric"
+        "left-metric": {
+          "var_param": "left_metric"
+        },
+        "cerebellum-surf": {
+          "var_param": "cerebellum_surf"
+        },
+        "right-surf": {
+          "var_param": "right_surf"
+        },
+        "left-surf": {
+          "var_param": "left_surf"
         }
       }
-    },
-    "weight-cifti": {
-      "var_param": "weight_cifti"
-    },
-    "column": {
-      "var_param": "column"
     },
     "roi": {
       "var_param": "roi",
@@ -43,20 +37,26 @@
         }
       }
     },
-    "mean": {
-      "var_param": "mean"
+    "percent": {
+      "var_param": "percent"
     },
     "sample": {
       "var_param": "sample"
     },
-    "percent": {
-      "var_param": "percent"
+    "column": {
+      "var_param": "column"
+    },
+    "weight-cifti": {
+      "var_param": "weight_cifti"
+    },
+    "show-map-name": {
+      "var_param": "show_map_name"
     },
     "sum": {
       "var_param": "sum_"
     },
-    "show-map-name": {
-      "var_param": "show_map_name"
+    "mean": {
+      "var_param": "mean"
     },
     "cifti-in": {
       "var_param": "cifti_in"

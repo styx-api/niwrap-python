@@ -4,14 +4,14 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
+    "limit-GB": {
+      "var_param": "limit_gb"
+    },
     "weight-file": {
       "var_param": "weight_file"
     },
     "fisher-z": {
       "var_param": "fisher_z"
-    },
-    "limit-GB": {
-      "var_param": "limit_gb"
     },
     "cifti-a": {
       "var_param": "cifti_a"

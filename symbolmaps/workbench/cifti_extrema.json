@@ -4,18 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "surface": {
-      "var_param": "surface_2"
-    },
-    "surface-kernel": {
-      "var_param": "surface_kernel"
-    },
-    "volume-kernel": {
-      "var_param": "volume_kernel"
-    },
-    "presmooth-fwhm": {
-      "var_param": "presmooth_fwhm"
-    },
     "threshold": {
       "var_param": "threshold",
       "fn_struct_make_params": "cifti_extrema_threshold",
@@ -28,20 +16,32 @@
         }
       }
     },
-    "merged-volume": {
-      "var_param": "merged_volume"
+    "volume-kernel": {
+      "var_param": "volume_kernel"
     },
-    "sum-maps": {
-      "var_param": "sum_maps"
+    "surface-kernel": {
+      "var_param": "surface_kernel"
     },
-    "consolidate-mode": {
-      "var_param": "consolidate_mode"
+    "surface": {
+      "var_param": "surface_2"
+    },
+    "only-minima": {
+      "var_param": "only_minima"
     },
     "only-maxima": {
       "var_param": "only_maxima"
     },
-    "only-minima": {
-      "var_param": "only_minima"
+    "consolidate-mode": {
+      "var_param": "consolidate_mode"
+    },
+    "sum-maps": {
+      "var_param": "sum_maps"
+    },
+    "merged-volume": {
+      "var_param": "merged_volume"
+    },
+    "presmooth-fwhm": {
+      "var_param": "presmooth_fwhm"
     },
     "cifti": {
       "var_param": "cifti"

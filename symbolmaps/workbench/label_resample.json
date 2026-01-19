@@ -28,9 +28,6 @@
         }
       }
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
     "valid-roi-out": {
       "var_param": "valid_roi_out",
       "fn_struct_make_params": "label_resample_valid_roi_out",
@@ -40,11 +37,14 @@
         }
       }
     },
-    "largest": {
-      "var_param": "largest"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "bypass-sphere-check": {
       "var_param": "bypass_sphere_check"
+    },
+    "largest": {
+      "var_param": "largest"
     },
     "label-in": {
       "var_param": "label_in"

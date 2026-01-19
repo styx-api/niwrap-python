@@ -8,31 +8,31 @@
       "var_param": "roi_override",
       "fn_struct_make_params": "cifti_correlation_roi_override",
       "properties": {
-        "roi-metric": {
-          "var_param": "roi_metric_2"
+        "roi-cifti": {
+          "var_param": "roi_cifti"
         },
         "roi-vol": {
           "var_param": "roi_vol"
         },
-        "roi-cifti": {
-          "var_param": "roi_cifti"
+        "roi-metric": {
+          "var_param": "roi_metric_2"
         }
       }
+    },
+    "limit-GB": {
+      "var_param": "limit_gb"
     },
     "weight-file": {
       "var_param": "weight_file"
     },
-    "fisher-z": {
-      "var_param": "fisher_z"
+    "covariance": {
+      "var_param": "covariance"
     },
     "no-demean": {
       "var_param": "no_demean"
     },
-    "covariance": {
-      "var_param": "covariance"
-    },
-    "limit-GB": {
-      "var_param": "limit_gb"
+    "fisher-z": {
+      "var_param": "fisher_z"
     },
     "cifti": {
       "var_param": "cifti"

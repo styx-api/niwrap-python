@@ -67,20 +67,20 @@ ConvertAffineToFlirtParamsDict = _ConvertAffineToFlirtParamsDictNoTag | ConvertA
 
 _ConvertAffineParamsDictNoTag = typing.TypedDict('_ConvertAffineParamsDictNoTag', {
     "from-world": typing.NotRequired[ConvertAffineFromWorldParamsDict | None],
-    "input": typing.NotRequired[str | None],
     "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParamsDict | None],
     "to-world": typing.NotRequired[ConvertAffineToWorldParamsDict | None],
-    "output": typing.NotRequired[str | None],
     "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParamsDict] | None],
+    "output": typing.NotRequired[str | None],
+    "input": typing.NotRequired[str | None],
 })
 ConvertAffineParamsDictTagged = typing.TypedDict('ConvertAffineParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-affine"],
     "from-world": typing.NotRequired[ConvertAffineFromWorldParamsDict | None],
-    "input": typing.NotRequired[str | None],
     "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParamsDict | None],
     "to-world": typing.NotRequired[ConvertAffineToWorldParamsDict | None],
-    "output": typing.NotRequired[str | None],
     "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParamsDict] | None],
+    "output": typing.NotRequired[str | None],
+    "input": typing.NotRequired[str | None],
 })
 ConvertAffineParamsDict = _ConvertAffineParamsDictNoTag | ConvertAffineParamsDictTagged
 
@@ -144,9 +144,10 @@ def convert_affine_from_world_cargs(
     cargs = []
     cargs.extend([
         "-from-world",
-        params.get("input", None),
-        ("-inverse" if (params.get("inverse", False)) else "")
+        params.get("input", None)
     ])
+    if params.get("inverse", False):
+        cargs.append("-inverse")
     return cargs
 
 
@@ -282,9 +283,10 @@ def convert_affine_to_world_cargs(
     cargs = []
     cargs.extend([
         "-to-world",
-        params.get("output", None),
-        ("-inverse" if (params.get("inverse", False)) else "")
+        params.get("output", None)
     ])
+    if params.get("inverse", False):
+        cargs.append("-inverse")
     return cargs
 
 
@@ -372,26 +374,26 @@ class ConvertAffineOutputs(typing.NamedTuple):
 
 def convert_affine_params(
     from_world: ConvertAffineFromWorldParamsDict | None = None,
-    input_: str | None = None,
     from_flirt: ConvertAffineFromFlirtParamsDict | None = None,
     to_world: ConvertAffineToWorldParamsDict | None = None,
-    output: str | None = None,
     to_flirt: list[ConvertAffineToFlirtParamsDict] | None = None,
+    output: str | None = None,
+    input_: str | None = None,
 ) -> ConvertAffineParamsDictTagged:
     """
     Build parameters.
     
     Args:
         from_world: input is a NIFTI 'world' affine.
-        input_: input is an ITK matrix\
-            \
-            the input affine.
         from_flirt: input is a flirt matrix.
         to_world: write output as a NIFTI 'world' affine.
+        to_flirt: write output as a flirt matrix.
         output: write output as an ITK affine\
             \
             output - the output affine.
-        to_flirt: write output as a flirt matrix.
+        input_: input is an ITK matrix\
+            \
+            the input affine.
     Returns:
         Parameter dictionary
     """
@@ -400,16 +402,16 @@ def convert_affine_params(
     }
     if from_world is not None:
         params["from-world"] = from_world
-    if input_ is not None:
-        params["input"] = input_
     if from_flirt is not None:
         params["from-flirt"] = from_flirt
     if to_world is not None:
         params["to-world"] = to_world
-    if output is not None:
-        params["output"] = output
     if to_flirt is not None:
         params["to-flirt"] = to_flirt
+    if output is not None:
+        params["output"] = output
+    if input_ is not None:
+        params["input"] = input_
     return params
 
 
@@ -427,21 +429,21 @@ def convert_affine_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("from-world", None) is not None:
         convert_affine_from_world_validate(params["from-world"])
-    if params.get("input", None) is not None:
-        if not isinstance(params["input"], str):
-            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str | None`')
     if params.get("from-flirt", None) is not None:
         convert_affine_from_flirt_validate(params["from-flirt"])
     if params.get("to-world", None) is not None:
         convert_affine_to_world_validate(params["to-world"])
-    if params.get("output", None) is not None:
-        if not isinstance(params["output"], str):
-            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
     if params.get("to-flirt", None) is not None:
         if not isinstance(params["to-flirt"], list):
             raise StyxValidationError(f'`to-flirt` has the wrong type: Received `{type(params.get("to-flirt", None))}` expected `list[ConvertAffineToFlirtParamsDict] | None`')
         for e in params["to-flirt"]:
             convert_affine_to_flirt_validate(e)
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], str):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str | None`')
 
 
 def convert_affine_cargs(
@@ -462,16 +464,22 @@ def convert_affine_cargs(
         "wb_command",
         "-convert-affine"
     ])
-    if params.get("from-world", None) is not None or params.get("input", None) is not None or params.get("from-flirt", None) is not None or params.get("to-world", None) is not None or params.get("output", None) is not None or params.get("to-flirt", None) is not None:
+    if params.get("from-world", None) is not None or params.get("from-flirt", None) is not None or params.get("to-world", None) is not None or params.get("to-flirt", None) is not None:
         cargs.extend([
             *(convert_affine_from_world_cargs(params.get("from-world", None), execution) if (params.get("from-world", None) is not None) else []),
-            "-from-itk",
-            (params.get("input", None) if (params.get("input", None) is not None) else ""),
             *(convert_affine_from_flirt_cargs(params.get("from-flirt", None), execution) if (params.get("from-flirt", None) is not None) else []),
             *(convert_affine_to_world_cargs(params.get("to-world", None), execution) if (params.get("to-world", None) is not None) else []),
-            "-to-itk",
-            (params.get("output", None) if (params.get("output", None) is not None) else ""),
             *([a for c in [convert_affine_to_flirt_cargs(s, execution) for s in params.get("to-flirt", None)] for a in c] if (params.get("to-flirt", None) is not None) else [])
+        ])
+    if params.get("output", None) is not None:
+        cargs.extend([
+            "-to-itk",
+            params.get("output", None)
+        ])
+    if params.get("input", None) is not None:
+        cargs.extend([
+            "-from-itk",
+            params.get("input", None)
         ])
     return cargs
 
@@ -532,11 +540,11 @@ def convert_affine_execute(
 
 def convert_affine(
     from_world: ConvertAffineFromWorldParamsDict | None = None,
-    input_: str | None = None,
     from_flirt: ConvertAffineFromFlirtParamsDict | None = None,
     to_world: ConvertAffineToWorldParamsDict | None = None,
-    output: str | None = None,
     to_flirt: list[ConvertAffineToFlirtParamsDict] | None = None,
+    output: str | None = None,
+    input_: str | None = None,
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
@@ -556,26 +564,26 @@ def convert_affine(
     
     Args:
         from_world: input is a NIFTI 'world' affine.
-        input_: input is an ITK matrix\
-            \
-            the input affine.
         from_flirt: input is a flirt matrix.
         to_world: write output as a NIFTI 'world' affine.
+        to_flirt: write output as a flirt matrix.
         output: write output as an ITK affine\
             \
             output - the output affine.
-        to_flirt: write output as a flirt matrix.
+        input_: input is an ITK matrix\
+            \
+            the input affine.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertAffineOutputs`).
     """
     params = convert_affine_params(
         from_world=from_world,
-        input_=input_,
         from_flirt=from_flirt,
         to_world=to_world,
-        output=output,
         to_flirt=to_flirt,
+        output=output,
+        input_=input_,
     )
     return convert_affine_execute(params, runner)
 

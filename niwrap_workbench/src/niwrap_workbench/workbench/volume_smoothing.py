@@ -15,20 +15,20 @@ VOLUME_SMOOTHING_METADATA = Metadata(
 
 _VolumeSmoothingParamsDictNoTag = typing.TypedDict('_VolumeSmoothingParamsDictNoTag', {
     "volume-out": str,
-    "fwhm": bool,
+    "subvol": typing.NotRequired[str | None],
     "roivol": typing.NotRequired[InputPathType | None],
     "fix-zeros": bool,
-    "subvol": typing.NotRequired[str | None],
+    "fwhm": bool,
     "volume-in": InputPathType,
     "kernel": float,
 })
 VolumeSmoothingParamsDictTagged = typing.TypedDict('VolumeSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-smoothing"],
     "volume-out": str,
-    "fwhm": bool,
+    "subvol": typing.NotRequired[str | None],
     "roivol": typing.NotRequired[InputPathType | None],
     "fix-zeros": bool,
-    "subvol": typing.NotRequired[str | None],
+    "fwhm": bool,
     "volume-in": InputPathType,
     "kernel": float,
 })
@@ -49,10 +49,10 @@ def volume_smoothing_params(
     volume_out: str,
     volume_in: InputPathType,
     kernel: float,
-    fwhm: bool = False,
+    subvol: str | None = None,
     roivol: InputPathType | None = None,
     fix_zeros: bool = False,
-    subvol: str | None = None,
+    fwhm: bool = False,
 ) -> VolumeSmoothingParamsDictTagged:
     """
     Build parameters.
@@ -62,29 +62,29 @@ def volume_smoothing_params(
         volume_in: the volume to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        fwhm: kernel size is FWHM, not sigma.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         roivol: smooth only from data within an ROI\
             \
             the volume to use as an ROI.
         fix_zeros: treat zero values as not being data.
-        subvol: select a single subvolume to smooth\
-            \
-            the subvolume number or name.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-smoothing",
         "volume-out": volume_out,
-        "fwhm": fwhm,
         "fix-zeros": fix_zeros,
+        "fwhm": fwhm,
         "volume-in": volume_in,
         "kernel": kernel,
     }
-    if roivol is not None:
-        params["roivol"] = roivol
     if subvol is not None:
         params["subvol"] = subvol
+    if roivol is not None:
+        params["roivol"] = roivol
     return params
 
 
@@ -104,10 +104,9 @@ def volume_smoothing_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("fwhm", False) is None:
-        raise StyxValidationError("`fwhm` must not be None")
-    if not isinstance(params["fwhm"], bool):
-        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
     if params.get("roivol", None) is not None:
         if not isinstance(params["roivol"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roivol` has the wrong type: Received `{type(params.get("roivol", None))}` expected `InputPathType | None`')
@@ -115,9 +114,10 @@ def volume_smoothing_validate(
         raise StyxValidationError("`fix-zeros` must not be None")
     if not isinstance(params["fix-zeros"], bool):
         raise StyxValidationError(f'`fix-zeros` has the wrong type: Received `{type(params.get("fix-zeros", False))}` expected `bool`')
-    if params.get("subvol", None) is not None:
-        if not isinstance(params["subvol"], str):
-            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -146,15 +146,21 @@ def volume_smoothing_cargs(
         "wb_command",
         "-volume-smoothing"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        ("-fwhm" if (params.get("fwhm", False)) else ""),
-        "-roi",
-        (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
-        ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
-        "-subvolume",
-        (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
-    ])
+    cargs.append(params.get("volume-out", None))
+    if params.get("subvol", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvol", None)
+        ])
+    if params.get("roivol", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roivol", None))
+        ])
+    if params.get("fix-zeros", False):
+        cargs.append("-fix-zeros")
+    if params.get("fwhm", False):
+        cargs.append("-fwhm")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(str(params.get("kernel", None)))
     return cargs
@@ -219,10 +225,10 @@ def volume_smoothing(
     volume_out: str,
     volume_in: InputPathType,
     kernel: float,
-    fwhm: bool = False,
+    subvol: str | None = None,
     roivol: InputPathType | None = None,
     fix_zeros: bool = False,
-    subvol: str | None = None,
+    fwhm: bool = False,
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
@@ -245,24 +251,24 @@ def volume_smoothing(
         volume_in: the volume to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        fwhm: kernel size is FWHM, not sigma.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         roivol: smooth only from data within an ROI\
             \
             the volume to use as an ROI.
         fix_zeros: treat zero values as not being data.
-        subvol: select a single subvolume to smooth\
-            \
-            the subvolume number or name.
+        fwhm: kernel size is FWHM, not sigma.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeSmoothingOutputs`).
     """
     params = volume_smoothing_params(
         volume_out=volume_out,
-        fwhm=fwhm,
+        subvol=subvol,
         roivol=roivol,
         fix_zeros=fix_zeros,
-        subvol=subvol,
+        fwhm=fwhm,
         volume_in=volume_in,
         kernel=kernel,
     )

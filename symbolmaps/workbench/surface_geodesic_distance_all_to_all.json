@@ -4,14 +4,14 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
+    "area-metric": {
+      "var_param": "area_metric"
     },
     "limit-mm": {
       "var_param": "limit_mm"
     },
-    "area-metric": {
-      "var_param": "area_metric"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "naive": {
       "var_param": "naive"

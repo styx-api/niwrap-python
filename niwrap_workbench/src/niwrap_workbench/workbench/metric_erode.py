@@ -15,9 +15,9 @@ METRIC_ERODE_METADATA = Metadata(
 
 _MetricErodeParamsDictNoTag = typing.TypedDict('_MetricErodeParamsDictNoTag', {
     "metric-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -25,9 +25,9 @@ _MetricErodeParamsDictNoTag = typing.TypedDict('_MetricErodeParamsDictNoTag', {
 MetricErodeParamsDictTagged = typing.TypedDict('MetricErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-erode"],
     "metric-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -50,9 +50,9 @@ def metric_erode_params(
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     area_metric: InputPathType | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
 ) -> MetricErodeParamsDictTagged:
     """
     Build parameters.
@@ -62,16 +62,16 @@ def metric_erode_params(
         metric: the metric file to erode.
         surface: the surface to compute on.
         distance: distance in mm to erode.
-        roi_metric: assume values outside this roi are nonzero\
-            \
-            metric file, positive values denote vertices that have data.
-        column: select a single column to erode\
-            \
-            the column number or name.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        roi_metric: assume values outside this roi are nonzero\
+            \
+            metric file, positive values denote vertices that have data.
     Returns:
         Parameter dictionary
     """
@@ -82,12 +82,12 @@ def metric_erode_params(
         "surface": surface,
         "distance": distance,
     }
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if column is not None:
-        params["column"] = column
     if area_metric is not None:
         params["area-metric"] = area_metric
+    if column is not None:
+        params["column"] = column
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -107,15 +107,15 @@ def metric_erode_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("metric", None) is None:
         raise StyxValidationError("`metric` must not be None")
     if not isinstance(params["metric"], (pathlib.Path, str)):
@@ -148,15 +148,22 @@ def metric_erode_cargs(
         "wb_command",
         "-metric-erode"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("distance", None)))
@@ -218,9 +225,9 @@ def metric_erode(
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     area_metric: InputPathType | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
@@ -238,25 +245,25 @@ def metric_erode(
         metric: the metric file to erode.
         surface: the surface to compute on.
         distance: distance in mm to erode.
-        roi_metric: assume values outside this roi are nonzero\
-            \
-            metric file, positive values denote vertices that have data.
-        column: select a single column to erode\
-            \
-            the column number or name.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
             the corrected vertex areas, as a metric.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        roi_metric: assume values outside this roi are nonzero\
+            \
+            metric file, positive values denote vertices that have data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricErodeOutputs`).
     """
     params = metric_erode_params(
         metric_out=metric_out,
-        roi_metric=roi_metric,
-        column=column,
         area_metric=area_metric,
+        column=column,
+        roi_metric=roi_metric,
         metric=metric,
         surface=surface,
         distance=distance,

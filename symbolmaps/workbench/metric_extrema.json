@@ -16,9 +16,6 @@
         }
       }
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
     "threshold": {
       "var_param": "threshold",
       "fn_struct_make_params": "metric_extrema_threshold",
@@ -31,20 +28,23 @@
         }
       }
     },
-    "sum-columns": {
-      "var_param": "sum_columns"
+    "column": {
+      "var_param": "column"
     },
-    "consolidate-mode": {
-      "var_param": "consolidate_mode"
-    },
-    "only-maxima": {
-      "var_param": "only_maxima"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "only-minima": {
       "var_param": "only_minima"
     },
-    "column": {
-      "var_param": "column"
+    "only-maxima": {
+      "var_param": "only_maxima"
+    },
+    "consolidate-mode": {
+      "var_param": "consolidate_mode"
+    },
+    "sum-columns": {
+      "var_param": "sum_columns"
     },
     "surface": {
       "var_param": "surface"

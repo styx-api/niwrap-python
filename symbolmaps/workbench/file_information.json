@@ -1,18 +1,6 @@
 {
   "fn_root_make_params_and_execute": "file_information",
   "properties": {
-    "no-map-info": {
-      "var_param": "no_map_info"
-    },
-    "only-step-interval": {
-      "var_param": "only_step_interval"
-    },
-    "only-number-of-maps": {
-      "var_param": "only_number_of_maps"
-    },
-    "only-map-names": {
-      "var_param": "only_map_names"
-    },
     "only-metadata": {
       "var_param": "only_metadata",
       "fn_struct_make_params": "file_information_only_metadata",
@@ -22,17 +10,29 @@
         }
       }
     },
-    "only-cifti-xml": {
-      "var_param": "only_cifti_xml"
-    },
-    "czi": {
-      "var_param": "czi"
+    "czi-xml": {
+      "var_param": "czi_xml"
     },
     "czi-all-sub-blocks": {
       "var_param": "czi_all_sub_blocks"
     },
-    "czi-xml": {
-      "var_param": "czi_xml"
+    "czi": {
+      "var_param": "czi"
+    },
+    "only-cifti-xml": {
+      "var_param": "only_cifti_xml"
+    },
+    "only-map-names": {
+      "var_param": "only_map_names"
+    },
+    "only-number-of-maps": {
+      "var_param": "only_number_of_maps"
+    },
+    "only-step-interval": {
+      "var_param": "only_step_interval"
+    },
+    "no-map-info": {
+      "var_param": "no_map_info"
     },
     "data-file": {
       "var_param": "data_file"

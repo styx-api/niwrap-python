@@ -4,11 +4,11 @@
     "border-out": {
       "var_param": "border_out"
     },
-    "fraction": {
-      "var_param": "fraction"
-    },
     "column": {
       "var_param": "column"
+    },
+    "fraction": {
+      "var_param": "fraction"
     },
     "surface": {
       "var_param": "surface"

@@ -16,9 +16,6 @@
         }
       }
     },
-    "roi-metric": {
-      "var_param": "roi_metric_"
-    },
     "row-cifti": {
       "var_param": "row_cifti",
       "fn_struct_make_params": "probtrackx_dot_convert_row_cifti",
@@ -55,11 +52,14 @@
         }
       }
     },
-    "transpose": {
-      "var_param": "transpose"
+    "roi-metric": {
+      "var_param": "roi_metric_"
     },
     "make-symmetric": {
       "var_param": "make_symmetric"
+    },
+    "transpose": {
+      "var_param": "transpose"
     },
     "dot-file": {
       "var_param": "dot_file"

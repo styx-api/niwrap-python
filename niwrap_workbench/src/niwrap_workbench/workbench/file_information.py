@@ -24,28 +24,28 @@ FileInformationOnlyMetadataParamsDict = _FileInformationOnlyMetadataParamsDictNo
 
 
 _FileInformationParamsDictNoTag = typing.TypedDict('_FileInformationParamsDictNoTag', {
-    "no-map-info": bool,
-    "only-step-interval": bool,
-    "only-number-of-maps": bool,
-    "only-map-names": bool,
     "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParamsDict | None],
-    "only-cifti-xml": bool,
-    "czi": bool,
-    "czi-all-sub-blocks": bool,
     "czi-xml": bool,
+    "czi-all-sub-blocks": bool,
+    "czi": bool,
+    "only-cifti-xml": bool,
+    "only-map-names": bool,
+    "only-number-of-maps": bool,
+    "only-step-interval": bool,
+    "no-map-info": bool,
     "data-file": str,
 })
 FileInformationParamsDictTagged = typing.TypedDict('FileInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/file-information"],
-    "no-map-info": bool,
-    "only-step-interval": bool,
-    "only-number-of-maps": bool,
-    "only-map-names": bool,
     "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParamsDict | None],
-    "only-cifti-xml": bool,
-    "czi": bool,
-    "czi-all-sub-blocks": bool,
     "czi-xml": bool,
+    "czi-all-sub-blocks": bool,
+    "czi": bool,
+    "only-cifti-xml": bool,
+    "only-map-names": bool,
+    "only-number-of-maps": bool,
+    "only-step-interval": bool,
+    "no-map-info": bool,
     "data-file": str,
 })
 FileInformationParamsDict = _FileInformationParamsDictNoTag | FileInformationParamsDictTagged
@@ -103,9 +103,9 @@ def file_information_only_metadata_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("-only-metadata")
     if params.get("key", None) is not None:
         cargs.extend([
-            "-only-metadata",
             "-key",
             params.get("key", None)
         ])
@@ -122,47 +122,47 @@ class FileInformationOutputs(typing.NamedTuple):
 
 def file_information_params(
     data_file: str,
-    no_map_info: bool = False,
-    only_step_interval: bool = False,
-    only_number_of_maps: bool = False,
-    only_map_names: bool = False,
     only_metadata: FileInformationOnlyMetadataParamsDict | None = None,
-    only_cifti_xml: bool = False,
-    czi: bool = False,
-    czi_all_sub_blocks: bool = False,
     czi_xml: bool = False,
+    czi_all_sub_blocks: bool = False,
+    czi: bool = False,
+    only_cifti_xml: bool = False,
+    only_map_names: bool = False,
+    only_number_of_maps: bool = False,
+    only_step_interval: bool = False,
+    no_map_info: bool = False,
 ) -> FileInformationParamsDictTagged:
     """
     Build parameters.
     
     Args:
         data_file: data file.
-        no_map_info: do not show map information for files that support maps.
-        only_step_interval: suppress normal output, print the interval between\
-            maps.
-        only_number_of_maps: suppress normal output, print the number of maps.
-        only_map_names: suppress normal output, print the names of all maps.
         only_metadata: suppress normal output, print file metadata.
-        only_cifti_xml: suppress normal output, print the cifti xml if the file\
-            type has it.
-        czi: For a CZI file, show information from the libCZI Info Command\
-            instead of the Workbench CZI File.
+        czi_xml: show XML from CZI file.
         czi_all_sub_blocks: show all sub-blocks in CZI file (may produce long\
             output).
-        czi_xml: show XML from CZI file.
+        czi: For a CZI file, show information from the libCZI Info Command\
+            instead of the Workbench CZI File.
+        only_cifti_xml: suppress normal output, print the cifti xml if the file\
+            type has it.
+        only_map_names: suppress normal output, print the names of all maps.
+        only_number_of_maps: suppress normal output, print the number of maps.
+        only_step_interval: suppress normal output, print the interval between\
+            maps.
+        no_map_info: do not show map information for files that support maps.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/file-information",
-        "no-map-info": no_map_info,
-        "only-step-interval": only_step_interval,
-        "only-number-of-maps": only_number_of_maps,
-        "only-map-names": only_map_names,
-        "only-cifti-xml": only_cifti_xml,
-        "czi": czi,
-        "czi-all-sub-blocks": czi_all_sub_blocks,
         "czi-xml": czi_xml,
+        "czi-all-sub-blocks": czi_all_sub_blocks,
+        "czi": czi,
+        "only-cifti-xml": only_cifti_xml,
+        "only-map-names": only_map_names,
+        "only-number-of-maps": only_number_of_maps,
+        "only-step-interval": only_step_interval,
+        "no-map-info": no_map_info,
         "data-file": data_file,
     }
     if only_metadata is not None:
@@ -182,40 +182,40 @@ def file_information_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("no-map-info", False) is None:
-        raise StyxValidationError("`no-map-info` must not be None")
-    if not isinstance(params["no-map-info"], bool):
-        raise StyxValidationError(f'`no-map-info` has the wrong type: Received `{type(params.get("no-map-info", False))}` expected `bool`')
-    if params.get("only-step-interval", False) is None:
-        raise StyxValidationError("`only-step-interval` must not be None")
-    if not isinstance(params["only-step-interval"], bool):
-        raise StyxValidationError(f'`only-step-interval` has the wrong type: Received `{type(params.get("only-step-interval", False))}` expected `bool`')
-    if params.get("only-number-of-maps", False) is None:
-        raise StyxValidationError("`only-number-of-maps` must not be None")
-    if not isinstance(params["only-number-of-maps"], bool):
-        raise StyxValidationError(f'`only-number-of-maps` has the wrong type: Received `{type(params.get("only-number-of-maps", False))}` expected `bool`')
-    if params.get("only-map-names", False) is None:
-        raise StyxValidationError("`only-map-names` must not be None")
-    if not isinstance(params["only-map-names"], bool):
-        raise StyxValidationError(f'`only-map-names` has the wrong type: Received `{type(params.get("only-map-names", False))}` expected `bool`')
     if params.get("only-metadata", None) is not None:
         file_information_only_metadata_validate(params["only-metadata"])
-    if params.get("only-cifti-xml", False) is None:
-        raise StyxValidationError("`only-cifti-xml` must not be None")
-    if not isinstance(params["only-cifti-xml"], bool):
-        raise StyxValidationError(f'`only-cifti-xml` has the wrong type: Received `{type(params.get("only-cifti-xml", False))}` expected `bool`')
-    if params.get("czi", False) is None:
-        raise StyxValidationError("`czi` must not be None")
-    if not isinstance(params["czi"], bool):
-        raise StyxValidationError(f'`czi` has the wrong type: Received `{type(params.get("czi", False))}` expected `bool`')
-    if params.get("czi-all-sub-blocks", False) is None:
-        raise StyxValidationError("`czi-all-sub-blocks` must not be None")
-    if not isinstance(params["czi-all-sub-blocks"], bool):
-        raise StyxValidationError(f'`czi-all-sub-blocks` has the wrong type: Received `{type(params.get("czi-all-sub-blocks", False))}` expected `bool`')
     if params.get("czi-xml", False) is None:
         raise StyxValidationError("`czi-xml` must not be None")
     if not isinstance(params["czi-xml"], bool):
         raise StyxValidationError(f'`czi-xml` has the wrong type: Received `{type(params.get("czi-xml", False))}` expected `bool`')
+    if params.get("czi-all-sub-blocks", False) is None:
+        raise StyxValidationError("`czi-all-sub-blocks` must not be None")
+    if not isinstance(params["czi-all-sub-blocks"], bool):
+        raise StyxValidationError(f'`czi-all-sub-blocks` has the wrong type: Received `{type(params.get("czi-all-sub-blocks", False))}` expected `bool`')
+    if params.get("czi", False) is None:
+        raise StyxValidationError("`czi` must not be None")
+    if not isinstance(params["czi"], bool):
+        raise StyxValidationError(f'`czi` has the wrong type: Received `{type(params.get("czi", False))}` expected `bool`')
+    if params.get("only-cifti-xml", False) is None:
+        raise StyxValidationError("`only-cifti-xml` must not be None")
+    if not isinstance(params["only-cifti-xml"], bool):
+        raise StyxValidationError(f'`only-cifti-xml` has the wrong type: Received `{type(params.get("only-cifti-xml", False))}` expected `bool`')
+    if params.get("only-map-names", False) is None:
+        raise StyxValidationError("`only-map-names` must not be None")
+    if not isinstance(params["only-map-names"], bool):
+        raise StyxValidationError(f'`only-map-names` has the wrong type: Received `{type(params.get("only-map-names", False))}` expected `bool`')
+    if params.get("only-number-of-maps", False) is None:
+        raise StyxValidationError("`only-number-of-maps` must not be None")
+    if not isinstance(params["only-number-of-maps"], bool):
+        raise StyxValidationError(f'`only-number-of-maps` has the wrong type: Received `{type(params.get("only-number-of-maps", False))}` expected `bool`')
+    if params.get("only-step-interval", False) is None:
+        raise StyxValidationError("`only-step-interval` must not be None")
+    if not isinstance(params["only-step-interval"], bool):
+        raise StyxValidationError(f'`only-step-interval` has the wrong type: Received `{type(params.get("only-step-interval", False))}` expected `bool`')
+    if params.get("no-map-info", False) is None:
+        raise StyxValidationError("`no-map-info` must not be None")
+    if not isinstance(params["no-map-info"], bool):
+        raise StyxValidationError(f'`no-map-info` has the wrong type: Received `{type(params.get("no-map-info", False))}` expected `bool`')
     if params.get("data-file", None) is None:
         raise StyxValidationError("`data-file` must not be None")
     if not isinstance(params["data-file"], str):
@@ -240,18 +240,24 @@ def file_information_cargs(
         "wb_command",
         "-file-information"
     ])
-    if params.get("no-map-info", False) or params.get("only-step-interval", False) or params.get("only-number-of-maps", False) or params.get("only-map-names", False) or params.get("only-metadata", None) is not None or params.get("only-cifti-xml", False) or params.get("czi", False) or params.get("czi-all-sub-blocks", False) or params.get("czi-xml", False):
-        cargs.extend([
-            ("-no-map-info" if (params.get("no-map-info", False)) else ""),
-            ("-only-step-interval" if (params.get("only-step-interval", False)) else ""),
-            ("-only-number-of-maps" if (params.get("only-number-of-maps", False)) else ""),
-            ("-only-map-names" if (params.get("only-map-names", False)) else ""),
-            *(file_information_only_metadata_cargs(params.get("only-metadata", None), execution) if (params.get("only-metadata", None) is not None) else []),
-            ("-only-cifti-xml" if (params.get("only-cifti-xml", False)) else ""),
-            ("-czi" if (params.get("czi", False)) else ""),
-            ("-czi-all-sub-blocks" if (params.get("czi-all-sub-blocks", False)) else ""),
-            ("-czi-xml" if (params.get("czi-xml", False)) else "")
-        ])
+    if params.get("only-metadata", None) is not None:
+        cargs.extend(file_information_only_metadata_cargs(params.get("only-metadata", None), execution))
+    if params.get("czi-xml", False):
+        cargs.append("-czi-xml")
+    if params.get("czi-all-sub-blocks", False):
+        cargs.append("-czi-all-sub-blocks")
+    if params.get("czi", False):
+        cargs.append("-czi")
+    if params.get("only-cifti-xml", False):
+        cargs.append("-only-cifti-xml")
+    if params.get("only-map-names", False):
+        cargs.append("-only-map-names")
+    if params.get("only-number-of-maps", False):
+        cargs.append("-only-number-of-maps")
+    if params.get("only-step-interval", False):
+        cargs.append("-only-step-interval")
+    if params.get("no-map-info", False):
+        cargs.append("-no-map-info")
     cargs.append(params.get("data-file", None))
     return cargs
 
@@ -344,15 +350,15 @@ def file_information_execute(
 
 def file_information(
     data_file: str,
-    no_map_info: bool = False,
-    only_step_interval: bool = False,
-    only_number_of_maps: bool = False,
-    only_map_names: bool = False,
     only_metadata: FileInformationOnlyMetadataParamsDict | None = None,
-    only_cifti_xml: bool = False,
-    czi: bool = False,
-    czi_all_sub_blocks: bool = False,
     czi_xml: bool = False,
+    czi_all_sub_blocks: bool = False,
+    czi: bool = False,
+    only_cifti_xml: bool = False,
+    only_map_names: bool = False,
+    only_number_of_maps: bool = False,
+    only_step_interval: bool = False,
+    no_map_info: bool = False,
     runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
@@ -404,33 +410,33 @@ def file_information(
     
     Args:
         data_file: data file.
-        no_map_info: do not show map information for files that support maps.
-        only_step_interval: suppress normal output, print the interval between\
-            maps.
-        only_number_of_maps: suppress normal output, print the number of maps.
-        only_map_names: suppress normal output, print the names of all maps.
         only_metadata: suppress normal output, print file metadata.
-        only_cifti_xml: suppress normal output, print the cifti xml if the file\
-            type has it.
-        czi: For a CZI file, show information from the libCZI Info Command\
-            instead of the Workbench CZI File.
+        czi_xml: show XML from CZI file.
         czi_all_sub_blocks: show all sub-blocks in CZI file (may produce long\
             output).
-        czi_xml: show XML from CZI file.
+        czi: For a CZI file, show information from the libCZI Info Command\
+            instead of the Workbench CZI File.
+        only_cifti_xml: suppress normal output, print the cifti xml if the file\
+            type has it.
+        only_map_names: suppress normal output, print the names of all maps.
+        only_number_of_maps: suppress normal output, print the number of maps.
+        only_step_interval: suppress normal output, print the interval between\
+            maps.
+        no_map_info: do not show map information for files that support maps.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FileInformationOutputs`).
     """
     params = file_information_params(
-        no_map_info=no_map_info,
-        only_step_interval=only_step_interval,
-        only_number_of_maps=only_number_of_maps,
-        only_map_names=only_map_names,
         only_metadata=only_metadata,
-        only_cifti_xml=only_cifti_xml,
-        czi=czi,
-        czi_all_sub_blocks=czi_all_sub_blocks,
         czi_xml=czi_xml,
+        czi_all_sub_blocks=czi_all_sub_blocks,
+        czi=czi,
+        only_cifti_xml=only_cifti_xml,
+        only_map_names=only_map_names,
+        only_number_of_maps=only_number_of_maps,
+        only_step_interval=only_step_interval,
+        no_map_info=no_map_info,
         data_file=data_file,
     )
     return file_information_execute(params, runner)

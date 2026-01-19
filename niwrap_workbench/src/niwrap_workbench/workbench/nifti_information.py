@@ -24,16 +24,16 @@ NiftiInformationPrintXmlParamsDict = _NiftiInformationPrintXmlParamsDictNoTag | 
 
 
 _NiftiInformationParamsDictNoTag = typing.TypedDict('_NiftiInformationParamsDictNoTag', {
+    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
-    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "nifti-file": str,
 })
 NiftiInformationParamsDictTagged = typing.TypedDict('NiftiInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/nifti-information"],
+    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
-    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "nifti-file": str,
 })
 NiftiInformationParamsDict = _NiftiInformationParamsDictNoTag | NiftiInformationParamsDictTagged
@@ -92,9 +92,9 @@ def nifti_information_print_xml_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("-print-xml")
     if params.get("version", None) is not None:
         cargs.extend([
-            "-print-xml",
             "-version",
             params.get("version", None)
         ])
@@ -111,20 +111,20 @@ class NiftiInformationOutputs(typing.NamedTuple):
 
 def nifti_information_params(
     nifti_file: str,
+    print_xml: NiftiInformationPrintXmlParamsDict | None = None,
     allow_truncated: bool | None = None,
     print_matrix: bool = False,
-    print_xml: NiftiInformationPrintXmlParamsDict | None = None,
 ) -> NiftiInformationParamsDictTagged:
     """
     Build parameters.
     
     Args:
         nifti_file: the nifti/cifti file to examine.
+        print_xml: print the cifti XML (cifti only).
         allow_truncated: display the header contents\
             \
             print the header even if the data is truncated.
         print_matrix: output the values in the matrix (cifti only).
-        print_xml: print the cifti XML (cifti only).
     Returns:
         Parameter dictionary
     """
@@ -133,10 +133,10 @@ def nifti_information_params(
         "print-matrix": print_matrix,
         "nifti-file": nifti_file,
     }
-    if allow_truncated is not None:
-        params["allow-truncated"] = allow_truncated
     if print_xml is not None:
         params["print-xml"] = print_xml
+    if allow_truncated is not None:
+        params["allow-truncated"] = allow_truncated
     return params
 
 
@@ -152,6 +152,8 @@ def nifti_information_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("print-xml", None) is not None:
+        nifti_information_print_xml_validate(params["print-xml"])
     if params.get("allow-truncated", None) is not None:
         if not isinstance(params["allow-truncated"], bool):
             raise StyxValidationError(f'`allow-truncated` has the wrong type: Received `{type(params.get("allow-truncated", None))}` expected `bool | None`')
@@ -159,8 +161,6 @@ def nifti_information_validate(
         raise StyxValidationError("`print-matrix` must not be None")
     if not isinstance(params["print-matrix"], bool):
         raise StyxValidationError(f'`print-matrix` has the wrong type: Received `{type(params.get("print-matrix", False))}` expected `bool`')
-    if params.get("print-xml", None) is not None:
-        nifti_information_print_xml_validate(params["print-xml"])
     if params.get("nifti-file", None) is None:
         raise StyxValidationError("`nifti-file` must not be None")
     if not isinstance(params["nifti-file"], str):
@@ -185,13 +185,15 @@ def nifti_information_cargs(
         "wb_command",
         "-nifti-information"
     ])
-    if params.get("allow-truncated", None) is not None or params.get("print-matrix", False) or params.get("print-xml", None) is not None:
+    if params.get("print-xml", None) is not None:
+        cargs.extend(nifti_information_print_xml_cargs(params.get("print-xml", None), execution))
+    if params.get("allow-truncated", None) is not None:
         cargs.extend([
             "-print-header",
-            ("-allow-truncated" if (params.get("allow-truncated", None) is not None) else ""),
-            ("-print-matrix" if (params.get("print-matrix", False)) else ""),
-            *(nifti_information_print_xml_cargs(params.get("print-xml", None), execution) if (params.get("print-xml", None) is not None) else [])
+            "-allow-truncated"
         ])
+    if params.get("print-matrix", False):
+        cargs.append("-print-matrix")
     cargs.append(params.get("nifti-file", None))
     return cargs
 
@@ -242,9 +244,9 @@ def nifti_information_execute(
 
 def nifti_information(
     nifti_file: str,
+    print_xml: NiftiInformationPrintXmlParamsDict | None = None,
     allow_truncated: bool | None = None,
     print_matrix: bool = False,
-    print_xml: NiftiInformationPrintXmlParamsDict | None = None,
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
@@ -254,19 +256,19 @@ def nifti_information(
     
     Args:
         nifti_file: the nifti/cifti file to examine.
+        print_xml: print the cifti XML (cifti only).
         allow_truncated: display the header contents\
             \
             print the header even if the data is truncated.
         print_matrix: output the values in the matrix (cifti only).
-        print_xml: print the cifti XML (cifti only).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NiftiInformationOutputs`).
     """
     params = nifti_information_params(
+        print_xml=print_xml,
         allow_truncated=allow_truncated,
         print_matrix=print_matrix,
-        print_xml=print_xml,
         nifti_file=nifti_file,
     )
     return nifti_information_execute(params, runner)

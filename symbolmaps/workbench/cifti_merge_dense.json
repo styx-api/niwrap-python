@@ -4,9 +4,6 @@
     "cifti-out": {
       "var_param": "cifti_out"
     },
-    "action": {
-      "var_param": "action"
-    },
     "cifti": {
       "var_param": "cifti",
       "fn_struct_make_params": "cifti_merge_dense_cifti",
@@ -15,6 +12,9 @@
           "var_param": "cifti_in"
         }
       }
+    },
+    "action": {
+      "var_param": "action"
     },
     "direction": {
       "var_param": "direction"

@@ -29,17 +29,17 @@ CiftiCreateScalarSeriesSeriesParamsDict = _CiftiCreateScalarSeriesSeriesParamsDi
 
 _CiftiCreateScalarSeriesParamsDictNoTag = typing.TypedDict('_CiftiCreateScalarSeriesParamsDictNoTag', {
     "cifti-out": str,
-    "transpose": bool,
-    "file": typing.NotRequired[str | None],
     "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParamsDict | None],
+    "file": typing.NotRequired[str | None],
+    "transpose": bool,
     "input": str,
 })
 CiftiCreateScalarSeriesParamsDictTagged = typing.TypedDict('CiftiCreateScalarSeriesParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-scalar-series"],
     "cifti-out": str,
-    "transpose": bool,
-    "file": typing.NotRequired[str | None],
     "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParamsDict | None],
+    "file": typing.NotRequired[str | None],
+    "transpose": bool,
     "input": str,
 })
 CiftiCreateScalarSeriesParamsDict = _CiftiCreateScalarSeriesParamsDictNoTag | CiftiCreateScalarSeriesParamsDictTagged
@@ -131,9 +131,9 @@ class CiftiCreateScalarSeriesOutputs(typing.NamedTuple):
 def cifti_create_scalar_series_params(
     cifti_out: str,
     input_: str,
-    transpose: bool = False,
-    file: str | None = None,
     series: CiftiCreateScalarSeriesSeriesParamsDict | None = None,
+    file: str | None = None,
+    transpose: bool = False,
 ) -> CiftiCreateScalarSeriesParamsDictTagged:
     """
     Build parameters.
@@ -141,12 +141,12 @@ def cifti_create_scalar_series_params(
     Args:
         cifti_out: output cifti file.
         input_: input file.
-        transpose: use if the rows of the text file are along the scalar\
-            dimension.
+        series: set the units and values of the series.
         file: use a text file to set names on scalar dimension\
             \
             text file containing names, one per line.
-        series: set the units and values of the series.
+        transpose: use if the rows of the text file are along the scalar\
+            dimension.
     Returns:
         Parameter dictionary
     """
@@ -156,10 +156,10 @@ def cifti_create_scalar_series_params(
         "transpose": transpose,
         "input": input_,
     }
-    if file is not None:
-        params["file"] = file
     if series is not None:
         params["series"] = series
+    if file is not None:
+        params["file"] = file
     return params
 
 
@@ -179,15 +179,15 @@ def cifti_create_scalar_series_validate(
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
         raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("series", None) is not None:
+        cifti_create_scalar_series_series_validate(params["series"])
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
     if params.get("transpose", False) is None:
         raise StyxValidationError("`transpose` must not be None")
     if not isinstance(params["transpose"], bool):
         raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
-    if params.get("file", None) is not None:
-        if not isinstance(params["file"], str):
-            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
-    if params.get("series", None) is not None:
-        cifti_create_scalar_series_series_validate(params["series"])
     if params.get("input", None) is None:
         raise StyxValidationError("`input` must not be None")
     if not isinstance(params["input"], str):
@@ -214,11 +214,15 @@ def cifti_create_scalar_series_cargs(
     ])
     cargs.extend([
         params.get("cifti-out", None),
-        ("-transpose" if (params.get("transpose", False)) else ""),
-        "-name-file",
-        (params.get("file", None) if (params.get("file", None) is not None) else ""),
         *(cifti_create_scalar_series_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else [])
     ])
+    if params.get("file", None) is not None:
+        cargs.extend([
+            "-name-file",
+            params.get("file", None)
+        ])
+    if params.get("transpose", False):
+        cargs.append("-transpose")
     cargs.append(params.get("input", None))
     return cargs
 
@@ -280,9 +284,9 @@ def cifti_create_scalar_series_execute(
 def cifti_create_scalar_series(
     cifti_out: str,
     input_: str,
-    transpose: bool = False,
-    file: str | None = None,
     series: CiftiCreateScalarSeriesSeriesParamsDict | None = None,
+    file: str | None = None,
+    transpose: bool = False,
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
@@ -302,21 +306,21 @@ def cifti_create_scalar_series(
     Args:
         cifti_out: output cifti file.
         input_: input file.
-        transpose: use if the rows of the text file are along the scalar\
-            dimension.
+        series: set the units and values of the series.
         file: use a text file to set names on scalar dimension\
             \
             text file containing names, one per line.
-        series: set the units and values of the series.
+        transpose: use if the rows of the text file are along the scalar\
+            dimension.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateScalarSeriesOutputs`).
     """
     params = cifti_create_scalar_series_params(
         cifti_out=cifti_out,
-        transpose=transpose,
-        file=file,
         series=series,
+        file=file,
+        transpose=transpose,
         input_=input_,
     )
     return cifti_create_scalar_series_execute(params, runner)

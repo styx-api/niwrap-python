@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "cifti_estimate_fwhm",
   "properties": {
-    "merged-volume": {
-      "var_param": "merged_volume"
-    },
-    "column": {
-      "var_param": "column"
-    },
-    "demean": {
-      "var_param": "demean"
-    },
     "surface": {
       "var_param": "surface",
       "fn_struct_make_params": "cifti_estimate_fwhm_surface",
@@ -21,6 +12,15 @@
           "var_param": "surface"
         }
       }
+    },
+    "demean": {
+      "var_param": "demean"
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "merged-volume": {
+      "var_param": "merged_volume"
     },
     "cifti": {
       "var_param": "cifti"

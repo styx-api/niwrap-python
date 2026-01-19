@@ -15,9 +15,9 @@ LABEL_DILATE_METADATA = Metadata(
 
 _LabelDilateParamsDictNoTag = typing.TypedDict('_LabelDilateParamsDictNoTag', {
     "label-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
     "dilate-dist": float,
@@ -25,9 +25,9 @@ _LabelDilateParamsDictNoTag = typing.TypedDict('_LabelDilateParamsDictNoTag', {
 LabelDilateParamsDictTagged = typing.TypedDict('LabelDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/label-dilate"],
     "label-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
     "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
     "dilate-dist": float,
@@ -50,9 +50,9 @@ def label_dilate_params(
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     area_metric: InputPathType | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
 ) -> LabelDilateParamsDictTagged:
     """
     Build parameters.
@@ -62,18 +62,18 @@ def label_dilate_params(
         label: the input label.
         surface: the surface to dilate on.
         dilate_dist: distance in mm to dilate the labels.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        column: select a single column to dilate\
+            \
+            the column number or name.
         roi_metric: specify an roi of vertices to overwrite, rather than\
             vertices with the unlabeled key\
             \
             metric file, positive values denote vertices to have their values\
             replaced.
-        column: select a single column to dilate\
-            \
-            the column number or name.
-        area_metric: vertex areas to use instead of computing them from the\
-            surface\
-            \
-            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
@@ -84,12 +84,12 @@ def label_dilate_params(
         "surface": surface,
         "dilate-dist": dilate_dist,
     }
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if column is not None:
-        params["column"] = column
     if area_metric is not None:
         params["area-metric"] = area_metric
+    if column is not None:
+        params["column"] = column
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -109,15 +109,15 @@ def label_dilate_validate(
         raise StyxValidationError("`label-out` must not be None")
     if not isinstance(params["label-out"], str):
         raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("label", None) is None:
         raise StyxValidationError("`label` must not be None")
     if not isinstance(params["label"], (pathlib.Path, str)):
@@ -150,15 +150,22 @@ def label_dilate_cargs(
         "wb_command",
         "-label-dilate"
     ])
-    cargs.extend([
-        params.get("label-out", None),
-        "-bad-vertex-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
-    ])
+    cargs.append(params.get("label-out", None))
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-bad-vertex-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("dilate-dist", None)))
@@ -219,9 +226,9 @@ def label_dilate(
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
-    roi_metric: InputPathType | None = None,
-    column: str | None = None,
     area_metric: InputPathType | None = None,
+    column: str | None = None,
+    roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
@@ -238,27 +245,27 @@ def label_dilate(
         label: the input label.
         surface: the surface to dilate on.
         dilate_dist: distance in mm to dilate the labels.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        column: select a single column to dilate\
+            \
+            the column number or name.
         roi_metric: specify an roi of vertices to overwrite, rather than\
             vertices with the unlabeled key\
             \
             metric file, positive values denote vertices to have their values\
             replaced.
-        column: select a single column to dilate\
-            \
-            the column number or name.
-        area_metric: vertex areas to use instead of computing them from the\
-            surface\
-            \
-            the corrected vertex areas, as a metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelDilateOutputs`).
     """
     params = label_dilate_params(
         label_out=label_out,
-        roi_metric=roi_metric,
-        column=column,
         area_metric=area_metric,
+        column=column,
+        roi_metric=roi_metric,
         label=label,
         surface=surface,
         dilate_dist=dilate_dist,

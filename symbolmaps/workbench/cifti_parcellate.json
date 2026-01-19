@@ -8,31 +8,25 @@
       "var_param": "spatial_weights",
       "fn_struct_make_params": "cifti_parcellate_spatial_weights",
       "properties": {
-        "left-surf": {
-          "var_param": "left_surf"
-        },
-        "right-surf": {
-          "var_param": "right_surf"
-        },
-        "cerebellum-surf": {
-          "var_param": "cerebellum_surf"
-        },
-        "left-metric": {
-          "var_param": "left_metric"
+        "cerebellum-metric": {
+          "var_param": "cerebellum_metric"
         },
         "right-metric": {
           "var_param": "right_metric"
         },
-        "cerebellum-metric": {
-          "var_param": "cerebellum_metric"
+        "left-metric": {
+          "var_param": "left_metric"
+        },
+        "cerebellum-surf": {
+          "var_param": "cerebellum_surf"
+        },
+        "right-surf": {
+          "var_param": "right_surf"
+        },
+        "left-surf": {
+          "var_param": "left_surf"
         }
       }
-    },
-    "weight-cifti": {
-      "var_param": "weight_cifti"
-    },
-    "method": {
-      "var_param": "method"
     },
     "exclude-outliers": {
       "var_param": "exclude_outliers",
@@ -46,12 +40,6 @@
         }
       }
     },
-    "only-numeric": {
-      "var_param": "only_numeric"
-    },
-    "value": {
-      "var_param": "value"
-    },
     "nonempty-mask-out": {
       "var_param": "nonempty_mask_out",
       "fn_struct_make_params": "cifti_parcellate_nonempty_mask_out",
@@ -61,11 +49,23 @@
         }
       }
     },
-    "legacy-mode": {
-      "var_param": "legacy_mode"
+    "value": {
+      "var_param": "value"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "weight-cifti": {
+      "var_param": "weight_cifti"
     },
     "include-empty": {
       "var_param": "include_empty"
+    },
+    "legacy-mode": {
+      "var_param": "legacy_mode"
+    },
+    "only-numeric": {
+      "var_param": "only_numeric"
     },
     "cifti-in": {
       "var_param": "cifti_in"

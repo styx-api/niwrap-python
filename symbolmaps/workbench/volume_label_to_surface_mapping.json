@@ -14,14 +14,14 @@
         "outer-surf": {
           "var_param": "outer_surf"
         },
-        "roi-volume": {
-          "var_param": "roi_volume"
+        "subdiv-num": {
+          "var_param": "subdiv_num"
         },
         "dist": {
           "var_param": "dist"
         },
-        "subdiv-num": {
-          "var_param": "subdiv_num"
+        "roi-volume": {
+          "var_param": "roi_volume"
         },
         "thin-columns": {
           "var_param": "thin_columns"

@@ -7,11 +7,11 @@
     "name": {
       "var_param": "name"
     },
-    "inverse": {
-      "var_param": "inverse"
-    },
     "include-border": {
       "var_param": "include_border"
+    },
+    "inverse": {
+      "var_param": "inverse"
     },
     "surface": {
       "var_param": "surface"

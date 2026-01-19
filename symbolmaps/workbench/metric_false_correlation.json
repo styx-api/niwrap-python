@@ -4,11 +4,11 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
     "text-out": {
       "var_param": "text_out"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "surface": {
       "var_param": "surface"

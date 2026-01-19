@@ -1,12 +1,6 @@
 {
   "fn_root_make_params_and_execute": "cifti_label_to_border",
   "properties": {
-    "fraction": {
-      "var_param": "fraction"
-    },
-    "column": {
-      "var_param": "column"
-    },
     "border": {
       "var_param": "border",
       "fn_struct_make_params": "cifti_label_to_border_border",
@@ -18,6 +12,12 @@
           "var_param": "border_out"
         }
       }
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "fraction": {
+      "var_param": "fraction"
     },
     "cifti-in": {
       "var_param": "cifti_in"

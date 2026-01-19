@@ -15,13 +15,13 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 
 _MetricFindClustersParamsDictNoTag = typing.TypedDict('_MetricFindClustersParamsDictNoTag', {
     "metric-out": str,
-    "less-than": bool,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "area-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
-    "ratio": typing.NotRequired[float | None],
-    "distance": typing.NotRequired[float | None],
     "startval": typing.NotRequired[int | None],
+    "distance": typing.NotRequired[float | None],
+    "ratio": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "less-than": bool,
     "surface": InputPathType,
     "metric-in": InputPathType,
     "value-threshold": float,
@@ -30,13 +30,13 @@ _MetricFindClustersParamsDictNoTag = typing.TypedDict('_MetricFindClustersParams
 MetricFindClustersParamsDictTagged = typing.TypedDict('MetricFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-find-clusters"],
     "metric-out": str,
-    "less-than": bool,
-    "roi-metric": typing.NotRequired[InputPathType | None],
-    "area-metric": typing.NotRequired[InputPathType | None],
-    "column": typing.NotRequired[str | None],
-    "ratio": typing.NotRequired[float | None],
-    "distance": typing.NotRequired[float | None],
     "startval": typing.NotRequired[int | None],
+    "distance": typing.NotRequired[float | None],
+    "ratio": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "less-than": bool,
     "surface": InputPathType,
     "metric-in": InputPathType,
     "value-threshold": float,
@@ -61,13 +61,13 @@ def metric_find_clusters_params(
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
-    less_than: bool = False,
-    roi_metric: InputPathType | None = None,
-    area_metric: InputPathType | None = None,
-    column: str | None = None,
-    ratio: float | None = None,
-    distance: float | None = None,
     startval: int | None = None,
+    distance: float | None = None,
+    ratio: float | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
+    roi_metric: InputPathType | None = None,
+    less_than: bool = False,
 ) -> MetricFindClustersParamsDictTagged:
     """
     Build parameters.
@@ -78,29 +78,29 @@ def metric_find_clusters_params(
         metric_in: the input metric.
         value_threshold: threshold for data values.
         minimum_area: threshold for cluster area, in mm^2.
-        less_than: find values less than <value-threshold>, rather than greater.
-        roi_metric: select a region of interest\
+        startval: start labeling clusters from a value other than 1\
             \
-            the roi, as a metric.
-        area_metric: vertex areas to use instead of computing them from the\
-            surface\
-            \
-            the corrected vertex areas, as a metric.
-        column: select a single column\
-            \
-            the column number or name.
-        ratio: ignore clusters smaller than a given fraction of the largest\
-            cluster in map\
-            \
-            fraction of the largest cluster's area.
+            the value to give the first cluster found.
         distance: ignore clusters further than a given distance from the\
             largest cluster\
             \
             how far from the largest cluster a cluster can be, edge to edge, in\
             mm.
-        startval: start labeling clusters from a value other than 1\
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
             \
-            the value to give the first cluster found.
+            fraction of the largest cluster's area.
+        column: select a single column\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        roi_metric: select a region of interest\
+            \
+            the roi, as a metric.
+        less_than: find values less than <value-threshold>, rather than greater.
     Returns:
         Parameter dictionary
     """
@@ -113,18 +113,18 @@ def metric_find_clusters_params(
         "value-threshold": value_threshold,
         "minimum-area": minimum_area,
     }
-    if roi_metric is not None:
-        params["roi-metric"] = roi_metric
-    if area_metric is not None:
-        params["area-metric"] = area_metric
-    if column is not None:
-        params["column"] = column
-    if ratio is not None:
-        params["ratio"] = ratio
-    if distance is not None:
-        params["distance"] = distance
     if startval is not None:
         params["startval"] = startval
+    if distance is not None:
+        params["distance"] = distance
+    if ratio is not None:
+        params["ratio"] = ratio
+    if column is not None:
+        params["column"] = column
+    if area_metric is not None:
+        params["area-metric"] = area_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -144,28 +144,28 @@ def metric_find_clusters_validate(
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
         raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("startval", None) is not None:
+        if not isinstance(params["startval"], int):
+            raise StyxValidationError(f'`startval` has the wrong type: Received `{type(params.get("startval", None))}` expected `int | None`')
+    if params.get("distance", None) is not None:
+        if not isinstance(params["distance"], (float, int)):
+            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
+    if params.get("ratio", None) is not None:
+        if not isinstance(params["ratio"], (float, int)):
+            raise StyxValidationError(f'`ratio` has the wrong type: Received `{type(params.get("ratio", None))}` expected `float | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("less-than", False) is None:
         raise StyxValidationError("`less-than` must not be None")
     if not isinstance(params["less-than"], bool):
         raise StyxValidationError(f'`less-than` has the wrong type: Received `{type(params.get("less-than", False))}` expected `bool`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("area-metric", None) is not None:
-        if not isinstance(params["area-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
-    if params.get("ratio", None) is not None:
-        if not isinstance(params["ratio"], (float, int)):
-            raise StyxValidationError(f'`ratio` has the wrong type: Received `{type(params.get("ratio", None))}` expected `float | None`')
-    if params.get("distance", None) is not None:
-        if not isinstance(params["distance"], (float, int)):
-            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
-    if params.get("startval", None) is not None:
-        if not isinstance(params["startval"], int):
-            raise StyxValidationError(f'`startval` has the wrong type: Received `{type(params.get("startval", None))}` expected `int | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -202,22 +202,39 @@ def metric_find_clusters_cargs(
         "wb_command",
         "-metric-find-clusters"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        ("-less-than" if (params.get("less-than", False)) else ""),
-        "-roi",
-        (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
-        "-corrected-areas",
-        (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else ""),
-        "-size-ratio",
-        (str(params.get("ratio", None)) if (params.get("ratio", None) is not None) else ""),
-        "-distance",
-        (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
-        "-start",
-        (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("startval", None) is not None:
+        cargs.extend([
+            "-start",
+            str(params.get("startval", None))
+        ])
+    if params.get("distance", None) is not None:
+        cargs.extend([
+            "-distance",
+            str(params.get("distance", None))
+        ])
+    if params.get("ratio", None) is not None:
+        cargs.extend([
+            "-size-ratio",
+            str(params.get("ratio", None))
+        ])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
+        ])
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    if params.get("less-than", False):
+        cargs.append("-less-than")
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(str(params.get("value-threshold", None)))
@@ -283,13 +300,13 @@ def metric_find_clusters(
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
-    less_than: bool = False,
-    roi_metric: InputPathType | None = None,
-    area_metric: InputPathType | None = None,
-    column: str | None = None,
-    ratio: float | None = None,
-    distance: float | None = None,
     startval: int | None = None,
+    distance: float | None = None,
+    ratio: float | None = None,
+    column: str | None = None,
+    area_metric: InputPathType | None = None,
+    roi_metric: InputPathType | None = None,
+    less_than: bool = False,
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
@@ -310,42 +327,42 @@ def metric_find_clusters(
         metric_in: the input metric.
         value_threshold: threshold for data values.
         minimum_area: threshold for cluster area, in mm^2.
-        less_than: find values less than <value-threshold>, rather than greater.
-        roi_metric: select a region of interest\
+        startval: start labeling clusters from a value other than 1\
             \
-            the roi, as a metric.
-        area_metric: vertex areas to use instead of computing them from the\
-            surface\
-            \
-            the corrected vertex areas, as a metric.
-        column: select a single column\
-            \
-            the column number or name.
-        ratio: ignore clusters smaller than a given fraction of the largest\
-            cluster in map\
-            \
-            fraction of the largest cluster's area.
+            the value to give the first cluster found.
         distance: ignore clusters further than a given distance from the\
             largest cluster\
             \
             how far from the largest cluster a cluster can be, edge to edge, in\
             mm.
-        startval: start labeling clusters from a value other than 1\
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
             \
-            the value to give the first cluster found.
+            fraction of the largest cluster's area.
+        column: select a single column\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        roi_metric: select a region of interest\
+            \
+            the roi, as a metric.
+        less_than: find values less than <value-threshold>, rather than greater.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFindClustersOutputs`).
     """
     params = metric_find_clusters_params(
         metric_out=metric_out,
-        less_than=less_than,
-        roi_metric=roi_metric,
-        area_metric=area_metric,
-        column=column,
-        ratio=ratio,
-        distance=distance,
         startval=startval,
+        distance=distance,
+        ratio=ratio,
+        column=column,
+        area_metric=area_metric,
+        roi_metric=roi_metric,
+        less_than=less_than,
         surface=surface,
         metric_in=metric_in,
         value_threshold=value_threshold,

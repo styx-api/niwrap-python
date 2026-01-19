@@ -15,16 +15,16 @@ LABEL_TO_BORDER_METADATA = Metadata(
 
 _LabelToBorderParamsDictNoTag = typing.TypedDict('_LabelToBorderParamsDictNoTag', {
     "border-out": str,
-    "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
     "surface": InputPathType,
     "label-in": InputPathType,
 })
 LabelToBorderParamsDictTagged = typing.TypedDict('LabelToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/label-to-border"],
     "border-out": str,
-    "fraction": typing.NotRequired[float | None],
     "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
     "surface": InputPathType,
     "label-in": InputPathType,
 })
@@ -45,8 +45,8 @@ def label_to_border_params(
     border_out: str,
     surface: InputPathType,
     label_in: InputPathType,
-    fraction: float | None = None,
     column: str | None = None,
+    fraction: float | None = None,
 ) -> LabelToBorderParamsDictTagged:
     """
     Build parameters.
@@ -55,12 +55,12 @@ def label_to_border_params(
         border_out: the output border file.
         surface: the surface to use for neighbor information.
         label_in: the input label file.
-        fraction: set how far along the edge border points are drawn\
-            \
-            fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
     Returns:
         Parameter dictionary
     """
@@ -70,10 +70,10 @@ def label_to_border_params(
         "surface": surface,
         "label-in": label_in,
     }
-    if fraction is not None:
-        params["fraction"] = fraction
     if column is not None:
         params["column"] = column
+    if fraction is not None:
+        params["fraction"] = fraction
     return params
 
 
@@ -93,12 +93,12 @@ def label_to_border_validate(
         raise StyxValidationError("`border-out` must not be None")
     if not isinstance(params["border-out"], str):
         raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
-    if params.get("fraction", None) is not None:
-        if not isinstance(params["fraction"], (float, int)):
-            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("fraction", None) is not None:
+        if not isinstance(params["fraction"], (float, int)):
+            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -127,13 +127,17 @@ def label_to_border_cargs(
         "wb_command",
         "-label-to-border"
     ])
-    cargs.extend([
-        params.get("border-out", None),
-        "-placement",
-        (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
-        "-column",
-        (params.get("column", None) if (params.get("column", None) is not None) else "")
-    ])
+    cargs.append(params.get("border-out", None))
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("fraction", None) is not None:
+        cargs.extend([
+            "-placement",
+            str(params.get("fraction", None))
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
@@ -191,8 +195,8 @@ def label_to_border(
     border_out: str,
     surface: InputPathType,
     label_in: InputPathType,
-    fraction: float | None = None,
     column: str | None = None,
+    fraction: float | None = None,
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
@@ -207,20 +211,20 @@ def label_to_border(
         border_out: the output border file.
         surface: the surface to use for neighbor information.
         label_in: the input label file.
-        fraction: set how far along the edge border points are drawn\
-            \
-            fraction along edge from inside vertex (default 0.33).
         column: select a single column\
             \
             the column number or name.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToBorderOutputs`).
     """
     params = label_to_border_params(
         border_out=border_out,
-        fraction=fraction,
         column=column,
+        fraction=fraction,
         surface=surface,
         label_in=label_in,
     )

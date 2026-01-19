@@ -26,16 +26,16 @@ CiftiLabelToBorderBorderParamsDict = _CiftiLabelToBorderBorderParamsDictNoTag | 
 
 
 _CiftiLabelToBorderParamsDictNoTag = typing.TypedDict('_CiftiLabelToBorderParamsDictNoTag', {
-    "fraction": typing.NotRequired[float | None],
-    "column": typing.NotRequired[str | None],
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParamsDict] | None],
+    "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
     "cifti-in": InputPathType,
 })
 CiftiLabelToBorderParamsDictTagged = typing.TypedDict('CiftiLabelToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-to-border"],
-    "fraction": typing.NotRequired[float | None],
-    "column": typing.NotRequired[str | None],
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParamsDict] | None],
+    "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
     "cifti-in": InputPathType,
 })
 CiftiLabelToBorderParamsDict = _CiftiLabelToBorderParamsDictNoTag | CiftiLabelToBorderParamsDictTagged
@@ -149,22 +149,22 @@ class CiftiLabelToBorderOutputs(typing.NamedTuple):
 
 def cifti_label_to_border_params(
     cifti_in: InputPathType,
-    fraction: float | None = None,
-    column: str | None = None,
     border: list[CiftiLabelToBorderBorderParamsDict] | None = None,
+    column: str | None = None,
+    fraction: float | None = None,
 ) -> CiftiLabelToBorderParamsDictTagged:
     """
     Build parameters.
     
     Args:
         cifti_in: the input cifti dlabel file.
-        fraction: set how far along the edge border points are drawn\
-            \
-            fraction along edge from inside vertex (default 0.33).
+        border: specify output file for a surface structure.
         column: select a single column\
             \
             the column number or name.
-        border: specify output file for a surface structure.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
     Returns:
         Parameter dictionary
     """
@@ -172,12 +172,12 @@ def cifti_label_to_border_params(
         "@type": "workbench/cifti-label-to-border",
         "cifti-in": cifti_in,
     }
-    if fraction is not None:
-        params["fraction"] = fraction
-    if column is not None:
-        params["column"] = column
     if border is not None:
         params["border"] = border
+    if column is not None:
+        params["column"] = column
+    if fraction is not None:
+        params["fraction"] = fraction
     return params
 
 
@@ -193,17 +193,17 @@ def cifti_label_to_border_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("fraction", None) is not None:
-        if not isinstance(params["fraction"], (float, int)):
-            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("border", None) is not None:
         if not isinstance(params["border"], list):
             raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `list[CiftiLabelToBorderBorderParamsDict] | None`')
         for e in params["border"]:
             cifti_label_to_border_border_validate(e)
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("fraction", None) is not None:
+        if not isinstance(params["fraction"], (float, int)):
+            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -228,13 +228,17 @@ def cifti_label_to_border_cargs(
         "wb_command",
         "-cifti-label-to-border"
     ])
-    if params.get("fraction", None) is not None or params.get("column", None) is not None or params.get("border", None) is not None:
+    if params.get("border", None) is not None:
+        cargs.extend([a for c in [cifti_label_to_border_border_cargs(s, execution) for s in params.get("border", None)] for a in c])
+    if params.get("column", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None)
+        ])
+    if params.get("fraction", None) is not None:
         cargs.extend([
             "-placement",
-            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
-            "-column",
-            (params.get("column", None) if (params.get("column", None) is not None) else ""),
-            *([a for c in [cifti_label_to_border_border_cargs(s, execution) for s in params.get("border", None)] for a in c] if (params.get("border", None) is not None) else [])
+            str(params.get("fraction", None))
         ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
@@ -289,9 +293,9 @@ def cifti_label_to_border_execute(
 
 def cifti_label_to_border(
     cifti_in: InputPathType,
-    fraction: float | None = None,
-    column: str | None = None,
     border: list[CiftiLabelToBorderBorderParamsDict] | None = None,
+    column: str | None = None,
+    fraction: float | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
     """
@@ -303,21 +307,21 @@ def cifti_label_to_border(
     
     Args:
         cifti_in: the input cifti dlabel file.
-        fraction: set how far along the edge border points are drawn\
-            \
-            fraction along edge from inside vertex (default 0.33).
+        border: specify output file for a surface structure.
         column: select a single column\
             \
             the column number or name.
-        border: specify output file for a surface structure.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToBorderOutputs`).
     """
     params = cifti_label_to_border_params(
-        fraction=fraction,
-        column=column,
         border=border,
+        column=column,
+        fraction=fraction,
         cifti_in=cifti_in,
     )
     return cifti_label_to_border_execute(params, runner)

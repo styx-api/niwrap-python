@@ -4,9 +4,6 @@
     "metric-out": {
       "var_param": "metric_out"
     },
-    "fwhm": {
-      "var_param": "fwhm"
-    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "metric_smoothing_roi",
@@ -19,17 +16,20 @@
         }
       }
     },
-    "fix-zeros": {
-      "var_param": "fix_zeros"
-    },
-    "column": {
-      "var_param": "column"
+    "method": {
+      "var_param": "method"
     },
     "area-metric": {
       "var_param": "area_metric"
     },
-    "method": {
-      "var_param": "method"
+    "column": {
+      "var_param": "column"
+    },
+    "fix-zeros": {
+      "var_param": "fix_zeros"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
     },
     "surface": {
       "var_param": "surface"
