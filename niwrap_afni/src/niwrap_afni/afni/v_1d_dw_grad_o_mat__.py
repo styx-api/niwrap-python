@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
-    id="089c358fdaa8a6343f360bc42573e573155fe1b0.boutiques",
+    id="6d06ff4a264d54f2bd119e11f55215f899c828b5.boutiques",
     name="1dDW_Grad_o_Mat++",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -375,7 +375,7 @@ def v_1d_dw_grad_o_mat___outputs(
         root=execution.output_file("."),
         outfile=execution.output_file(params.get("out_row_vec", None)),
         out_row_bval_file=execution.output_file(params.get("out_row_bval_sep", None)) if (params.get("out_row_bval_sep") is not None) else None,
-        out_col_bval_file=execution.output_file(params.get("out_row_bval_sep", None)) if (params.get("out_row_bval_sep") is not None) else None,
+        out_col_bval_file=execution.output_file(params.get("out_col_bval_sep", None)) if (params.get("out_col_bval_sep") is not None) else None,
     )
     return ret
 

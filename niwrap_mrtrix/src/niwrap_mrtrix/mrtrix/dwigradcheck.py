@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWIGRADCHECK_METADATA = Metadata(
-    id="da91c0d77a46dd23fc98bad56497487a81e19371.boutiques",
+    id="efa3ccbad97d0c5bc080c7e11292722025c2c985.boutiques",
     name="dwigradcheck",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",
@@ -258,9 +258,7 @@ class DwigradcheckOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     export_grad_mrtrix: OutputPathType | None
     """export the diffusion-weighted gradient table to file in MRtrix format """
-    export_grad_fsl: OutputPathType | None
-    """export the diffusion-weighted gradient table to file in FSL format """
-    export_grad_fsl_: DwigradcheckExportGradFslOutputs | None
+    export_grad_fsl: DwigradcheckExportGradFslOutputs | None
     """Outputs from `dwigradcheck_export_grad_fsl_outputs`."""
 
 
@@ -527,8 +525,7 @@ def dwigradcheck_outputs(
     ret = DwigradcheckOutputs(
         root=execution.output_file("."),
         export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix", None)) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_grad_fsl=execution.output_file(params.get("export_grad_mrtrix", None)) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_grad_fsl_=dwigradcheck_export_grad_fsl_outputs(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_grad_fsl=dwigradcheck_export_grad_fsl_outputs(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
     )
     return ret
 
