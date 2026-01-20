@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "cifti_transpose",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
     "limit-GB": {
       "var_param": "limit_gb"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
     }
   }
 }

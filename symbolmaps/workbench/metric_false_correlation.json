@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "metric_false_correlation",
   "properties": {
-    "metric-out": {
-      "var_param": "metric_out"
-    },
-    "text-out": {
-      "var_param": "text_out"
-    },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
     "surface": {
       "var_param": "surface"
     },
@@ -24,6 +15,15 @@
     },
     "geo-inner": {
       "var_param": "geo_inner"
+    },
+    "metric-out": {
+      "var_param": "metric_out"
+    },
+    "text-out": {
+      "var_param": "text_out"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric"
     }
   }
 }

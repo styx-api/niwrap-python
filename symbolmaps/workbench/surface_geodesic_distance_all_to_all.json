@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "surface_geodesic_distance_all_to_all",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -15,9 +18,6 @@
     },
     "naive": {
       "var_param": "naive"
-    },
-    "surface": {
-      "var_param": "surface"
     }
   }
 }

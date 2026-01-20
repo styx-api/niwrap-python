@@ -14,21 +14,21 @@ BORDER_TO_ROIS_METADATA = Metadata(
 
 
 _BorderToRoisParamsDictNoTag = typing.TypedDict('_BorderToRoisParamsDictNoTag', {
+    "surface": InputPathType,
+    "border-file": InputPathType,
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "include-border": bool,
     "inverse": bool,
-    "surface": InputPathType,
-    "border-file": InputPathType,
 })
 BorderToRoisParamsDictTagged = typing.TypedDict('BorderToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/border-to-rois"],
+    "surface": InputPathType,
+    "border-file": InputPathType,
     "metric-out": str,
     "name": typing.NotRequired[str | None],
     "include-border": bool,
     "inverse": bool,
-    "surface": InputPathType,
-    "border-file": InputPathType,
 })
 BorderToRoisParamsDict = _BorderToRoisParamsDictNoTag | BorderToRoisParamsDictTagged
 
@@ -44,9 +44,9 @@ class BorderToRoisOutputs(typing.NamedTuple):
 
 
 def border_to_rois_params(
-    metric_out: str,
     surface: InputPathType,
     border_file: InputPathType,
+    metric_out: str,
     name: str | None = None,
     include_border: bool = False,
     inverse: bool = False,
@@ -55,9 +55,9 @@ def border_to_rois_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric file.
         surface: the surface the borders are drawn on.
         border_file: the border file.
+        metric_out: the output metric file.
         name: create ROI for only one border\
             \
             the name of the border.
@@ -68,11 +68,11 @@ def border_to_rois_params(
     """
     params = {
         "@type": "workbench/border-to-rois",
+        "surface": surface,
+        "border-file": border_file,
         "metric-out": metric_out,
         "include-border": include_border,
         "inverse": inverse,
-        "surface": surface,
-        "border-file": border_file,
     }
     if name is not None:
         params["name"] = name
@@ -91,6 +91,14 @@ def border_to_rois_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("border-file", None) is None:
+        raise StyxValidationError("`border-file` must not be None")
+    if not isinstance(params["border-file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border-file` has the wrong type: Received `{type(params.get("border-file", None))}` expected `InputPathType`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -106,14 +114,6 @@ def border_to_rois_validate(
         raise StyxValidationError("`inverse` must not be None")
     if not isinstance(params["inverse"], bool):
         raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("border-file", None) is None:
-        raise StyxValidationError("`border-file` must not be None")
-    if not isinstance(params["border-file"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`border-file` has the wrong type: Received `{type(params.get("border-file", None))}` expected `InputPathType`')
 
 
 def border_to_rois_cargs(
@@ -134,6 +134,8 @@ def border_to_rois_cargs(
         "wb_command",
         "-border-to-rois"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("border-file", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("name", None) is not None:
         cargs.extend([
@@ -144,8 +146,6 @@ def border_to_rois_cargs(
         cargs.append("-include-border")
     if params.get("inverse", False):
         cargs.append("-inverse")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("border-file", None)))
     return cargs
 
 
@@ -196,9 +196,9 @@ def border_to_rois_execute(
 
 
 def border_to_rois(
-    metric_out: str,
     surface: InputPathType,
     border_file: InputPathType,
+    metric_out: str,
     name: str | None = None,
     include_border: bool = False,
     inverse: bool = False,
@@ -211,9 +211,9 @@ def border_to_rois(
     metric columns.
     
     Args:
-        metric_out: the output metric file.
         surface: the surface the borders are drawn on.
         border_file: the border file.
+        metric_out: the output metric file.
         name: create ROI for only one border\
             \
             the name of the border.
@@ -224,12 +224,12 @@ def border_to_rois(
         NamedTuple of outputs (described in `BorderToRoisOutputs`).
     """
     params = border_to_rois_params(
+        surface=surface,
+        border_file=border_file,
         metric_out=metric_out,
         name=name,
         include_border=include_border,
         inverse=inverse,
-        surface=surface,
-        border_file=border_file,
     )
     return border_to_rois_execute(params, runner)
 

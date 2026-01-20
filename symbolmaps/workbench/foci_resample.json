@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "foci_resample",
   "properties": {
+    "foci-in": {
+      "var_param": "foci_in"
+    },
     "foci-out": {
       "var_param": "foci_out"
     },
@@ -45,9 +48,6 @@
     },
     "discard-distance-from-surface": {
       "var_param": "discard_distance_from_surface"
-    },
-    "foci-in": {
-      "var_param": "foci_in"
     }
   }
 }

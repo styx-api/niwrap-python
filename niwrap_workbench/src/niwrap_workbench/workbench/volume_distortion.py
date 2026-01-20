@@ -14,19 +14,19 @@ VOLUME_DISTORTION_METADATA = Metadata(
 
 
 _VolumeDistortionParamsDictNoTag = typing.TypedDict('_VolumeDistortionParamsDictNoTag', {
+    "warpfield": str,
     "volume-out": str,
     "source-volume": typing.NotRequired[str | None],
     "log2": bool,
     "circular": bool,
-    "warpfield": str,
 })
 VolumeDistortionParamsDictTagged = typing.TypedDict('VolumeDistortionParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-distortion"],
+    "warpfield": str,
     "volume-out": str,
     "source-volume": typing.NotRequired[str | None],
     "log2": bool,
     "circular": bool,
-    "warpfield": str,
 })
 VolumeDistortionParamsDict = _VolumeDistortionParamsDictNoTag | VolumeDistortionParamsDictTagged
 
@@ -42,8 +42,8 @@ class VolumeDistortionOutputs(typing.NamedTuple):
 
 
 def volume_distortion_params(
-    volume_out: str,
     warpfield: str,
+    volume_out: str,
     source_volume: str | None = None,
     log2: bool = False,
     circular: bool = False,
@@ -52,8 +52,8 @@ def volume_distortion_params(
     Build parameters.
     
     Args:
-        volume_out: the output distortion measures.
         warpfield: the warpfield to compute the distortion of.
+        volume_out: the output distortion measures.
         source_volume: MUST be used if using a fnirt warpfield\
             \
             the source volume used when generating the warpfield.
@@ -64,10 +64,10 @@ def volume_distortion_params(
     """
     params = {
         "@type": "workbench/volume-distortion",
+        "warpfield": warpfield,
         "volume-out": volume_out,
         "log2": log2,
         "circular": circular,
-        "warpfield": warpfield,
     }
     if source_volume is not None:
         params["source-volume"] = source_volume
@@ -86,6 +86,10 @@ def volume_distortion_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warpfield", None) is None:
+        raise StyxValidationError("`warpfield` must not be None")
+    if not isinstance(params["warpfield"], str):
+        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -101,10 +105,6 @@ def volume_distortion_validate(
         raise StyxValidationError("`circular` must not be None")
     if not isinstance(params["circular"], bool):
         raise StyxValidationError(f'`circular` has the wrong type: Received `{type(params.get("circular", False))}` expected `bool`')
-    if params.get("warpfield", None) is None:
-        raise StyxValidationError("`warpfield` must not be None")
-    if not isinstance(params["warpfield"], str):
-        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
 
 
 def volume_distortion_cargs(
@@ -125,6 +125,7 @@ def volume_distortion_cargs(
         "wb_command",
         "-volume-distortion"
     ])
+    cargs.append(params.get("warpfield", None))
     cargs.append(params.get("volume-out", None))
     if params.get("source-volume", None) is not None:
         cargs.extend([
@@ -135,7 +136,6 @@ def volume_distortion_cargs(
         cargs.append("-log2")
     if params.get("circular", False):
         cargs.append("-circular")
-    cargs.append(params.get("warpfield", None))
     return cargs
 
 
@@ -196,8 +196,8 @@ def volume_distortion_execute(
 
 
 def volume_distortion(
-    volume_out: str,
     warpfield: str,
+    volume_out: str,
     source_volume: str | None = None,
     log2: bool = False,
     circular: bool = False,
@@ -220,8 +220,8 @@ def volume_distortion(
     diameter, and transforms that back to a ratio.
     
     Args:
-        volume_out: the output distortion measures.
         warpfield: the warpfield to compute the distortion of.
+        volume_out: the output distortion measures.
         source_volume: MUST be used if using a fnirt warpfield\
             \
             the source volume used when generating the warpfield.
@@ -232,11 +232,11 @@ def volume_distortion(
         NamedTuple of outputs (described in `VolumeDistortionOutputs`).
     """
     params = volume_distortion_params(
+        warpfield=warpfield,
         volume_out=volume_out,
         source_volume=source_volume,
         log2=log2,
         circular=circular,
-        warpfield=warpfield,
     )
     return volume_distortion_execute(params, runner)
 

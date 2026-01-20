@@ -106,6 +106,8 @@ VolumeToSurfaceMappingMyelinStyleParamsDict = _VolumeToSurfaceMappingMyelinStyle
 
 
 _VolumeToSurfaceMappingParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappingParamsDictNoTag', {
+    "volume": InputPathType,
+    "surface": InputPathType,
     "metric-out": str,
     "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParamsDict | None],
     "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParamsDict | None],
@@ -113,11 +115,11 @@ _VolumeToSurfaceMappingParamsDictNoTag = typing.TypedDict('_VolumeToSurfaceMappi
     "cubic": bool,
     "enclosing": bool,
     "trilinear": bool,
-    "volume": InputPathType,
-    "surface": InputPathType,
 })
 VolumeToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-to-surface-mapping"],
+    "volume": InputPathType,
+    "surface": InputPathType,
     "metric-out": str,
     "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParamsDict | None],
     "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParamsDict | None],
@@ -125,8 +127,6 @@ VolumeToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeToSurfaceMappin
     "cubic": bool,
     "enclosing": bool,
     "trilinear": bool,
-    "volume": InputPathType,
-    "surface": InputPathType,
 })
 VolumeToSurfaceMappingParamsDict = _VolumeToSurfaceMappingParamsDictNoTag | VolumeToSurfaceMappingParamsDictTagged
 
@@ -735,9 +735,9 @@ class VolumeToSurfaceMappingOutputs(typing.NamedTuple):
 
 
 def volume_to_surface_mapping_params(
-    metric_out: str,
     volume: InputPathType,
     surface: InputPathType,
+    metric_out: str,
     ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     myelin_style: VolumeToSurfaceMappingMyelinStyleParamsDict | None = None,
     subvol: str | None = None,
@@ -749,9 +749,9 @@ def volume_to_surface_mapping_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric file.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
+        metric_out: the output metric file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         myelin_style: use the method from myelin mapping.
         subvol: select a single subvolume to map\
@@ -765,12 +765,12 @@ def volume_to_surface_mapping_params(
     """
     params = {
         "@type": "workbench/volume-to-surface-mapping",
+        "volume": volume,
+        "surface": surface,
         "metric-out": metric_out,
         "cubic": cubic,
         "enclosing": enclosing,
         "trilinear": trilinear,
-        "volume": volume,
-        "surface": surface,
     }
     if ribbon_constrained is not None:
         params["ribbon-constrained"] = ribbon_constrained
@@ -793,6 +793,14 @@ def volume_to_surface_mapping_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -816,14 +824,6 @@ def volume_to_surface_mapping_validate(
         raise StyxValidationError("`trilinear` must not be None")
     if not isinstance(params["trilinear"], bool):
         raise StyxValidationError(f'`trilinear` has the wrong type: Received `{type(params.get("trilinear", False))}` expected `bool`')
-    if params.get("volume", None) is None:
-        raise StyxValidationError("`volume` must not be None")
-    if not isinstance(params["volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
 
 
 def volume_to_surface_mapping_cargs(
@@ -844,11 +844,14 @@ def volume_to_surface_mapping_cargs(
         "wb_command",
         "-volume-to-surface-mapping"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(volume_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
-        *(volume_to_surface_mapping_myelin_style_cargs(params.get("myelin-style", None), execution) if (params.get("myelin-style", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric-out", None))
+    if params.get("ribbon-constrained", None) is not None or params.get("myelin-style", None) is not None:
+        cargs.extend([
+            *(volume_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
+            *(volume_to_surface_mapping_myelin_style_cargs(params.get("myelin-style", None), execution) if (params.get("myelin-style", None) is not None) else [])
+        ])
     if params.get("subvol", None) is not None:
         cargs.extend([
             "-subvol-select",
@@ -860,8 +863,6 @@ def volume_to_surface_mapping_cargs(
         cargs.append("-enclosing")
     if params.get("trilinear", False):
         cargs.append("-trilinear")
-    cargs.append(execution.input_file(params.get("volume", None)))
-    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -948,9 +949,9 @@ def volume_to_surface_mapping_execute(
 
 
 def volume_to_surface_mapping(
-    metric_out: str,
     volume: InputPathType,
     surface: InputPathType,
+    metric_out: str,
     ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     myelin_style: VolumeToSurfaceMappingMyelinStyleParamsDict | None = None,
     subvol: str | None = None,
@@ -1001,9 +1002,9 @@ def volume_to_surface_mapping(
     where the cylinder cutoff should have been.
     
     Args:
-        metric_out: the output metric file.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
+        metric_out: the output metric file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         myelin_style: use the method from myelin mapping.
         subvol: select a single subvolume to map\
@@ -1017,6 +1018,8 @@ def volume_to_surface_mapping(
         NamedTuple of outputs (described in `VolumeToSurfaceMappingOutputs`).
     """
     params = volume_to_surface_mapping_params(
+        volume=volume,
+        surface=surface,
         metric_out=metric_out,
         ribbon_constrained=ribbon_constrained,
         myelin_style=myelin_style,
@@ -1024,8 +1027,6 @@ def volume_to_surface_mapping(
         cubic=cubic,
         enclosing=enclosing,
         trilinear=trilinear,
-        volume=volume,
-        surface=surface,
     )
     return volume_to_surface_mapping_execute(params, runner)
 

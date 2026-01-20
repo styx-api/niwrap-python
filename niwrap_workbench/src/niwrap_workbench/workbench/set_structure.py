@@ -14,17 +14,17 @@ SET_STRUCTURE_METADATA = Metadata(
 
 
 _SetStructureParamsDictNoTag = typing.TypedDict('_SetStructureParamsDictNoTag', {
-    "secondary type": typing.NotRequired[str | None],
-    "type": typing.NotRequired[str | None],
     "data-file": str,
     "structure": str,
+    "secondary type": typing.NotRequired[str | None],
+    "type": typing.NotRequired[str | None],
 })
 SetStructureParamsDictTagged = typing.TypedDict('SetStructureParamsDictTagged', {
     "@type": typing.Literal["workbench/set-structure"],
-    "secondary type": typing.NotRequired[str | None],
-    "type": typing.NotRequired[str | None],
     "data-file": str,
     "structure": str,
+    "secondary type": typing.NotRequired[str | None],
+    "type": typing.NotRequired[str | None],
 })
 SetStructureParamsDict = _SetStructureParamsDictNoTag | SetStructureParamsDictTagged
 
@@ -83,12 +83,6 @@ def set_structure_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("secondary type", None) is not None:
-        if not isinstance(params["secondary type"], str):
-            raise StyxValidationError(f'`secondary type` has the wrong type: Received `{type(params.get("secondary type", None))}` expected `str | None`')
-    if params.get("type", None) is not None:
-        if not isinstance(params["type"], str):
-            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
     if params.get("data-file", None) is None:
         raise StyxValidationError("`data-file` must not be None")
     if not isinstance(params["data-file"], str):
@@ -97,6 +91,12 @@ def set_structure_validate(
         raise StyxValidationError("`structure` must not be None")
     if not isinstance(params["structure"], str):
         raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("secondary type", None) is not None:
+        if not isinstance(params["secondary type"], str):
+            raise StyxValidationError(f'`secondary type` has the wrong type: Received `{type(params.get("secondary type", None))}` expected `str | None`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
 
 
 def set_structure_cargs(
@@ -117,6 +117,8 @@ def set_structure_cargs(
         "wb_command",
         "-set-structure"
     ])
+    cargs.append(params.get("data-file", None))
+    cargs.append(params.get("structure", None))
     if params.get("secondary type", None) is not None:
         cargs.extend([
             "-surface-secondary-type",
@@ -127,8 +129,6 @@ def set_structure_cargs(
             "-surface-type",
             params.get("type", None)
         ])
-    cargs.append(params.get("data-file", None))
-    cargs.append(params.get("structure", None))
     return cargs
 
 
@@ -323,10 +323,10 @@ def set_structure(
         NamedTuple of outputs (described in `SetStructureOutputs`).
     """
     params = set_structure_params(
-        secondary_type=secondary_type,
-        type_=type_,
         data_file=data_file,
         structure=structure,
+        secondary_type=secondary_type,
+        type_=type_,
     )
     return set_structure_execute(params, runner)
 

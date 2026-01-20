@@ -26,17 +26,17 @@ SurfaceApplyAffineFlirtParamsDict = _SurfaceApplyAffineFlirtParamsDictNoTag | Su
 
 
 _SurfaceApplyAffineParamsDictNoTag = typing.TypedDict('_SurfaceApplyAffineParamsDictNoTag', {
-    "out-surf": str,
-    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
     "in-surf": InputPathType,
     "affine": str,
+    "out-surf": str,
+    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
 })
 SurfaceApplyAffineParamsDictTagged = typing.TypedDict('SurfaceApplyAffineParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-apply-affine"],
-    "out-surf": str,
-    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
     "in-surf": InputPathType,
     "affine": str,
+    "out-surf": str,
+    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParamsDict | None],
 })
 SurfaceApplyAffineParamsDict = _SurfaceApplyAffineParamsDictNoTag | SurfaceApplyAffineParamsDictTagged
 
@@ -117,27 +117,27 @@ class SurfaceApplyAffineOutputs(typing.NamedTuple):
 
 
 def surface_apply_affine_params(
-    out_surf: str,
     in_surf: InputPathType,
     affine: str,
+    out_surf: str,
     flirt: SurfaceApplyAffineFlirtParamsDict | None = None,
 ) -> SurfaceApplyAffineParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        out_surf: the output transformed surface.
         in_surf: the surface to transform.
         affine: the affine file.
+        out_surf: the output transformed surface.
         flirt: MUST be used if affine is a flirt affine.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-apply-affine",
-        "out-surf": out_surf,
         "in-surf": in_surf,
         "affine": affine,
+        "out-surf": out_surf,
     }
     if flirt is not None:
         params["flirt"] = flirt
@@ -156,12 +156,6 @@ def surface_apply_affine_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("out-surf", None) is None:
-        raise StyxValidationError("`out-surf` must not be None")
-    if not isinstance(params["out-surf"], str):
-        raise StyxValidationError(f'`out-surf` has the wrong type: Received `{type(params.get("out-surf", None))}` expected `str`')
-    if params.get("flirt", None) is not None:
-        surface_apply_affine_flirt_validate(params["flirt"])
     if params.get("in-surf", None) is None:
         raise StyxValidationError("`in-surf` must not be None")
     if not isinstance(params["in-surf"], (pathlib.Path, str)):
@@ -170,6 +164,12 @@ def surface_apply_affine_validate(
         raise StyxValidationError("`affine` must not be None")
     if not isinstance(params["affine"], str):
         raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `str`')
+    if params.get("out-surf", None) is None:
+        raise StyxValidationError("`out-surf` must not be None")
+    if not isinstance(params["out-surf"], str):
+        raise StyxValidationError(f'`out-surf` has the wrong type: Received `{type(params.get("out-surf", None))}` expected `str`')
+    if params.get("flirt", None) is not None:
+        surface_apply_affine_flirt_validate(params["flirt"])
 
 
 def surface_apply_affine_cargs(
@@ -190,12 +190,11 @@ def surface_apply_affine_cargs(
         "wb_command",
         "-surface-apply-affine"
     ])
-    cargs.extend([
-        params.get("out-surf", None),
-        *(surface_apply_affine_flirt_cargs(params.get("flirt", None), execution) if (params.get("flirt", None) is not None) else [])
-    ])
     cargs.append(execution.input_file(params.get("in-surf", None)))
     cargs.append(params.get("affine", None))
+    cargs.append(params.get("out-surf", None))
+    if params.get("flirt", None) is not None:
+        cargs.extend(surface_apply_affine_flirt_cargs(params.get("flirt", None), execution))
     return cargs
 
 
@@ -249,9 +248,9 @@ def surface_apply_affine_execute(
 
 
 def surface_apply_affine(
-    out_surf: str,
     in_surf: InputPathType,
     affine: str,
+    out_surf: str,
     flirt: SurfaceApplyAffineFlirtParamsDict | None = None,
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
@@ -265,19 +264,19 @@ def surface_apply_affine(
     from the 4dfp suite.
     
     Args:
-        out_surf: the output transformed surface.
         in_surf: the surface to transform.
         affine: the affine file.
+        out_surf: the output transformed surface.
         flirt: MUST be used if affine is a flirt affine.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyAffineOutputs`).
     """
     params = surface_apply_affine_params(
-        out_surf=out_surf,
-        flirt=flirt,
         in_surf=in_surf,
         affine=affine,
+        out_surf=out_surf,
+        flirt=flirt,
     )
     return surface_apply_affine_execute(params, runner)
 

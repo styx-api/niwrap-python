@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "label_probability",
   "properties": {
+    "label-maps": {
+      "var_param": "label_maps"
+    },
     "probability-metric-out": {
       "var_param": "probability_metric_out"
     },
     "exclude-unlabeled": {
       "var_param": "exclude_unlabeled"
-    },
-    "label-maps": {
-      "var_param": "label_maps"
     }
   }
 }

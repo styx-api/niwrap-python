@@ -14,15 +14,15 @@ LABEL_PROBABILITY_METADATA = Metadata(
 
 
 _LabelProbabilityParamsDictNoTag = typing.TypedDict('_LabelProbabilityParamsDictNoTag', {
+    "label-maps": InputPathType,
     "probability-metric-out": str,
     "exclude-unlabeled": bool,
-    "label-maps": InputPathType,
 })
 LabelProbabilityParamsDictTagged = typing.TypedDict('LabelProbabilityParamsDictTagged', {
     "@type": typing.Literal["workbench/label-probability"],
+    "label-maps": InputPathType,
     "probability-metric-out": str,
     "exclude-unlabeled": bool,
-    "label-maps": InputPathType,
 })
 LabelProbabilityParamsDict = _LabelProbabilityParamsDictNoTag | LabelProbabilityParamsDictTagged
 
@@ -38,27 +38,27 @@ class LabelProbabilityOutputs(typing.NamedTuple):
 
 
 def label_probability_params(
-    probability_metric_out: str,
     label_maps: InputPathType,
+    probability_metric_out: str,
     exclude_unlabeled: bool = False,
 ) -> LabelProbabilityParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        probability_metric_out: the relative frequencies of each label at each\
-            vertex.
         label_maps: label file containing individual label maps from many\
             subjects.
+        probability_metric_out: the relative frequencies of each label at each\
+            vertex.
         exclude_unlabeled: don't make a probability map of the unlabeled key.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-probability",
+        "label-maps": label_maps,
         "probability-metric-out": probability_metric_out,
         "exclude-unlabeled": exclude_unlabeled,
-        "label-maps": label_maps,
     }
     return params
 
@@ -75,6 +75,10 @@ def label_probability_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-maps", None) is None:
+        raise StyxValidationError("`label-maps` must not be None")
+    if not isinstance(params["label-maps"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
     if params.get("probability-metric-out", None) is None:
         raise StyxValidationError("`probability-metric-out` must not be None")
     if not isinstance(params["probability-metric-out"], str):
@@ -83,10 +87,6 @@ def label_probability_validate(
         raise StyxValidationError("`exclude-unlabeled` must not be None")
     if not isinstance(params["exclude-unlabeled"], bool):
         raise StyxValidationError(f'`exclude-unlabeled` has the wrong type: Received `{type(params.get("exclude-unlabeled", False))}` expected `bool`')
-    if params.get("label-maps", None) is None:
-        raise StyxValidationError("`label-maps` must not be None")
-    if not isinstance(params["label-maps"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
 
 
 def label_probability_cargs(
@@ -107,10 +107,10 @@ def label_probability_cargs(
         "wb_command",
         "-label-probability"
     ])
+    cargs.append(execution.input_file(params.get("label-maps", None)))
     cargs.append(params.get("probability-metric-out", None))
     if params.get("exclude-unlabeled", False):
         cargs.append("-exclude-unlabeled")
-    cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 
 
@@ -162,8 +162,8 @@ def label_probability_execute(
 
 
 def label_probability(
-    probability_metric_out: str,
     label_maps: InputPathType,
+    probability_metric_out: str,
     exclude_unlabeled: bool = False,
     runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
@@ -175,19 +175,19 @@ def label_probability(
     divided by the number of input maps.
     
     Args:
-        probability_metric_out: the relative frequencies of each label at each\
-            vertex.
         label_maps: label file containing individual label maps from many\
             subjects.
+        probability_metric_out: the relative frequencies of each label at each\
+            vertex.
         exclude_unlabeled: don't make a probability map of the unlabeled key.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelProbabilityOutputs`).
     """
     params = label_probability_params(
+        label_maps=label_maps,
         probability_metric_out=probability_metric_out,
         exclude_unlabeled=exclude_unlabeled,
-        label_maps=label_maps,
     )
     return label_probability_execute(params, runner)
 

@@ -36,25 +36,25 @@ SurfaceDistortionMatchSurfaceAreaParamsDict = _SurfaceDistortionMatchSurfaceArea
 
 
 _SurfaceDistortionParamsDictNoTag = typing.TypedDict('_SurfaceDistortionParamsDictNoTag', {
+    "surface-reference": InputPathType,
+    "surface-distorted": InputPathType,
     "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
     "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
     "log2": typing.NotRequired[bool | None],
     "edge-method": bool,
     "caret5-method": bool,
-    "surface-reference": InputPathType,
-    "surface-distorted": InputPathType,
 })
 SurfaceDistortionParamsDictTagged = typing.TypedDict('SurfaceDistortionParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-distortion"],
+    "surface-reference": InputPathType,
+    "surface-distorted": InputPathType,
     "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParamsDict | None],
     "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParamsDict | None],
     "log2": typing.NotRequired[bool | None],
     "edge-method": bool,
     "caret5-method": bool,
-    "surface-reference": InputPathType,
-    "surface-distorted": InputPathType,
 })
 SurfaceDistortionParamsDict = _SurfaceDistortionParamsDictNoTag | SurfaceDistortionParamsDictTagged
 
@@ -198,9 +198,9 @@ class SurfaceDistortionOutputs(typing.NamedTuple):
 
 
 def surface_distortion_params(
-    metric_out: str,
     surface_reference: InputPathType,
     surface_distorted: InputPathType,
+    metric_out: str,
     smooth: SurfaceDistortionSmoothParamsDict | None = None,
     match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
     log2: bool | None = None,
@@ -211,9 +211,9 @@ def surface_distortion_params(
     Build parameters.
     
     Args:
-        metric_out: the output distortion metric.
         surface_reference: the reference surface.
         surface_distorted: the distorted surface.
+        metric_out: the output distortion metric.
         smooth: smooth the area data.
         match_surface_area: isotropically rescale the distorted surface so that\
             it has the same surface area as the reference surface.
@@ -227,11 +227,11 @@ def surface_distortion_params(
     """
     params = {
         "@type": "workbench/surface-distortion",
+        "surface-reference": surface_reference,
+        "surface-distorted": surface_distorted,
         "metric-out": metric_out,
         "edge-method": edge_method,
         "caret5-method": caret5_method,
-        "surface-reference": surface_reference,
-        "surface-distorted": surface_distorted,
     }
     if smooth is not None:
         params["smooth"] = smooth
@@ -254,6 +254,14 @@ def surface_distortion_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-reference", None) is None:
+        raise StyxValidationError("`surface-reference` must not be None")
+    if not isinstance(params["surface-reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-reference` has the wrong type: Received `{type(params.get("surface-reference", None))}` expected `InputPathType`')
+    if params.get("surface-distorted", None) is None:
+        raise StyxValidationError("`surface-distorted` must not be None")
+    if not isinstance(params["surface-distorted"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-distorted` has the wrong type: Received `{type(params.get("surface-distorted", None))}` expected `InputPathType`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -273,14 +281,6 @@ def surface_distortion_validate(
         raise StyxValidationError("`caret5-method` must not be None")
     if not isinstance(params["caret5-method"], bool):
         raise StyxValidationError(f'`caret5-method` has the wrong type: Received `{type(params.get("caret5-method", False))}` expected `bool`')
-    if params.get("surface-reference", None) is None:
-        raise StyxValidationError("`surface-reference` must not be None")
-    if not isinstance(params["surface-reference"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface-reference` has the wrong type: Received `{type(params.get("surface-reference", None))}` expected `InputPathType`')
-    if params.get("surface-distorted", None) is None:
-        raise StyxValidationError("`surface-distorted` must not be None")
-    if not isinstance(params["surface-distorted"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface-distorted` has the wrong type: Received `{type(params.get("surface-distorted", None))}` expected `InputPathType`')
 
 
 def surface_distortion_cargs(
@@ -301,11 +301,14 @@ def surface_distortion_cargs(
         "wb_command",
         "-surface-distortion"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(surface_distortion_smooth_cargs(params.get("smooth", None), execution) if (params.get("smooth", None) is not None) else []),
-        *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("surface-reference", None)))
+    cargs.append(execution.input_file(params.get("surface-distorted", None)))
+    cargs.append(params.get("metric-out", None))
+    if params.get("smooth", None) is not None or params.get("match-surface-area", None) is not None:
+        cargs.extend([
+            *(surface_distortion_smooth_cargs(params.get("smooth", None), execution) if (params.get("smooth", None) is not None) else []),
+            *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else [])
+        ])
     if params.get("log2", None) is not None:
         cargs.extend([
             "-local-affine-method",
@@ -315,8 +318,6 @@ def surface_distortion_cargs(
         cargs.append("-edge-method")
     if params.get("caret5-method", False):
         cargs.append("-caret5-method")
-    cargs.append(execution.input_file(params.get("surface-reference", None)))
-    cargs.append(execution.input_file(params.get("surface-distorted", None)))
     return cargs
 
 
@@ -384,9 +385,9 @@ def surface_distortion_execute(
 
 
 def surface_distortion(
-    metric_out: str,
     surface_reference: InputPathType,
     surface_distorted: InputPathType,
+    metric_out: str,
     smooth: SurfaceDistortionSmoothParamsDict | None = None,
     match_surface_area: SurfaceDistortionMatchSurfaceAreaParamsDict | None = None,
     log2: bool | None = None,
@@ -418,9 +419,9 @@ def surface_distortion(
     matching triangles, and then averaged across the triangles of a vertex.
     
     Args:
-        metric_out: the output distortion metric.
         surface_reference: the reference surface.
         surface_distorted: the distorted surface.
+        metric_out: the output distortion metric.
         smooth: smooth the area data.
         match_surface_area: isotropically rescale the distorted surface so that\
             it has the same surface area as the reference surface.
@@ -434,14 +435,14 @@ def surface_distortion(
         NamedTuple of outputs (described in `SurfaceDistortionOutputs`).
     """
     params = surface_distortion_params(
+        surface_reference=surface_reference,
+        surface_distorted=surface_distorted,
         metric_out=metric_out,
         smooth=smooth,
         match_surface_area=match_surface_area,
         log2=log2,
         edge_method=edge_method,
         caret5_method=caret5_method,
-        surface_reference=surface_reference,
-        surface_distorted=surface_distorted,
     )
     return surface_distortion_execute(params, runner)
 

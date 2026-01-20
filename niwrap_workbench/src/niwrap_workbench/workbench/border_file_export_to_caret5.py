@@ -24,15 +24,15 @@ BorderFileExportToCaret5SurfaceParamsDict = _BorderFileExportToCaret5SurfacePara
 
 
 _BorderFileExportToCaret5ParamsDictNoTag = typing.TypedDict('_BorderFileExportToCaret5ParamsDictNoTag', {
-    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
     "border-file": str,
     "output-file-prefix": str,
+    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
 })
 BorderFileExportToCaret5ParamsDictTagged = typing.TypedDict('BorderFileExportToCaret5ParamsDictTagged', {
     "@type": typing.Literal["workbench/border-file-export-to-caret5"],
-    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
     "border-file": str,
     "output-file-prefix": str,
+    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParamsDict] | None],
 })
 BorderFileExportToCaret5ParamsDict = _BorderFileExportToCaret5ParamsDictNoTag | BorderFileExportToCaret5ParamsDictTagged
 
@@ -140,11 +140,6 @@ def border_file_export_to_caret5_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("surface", None) is not None:
-        if not isinstance(params["surface"], list):
-            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[BorderFileExportToCaret5SurfaceParamsDict] | None`')
-        for e in params["surface"]:
-            border_file_export_to_caret5_surface_validate(e)
     if params.get("border-file", None) is None:
         raise StyxValidationError("`border-file` must not be None")
     if not isinstance(params["border-file"], str):
@@ -153,6 +148,11 @@ def border_file_export_to_caret5_validate(
         raise StyxValidationError("`output-file-prefix` must not be None")
     if not isinstance(params["output-file-prefix"], str):
         raise StyxValidationError(f'`output-file-prefix` has the wrong type: Received `{type(params.get("output-file-prefix", None))}` expected `str`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], list):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[BorderFileExportToCaret5SurfaceParamsDict] | None`')
+        for e in params["surface"]:
+            border_file_export_to_caret5_surface_validate(e)
 
 
 def border_file_export_to_caret5_cargs(
@@ -173,10 +173,10 @@ def border_file_export_to_caret5_cargs(
         "wb_command",
         "-border-file-export-to-caret5"
     ])
-    if params.get("surface", None) is not None:
-        cargs.extend([a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
     cargs.append(params.get("border-file", None))
     cargs.append(params.get("output-file-prefix", None))
+    if params.get("surface", None) is not None:
+        cargs.extend([a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
     return cargs
 
 
@@ -291,9 +291,9 @@ def border_file_export_to_caret5(
         NamedTuple of outputs (described in `BorderFileExportToCaret5Outputs`).
     """
     params = border_file_export_to_caret5_params(
-        surface=surface,
         border_file=border_file,
         output_file_prefix=output_file_prefix,
+        surface=surface,
     )
     return border_file_export_to_caret5_execute(params, runner)
 

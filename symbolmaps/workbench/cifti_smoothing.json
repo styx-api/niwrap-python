@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_smoothing",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surface-kernel": {
+      "var_param": "surface_kernel"
+    },
+    "volume-kernel": {
+      "var_param": "volume_kernel"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -69,18 +81,6 @@
     },
     "fwhm": {
       "var_param": "fwhm"
-    },
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "surface-kernel": {
-      "var_param": "surface_kernel"
-    },
-    "volume-kernel": {
-      "var_param": "volume_kernel"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

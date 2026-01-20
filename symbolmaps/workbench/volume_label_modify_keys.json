@@ -1,17 +1,17 @@
 {
   "fn_root_make_params_and_execute": "volume_label_modify_keys",
   "properties": {
-    "volume-out": {
-      "var_param": "volume_out"
-    },
-    "subvolume": {
-      "var_param": "subvolume"
-    },
     "volume-in": {
       "var_param": "volume_in"
     },
     "remap-file": {
       "var_param": "remap_file"
+    },
+    "volume-out": {
+      "var_param": "volume_out"
+    },
+    "subvolume": {
+      "var_param": "subvolume"
     }
   }
 }

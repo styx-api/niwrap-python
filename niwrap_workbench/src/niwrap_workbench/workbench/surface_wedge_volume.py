@@ -14,15 +14,15 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
 
 
 _SurfaceWedgeVolumeParamsDictNoTag = typing.TypedDict('_SurfaceWedgeVolumeParamsDictNoTag', {
-    "metric": str,
     "inner-surface": InputPathType,
     "outer-surface": InputPathType,
+    "metric": str,
 })
 SurfaceWedgeVolumeParamsDictTagged = typing.TypedDict('SurfaceWedgeVolumeParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-wedge-volume"],
-    "metric": str,
     "inner-surface": InputPathType,
     "outer-surface": InputPathType,
+    "metric": str,
 })
 SurfaceWedgeVolumeParamsDict = _SurfaceWedgeVolumeParamsDictNoTag | SurfaceWedgeVolumeParamsDictTagged
 
@@ -38,25 +38,25 @@ class SurfaceWedgeVolumeOutputs(typing.NamedTuple):
 
 
 def surface_wedge_volume_params(
-    metric: str,
     inner_surface: InputPathType,
     outer_surface: InputPathType,
+    metric: str,
 ) -> SurfaceWedgeVolumeParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric: the output metric.
         inner_surface: the inner surface.
         outer_surface: the outer surface.
+        metric: the output metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-wedge-volume",
-        "metric": metric,
         "inner-surface": inner_surface,
         "outer-surface": outer_surface,
+        "metric": metric,
     }
     return params
 
@@ -73,10 +73,6 @@ def surface_wedge_volume_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric", None) is None:
-        raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], str):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
     if params.get("inner-surface", None) is None:
         raise StyxValidationError("`inner-surface` must not be None")
     if not isinstance(params["inner-surface"], (pathlib.Path, str)):
@@ -85,6 +81,10 @@ def surface_wedge_volume_validate(
         raise StyxValidationError("`outer-surface` must not be None")
     if not isinstance(params["outer-surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`outer-surface` has the wrong type: Received `{type(params.get("outer-surface", None))}` expected `InputPathType`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
 
 
 def surface_wedge_volume_cargs(
@@ -105,9 +105,9 @@ def surface_wedge_volume_cargs(
         "wb_command",
         "-surface-wedge-volume"
     ])
-    cargs.append(params.get("metric", None))
     cargs.append(execution.input_file(params.get("inner-surface", None)))
     cargs.append(execution.input_file(params.get("outer-surface", None)))
+    cargs.append(params.get("metric", None))
     return cargs
 
 
@@ -159,9 +159,9 @@ def surface_wedge_volume_execute(
 
 
 def surface_wedge_volume(
-    metric: str,
     inner_surface: InputPathType,
     outer_surface: InputPathType,
+    metric: str,
     runner: Runner | None = None,
 ) -> SurfaceWedgeVolumeOutputs:
     """
@@ -172,17 +172,17 @@ def surface_wedge_volume(
     orientation.
     
     Args:
-        metric: the output metric.
         inner_surface: the inner surface.
         outer_surface: the outer surface.
+        metric: the output metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceWedgeVolumeOutputs`).
     """
     params = surface_wedge_volume_params(
-        metric=metric,
         inner_surface=inner_surface,
         outer_surface=outer_surface,
+        metric=metric,
     )
     return surface_wedge_volume_execute(params, runner)
 

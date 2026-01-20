@@ -1,21 +1,6 @@
 {
   "fn_root_make_params_and_execute": "convert_matrix4_to_workbench_sparse",
   "properties": {
-    "volume-seeds": {
-      "var_param": "volume_seeds",
-      "fn_struct_make_params": "convert_matrix4_to_workbench_sparse_volume_seeds",
-      "properties": {
-        "cifti-template": {
-          "var_param": "cifti_template"
-        },
-        "direction": {
-          "var_param": "direction"
-        }
-      }
-    },
-    "seed-roi": {
-      "var_param": "seed_roi"
-    },
     "matrix4_1": {
       "var_param": "matrix4_1"
     },
@@ -33,6 +18,21 @@
     },
     "wb-sparse-out": {
       "var_param": "wb_sparse_out"
+    },
+    "volume-seeds": {
+      "var_param": "volume_seeds",
+      "fn_struct_make_params": "convert_matrix4_to_workbench_sparse_volume_seeds",
+      "properties": {
+        "cifti-template": {
+          "var_param": "cifti_template"
+        },
+        "direction": {
+          "var_param": "direction"
+        }
+      }
+    },
+    "seed-roi": {
+      "var_param": "seed_roi"
     }
   }
 }

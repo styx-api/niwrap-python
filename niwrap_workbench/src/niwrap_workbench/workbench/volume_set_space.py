@@ -80,19 +80,19 @@ VolumeSetSpaceFileParamsDict = _VolumeSetSpaceFileParamsDictNoTag | VolumeSetSpa
 
 
 _VolumeSetSpaceParamsDictNoTag = typing.TypedDict('_VolumeSetSpaceParamsDictNoTag', {
+    "volume-in": InputPathType,
+    "volume-out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParamsDict | None],
     "sform": typing.NotRequired[VolumeSetSpaceSformParamsDict | None],
     "file": typing.NotRequired[VolumeSetSpaceFileParamsDict | None],
-    "volume-in": InputPathType,
-    "volume-out": str,
 })
 VolumeSetSpaceParamsDictTagged = typing.TypedDict('VolumeSetSpaceParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-set-space"],
+    "volume-in": InputPathType,
+    "volume-out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParamsDict | None],
     "sform": typing.NotRequired[VolumeSetSpaceSformParamsDict | None],
     "file": typing.NotRequired[VolumeSetSpaceFileParamsDict | None],
-    "volume-in": InputPathType,
-    "volume-out": str,
 })
 VolumeSetSpaceParamsDict = _VolumeSetSpaceParamsDictNoTag | VolumeSetSpaceParamsDictTagged
 
@@ -467,12 +467,6 @@ def volume_set_space_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("plumb", None) is not None:
-        volume_set_space_plumb_validate(params["plumb"])
-    if params.get("sform", None) is not None:
-        volume_set_space_sform_validate(params["sform"])
-    if params.get("file", None) is not None:
-        volume_set_space_file_validate(params["file"])
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -481,6 +475,12 @@ def volume_set_space_validate(
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
         raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("plumb", None) is not None:
+        volume_set_space_plumb_validate(params["plumb"])
+    if params.get("sform", None) is not None:
+        volume_set_space_sform_validate(params["sform"])
+    if params.get("file", None) is not None:
+        volume_set_space_file_validate(params["file"])
 
 
 def volume_set_space_cargs(
@@ -501,14 +501,14 @@ def volume_set_space_cargs(
         "wb_command",
         "-volume-set-space"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(params.get("volume-out", None))
     if params.get("plumb", None) is not None or params.get("sform", None) is not None or params.get("file", None) is not None:
         cargs.extend([
             *(volume_set_space_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
             *(volume_set_space_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else []),
             *(volume_set_space_file_cargs(params.get("file", None), execution) if (params.get("file", None) is not None) else [])
         ])
-    cargs.append(execution.input_file(params.get("volume-in", None)))
-    cargs.append(params.get("volume-out", None))
     return cargs
 
 
@@ -586,11 +586,11 @@ def volume_set_space(
         NamedTuple of outputs (described in `VolumeSetSpaceOutputs`).
     """
     params = volume_set_space_params(
+        volume_in=volume_in,
+        volume_out=volume_out,
         plumb=plumb,
         sform=sform,
         file=file,
-        volume_in=volume_in,
-        volume_out=volume_out,
     )
     return volume_set_space_execute(params, runner)
 

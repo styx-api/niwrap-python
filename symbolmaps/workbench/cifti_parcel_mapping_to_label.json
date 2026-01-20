@@ -1,9 +1,6 @@
 {
   "fn_root_make_params_and_execute": "cifti_parcel_mapping_to_label",
   "properties": {
-    "dlabel-out": {
-      "var_param": "dlabel_out"
-    },
     "cifti-in": {
       "var_param": "cifti_in"
     },
@@ -12,6 +9,9 @@
     },
     "template-cifti": {
       "var_param": "template_cifti"
+    },
+    "dlabel-out": {
+      "var_param": "dlabel_out"
     }
   }
 }

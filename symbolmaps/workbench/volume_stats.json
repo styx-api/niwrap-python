@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "volume_stats",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "volume_stats_roi",
@@ -24,9 +27,6 @@
     },
     "show-map-name": {
       "var_param": "show_map_name"
-    },
-    "volume-in": {
-      "var_param": "volume_in"
     }
   }
 }

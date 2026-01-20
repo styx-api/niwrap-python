@@ -14,25 +14,25 @@ CIFTI_VECTOR_OPERATION_METADATA = Metadata(
 
 
 _CiftiVectorOperationParamsDictNoTag = typing.TypedDict('_CiftiVectorOperationParamsDictNoTag', {
+    "vectors-a": InputPathType,
+    "vectors-b": InputPathType,
+    "operation": str,
     "cifti-out": str,
     "magnitude": bool,
     "normalize-output": bool,
     "normalize-b": bool,
     "normalize-a": bool,
-    "vectors-a": InputPathType,
-    "vectors-b": InputPathType,
-    "operation": str,
 })
 CiftiVectorOperationParamsDictTagged = typing.TypedDict('CiftiVectorOperationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-vector-operation"],
+    "vectors-a": InputPathType,
+    "vectors-b": InputPathType,
+    "operation": str,
     "cifti-out": str,
     "magnitude": bool,
     "normalize-output": bool,
     "normalize-b": bool,
     "normalize-a": bool,
-    "vectors-a": InputPathType,
-    "vectors-b": InputPathType,
-    "operation": str,
 })
 CiftiVectorOperationParamsDict = _CiftiVectorOperationParamsDictNoTag | CiftiVectorOperationParamsDictTagged
 
@@ -48,10 +48,10 @@ class CiftiVectorOperationOutputs(typing.NamedTuple):
 
 
 def cifti_vector_operation_params(
-    cifti_out: str,
     vectors_a: InputPathType,
     vectors_b: InputPathType,
     operation: str,
+    cifti_out: str,
     magnitude: bool = False,
     normalize_output: bool = False,
     normalize_b: bool = False,
@@ -61,10 +61,10 @@ def cifti_vector_operation_params(
     Build parameters.
     
     Args:
-        cifti_out: the output file.
         vectors_a: first vector input file.
         vectors_b: second vector input file.
         operation: what vector operation to do.
+        cifti_out: the output file.
         magnitude: output the magnitude of the result (not valid for dot\
             product).
         normalize_output: normalize output vectors (not valid for dot product).
@@ -75,14 +75,14 @@ def cifti_vector_operation_params(
     """
     params = {
         "@type": "workbench/cifti-vector-operation",
+        "vectors-a": vectors_a,
+        "vectors-b": vectors_b,
+        "operation": operation,
         "cifti-out": cifti_out,
         "magnitude": magnitude,
         "normalize-output": normalize_output,
         "normalize-b": normalize_b,
         "normalize-a": normalize_a,
-        "vectors-a": vectors_a,
-        "vectors-b": vectors_b,
-        "operation": operation,
     }
     return params
 
@@ -99,6 +99,18 @@ def cifti_vector_operation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vectors-a", None) is None:
+        raise StyxValidationError("`vectors-a` must not be None")
+    if not isinstance(params["vectors-a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vectors-a` has the wrong type: Received `{type(params.get("vectors-a", None))}` expected `InputPathType`')
+    if params.get("vectors-b", None) is None:
+        raise StyxValidationError("`vectors-b` must not be None")
+    if not isinstance(params["vectors-b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vectors-b` has the wrong type: Received `{type(params.get("vectors-b", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -119,18 +131,6 @@ def cifti_vector_operation_validate(
         raise StyxValidationError("`normalize-a` must not be None")
     if not isinstance(params["normalize-a"], bool):
         raise StyxValidationError(f'`normalize-a` has the wrong type: Received `{type(params.get("normalize-a", False))}` expected `bool`')
-    if params.get("vectors-a", None) is None:
-        raise StyxValidationError("`vectors-a` must not be None")
-    if not isinstance(params["vectors-a"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`vectors-a` has the wrong type: Received `{type(params.get("vectors-a", None))}` expected `InputPathType`')
-    if params.get("vectors-b", None) is None:
-        raise StyxValidationError("`vectors-b` must not be None")
-    if not isinstance(params["vectors-b"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`vectors-b` has the wrong type: Received `{type(params.get("vectors-b", None))}` expected `InputPathType`')
-    if params.get("operation", None) is None:
-        raise StyxValidationError("`operation` must not be None")
-    if not isinstance(params["operation"], str):
-        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
 
 
 def cifti_vector_operation_cargs(
@@ -151,6 +151,9 @@ def cifti_vector_operation_cargs(
         "wb_command",
         "-cifti-vector-operation"
     ])
+    cargs.append(execution.input_file(params.get("vectors-a", None)))
+    cargs.append(execution.input_file(params.get("vectors-b", None)))
+    cargs.append(params.get("operation", None))
     cargs.append(params.get("cifti-out", None))
     if params.get("magnitude", False):
         cargs.append("-magnitude")
@@ -160,9 +163,6 @@ def cifti_vector_operation_cargs(
         cargs.append("-normalize-b")
     if params.get("normalize-a", False):
         cargs.append("-normalize-a")
-    cargs.append(execution.input_file(params.get("vectors-a", None)))
-    cargs.append(execution.input_file(params.get("vectors-b", None)))
-    cargs.append(params.get("operation", None))
     return cargs
 
 
@@ -222,10 +222,10 @@ def cifti_vector_operation_execute(
 
 
 def cifti_vector_operation(
-    cifti_out: str,
     vectors_a: InputPathType,
     vectors_b: InputPathType,
     operation: str,
+    cifti_out: str,
     magnitude: bool = False,
     normalize_output: bool = False,
     normalize_b: bool = False,
@@ -248,10 +248,10 @@ def cifti_vector_operation(
     SUBTRACT.
     
     Args:
-        cifti_out: the output file.
         vectors_a: first vector input file.
         vectors_b: second vector input file.
         operation: what vector operation to do.
+        cifti_out: the output file.
         magnitude: output the magnitude of the result (not valid for dot\
             product).
         normalize_output: normalize output vectors (not valid for dot product).
@@ -262,14 +262,14 @@ def cifti_vector_operation(
         NamedTuple of outputs (described in `CiftiVectorOperationOutputs`).
     """
     params = cifti_vector_operation_params(
+        vectors_a=vectors_a,
+        vectors_b=vectors_b,
+        operation=operation,
         cifti_out=cifti_out,
         magnitude=magnitude,
         normalize_output=normalize_output,
         normalize_b=normalize_b,
         normalize_a=normalize_a,
-        vectors_a=vectors_a,
-        vectors_b=vectors_b,
-        operation=operation,
     )
     return cifti_vector_operation_execute(params, runner)
 

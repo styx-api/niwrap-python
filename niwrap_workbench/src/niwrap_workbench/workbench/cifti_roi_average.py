@@ -14,23 +14,23 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
 
 
 _CiftiRoiAverageParamsDictNoTag = typing.TypedDict('_CiftiRoiAverageParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "text-out": str,
     "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
-    "cifti-in": InputPathType,
-    "text-out": str,
 })
 CiftiRoiAverageParamsDictTagged = typing.TypedDict('CiftiRoiAverageParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-roi-average"],
+    "cifti-in": InputPathType,
+    "text-out": str,
     "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
-    "cifti-in": InputPathType,
-    "text-out": str,
 })
 CiftiRoiAverageParamsDict = _CiftiRoiAverageParamsDictNoTag | CiftiRoiAverageParamsDictTagged
 
@@ -106,6 +106,14 @@ def cifti_roi_average_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
     if params.get("roi-vol", None) is not None:
         if not isinstance(params["roi-vol"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
@@ -121,14 +129,6 @@ def cifti_roi_average_validate(
     if params.get("roi-cifti", None) is not None:
         if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
-    if params.get("text-out", None) is None:
-        raise StyxValidationError("`text-out` must not be None")
-    if not isinstance(params["text-out"], str):
-        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
 
 
 def cifti_roi_average_cargs(
@@ -149,6 +149,8 @@ def cifti_roi_average_cargs(
         "wb_command",
         "-cifti-roi-average"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("text-out", None))
     if params.get("roi-vol", None) is not None:
         cargs.extend([
             "-vol-roi",
@@ -174,8 +176,6 @@ def cifti_roi_average_cargs(
             "-cifti-roi",
             execution.input_file(params.get("roi-cifti", None))
         ])
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(params.get("text-out", None))
     return cargs
 
 
@@ -267,13 +267,13 @@ def cifti_roi_average(
         NamedTuple of outputs (described in `CiftiRoiAverageOutputs`).
     """
     params = cifti_roi_average_params(
+        cifti_in=cifti_in,
+        text_out=text_out,
         roi_vol=roi_vol,
         roi_metric=roi_metric,
         roi_metric_=roi_metric_,
         roi_metric_2=roi_metric_2,
         roi_cifti=roi_cifti,
-        cifti_in=cifti_in,
-        text_out=text_out,
     )
     return cifti_roi_average_execute(params, runner)
 

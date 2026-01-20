@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_erode",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "surface-distance": {
+      "var_param": "surface_distance"
+    },
+    "volume-distance": {
+      "var_param": "volume_distance"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -42,18 +54,6 @@
     },
     "merged-volume": {
       "var_param": "merged_volume"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "surface-distance": {
-      "var_param": "surface_distance"
-    },
-    "volume-distance": {
-      "var_param": "volume_distance"
     }
   }
 }

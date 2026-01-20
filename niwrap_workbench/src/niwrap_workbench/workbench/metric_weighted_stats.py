@@ -26,6 +26,7 @@ MetricWeightedStatsRoiParamsDict = _MetricWeightedStatsRoiParamsDictNoTag | Metr
 
 
 _MetricWeightedStatsParamsDictNoTag = typing.TypedDict('_MetricWeightedStatsParamsDictNoTag', {
+    "metric-in": InputPathType,
     "roi": typing.NotRequired[MetricWeightedStatsRoiParamsDict | None],
     "percent": typing.NotRequired[float | None],
     "sample": typing.NotRequired[bool | None],
@@ -35,10 +36,10 @@ _MetricWeightedStatsParamsDictNoTag = typing.TypedDict('_MetricWeightedStatsPara
     "show-map-name": bool,
     "sum": bool,
     "mean": bool,
-    "metric-in": InputPathType,
 })
 MetricWeightedStatsParamsDictTagged = typing.TypedDict('MetricWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-weighted-stats"],
+    "metric-in": InputPathType,
     "roi": typing.NotRequired[MetricWeightedStatsRoiParamsDict | None],
     "percent": typing.NotRequired[float | None],
     "sample": typing.NotRequired[bool | None],
@@ -48,7 +49,6 @@ MetricWeightedStatsParamsDictTagged = typing.TypedDict('MetricWeightedStatsParam
     "show-map-name": bool,
     "sum": bool,
     "mean": bool,
-    "metric-in": InputPathType,
 })
 MetricWeightedStatsParamsDict = _MetricWeightedStatsParamsDictNoTag | MetricWeightedStatsParamsDictTagged
 
@@ -169,10 +169,10 @@ def metric_weighted_stats_params(
     """
     params = {
         "@type": "workbench/metric-weighted-stats",
+        "metric-in": metric_in,
         "show-map-name": show_map_name,
         "sum": sum_,
         "mean": mean,
-        "metric-in": metric_in,
     }
     if roi is not None:
         params["roi"] = roi
@@ -201,6 +201,10 @@ def metric_weighted_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
     if params.get("roi", None) is not None:
         metric_weighted_stats_roi_validate(params["roi"])
     if params.get("percent", None) is not None:
@@ -230,10 +234,6 @@ def metric_weighted_stats_validate(
         raise StyxValidationError("`mean` must not be None")
     if not isinstance(params["mean"], bool):
         raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
 
 
 def metric_weighted_stats_cargs(
@@ -254,6 +254,7 @@ def metric_weighted_stats_cargs(
         "wb_command",
         "-metric-weighted-stats"
     ])
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     if params.get("roi", None) is not None:
         cargs.extend(metric_weighted_stats_roi_cargs(params.get("roi", None), execution))
     if params.get("percent", None) is not None:
@@ -287,7 +288,6 @@ def metric_weighted_stats_cargs(
         cargs.append("-sum")
     if params.get("mean", False):
         cargs.append("-mean")
-    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -403,6 +403,7 @@ def metric_weighted_stats(
         NamedTuple of outputs (described in `MetricWeightedStatsOutputs`).
     """
     params = metric_weighted_stats_params(
+        metric_in=metric_in,
         roi=roi,
         percent=percent,
         sample=sample,
@@ -412,7 +413,6 @@ def metric_weighted_stats(
         show_map_name=show_map_name,
         sum_=sum_,
         mean=mean,
-        metric_in=metric_in,
     )
     return metric_weighted_stats_execute(params, runner)
 

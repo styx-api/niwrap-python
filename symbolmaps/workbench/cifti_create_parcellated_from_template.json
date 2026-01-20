@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_create_parcellated_from_template",
   "properties": {
+    "cifti-template": {
+      "var_param": "cifti_template"
+    },
+    "modify-direction": {
+      "var_param": "modify_direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -15,12 +21,6 @@
     },
     "value": {
       "var_param": "value"
-    },
-    "cifti-template": {
-      "var_param": "cifti_template"
-    },
-    "modify-direction": {
-      "var_param": "modify_direction"
     }
   }
 }

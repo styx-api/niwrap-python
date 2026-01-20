@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "metric_regression",
   "properties": {
+    "metric-in": {
+      "var_param": "metric_in"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -33,9 +36,6 @@
     },
     "roi-metric": {
       "var_param": "roi_metric"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
     }
   }
 }

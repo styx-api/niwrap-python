@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "cifti_label_adjacency",
   "properties": {
+    "label-in": {
+      "var_param": "label_in"
+    },
     "adjacency-out": {
       "var_param": "adjacency_out"
     },
     "surface": {
       "var_param": "surface_2"
-    },
-    "label-in": {
-      "var_param": "label_in"
     }
   }
 }

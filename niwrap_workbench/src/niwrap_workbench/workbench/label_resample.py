@@ -48,6 +48,10 @@ LabelResampleValidRoiOutParamsDict = _LabelResampleValidRoiOutParamsDictNoTag | 
 
 
 _LabelResampleParamsDictNoTag = typing.TypedDict('_LabelResampleParamsDictNoTag', {
+    "label-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
+    "method": str,
     "label-out": str,
     "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
@@ -55,13 +59,13 @@ _LabelResampleParamsDictNoTag = typing.TypedDict('_LabelResampleParamsDictNoTag'
     "roi-metric": typing.NotRequired[InputPathType | None],
     "bypass-sphere-check": bool,
     "largest": bool,
-    "label-in": InputPathType,
-    "current-sphere": InputPathType,
-    "new-sphere": InputPathType,
-    "method": str,
 })
 LabelResampleParamsDictTagged = typing.TypedDict('LabelResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/label-resample"],
+    "label-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
+    "method": str,
     "label-out": str,
     "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParamsDict | None],
@@ -69,10 +73,6 @@ LabelResampleParamsDictTagged = typing.TypedDict('LabelResampleParamsDictTagged'
     "roi-metric": typing.NotRequired[InputPathType | None],
     "bypass-sphere-check": bool,
     "largest": bool,
-    "label-in": InputPathType,
-    "current-sphere": InputPathType,
-    "new-sphere": InputPathType,
-    "method": str,
 })
 LabelResampleParamsDict = _LabelResampleParamsDictNoTag | LabelResampleParamsDictTagged
 
@@ -307,11 +307,11 @@ class LabelResampleOutputs(typing.NamedTuple):
 
 
 def label_resample_params(
-    label_out: str,
     label_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
+    label_out: str,
     area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
     area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
     valid_roi_out: LabelResampleValidRoiOutParamsDict | None = None,
@@ -323,13 +323,13 @@ def label_resample_params(
     Build parameters.
     
     Args:
-        label_out: the output label file.
         label_in: the label file to resample.
         current_sphere: a sphere surface with the mesh that the label file is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
+        label_out: the output label file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
@@ -347,13 +347,13 @@ def label_resample_params(
     """
     params = {
         "@type": "workbench/label-resample",
-        "label-out": label_out,
-        "bypass-sphere-check": bypass_sphere_check,
-        "largest": largest,
         "label-in": label_in,
         "current-sphere": current_sphere,
         "new-sphere": new_sphere,
         "method": method,
+        "label-out": label_out,
+        "bypass-sphere-check": bypass_sphere_check,
+        "largest": largest,
     }
     if area_surfs is not None:
         params["area-surfs"] = area_surfs
@@ -378,6 +378,22 @@ def label_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
     if params.get("label-out", None) is None:
         raise StyxValidationError("`label-out` must not be None")
     if not isinstance(params["label-out"], str):
@@ -399,22 +415,6 @@ def label_resample_validate(
         raise StyxValidationError("`largest` must not be None")
     if not isinstance(params["largest"], bool):
         raise StyxValidationError(f'`largest` has the wrong type: Received `{type(params.get("largest", False))}` expected `bool`')
-    if params.get("label-in", None) is None:
-        raise StyxValidationError("`label-in` must not be None")
-    if not isinstance(params["label-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
-    if params.get("current-sphere", None) is None:
-        raise StyxValidationError("`current-sphere` must not be None")
-    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
-    if params.get("new-sphere", None) is None:
-        raise StyxValidationError("`new-sphere` must not be None")
-    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
-    if params.get("method", None) is None:
-        raise StyxValidationError("`method` must not be None")
-    if not isinstance(params["method"], str):
-        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
 
 
 def label_resample_cargs(
@@ -435,12 +435,17 @@ def label_resample_cargs(
         "wb_command",
         "-label-resample"
     ])
-    cargs.extend([
-        params.get("label-out", None),
-        *(label_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
-        *(label_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
-        *(label_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("label-out", None))
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("valid-roi-out", None) is not None:
+        cargs.extend([
+            *(label_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+            *(label_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
+            *(label_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else [])
+        ])
     if params.get("roi-metric", None) is not None:
         cargs.extend([
             "-current-roi",
@@ -450,10 +455,6 @@ def label_resample_cargs(
         cargs.append("-bypass-sphere-check")
     if params.get("largest", False):
         cargs.append("-largest")
-    cargs.append(execution.input_file(params.get("label-in", None)))
-    cargs.append(execution.input_file(params.get("current-sphere", None)))
-    cargs.append(execution.input_file(params.get("new-sphere", None)))
-    cargs.append(params.get("method", None))
     return cargs
 
 
@@ -524,11 +525,11 @@ def label_resample_execute(
 
 
 def label_resample(
-    label_out: str,
     label_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
+    label_out: str,
     area_surfs: LabelResampleAreaSurfsParamsDict | None = None,
     area_metrics: LabelResampleAreaMetricsParamsDict | None = None,
     valid_roi_out: LabelResampleValidRoiOutParamsDict | None = None,
@@ -563,13 +564,13 @@ def label_resample(
     .
     
     Args:
-        label_out: the output label file.
         label_in: the label file to resample.
         current_sphere: a sphere surface with the mesh that the label file is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
+        label_out: the output label file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
@@ -587,6 +588,10 @@ def label_resample(
         NamedTuple of outputs (described in `LabelResampleOutputs`).
     """
     params = label_resample_params(
+        label_in=label_in,
+        current_sphere=current_sphere,
+        new_sphere=new_sphere,
+        method=method,
         label_out=label_out,
         area_surfs=area_surfs,
         area_metrics=area_metrics,
@@ -594,10 +599,6 @@ def label_resample(
         roi_metric=roi_metric,
         bypass_sphere_check=bypass_sphere_check,
         largest=largest,
-        label_in=label_in,
-        current_sphere=current_sphere,
-        new_sphere=new_sphere,
-        method=method,
     )
     return label_resample_execute(params, runner)
 

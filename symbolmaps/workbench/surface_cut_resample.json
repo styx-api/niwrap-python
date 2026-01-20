@@ -1,9 +1,6 @@
 {
   "fn_root_make_params_and_execute": "surface_cut_resample",
   "properties": {
-    "surface-out": {
-      "var_param": "surface_out"
-    },
     "surface-in": {
       "var_param": "surface_in"
     },
@@ -12,6 +9,9 @@
     },
     "new-sphere": {
       "var_param": "new_sphere"
+    },
+    "surface-out": {
+      "var_param": "surface_out"
     }
   }
 }

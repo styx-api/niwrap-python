@@ -14,17 +14,17 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
 
 
 _CiftiParcelMappingToLabelParamsDictNoTag = typing.TypedDict('_CiftiParcelMappingToLabelParamsDictNoTag', {
-    "dlabel-out": str,
     "cifti-in": InputPathType,
     "direction": str,
     "template-cifti": InputPathType,
+    "dlabel-out": str,
 })
 CiftiParcelMappingToLabelParamsDictTagged = typing.TypedDict('CiftiParcelMappingToLabelParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-parcel-mapping-to-label"],
-    "dlabel-out": str,
     "cifti-in": InputPathType,
     "direction": str,
     "template-cifti": InputPathType,
+    "dlabel-out": str,
 })
 CiftiParcelMappingToLabelParamsDict = _CiftiParcelMappingToLabelParamsDictNoTag | CiftiParcelMappingToLabelParamsDictTagged
 
@@ -40,29 +40,29 @@ class CiftiParcelMappingToLabelOutputs(typing.NamedTuple):
 
 
 def cifti_parcel_mapping_to_label_params(
-    dlabel_out: str,
     cifti_in: InputPathType,
     direction: str,
     template_cifti: InputPathType,
+    dlabel_out: str,
 ) -> CiftiParcelMappingToLabelParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        dlabel_out: the output dense label file.
         cifti_in: the input parcellated file.
         direction: which dimension to take the parcel map from, ROW or COLUMN.
         template_cifti: a cifti file with the desired dense mapping along\
             column.
+        dlabel_out: the output dense label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-parcel-mapping-to-label",
-        "dlabel-out": dlabel_out,
         "cifti-in": cifti_in,
         "direction": direction,
         "template-cifti": template_cifti,
+        "dlabel-out": dlabel_out,
     }
     return params
 
@@ -79,10 +79,6 @@ def cifti_parcel_mapping_to_label_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("dlabel-out", None) is None:
-        raise StyxValidationError("`dlabel-out` must not be None")
-    if not isinstance(params["dlabel-out"], str):
-        raise StyxValidationError(f'`dlabel-out` has the wrong type: Received `{type(params.get("dlabel-out", None))}` expected `str`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -95,6 +91,10 @@ def cifti_parcel_mapping_to_label_validate(
         raise StyxValidationError("`template-cifti` must not be None")
     if not isinstance(params["template-cifti"], (pathlib.Path, str)):
         raise StyxValidationError(f'`template-cifti` has the wrong type: Received `{type(params.get("template-cifti", None))}` expected `InputPathType`')
+    if params.get("dlabel-out", None) is None:
+        raise StyxValidationError("`dlabel-out` must not be None")
+    if not isinstance(params["dlabel-out"], str):
+        raise StyxValidationError(f'`dlabel-out` has the wrong type: Received `{type(params.get("dlabel-out", None))}` expected `str`')
 
 
 def cifti_parcel_mapping_to_label_cargs(
@@ -115,10 +115,10 @@ def cifti_parcel_mapping_to_label_cargs(
         "wb_command",
         "-cifti-parcel-mapping-to-label"
     ])
-    cargs.append(params.get("dlabel-out", None))
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(execution.input_file(params.get("template-cifti", None)))
+    cargs.append(params.get("dlabel-out", None))
     return cargs
 
 
@@ -172,10 +172,10 @@ def cifti_parcel_mapping_to_label_execute(
 
 
 def cifti_parcel_mapping_to_label(
-    dlabel_out: str,
     cifti_in: InputPathType,
     direction: str,
     template_cifti: InputPathType,
+    dlabel_out: str,
     runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
@@ -188,20 +188,20 @@ def cifti_parcel_mapping_to_label(
     <direction> will work.
     
     Args:
-        dlabel_out: the output dense label file.
         cifti_in: the input parcellated file.
         direction: which dimension to take the parcel map from, ROW or COLUMN.
         template_cifti: a cifti file with the desired dense mapping along\
             column.
+        dlabel_out: the output dense label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiParcelMappingToLabelOutputs`).
     """
     params = cifti_parcel_mapping_to_label_params(
-        dlabel_out=dlabel_out,
         cifti_in=cifti_in,
         direction=direction,
         template_cifti=template_cifti,
+        dlabel_out=dlabel_out,
     )
     return cifti_parcel_mapping_to_label_execute(params, runner)
 

@@ -1,12 +1,6 @@
 {
   "fn_root_make_params_and_execute": "zip_spec_file",
   "properties": {
-    "directory": {
-      "var_param": "directory"
-    },
-    "skip-missing": {
-      "var_param": "skip_missing"
-    },
     "spec-file": {
       "var_param": "spec_file"
     },
@@ -15,6 +9,12 @@
     },
     "zip-file": {
       "var_param": "zip_file"
+    },
+    "directory": {
+      "var_param": "directory"
+    },
+    "skip-missing": {
+      "var_param": "skip_missing"
     }
   }
 }

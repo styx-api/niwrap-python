@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "metric_to_volume_mapping",
   "properties": {
+    "metric": {
+      "var_param": "metric"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "volume-space": {
+      "var_param": "volume_space"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -27,15 +36,6 @@
     },
     "distance": {
       "var_param": "distance"
-    },
-    "metric": {
-      "var_param": "metric"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "volume-space": {
-      "var_param": "volume_space"
     }
   }
 }

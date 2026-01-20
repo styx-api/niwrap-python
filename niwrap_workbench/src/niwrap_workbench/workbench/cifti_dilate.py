@@ -50,6 +50,10 @@ CiftiDilateCerebellumSurfaceParamsDict = _CiftiDilateCerebellumSurfaceParamsDict
 
 
 _CiftiDilateParamsDictNoTag = typing.TypedDict('_CiftiDilateParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "direction": str,
+    "surface-distance": float,
+    "volume-distance": float,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
@@ -58,13 +62,13 @@ _CiftiDilateParamsDictNoTag = typing.TypedDict('_CiftiDilateParamsDictNoTag', {
     "legacy-mode": bool,
     "merged-volume": bool,
     "nearest": bool,
-    "cifti-in": InputPathType,
-    "direction": str,
-    "surface-distance": float,
-    "volume-distance": float,
 })
 CiftiDilateParamsDictTagged = typing.TypedDict('CiftiDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-dilate"],
+    "cifti-in": InputPathType,
+    "direction": str,
+    "surface-distance": float,
+    "volume-distance": float,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiDilateLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiDilateRightSurfaceParamsDict | None],
@@ -73,10 +77,6 @@ CiftiDilateParamsDictTagged = typing.TypedDict('CiftiDilateParamsDictTagged', {
     "legacy-mode": bool,
     "merged-volume": bool,
     "nearest": bool,
-    "cifti-in": InputPathType,
-    "direction": str,
-    "surface-distance": float,
-    "volume-distance": float,
 })
 CiftiDilateParamsDict = _CiftiDilateParamsDictNoTag | CiftiDilateParamsDictTagged
 
@@ -308,11 +308,11 @@ class CiftiDilateOutputs(typing.NamedTuple):
 
 
 def cifti_dilate_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     surface_distance: float,
     volume_distance: float,
+    cifti_out: str,
     left_surface: CiftiDilateLeftSurfaceParamsDict | None = None,
     right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
@@ -325,11 +325,11 @@ def cifti_dilate_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the input cifti file.
         direction: which dimension to dilate along, ROW or COLUMN.
         surface_distance: the distance to dilate on surfaces, in mm.
         volume_distance: the distance to dilate in the volume, in mm.
+        cifti_out: the output cifti file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -347,14 +347,14 @@ def cifti_dilate_params(
     """
     params = {
         "@type": "workbench/cifti-dilate",
-        "cifti-out": cifti_out,
-        "legacy-mode": legacy_mode,
-        "merged-volume": merged_volume,
-        "nearest": nearest,
         "cifti-in": cifti_in,
         "direction": direction,
         "surface-distance": surface_distance,
         "volume-distance": volume_distance,
+        "cifti-out": cifti_out,
+        "legacy-mode": legacy_mode,
+        "merged-volume": merged_volume,
+        "nearest": nearest,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -379,6 +379,22 @@ def cifti_dilate_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+    if params.get("surface-distance", None) is None:
+        raise StyxValidationError("`surface-distance` must not be None")
+    if not isinstance(params["surface-distance"], (float, int)):
+        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
+    if params.get("volume-distance", None) is None:
+        raise StyxValidationError("`volume-distance` must not be None")
+    if not isinstance(params["volume-distance"], (float, int)):
+        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -404,22 +420,6 @@ def cifti_dilate_validate(
         raise StyxValidationError("`nearest` must not be None")
     if not isinstance(params["nearest"], bool):
         raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
-    if params.get("surface-distance", None) is None:
-        raise StyxValidationError("`surface-distance` must not be None")
-    if not isinstance(params["surface-distance"], (float, int)):
-        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
-    if params.get("volume-distance", None) is None:
-        raise StyxValidationError("`volume-distance` must not be None")
-    if not isinstance(params["volume-distance"], (float, int)):
-        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
 
 
 def cifti_dilate_cargs(
@@ -440,12 +440,17 @@ def cifti_dilate_cargs(
         "wb_command",
         "-cifti-dilate"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(str(params.get("surface-distance", None)))
+    cargs.append(str(params.get("volume-distance", None)))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None:
+        cargs.extend([
+            *(cifti_dilate_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_dilate_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_dilate_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
+        ])
     if params.get("roi-cifti", None) is not None:
         cargs.extend([
             "-bad-brainordinate-roi",
@@ -457,10 +462,6 @@ def cifti_dilate_cargs(
         cargs.append("-merged-volume")
     if params.get("nearest", False):
         cargs.append("-nearest")
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(params.get("direction", None))
-    cargs.append(str(params.get("surface-distance", None)))
-    cargs.append(str(params.get("volume-distance", None)))
     return cargs
 
 
@@ -524,11 +525,11 @@ def cifti_dilate_execute(
 
 
 def cifti_dilate(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     surface_distance: float,
     volume_distance: float,
+    cifti_out: str,
     left_surface: CiftiDilateLeftSurfaceParamsDict | None = None,
     right_surface: CiftiDilateRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiDilateCerebellumSurfaceParamsDict | None = None,
@@ -558,11 +559,11 @@ def cifti_dilate(
     If it is not specified, only values equal to zero are bad.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the input cifti file.
         direction: which dimension to dilate along, ROW or COLUMN.
         surface_distance: the distance to dilate on surfaces, in mm.
         volume_distance: the distance to dilate in the volume, in mm.
+        cifti_out: the output cifti file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -580,6 +581,10 @@ def cifti_dilate(
         NamedTuple of outputs (described in `CiftiDilateOutputs`).
     """
     params = cifti_dilate_params(
+        cifti_in=cifti_in,
+        direction=direction,
+        surface_distance=surface_distance,
+        volume_distance=volume_distance,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
@@ -588,10 +593,6 @@ def cifti_dilate(
         legacy_mode=legacy_mode,
         merged_volume=merged_volume,
         nearest=nearest,
-        cifti_in=cifti_in,
-        direction=direction,
-        surface_distance=surface_distance,
-        volume_distance=volume_distance,
     )
     return cifti_dilate_execute(params, runner)
 

@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "volume_estimate_fwhm",
   "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
     "demean": {
       "var_param": "demean"
     },
@@ -9,9 +12,6 @@
     },
     "roivol": {
       "var_param": "roivol"
-    },
-    "volume": {
-      "var_param": "volume"
     }
   }
 }

@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "scene_file_merge",
   "properties": {
+    "scene-file-out": {
+      "var_param": "scene_file_out"
+    },
     "scene-file": {
       "var_param": "scene_file",
       "fn_struct_make_params": "scene_file_merge_scene_file",
@@ -30,9 +33,6 @@
           }
         }
       }
-    },
-    "scene-file-out": {
-      "var_param": "scene_file_out"
     }
   }
 }

@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "metric_math",
   "properties": {
+    "expression": {
+      "var_param": "expression"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -24,9 +27,6 @@
     },
     "replace": {
       "var_param": "replace"
-    },
-    "expression": {
-      "var_param": "expression"
     }
   }
 }

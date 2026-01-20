@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "spec_file_modify",
   "properties": {
+    "spec-file": {
+      "var_param": "spec_file"
+    },
     "add": {
       "var_param": "add",
       "fn_struct_make_params": "spec_file_modify_add",
@@ -27,9 +30,6 @@
           "var_param": "recursive"
         }
       }
-    },
-    "spec-file": {
-      "var_param": "spec_file"
     }
   }
 }

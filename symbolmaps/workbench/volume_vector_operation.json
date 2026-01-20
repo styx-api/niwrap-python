@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "volume_vector_operation",
   "properties": {
+    "vectors-a": {
+      "var_param": "vectors_a"
+    },
+    "vectors-b": {
+      "var_param": "vectors_b"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -15,15 +24,6 @@
     },
     "normalize-a": {
       "var_param": "normalize_a"
-    },
-    "vectors-a": {
-      "var_param": "vectors_a"
-    },
-    "vectors-b": {
-      "var_param": "vectors_b"
-    },
-    "operation": {
-      "var_param": "operation"
     }
   }
 }

@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "zip_scene_file",
   "properties": {
-    "directory": {
-      "var_param": "directory"
-    },
-    "write-scene-file": {
-      "var_param": "write_scene_file"
-    },
-    "skip-missing": {
-      "var_param": "skip_missing"
-    },
     "scene-file": {
       "var_param": "scene_file"
     },
@@ -18,6 +9,15 @@
     },
     "zip-file": {
       "var_param": "zip_file"
+    },
+    "directory": {
+      "var_param": "directory"
+    },
+    "write-scene-file": {
+      "var_param": "write_scene_file"
+    },
+    "skip-missing": {
+      "var_param": "skip_missing"
     }
   }
 }

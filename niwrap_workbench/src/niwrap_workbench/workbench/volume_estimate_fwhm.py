@@ -14,17 +14,17 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 _VolumeEstimateFwhmParamsDictNoTag = typing.TypedDict('_VolumeEstimateFwhmParamsDictNoTag', {
+    "volume": InputPathType,
     "demean": typing.NotRequired[bool | None],
     "subvol": typing.NotRequired[str | None],
     "roivol": typing.NotRequired[InputPathType | None],
-    "volume": InputPathType,
 })
 VolumeEstimateFwhmParamsDictTagged = typing.TypedDict('VolumeEstimateFwhmParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-estimate-fwhm"],
+    "volume": InputPathType,
     "demean": typing.NotRequired[bool | None],
     "subvol": typing.NotRequired[str | None],
     "roivol": typing.NotRequired[InputPathType | None],
-    "volume": InputPathType,
 })
 VolumeEstimateFwhmParamsDict = _VolumeEstimateFwhmParamsDictNoTag | VolumeEstimateFwhmParamsDictTagged
 
@@ -86,6 +86,10 @@ def volume_estimate_fwhm_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
     if params.get("demean", None) is not None:
         if not isinstance(params["demean"], bool):
             raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", None))}` expected `bool | None`')
@@ -95,10 +99,6 @@ def volume_estimate_fwhm_validate(
     if params.get("roivol", None) is not None:
         if not isinstance(params["roivol"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roivol` has the wrong type: Received `{type(params.get("roivol", None))}` expected `InputPathType | None`')
-    if params.get("volume", None) is None:
-        raise StyxValidationError("`volume` must not be None")
-    if not isinstance(params["volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
 
 
 def volume_estimate_fwhm_cargs(
@@ -119,6 +119,7 @@ def volume_estimate_fwhm_cargs(
         "wb_command",
         "-volume-estimate-fwhm"
     ])
+    cargs.append(execution.input_file(params.get("volume", None)))
     if params.get("demean", None) is not None:
         cargs.extend([
             "-whole-file",
@@ -134,7 +135,6 @@ def volume_estimate_fwhm_cargs(
             "-roi",
             execution.input_file(params.get("roivol", None))
         ])
-    cargs.append(execution.input_file(params.get("volume", None)))
     return cargs
 
 
@@ -217,10 +217,10 @@ def volume_estimate_fwhm(
         NamedTuple of outputs (described in `VolumeEstimateFwhmOutputs`).
     """
     params = volume_estimate_fwhm_params(
+        volume=volume,
         demean=demean,
         subvol=subvol,
         roivol=roivol,
-        volume=volume,
     )
     return volume_estimate_fwhm_execute(params, runner)
 

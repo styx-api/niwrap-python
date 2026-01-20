@@ -14,19 +14,19 @@ LABEL_TO_BORDER_METADATA = Metadata(
 
 
 _LabelToBorderParamsDictNoTag = typing.TypedDict('_LabelToBorderParamsDictNoTag', {
+    "surface": InputPathType,
+    "label-in": InputPathType,
     "border-out": str,
     "column": typing.NotRequired[str | None],
     "fraction": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "label-in": InputPathType,
 })
 LabelToBorderParamsDictTagged = typing.TypedDict('LabelToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/label-to-border"],
+    "surface": InputPathType,
+    "label-in": InputPathType,
     "border-out": str,
     "column": typing.NotRequired[str | None],
     "fraction": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "label-in": InputPathType,
 })
 LabelToBorderParamsDict = _LabelToBorderParamsDictNoTag | LabelToBorderParamsDictTagged
 
@@ -42,9 +42,9 @@ class LabelToBorderOutputs(typing.NamedTuple):
 
 
 def label_to_border_params(
-    border_out: str,
     surface: InputPathType,
     label_in: InputPathType,
+    border_out: str,
     column: str | None = None,
     fraction: float | None = None,
 ) -> LabelToBorderParamsDictTagged:
@@ -52,9 +52,9 @@ def label_to_border_params(
     Build parameters.
     
     Args:
-        border_out: the output border file.
         surface: the surface to use for neighbor information.
         label_in: the input label file.
+        border_out: the output border file.
         column: select a single column\
             \
             the column number or name.
@@ -66,9 +66,9 @@ def label_to_border_params(
     """
     params = {
         "@type": "workbench/label-to-border",
-        "border-out": border_out,
         "surface": surface,
         "label-in": label_in,
+        "border-out": border_out,
     }
     if column is not None:
         params["column"] = column
@@ -89,6 +89,14 @@ def label_to_border_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
     if params.get("border-out", None) is None:
         raise StyxValidationError("`border-out` must not be None")
     if not isinstance(params["border-out"], str):
@@ -99,14 +107,6 @@ def label_to_border_validate(
     if params.get("fraction", None) is not None:
         if not isinstance(params["fraction"], (float, int)):
             raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("label-in", None) is None:
-        raise StyxValidationError("`label-in` must not be None")
-    if not isinstance(params["label-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
 
 
 def label_to_border_cargs(
@@ -127,6 +127,8 @@ def label_to_border_cargs(
         "wb_command",
         "-label-to-border"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("border-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
@@ -138,8 +140,6 @@ def label_to_border_cargs(
             "-placement",
             str(params.get("fraction", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -192,9 +192,9 @@ def label_to_border_execute(
 
 
 def label_to_border(
-    border_out: str,
     surface: InputPathType,
     label_in: InputPathType,
+    border_out: str,
     column: str | None = None,
     fraction: float | None = None,
     runner: Runner | None = None,
@@ -208,9 +208,9 @@ def label_to_border(
     border.
     
     Args:
-        border_out: the output border file.
         surface: the surface to use for neighbor information.
         label_in: the input label file.
+        border_out: the output border file.
         column: select a single column\
             \
             the column number or name.
@@ -222,11 +222,11 @@ def label_to_border(
         NamedTuple of outputs (described in `LabelToBorderOutputs`).
     """
     params = label_to_border_params(
+        surface=surface,
+        label_in=label_in,
         border_out=border_out,
         column=column,
         fraction=fraction,
-        surface=surface,
-        label_in=label_in,
     )
     return label_to_border_execute(params, runner)
 

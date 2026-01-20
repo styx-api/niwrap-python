@@ -44,6 +44,9 @@ SceneFileUpdateDataFileRemoveParamsDict = _SceneFileUpdateDataFileRemoveParamsDi
 
 
 _SceneFileUpdateParamsDictNoTag = typing.TypedDict('_SceneFileUpdateParamsDictNoTag', {
+    "input-scene-file": str,
+    "output-scene-file": str,
+    "scene-name-or-number": str,
     "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None],
     "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParamsDict] | None],
     "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParamsDict] | None],
@@ -51,12 +54,12 @@ _SceneFileUpdateParamsDictNoTag = typing.TypedDict('_SceneFileUpdateParamsDictNo
     "error": bool,
     "remove-missing-files": bool,
     "fix-map-palette-settings": bool,
-    "input-scene-file": str,
-    "output-scene-file": str,
-    "scene-name-or-number": str,
 })
 SceneFileUpdateParamsDictTagged = typing.TypedDict('SceneFileUpdateParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-file-update"],
+    "input-scene-file": str,
+    "output-scene-file": str,
+    "scene-name-or-number": str,
     "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None],
     "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParamsDict] | None],
     "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParamsDict] | None],
@@ -64,9 +67,6 @@ SceneFileUpdateParamsDictTagged = typing.TypedDict('SceneFileUpdateParamsDictTag
     "error": bool,
     "remove-missing-files": bool,
     "fix-map-palette-settings": bool,
-    "input-scene-file": str,
-    "output-scene-file": str,
-    "scene-name-or-number": str,
 })
 SceneFileUpdateParamsDict = _SceneFileUpdateParamsDictNoTag | SceneFileUpdateParamsDictTagged
 
@@ -300,13 +300,13 @@ def scene_file_update_params(
     """
     params = {
         "@type": "workbench/scene-file-update",
+        "input-scene-file": input_scene_file,
+        "output-scene-file": output_scene_file,
+        "scene-name-or-number": scene_name_or_number,
         "verbose": verbose,
         "error": error,
         "remove-missing-files": remove_missing_files,
         "fix-map-palette-settings": fix_map_palette_settings,
-        "input-scene-file": input_scene_file,
-        "output-scene-file": output_scene_file,
-        "scene-name-or-number": scene_name_or_number,
     }
     if copy_map_one_palette is not None:
         params["copy-map-one-palette"] = copy_map_one_palette
@@ -329,6 +329,18 @@ def scene_file_update_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input-scene-file", None) is None:
+        raise StyxValidationError("`input-scene-file` must not be None")
+    if not isinstance(params["input-scene-file"], str):
+        raise StyxValidationError(f'`input-scene-file` has the wrong type: Received `{type(params.get("input-scene-file", None))}` expected `str`')
+    if params.get("output-scene-file", None) is None:
+        raise StyxValidationError("`output-scene-file` must not be None")
+    if not isinstance(params["output-scene-file"], str):
+        raise StyxValidationError(f'`output-scene-file` has the wrong type: Received `{type(params.get("output-scene-file", None))}` expected `str`')
+    if params.get("scene-name-or-number", None) is None:
+        raise StyxValidationError("`scene-name-or-number` must not be None")
+    if not isinstance(params["scene-name-or-number"], str):
+        raise StyxValidationError(f'`scene-name-or-number` has the wrong type: Received `{type(params.get("scene-name-or-number", None))}` expected `str`')
     if params.get("copy-map-one-palette", None) is not None:
         if not isinstance(params["copy-map-one-palette"], list):
             raise StyxValidationError(f'`copy-map-one-palette` has the wrong type: Received `{type(params.get("copy-map-one-palette", None))}` expected `list[SceneFileUpdateCopyMapOnePaletteParamsDict] | None`')
@@ -360,18 +372,6 @@ def scene_file_update_validate(
         raise StyxValidationError("`fix-map-palette-settings` must not be None")
     if not isinstance(params["fix-map-palette-settings"], bool):
         raise StyxValidationError(f'`fix-map-palette-settings` has the wrong type: Received `{type(params.get("fix-map-palette-settings", False))}` expected `bool`')
-    if params.get("input-scene-file", None) is None:
-        raise StyxValidationError("`input-scene-file` must not be None")
-    if not isinstance(params["input-scene-file"], str):
-        raise StyxValidationError(f'`input-scene-file` has the wrong type: Received `{type(params.get("input-scene-file", None))}` expected `str`')
-    if params.get("output-scene-file", None) is None:
-        raise StyxValidationError("`output-scene-file` must not be None")
-    if not isinstance(params["output-scene-file"], str):
-        raise StyxValidationError(f'`output-scene-file` has the wrong type: Received `{type(params.get("output-scene-file", None))}` expected `str`')
-    if params.get("scene-name-or-number", None) is None:
-        raise StyxValidationError("`scene-name-or-number` must not be None")
-    if not isinstance(params["scene-name-or-number"], str):
-        raise StyxValidationError(f'`scene-name-or-number` has the wrong type: Received `{type(params.get("scene-name-or-number", None))}` expected `str`')
 
 
 def scene_file_update_cargs(
@@ -392,6 +392,9 @@ def scene_file_update_cargs(
         "wb_command",
         "-scene-file-update"
     ])
+    cargs.append(params.get("input-scene-file", None))
+    cargs.append(params.get("output-scene-file", None))
+    cargs.append(params.get("scene-name-or-number", None))
     if params.get("copy-map-one-palette", None) is not None or params.get("data-file-add", None) is not None or params.get("data-file-remove", None) is not None:
         cargs.extend([
             *([a for c in [scene_file_update_copy_map_one_palette_cargs(s, execution) for s in params.get("copy-map-one-palette", None)] for a in c] if (params.get("copy-map-one-palette", None) is not None) else []),
@@ -406,9 +409,6 @@ def scene_file_update_cargs(
         cargs.append("-remove-missing-files")
     if params.get("fix-map-palette-settings", False):
         cargs.append("-fix-map-palette-settings")
-    cargs.append(params.get("input-scene-file", None))
-    cargs.append(params.get("output-scene-file", None))
-    cargs.append(params.get("scene-name-or-number", None))
     return cargs
 
 
@@ -546,6 +546,9 @@ def scene_file_update(
         NamedTuple of outputs (described in `SceneFileUpdateOutputs`).
     """
     params = scene_file_update_params(
+        input_scene_file=input_scene_file,
+        output_scene_file=output_scene_file,
+        scene_name_or_number=scene_name_or_number,
         copy_map_one_palette=copy_map_one_palette,
         data_file_add=data_file_add,
         data_file_remove=data_file_remove,
@@ -553,9 +556,6 @@ def scene_file_update(
         error=error,
         remove_missing_files=remove_missing_files,
         fix_map_palette_settings=fix_map_palette_settings,
-        input_scene_file=input_scene_file,
-        output_scene_file=output_scene_file,
-        scene_name_or_number=scene_name_or_number,
     )
     return scene_file_update_execute(params, runner)
 

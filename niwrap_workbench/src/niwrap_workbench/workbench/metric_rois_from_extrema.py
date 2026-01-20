@@ -14,25 +14,25 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 _MetricRoisFromExtremaParamsDictNoTag = typing.TypedDict('_MetricRoisFromExtremaParamsDictNoTag', {
+    "surface": InputPathType,
+    "metric": InputPathType,
+    "limit": float,
     "metric-out": str,
     "column": typing.NotRequired[str | None],
     "method": typing.NotRequired[str | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "sigma": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "metric": InputPathType,
-    "limit": float,
 })
 MetricRoisFromExtremaParamsDictTagged = typing.TypedDict('MetricRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-rois-from-extrema"],
+    "surface": InputPathType,
+    "metric": InputPathType,
+    "limit": float,
     "metric-out": str,
     "column": typing.NotRequired[str | None],
     "method": typing.NotRequired[str | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "sigma": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "metric": InputPathType,
-    "limit": float,
 })
 MetricRoisFromExtremaParamsDict = _MetricRoisFromExtremaParamsDictNoTag | MetricRoisFromExtremaParamsDictTagged
 
@@ -48,10 +48,10 @@ class MetricRoisFromExtremaOutputs(typing.NamedTuple):
 
 
 def metric_rois_from_extrema_params(
-    metric_out: str,
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
+    metric_out: str,
     column: str | None = None,
     method: str | None = None,
     roi_metric: InputPathType | None = None,
@@ -61,10 +61,10 @@ def metric_rois_from_extrema_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric file.
         surface: the surface to use for geodesic distance.
         metric: the input metric file.
         limit: geodesic distance limit from vertex, in mm.
+        metric_out: the output metric file.
         column: select a single input column to use\
             \
             the column number or name.
@@ -82,10 +82,10 @@ def metric_rois_from_extrema_params(
     """
     params = {
         "@type": "workbench/metric-rois-from-extrema",
-        "metric-out": metric_out,
         "surface": surface,
         "metric": metric,
         "limit": limit,
+        "metric-out": metric_out,
     }
     if column is not None:
         params["column"] = column
@@ -110,6 +110,18 @@ def metric_rois_from_extrema_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("limit", None) is None:
+        raise StyxValidationError("`limit` must not be None")
+    if not isinstance(params["limit"], (float, int)):
+        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -126,18 +138,6 @@ def metric_rois_from_extrema_validate(
     if params.get("sigma", None) is not None:
         if not isinstance(params["sigma"], (float, int)):
             raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("metric", None) is None:
-        raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
-    if params.get("limit", None) is None:
-        raise StyxValidationError("`limit` must not be None")
-    if not isinstance(params["limit"], (float, int)):
-        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
 
 
 def metric_rois_from_extrema_cargs(
@@ -158,6 +158,9 @@ def metric_rois_from_extrema_cargs(
         "wb_command",
         "-metric-rois-from-extrema"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(str(params.get("limit", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
@@ -179,9 +182,6 @@ def metric_rois_from_extrema_cargs(
             "-gaussian",
             str(params.get("sigma", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric", None)))
-    cargs.append(str(params.get("limit", None)))
     return cargs
 
 
@@ -238,10 +238,10 @@ def metric_rois_from_extrema_execute(
 
 
 def metric_rois_from_extrema(
-    metric_out: str,
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
+    metric_out: str,
     column: str | None = None,
     method: str | None = None,
     roi_metric: InputPathType | None = None,
@@ -261,10 +261,10 @@ def metric_rois_from_extrema(
     vertex within range of more than one ROI does not belong to any ROI.
     
     Args:
-        metric_out: the output metric file.
         surface: the surface to use for geodesic distance.
         metric: the input metric file.
         limit: geodesic distance limit from vertex, in mm.
+        metric_out: the output metric file.
         column: select a single input column to use\
             \
             the column number or name.
@@ -282,14 +282,14 @@ def metric_rois_from_extrema(
         NamedTuple of outputs (described in `MetricRoisFromExtremaOutputs`).
     """
     params = metric_rois_from_extrema_params(
+        surface=surface,
+        metric=metric,
+        limit=limit,
         metric_out=metric_out,
         column=column,
         method=method,
         roi_metric=roi_metric,
         sigma=sigma,
-        surface=surface,
-        metric=metric,
-        limit=limit,
     )
     return metric_rois_from_extrema_execute(params, runner)
 

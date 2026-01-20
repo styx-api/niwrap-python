@@ -14,25 +14,25 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
 
 
 _MetricFalseCorrelationParamsDictNoTag = typing.TypedDict('_MetricFalseCorrelationParamsDictNoTag', {
-    "metric-out": str,
-    "text-out": typing.NotRequired[str | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
     "3D-dist": float,
     "geo-outer": float,
     "geo-inner": float,
+    "metric-out": str,
+    "text-out": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 MetricFalseCorrelationParamsDictTagged = typing.TypedDict('MetricFalseCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-false-correlation"],
-    "metric-out": str,
-    "text-out": typing.NotRequired[str | None],
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
     "3D-dist": float,
     "geo-outer": float,
     "geo-inner": float,
+    "metric-out": str,
+    "text-out": typing.NotRequired[str | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 MetricFalseCorrelationParamsDict = _MetricFalseCorrelationParamsDictNoTag | MetricFalseCorrelationParamsDictTagged
 
@@ -48,12 +48,12 @@ class MetricFalseCorrelationOutputs(typing.NamedTuple):
 
 
 def metric_false_correlation_params(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
+    metric_out: str,
     text_out: str | None = None,
     roi_metric: InputPathType | None = None,
 ) -> MetricFalseCorrelationParamsDictTagged:
@@ -61,12 +61,12 @@ def metric_false_correlation_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute geodesic and 3D distance with.
         metric_in: the metric to correlate.
         v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
+        metric_out: the output metric.
         text_out: dump the raw measures used to a text file\
             \
             the output text file.
@@ -78,12 +78,12 @@ def metric_false_correlation_params(
     """
     params = {
         "@type": "workbench/metric-false-correlation",
-        "metric-out": metric_out,
         "surface": surface,
         "metric-in": metric_in,
         "3D-dist": v_3_d_dist,
         "geo-outer": geo_outer,
         "geo-inner": geo_inner,
+        "metric-out": metric_out,
     }
     if text_out is not None:
         params["text-out"] = text_out
@@ -104,16 +104,6 @@ def metric_false_correlation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("text-out", None) is not None:
-        if not isinstance(params["text-out"], str):
-            raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str | None`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -134,6 +124,16 @@ def metric_false_correlation_validate(
         raise StyxValidationError("`geo-inner` must not be None")
     if not isinstance(params["geo-inner"], (float, int)):
         raise StyxValidationError(f'`geo-inner` has the wrong type: Received `{type(params.get("geo-inner", None))}` expected `float`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("text-out", None) is not None:
+        if not isinstance(params["text-out"], str):
+            raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def metric_false_correlation_cargs(
@@ -154,6 +154,11 @@ def metric_false_correlation_cargs(
         "wb_command",
         "-metric-false-correlation"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("3D-dist", None)))
+    cargs.append(str(params.get("geo-outer", None)))
+    cargs.append(str(params.get("geo-inner", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("text-out", None) is not None:
         cargs.extend([
@@ -165,11 +170,6 @@ def metric_false_correlation_cargs(
             "-roi",
             execution.input_file(params.get("roi-metric", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
-    cargs.append(str(params.get("3D-dist", None)))
-    cargs.append(str(params.get("geo-outer", None)))
-    cargs.append(str(params.get("geo-inner", None)))
     return cargs
 
 
@@ -224,12 +224,12 @@ def metric_false_correlation_execute(
 
 
 def metric_false_correlation(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
+    metric_out: str,
     text_out: str | None = None,
     roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
@@ -245,12 +245,12 @@ def metric_false_correlation(
     some additional maps to help explain the ratio.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute geodesic and 3D distance with.
         metric_in: the metric to correlate.
         v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
+        metric_out: the output metric.
         text_out: dump the raw measures used to a text file\
             \
             the output text file.
@@ -262,14 +262,14 @@ def metric_false_correlation(
         NamedTuple of outputs (described in `MetricFalseCorrelationOutputs`).
     """
     params = metric_false_correlation_params(
-        metric_out=metric_out,
-        text_out=text_out,
-        roi_metric=roi_metric,
         surface=surface,
         metric_in=metric_in,
         v_3_d_dist=v_3_d_dist,
         geo_outer=geo_outer,
         geo_inner=geo_inner,
+        metric_out=metric_out,
+        text_out=text_out,
+        roi_metric=roi_metric,
     )
     return metric_false_correlation_execute(params, runner)
 

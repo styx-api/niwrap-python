@@ -14,17 +14,17 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 _LabelModifyKeysParamsDictNoTag = typing.TypedDict('_LabelModifyKeysParamsDictNoTag', {
-    "label-out": str,
-    "column": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "remap-file": str,
+    "label-out": str,
+    "column": typing.NotRequired[str | None],
 })
 LabelModifyKeysParamsDictTagged = typing.TypedDict('LabelModifyKeysParamsDictTagged', {
     "@type": typing.Literal["workbench/label-modify-keys"],
-    "label-out": str,
-    "column": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "remap-file": str,
+    "label-out": str,
+    "column": typing.NotRequired[str | None],
 })
 LabelModifyKeysParamsDict = _LabelModifyKeysParamsDictNoTag | LabelModifyKeysParamsDictTagged
 
@@ -40,18 +40,18 @@ class LabelModifyKeysOutputs(typing.NamedTuple):
 
 
 def label_modify_keys_params(
-    label_out: str,
     label_in: InputPathType,
     remap_file: str,
+    label_out: str,
     column: str | None = None,
 ) -> LabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        label_out: output label file.
         label_in: the input label file.
         remap_file: text file with old and new key values.
+        label_out: output label file.
         column: select a single column to use\
             \
             the column number or name.
@@ -60,9 +60,9 @@ def label_modify_keys_params(
     """
     params = {
         "@type": "workbench/label-modify-keys",
-        "label-out": label_out,
         "label-in": label_in,
         "remap-file": remap_file,
+        "label-out": label_out,
     }
     if column is not None:
         params["column"] = column
@@ -81,13 +81,6 @@ def label_modify_keys_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("label-out", None) is None:
-        raise StyxValidationError("`label-out` must not be None")
-    if not isinstance(params["label-out"], str):
-        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def label_modify_keys_validate(
         raise StyxValidationError("`remap-file` must not be None")
     if not isinstance(params["remap-file"], str):
         raise StyxValidationError(f'`remap-file` has the wrong type: Received `{type(params.get("remap-file", None))}` expected `str`')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
 
 
 def label_modify_keys_cargs(
@@ -116,14 +116,14 @@ def label_modify_keys_cargs(
         "wb_command",
         "-label-modify-keys"
     ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
+    cargs.append(params.get("remap-file", None))
     cargs.append(params.get("label-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
             "-column",
             params.get("column", None)
         ])
-    cargs.append(execution.input_file(params.get("label-in", None)))
-    cargs.append(params.get("remap-file", None))
     return cargs
 
 
@@ -185,9 +185,9 @@ def label_modify_keys_execute(
 
 
 def label_modify_keys(
-    label_out: str,
     label_in: InputPathType,
     remap_file: str,
+    label_out: str,
     column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelModifyKeysOutputs:
@@ -209,9 +209,9 @@ def label_modify_keys(
     values in the data at the same time.
     
     Args:
-        label_out: output label file.
         label_in: the input label file.
         remap_file: text file with old and new key values.
+        label_out: output label file.
         column: select a single column to use\
             \
             the column number or name.
@@ -220,10 +220,10 @@ def label_modify_keys(
         NamedTuple of outputs (described in `LabelModifyKeysOutputs`).
     """
     params = label_modify_keys_params(
-        label_out=label_out,
-        column=column,
         label_in=label_in,
         remap_file=remap_file,
+        label_out=label_out,
+        column=column,
     )
     return label_modify_keys_execute(params, runner)
 

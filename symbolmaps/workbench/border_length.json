@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "border_length",
   "properties": {
+    "border": {
+      "var_param": "border"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
     "area-metric": {
       "var_param": "area_metric"
     },
@@ -9,12 +15,6 @@
     },
     "separate-pieces": {
       "var_param": "separate_pieces"
-    },
-    "border": {
-      "var_param": "border"
-    },
-    "surface": {
-      "var_param": "surface"
     }
   }
 }

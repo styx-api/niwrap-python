@@ -14,17 +14,17 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
 
 
 _VolumeCopyExtensionsParamsDictNoTag = typing.TypedDict('_VolumeCopyExtensionsParamsDictNoTag', {
-    "volume-out": str,
-    "drop-unknown": bool,
     "data-volume": InputPathType,
     "extension-volume": InputPathType,
+    "volume-out": str,
+    "drop-unknown": bool,
 })
 VolumeCopyExtensionsParamsDictTagged = typing.TypedDict('VolumeCopyExtensionsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-copy-extensions"],
-    "volume-out": str,
-    "drop-unknown": bool,
     "data-volume": InputPathType,
     "extension-volume": InputPathType,
+    "volume-out": str,
+    "drop-unknown": bool,
 })
 VolumeCopyExtensionsParamsDict = _VolumeCopyExtensionsParamsDictNoTag | VolumeCopyExtensionsParamsDictTagged
 
@@ -40,28 +40,28 @@ class VolumeCopyExtensionsOutputs(typing.NamedTuple):
 
 
 def volume_copy_extensions_params(
-    volume_out: str,
     data_volume: InputPathType,
     extension_volume: InputPathType,
+    volume_out: str,
     drop_unknown: bool = False,
 ) -> VolumeCopyExtensionsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         data_volume: the volume file containing the voxel data to use.
         extension_volume: the volume file containing the extensions to use.
+        volume_out: the output volume.
         drop_unknown: don't copy extensions that workbench doesn't understand.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-copy-extensions",
-        "volume-out": volume_out,
-        "drop-unknown": drop_unknown,
         "data-volume": data_volume,
         "extension-volume": extension_volume,
+        "volume-out": volume_out,
+        "drop-unknown": drop_unknown,
     }
     return params
 
@@ -78,14 +78,6 @@ def volume_copy_extensions_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("drop-unknown", False) is None:
-        raise StyxValidationError("`drop-unknown` must not be None")
-    if not isinstance(params["drop-unknown"], bool):
-        raise StyxValidationError(f'`drop-unknown` has the wrong type: Received `{type(params.get("drop-unknown", False))}` expected `bool`')
     if params.get("data-volume", None) is None:
         raise StyxValidationError("`data-volume` must not be None")
     if not isinstance(params["data-volume"], (pathlib.Path, str)):
@@ -94,6 +86,14 @@ def volume_copy_extensions_validate(
         raise StyxValidationError("`extension-volume` must not be None")
     if not isinstance(params["extension-volume"], (pathlib.Path, str)):
         raise StyxValidationError(f'`extension-volume` has the wrong type: Received `{type(params.get("extension-volume", None))}` expected `InputPathType`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("drop-unknown", False) is None:
+        raise StyxValidationError("`drop-unknown` must not be None")
+    if not isinstance(params["drop-unknown"], bool):
+        raise StyxValidationError(f'`drop-unknown` has the wrong type: Received `{type(params.get("drop-unknown", False))}` expected `bool`')
 
 
 def volume_copy_extensions_cargs(
@@ -114,11 +114,11 @@ def volume_copy_extensions_cargs(
         "wb_command",
         "-volume-copy-extensions"
     ])
+    cargs.append(execution.input_file(params.get("data-volume", None)))
+    cargs.append(execution.input_file(params.get("extension-volume", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("drop-unknown", False):
         cargs.append("-drop-unknown")
-    cargs.append(execution.input_file(params.get("data-volume", None)))
-    cargs.append(execution.input_file(params.get("extension-volume", None)))
     return cargs
 
 
@@ -171,9 +171,9 @@ def volume_copy_extensions_execute(
 
 
 def volume_copy_extensions(
-    volume_out: str,
     data_volume: InputPathType,
     extension_volume: InputPathType,
+    volume_out: str,
     drop_unknown: bool = False,
     runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
@@ -186,19 +186,19 @@ def volume_copy_extensions(
     similar kinds of information set by other software.
     
     Args:
-        volume_out: the output volume.
         data_volume: the volume file containing the voxel data to use.
         extension_volume: the volume file containing the extensions to use.
+        volume_out: the output volume.
         drop_unknown: don't copy extensions that workbench doesn't understand.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeCopyExtensionsOutputs`).
     """
     params = volume_copy_extensions_params(
-        volume_out=volume_out,
-        drop_unknown=drop_unknown,
         data_volume=data_volume,
         extension_volume=extension_volume,
+        volume_out=volume_out,
+        drop_unknown=drop_unknown,
     )
     return volume_copy_extensions_execute(params, runner)
 

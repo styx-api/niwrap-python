@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "volume_create",
   "properties": {
+    "i-dim": {
+      "var_param": "i_dim"
+    },
+    "j-dim": {
+      "var_param": "j_dim"
+    },
+    "k-dim": {
+      "var_param": "k_dim"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -72,15 +81,6 @@
           "var_param": "z_offset"
         }
       }
-    },
-    "i-dim": {
-      "var_param": "i_dim"
-    },
-    "j-dim": {
-      "var_param": "j_dim"
-    },
-    "k-dim": {
-      "var_param": "k_dim"
     }
   }
 }

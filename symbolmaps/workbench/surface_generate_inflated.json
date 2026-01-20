@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "surface_generate_inflated",
   "properties": {
+    "anatomical-surface-in": {
+      "var_param": "anatomical_surface_in"
+    },
     "inflated-surface-out": {
       "var_param": "inflated_surface_out"
     },
@@ -9,9 +12,6 @@
     },
     "iterations-scale-value": {
       "var_param": "iterations_scale_value"
-    },
-    "anatomical-surface-in": {
-      "var_param": "anatomical_surface_in"
     }
   }
 }

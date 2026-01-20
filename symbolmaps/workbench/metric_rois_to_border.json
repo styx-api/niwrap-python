@@ -1,15 +1,6 @@
 {
   "fn_root_make_params_and_execute": "metric_rois_to_border",
   "properties": {
-    "border-out": {
-      "var_param": "border_out"
-    },
-    "column": {
-      "var_param": "column"
-    },
-    "fraction": {
-      "var_param": "fraction"
-    },
     "surface": {
       "var_param": "surface"
     },
@@ -18,6 +9,15 @@
     },
     "class-name": {
       "var_param": "class_name"
+    },
+    "border-out": {
+      "var_param": "border_out"
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "fraction": {
+      "var_param": "fraction"
     }
   }
 }

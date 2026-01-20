@@ -14,7 +14,6 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
 
 
 _EstimateFiberBinghamsParamsDictNoTag = typing.TypedDict('_EstimateFiberBinghamsParamsDictNoTag', {
-    "cifti-out": str,
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,
@@ -25,10 +24,10 @@ _EstimateFiberBinghamsParamsDictNoTag = typing.TypedDict('_EstimateFiberBinghams
     "merged_th3samples": InputPathType,
     "merged_ph3samples": InputPathType,
     "label-volume": InputPathType,
+    "cifti-out": str,
 })
 EstimateFiberBinghamsParamsDictTagged = typing.TypedDict('EstimateFiberBinghamsParamsDictTagged', {
     "@type": typing.Literal["workbench/estimate-fiber-binghams"],
-    "cifti-out": str,
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,
@@ -39,6 +38,7 @@ EstimateFiberBinghamsParamsDictTagged = typing.TypedDict('EstimateFiberBinghamsP
     "merged_th3samples": InputPathType,
     "merged_ph3samples": InputPathType,
     "label-volume": InputPathType,
+    "cifti-out": str,
 })
 EstimateFiberBinghamsParamsDict = _EstimateFiberBinghamsParamsDictNoTag | EstimateFiberBinghamsParamsDictTagged
 
@@ -54,7 +54,6 @@ class EstimateFiberBinghamsOutputs(typing.NamedTuple):
 
 
 def estimate_fiber_binghams_params(
-    cifti_out: str,
     merged_f1samples: InputPathType,
     merged_th1samples: InputPathType,
     merged_ph1samples: InputPathType,
@@ -65,12 +64,12 @@ def estimate_fiber_binghams_params(
     merged_th3samples: InputPathType,
     merged_ph3samples: InputPathType,
     label_volume: InputPathType,
+    cifti_out: str,
 ) -> EstimateFiberBinghamsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        cifti_out: output cifti fiber distributons file.
         merged_f1samples: fiber 1 strength samples.
         merged_th1samples: fiber 1 theta samples.
         merged_ph1samples: fiber 1 phi samples.
@@ -81,12 +80,12 @@ def estimate_fiber_binghams_params(
         merged_th3samples: fiber 3 theta samples.
         merged_ph3samples: fiber 3 phi samples.
         label_volume: volume of cifti structure labels.
+        cifti_out: output cifti fiber distributons file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/estimate-fiber-binghams",
-        "cifti-out": cifti_out,
         "merged_f1samples": merged_f1samples,
         "merged_th1samples": merged_th1samples,
         "merged_ph1samples": merged_ph1samples,
@@ -97,6 +96,7 @@ def estimate_fiber_binghams_params(
         "merged_th3samples": merged_th3samples,
         "merged_ph3samples": merged_ph3samples,
         "label-volume": label_volume,
+        "cifti-out": cifti_out,
     }
     return params
 
@@ -113,10 +113,6 @@ def estimate_fiber_binghams_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("merged_f1samples", None) is None:
         raise StyxValidationError("`merged_f1samples` must not be None")
     if not isinstance(params["merged_f1samples"], (pathlib.Path, str)):
@@ -157,6 +153,10 @@ def estimate_fiber_binghams_validate(
         raise StyxValidationError("`label-volume` must not be None")
     if not isinstance(params["label-volume"], (pathlib.Path, str)):
         raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
 
 
 def estimate_fiber_binghams_cargs(
@@ -177,7 +177,6 @@ def estimate_fiber_binghams_cargs(
         "wb_command",
         "-estimate-fiber-binghams"
     ])
-    cargs.append(params.get("cifti-out", None))
     cargs.append(execution.input_file(params.get("merged_f1samples", None)))
     cargs.append(execution.input_file(params.get("merged_th1samples", None)))
     cargs.append(execution.input_file(params.get("merged_ph1samples", None)))
@@ -188,6 +187,7 @@ def estimate_fiber_binghams_cargs(
     cargs.append(execution.input_file(params.get("merged_th3samples", None)))
     cargs.append(execution.input_file(params.get("merged_ph3samples", None)))
     cargs.append(execution.input_file(params.get("label-volume", None)))
+    cargs.append(params.get("cifti-out", None))
     return cargs
 
 
@@ -276,7 +276,6 @@ def estimate_fiber_binghams_execute(
 
 
 def estimate_fiber_binghams(
-    cifti_out: str,
     merged_f1samples: InputPathType,
     merged_th1samples: InputPathType,
     merged_ph1samples: InputPathType,
@@ -287,6 +286,7 @@ def estimate_fiber_binghams(
     merged_th3samples: InputPathType,
     merged_ph3samples: InputPathType,
     label_volume: InputPathType,
+    cifti_out: str,
     runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
@@ -334,7 +334,6 @@ def estimate_fiber_binghams(
     THALAMUS_RIGHT.
     
     Args:
-        cifti_out: output cifti fiber distributons file.
         merged_f1samples: fiber 1 strength samples.
         merged_th1samples: fiber 1 theta samples.
         merged_ph1samples: fiber 1 phi samples.
@@ -345,12 +344,12 @@ def estimate_fiber_binghams(
         merged_th3samples: fiber 3 theta samples.
         merged_ph3samples: fiber 3 phi samples.
         label_volume: volume of cifti structure labels.
+        cifti_out: output cifti fiber distributons file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EstimateFiberBinghamsOutputs`).
     """
     params = estimate_fiber_binghams_params(
-        cifti_out=cifti_out,
         merged_f1samples=merged_f1samples,
         merged_th1samples=merged_th1samples,
         merged_ph1samples=merged_ph1samples,
@@ -361,6 +360,7 @@ def estimate_fiber_binghams(
         merged_th3samples=merged_th3samples,
         merged_ph3samples=merged_ph3samples,
         label_volume=label_volume,
+        cifti_out=cifti_out,
     )
     return estimate_fiber_binghams_execute(params, runner)
 

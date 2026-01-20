@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "metric_reduce",
   "properties": {
+    "metric-in": {
+      "var_param": "metric_in"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -18,12 +24,6 @@
     },
     "only-numeric": {
       "var_param": "only_numeric"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
-    },
-    "operation": {
-      "var_param": "operation"
     }
   }
 }

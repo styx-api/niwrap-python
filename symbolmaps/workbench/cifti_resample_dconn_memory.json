@@ -1,6 +1,21 @@
 {
   "fn_root_make_params_and_execute": "cifti_resample_dconn_memory",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "cifti-template": {
+      "var_param": "cifti_template"
+    },
+    "template-direction": {
+      "var_param": "template_direction"
+    },
+    "surface-method": {
+      "var_param": "surface_method"
+    },
+    "volume-method": {
+      "var_param": "volume_method"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -198,21 +213,6 @@
     },
     "surface-largest": {
       "var_param": "surface_largest"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "cifti-template": {
-      "var_param": "cifti_template"
-    },
-    "template-direction": {
-      "var_param": "template_direction"
-    },
-    "surface-method": {
-      "var_param": "surface_method"
-    },
-    "volume-method": {
-      "var_param": "volume_method"
     }
   }
 }

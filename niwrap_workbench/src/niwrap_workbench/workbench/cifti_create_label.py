@@ -550,14 +550,15 @@ def cifti_create_label_cargs(
         "wb_command",
         "-cifti-create-label"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_create_label_volume_cargs(params.get("volume", None), execution) if (params.get("volume", None) is not None) else []),
-        *(cifti_create_label_left_label_cargs(params.get("left-label", None), execution) if (params.get("left-label", None) is not None) else []),
-        *(cifti_create_label_right_label_cargs(params.get("right-label", None), execution) if (params.get("right-label", None) is not None) else []),
-        *(cifti_create_label_cerebellum_label_cargs(params.get("cerebellum-label", None), execution) if (params.get("cerebellum-label", None) is not None) else []),
-        *([a for c in [cifti_create_label_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else [])
-    ])
+    cargs.append(params.get("cifti-out", None))
+    if params.get("volume", None) is not None or params.get("left-label", None) is not None or params.get("right-label", None) is not None or params.get("cerebellum-label", None) is not None or params.get("label", None) is not None:
+        cargs.extend([
+            *(cifti_create_label_volume_cargs(params.get("volume", None), execution) if (params.get("volume", None) is not None) else []),
+            *(cifti_create_label_left_label_cargs(params.get("left-label", None), execution) if (params.get("left-label", None) is not None) else []),
+            *(cifti_create_label_right_label_cargs(params.get("right-label", None), execution) if (params.get("right-label", None) is not None) else []),
+            *(cifti_create_label_cerebellum_label_cargs(params.get("cerebellum-label", None), execution) if (params.get("cerebellum-label", None) is not None) else []),
+            *([a for c in [cifti_create_label_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else [])
+        ])
     return cargs
 
 

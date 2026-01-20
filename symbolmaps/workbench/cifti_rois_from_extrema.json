@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_rois_from_extrema",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surf-limit": {
+      "var_param": "surf_limit"
+    },
+    "vol-limit": {
+      "var_param": "vol_limit"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -24,18 +36,6 @@
     },
     "merged-volume": {
       "var_param": "merged_volume"
-    },
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "surf-limit": {
-      "var_param": "surf_limit"
-    },
-    "vol-limit": {
-      "var_param": "vol_limit"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

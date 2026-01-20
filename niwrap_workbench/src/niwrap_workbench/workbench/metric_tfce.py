@@ -38,25 +38,25 @@ MetricTfceParametersParamsDict = _MetricTfceParametersParamsDictNoTag | MetricTf
 
 
 _MetricTfceParamsDictNoTag = typing.TypedDict('_MetricTfceParamsDictNoTag', {
+    "surface": InputPathType,
+    "metric-in": InputPathType,
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricTfcePresmoothParamsDict | None],
     "parameters": typing.NotRequired[MetricTfceParametersParamsDict | None],
     "area-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "surface": InputPathType,
-    "metric-in": InputPathType,
 })
 MetricTfceParamsDictTagged = typing.TypedDict('MetricTfceParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-tfce"],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricTfcePresmoothParamsDict | None],
     "parameters": typing.NotRequired[MetricTfceParametersParamsDict | None],
     "area-metric": typing.NotRequired[InputPathType | None],
     "column": typing.NotRequired[str | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "surface": InputPathType,
-    "metric-in": InputPathType,
 })
 MetricTfceParamsDict = _MetricTfceParamsDictNoTag | MetricTfceParamsDictTagged
 
@@ -204,9 +204,9 @@ class MetricTfceOutputs(typing.NamedTuple):
 
 
 def metric_tfce_params(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
+    metric_out: str,
     presmooth: MetricTfcePresmoothParamsDict | None = None,
     parameters: MetricTfceParametersParamsDict | None = None,
     area_metric: InputPathType | None = None,
@@ -217,9 +217,9 @@ def metric_tfce_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         metric_in: the metric to run TFCE on.
+        metric_out: the output metric.
         presmooth: smooth the metric before running TFCE.
         parameters: set parameters for TFCE integral.
         area_metric: vertex areas to use instead of computing them from the\
@@ -237,9 +237,9 @@ def metric_tfce_params(
     """
     params = {
         "@type": "workbench/metric-tfce",
-        "metric-out": metric_out,
         "surface": surface,
         "metric-in": metric_in,
+        "metric-out": metric_out,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -266,6 +266,14 @@ def metric_tfce_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -283,14 +291,6 @@ def metric_tfce_validate(
     if params.get("roi-metric", None) is not None:
         if not isinstance(params["roi-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
 
 
 def metric_tfce_cargs(
@@ -311,11 +311,14 @@ def metric_tfce_cargs(
         "wb_command",
         "-metric-tfce"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-        *(metric_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(params.get("metric-out", None))
+    if params.get("presmooth", None) is not None or params.get("parameters", None) is not None:
+        cargs.extend([
+            *(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
+            *(metric_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else [])
+        ])
     if params.get("area-metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
@@ -331,8 +334,6 @@ def metric_tfce_cargs(
             "-roi",
             execution.input_file(params.get("roi-metric", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -405,9 +406,9 @@ def metric_tfce_execute(
 
 
 def metric_tfce(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
+    metric_out: str,
     presmooth: MetricTfcePresmoothParamsDict | None = None,
     parameters: MetricTfceParametersParamsDict | None = None,
     area_metric: InputPathType | None = None,
@@ -444,9 +445,9 @@ def metric_tfce(
     PMID: 18501637.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         metric_in: the metric to run TFCE on.
+        metric_out: the output metric.
         presmooth: smooth the metric before running TFCE.
         parameters: set parameters for TFCE integral.
         area_metric: vertex areas to use instead of computing them from the\
@@ -464,14 +465,14 @@ def metric_tfce(
         NamedTuple of outputs (described in `MetricTfceOutputs`).
     """
     params = metric_tfce_params(
+        surface=surface,
+        metric_in=metric_in,
         metric_out=metric_out,
         presmooth=presmooth,
         parameters=parameters,
         area_metric=area_metric,
         column=column,
         roi_metric=roi_metric,
-        surface=surface,
-        metric_in=metric_in,
     )
     return metric_tfce_execute(params, runner)
 

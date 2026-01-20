@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "wbsparse_merge_dense",
   "properties": {
+    "direction": {
+      "var_param": "direction"
+    },
+    "wbsparse-out": {
+      "var_param": "wbsparse_out"
+    },
     "wbsparse": {
       "var_param": "wbsparse",
       "fn_struct_make_params": "wbsparse_merge_dense_wbsparse",
@@ -9,12 +15,6 @@
           "var_param": "wbsparse_in"
         }
       }
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "wbsparse-out": {
-      "var_param": "wbsparse_out"
     }
   }
 }

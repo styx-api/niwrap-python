@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "label_resample",
   "properties": {
+    "label-in": {
+      "var_param": "label_in"
+    },
+    "current-sphere": {
+      "var_param": "current_sphere"
+    },
+    "new-sphere": {
+      "var_param": "new_sphere"
+    },
+    "method": {
+      "var_param": "method"
+    },
     "label-out": {
       "var_param": "label_out"
     },
@@ -45,18 +57,6 @@
     },
     "largest": {
       "var_param": "largest"
-    },
-    "label-in": {
-      "var_param": "label_in"
-    },
-    "current-sphere": {
-      "var_param": "current_sphere"
-    },
-    "new-sphere": {
-      "var_param": "new_sphere"
-    },
-    "method": {
-      "var_param": "method"
     }
   }
 }

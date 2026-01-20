@@ -103,8 +103,6 @@ def surface_match_cargs(
         "wb_command",
         "-surface-match"
     ])
-    cargs.extend([
-    ])
     cargs.append(execution.input_file(params.get("Match Surface File", None)))
     cargs.append(execution.input_file(params.get("Input Surface File", None)))
     cargs.append(params.get("Output Surface Name", None))

@@ -50,13 +50,13 @@ SceneFileMergeSceneFileParamsDict = _SceneFileMergeSceneFileParamsDictNoTag | Sc
 
 
 _SceneFileMergeParamsDictNoTag = typing.TypedDict('_SceneFileMergeParamsDictNoTag', {
-    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
     "scene-file-out": str,
+    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
 })
 SceneFileMergeParamsDictTagged = typing.TypedDict('SceneFileMergeParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-file-merge"],
-    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
     "scene-file-out": str,
+    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParamsDict] | None],
 })
 SceneFileMergeParamsDict = _SceneFileMergeParamsDictNoTag | SceneFileMergeParamsDictTagged
 
@@ -300,15 +300,15 @@ def scene_file_merge_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scene-file-out", None) is None:
+        raise StyxValidationError("`scene-file-out` must not be None")
+    if not isinstance(params["scene-file-out"], str):
+        raise StyxValidationError(f'`scene-file-out` has the wrong type: Received `{type(params.get("scene-file-out", None))}` expected `str`')
     if params.get("scene-file", None) is not None:
         if not isinstance(params["scene-file"], list):
             raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `list[SceneFileMergeSceneFileParamsDict] | None`')
         for e in params["scene-file"]:
             scene_file_merge_scene_file_validate(e)
-    if params.get("scene-file-out", None) is None:
-        raise StyxValidationError("`scene-file-out` must not be None")
-    if not isinstance(params["scene-file-out"], str):
-        raise StyxValidationError(f'`scene-file-out` has the wrong type: Received `{type(params.get("scene-file-out", None))}` expected `str`')
 
 
 def scene_file_merge_cargs(
@@ -329,9 +329,9 @@ def scene_file_merge_cargs(
         "wb_command",
         "-scene-file-merge"
     ])
+    cargs.append(params.get("scene-file-out", None))
     if params.get("scene-file", None) is not None:
         cargs.extend([a for c in [scene_file_merge_scene_file_cargs(s, execution) for s in params.get("scene-file", None)] for a in c])
-    cargs.append(params.get("scene-file-out", None))
     return cargs
 
 
@@ -411,8 +411,8 @@ def scene_file_merge(
         NamedTuple of outputs (described in `SceneFileMergeOutputs`).
     """
     params = scene_file_merge_params(
-        scene_file=scene_file,
         scene_file_out=scene_file_out,
+        scene_file=scene_file,
     )
     return scene_file_merge_execute(params, runner)
 

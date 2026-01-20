@@ -1,17 +1,17 @@
 {
   "fn_root_make_params_and_execute": "surface_modify_sphere",
   "properties": {
-    "sphere-out": {
-      "var_param": "sphere_out"
-    },
-    "recenter": {
-      "var_param": "recenter"
-    },
     "sphere-in": {
       "var_param": "sphere_in"
     },
     "radius": {
       "var_param": "radius"
+    },
+    "sphere-out": {
+      "var_param": "sphere_out"
+    },
+    "recenter": {
+      "var_param": "recenter"
     }
   }
 }

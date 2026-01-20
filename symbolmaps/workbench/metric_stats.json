@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "metric_stats",
   "properties": {
+    "metric-in": {
+      "var_param": "metric_in"
+    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "metric_stats_roi",
@@ -24,9 +27,6 @@
     },
     "show-map-name": {
       "var_param": "show_map_name"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
     }
   }
 }

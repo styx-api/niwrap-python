@@ -14,13 +14,13 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
 
 
 _SurfaceCoordinatesToMetricParamsDictNoTag = typing.TypedDict('_SurfaceCoordinatesToMetricParamsDictNoTag', {
-    "metric-out": str,
     "surface": InputPathType,
+    "metric-out": str,
 })
 SurfaceCoordinatesToMetricParamsDictTagged = typing.TypedDict('SurfaceCoordinatesToMetricParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-coordinates-to-metric"],
-    "metric-out": str,
     "surface": InputPathType,
+    "metric-out": str,
 })
 SurfaceCoordinatesToMetricParamsDict = _SurfaceCoordinatesToMetricParamsDictNoTag | SurfaceCoordinatesToMetricParamsDictTagged
 
@@ -36,22 +36,22 @@ class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):
 
 
 def surface_coordinates_to_metric_params(
-    metric_out: str,
     surface: InputPathType,
+    metric_out: str,
 ) -> SurfaceCoordinatesToMetricParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to use the coordinates of.
+        metric_out: the output metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-coordinates-to-metric",
-        "metric-out": metric_out,
         "surface": surface,
+        "metric-out": metric_out,
     }
     return params
 
@@ -68,14 +68,14 @@ def surface_coordinates_to_metric_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
 
 
 def surface_coordinates_to_metric_cargs(
@@ -96,8 +96,8 @@ def surface_coordinates_to_metric_cargs(
         "wb_command",
         "-surface-coordinates-to-metric"
     ])
-    cargs.append(params.get("metric-out", None))
     cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric-out", None))
     return cargs
 
 
@@ -147,8 +147,8 @@ def surface_coordinates_to_metric_execute(
 
 
 def surface_coordinates_to_metric(
-    metric_out: str,
     surface: InputPathType,
+    metric_out: str,
     runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
@@ -157,15 +157,15 @@ def surface_coordinates_to_metric(
     Puts the coordinates of the surface into a 3-map metric file, as x, y, z.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to use the coordinates of.
+        metric_out: the output metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCoordinatesToMetricOutputs`).
     """
     params = surface_coordinates_to_metric_params(
-        metric_out=metric_out,
         surface=surface,
+        metric_out=metric_out,
     )
     return surface_coordinates_to_metric_execute(params, runner)
 

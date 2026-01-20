@@ -395,12 +395,13 @@ def surface_average_cargs(
         "wb_command",
         "-surface-average"
     ])
-    cargs.extend([
-        params.get("surface-out", None),
-        *(surface_average_stddev_cargs(params.get("stddev", None), execution) if (params.get("stddev", None) is not None) else []),
-        *(surface_average_uncertainty_cargs(params.get("uncertainty", None), execution) if (params.get("uncertainty", None) is not None) else []),
-        *([a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c] if (params.get("surf", None) is not None) else [])
-    ])
+    cargs.append(params.get("surface-out", None))
+    if params.get("stddev", None) is not None or params.get("uncertainty", None) is not None or params.get("surf", None) is not None:
+        cargs.extend([
+            *(surface_average_stddev_cargs(params.get("stddev", None), execution) if (params.get("stddev", None) is not None) else []),
+            *(surface_average_uncertainty_cargs(params.get("uncertainty", None), execution) if (params.get("uncertainty", None) is not None) else []),
+            *([a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c] if (params.get("surf", None) is not None) else [])
+        ])
     return cargs
 
 

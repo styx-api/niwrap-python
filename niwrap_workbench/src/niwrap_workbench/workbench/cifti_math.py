@@ -42,19 +42,19 @@ CiftiMathVarParamsDict = _CiftiMathVarParamsDictNoTag | CiftiMathVarParamsDictTa
 
 
 _CiftiMathParamsDictNoTag = typing.TypedDict('_CiftiMathParamsDictNoTag', {
+    "expression": str,
     "cifti-out": str,
     "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
-    "expression": str,
 })
 CiftiMathParamsDictTagged = typing.TypedDict('CiftiMathParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-math"],
+    "expression": str,
     "cifti-out": str,
     "var": typing.NotRequired[list[CiftiMathVarParamsDict] | None],
     "replace": typing.NotRequired[float | None],
     "override-mapping-check": bool,
-    "expression": str,
 })
 CiftiMathParamsDict = _CiftiMathParamsDictNoTag | CiftiMathParamsDictTagged
 
@@ -220,8 +220,8 @@ class CiftiMathOutputs(typing.NamedTuple):
 
 
 def cifti_math_params(
-    cifti_out: str,
     expression: str,
+    cifti_out: str,
     var: list[CiftiMathVarParamsDict] | None = None,
     replace: float | None = None,
     override_mapping_check: bool = False,
@@ -230,8 +230,8 @@ def cifti_math_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         expression: the expression to evaluate, in quotes.
+        cifti_out: the output cifti file.
         var: a cifti file to use as a variable.
         replace: replace NaN results with a value\
             \
@@ -243,9 +243,9 @@ def cifti_math_params(
     """
     params = {
         "@type": "workbench/cifti-math",
+        "expression": expression,
         "cifti-out": cifti_out,
         "override-mapping-check": override_mapping_check,
-        "expression": expression,
     }
     if var is not None:
         params["var"] = var
@@ -266,6 +266,10 @@ def cifti_math_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -282,10 +286,6 @@ def cifti_math_validate(
         raise StyxValidationError("`override-mapping-check` must not be None")
     if not isinstance(params["override-mapping-check"], bool):
         raise StyxValidationError(f'`override-mapping-check` has the wrong type: Received `{type(params.get("override-mapping-check", False))}` expected `bool`')
-    if params.get("expression", None) is None:
-        raise StyxValidationError("`expression` must not be None")
-    if not isinstance(params["expression"], str):
-        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
 
 
 def cifti_math_cargs(
@@ -306,10 +306,10 @@ def cifti_math_cargs(
         "wb_command",
         "-cifti-math"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
-    ])
+    cargs.append(params.get("expression", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("var", None) is not None:
+        cargs.extend([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
     if params.get("replace", None) is not None:
         cargs.extend([
             "-fixnan",
@@ -317,7 +317,6 @@ def cifti_math_cargs(
         ])
     if params.get("override-mapping-check", False):
         cargs.append("-override-mapping-check")
-    cargs.append(params.get("expression", None))
     return cargs
 
 
@@ -438,8 +437,8 @@ def cifti_math_execute(
 
 
 def cifti_math(
-    cifti_out: str,
     expression: str,
+    cifti_out: str,
     var: list[CiftiMathVarParamsDict] | None = None,
     replace: float | None = None,
     override_mapping_check: bool = False,
@@ -522,8 +521,8 @@ def cifti_math(
     .
     
     Args:
-        cifti_out: the output cifti file.
         expression: the expression to evaluate, in quotes.
+        cifti_out: the output cifti file.
         var: a cifti file to use as a variable.
         replace: replace NaN results with a value\
             \
@@ -535,11 +534,11 @@ def cifti_math(
         NamedTuple of outputs (described in `CiftiMathOutputs`).
     """
     params = cifti_math_params(
+        expression=expression,
         cifti_out=cifti_out,
         var=var,
         replace=replace,
         override_mapping_check=override_mapping_check,
-        expression=expression,
     )
     return cifti_math_execute(params, runner)
 

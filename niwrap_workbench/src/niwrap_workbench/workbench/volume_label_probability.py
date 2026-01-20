@@ -14,15 +14,15 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 _VolumeLabelProbabilityParamsDictNoTag = typing.TypedDict('_VolumeLabelProbabilityParamsDictNoTag', {
+    "label-maps": InputPathType,
     "probability-out": str,
     "exclude-unlabeled": bool,
-    "label-maps": InputPathType,
 })
 VolumeLabelProbabilityParamsDictTagged = typing.TypedDict('VolumeLabelProbabilityParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-probability"],
+    "label-maps": InputPathType,
     "probability-out": str,
     "exclude-unlabeled": bool,
-    "label-maps": InputPathType,
 })
 VolumeLabelProbabilityParamsDict = _VolumeLabelProbabilityParamsDictNoTag | VolumeLabelProbabilityParamsDictTagged
 
@@ -38,26 +38,26 @@ class VolumeLabelProbabilityOutputs(typing.NamedTuple):
 
 
 def volume_label_probability_params(
-    probability_out: str,
     label_maps: InputPathType,
+    probability_out: str,
     exclude_unlabeled: bool = False,
 ) -> VolumeLabelProbabilityParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        probability_out: the relative frequencies of each label at each voxel.
         label_maps: volume label file containing individual label maps from\
             many subjects.
+        probability_out: the relative frequencies of each label at each voxel.
         exclude_unlabeled: don't make a probability map of the unlabeled key.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-probability",
+        "label-maps": label_maps,
         "probability-out": probability_out,
         "exclude-unlabeled": exclude_unlabeled,
-        "label-maps": label_maps,
     }
     return params
 
@@ -74,6 +74,10 @@ def volume_label_probability_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-maps", None) is None:
+        raise StyxValidationError("`label-maps` must not be None")
+    if not isinstance(params["label-maps"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
     if params.get("probability-out", None) is None:
         raise StyxValidationError("`probability-out` must not be None")
     if not isinstance(params["probability-out"], str):
@@ -82,10 +86,6 @@ def volume_label_probability_validate(
         raise StyxValidationError("`exclude-unlabeled` must not be None")
     if not isinstance(params["exclude-unlabeled"], bool):
         raise StyxValidationError(f'`exclude-unlabeled` has the wrong type: Received `{type(params.get("exclude-unlabeled", False))}` expected `bool`')
-    if params.get("label-maps", None) is None:
-        raise StyxValidationError("`label-maps` must not be None")
-    if not isinstance(params["label-maps"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
 
 
 def volume_label_probability_cargs(
@@ -106,10 +106,10 @@ def volume_label_probability_cargs(
         "wb_command",
         "-volume-label-probability"
     ])
+    cargs.append(execution.input_file(params.get("label-maps", None)))
     cargs.append(params.get("probability-out", None))
     if params.get("exclude-unlabeled", False):
         cargs.append("-exclude-unlabeled")
-    cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 
 
@@ -161,8 +161,8 @@ def volume_label_probability_execute(
 
 
 def volume_label_probability(
-    probability_out: str,
     label_maps: InputPathType,
+    probability_out: str,
     exclude_unlabeled: bool = False,
     runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
@@ -174,18 +174,18 @@ def volume_label_probability(
     divided by the number of input maps.
     
     Args:
-        probability_out: the relative frequencies of each label at each voxel.
         label_maps: volume label file containing individual label maps from\
             many subjects.
+        probability_out: the relative frequencies of each label at each voxel.
         exclude_unlabeled: don't make a probability map of the unlabeled key.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelProbabilityOutputs`).
     """
     params = volume_label_probability_params(
+        label_maps=label_maps,
         probability_out=probability_out,
         exclude_unlabeled=exclude_unlabeled,
-        label_maps=label_maps,
     )
     return volume_label_probability_execute(params, runner)
 

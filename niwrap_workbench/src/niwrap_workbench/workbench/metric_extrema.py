@@ -38,6 +38,9 @@ MetricExtremaThresholdParamsDict = _MetricExtremaThresholdParamsDictNoTag | Metr
 
 
 _MetricExtremaParamsDictNoTag = typing.TypedDict('_MetricExtremaParamsDictNoTag', {
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "distance": float,
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
     "threshold": typing.NotRequired[MetricExtremaThresholdParamsDict | None],
@@ -47,12 +50,12 @@ _MetricExtremaParamsDictNoTag = typing.TypedDict('_MetricExtremaParamsDictNoTag'
     "only-maxima": bool,
     "consolidate-mode": bool,
     "sum-columns": bool,
-    "surface": InputPathType,
-    "metric-in": InputPathType,
-    "distance": float,
 })
 MetricExtremaParamsDictTagged = typing.TypedDict('MetricExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-extrema"],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "distance": float,
     "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParamsDict | None],
     "threshold": typing.NotRequired[MetricExtremaThresholdParamsDict | None],
@@ -62,9 +65,6 @@ MetricExtremaParamsDictTagged = typing.TypedDict('MetricExtremaParamsDictTagged'
     "only-maxima": bool,
     "consolidate-mode": bool,
     "sum-columns": bool,
-    "surface": InputPathType,
-    "metric-in": InputPathType,
-    "distance": float,
 })
 MetricExtremaParamsDict = _MetricExtremaParamsDictNoTag | MetricExtremaParamsDictTagged
 
@@ -212,10 +212,10 @@ class MetricExtremaOutputs(typing.NamedTuple):
 
 
 def metric_extrema_params(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
+    metric_out: str,
     presmooth: MetricExtremaPresmoothParamsDict | None = None,
     threshold: MetricExtremaThresholdParamsDict | None = None,
     column: str | None = None,
@@ -229,11 +229,11 @@ def metric_extrema_params(
     Build parameters.
     
     Args:
-        metric_out: the output extrema metric.
         surface: the surface to use for distance information.
         metric_in: the metric to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
+        metric_out: the output extrema metric.
         presmooth: smooth the metric before finding extrema.
         threshold: ignore small extrema.
         column: select a single column to find extrema in\
@@ -253,14 +253,14 @@ def metric_extrema_params(
     """
     params = {
         "@type": "workbench/metric-extrema",
+        "surface": surface,
+        "metric-in": metric_in,
+        "distance": distance,
         "metric-out": metric_out,
         "only-minima": only_minima,
         "only-maxima": only_maxima,
         "consolidate-mode": consolidate_mode,
         "sum-columns": sum_columns,
-        "surface": surface,
-        "metric-in": metric_in,
-        "distance": distance,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -285,6 +285,18 @@ def metric_extrema_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -315,18 +327,6 @@ def metric_extrema_validate(
         raise StyxValidationError("`sum-columns` must not be None")
     if not isinstance(params["sum-columns"], bool):
         raise StyxValidationError(f'`sum-columns` has the wrong type: Received `{type(params.get("sum-columns", False))}` expected `bool`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
-    if params.get("distance", None) is None:
-        raise StyxValidationError("`distance` must not be None")
-    if not isinstance(params["distance"], (float, int)):
-        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
 
 
 def metric_extrema_cargs(
@@ -347,11 +347,15 @@ def metric_extrema_cargs(
         "wb_command",
         "-metric-extrema"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-        *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("metric-out", None))
+    if params.get("presmooth", None) is not None or params.get("threshold", None) is not None:
+        cargs.extend([
+            *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
+            *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
+        ])
     if params.get("column", None) is not None:
         cargs.extend([
             "-column",
@@ -370,9 +374,6 @@ def metric_extrema_cargs(
         cargs.append("-consolidate-mode")
     if params.get("sum-columns", False):
         cargs.append("-sum-columns")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
-    cargs.append(str(params.get("distance", None)))
     return cargs
 
 
@@ -446,10 +447,10 @@ def metric_extrema_execute(
 
 
 def metric_extrema(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
+    metric_out: str,
     presmooth: MetricExtremaPresmoothParamsDict | None = None,
     threshold: MetricExtremaThresholdParamsDict | None = None,
     column: str | None = None,
@@ -490,11 +491,11 @@ def metric_extrema(
     finding the extrema.
     
     Args:
-        metric_out: the output extrema metric.
         surface: the surface to use for distance information.
         metric_in: the metric to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
+        metric_out: the output extrema metric.
         presmooth: smooth the metric before finding extrema.
         threshold: ignore small extrema.
         column: select a single column to find extrema in\
@@ -514,6 +515,9 @@ def metric_extrema(
         NamedTuple of outputs (described in `MetricExtremaOutputs`).
     """
     params = metric_extrema_params(
+        surface=surface,
+        metric_in=metric_in,
+        distance=distance,
         metric_out=metric_out,
         presmooth=presmooth,
         threshold=threshold,
@@ -523,9 +527,6 @@ def metric_extrema(
         only_maxima=only_maxima,
         consolidate_mode=consolidate_mode,
         sum_columns=sum_columns,
-        surface=surface,
-        metric_in=metric_in,
-        distance=distance,
     )
     return metric_extrema_execute(params, runner)
 

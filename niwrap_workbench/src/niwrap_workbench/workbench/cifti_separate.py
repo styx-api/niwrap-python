@@ -124,21 +124,21 @@ CiftiSeparateVolumeParamsDict = _CiftiSeparateVolumeParamsDictNoTag | CiftiSepar
 
 
 _CiftiSeparateParamsDictNoTag = typing.TypedDict('_CiftiSeparateParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "direction": str,
     "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
     "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict_] | None],
     "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiSeparateVolumeParamsDict] | None],
-    "cifti-in": InputPathType,
-    "direction": str,
 })
 CiftiSeparateParamsDictTagged = typing.TypedDict('CiftiSeparateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-separate"],
+    "cifti-in": InputPathType,
+    "direction": str,
     "volume-all": typing.NotRequired[CiftiSeparateVolumeAllParamsDict | None],
     "label": typing.NotRequired[list[CiftiSeparateLabelParamsDict_] | None],
     "metric": typing.NotRequired[list[CiftiSeparateMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiSeparateVolumeParamsDict] | None],
-    "cifti-in": InputPathType,
-    "direction": str,
 })
 CiftiSeparateParamsDict = _CiftiSeparateParamsDictNoTag | CiftiSeparateParamsDictTagged
 
@@ -1088,6 +1088,14 @@ def cifti_separate_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("volume-all", None) is not None:
         cifti_separate_volume_all_validate(params["volume-all"])
     if params.get("label", None) is not None:
@@ -1105,14 +1113,6 @@ def cifti_separate_validate(
             raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiSeparateVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_separate_volume_validate(e)
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_separate_cargs(
@@ -1133,6 +1133,8 @@ def cifti_separate_cargs(
         "wb_command",
         "-cifti-separate"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("direction", None))
     if params.get("volume-all", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
             *(cifti_separate_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
@@ -1140,8 +1142,6 @@ def cifti_separate_cargs(
             *([a for c in [cifti_separate_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
             *([a for c in [cifti_separate_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
         ])
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -1309,12 +1309,12 @@ def cifti_separate(
         NamedTuple of outputs (described in `CiftiSeparateOutputs`).
     """
     params = cifti_separate_params(
+        cifti_in=cifti_in,
+        direction=direction,
         volume_all=volume_all,
         label=label,
         metric=metric,
         volume=volume,
-        cifti_in=cifti_in,
-        direction=direction,
     )
     return cifti_separate_execute(params, runner)
 

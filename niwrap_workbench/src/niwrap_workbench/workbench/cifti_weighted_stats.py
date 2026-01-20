@@ -46,6 +46,7 @@ CiftiWeightedStatsRoiParamsDict = _CiftiWeightedStatsRoiParamsDictNoTag | CiftiW
 
 
 _CiftiWeightedStatsParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsParamsDictNoTag', {
+    "cifti-in": InputPathType,
     "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
     "roi": typing.NotRequired[CiftiWeightedStatsRoiParamsDict | None],
     "percent": typing.NotRequired[float | None],
@@ -55,10 +56,10 @@ _CiftiWeightedStatsParamsDictNoTag = typing.TypedDict('_CiftiWeightedStatsParams
     "show-map-name": bool,
     "sum": bool,
     "mean": bool,
-    "cifti-in": InputPathType,
 })
 CiftiWeightedStatsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-weighted-stats"],
+    "cifti-in": InputPathType,
     "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParamsDict | None],
     "roi": typing.NotRequired[CiftiWeightedStatsRoiParamsDict | None],
     "percent": typing.NotRequired[float | None],
@@ -68,7 +69,6 @@ CiftiWeightedStatsParamsDictTagged = typing.TypedDict('CiftiWeightedStatsParamsD
     "show-map-name": bool,
     "sum": bool,
     "mean": bool,
-    "cifti-in": InputPathType,
 })
 CiftiWeightedStatsParamsDict = _CiftiWeightedStatsParamsDictNoTag | CiftiWeightedStatsParamsDictTagged
 
@@ -318,10 +318,10 @@ def cifti_weighted_stats_params(
     """
     params = {
         "@type": "workbench/cifti-weighted-stats",
+        "cifti-in": cifti_in,
         "show-map-name": show_map_name,
         "sum": sum_,
         "mean": mean,
-        "cifti-in": cifti_in,
     }
     if spatial_weights is not None:
         params["spatial-weights"] = spatial_weights
@@ -350,6 +350,10 @@ def cifti_weighted_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
     if params.get("spatial-weights", None) is not None:
         cifti_weighted_stats_spatial_weights_validate(params["spatial-weights"])
     if params.get("roi", None) is not None:
@@ -378,10 +382,6 @@ def cifti_weighted_stats_validate(
         raise StyxValidationError("`mean` must not be None")
     if not isinstance(params["mean"], bool):
         raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
 
 
 def cifti_weighted_stats_cargs(
@@ -402,6 +402,7 @@ def cifti_weighted_stats_cargs(
         "wb_command",
         "-cifti-weighted-stats"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     if params.get("spatial-weights", None) is not None or params.get("roi", None) is not None:
         cargs.extend([
             *(cifti_weighted_stats_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
@@ -433,7 +434,6 @@ def cifti_weighted_stats_cargs(
         cargs.append("-sum")
     if params.get("mean", False):
         cargs.append("-mean")
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -549,6 +549,7 @@ def cifti_weighted_stats(
         NamedTuple of outputs (described in `CiftiWeightedStatsOutputs`).
     """
     params = cifti_weighted_stats_params(
+        cifti_in=cifti_in,
         spatial_weights=spatial_weights,
         roi=roi,
         percent=percent,
@@ -558,7 +559,6 @@ def cifti_weighted_stats(
         show_map_name=show_map_name,
         sum_=sum_,
         mean=mean,
-        cifti_in=cifti_in,
     )
     return cifti_weighted_stats_execute(params, runner)
 

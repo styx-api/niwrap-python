@@ -14,15 +14,15 @@ SURFACE_SET_COORDINATES_METADATA = Metadata(
 
 
 _SurfaceSetCoordinatesParamsDictNoTag = typing.TypedDict('_SurfaceSetCoordinatesParamsDictNoTag', {
-    "surface-out": str,
     "surface-in": InputPathType,
     "coord-metric": InputPathType,
+    "surface-out": str,
 })
 SurfaceSetCoordinatesParamsDictTagged = typing.TypedDict('SurfaceSetCoordinatesParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-set-coordinates"],
-    "surface-out": str,
     "surface-in": InputPathType,
     "coord-metric": InputPathType,
+    "surface-out": str,
 })
 SurfaceSetCoordinatesParamsDict = _SurfaceSetCoordinatesParamsDictNoTag | SurfaceSetCoordinatesParamsDictTagged
 
@@ -38,25 +38,25 @@ class SurfaceSetCoordinatesOutputs(typing.NamedTuple):
 
 
 def surface_set_coordinates_params(
-    surface_out: str,
     surface_in: InputPathType,
     coord_metric: InputPathType,
+    surface_out: str,
 ) -> SurfaceSetCoordinatesParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        surface_out: the new surface.
         surface_in: the surface to use for the topology.
         coord_metric: the new coordinates, as a 3-column metric file.
+        surface_out: the new surface.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-set-coordinates",
-        "surface-out": surface_out,
         "surface-in": surface_in,
         "coord-metric": coord_metric,
+        "surface-out": surface_out,
     }
     return params
 
@@ -73,10 +73,6 @@ def surface_set_coordinates_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("surface-out", None) is None:
-        raise StyxValidationError("`surface-out` must not be None")
-    if not isinstance(params["surface-out"], str):
-        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
     if params.get("surface-in", None) is None:
         raise StyxValidationError("`surface-in` must not be None")
     if not isinstance(params["surface-in"], (pathlib.Path, str)):
@@ -85,6 +81,10 @@ def surface_set_coordinates_validate(
         raise StyxValidationError("`coord-metric` must not be None")
     if not isinstance(params["coord-metric"], (pathlib.Path, str)):
         raise StyxValidationError(f'`coord-metric` has the wrong type: Received `{type(params.get("coord-metric", None))}` expected `InputPathType`')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
 
 
 def surface_set_coordinates_cargs(
@@ -105,9 +105,9 @@ def surface_set_coordinates_cargs(
         "wb_command",
         "-surface-set-coordinates"
     ])
-    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("coord-metric", None)))
+    cargs.append(params.get("surface-out", None))
     return cargs
 
 
@@ -161,9 +161,9 @@ def surface_set_coordinates_execute(
 
 
 def surface_set_coordinates(
-    surface_out: str,
     surface_in: InputPathType,
     coord_metric: InputPathType,
+    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
@@ -176,17 +176,17 @@ def surface_set_coordinates(
     metric file, such that you can then modify them via metric commands, etc.
     
     Args:
-        surface_out: the new surface.
         surface_in: the surface to use for the topology.
         coord_metric: the new coordinates, as a 3-column metric file.
+        surface_out: the new surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSetCoordinatesOutputs`).
     """
     params = surface_set_coordinates_params(
-        surface_out=surface_out,
         surface_in=surface_in,
         coord_metric=coord_metric,
+        surface_out=surface_out,
     )
     return surface_set_coordinates_execute(params, runner)
 

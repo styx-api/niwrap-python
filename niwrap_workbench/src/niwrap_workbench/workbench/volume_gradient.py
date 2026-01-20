@@ -36,21 +36,21 @@ VolumeGradientVectorsParamsDict = _VolumeGradientVectorsParamsDictNoTag | Volume
 
 
 _VolumeGradientParamsDictNoTag = typing.TypedDict('_VolumeGradientParamsDictNoTag', {
+    "volume-in": InputPathType,
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "vectors": typing.NotRequired[VolumeGradientVectorsParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "volume-in": InputPathType,
 })
 VolumeGradientParamsDictTagged = typing.TypedDict('VolumeGradientParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-gradient"],
+    "volume-in": InputPathType,
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParamsDict | None],
     "vectors": typing.NotRequired[VolumeGradientVectorsParamsDict | None],
     "subvol": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "volume-in": InputPathType,
 })
 VolumeGradientParamsDict = _VolumeGradientParamsDictNoTag | VolumeGradientParamsDictTagged
 
@@ -222,8 +222,8 @@ class VolumeGradientOutputs(typing.NamedTuple):
 
 
 def volume_gradient_params(
-    volume_out: str,
     volume_in: InputPathType,
+    volume_out: str,
     presmooth: VolumeGradientPresmoothParamsDict | None = None,
     vectors: VolumeGradientVectorsParamsDict | None = None,
     subvol: str | None = None,
@@ -233,8 +233,8 @@ def volume_gradient_params(
     Build parameters.
     
     Args:
-        volume_out: the output gradient magnitude volume.
         volume_in: the input volume.
+        volume_out: the output gradient magnitude volume.
         presmooth: smooth the volume before computing the gradient.
         vectors: output vectors.
         subvol: select a single subvolume to take the gradient of\
@@ -248,8 +248,8 @@ def volume_gradient_params(
     """
     params = {
         "@type": "workbench/volume-gradient",
-        "volume-out": volume_out,
         "volume-in": volume_in,
+        "volume-out": volume_out,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -274,6 +274,10 @@ def volume_gradient_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -288,10 +292,6 @@ def volume_gradient_validate(
     if params.get("roi-volume", None) is not None:
         if not isinstance(params["roi-volume"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
 
 
 def volume_gradient_cargs(
@@ -312,11 +312,13 @@ def volume_gradient_cargs(
         "wb_command",
         "-volume-gradient"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-        *(volume_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(params.get("volume-out", None))
+    if params.get("presmooth", None) is not None or params.get("vectors", None) is not None:
+        cargs.extend([
+            *(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
+            *(volume_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else [])
+        ])
     if params.get("subvol", None) is not None:
         cargs.extend([
             "-subvolume",
@@ -327,7 +329,6 @@ def volume_gradient_cargs(
             "-roi",
             execution.input_file(params.get("roi-volume", None))
         ])
-    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -383,8 +384,8 @@ def volume_gradient_execute(
 
 
 def volume_gradient(
-    volume_out: str,
     volume_in: InputPathType,
+    volume_out: str,
     presmooth: VolumeGradientPresmoothParamsDict | None = None,
     vectors: VolumeGradientVectorsParamsDict | None = None,
     subvol: str | None = None,
@@ -402,8 +403,8 @@ def volume_gradient(
     and z components from a subvolume as consecutive subvolumes.
     
     Args:
-        volume_out: the output gradient magnitude volume.
         volume_in: the input volume.
+        volume_out: the output gradient magnitude volume.
         presmooth: smooth the volume before computing the gradient.
         vectors: output vectors.
         subvol: select a single subvolume to take the gradient of\
@@ -417,12 +418,12 @@ def volume_gradient(
         NamedTuple of outputs (described in `VolumeGradientOutputs`).
     """
     params = volume_gradient_params(
+        volume_in=volume_in,
         volume_out=volume_out,
         presmooth=presmooth,
         vectors=vectors,
         subvol=subvol,
         roi_volume=roi_volume,
-        volume_in=volume_in,
     )
     return volume_gradient_execute(params, runner)
 

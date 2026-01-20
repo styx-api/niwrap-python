@@ -26,21 +26,21 @@ MetricStatsRoiParamsDict = _MetricStatsRoiParamsDictNoTag | MetricStatsRoiParams
 
 
 _MetricStatsParamsDictNoTag = typing.TypedDict('_MetricStatsParamsDictNoTag', {
+    "metric-in": InputPathType,
     "roi": typing.NotRequired[MetricStatsRoiParamsDict | None],
     "column": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
-    "metric-in": InputPathType,
 })
 MetricStatsParamsDictTagged = typing.TypedDict('MetricStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-stats"],
+    "metric-in": InputPathType,
     "roi": typing.NotRequired[MetricStatsRoiParamsDict | None],
     "column": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
-    "metric-in": InputPathType,
 })
 MetricStatsParamsDict = _MetricStatsParamsDictNoTag | MetricStatsParamsDictTagged
 
@@ -149,8 +149,8 @@ def metric_stats_params(
     """
     params = {
         "@type": "workbench/metric-stats",
-        "show-map-name": show_map_name,
         "metric-in": metric_in,
+        "show-map-name": show_map_name,
     }
     if roi is not None:
         params["roi"] = roi
@@ -175,6 +175,10 @@ def metric_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
     if params.get("roi", None) is not None:
         metric_stats_roi_validate(params["roi"])
     if params.get("column", None) is not None:
@@ -190,10 +194,6 @@ def metric_stats_validate(
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
         raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
 
 
 def metric_stats_cargs(
@@ -214,6 +214,7 @@ def metric_stats_cargs(
         "wb_command",
         "-metric-stats"
     ])
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     if params.get("roi", None) is not None:
         cargs.extend(metric_stats_roi_cargs(params.get("roi", None), execution))
     if params.get("column", None) is not None:
@@ -233,7 +234,6 @@ def metric_stats_cargs(
         ])
     if params.get("show-map-name", False):
         cargs.append("-show-map-name")
-    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -363,12 +363,12 @@ def metric_stats(
         NamedTuple of outputs (described in `MetricStatsOutputs`).
     """
     params = metric_stats_params(
+        metric_in=metric_in,
         roi=roi,
         column=column,
         percent=percent,
         operation=operation,
         show_map_name=show_map_name,
-        metric_in=metric_in,
     )
     return metric_stats_execute(params, runner)
 

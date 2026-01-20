@@ -78,6 +78,8 @@ VolumePaletteThresholdingParamsDict = _VolumePaletteThresholdingParamsDictNoTag 
 
 
 _VolumePaletteParamsDictNoTag = typing.TypedDict('_VolumePaletteParamsDictNoTag', {
+    "volume": str,
+    "mode": str,
     "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
     "pos-user": typing.NotRequired[VolumePalettePosUserParamsDict | None],
@@ -91,11 +93,11 @@ _VolumePaletteParamsDictNoTag = typing.TypedDict('_VolumePaletteParamsDictNoTag'
     "display": typing.NotRequired[bool | None],
     "interpolate": typing.NotRequired[bool | None],
     "subvolume": typing.NotRequired[str | None],
-    "volume": str,
-    "mode": str,
 })
 VolumePaletteParamsDictTagged = typing.TypedDict('VolumePaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-palette"],
+    "volume": str,
+    "mode": str,
     "pos-percent": typing.NotRequired[VolumePalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[VolumePaletteNegPercentParamsDict | None],
     "pos-user": typing.NotRequired[VolumePalettePosUserParamsDict | None],
@@ -109,8 +111,6 @@ VolumePaletteParamsDictTagged = typing.TypedDict('VolumePaletteParamsDictTagged'
     "display": typing.NotRequired[bool | None],
     "interpolate": typing.NotRequired[bool | None],
     "subvolume": typing.NotRequired[str | None],
-    "volume": str,
-    "mode": str,
 })
 VolumePaletteParamsDict = _VolumePaletteParamsDictNoTag | VolumePaletteParamsDictTagged
 
@@ -566,6 +566,14 @@ def volume_palette_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], str):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `str`')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
     if params.get("pos-percent", None) is not None:
         volume_palette_pos_percent_validate(params["pos-percent"])
     if params.get("neg-percent", None) is not None:
@@ -600,14 +608,6 @@ def volume_palette_validate(
     if params.get("subvolume", None) is not None:
         if not isinstance(params["subvolume"], str):
             raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
-    if params.get("volume", None) is None:
-        raise StyxValidationError("`volume` must not be None")
-    if not isinstance(params["volume"], str):
-        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `str`')
-    if params.get("mode", None) is None:
-        raise StyxValidationError("`mode` must not be None")
-    if not isinstance(params["mode"], str):
-        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
 
 
 def volume_palette_cargs(
@@ -628,6 +628,8 @@ def volume_palette_cargs(
         "wb_command",
         "-volume-palette"
     ])
+    cargs.append(params.get("volume", None))
+    cargs.append(params.get("mode", None))
     if params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("thresholding", None) is not None:
         cargs.extend([
             *(volume_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
@@ -676,8 +678,6 @@ def volume_palette_cargs(
             "-subvolume",
             params.get("subvolume", None)
         ])
-    cargs.append(params.get("volume", None))
-    cargs.append(params.get("mode", None))
     return cargs
 
 
@@ -944,6 +944,8 @@ def volume_palette(
         NamedTuple of outputs (described in `VolumePaletteOutputs`).
     """
     params = volume_palette_params(
+        volume=volume,
+        mode=mode,
         pos_percent=pos_percent,
         neg_percent=neg_percent,
         pos_user=pos_user,
@@ -957,8 +959,6 @@ def volume_palette(
         display_2=display_2,
         interpolate=interpolate,
         subvolume=subvolume,
-        volume=volume,
-        mode=mode,
     )
     return volume_palette_execute(params, runner)
 

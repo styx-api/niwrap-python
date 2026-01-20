@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_stats",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "cifti_stats_roi",
@@ -24,9 +27,6 @@
     },
     "show-map-name": {
       "var_param": "show_map_name"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
     }
   }
 }

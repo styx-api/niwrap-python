@@ -34,19 +34,19 @@ VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict = _VolumeLabelToSurfaceMa
 
 
 _VolumeLabelToSurfaceMappingParamsDictNoTag = typing.TypedDict('_VolumeLabelToSurfaceMappingParamsDictNoTag', {
+    "volume": InputPathType,
+    "surface": InputPathType,
     "label-out": str,
     "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None],
     "subvol": typing.NotRequired[str | None],
-    "volume": InputPathType,
-    "surface": InputPathType,
 })
 VolumeLabelToSurfaceMappingParamsDictTagged = typing.TypedDict('VolumeLabelToSurfaceMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-to-surface-mapping"],
+    "volume": InputPathType,
+    "surface": InputPathType,
     "label-out": str,
     "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None],
     "subvol": typing.NotRequired[str | None],
-    "volume": InputPathType,
-    "surface": InputPathType,
 })
 VolumeLabelToSurfaceMappingParamsDict = _VolumeLabelToSurfaceMappingParamsDictNoTag | VolumeLabelToSurfaceMappingParamsDictTagged
 
@@ -178,9 +178,9 @@ class VolumeLabelToSurfaceMappingOutputs(typing.NamedTuple):
 
 
 def volume_label_to_surface_mapping_params(
-    label_out: str,
     volume: InputPathType,
     surface: InputPathType,
+    label_out: str,
     ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     subvol: str | None = None,
 ) -> VolumeLabelToSurfaceMappingParamsDictTagged:
@@ -188,9 +188,9 @@ def volume_label_to_surface_mapping_params(
     Build parameters.
     
     Args:
-        label_out: the output gifti label file.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
+        label_out: the output gifti label file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         subvol: select a single subvolume to map\
             \
@@ -200,9 +200,9 @@ def volume_label_to_surface_mapping_params(
     """
     params = {
         "@type": "workbench/volume-label-to-surface-mapping",
-        "label-out": label_out,
         "volume": volume,
         "surface": surface,
+        "label-out": label_out,
     }
     if ribbon_constrained is not None:
         params["ribbon-constrained"] = ribbon_constrained
@@ -223,6 +223,14 @@ def volume_label_to_surface_mapping_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
     if params.get("label-out", None) is None:
         raise StyxValidationError("`label-out` must not be None")
     if not isinstance(params["label-out"], str):
@@ -232,14 +240,6 @@ def volume_label_to_surface_mapping_validate(
     if params.get("subvol", None) is not None:
         if not isinstance(params["subvol"], str):
             raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
-    if params.get("volume", None) is None:
-        raise StyxValidationError("`volume` must not be None")
-    if not isinstance(params["volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
 
 
 def volume_label_to_surface_mapping_cargs(
@@ -260,17 +260,16 @@ def volume_label_to_surface_mapping_cargs(
         "wb_command",
         "-volume-label-to-surface-mapping"
     ])
-    cargs.extend([
-        params.get("label-out", None),
-        *(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("label-out", None))
+    if params.get("ribbon-constrained", None) is not None:
+        cargs.extend(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution))
     if params.get("subvol", None) is not None:
         cargs.extend([
             "-subvol-select",
             params.get("subvol", None)
         ])
-    cargs.append(execution.input_file(params.get("volume", None)))
-    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -335,9 +334,9 @@ def volume_label_to_surface_mapping_execute(
 
 
 def volume_label_to_surface_mapping(
-    label_out: str,
     volume: InputPathType,
     surface: InputPathType,
+    label_out: str,
     ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParamsDict | None = None,
     subvol: str | None = None,
     runner: Runner | None = None,
@@ -363,9 +362,9 @@ def volume_label_to_surface_mapping(
     unlabeled vertices in your output.
     
     Args:
-        label_out: the output gifti label file.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
+        label_out: the output gifti label file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         subvol: select a single subvolume to map\
             \
@@ -375,11 +374,11 @@ def volume_label_to_surface_mapping(
         NamedTuple of outputs (described in `VolumeLabelToSurfaceMappingOutputs`).
     """
     params = volume_label_to_surface_mapping_params(
+        volume=volume,
+        surface=surface,
         label_out=label_out,
         ribbon_constrained=ribbon_constrained,
         subvol=subvol,
-        volume=volume,
-        surface=surface,
     )
     return volume_label_to_surface_mapping_execute(params, runner)
 

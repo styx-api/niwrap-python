@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_erode",
   "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -9,12 +15,6 @@
     },
     "roi-volume": {
       "var_param": "roi_volume"
-    },
-    "volume": {
-      "var_param": "volume"
-    },
-    "distance": {
-      "var_param": "distance"
     }
   }
 }

@@ -14,15 +14,15 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 _CiftiLabelProbabilityParamsDictNoTag = typing.TypedDict('_CiftiLabelProbabilityParamsDictNoTag', {
+    "label-maps": InputPathType,
     "probability-dscalar-out": str,
     "exclude-unlabeled": bool,
-    "label-maps": InputPathType,
 })
 CiftiLabelProbabilityParamsDictTagged = typing.TypedDict('CiftiLabelProbabilityParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-probability"],
+    "label-maps": InputPathType,
     "probability-dscalar-out": str,
     "exclude-unlabeled": bool,
-    "label-maps": InputPathType,
 })
 CiftiLabelProbabilityParamsDict = _CiftiLabelProbabilityParamsDictNoTag | CiftiLabelProbabilityParamsDictTagged
 
@@ -38,27 +38,27 @@ class CiftiLabelProbabilityOutputs(typing.NamedTuple):
 
 
 def cifti_label_probability_params(
-    probability_dscalar_out: str,
     label_maps: InputPathType,
+    probability_dscalar_out: str,
     exclude_unlabeled: bool = False,
 ) -> CiftiLabelProbabilityParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        probability_dscalar_out: the relative frequencies of each label at each\
-            vertex/voxel.
         label_maps: cifti dlabel file containing individual label maps from\
             many subjects.
+        probability_dscalar_out: the relative frequencies of each label at each\
+            vertex/voxel.
         exclude_unlabeled: don't make a probability map of the unlabeled key.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-probability",
+        "label-maps": label_maps,
         "probability-dscalar-out": probability_dscalar_out,
         "exclude-unlabeled": exclude_unlabeled,
-        "label-maps": label_maps,
     }
     return params
 
@@ -75,6 +75,10 @@ def cifti_label_probability_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-maps", None) is None:
+        raise StyxValidationError("`label-maps` must not be None")
+    if not isinstance(params["label-maps"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
     if params.get("probability-dscalar-out", None) is None:
         raise StyxValidationError("`probability-dscalar-out` must not be None")
     if not isinstance(params["probability-dscalar-out"], str):
@@ -83,10 +87,6 @@ def cifti_label_probability_validate(
         raise StyxValidationError("`exclude-unlabeled` must not be None")
     if not isinstance(params["exclude-unlabeled"], bool):
         raise StyxValidationError(f'`exclude-unlabeled` has the wrong type: Received `{type(params.get("exclude-unlabeled", False))}` expected `bool`')
-    if params.get("label-maps", None) is None:
-        raise StyxValidationError("`label-maps` must not be None")
-    if not isinstance(params["label-maps"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
 
 
 def cifti_label_probability_cargs(
@@ -107,10 +107,10 @@ def cifti_label_probability_cargs(
         "wb_command",
         "-cifti-label-probability"
     ])
+    cargs.append(execution.input_file(params.get("label-maps", None)))
     cargs.append(params.get("probability-dscalar-out", None))
     if params.get("exclude-unlabeled", False):
         cargs.append("-exclude-unlabeled")
-    cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 
 
@@ -162,8 +162,8 @@ def cifti_label_probability_execute(
 
 
 def cifti_label_probability(
-    probability_dscalar_out: str,
     label_maps: InputPathType,
+    probability_dscalar_out: str,
     exclude_unlabeled: bool = False,
     runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
@@ -175,19 +175,19 @@ def cifti_label_probability(
     vertex/voxel, divided by the number of input maps.
     
     Args:
-        probability_dscalar_out: the relative frequencies of each label at each\
-            vertex/voxel.
         label_maps: cifti dlabel file containing individual label maps from\
             many subjects.
+        probability_dscalar_out: the relative frequencies of each label at each\
+            vertex/voxel.
         exclude_unlabeled: don't make a probability map of the unlabeled key.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelProbabilityOutputs`).
     """
     params = cifti_label_probability_params(
+        label_maps=label_maps,
         probability_dscalar_out=probability_dscalar_out,
         exclude_unlabeled=exclude_unlabeled,
-        label_maps=label_maps,
     )
     return cifti_label_probability_execute(params, runner)
 

@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_create_dense_from_template",
   "properties": {
+    "template-cifti": {
+      "var_param": "template_cifti"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -81,9 +84,6 @@
     },
     "action": {
       "var_param": "action"
-    },
-    "template-cifti": {
-      "var_param": "template_cifti"
     }
   }
 }

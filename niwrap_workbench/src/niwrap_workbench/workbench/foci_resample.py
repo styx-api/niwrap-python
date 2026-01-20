@@ -50,23 +50,23 @@ FociResampleCerebellumSurfacesParamsDict = _FociResampleCerebellumSurfacesParams
 
 
 _FociResampleParamsDictNoTag = typing.TypedDict('_FociResampleParamsDictNoTag', {
+    "foci-in": InputPathType,
     "foci-out": str,
     "left-surfaces": typing.NotRequired[FociResampleLeftSurfacesParamsDict | None],
     "right-surfaces": typing.NotRequired[FociResampleRightSurfacesParamsDict | None],
     "cerebellum-surfaces": typing.NotRequired[FociResampleCerebellumSurfacesParamsDict | None],
     "restore-xyz": bool,
     "discard-distance-from-surface": bool,
-    "foci-in": InputPathType,
 })
 FociResampleParamsDictTagged = typing.TypedDict('FociResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/foci-resample"],
+    "foci-in": InputPathType,
     "foci-out": str,
     "left-surfaces": typing.NotRequired[FociResampleLeftSurfacesParamsDict | None],
     "right-surfaces": typing.NotRequired[FociResampleRightSurfacesParamsDict | None],
     "cerebellum-surfaces": typing.NotRequired[FociResampleCerebellumSurfacesParamsDict | None],
     "restore-xyz": bool,
     "discard-distance-from-surface": bool,
-    "foci-in": InputPathType,
 })
 FociResampleParamsDict = _FociResampleParamsDictNoTag | FociResampleParamsDictTagged
 
@@ -277,8 +277,8 @@ class FociResampleOutputs(typing.NamedTuple):
 
 
 def foci_resample_params(
-    foci_out: str,
     foci_in: InputPathType,
+    foci_out: str,
     left_surfaces: FociResampleLeftSurfacesParamsDict | None = None,
     right_surfaces: FociResampleRightSurfacesParamsDict | None = None,
     cerebellum_surfaces: FociResampleCerebellumSurfacesParamsDict | None = None,
@@ -289,8 +289,8 @@ def foci_resample_params(
     Build parameters.
     
     Args:
-        foci_out: the output foci file.
         foci_in: the input foci file.
+        foci_out: the output foci file.
         left_surfaces: the left surfaces for resampling.
         right_surfaces: the right surfaces for resampling.
         cerebellum_surfaces: the cerebellum surfaces for resampling.
@@ -303,10 +303,10 @@ def foci_resample_params(
     """
     params = {
         "@type": "workbench/foci-resample",
+        "foci-in": foci_in,
         "foci-out": foci_out,
         "restore-xyz": restore_xyz,
         "discard-distance-from-surface": discard_distance_from_surface,
-        "foci-in": foci_in,
     }
     if left_surfaces is not None:
         params["left-surfaces"] = left_surfaces
@@ -329,6 +329,10 @@ def foci_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("foci-in", None) is None:
+        raise StyxValidationError("`foci-in` must not be None")
+    if not isinstance(params["foci-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`foci-in` has the wrong type: Received `{type(params.get("foci-in", None))}` expected `InputPathType`')
     if params.get("foci-out", None) is None:
         raise StyxValidationError("`foci-out` must not be None")
     if not isinstance(params["foci-out"], str):
@@ -347,10 +351,6 @@ def foci_resample_validate(
         raise StyxValidationError("`discard-distance-from-surface` must not be None")
     if not isinstance(params["discard-distance-from-surface"], bool):
         raise StyxValidationError(f'`discard-distance-from-surface` has the wrong type: Received `{type(params.get("discard-distance-from-surface", False))}` expected `bool`')
-    if params.get("foci-in", None) is None:
-        raise StyxValidationError("`foci-in` must not be None")
-    if not isinstance(params["foci-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`foci-in` has the wrong type: Received `{type(params.get("foci-in", None))}` expected `InputPathType`')
 
 
 def foci_resample_cargs(
@@ -371,17 +371,18 @@ def foci_resample_cargs(
         "wb_command",
         "-foci-resample"
     ])
-    cargs.extend([
-        params.get("foci-out", None),
-        *(foci_resample_left_surfaces_cargs(params.get("left-surfaces", None), execution) if (params.get("left-surfaces", None) is not None) else []),
-        *(foci_resample_right_surfaces_cargs(params.get("right-surfaces", None), execution) if (params.get("right-surfaces", None) is not None) else []),
-        *(foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum-surfaces", None), execution) if (params.get("cerebellum-surfaces", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("foci-in", None)))
+    cargs.append(params.get("foci-out", None))
+    if params.get("left-surfaces", None) is not None or params.get("right-surfaces", None) is not None or params.get("cerebellum-surfaces", None) is not None:
+        cargs.extend([
+            *(foci_resample_left_surfaces_cargs(params.get("left-surfaces", None), execution) if (params.get("left-surfaces", None) is not None) else []),
+            *(foci_resample_right_surfaces_cargs(params.get("right-surfaces", None), execution) if (params.get("right-surfaces", None) is not None) else []),
+            *(foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum-surfaces", None), execution) if (params.get("cerebellum-surfaces", None) is not None) else [])
+        ])
     if params.get("restore-xyz", False):
         cargs.append("-restore-xyz")
     if params.get("discard-distance-from-surface", False):
         cargs.append("-discard-distance-from-surface")
-    cargs.append(execution.input_file(params.get("foci-in", None)))
     return cargs
 
 
@@ -435,8 +436,8 @@ def foci_resample_execute(
 
 
 def foci_resample(
-    foci_out: str,
     foci_in: InputPathType,
+    foci_out: str,
     left_surfaces: FociResampleLeftSurfacesParamsDict | None = None,
     right_surfaces: FociResampleRightSurfacesParamsDict | None = None,
     cerebellum_surfaces: FociResampleCerebellumSurfacesParamsDict | None = None,
@@ -454,8 +455,8 @@ def foci_resample(
     -restore-xyz.
     
     Args:
-        foci_out: the output foci file.
         foci_in: the input foci file.
+        foci_out: the output foci file.
         left_surfaces: the left surfaces for resampling.
         right_surfaces: the right surfaces for resampling.
         cerebellum_surfaces: the cerebellum surfaces for resampling.
@@ -468,13 +469,13 @@ def foci_resample(
         NamedTuple of outputs (described in `FociResampleOutputs`).
     """
     params = foci_resample_params(
+        foci_in=foci_in,
         foci_out=foci_out,
         left_surfaces=left_surfaces,
         right_surfaces=right_surfaces,
         cerebellum_surfaces=cerebellum_surfaces,
         restore_xyz=restore_xyz,
         discard_distance_from_surface=discard_distance_from_surface,
-        foci_in=foci_in,
     )
     return foci_resample_execute(params, runner)
 

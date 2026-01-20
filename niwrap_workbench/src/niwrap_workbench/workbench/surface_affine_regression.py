@@ -103,8 +103,6 @@ def surface_affine_regression_cargs(
         "wb_command",
         "-surface-affine-regression"
     ])
-    cargs.extend([
-    ])
     cargs.append(execution.input_file(params.get("source", None)))
     cargs.append(execution.input_file(params.get("target", None)))
     cargs.append(params.get("affine-out", None))

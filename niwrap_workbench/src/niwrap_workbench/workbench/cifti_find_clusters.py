@@ -74,6 +74,12 @@ CiftiFindClustersDistanceParamsDict = _CiftiFindClustersDistanceParamsDictNoTag 
 
 
 _CiftiFindClustersParamsDictNoTag = typing.TypedDict('_CiftiFindClustersParamsDictNoTag', {
+    "cifti": InputPathType,
+    "surface-value-threshold": float,
+    "surface-minimum-area": float,
+    "volume-value-threshold": float,
+    "volume-minimum-size": float,
+    "direction": str,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiFindClustersRightSurfaceParamsDict | None],
@@ -84,15 +90,15 @@ _CiftiFindClustersParamsDictNoTag = typing.TypedDict('_CiftiFindClustersParamsDi
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "merged-volume": bool,
     "less-than": bool,
-    "cifti": InputPathType,
-    "surface-value-threshold": float,
-    "surface-minimum-area": float,
-    "volume-value-threshold": float,
-    "volume-minimum-size": float,
-    "direction": str,
 })
 CiftiFindClustersParamsDictTagged = typing.TypedDict('CiftiFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-find-clusters"],
+    "cifti": InputPathType,
+    "surface-value-threshold": float,
+    "surface-minimum-area": float,
+    "volume-value-threshold": float,
+    "volume-minimum-size": float,
+    "direction": str,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiFindClustersRightSurfaceParamsDict | None],
@@ -103,12 +109,6 @@ CiftiFindClustersParamsDictTagged = typing.TypedDict('CiftiFindClustersParamsDic
     "roi-cifti": typing.NotRequired[InputPathType | None],
     "merged-volume": bool,
     "less-than": bool,
-    "cifti": InputPathType,
-    "surface-value-threshold": float,
-    "surface-minimum-area": float,
-    "volume-value-threshold": float,
-    "volume-minimum-size": float,
-    "direction": str,
 })
 CiftiFindClustersParamsDict = _CiftiFindClustersParamsDictNoTag | CiftiFindClustersParamsDictTagged
 
@@ -472,13 +472,13 @@ class CiftiFindClustersOutputs(typing.NamedTuple):
 
 
 def cifti_find_clusters_params(
-    cifti_out: str,
     cifti: InputPathType,
     surface_value_threshold: float,
     surface_minimum_area: float,
     volume_value_threshold: float,
     volume_minimum_size: float,
     direction: str,
+    cifti_out: str,
     left_surface: CiftiFindClustersLeftSurfaceParamsDict | None = None,
     right_surface: CiftiFindClustersRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiFindClustersCerebellumSurfaceParamsDict | None = None,
@@ -493,7 +493,6 @@ def cifti_find_clusters_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surface_value_threshold: threshold for surface data values.
         surface_minimum_area: threshold for surface cluster area, in mm^2.
@@ -501,6 +500,7 @@ def cifti_find_clusters_params(
         volume_minimum_size: threshold for volume cluster size, in mm^3.
         direction: which dimension to use for spatial information, ROW or\
             COLUMN.
+        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -522,15 +522,15 @@ def cifti_find_clusters_params(
     """
     params = {
         "@type": "workbench/cifti-find-clusters",
-        "cifti-out": cifti_out,
-        "merged-volume": merged_volume,
-        "less-than": less_than,
         "cifti": cifti,
         "surface-value-threshold": surface_value_threshold,
         "surface-minimum-area": surface_minimum_area,
         "volume-value-threshold": volume_value_threshold,
         "volume-minimum-size": volume_minimum_size,
         "direction": direction,
+        "cifti-out": cifti_out,
+        "merged-volume": merged_volume,
+        "less-than": less_than,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -561,6 +561,30 @@ def cifti_find_clusters_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("surface-value-threshold", None) is None:
+        raise StyxValidationError("`surface-value-threshold` must not be None")
+    if not isinstance(params["surface-value-threshold"], (float, int)):
+        raise StyxValidationError(f'`surface-value-threshold` has the wrong type: Received `{type(params.get("surface-value-threshold", None))}` expected `float`')
+    if params.get("surface-minimum-area", None) is None:
+        raise StyxValidationError("`surface-minimum-area` must not be None")
+    if not isinstance(params["surface-minimum-area"], (float, int)):
+        raise StyxValidationError(f'`surface-minimum-area` has the wrong type: Received `{type(params.get("surface-minimum-area", None))}` expected `float`')
+    if params.get("volume-value-threshold", None) is None:
+        raise StyxValidationError("`volume-value-threshold` must not be None")
+    if not isinstance(params["volume-value-threshold"], (float, int)):
+        raise StyxValidationError(f'`volume-value-threshold` has the wrong type: Received `{type(params.get("volume-value-threshold", None))}` expected `float`')
+    if params.get("volume-minimum-size", None) is None:
+        raise StyxValidationError("`volume-minimum-size` must not be None")
+    if not isinstance(params["volume-minimum-size"], (float, int)):
+        raise StyxValidationError(f'`volume-minimum-size` has the wrong type: Received `{type(params.get("volume-minimum-size", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -589,30 +613,6 @@ def cifti_find_clusters_validate(
         raise StyxValidationError("`less-than` must not be None")
     if not isinstance(params["less-than"], bool):
         raise StyxValidationError(f'`less-than` has the wrong type: Received `{type(params.get("less-than", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
-    if params.get("surface-value-threshold", None) is None:
-        raise StyxValidationError("`surface-value-threshold` must not be None")
-    if not isinstance(params["surface-value-threshold"], (float, int)):
-        raise StyxValidationError(f'`surface-value-threshold` has the wrong type: Received `{type(params.get("surface-value-threshold", None))}` expected `float`')
-    if params.get("surface-minimum-area", None) is None:
-        raise StyxValidationError("`surface-minimum-area` must not be None")
-    if not isinstance(params["surface-minimum-area"], (float, int)):
-        raise StyxValidationError(f'`surface-minimum-area` has the wrong type: Received `{type(params.get("surface-minimum-area", None))}` expected `float`')
-    if params.get("volume-value-threshold", None) is None:
-        raise StyxValidationError("`volume-value-threshold` must not be None")
-    if not isinstance(params["volume-value-threshold"], (float, int)):
-        raise StyxValidationError(f'`volume-value-threshold` has the wrong type: Received `{type(params.get("volume-value-threshold", None))}` expected `float`')
-    if params.get("volume-minimum-size", None) is None:
-        raise StyxValidationError("`volume-minimum-size` must not be None")
-    if not isinstance(params["volume-minimum-size"], (float, int)):
-        raise StyxValidationError(f'`volume-minimum-size` has the wrong type: Received `{type(params.get("volume-minimum-size", None))}` expected `float`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_find_clusters_cargs(
@@ -633,14 +633,21 @@ def cifti_find_clusters_cargs(
         "wb_command",
         "-cifti-find-clusters"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_find_clusters_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_find_clusters_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_find_clusters_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        *(cifti_find_clusters_size_ratio_cargs(params.get("size-ratio", None), execution) if (params.get("size-ratio", None) is not None) else []),
-        *(cifti_find_clusters_distance_cargs(params.get("distance", None), execution) if (params.get("distance", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surface-value-threshold", None)))
+    cargs.append(str(params.get("surface-minimum-area", None)))
+    cargs.append(str(params.get("volume-value-threshold", None)))
+    cargs.append(str(params.get("volume-minimum-size", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("size-ratio", None) is not None or params.get("distance", None) is not None:
+        cargs.extend([
+            *(cifti_find_clusters_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_find_clusters_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_find_clusters_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
+            *(cifti_find_clusters_size_ratio_cargs(params.get("size-ratio", None), execution) if (params.get("size-ratio", None) is not None) else []),
+            *(cifti_find_clusters_distance_cargs(params.get("distance", None), execution) if (params.get("distance", None) is not None) else [])
+        ])
     if params.get("startval", None) is not None:
         cargs.extend([
             "-start",
@@ -655,12 +662,6 @@ def cifti_find_clusters_cargs(
         cargs.append("-merged-volume")
     if params.get("less-than", False):
         cargs.append("-less-than")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(str(params.get("surface-value-threshold", None)))
-    cargs.append(str(params.get("surface-minimum-area", None)))
-    cargs.append(str(params.get("volume-value-threshold", None)))
-    cargs.append(str(params.get("volume-minimum-size", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -718,13 +719,13 @@ def cifti_find_clusters_execute(
 
 
 def cifti_find_clusters(
-    cifti_out: str,
     cifti: InputPathType,
     surface_value_threshold: float,
     surface_minimum_area: float,
     volume_value_threshold: float,
     volume_minimum_size: float,
     direction: str,
+    cifti_out: str,
     left_surface: CiftiFindClustersLeftSurfaceParamsDict | None = None,
     right_surface: CiftiFindClustersRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiFindClustersCerebellumSurfaceParamsDict | None = None,
@@ -750,7 +751,6 @@ def cifti_find_clusters(
     the ROI is ignored.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surface_value_threshold: threshold for surface data values.
         surface_minimum_area: threshold for surface cluster area, in mm^2.
@@ -758,6 +758,7 @@ def cifti_find_clusters(
         volume_minimum_size: threshold for volume cluster size, in mm^3.
         direction: which dimension to use for spatial information, ROW or\
             COLUMN.
+        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -779,6 +780,12 @@ def cifti_find_clusters(
         NamedTuple of outputs (described in `CiftiFindClustersOutputs`).
     """
     params = cifti_find_clusters_params(
+        cifti=cifti,
+        surface_value_threshold=surface_value_threshold,
+        surface_minimum_area=surface_minimum_area,
+        volume_value_threshold=volume_value_threshold,
+        volume_minimum_size=volume_minimum_size,
+        direction=direction,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
@@ -789,12 +796,6 @@ def cifti_find_clusters(
         roi_cifti=roi_cifti,
         merged_volume=merged_volume,
         less_than=less_than,
-        cifti=cifti,
-        surface_value_threshold=surface_value_threshold,
-        surface_minimum_area=surface_minimum_area,
-        volume_value_threshold=volume_value_threshold,
-        volume_minimum_size=volume_minimum_size,
-        direction=direction,
     )
     return cifti_find_clusters_execute(params, runner)
 

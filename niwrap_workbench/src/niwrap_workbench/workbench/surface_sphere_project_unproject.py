@@ -14,17 +14,17 @@ SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
 
 
 _SurfaceSphereProjectUnprojectParamsDictNoTag = typing.TypedDict('_SurfaceSphereProjectUnprojectParamsDictNoTag', {
-    "sphere-out": str,
     "sphere-in": InputPathType,
     "sphere-project-to": InputPathType,
     "sphere-unproject-from": InputPathType,
+    "sphere-out": str,
 })
 SurfaceSphereProjectUnprojectParamsDictTagged = typing.TypedDict('SurfaceSphereProjectUnprojectParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-sphere-project-unproject"],
-    "sphere-out": str,
     "sphere-in": InputPathType,
     "sphere-project-to": InputPathType,
     "sphere-unproject-from": InputPathType,
+    "sphere-out": str,
 })
 SurfaceSphereProjectUnprojectParamsDict = _SurfaceSphereProjectUnprojectParamsDictNoTag | SurfaceSphereProjectUnprojectParamsDictTagged
 
@@ -40,29 +40,29 @@ class SurfaceSphereProjectUnprojectOutputs(typing.NamedTuple):
 
 
 def surface_sphere_project_unproject_params(
-    sphere_out: str,
     sphere_in: InputPathType,
     sphere_project_to: InputPathType,
     sphere_unproject_from: InputPathType,
+    sphere_out: str,
 ) -> SurfaceSphereProjectUnprojectParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        sphere_out: the output sphere.
         sphere_in: a sphere with the desired output mesh.
         sphere_project_to: a sphere that aligns with sphere-in.
         sphere_unproject_from: <sphere-project-to> deformed to the desired\
             output space.
+        sphere_out: the output sphere.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-sphere-project-unproject",
-        "sphere-out": sphere_out,
         "sphere-in": sphere_in,
         "sphere-project-to": sphere_project_to,
         "sphere-unproject-from": sphere_unproject_from,
+        "sphere-out": sphere_out,
     }
     return params
 
@@ -79,10 +79,6 @@ def surface_sphere_project_unproject_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("sphere-out", None) is None:
-        raise StyxValidationError("`sphere-out` must not be None")
-    if not isinstance(params["sphere-out"], str):
-        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
     if params.get("sphere-in", None) is None:
         raise StyxValidationError("`sphere-in` must not be None")
     if not isinstance(params["sphere-in"], (pathlib.Path, str)):
@@ -95,6 +91,10 @@ def surface_sphere_project_unproject_validate(
         raise StyxValidationError("`sphere-unproject-from` must not be None")
     if not isinstance(params["sphere-unproject-from"], (pathlib.Path, str)):
         raise StyxValidationError(f'`sphere-unproject-from` has the wrong type: Received `{type(params.get("sphere-unproject-from", None))}` expected `InputPathType`')
+    if params.get("sphere-out", None) is None:
+        raise StyxValidationError("`sphere-out` must not be None")
+    if not isinstance(params["sphere-out"], str):
+        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
 
 
 def surface_sphere_project_unproject_cargs(
@@ -115,10 +115,10 @@ def surface_sphere_project_unproject_cargs(
         "wb_command",
         "-surface-sphere-project-unproject"
     ])
-    cargs.append(params.get("sphere-out", None))
     cargs.append(execution.input_file(params.get("sphere-in", None)))
     cargs.append(execution.input_file(params.get("sphere-project-to", None)))
     cargs.append(execution.input_file(params.get("sphere-unproject-from", None)))
+    cargs.append(params.get("sphere-out", None))
     return cargs
 
 
@@ -221,10 +221,10 @@ def surface_sphere_project_unproject_execute(
 
 
 def surface_sphere_project_unproject(
-    sphere_out: str,
     sphere_in: InputPathType,
     sphere_project_to: InputPathType,
     sphere_unproject_from: InputPathType,
+    sphere_out: str,
     runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
@@ -286,20 +286,20 @@ def surface_sphere_project_unproject(
     as each other, but <sphere-in> may have any topology.
     
     Args:
-        sphere_out: the output sphere.
         sphere_in: a sphere with the desired output mesh.
         sphere_project_to: a sphere that aligns with sphere-in.
         sphere_unproject_from: <sphere-project-to> deformed to the desired\
             output space.
+        sphere_out: the output sphere.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereProjectUnprojectOutputs`).
     """
     params = surface_sphere_project_unproject_params(
-        sphere_out=sphere_out,
         sphere_in=sphere_in,
         sphere_project_to=sphere_project_to,
         sphere_unproject_from=sphere_unproject_from,
+        sphere_out=sphere_out,
     )
     return surface_sphere_project_unproject_execute(params, runner)
 

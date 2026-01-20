@@ -50,27 +50,27 @@ CiftiErodeCerebellumSurfaceParamsDict = _CiftiErodeCerebellumSurfaceParamsDictNo
 
 
 _CiftiErodeParamsDictNoTag = typing.TypedDict('_CiftiErodeParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "direction": str,
+    "surface-distance": float,
+    "volume-distance": float,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParamsDict | None],
     "merged-volume": bool,
-    "cifti-in": InputPathType,
-    "direction": str,
-    "surface-distance": float,
-    "volume-distance": float,
 })
 CiftiErodeParamsDictTagged = typing.TypedDict('CiftiErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-erode"],
+    "cifti-in": InputPathType,
+    "direction": str,
+    "surface-distance": float,
+    "volume-distance": float,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiErodeLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiErodeRightSurfaceParamsDict | None],
     "cerebellum-surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParamsDict | None],
     "merged-volume": bool,
-    "cifti-in": InputPathType,
-    "direction": str,
-    "surface-distance": float,
-    "volume-distance": float,
 })
 CiftiErodeParamsDict = _CiftiErodeParamsDictNoTag | CiftiErodeParamsDictTagged
 
@@ -302,11 +302,11 @@ class CiftiErodeOutputs(typing.NamedTuple):
 
 
 def cifti_erode_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     surface_distance: float,
     volume_distance: float,
+    cifti_out: str,
     left_surface: CiftiErodeLeftSurfaceParamsDict | None = None,
     right_surface: CiftiErodeRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiErodeCerebellumSurfaceParamsDict | None = None,
@@ -316,11 +316,11 @@ def cifti_erode_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the input cifti file.
         direction: which dimension to dilate along, ROW or COLUMN.
         surface_distance: the distance to dilate on surfaces, in mm.
         volume_distance: the distance to dilate in the volume, in mm.
+        cifti_out: the output cifti file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -331,12 +331,12 @@ def cifti_erode_params(
     """
     params = {
         "@type": "workbench/cifti-erode",
-        "cifti-out": cifti_out,
-        "merged-volume": merged_volume,
         "cifti-in": cifti_in,
         "direction": direction,
         "surface-distance": surface_distance,
         "volume-distance": volume_distance,
+        "cifti-out": cifti_out,
+        "merged-volume": merged_volume,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -359,20 +359,6 @@ def cifti_erode_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("left-surface", None) is not None:
-        cifti_erode_left_surface_validate(params["left-surface"])
-    if params.get("right-surface", None) is not None:
-        cifti_erode_right_surface_validate(params["right-surface"])
-    if params.get("cerebellum-surface", None) is not None:
-        cifti_erode_cerebellum_surface_validate(params["cerebellum-surface"])
-    if params.get("merged-volume", False) is None:
-        raise StyxValidationError("`merged-volume` must not be None")
-    if not isinstance(params["merged-volume"], bool):
-        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -389,6 +375,20 @@ def cifti_erode_validate(
         raise StyxValidationError("`volume-distance` must not be None")
     if not isinstance(params["volume-distance"], (float, int)):
         raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("left-surface", None) is not None:
+        cifti_erode_left_surface_validate(params["left-surface"])
+    if params.get("right-surface", None) is not None:
+        cifti_erode_right_surface_validate(params["right-surface"])
+    if params.get("cerebellum-surface", None) is not None:
+        cifti_erode_cerebellum_surface_validate(params["cerebellum-surface"])
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
 
 
 def cifti_erode_cargs(
@@ -409,18 +409,19 @@ def cifti_erode_cargs(
         "wb_command",
         "-cifti-erode"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_erode_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_erode_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_erode_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
-    ])
-    if params.get("merged-volume", False):
-        cargs.append("-merged-volume")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(str(params.get("surface-distance", None)))
     cargs.append(str(params.get("volume-distance", None)))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None:
+        cargs.extend([
+            *(cifti_erode_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_erode_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_erode_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
+        ])
+    if params.get("merged-volume", False):
+        cargs.append("-merged-volume")
     return cargs
 
 
@@ -477,11 +478,11 @@ def cifti_erode_execute(
 
 
 def cifti_erode(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     surface_distance: float,
     volume_distance: float,
+    cifti_out: str,
     left_surface: CiftiErodeLeftSurfaceParamsDict | None = None,
     right_surface: CiftiErodeRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiErodeCerebellumSurfaceParamsDict | None = None,
@@ -501,11 +502,11 @@ def cifti_erode(
     surfaces, but it is only an approximate correction.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the input cifti file.
         direction: which dimension to dilate along, ROW or COLUMN.
         surface_distance: the distance to dilate on surfaces, in mm.
         volume_distance: the distance to dilate in the volume, in mm.
+        cifti_out: the output cifti file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -516,15 +517,15 @@ def cifti_erode(
         NamedTuple of outputs (described in `CiftiErodeOutputs`).
     """
     params = cifti_erode_params(
+        cifti_in=cifti_in,
+        direction=direction,
+        surface_distance=surface_distance,
+        volume_distance=volume_distance,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
         merged_volume=merged_volume,
-        cifti_in=cifti_in,
-        direction=direction,
-        surface_distance=surface_distance,
-        volume_distance=volume_distance,
     )
     return cifti_erode_execute(params, runner)
 

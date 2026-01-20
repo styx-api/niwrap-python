@@ -68,21 +68,21 @@ VolumeCreateSformParamsDict = _VolumeCreateSformParamsDictNoTag | VolumeCreateSf
 
 
 _VolumeCreateParamsDictNoTag = typing.TypedDict('_VolumeCreateParamsDictNoTag', {
-    "volume-out": str,
-    "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
-    "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
     "i-dim": int,
     "j-dim": int,
     "k-dim": int,
+    "volume-out": str,
+    "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
+    "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
 })
 VolumeCreateParamsDictTagged = typing.TypedDict('VolumeCreateParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-create"],
-    "volume-out": str,
-    "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
-    "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
     "i-dim": int,
     "j-dim": int,
     "k-dim": int,
+    "volume-out": str,
+    "plumb": typing.NotRequired[VolumeCreatePlumbParamsDict | None],
+    "sform": typing.NotRequired[VolumeCreateSformParamsDict | None],
 })
 VolumeCreateParamsDict = _VolumeCreateParamsDictNoTag | VolumeCreateParamsDictTagged
 
@@ -349,10 +349,10 @@ class VolumeCreateOutputs(typing.NamedTuple):
 
 
 def volume_create_params(
-    volume_out: str,
     i_dim: int,
     j_dim: int,
     k_dim: int,
+    volume_out: str,
     plumb: VolumeCreatePlumbParamsDict | None = None,
     sform: VolumeCreateSformParamsDict | None = None,
 ) -> VolumeCreateParamsDictTagged:
@@ -360,10 +360,10 @@ def volume_create_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         i_dim: length of first dimension.
         j_dim: length of second dimension.
         k_dim: length of third dimension.
+        volume_out: the output volume.
         plumb: set via axis order and spacing/offset.
         sform: set via a nifti sform.
     Returns:
@@ -371,10 +371,10 @@ def volume_create_params(
     """
     params = {
         "@type": "workbench/volume-create",
-        "volume-out": volume_out,
         "i-dim": i_dim,
         "j-dim": j_dim,
         "k-dim": k_dim,
+        "volume-out": volume_out,
     }
     if plumb is not None:
         params["plumb"] = plumb
@@ -395,14 +395,6 @@ def volume_create_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("plumb", None) is not None:
-        volume_create_plumb_validate(params["plumb"])
-    if params.get("sform", None) is not None:
-        volume_create_sform_validate(params["sform"])
     if params.get("i-dim", None) is None:
         raise StyxValidationError("`i-dim` must not be None")
     if not isinstance(params["i-dim"], int):
@@ -415,6 +407,14 @@ def volume_create_validate(
         raise StyxValidationError("`k-dim` must not be None")
     if not isinstance(params["k-dim"], int):
         raise StyxValidationError(f'`k-dim` has the wrong type: Received `{type(params.get("k-dim", None))}` expected `int`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("plumb", None) is not None:
+        volume_create_plumb_validate(params["plumb"])
+    if params.get("sform", None) is not None:
+        volume_create_sform_validate(params["sform"])
 
 
 def volume_create_cargs(
@@ -435,14 +435,15 @@ def volume_create_cargs(
         "wb_command",
         "-volume-create"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *(volume_create_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
-        *(volume_create_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else [])
-    ])
     cargs.append(str(params.get("i-dim", None)))
     cargs.append(str(params.get("j-dim", None)))
     cargs.append(str(params.get("k-dim", None)))
+    cargs.append(params.get("volume-out", None))
+    if params.get("plumb", None) is not None or params.get("sform", None) is not None:
+        cargs.extend([
+            *(volume_create_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
+            *(volume_create_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else [])
+        ])
     return cargs
 
 
@@ -493,10 +494,10 @@ def volume_create_execute(
 
 
 def volume_create(
-    volume_out: str,
     i_dim: int,
     j_dim: int,
     k_dim: int,
+    volume_out: str,
     plumb: VolumeCreatePlumbParamsDict | None = None,
     sform: VolumeCreateSformParamsDict | None = None,
     runner: Runner | None = None,
@@ -508,10 +509,10 @@ def volume_create(
     specified.
     
     Args:
-        volume_out: the output volume.
         i_dim: length of first dimension.
         j_dim: length of second dimension.
         k_dim: length of third dimension.
+        volume_out: the output volume.
         plumb: set via axis order and spacing/offset.
         sform: set via a nifti sform.
         runner: Command runner.
@@ -519,12 +520,12 @@ def volume_create(
         NamedTuple of outputs (described in `VolumeCreateOutputs`).
     """
     params = volume_create_params(
-        volume_out=volume_out,
-        plumb=plumb,
-        sform=sform,
         i_dim=i_dim,
         j_dim=j_dim,
         k_dim=k_dim,
+        volume_out=volume_out,
+        plumb=plumb,
+        sform=sform,
     )
     return volume_create_execute(params, runner)
 

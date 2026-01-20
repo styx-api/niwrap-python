@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "nifti_information",
   "properties": {
+    "nifti-file": {
+      "var_param": "nifti_file"
+    },
     "print-xml": {
       "var_param": "print_xml",
       "fn_struct_make_params": "nifti_information_print_xml",
@@ -15,9 +18,6 @@
     },
     "print-matrix": {
       "var_param": "print_matrix"
-    },
-    "nifti-file": {
-      "var_param": "nifti_file"
     }
   }
 }

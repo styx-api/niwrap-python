@@ -56,19 +56,19 @@ CiftiExportDenseMappingVolumeParamsDict = _CiftiExportDenseMappingVolumeParamsDi
 
 
 _CiftiExportDenseMappingParamsDictNoTag = typing.TypedDict('_CiftiExportDenseMappingParamsDictNoTag', {
+    "cifti": InputPathType,
+    "direction": str,
     "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParamsDict | None],
     "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParamsDict] | None],
-    "cifti": InputPathType,
-    "direction": str,
 })
 CiftiExportDenseMappingParamsDictTagged = typing.TypedDict('CiftiExportDenseMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-export-dense-mapping"],
+    "cifti": InputPathType,
+    "direction": str,
     "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParamsDict | None],
     "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParamsDict] | None],
-    "cifti": InputPathType,
-    "direction": str,
 })
 CiftiExportDenseMappingParamsDict = _CiftiExportDenseMappingParamsDictNoTag | CiftiExportDenseMappingParamsDictTagged
 
@@ -349,6 +349,14 @@ def cifti_export_dense_mapping_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("volume-all", None) is not None:
         cifti_export_dense_mapping_volume_all_validate(params["volume-all"])
     if params.get("surface", None) is not None:
@@ -361,14 +369,6 @@ def cifti_export_dense_mapping_validate(
             raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiExportDenseMappingVolumeParamsDict] | None`')
         for e in params["volume"]:
             cifti_export_dense_mapping_volume_validate(e)
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_export_dense_mapping_cargs(
@@ -389,14 +389,14 @@ def cifti_export_dense_mapping_cargs(
         "wb_command",
         "-cifti-export-dense-mapping"
     ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(params.get("direction", None))
     if params.get("volume-all", None) is not None or params.get("surface", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
             *(cifti_export_dense_mapping_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
             *([a for c in [cifti_export_dense_mapping_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else []),
             *([a for c in [cifti_export_dense_mapping_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
         ])
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -560,11 +560,11 @@ def cifti_export_dense_mapping(
         NamedTuple of outputs (described in `CiftiExportDenseMappingOutputs`).
     """
     params = cifti_export_dense_mapping_params(
+        cifti=cifti,
+        direction=direction,
         volume_all=volume_all,
         surface=surface,
         volume=volume,
-        cifti=cifti,
-        direction=direction,
     )
     return cifti_export_dense_mapping_execute(params, runner)
 

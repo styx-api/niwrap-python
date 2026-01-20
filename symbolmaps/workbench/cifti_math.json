@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_math",
   "properties": {
+    "expression": {
+      "var_param": "expression"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -36,9 +39,6 @@
     },
     "override-mapping-check": {
       "var_param": "override_mapping_check"
-    },
-    "expression": {
-      "var_param": "expression"
     }
   }
 }

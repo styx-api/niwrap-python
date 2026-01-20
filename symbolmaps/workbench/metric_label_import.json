@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "metric_label_import",
   "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "label-list-file": {
+      "var_param": "label_list_file"
+    },
     "output": {
       "var_param": "output"
     },
@@ -18,12 +24,6 @@
     },
     "discard-others": {
       "var_param": "discard_others"
-    },
-    "input": {
-      "var_param": "input_"
-    },
-    "label-list-file": {
-      "var_param": "label_list_file"
     }
   }
 }

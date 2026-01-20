@@ -1,18 +1,6 @@
 {
   "fn_root_make_params_and_execute": "volume_parcel_resampling_generic",
   "properties": {
-    "volume-out": {
-      "var_param": "volume_out"
-    },
-    "subvol": {
-      "var_param": "subvol"
-    },
-    "fix-zeros": {
-      "var_param": "fix_zeros"
-    },
-    "fwhm": {
-      "var_param": "fwhm"
-    },
     "volume-in": {
       "var_param": "volume_in"
     },
@@ -24,6 +12,18 @@
     },
     "kernel": {
       "var_param": "kernel"
+    },
+    "volume-out": {
+      "var_param": "volume_out"
+    },
+    "subvol": {
+      "var_param": "subvol"
+    },
+    "fix-zeros": {
+      "var_param": "fix_zeros"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
     }
   }
 }

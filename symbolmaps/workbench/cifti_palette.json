@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_palette",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -84,12 +90,6 @@
     },
     "column": {
       "var_param": "column"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "mode": {
-      "var_param": "mode"
     }
   }
 }

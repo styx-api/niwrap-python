@@ -26,6 +26,10 @@ CiftiExtremaThresholdParamsDict = _CiftiExtremaThresholdParamsDictNoTag | CiftiE
 
 
 _CiftiExtremaParamsDictNoTag = typing.TypedDict('_CiftiExtremaParamsDictNoTag', {
+    "cifti": InputPathType,
+    "surface-distance": float,
+    "volume-distance": float,
+    "direction": str,
     "cifti-out": str,
     "threshold": typing.NotRequired[CiftiExtremaThresholdParamsDict | None],
     "volume-kernel": typing.NotRequired[float | None],
@@ -39,13 +43,13 @@ _CiftiExtremaParamsDictNoTag = typing.TypedDict('_CiftiExtremaParamsDictNoTag', 
     "sum-maps": bool,
     "merged-volume": bool,
     "presmooth-fwhm": bool,
-    "cifti": InputPathType,
-    "surface-distance": float,
-    "volume-distance": float,
-    "direction": str,
 })
 CiftiExtremaParamsDictTagged = typing.TypedDict('CiftiExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-extrema"],
+    "cifti": InputPathType,
+    "surface-distance": float,
+    "volume-distance": float,
+    "direction": str,
     "cifti-out": str,
     "threshold": typing.NotRequired[CiftiExtremaThresholdParamsDict | None],
     "volume-kernel": typing.NotRequired[float | None],
@@ -59,10 +63,6 @@ CiftiExtremaParamsDictTagged = typing.TypedDict('CiftiExtremaParamsDictTagged', 
     "sum-maps": bool,
     "merged-volume": bool,
     "presmooth-fwhm": bool,
-    "cifti": InputPathType,
-    "surface-distance": float,
-    "volume-distance": float,
-    "direction": str,
 })
 CiftiExtremaParamsDict = _CiftiExtremaParamsDictNoTag | CiftiExtremaParamsDictTagged
 
@@ -143,11 +143,11 @@ class CiftiExtremaOutputs(typing.NamedTuple):
 
 
 def cifti_extrema_params(
-    cifti_out: str,
     cifti: InputPathType,
     surface_distance: float,
     volume_distance: float,
     direction: str,
+    cifti_out: str,
     threshold: CiftiExtremaThresholdParamsDict | None = None,
     volume_kernel: float | None = None,
     surface_kernel: float | None = None,
@@ -165,13 +165,13 @@ def cifti_extrema_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surface_distance: the minimum distance between extrema of the same\
             type, for surface components.
         volume_distance: the minimum distance between extrema of the same type,\
             for volume components.
         direction: which dimension to find extrema along, ROW or COLUMN.
+        cifti_out: the output cifti.
         threshold: ignore small extrema.
         volume_kernel: smooth volume components before finding extrema\
             \
@@ -204,6 +204,10 @@ def cifti_extrema_params(
     """
     params = {
         "@type": "workbench/cifti-extrema",
+        "cifti": cifti,
+        "surface-distance": surface_distance,
+        "volume-distance": volume_distance,
+        "direction": direction,
         "cifti-out": cifti_out,
         "only-minima": only_minima,
         "only-maxima": only_maxima,
@@ -211,10 +215,6 @@ def cifti_extrema_params(
         "sum-maps": sum_maps,
         "merged-volume": merged_volume,
         "presmooth-fwhm": presmooth_fwhm,
-        "cifti": cifti,
-        "surface-distance": surface_distance,
-        "volume-distance": volume_distance,
-        "direction": direction,
     }
     if threshold is not None:
         params["threshold"] = threshold
@@ -243,6 +243,22 @@ def cifti_extrema_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("surface-distance", None) is None:
+        raise StyxValidationError("`surface-distance` must not be None")
+    if not isinstance(params["surface-distance"], (float, int)):
+        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
+    if params.get("volume-distance", None) is None:
+        raise StyxValidationError("`volume-distance` must not be None")
+    if not isinstance(params["volume-distance"], (float, int)):
+        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -288,22 +304,6 @@ def cifti_extrema_validate(
         raise StyxValidationError("`presmooth-fwhm` must not be None")
     if not isinstance(params["presmooth-fwhm"], bool):
         raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
-    if params.get("surface-distance", None) is None:
-        raise StyxValidationError("`surface-distance` must not be None")
-    if not isinstance(params["surface-distance"], (float, int)):
-        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
-    if params.get("volume-distance", None) is None:
-        raise StyxValidationError("`volume-distance` must not be None")
-    if not isinstance(params["volume-distance"], (float, int)):
-        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_extrema_cargs(
@@ -324,10 +324,13 @@ def cifti_extrema_cargs(
         "wb_command",
         "-cifti-extrema"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surface-distance", None)))
+    cargs.append(str(params.get("volume-distance", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("threshold", None) is not None:
+        cargs.extend(cifti_extrema_threshold_cargs(params.get("threshold", None), execution))
     if params.get("volume-kernel", None) is not None:
         cargs.extend([
             "-volume-presmooth",
@@ -365,10 +368,6 @@ def cifti_extrema_cargs(
         cargs.append("-merged-volume")
     if params.get("presmooth-fwhm", False):
         cargs.append("-presmooth-fwhm")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(str(params.get("surface-distance", None)))
-    cargs.append(str(params.get("volume-distance", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -422,11 +421,11 @@ def cifti_extrema_execute(
 
 
 def cifti_extrema(
-    cifti_out: str,
     cifti: InputPathType,
     surface_distance: float,
     volume_distance: float,
     direction: str,
+    cifti_out: str,
     threshold: CiftiExtremaThresholdParamsDict | None = None,
     volume_kernel: float | None = None,
     surface_kernel: float | None = None,
@@ -451,13 +450,13 @@ def cifti_extrema(
     dconn, if it is symmetric use COLUMN, otherwise use ROW.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surface_distance: the minimum distance between extrema of the same\
             type, for surface components.
         volume_distance: the minimum distance between extrema of the same type,\
             for volume components.
         direction: which dimension to find extrema along, ROW or COLUMN.
+        cifti_out: the output cifti.
         threshold: ignore small extrema.
         volume_kernel: smooth volume components before finding extrema\
             \
@@ -490,6 +489,10 @@ def cifti_extrema(
         NamedTuple of outputs (described in `CiftiExtremaOutputs`).
     """
     params = cifti_extrema_params(
+        cifti=cifti,
+        surface_distance=surface_distance,
+        volume_distance=volume_distance,
+        direction=direction,
         cifti_out=cifti_out,
         threshold=threshold,
         volume_kernel=volume_kernel,
@@ -503,10 +506,6 @@ def cifti_extrema(
         sum_maps=sum_maps,
         merged_volume=merged_volume,
         presmooth_fwhm=presmooth_fwhm,
-        cifti=cifti,
-        surface_distance=surface_distance,
-        volume_distance=volume_distance,
-        direction=direction,
     )
     return cifti_extrema_execute(params, runner)
 

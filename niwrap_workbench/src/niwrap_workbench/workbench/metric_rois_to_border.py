@@ -14,21 +14,21 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
 
 
 _MetricRoisToBorderParamsDictNoTag = typing.TypedDict('_MetricRoisToBorderParamsDictNoTag', {
-    "border-out": str,
-    "column": typing.NotRequired[str | None],
-    "fraction": typing.NotRequired[float | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "class-name": str,
+    "border-out": str,
+    "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
 })
 MetricRoisToBorderParamsDictTagged = typing.TypedDict('MetricRoisToBorderParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-rois-to-border"],
-    "border-out": str,
-    "column": typing.NotRequired[str | None],
-    "fraction": typing.NotRequired[float | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "class-name": str,
+    "border-out": str,
+    "column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
 })
 MetricRoisToBorderParamsDict = _MetricRoisToBorderParamsDictNoTag | MetricRoisToBorderParamsDictTagged
 
@@ -44,10 +44,10 @@ class MetricRoisToBorderOutputs(typing.NamedTuple):
 
 
 def metric_rois_to_border_params(
-    border_out: str,
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
+    border_out: str,
     column: str | None = None,
     fraction: float | None = None,
 ) -> MetricRoisToBorderParamsDictTagged:
@@ -55,10 +55,10 @@ def metric_rois_to_border_params(
     Build parameters.
     
     Args:
-        border_out: the output border file.
         surface: the surface to use for neighbor information.
         metric: the input metric containing ROIs.
         class_name: the name to use for the class of the output borders.
+        border_out: the output border file.
         column: select a single column\
             \
             the column number or name.
@@ -70,10 +70,10 @@ def metric_rois_to_border_params(
     """
     params = {
         "@type": "workbench/metric-rois-to-border",
-        "border-out": border_out,
         "surface": surface,
         "metric": metric,
         "class-name": class_name,
+        "border-out": border_out,
     }
     if column is not None:
         params["column"] = column
@@ -94,16 +94,6 @@ def metric_rois_to_border_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("border-out", None) is None:
-        raise StyxValidationError("`border-out` must not be None")
-    if not isinstance(params["border-out"], str):
-        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
-    if params.get("fraction", None) is not None:
-        if not isinstance(params["fraction"], (float, int)):
-            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -116,6 +106,16 @@ def metric_rois_to_border_validate(
         raise StyxValidationError("`class-name` must not be None")
     if not isinstance(params["class-name"], str):
         raise StyxValidationError(f'`class-name` has the wrong type: Received `{type(params.get("class-name", None))}` expected `str`')
+    if params.get("border-out", None) is None:
+        raise StyxValidationError("`border-out` must not be None")
+    if not isinstance(params["border-out"], str):
+        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("fraction", None) is not None:
+        if not isinstance(params["fraction"], (float, int)):
+            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
 
 
 def metric_rois_to_border_cargs(
@@ -136,6 +136,9 @@ def metric_rois_to_border_cargs(
         "wb_command",
         "-metric-rois-to-border"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(params.get("class-name", None))
     cargs.append(params.get("border-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
@@ -147,9 +150,6 @@ def metric_rois_to_border_cargs(
             "-placement",
             str(params.get("fraction", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric", None)))
-    cargs.append(params.get("class-name", None))
     return cargs
 
 
@@ -201,10 +201,10 @@ def metric_rois_to_border_execute(
 
 
 def metric_rois_to_border(
-    border_out: str,
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
+    border_out: str,
     column: str | None = None,
     fraction: float | None = None,
     runner: Runner | None = None,
@@ -217,10 +217,10 @@ def metric_rois_to_border(
     columns in the input file, using the map name as the name for the border.
     
     Args:
-        border_out: the output border file.
         surface: the surface to use for neighbor information.
         metric: the input metric containing ROIs.
         class_name: the name to use for the class of the output borders.
+        border_out: the output border file.
         column: select a single column\
             \
             the column number or name.
@@ -232,12 +232,12 @@ def metric_rois_to_border(
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).
     """
     params = metric_rois_to_border_params(
-        border_out=border_out,
-        column=column,
-        fraction=fraction,
         surface=surface,
         metric=metric,
         class_name=class_name,
+        border_out=border_out,
+        column=column,
+        fraction=fraction,
     )
     return metric_rois_to_border_execute(params, runner)
 

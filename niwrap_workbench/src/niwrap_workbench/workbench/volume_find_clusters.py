@@ -14,6 +14,9 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 
 
 _VolumeFindClustersParamsDictNoTag = typing.TypedDict('_VolumeFindClustersParamsDictNoTag', {
+    "volume-in": InputPathType,
+    "value-threshold": float,
+    "minimum-volume": float,
     "volume-out": str,
     "startval": typing.NotRequired[int | None],
     "distance": typing.NotRequired[float | None],
@@ -21,12 +24,12 @@ _VolumeFindClustersParamsDictNoTag = typing.TypedDict('_VolumeFindClustersParams
     "subvol": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
     "less-than": bool,
-    "volume-in": InputPathType,
-    "value-threshold": float,
-    "minimum-volume": float,
 })
 VolumeFindClustersParamsDictTagged = typing.TypedDict('VolumeFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-find-clusters"],
+    "volume-in": InputPathType,
+    "value-threshold": float,
+    "minimum-volume": float,
     "volume-out": str,
     "startval": typing.NotRequired[int | None],
     "distance": typing.NotRequired[float | None],
@@ -34,9 +37,6 @@ VolumeFindClustersParamsDictTagged = typing.TypedDict('VolumeFindClustersParamsD
     "subvol": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
     "less-than": bool,
-    "volume-in": InputPathType,
-    "value-threshold": float,
-    "minimum-volume": float,
 })
 VolumeFindClustersParamsDict = _VolumeFindClustersParamsDictNoTag | VolumeFindClustersParamsDictTagged
 
@@ -52,10 +52,10 @@ class VolumeFindClustersOutputs(typing.NamedTuple):
 
 
 def volume_find_clusters_params(
-    volume_out: str,
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
+    volume_out: str,
     startval: int | None = None,
     distance: float | None = None,
     ratio: float | None = None,
@@ -67,10 +67,10 @@ def volume_find_clusters_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         volume_in: the input volume.
         value_threshold: threshold for data values.
         minimum_volume: threshold for cluster volume, in mm^3.
+        volume_out: the output volume.
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
@@ -95,11 +95,11 @@ def volume_find_clusters_params(
     """
     params = {
         "@type": "workbench/volume-find-clusters",
-        "volume-out": volume_out,
-        "less-than": less_than,
         "volume-in": volume_in,
         "value-threshold": value_threshold,
         "minimum-volume": minimum_volume,
+        "volume-out": volume_out,
+        "less-than": less_than,
     }
     if startval is not None:
         params["startval"] = startval
@@ -126,6 +126,18 @@ def volume_find_clusters_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("value-threshold", None) is None:
+        raise StyxValidationError("`value-threshold` must not be None")
+    if not isinstance(params["value-threshold"], (float, int)):
+        raise StyxValidationError(f'`value-threshold` has the wrong type: Received `{type(params.get("value-threshold", None))}` expected `float`')
+    if params.get("minimum-volume", None) is None:
+        raise StyxValidationError("`minimum-volume` must not be None")
+    if not isinstance(params["minimum-volume"], (float, int)):
+        raise StyxValidationError(f'`minimum-volume` has the wrong type: Received `{type(params.get("minimum-volume", None))}` expected `float`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -149,18 +161,6 @@ def volume_find_clusters_validate(
         raise StyxValidationError("`less-than` must not be None")
     if not isinstance(params["less-than"], bool):
         raise StyxValidationError(f'`less-than` has the wrong type: Received `{type(params.get("less-than", False))}` expected `bool`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
-    if params.get("value-threshold", None) is None:
-        raise StyxValidationError("`value-threshold` must not be None")
-    if not isinstance(params["value-threshold"], (float, int)):
-        raise StyxValidationError(f'`value-threshold` has the wrong type: Received `{type(params.get("value-threshold", None))}` expected `float`')
-    if params.get("minimum-volume", None) is None:
-        raise StyxValidationError("`minimum-volume` must not be None")
-    if not isinstance(params["minimum-volume"], (float, int)):
-        raise StyxValidationError(f'`minimum-volume` has the wrong type: Received `{type(params.get("minimum-volume", None))}` expected `float`')
 
 
 def volume_find_clusters_cargs(
@@ -181,6 +181,9 @@ def volume_find_clusters_cargs(
         "wb_command",
         "-volume-find-clusters"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("value-threshold", None)))
+    cargs.append(str(params.get("minimum-volume", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("startval", None) is not None:
         cargs.extend([
@@ -209,9 +212,6 @@ def volume_find_clusters_cargs(
         ])
     if params.get("less-than", False):
         cargs.append("-less-than")
-    cargs.append(execution.input_file(params.get("volume-in", None)))
-    cargs.append(str(params.get("value-threshold", None)))
-    cargs.append(str(params.get("minimum-volume", None)))
     return cargs
 
 
@@ -268,10 +268,10 @@ def volume_find_clusters_execute(
 
 
 def volume_find_clusters(
-    volume_out: str,
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
+    volume_out: str,
     startval: int | None = None,
     distance: float | None = None,
     ratio: float | None = None,
@@ -293,10 +293,10 @@ def volume_find_clusters(
     complicated thresholding, see -volume-math.
     
     Args:
-        volume_out: the output volume.
         volume_in: the input volume.
         value_threshold: threshold for data values.
         minimum_volume: threshold for cluster volume, in mm^3.
+        volume_out: the output volume.
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
@@ -321,6 +321,9 @@ def volume_find_clusters(
         NamedTuple of outputs (described in `VolumeFindClustersOutputs`).
     """
     params = volume_find_clusters_params(
+        volume_in=volume_in,
+        value_threshold=value_threshold,
+        minimum_volume=minimum_volume,
         volume_out=volume_out,
         startval=startval,
         distance=distance,
@@ -328,9 +331,6 @@ def volume_find_clusters(
         subvol=subvol,
         roi_volume=roi_volume,
         less_than=less_than,
-        volume_in=volume_in,
-        value_threshold=value_threshold,
-        minimum_volume=minimum_volume,
     )
     return volume_find_clusters_execute(params, runner)
 

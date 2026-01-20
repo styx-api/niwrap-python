@@ -14,17 +14,17 @@ SURFACE_SMOOTHING_METADATA = Metadata(
 
 
 _SurfaceSmoothingParamsDictNoTag = typing.TypedDict('_SurfaceSmoothingParamsDictNoTag', {
-    "surface-out": str,
     "surface-in": InputPathType,
     "smoothing-strength": float,
     "smoothing-iterations": int,
+    "surface-out": str,
 })
 SurfaceSmoothingParamsDictTagged = typing.TypedDict('SurfaceSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-smoothing"],
-    "surface-out": str,
     "surface-in": InputPathType,
     "smoothing-strength": float,
     "smoothing-iterations": int,
+    "surface-out": str,
 })
 SurfaceSmoothingParamsDict = _SurfaceSmoothingParamsDictNoTag | SurfaceSmoothingParamsDictTagged
 
@@ -40,28 +40,28 @@ class SurfaceSmoothingOutputs(typing.NamedTuple):
 
 
 def surface_smoothing_params(
-    surface_out: str,
     surface_in: InputPathType,
     smoothing_strength: float,
     smoothing_iterations: int,
+    surface_out: str,
 ) -> SurfaceSmoothingParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        surface_out: output surface file.
         surface_in: the surface file to smooth.
         smoothing_strength: smoothing strength (ranges [0.0 - 1.0]).
         smoothing_iterations: smoothing iterations.
+        surface_out: output surface file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-smoothing",
-        "surface-out": surface_out,
         "surface-in": surface_in,
         "smoothing-strength": smoothing_strength,
         "smoothing-iterations": smoothing_iterations,
+        "surface-out": surface_out,
     }
     return params
 
@@ -78,10 +78,6 @@ def surface_smoothing_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("surface-out", None) is None:
-        raise StyxValidationError("`surface-out` must not be None")
-    if not isinstance(params["surface-out"], str):
-        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
     if params.get("surface-in", None) is None:
         raise StyxValidationError("`surface-in` must not be None")
     if not isinstance(params["surface-in"], (pathlib.Path, str)):
@@ -94,6 +90,10 @@ def surface_smoothing_validate(
         raise StyxValidationError("`smoothing-iterations` must not be None")
     if not isinstance(params["smoothing-iterations"], int):
         raise StyxValidationError(f'`smoothing-iterations` has the wrong type: Received `{type(params.get("smoothing-iterations", None))}` expected `int`')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
 
 
 def surface_smoothing_cargs(
@@ -114,10 +114,10 @@ def surface_smoothing_cargs(
         "wb_command",
         "-surface-smoothing"
     ])
-    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(str(params.get("smoothing-strength", None)))
     cargs.append(str(params.get("smoothing-iterations", None)))
+    cargs.append(params.get("surface-out", None))
     return cargs
 
 
@@ -168,10 +168,10 @@ def surface_smoothing_execute(
 
 
 def surface_smoothing(
-    surface_out: str,
     surface_in: InputPathType,
     smoothing_strength: float,
     smoothing_iterations: int,
+    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
@@ -181,19 +181,19 @@ def surface_smoothing(
     neighboring vertices.
     
     Args:
-        surface_out: output surface file.
         surface_in: the surface file to smooth.
         smoothing_strength: smoothing strength (ranges [0.0 - 1.0]).
         smoothing_iterations: smoothing iterations.
+        surface_out: output surface file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSmoothingOutputs`).
     """
     params = surface_smoothing_params(
-        surface_out=surface_out,
         surface_in=surface_in,
         smoothing_strength=smoothing_strength,
         smoothing_iterations=smoothing_iterations,
+        surface_out=surface_out,
     )
     return surface_smoothing_execute(params, runner)
 

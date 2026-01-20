@@ -1,17 +1,17 @@
 {
   "fn_root_make_params_and_execute": "metric_remove_islands",
   "properties": {
-    "metric-out": {
-      "var_param": "metric_out"
-    },
-    "area-metric": {
-      "var_param": "area_metric"
-    },
     "surface": {
       "var_param": "surface"
     },
     "metric-in": {
       "var_param": "metric_in"
+    },
+    "metric-out": {
+      "var_param": "metric_out"
+    },
+    "area-metric": {
+      "var_param": "area_metric"
     }
   }
 }

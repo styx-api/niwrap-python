@@ -14,17 +14,17 @@ LABEL_MASK_METADATA = Metadata(
 
 
 _LabelMaskParamsDictNoTag = typing.TypedDict('_LabelMaskParamsDictNoTag', {
-    "label-out": str,
-    "column": typing.NotRequired[str | None],
     "label": InputPathType,
     "mask": InputPathType,
+    "label-out": str,
+    "column": typing.NotRequired[str | None],
 })
 LabelMaskParamsDictTagged = typing.TypedDict('LabelMaskParamsDictTagged', {
     "@type": typing.Literal["workbench/label-mask"],
-    "label-out": str,
-    "column": typing.NotRequired[str | None],
     "label": InputPathType,
     "mask": InputPathType,
+    "label-out": str,
+    "column": typing.NotRequired[str | None],
 })
 LabelMaskParamsDict = _LabelMaskParamsDictNoTag | LabelMaskParamsDictTagged
 
@@ -40,18 +40,18 @@ class LabelMaskOutputs(typing.NamedTuple):
 
 
 def label_mask_params(
-    label_out: str,
     label: InputPathType,
     mask: InputPathType,
+    label_out: str,
     column: str | None = None,
 ) -> LabelMaskParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        label_out: the output label file.
         label: the label file to mask.
         mask: the mask metric.
+        label_out: the output label file.
         column: select a single column\
             \
             the column number or name.
@@ -60,9 +60,9 @@ def label_mask_params(
     """
     params = {
         "@type": "workbench/label-mask",
-        "label-out": label_out,
         "label": label,
         "mask": mask,
+        "label-out": label_out,
     }
     if column is not None:
         params["column"] = column
@@ -81,13 +81,6 @@ def label_mask_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("label-out", None) is None:
-        raise StyxValidationError("`label-out` must not be None")
-    if not isinstance(params["label-out"], str):
-        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("label", None) is None:
         raise StyxValidationError("`label` must not be None")
     if not isinstance(params["label"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def label_mask_validate(
         raise StyxValidationError("`mask` must not be None")
     if not isinstance(params["mask"], (pathlib.Path, str)):
         raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
 
 
 def label_mask_cargs(
@@ -116,14 +116,14 @@ def label_mask_cargs(
         "wb_command",
         "-label-mask"
     ])
+    cargs.append(execution.input_file(params.get("label", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
     cargs.append(params.get("label-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
             "-column",
             params.get("column", None)
         ])
-    cargs.append(execution.input_file(params.get("label", None)))
-    cargs.append(execution.input_file(params.get("mask", None)))
     return cargs
 
 
@@ -176,9 +176,9 @@ def label_mask_execute(
 
 
 def label_mask(
-    label_out: str,
     label: InputPathType,
     mask: InputPathType,
+    label_out: str,
     column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelMaskOutputs:
@@ -191,9 +191,9 @@ def label_mask(
     specified input column.
     
     Args:
-        label_out: the output label file.
         label: the label file to mask.
         mask: the mask metric.
+        label_out: the output label file.
         column: select a single column\
             \
             the column number or name.
@@ -202,10 +202,10 @@ def label_mask(
         NamedTuple of outputs (described in `LabelMaskOutputs`).
     """
     params = label_mask_params(
-        label_out=label_out,
-        column=column,
         label=label,
         mask=mask,
+        label_out=label_out,
+        column=column,
     )
     return label_mask_execute(params, runner)
 

@@ -103,8 +103,6 @@ def surface_closest_vertex_cargs(
         "wb_command",
         "-surface-closest-vertex"
     ])
-    cargs.extend([
-    ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("coord-list-file", None))
     cargs.append(params.get("vertex-list-out", None))

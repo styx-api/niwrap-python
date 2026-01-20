@@ -14,17 +14,17 @@ BORDER_RESAMPLE_METADATA = Metadata(
 
 
 _BorderResampleParamsDictNoTag = typing.TypedDict('_BorderResampleParamsDictNoTag', {
-    "border-out": str,
     "border-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
+    "border-out": str,
 })
 BorderResampleParamsDictTagged = typing.TypedDict('BorderResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/border-resample"],
-    "border-out": str,
     "border-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
+    "border-out": str,
 })
 BorderResampleParamsDict = _BorderResampleParamsDictNoTag | BorderResampleParamsDictTagged
 
@@ -40,30 +40,30 @@ class BorderResampleOutputs(typing.NamedTuple):
 
 
 def border_resample_params(
-    border_out: str,
     border_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
+    border_out: str,
 ) -> BorderResampleParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        border_out: the output border file.
         border_in: the border file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
+        border_out: the output border file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-resample",
-        "border-out": border_out,
         "border-in": border_in,
         "current-sphere": current_sphere,
         "new-sphere": new_sphere,
+        "border-out": border_out,
     }
     return params
 
@@ -80,10 +80,6 @@ def border_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("border-out", None) is None:
-        raise StyxValidationError("`border-out` must not be None")
-    if not isinstance(params["border-out"], str):
-        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
     if params.get("border-in", None) is None:
         raise StyxValidationError("`border-in` must not be None")
     if not isinstance(params["border-in"], (pathlib.Path, str)):
@@ -96,6 +92,10 @@ def border_resample_validate(
         raise StyxValidationError("`new-sphere` must not be None")
     if not isinstance(params["new-sphere"], (pathlib.Path, str)):
         raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("border-out", None) is None:
+        raise StyxValidationError("`border-out` must not be None")
+    if not isinstance(params["border-out"], str):
+        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
 
 
 def border_resample_cargs(
@@ -116,10 +116,10 @@ def border_resample_cargs(
         "wb_command",
         "-border-resample"
     ])
-    cargs.append(params.get("border-out", None))
     cargs.append(execution.input_file(params.get("border-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))
+    cargs.append(params.get("border-out", None))
     return cargs
 
 
@@ -171,10 +171,10 @@ def border_resample_execute(
 
 
 def border_resample(
-    border_out: str,
     border_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
+    border_out: str,
     runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
@@ -185,21 +185,21 @@ def border_resample(
     resampled.
     
     Args:
-        border_out: the output border file.
         border_in: the border file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
+        border_out: the output border file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderResampleOutputs`).
     """
     params = border_resample_params(
-        border_out=border_out,
         border_in=border_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
+        border_out=border_out,
     )
     return border_resample_execute(params, runner)
 

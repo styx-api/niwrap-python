@@ -14,23 +14,23 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 _VolumeRoisFromExtremaParamsDictNoTag = typing.TypedDict('_VolumeRoisFromExtremaParamsDictNoTag', {
+    "volume-in": InputPathType,
+    "limit": float,
     "volume-out": str,
     "subvol": typing.NotRequired[str | None],
     "method": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
     "sigma": typing.NotRequired[float | None],
-    "volume-in": InputPathType,
-    "limit": float,
 })
 VolumeRoisFromExtremaParamsDictTagged = typing.TypedDict('VolumeRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-rois-from-extrema"],
+    "volume-in": InputPathType,
+    "limit": float,
     "volume-out": str,
     "subvol": typing.NotRequired[str | None],
     "method": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
     "sigma": typing.NotRequired[float | None],
-    "volume-in": InputPathType,
-    "limit": float,
 })
 VolumeRoisFromExtremaParamsDict = _VolumeRoisFromExtremaParamsDictNoTag | VolumeRoisFromExtremaParamsDictTagged
 
@@ -46,9 +46,9 @@ class VolumeRoisFromExtremaOutputs(typing.NamedTuple):
 
 
 def volume_rois_from_extrema_params(
-    volume_out: str,
     volume_in: InputPathType,
     limit: float,
+    volume_out: str,
     subvol: str | None = None,
     method: str | None = None,
     roi_volume: InputPathType | None = None,
@@ -58,9 +58,9 @@ def volume_rois_from_extrema_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         volume_in: the input volume.
         limit: distance limit from voxel center, in mm.
+        volume_out: the output volume.
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
@@ -78,9 +78,9 @@ def volume_rois_from_extrema_params(
     """
     params = {
         "@type": "workbench/volume-rois-from-extrema",
-        "volume-out": volume_out,
         "volume-in": volume_in,
         "limit": limit,
+        "volume-out": volume_out,
     }
     if subvol is not None:
         params["subvol"] = subvol
@@ -105,6 +105,14 @@ def volume_rois_from_extrema_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("limit", None) is None:
+        raise StyxValidationError("`limit` must not be None")
+    if not isinstance(params["limit"], (float, int)):
+        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -121,14 +129,6 @@ def volume_rois_from_extrema_validate(
     if params.get("sigma", None) is not None:
         if not isinstance(params["sigma"], (float, int)):
             raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
-    if params.get("limit", None) is None:
-        raise StyxValidationError("`limit` must not be None")
-    if not isinstance(params["limit"], (float, int)):
-        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
 
 
 def volume_rois_from_extrema_cargs(
@@ -149,6 +149,8 @@ def volume_rois_from_extrema_cargs(
         "wb_command",
         "-volume-rois-from-extrema"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("limit", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("subvol", None) is not None:
         cargs.extend([
@@ -170,8 +172,6 @@ def volume_rois_from_extrema_cargs(
             "-gaussian",
             str(params.get("sigma", None))
         ])
-    cargs.append(execution.input_file(params.get("volume-in", None)))
-    cargs.append(str(params.get("limit", None)))
     return cargs
 
 
@@ -228,9 +228,9 @@ def volume_rois_from_extrema_execute(
 
 
 def volume_rois_from_extrema(
-    volume_out: str,
     volume_in: InputPathType,
     limit: float,
+    volume_out: str,
     subvol: str | None = None,
     method: str | None = None,
     roi_volume: InputPathType | None = None,
@@ -250,9 +250,9 @@ def volume_rois_from_extrema(
     vertex within range of more than one ROI does not belong to any ROI.
     
     Args:
-        volume_out: the output volume.
         volume_in: the input volume.
         limit: distance limit from voxel center, in mm.
+        volume_out: the output volume.
         subvol: select a single subvolume to take the gradient of\
             \
             the subvolume number or name.
@@ -270,13 +270,13 @@ def volume_rois_from_extrema(
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).
     """
     params = volume_rois_from_extrema_params(
+        volume_in=volume_in,
+        limit=limit,
         volume_out=volume_out,
         subvol=subvol,
         method=method,
         roi_volume=roi_volume,
         sigma=sigma,
-        volume_in=volume_in,
-        limit=limit,
     )
     return volume_rois_from_extrema_execute(params, runner)
 

@@ -14,17 +14,17 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
 
 
 _SurfaceGenerateInflatedParamsDictNoTag = typing.TypedDict('_SurfaceGenerateInflatedParamsDictNoTag', {
+    "anatomical-surface-in": InputPathType,
     "inflated-surface-out": str,
     "very-inflated-surface-out": str,
     "iterations-scale-value": typing.NotRequired[float | None],
-    "anatomical-surface-in": InputPathType,
 })
 SurfaceGenerateInflatedParamsDictTagged = typing.TypedDict('SurfaceGenerateInflatedParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-generate-inflated"],
+    "anatomical-surface-in": InputPathType,
     "inflated-surface-out": str,
     "very-inflated-surface-out": str,
     "iterations-scale-value": typing.NotRequired[float | None],
-    "anatomical-surface-in": InputPathType,
 })
 SurfaceGenerateInflatedParamsDict = _SurfaceGenerateInflatedParamsDictNoTag | SurfaceGenerateInflatedParamsDictTagged
 
@@ -42,18 +42,18 @@ class SurfaceGenerateInflatedOutputs(typing.NamedTuple):
 
 
 def surface_generate_inflated_params(
+    anatomical_surface_in: InputPathType,
     inflated_surface_out: str,
     very_inflated_surface_out: str,
-    anatomical_surface_in: InputPathType,
     iterations_scale_value: float | None = None,
 ) -> SurfaceGenerateInflatedParamsDictTagged:
     """
     Build parameters.
     
     Args:
+        anatomical_surface_in: the anatomical surface.
         inflated_surface_out: the output inflated surface.
         very_inflated_surface_out: the output very inflated surface.
-        anatomical_surface_in: the anatomical surface.
         iterations_scale_value: optional iterations scaling\
             \
             iterations-scale value.
@@ -62,9 +62,9 @@ def surface_generate_inflated_params(
     """
     params = {
         "@type": "workbench/surface-generate-inflated",
+        "anatomical-surface-in": anatomical_surface_in,
         "inflated-surface-out": inflated_surface_out,
         "very-inflated-surface-out": very_inflated_surface_out,
-        "anatomical-surface-in": anatomical_surface_in,
     }
     if iterations_scale_value is not None:
         params["iterations-scale-value"] = iterations_scale_value
@@ -83,6 +83,10 @@ def surface_generate_inflated_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("anatomical-surface-in", None) is None:
+        raise StyxValidationError("`anatomical-surface-in` must not be None")
+    if not isinstance(params["anatomical-surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical-surface-in` has the wrong type: Received `{type(params.get("anatomical-surface-in", None))}` expected `InputPathType`')
     if params.get("inflated-surface-out", None) is None:
         raise StyxValidationError("`inflated-surface-out` must not be None")
     if not isinstance(params["inflated-surface-out"], str):
@@ -94,10 +98,6 @@ def surface_generate_inflated_validate(
     if params.get("iterations-scale-value", None) is not None:
         if not isinstance(params["iterations-scale-value"], (float, int)):
             raise StyxValidationError(f'`iterations-scale-value` has the wrong type: Received `{type(params.get("iterations-scale-value", None))}` expected `float | None`')
-    if params.get("anatomical-surface-in", None) is None:
-        raise StyxValidationError("`anatomical-surface-in` must not be None")
-    if not isinstance(params["anatomical-surface-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`anatomical-surface-in` has the wrong type: Received `{type(params.get("anatomical-surface-in", None))}` expected `InputPathType`')
 
 
 def surface_generate_inflated_cargs(
@@ -118,16 +118,14 @@ def surface_generate_inflated_cargs(
         "wb_command",
         "-surface-generate-inflated"
     ])
-    cargs.extend([
-        params.get("inflated-surface-out", None),
-        params.get("very-inflated-surface-out", None)
-    ])
+    cargs.append(execution.input_file(params.get("anatomical-surface-in", None)))
+    cargs.append(params.get("inflated-surface-out", None))
+    cargs.append(params.get("very-inflated-surface-out", None))
     if params.get("iterations-scale-value", None) is not None:
         cargs.extend([
             "-iterations-scale",
             str(params.get("iterations-scale-value", None))
         ])
-    cargs.append(execution.input_file(params.get("anatomical-surface-in", None)))
     return cargs
 
 
@@ -182,9 +180,9 @@ def surface_generate_inflated_execute(
 
 
 def surface_generate_inflated(
+    anatomical_surface_in: InputPathType,
     inflated_surface_out: str,
     very_inflated_surface_out: str,
-    anatomical_surface_in: InputPathType,
     iterations_scale_value: float | None = None,
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
@@ -198,9 +196,9 @@ def surface_generate_inflated(
     2.5.
     
     Args:
+        anatomical_surface_in: the anatomical surface.
         inflated_surface_out: the output inflated surface.
         very_inflated_surface_out: the output very inflated surface.
-        anatomical_surface_in: the anatomical surface.
         iterations_scale_value: optional iterations scaling\
             \
             iterations-scale value.
@@ -209,10 +207,10 @@ def surface_generate_inflated(
         NamedTuple of outputs (described in `SurfaceGenerateInflatedOutputs`).
     """
     params = surface_generate_inflated_params(
+        anatomical_surface_in=anatomical_surface_in,
         inflated_surface_out=inflated_surface_out,
         very_inflated_surface_out=very_inflated_surface_out,
         iterations_scale_value=iterations_scale_value,
-        anatomical_surface_in=anatomical_surface_in,
     )
     return surface_generate_inflated_execute(params, runner)
 

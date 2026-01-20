@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_to_surface_mapping",
   "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -105,12 +111,6 @@
     },
     "trilinear": {
       "var_param": "trilinear"
-    },
-    "volume": {
-      "var_param": "volume"
-    },
-    "surface": {
-      "var_param": "surface"
     }
   }
 }

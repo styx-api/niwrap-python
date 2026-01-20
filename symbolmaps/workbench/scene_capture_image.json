@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "scene_capture_image",
   "properties": {
+    "scene-file": {
+      "var_param": "scene_file"
+    },
+    "scene-name-or-number": {
+      "var_param": "scene_name_or_number"
+    },
+    "image-file-name": {
+      "var_param": "image_file_name"
+    },
     "size-width-height": {
       "var_param": "size_width_height",
       "fn_struct_make_params": "scene_capture_image_size_width_height",
@@ -78,15 +87,6 @@
     },
     "size-window": {
       "var_param": "size_window"
-    },
-    "scene-file": {
-      "var_param": "scene_file"
-    },
-    "scene-name-or-number": {
-      "var_param": "scene_name_or_number"
-    },
-    "image-file-name": {
-      "var_param": "image_file_name"
     }
   }
 }

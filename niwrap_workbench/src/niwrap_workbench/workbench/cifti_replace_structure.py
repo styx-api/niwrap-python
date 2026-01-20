@@ -64,25 +64,25 @@ CiftiReplaceStructureVolumeParamsDict = _CiftiReplaceStructureVolumeParamsDictNo
 
 
 _CiftiReplaceStructureParamsDictNoTag = typing.TypedDict('_CiftiReplaceStructureParamsDictNoTag', {
+    "cifti": str,
+    "direction": str,
     "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
     "label": typing.NotRequired[list[CiftiReplaceStructureLabelParamsDict] | None],
     "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParamsDict] | None],
     "action": typing.NotRequired[str | None],
     "discard-unused-labels": bool,
-    "cifti": str,
-    "direction": str,
 })
 CiftiReplaceStructureParamsDictTagged = typing.TypedDict('CiftiReplaceStructureParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-replace-structure"],
+    "cifti": str,
+    "direction": str,
     "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParamsDict | None],
     "label": typing.NotRequired[list[CiftiReplaceStructureLabelParamsDict] | None],
     "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParamsDict] | None],
     "action": typing.NotRequired[str | None],
     "discard-unused-labels": bool,
-    "cifti": str,
-    "direction": str,
 })
 CiftiReplaceStructureParamsDict = _CiftiReplaceStructureParamsDictNoTag | CiftiReplaceStructureParamsDictTagged
 
@@ -396,9 +396,9 @@ def cifti_replace_structure_params(
     """
     params = {
         "@type": "workbench/cifti-replace-structure",
-        "discard-unused-labels": discard_unused_labels,
         "cifti": cifti,
         "direction": direction,
+        "discard-unused-labels": discard_unused_labels,
     }
     if volume_all is not None:
         params["volume-all"] = volume_all
@@ -425,6 +425,14 @@ def cifti_replace_structure_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], str):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `str`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("volume-all", None) is not None:
         cifti_replace_structure_volume_all_validate(params["volume-all"])
     if params.get("label", None) is not None:
@@ -449,14 +457,6 @@ def cifti_replace_structure_validate(
         raise StyxValidationError("`discard-unused-labels` must not be None")
     if not isinstance(params["discard-unused-labels"], bool):
         raise StyxValidationError(f'`discard-unused-labels` has the wrong type: Received `{type(params.get("discard-unused-labels", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], str):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `str`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_replace_structure_cargs(
@@ -477,6 +477,8 @@ def cifti_replace_structure_cargs(
         "wb_command",
         "-cifti-replace-structure"
     ])
+    cargs.append(params.get("cifti", None))
+    cargs.append(params.get("direction", None))
     if params.get("volume-all", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
         cargs.extend([
             *(cifti_replace_structure_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
@@ -491,8 +493,6 @@ def cifti_replace_structure_cargs(
         ])
     if params.get("discard-unused-labels", False):
         cargs.append("-discard-unused-labels")
-    cargs.append(params.get("cifti", None))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -666,14 +666,14 @@ def cifti_replace_structure(
         NamedTuple of outputs (described in `CiftiReplaceStructureOutputs`).
     """
     params = cifti_replace_structure_params(
+        cifti=cifti,
+        direction=direction,
         volume_all=volume_all,
         label=label,
         metric=metric,
         volume=volume,
         action=action,
         discard_unused_labels=discard_unused_labels,
-        cifti=cifti,
-        direction=direction,
     )
     return cifti_replace_structure_execute(params, runner)
 

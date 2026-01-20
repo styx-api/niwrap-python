@@ -14,17 +14,17 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
 
 
 _SurfaceApplyWarpfieldParamsDictNoTag = typing.TypedDict('_SurfaceApplyWarpfieldParamsDictNoTag', {
-    "out-surf": str,
-    "forward-warp": typing.NotRequired[str | None],
     "in-surf": InputPathType,
     "warpfield": str,
+    "out-surf": str,
+    "forward-warp": typing.NotRequired[str | None],
 })
 SurfaceApplyWarpfieldParamsDictTagged = typing.TypedDict('SurfaceApplyWarpfieldParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-apply-warpfield"],
-    "out-surf": str,
-    "forward-warp": typing.NotRequired[str | None],
     "in-surf": InputPathType,
     "warpfield": str,
+    "out-surf": str,
+    "forward-warp": typing.NotRequired[str | None],
 })
 SurfaceApplyWarpfieldParamsDict = _SurfaceApplyWarpfieldParamsDictNoTag | SurfaceApplyWarpfieldParamsDictTagged
 
@@ -40,18 +40,18 @@ class SurfaceApplyWarpfieldOutputs(typing.NamedTuple):
 
 
 def surface_apply_warpfield_params(
-    out_surf: str,
     in_surf: InputPathType,
     warpfield: str,
+    out_surf: str,
     forward_warp: str | None = None,
 ) -> SurfaceApplyWarpfieldParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        out_surf: the output transformed surface.
         in_surf: the surface to transform.
         warpfield: the INVERSE warpfield.
+        out_surf: the output transformed surface.
         forward_warp: MUST be used if using a fnirt warpfield\
             \
             the forward warpfield.
@@ -60,9 +60,9 @@ def surface_apply_warpfield_params(
     """
     params = {
         "@type": "workbench/surface-apply-warpfield",
-        "out-surf": out_surf,
         "in-surf": in_surf,
         "warpfield": warpfield,
+        "out-surf": out_surf,
     }
     if forward_warp is not None:
         params["forward-warp"] = forward_warp
@@ -81,13 +81,6 @@ def surface_apply_warpfield_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("out-surf", None) is None:
-        raise StyxValidationError("`out-surf` must not be None")
-    if not isinstance(params["out-surf"], str):
-        raise StyxValidationError(f'`out-surf` has the wrong type: Received `{type(params.get("out-surf", None))}` expected `str`')
-    if params.get("forward-warp", None) is not None:
-        if not isinstance(params["forward-warp"], str):
-            raise StyxValidationError(f'`forward-warp` has the wrong type: Received `{type(params.get("forward-warp", None))}` expected `str | None`')
     if params.get("in-surf", None) is None:
         raise StyxValidationError("`in-surf` must not be None")
     if not isinstance(params["in-surf"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def surface_apply_warpfield_validate(
         raise StyxValidationError("`warpfield` must not be None")
     if not isinstance(params["warpfield"], str):
         raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
+    if params.get("out-surf", None) is None:
+        raise StyxValidationError("`out-surf` must not be None")
+    if not isinstance(params["out-surf"], str):
+        raise StyxValidationError(f'`out-surf` has the wrong type: Received `{type(params.get("out-surf", None))}` expected `str`')
+    if params.get("forward-warp", None) is not None:
+        if not isinstance(params["forward-warp"], str):
+            raise StyxValidationError(f'`forward-warp` has the wrong type: Received `{type(params.get("forward-warp", None))}` expected `str | None`')
 
 
 def surface_apply_warpfield_cargs(
@@ -116,14 +116,14 @@ def surface_apply_warpfield_cargs(
         "wb_command",
         "-surface-apply-warpfield"
     ])
+    cargs.append(execution.input_file(params.get("in-surf", None)))
+    cargs.append(params.get("warpfield", None))
     cargs.append(params.get("out-surf", None))
     if params.get("forward-warp", None) is not None:
         cargs.extend([
             "-fnirt",
             params.get("forward-warp", None)
         ])
-    cargs.append(execution.input_file(params.get("in-surf", None)))
-    cargs.append(params.get("warpfield", None))
     return cargs
 
 
@@ -179,9 +179,9 @@ def surface_apply_warpfield_execute(
 
 
 def surface_apply_warpfield(
-    out_surf: str,
     in_surf: InputPathType,
     warpfield: str,
+    out_surf: str,
     forward_warp: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
@@ -197,9 +197,9 @@ def surface_apply_warpfield(
     warpfield, which can be obtained with the -convert-warpfield command.
     
     Args:
-        out_surf: the output transformed surface.
         in_surf: the surface to transform.
         warpfield: the INVERSE warpfield.
+        out_surf: the output transformed surface.
         forward_warp: MUST be used if using a fnirt warpfield\
             \
             the forward warpfield.
@@ -208,10 +208,10 @@ def surface_apply_warpfield(
         NamedTuple of outputs (described in `SurfaceApplyWarpfieldOutputs`).
     """
     params = surface_apply_warpfield_params(
-        out_surf=out_surf,
-        forward_warp=forward_warp,
         in_surf=in_surf,
         warpfield=warpfield,
+        out_surf=out_surf,
+        forward_warp=forward_warp,
     )
     return surface_apply_warpfield_execute(params, runner)
 

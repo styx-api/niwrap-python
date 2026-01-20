@@ -330,11 +330,12 @@ def cifti_average_roi_correlation_cargs(
         "wb_command",
         "-cifti-average-roi-correlation"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_average_roi_correlation_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
-        *([a for c in [cifti_average_roi_correlation_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-    ])
+    cargs.append(params.get("cifti-out", None))
+    if params.get("cifti-roi", None) is not None or params.get("cifti", None) is not None:
+        cargs.extend([
+            *(cifti_average_roi_correlation_cifti_roi_cargs(params.get("cifti-roi", None), execution) if (params.get("cifti-roi", None) is not None) else []),
+            *([a for c in [cifti_average_roi_correlation_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
+        ])
     if params.get("cerebellum-surf", None) is not None:
         cargs.extend([
             "-cerebellum-area-surf",

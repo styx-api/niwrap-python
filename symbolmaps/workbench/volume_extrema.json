@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_extrema",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -45,12 +51,6 @@
     },
     "sum-subvols": {
       "var_param": "sum_subvols"
-    },
-    "volume-in": {
-      "var_param": "volume_in"
-    },
-    "distance": {
-      "var_param": "distance"
     }
   }
 }

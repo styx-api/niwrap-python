@@ -14,17 +14,17 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
 
 
 _SignedDistanceToSurfaceParamsDictNoTag = typing.TypedDict('_SignedDistanceToSurfaceParamsDictNoTag', {
-    "metric": str,
-    "method": typing.NotRequired[str | None],
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
+    "metric": str,
+    "method": typing.NotRequired[str | None],
 })
 SignedDistanceToSurfaceParamsDictTagged = typing.TypedDict('SignedDistanceToSurfaceParamsDictTagged', {
     "@type": typing.Literal["workbench/signed-distance-to-surface"],
-    "metric": str,
-    "method": typing.NotRequired[str | None],
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
+    "metric": str,
+    "method": typing.NotRequired[str | None],
 })
 SignedDistanceToSurfaceParamsDict = _SignedDistanceToSurfaceParamsDictNoTag | SignedDistanceToSurfaceParamsDictTagged
 
@@ -40,19 +40,19 @@ class SignedDistanceToSurfaceOutputs(typing.NamedTuple):
 
 
 def signed_distance_to_surface_params(
-    metric: str,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    metric: str,
     method: str | None = None,
 ) -> SignedDistanceToSurfaceParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric: the output metric.
         surface_comp: the comparison surface to measure the signed distance on.
         surface_ref: the reference surface that defines the signed distance\
             function.
+        metric: the output metric.
         method: winding method for point inside surface test\
             \
             name of the method (default EVEN_ODD).
@@ -61,9 +61,9 @@ def signed_distance_to_surface_params(
     """
     params = {
         "@type": "workbench/signed-distance-to-surface",
-        "metric": metric,
         "surface-comp": surface_comp,
         "surface-ref": surface_ref,
+        "metric": metric,
     }
     if method is not None:
         params["method"] = method
@@ -82,13 +82,6 @@ def signed_distance_to_surface_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric", None) is None:
-        raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], str):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
-    if params.get("method", None) is not None:
-        if not isinstance(params["method"], str):
-            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
     if params.get("surface-comp", None) is None:
         raise StyxValidationError("`surface-comp` must not be None")
     if not isinstance(params["surface-comp"], (pathlib.Path, str)):
@@ -97,6 +90,13 @@ def signed_distance_to_surface_validate(
         raise StyxValidationError("`surface-ref` must not be None")
     if not isinstance(params["surface-ref"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface-ref` has the wrong type: Received `{type(params.get("surface-ref", None))}` expected `InputPathType`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
 
 
 def signed_distance_to_surface_cargs(
@@ -117,14 +117,14 @@ def signed_distance_to_surface_cargs(
         "wb_command",
         "-signed-distance-to-surface"
     ])
+    cargs.append(execution.input_file(params.get("surface-comp", None)))
+    cargs.append(execution.input_file(params.get("surface-ref", None)))
     cargs.append(params.get("metric", None))
     if params.get("method", None) is not None:
         cargs.extend([
             "-winding",
             params.get("method", None)
         ])
-    cargs.append(execution.input_file(params.get("surface-comp", None)))
-    cargs.append(execution.input_file(params.get("surface-ref", None)))
     return cargs
 
 
@@ -190,9 +190,9 @@ def signed_distance_to_surface_execute(
 
 
 def signed_distance_to_surface(
-    metric: str,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    metric: str,
     method: str | None = None,
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
@@ -218,10 +218,10 @@ def signed_distance_to_surface(
     total is odd, negative, or nonzero, respectively.
     
     Args:
-        metric: the output metric.
         surface_comp: the comparison surface to measure the signed distance on.
         surface_ref: the reference surface that defines the signed distance\
             function.
+        metric: the output metric.
         method: winding method for point inside surface test\
             \
             name of the method (default EVEN_ODD).
@@ -230,10 +230,10 @@ def signed_distance_to_surface(
         NamedTuple of outputs (described in `SignedDistanceToSurfaceOutputs`).
     """
     params = signed_distance_to_surface_params(
-        metric=metric,
-        method=method,
         surface_comp=surface_comp,
         surface_ref=surface_ref,
+        metric=metric,
+        method=method,
     )
     return signed_distance_to_surface_execute(params, runner)
 

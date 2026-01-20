@@ -26,17 +26,17 @@ SetMapNamesMapParamsDict = _SetMapNamesMapParamsDictNoTag | SetMapNamesMapParams
 
 
 _SetMapNamesParamsDictNoTag = typing.TypedDict('_SetMapNamesParamsDictNoTag', {
+    "data-file": str,
     "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
     "file": typing.NotRequired[str | None],
     "file": typing.NotRequired[str | None],
-    "data-file": str,
 })
 SetMapNamesParamsDictTagged = typing.TypedDict('SetMapNamesParamsDictTagged', {
     "@type": typing.Literal["workbench/set-map-names"],
+    "data-file": str,
     "map": typing.NotRequired[list[SetMapNamesMapParamsDict] | None],
     "file": typing.NotRequired[str | None],
     "file": typing.NotRequired[str | None],
-    "data-file": str,
 })
 SetMapNamesParamsDict = _SetMapNamesParamsDictNoTag | SetMapNamesParamsDictTagged
 
@@ -160,6 +160,10 @@ def set_map_names_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data-file", None) is None:
+        raise StyxValidationError("`data-file` must not be None")
+    if not isinstance(params["data-file"], str):
+        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
     if params.get("map", None) is not None:
         if not isinstance(params["map"], list):
             raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `list[SetMapNamesMapParamsDict] | None`')
@@ -171,10 +175,6 @@ def set_map_names_validate(
     if params.get("file", None) is not None:
         if not isinstance(params["file"], str):
             raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
-    if params.get("data-file", None) is None:
-        raise StyxValidationError("`data-file` must not be None")
-    if not isinstance(params["data-file"], str):
-        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
 
 
 def set_map_names_cargs(
@@ -195,6 +195,7 @@ def set_map_names_cargs(
         "wb_command",
         "-set-map-names"
     ])
+    cargs.append(params.get("data-file", None))
     if params.get("map", None) is not None:
         cargs.extend([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c])
     if params.get("file", None) is not None:
@@ -207,7 +208,6 @@ def set_map_names_cargs(
             "-name-file",
             params.get("file", None)
         ])
-    cargs.append(params.get("data-file", None))
     return cargs
 
 
@@ -287,10 +287,10 @@ def set_map_names(
         NamedTuple of outputs (described in `SetMapNamesOutputs`).
     """
     params = set_map_names_params(
+        data_file=data_file,
         map_=map_,
         file=file,
         file_=file_,
-        data_file=data_file,
     )
     return set_map_names_execute(params, runner)
 

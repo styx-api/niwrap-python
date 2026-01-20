@@ -14,13 +14,13 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
 
 
 _SurfaceFlipNormalsParamsDictNoTag = typing.TypedDict('_SurfaceFlipNormalsParamsDictNoTag', {
-    "surface-out": str,
     "surface": InputPathType,
+    "surface-out": str,
 })
 SurfaceFlipNormalsParamsDictTagged = typing.TypedDict('SurfaceFlipNormalsParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-flip-normals"],
-    "surface-out": str,
     "surface": InputPathType,
+    "surface-out": str,
 })
 SurfaceFlipNormalsParamsDict = _SurfaceFlipNormalsParamsDictNoTag | SurfaceFlipNormalsParamsDictTagged
 
@@ -36,22 +36,22 @@ class SurfaceFlipNormalsOutputs(typing.NamedTuple):
 
 
 def surface_flip_normals_params(
-    surface_out: str,
     surface: InputPathType,
+    surface_out: str,
 ) -> SurfaceFlipNormalsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        surface_out: the output surface.
         surface: the surface to flip the normals of.
+        surface_out: the output surface.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-flip-normals",
-        "surface-out": surface_out,
         "surface": surface,
+        "surface-out": surface_out,
     }
     return params
 
@@ -68,14 +68,14 @@ def surface_flip_normals_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("surface-out", None) is None:
-        raise StyxValidationError("`surface-out` must not be None")
-    if not isinstance(params["surface-out"], str):
-        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
 
 
 def surface_flip_normals_cargs(
@@ -96,8 +96,8 @@ def surface_flip_normals_cargs(
         "wb_command",
         "-surface-flip-normals"
     ])
-    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("surface-out", None))
     return cargs
 
 
@@ -152,8 +152,8 @@ def surface_flip_normals_execute(
 
 
 def surface_flip_normals(
-    surface_out: str,
     surface: InputPathType,
+    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
@@ -167,15 +167,15 @@ def surface_flip_normals(
     problem.
     
     Args:
-        surface_out: the output surface.
         surface: the surface to flip the normals of.
+        surface_out: the output surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipNormalsOutputs`).
     """
     params = surface_flip_normals_params(
-        surface_out=surface_out,
         surface=surface,
+        surface_out=surface_out,
     )
     return surface_flip_normals_execute(params, runner)
 

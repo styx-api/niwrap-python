@@ -14,17 +14,17 @@ CIFTI_REORDER_METADATA = Metadata(
 
 
 _CiftiReorderParamsDictNoTag = typing.TypedDict('_CiftiReorderParamsDictNoTag', {
-    "cifti-out": str,
     "cifti-in": InputPathType,
     "direction": str,
     "reorder-list": str,
+    "cifti-out": str,
 })
 CiftiReorderParamsDictTagged = typing.TypedDict('CiftiReorderParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-reorder"],
-    "cifti-out": str,
     "cifti-in": InputPathType,
     "direction": str,
     "reorder-list": str,
+    "cifti-out": str,
 })
 CiftiReorderParamsDict = _CiftiReorderParamsDictNoTag | CiftiReorderParamsDictTagged
 
@@ -40,28 +40,28 @@ class CiftiReorderOutputs(typing.NamedTuple):
 
 
 def cifti_reorder_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     reorder_list: str,
+    cifti_out: str,
 ) -> CiftiReorderParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        cifti_out: the reordered cifti file.
         cifti_in: input cifti file.
         direction: which dimension to reorder along, ROW or COLUMN.
         reorder_list: a text file containing the desired order transformation.
+        cifti_out: the reordered cifti file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-reorder",
-        "cifti-out": cifti_out,
         "cifti-in": cifti_in,
         "direction": direction,
         "reorder-list": reorder_list,
+        "cifti-out": cifti_out,
     }
     return params
 
@@ -78,10 +78,6 @@ def cifti_reorder_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -94,6 +90,10 @@ def cifti_reorder_validate(
         raise StyxValidationError("`reorder-list` must not be None")
     if not isinstance(params["reorder-list"], str):
         raise StyxValidationError(f'`reorder-list` has the wrong type: Received `{type(params.get("reorder-list", None))}` expected `str`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
 
 
 def cifti_reorder_cargs(
@@ -114,10 +114,10 @@ def cifti_reorder_cargs(
         "wb_command",
         "-cifti-reorder"
     ])
-    cargs.append(params.get("cifti-out", None))
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(params.get("reorder-list", None))
+    cargs.append(params.get("cifti-out", None))
     return cargs
 
 
@@ -174,10 +174,10 @@ def cifti_reorder_execute(
 
 
 def cifti_reorder(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     reorder_list: str,
+    cifti_out: str,
     runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
@@ -193,19 +193,19 @@ def cifti_reorder(
     contain '4 1 2 3'.
     
     Args:
-        cifti_out: the reordered cifti file.
         cifti_in: input cifti file.
         direction: which dimension to reorder along, ROW or COLUMN.
         reorder_list: a text file containing the desired order transformation.
+        cifti_out: the reordered cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiReorderOutputs`).
     """
     params = cifti_reorder_params(
-        cifti_out=cifti_out,
         cifti_in=cifti_in,
         direction=direction,
         reorder_list=reorder_list,
+        cifti_out=cifti_out,
     )
     return cifti_reorder_execute(params, runner)
 

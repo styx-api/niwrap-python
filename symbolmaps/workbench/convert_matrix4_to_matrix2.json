@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "convert_matrix4_to_matrix2",
   "properties": {
+    "matrix4-wbsparse": {
+      "var_param": "matrix4_wbsparse"
+    },
     "counts-out": {
       "var_param": "counts_out"
     },
@@ -27,9 +30,6 @@
           "var_param": "fiber_3"
         }
       }
-    },
-    "matrix4-wbsparse": {
-      "var_param": "matrix4_wbsparse"
     }
   }
 }

@@ -26,21 +26,21 @@ CiftiStatsRoiParamsDict = _CiftiStatsRoiParamsDictNoTag | CiftiStatsRoiParamsDic
 
 
 _CiftiStatsParamsDictNoTag = typing.TypedDict('_CiftiStatsParamsDictNoTag', {
+    "cifti-in": InputPathType,
     "roi": typing.NotRequired[CiftiStatsRoiParamsDict | None],
     "column": typing.NotRequired[int | None],
     "percent": typing.NotRequired[float | None],
     "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
-    "cifti-in": InputPathType,
 })
 CiftiStatsParamsDictTagged = typing.TypedDict('CiftiStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-stats"],
+    "cifti-in": InputPathType,
     "roi": typing.NotRequired[CiftiStatsRoiParamsDict | None],
     "column": typing.NotRequired[int | None],
     "percent": typing.NotRequired[float | None],
     "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
-    "cifti-in": InputPathType,
 })
 CiftiStatsParamsDict = _CiftiStatsParamsDictNoTag | CiftiStatsParamsDictTagged
 
@@ -149,8 +149,8 @@ def cifti_stats_params(
     """
     params = {
         "@type": "workbench/cifti-stats",
-        "show-map-name": show_map_name,
         "cifti-in": cifti_in,
+        "show-map-name": show_map_name,
     }
     if roi is not None:
         params["roi"] = roi
@@ -175,6 +175,10 @@ def cifti_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
     if params.get("roi", None) is not None:
         cifti_stats_roi_validate(params["roi"])
     if params.get("column", None) is not None:
@@ -190,10 +194,6 @@ def cifti_stats_validate(
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
         raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
 
 
 def cifti_stats_cargs(
@@ -214,6 +214,7 @@ def cifti_stats_cargs(
         "wb_command",
         "-cifti-stats"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     if params.get("roi", None) is not None:
         cargs.extend(cifti_stats_roi_cargs(params.get("roi", None), execution))
     if params.get("column", None) is not None:
@@ -233,7 +234,6 @@ def cifti_stats_cargs(
         ])
     if params.get("show-map-name", False):
         cargs.append("-show-map-name")
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -363,12 +363,12 @@ def cifti_stats(
         NamedTuple of outputs (described in `CiftiStatsOutputs`).
     """
     params = cifti_stats_params(
+        cifti_in=cifti_in,
         roi=roi,
         column=column,
         percent=percent,
         operation=operation,
         show_map_name=show_map_name,
-        cifti_in=cifti_in,
     )
     return cifti_stats_execute(params, runner)
 

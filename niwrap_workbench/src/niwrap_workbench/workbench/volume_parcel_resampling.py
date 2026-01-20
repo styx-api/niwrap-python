@@ -14,25 +14,25 @@ VOLUME_PARCEL_RESAMPLING_METADATA = Metadata(
 
 
 _VolumeParcelResamplingParamsDictNoTag = typing.TypedDict('_VolumeParcelResamplingParamsDictNoTag', {
-    "volume-out": str,
-    "subvol": typing.NotRequired[str | None],
-    "fwhm": bool,
-    "fix-zeros": bool,
     "volume-in": InputPathType,
     "cur-parcels": InputPathType,
     "new-parcels": InputPathType,
     "kernel": float,
+    "volume-out": str,
+    "subvol": typing.NotRequired[str | None],
+    "fwhm": bool,
+    "fix-zeros": bool,
 })
 VolumeParcelResamplingParamsDictTagged = typing.TypedDict('VolumeParcelResamplingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-parcel-resampling"],
-    "volume-out": str,
-    "subvol": typing.NotRequired[str | None],
-    "fwhm": bool,
-    "fix-zeros": bool,
     "volume-in": InputPathType,
     "cur-parcels": InputPathType,
     "new-parcels": InputPathType,
     "kernel": float,
+    "volume-out": str,
+    "subvol": typing.NotRequired[str | None],
+    "fwhm": bool,
+    "fix-zeros": bool,
 })
 VolumeParcelResamplingParamsDict = _VolumeParcelResamplingParamsDictNoTag | VolumeParcelResamplingParamsDictTagged
 
@@ -48,11 +48,11 @@ class VolumeParcelResamplingOutputs(typing.NamedTuple):
 
 
 def volume_parcel_resampling_params(
-    volume_out: str,
     volume_in: InputPathType,
     cur_parcels: InputPathType,
     new_parcels: InputPathType,
     kernel: float,
+    volume_out: str,
     subvol: str | None = None,
     fwhm: bool = False,
     fix_zeros: bool = False,
@@ -61,12 +61,12 @@ def volume_parcel_resampling_params(
     Build parameters.
     
     Args:
-        volume_out: output volume.
         volume_in: the input data volume.
         cur_parcels: label volume of where the parcels currently are.
         new_parcels: label volume of where the parcels should be.
         kernel: gaussian kernel size in mm to smooth by during resampling, as\
             sigma by default.
+        volume_out: output volume.
         subvol: select a single subvolume as input\
             \
             the subvolume number or name.
@@ -77,13 +77,13 @@ def volume_parcel_resampling_params(
     """
     params = {
         "@type": "workbench/volume-parcel-resampling",
-        "volume-out": volume_out,
-        "fwhm": fwhm,
-        "fix-zeros": fix_zeros,
         "volume-in": volume_in,
         "cur-parcels": cur_parcels,
         "new-parcels": new_parcels,
         "kernel": kernel,
+        "volume-out": volume_out,
+        "fwhm": fwhm,
+        "fix-zeros": fix_zeros,
     }
     if subvol is not None:
         params["subvol"] = subvol
@@ -102,21 +102,6 @@ def volume_parcel_resampling_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("subvol", None) is not None:
-        if not isinstance(params["subvol"], str):
-            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
-    if params.get("fwhm", False) is None:
-        raise StyxValidationError("`fwhm` must not be None")
-    if not isinstance(params["fwhm"], bool):
-        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
-    if params.get("fix-zeros", False) is None:
-        raise StyxValidationError("`fix-zeros` must not be None")
-    if not isinstance(params["fix-zeros"], bool):
-        raise StyxValidationError(f'`fix-zeros` has the wrong type: Received `{type(params.get("fix-zeros", False))}` expected `bool`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -133,6 +118,21 @@ def volume_parcel_resampling_validate(
         raise StyxValidationError("`kernel` must not be None")
     if not isinstance(params["kernel"], (float, int)):
         raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+    if params.get("fix-zeros", False) is None:
+        raise StyxValidationError("`fix-zeros` must not be None")
+    if not isinstance(params["fix-zeros"], bool):
+        raise StyxValidationError(f'`fix-zeros` has the wrong type: Received `{type(params.get("fix-zeros", False))}` expected `bool`')
 
 
 def volume_parcel_resampling_cargs(
@@ -153,6 +153,10 @@ def volume_parcel_resampling_cargs(
         "wb_command",
         "-volume-parcel-resampling"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(execution.input_file(params.get("cur-parcels", None)))
+    cargs.append(execution.input_file(params.get("new-parcels", None)))
+    cargs.append(str(params.get("kernel", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("subvol", None) is not None:
         cargs.extend([
@@ -163,10 +167,6 @@ def volume_parcel_resampling_cargs(
         cargs.append("-fwhm")
     if params.get("fix-zeros", False):
         cargs.append("-fix-zeros")
-    cargs.append(execution.input_file(params.get("volume-in", None)))
-    cargs.append(execution.input_file(params.get("cur-parcels", None)))
-    cargs.append(execution.input_file(params.get("new-parcels", None)))
-    cargs.append(str(params.get("kernel", None)))
     return cargs
 
 
@@ -225,11 +225,11 @@ def volume_parcel_resampling_execute(
 
 
 def volume_parcel_resampling(
-    volume_out: str,
     volume_in: InputPathType,
     cur_parcels: InputPathType,
     new_parcels: InputPathType,
     kernel: float,
+    volume_out: str,
     subvol: str | None = None,
     fwhm: bool = False,
     fix_zeros: bool = False,
@@ -250,12 +250,12 @@ def volume_parcel_resampling(
     different output space, see -volume-parcel-resampling-generic.
     
     Args:
-        volume_out: output volume.
         volume_in: the input data volume.
         cur_parcels: label volume of where the parcels currently are.
         new_parcels: label volume of where the parcels should be.
         kernel: gaussian kernel size in mm to smooth by during resampling, as\
             sigma by default.
+        volume_out: output volume.
         subvol: select a single subvolume as input\
             \
             the subvolume number or name.
@@ -266,14 +266,14 @@ def volume_parcel_resampling(
         NamedTuple of outputs (described in `VolumeParcelResamplingOutputs`).
     """
     params = volume_parcel_resampling_params(
-        volume_out=volume_out,
-        subvol=subvol,
-        fwhm=fwhm,
-        fix_zeros=fix_zeros,
         volume_in=volume_in,
         cur_parcels=cur_parcels,
         new_parcels=new_parcels,
         kernel=kernel,
+        volume_out=volume_out,
+        subvol=subvol,
+        fwhm=fwhm,
+        fix_zeros=fix_zeros,
     )
     return volume_parcel_resampling_execute(params, runner)
 

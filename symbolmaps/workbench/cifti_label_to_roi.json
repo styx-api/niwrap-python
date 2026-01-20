@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_label_to_roi",
   "properties": {
+    "label-in": {
+      "var_param": "label_in"
+    },
     "scalar-out": {
       "var_param": "scalar_out"
     },
@@ -12,9 +15,6 @@
     },
     "label-name": {
       "var_param": "label_name"
-    },
-    "label-in": {
-      "var_param": "label_in"
     }
   }
 }

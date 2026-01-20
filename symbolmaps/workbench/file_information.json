@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "file_information",
   "properties": {
+    "data-file": {
+      "var_param": "data_file"
+    },
     "only-metadata": {
       "var_param": "only_metadata",
       "fn_struct_make_params": "file_information_only_metadata",
@@ -33,9 +36,6 @@
     },
     "no-map-info": {
       "var_param": "no_map_info"
-    },
-    "data-file": {
-      "var_param": "data_file"
     }
   }
 }

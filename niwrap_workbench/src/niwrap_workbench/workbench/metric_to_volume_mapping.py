@@ -32,21 +32,21 @@ MetricToVolumeMappingRibbonConstrainedParamsDict = _MetricToVolumeMappingRibbonC
 
 
 _MetricToVolumeMappingParamsDictNoTag = typing.TypedDict('_MetricToVolumeMappingParamsDictNoTag', {
-    "volume-out": str,
-    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
-    "distance": typing.NotRequired[float | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
+    "volume-out": str,
+    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
+    "distance": typing.NotRequired[float | None],
 })
 MetricToVolumeMappingParamsDictTagged = typing.TypedDict('MetricToVolumeMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-to-volume-mapping"],
-    "volume-out": str,
-    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
-    "distance": typing.NotRequired[float | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume-space": InputPathType,
+    "volume-out": str,
+    "ribbon-constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParamsDict | None],
+    "distance": typing.NotRequired[float | None],
 })
 MetricToVolumeMappingParamsDict = _MetricToVolumeMappingParamsDictNoTag | MetricToVolumeMappingParamsDictTagged
 
@@ -160,10 +160,10 @@ class MetricToVolumeMappingOutputs(typing.NamedTuple):
 
 
 def metric_to_volume_mapping_params(
-    volume_out: str,
     metric: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
+    volume_out: str,
     ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParamsDict | None = None,
     distance: float | None = None,
 ) -> MetricToVolumeMappingParamsDictTagged:
@@ -171,10 +171,10 @@ def metric_to_volume_mapping_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume file.
         metric: the input metric file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
+        volume_out: the output volume file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         distance: use the value from the vertex closest to the voxel center\
             \
@@ -184,10 +184,10 @@ def metric_to_volume_mapping_params(
     """
     params = {
         "@type": "workbench/metric-to-volume-mapping",
-        "volume-out": volume_out,
         "metric": metric,
         "surface": surface,
         "volume-space": volume_space,
+        "volume-out": volume_out,
     }
     if ribbon_constrained is not None:
         params["ribbon-constrained"] = ribbon_constrained
@@ -208,15 +208,6 @@ def metric_to_volume_mapping_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("ribbon-constrained", None) is not None:
-        metric_to_volume_mapping_ribbon_constrained_validate(params["ribbon-constrained"])
-    if params.get("distance", None) is not None:
-        if not isinstance(params["distance"], (float, int)):
-            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
     if params.get("metric", None) is None:
         raise StyxValidationError("`metric` must not be None")
     if not isinstance(params["metric"], (pathlib.Path, str)):
@@ -229,6 +220,15 @@ def metric_to_volume_mapping_validate(
         raise StyxValidationError("`volume-space` must not be None")
     if not isinstance(params["volume-space"], (pathlib.Path, str)):
         raise StyxValidationError(f'`volume-space` has the wrong type: Received `{type(params.get("volume-space", None))}` expected `InputPathType`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("ribbon-constrained", None) is not None:
+        metric_to_volume_mapping_ribbon_constrained_validate(params["ribbon-constrained"])
+    if params.get("distance", None) is not None:
+        if not isinstance(params["distance"], (float, int)):
+            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
 
 
 def metric_to_volume_mapping_cargs(
@@ -249,18 +249,17 @@ def metric_to_volume_mapping_cargs(
         "wb_command",
         "-metric-to-volume-mapping"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *(metric_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("volume-space", None)))
+    cargs.append(params.get("volume-out", None))
+    if params.get("ribbon-constrained", None) is not None:
+        cargs.extend(metric_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution))
     if params.get("distance", None) is not None:
         cargs.extend([
             "-nearest-vertex",
             str(params.get("distance", None))
         ])
-    cargs.append(execution.input_file(params.get("metric", None)))
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("volume-space", None)))
     return cargs
 
 
@@ -316,10 +315,10 @@ def metric_to_volume_mapping_execute(
 
 
 def metric_to_volume_mapping(
-    volume_out: str,
     metric: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
+    volume_out: str,
     ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParamsDict | None = None,
     distance: float | None = None,
     runner: Runner | None = None,
@@ -336,10 +335,10 @@ def metric_to_volume_mapping(
     order to have all of the surface data participate.
     
     Args:
-        volume_out: the output volume file.
         metric: the input metric file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
+        volume_out: the output volume file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         distance: use the value from the vertex closest to the voxel center\
             \
@@ -349,12 +348,12 @@ def metric_to_volume_mapping(
         NamedTuple of outputs (described in `MetricToVolumeMappingOutputs`).
     """
     params = metric_to_volume_mapping_params(
-        volume_out=volume_out,
-        ribbon_constrained=ribbon_constrained,
-        distance=distance,
         metric=metric,
         surface=surface,
         volume_space=volume_space,
+        volume_out=volume_out,
+        ribbon_constrained=ribbon_constrained,
+        distance=distance,
     )
     return metric_to_volume_mapping_execute(params, runner)
 

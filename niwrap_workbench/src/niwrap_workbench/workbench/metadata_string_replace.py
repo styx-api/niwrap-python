@@ -14,19 +14,19 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
 
 
 _MetadataStringReplaceParamsDictNoTag = typing.TypedDict('_MetadataStringReplaceParamsDictNoTag', {
-    "case-insensitive": bool,
     "input-file": str,
     "find-string": str,
     "replace-string": str,
     "output-file": str,
+    "case-insensitive": bool,
 })
 MetadataStringReplaceParamsDictTagged = typing.TypedDict('MetadataStringReplaceParamsDictTagged', {
     "@type": typing.Literal["workbench/metadata-string-replace"],
-    "case-insensitive": bool,
     "input-file": str,
     "find-string": str,
     "replace-string": str,
     "output-file": str,
+    "case-insensitive": bool,
 })
 MetadataStringReplaceParamsDict = _MetadataStringReplaceParamsDictNoTag | MetadataStringReplaceParamsDictTagged
 
@@ -60,11 +60,11 @@ def metadata_string_replace_params(
     """
     params = {
         "@type": "workbench/metadata-string-replace",
-        "case-insensitive": case_insensitive,
         "input-file": input_file,
         "find-string": find_string,
         "replace-string": replace_string,
         "output-file": output_file,
+        "case-insensitive": case_insensitive,
     }
     return params
 
@@ -81,10 +81,6 @@ def metadata_string_replace_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("case-insensitive", False) is None:
-        raise StyxValidationError("`case-insensitive` must not be None")
-    if not isinstance(params["case-insensitive"], bool):
-        raise StyxValidationError(f'`case-insensitive` has the wrong type: Received `{type(params.get("case-insensitive", False))}` expected `bool`')
     if params.get("input-file", None) is None:
         raise StyxValidationError("`input-file` must not be None")
     if not isinstance(params["input-file"], str):
@@ -101,6 +97,10 @@ def metadata_string_replace_validate(
         raise StyxValidationError("`output-file` must not be None")
     if not isinstance(params["output-file"], str):
         raise StyxValidationError(f'`output-file` has the wrong type: Received `{type(params.get("output-file", None))}` expected `str`')
+    if params.get("case-insensitive", False) is None:
+        raise StyxValidationError("`case-insensitive` must not be None")
+    if not isinstance(params["case-insensitive"], bool):
+        raise StyxValidationError(f'`case-insensitive` has the wrong type: Received `{type(params.get("case-insensitive", False))}` expected `bool`')
 
 
 def metadata_string_replace_cargs(
@@ -121,12 +121,12 @@ def metadata_string_replace_cargs(
         "wb_command",
         "-metadata-string-replace"
     ])
-    if params.get("case-insensitive", False):
-        cargs.append("-case-insensitive")
     cargs.append(params.get("input-file", None))
     cargs.append(params.get("find-string", None))
     cargs.append(params.get("replace-string", None))
     cargs.append(params.get("output-file", None))
+    if params.get("case-insensitive", False):
+        cargs.append("-case-insensitive")
     return cargs
 
 
@@ -200,11 +200,11 @@ def metadata_string_replace(
         NamedTuple of outputs (described in `MetadataStringReplaceOutputs`).
     """
     params = metadata_string_replace_params(
-        case_insensitive=case_insensitive,
         input_file=input_file,
         find_string=find_string,
         replace_string=replace_string,
         output_file=output_file,
+        case_insensitive=case_insensitive,
     )
     return metadata_string_replace_execute(params, runner)
 

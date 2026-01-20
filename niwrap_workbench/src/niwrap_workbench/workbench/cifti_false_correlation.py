@@ -50,25 +50,25 @@ CiftiFalseCorrelationCerebellumSurfaceParamsDict = _CiftiFalseCorrelationCerebel
 
 
 _CiftiFalseCorrelationParamsDictNoTag = typing.TypedDict('_CiftiFalseCorrelationParamsDictNoTag', {
-    "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
-    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
-    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParamsDict | None],
     "cifti-in": InputPathType,
     "3D-dist": float,
     "geo-outer": float,
     "geo-inner": float,
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParamsDict | None],
 })
 CiftiFalseCorrelationParamsDictTagged = typing.TypedDict('CiftiFalseCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-false-correlation"],
-    "cifti-out": str,
-    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
-    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
-    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParamsDict | None],
     "cifti-in": InputPathType,
     "3D-dist": float,
     "geo-outer": float,
     "geo-inner": float,
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParamsDict | None],
+    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParamsDict | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParamsDict | None],
 })
 CiftiFalseCorrelationParamsDict = _CiftiFalseCorrelationParamsDictNoTag | CiftiFalseCorrelationParamsDictTagged
 
@@ -297,11 +297,11 @@ class CiftiFalseCorrelationOutputs(typing.NamedTuple):
 
 
 def cifti_false_correlation_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
+    cifti_out: str,
     left_surface: CiftiFalseCorrelationLeftSurfaceParamsDict | None = None,
     right_surface: CiftiFalseCorrelationRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParamsDict | None = None,
@@ -310,11 +310,11 @@ def cifti_false_correlation_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti dscalar file.
         cifti_in: the cifti file to use for correlation.
         v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
+        cifti_out: the output cifti dscalar file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -323,11 +323,11 @@ def cifti_false_correlation_params(
     """
     params = {
         "@type": "workbench/cifti-false-correlation",
-        "cifti-out": cifti_out,
         "cifti-in": cifti_in,
         "3D-dist": v_3_d_dist,
         "geo-outer": geo_outer,
         "geo-inner": geo_inner,
+        "cifti-out": cifti_out,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -350,16 +350,6 @@ def cifti_false_correlation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("left-surface", None) is not None:
-        cifti_false_correlation_left_surface_validate(params["left-surface"])
-    if params.get("right-surface", None) is not None:
-        cifti_false_correlation_right_surface_validate(params["right-surface"])
-    if params.get("cerebellum-surface", None) is not None:
-        cifti_false_correlation_cerebellum_surface_validate(params["cerebellum-surface"])
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -376,6 +366,16 @@ def cifti_false_correlation_validate(
         raise StyxValidationError("`geo-inner` must not be None")
     if not isinstance(params["geo-inner"], (float, int)):
         raise StyxValidationError(f'`geo-inner` has the wrong type: Received `{type(params.get("geo-inner", None))}` expected `float`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("left-surface", None) is not None:
+        cifti_false_correlation_left_surface_validate(params["left-surface"])
+    if params.get("right-surface", None) is not None:
+        cifti_false_correlation_right_surface_validate(params["right-surface"])
+    if params.get("cerebellum-surface", None) is not None:
+        cifti_false_correlation_cerebellum_surface_validate(params["cerebellum-surface"])
 
 
 def cifti_false_correlation_cargs(
@@ -396,16 +396,17 @@ def cifti_false_correlation_cargs(
         "wb_command",
         "-cifti-false-correlation"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_false_correlation_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_false_correlation_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_false_correlation_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
-    ])
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(str(params.get("3D-dist", None)))
     cargs.append(str(params.get("geo-outer", None)))
     cargs.append(str(params.get("geo-inner", None)))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None:
+        cargs.extend([
+            *(cifti_false_correlation_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_false_correlation_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_false_correlation_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
+        ])
     return cargs
 
 
@@ -460,11 +461,11 @@ def cifti_false_correlation_execute(
 
 
 def cifti_false_correlation(
-    cifti_out: str,
     cifti_in: InputPathType,
     v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
+    cifti_out: str,
     left_surface: CiftiFalseCorrelationLeftSurfaceParamsDict | None = None,
     right_surface: CiftiFalseCorrelationRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParamsDict | None = None,
@@ -481,11 +482,11 @@ def cifti_false_correlation(
     some additional maps to help explain the ratio.
     
     Args:
-        cifti_out: the output cifti dscalar file.
         cifti_in: the cifti file to use for correlation.
         v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
+        cifti_out: the output cifti dscalar file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -494,14 +495,14 @@ def cifti_false_correlation(
         NamedTuple of outputs (described in `CiftiFalseCorrelationOutputs`).
     """
     params = cifti_false_correlation_params(
-        cifti_out=cifti_out,
-        left_surface=left_surface,
-        right_surface=right_surface,
-        cerebellum_surface=cerebellum_surface,
         cifti_in=cifti_in,
         v_3_d_dist=v_3_d_dist,
         geo_outer=geo_outer,
         geo_inner=geo_inner,
+        cifti_out=cifti_out,
+        left_surface=left_surface,
+        right_surface=right_surface,
+        cerebellum_surface=cerebellum_surface,
     )
     return cifti_false_correlation_execute(params, runner)
 

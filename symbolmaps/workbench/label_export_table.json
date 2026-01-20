@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "label_export_table",
   "properties": {
-    "json-out": {
-      "var_param": "json_out"
-    },
     "label-in": {
       "var_param": "label_in"
     },
     "table-out": {
       "var_param": "table_out"
+    },
+    "json-out": {
+      "var_param": "json_out"
     }
   }
 }

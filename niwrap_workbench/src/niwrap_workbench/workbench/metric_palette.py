@@ -78,6 +78,8 @@ MetricPaletteThresholdingParamsDict = _MetricPaletteThresholdingParamsDictNoTag 
 
 
 _MetricPaletteParamsDictNoTag = typing.TypedDict('_MetricPaletteParamsDictNoTag', {
+    "metric": str,
+    "mode": str,
     "pos-percent": typing.NotRequired[MetricPalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[MetricPaletteNegPercentParamsDict | None],
     "pos-user": typing.NotRequired[MetricPalettePosUserParamsDict | None],
@@ -91,11 +93,11 @@ _MetricPaletteParamsDictNoTag = typing.TypedDict('_MetricPaletteParamsDictNoTag'
     "display": typing.NotRequired[bool | None],
     "interpolate": typing.NotRequired[bool | None],
     "column": typing.NotRequired[str | None],
-    "metric": str,
-    "mode": str,
 })
 MetricPaletteParamsDictTagged = typing.TypedDict('MetricPaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-palette"],
+    "metric": str,
+    "mode": str,
     "pos-percent": typing.NotRequired[MetricPalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[MetricPaletteNegPercentParamsDict | None],
     "pos-user": typing.NotRequired[MetricPalettePosUserParamsDict | None],
@@ -109,8 +111,6 @@ MetricPaletteParamsDictTagged = typing.TypedDict('MetricPaletteParamsDictTagged'
     "display": typing.NotRequired[bool | None],
     "interpolate": typing.NotRequired[bool | None],
     "column": typing.NotRequired[str | None],
-    "metric": str,
-    "mode": str,
 })
 MetricPaletteParamsDict = _MetricPaletteParamsDictNoTag | MetricPaletteParamsDictTagged
 
@@ -566,6 +566,14 @@ def metric_palette_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
     if params.get("pos-percent", None) is not None:
         metric_palette_pos_percent_validate(params["pos-percent"])
     if params.get("neg-percent", None) is not None:
@@ -600,14 +608,6 @@ def metric_palette_validate(
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
-    if params.get("metric", None) is None:
-        raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], str):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
-    if params.get("mode", None) is None:
-        raise StyxValidationError("`mode` must not be None")
-    if not isinstance(params["mode"], str):
-        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
 
 
 def metric_palette_cargs(
@@ -628,6 +628,8 @@ def metric_palette_cargs(
         "wb_command",
         "-metric-palette"
     ])
+    cargs.append(params.get("metric", None))
+    cargs.append(params.get("mode", None))
     if params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("thresholding", None) is not None:
         cargs.extend([
             *(metric_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
@@ -676,8 +678,6 @@ def metric_palette_cargs(
             "-column",
             params.get("column", None)
         ])
-    cargs.append(params.get("metric", None))
-    cargs.append(params.get("mode", None))
     return cargs
 
 
@@ -944,6 +944,8 @@ def metric_palette(
         NamedTuple of outputs (described in `MetricPaletteOutputs`).
     """
     params = metric_palette_params(
+        metric=metric,
+        mode=mode,
         pos_percent=pos_percent,
         neg_percent=neg_percent,
         pos_user=pos_user,
@@ -957,8 +959,6 @@ def metric_palette(
         display_2=display_2,
         interpolate=interpolate,
         column=column,
-        metric=metric,
-        mode=mode,
     )
     return metric_palette_execute(params, runner)
 

@@ -14,13 +14,13 @@ SURFACE_CREATE_SPHERE_METADATA = Metadata(
 
 
 _SurfaceCreateSphereParamsDictNoTag = typing.TypedDict('_SurfaceCreateSphereParamsDictNoTag', {
-    "sphere-out": str,
     "num-vertices": int,
+    "sphere-out": str,
 })
 SurfaceCreateSphereParamsDictTagged = typing.TypedDict('SurfaceCreateSphereParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-create-sphere"],
-    "sphere-out": str,
     "num-vertices": int,
+    "sphere-out": str,
 })
 SurfaceCreateSphereParamsDict = _SurfaceCreateSphereParamsDictNoTag | SurfaceCreateSphereParamsDictTagged
 
@@ -36,22 +36,22 @@ class SurfaceCreateSphereOutputs(typing.NamedTuple):
 
 
 def surface_create_sphere_params(
-    sphere_out: str,
     num_vertices: int,
+    sphere_out: str,
 ) -> SurfaceCreateSphereParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        sphere_out: the output sphere.
         num_vertices: desired number of vertices.
+        sphere_out: the output sphere.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-create-sphere",
-        "sphere-out": sphere_out,
         "num-vertices": num_vertices,
+        "sphere-out": sphere_out,
     }
     return params
 
@@ -68,14 +68,14 @@ def surface_create_sphere_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("sphere-out", None) is None:
-        raise StyxValidationError("`sphere-out` must not be None")
-    if not isinstance(params["sphere-out"], str):
-        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
     if params.get("num-vertices", None) is None:
         raise StyxValidationError("`num-vertices` must not be None")
     if not isinstance(params["num-vertices"], int):
         raise StyxValidationError(f'`num-vertices` has the wrong type: Received `{type(params.get("num-vertices", None))}` expected `int`')
+    if params.get("sphere-out", None) is None:
+        raise StyxValidationError("`sphere-out` must not be None")
+    if not isinstance(params["sphere-out"], str):
+        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
 
 
 def surface_create_sphere_cargs(
@@ -96,8 +96,8 @@ def surface_create_sphere_cargs(
         "wb_command",
         "-surface-create-sphere"
     ])
-    cargs.append(params.get("sphere-out", None))
     cargs.append(str(params.get("num-vertices", None)))
+    cargs.append(params.get("sphere-out", None))
     return cargs
 
 
@@ -157,8 +157,8 @@ def surface_create_sphere_execute(
 
 
 def surface_create_sphere(
-    sphere_out: str,
     num_vertices: int,
+    sphere_out: str,
     runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
@@ -177,15 +177,15 @@ def surface_create_sphere(
     $ wb_command -set-structure Sphere.6k.L.surf.gii CORTEX_LEFT.
     
     Args:
-        sphere_out: the output sphere.
         num_vertices: desired number of vertices.
+        sphere_out: the output sphere.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCreateSphereOutputs`).
     """
     params = surface_create_sphere_params(
-        sphere_out=sphere_out,
         num_vertices=num_vertices,
+        sphere_out=sphere_out,
     )
     return surface_create_sphere_execute(params, runner)
 

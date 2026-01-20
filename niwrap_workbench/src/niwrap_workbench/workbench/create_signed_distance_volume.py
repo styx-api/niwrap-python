@@ -24,6 +24,8 @@ CreateSignedDistanceVolumeRoiOutParamsDict = _CreateSignedDistanceVolumeRoiOutPa
 
 
 _CreateSignedDistanceVolumeParamsDictNoTag = typing.TypedDict('_CreateSignedDistanceVolumeParamsDictNoTag', {
+    "surface": InputPathType,
+    "refspace": str,
     "outvol": str,
     "roi-out": typing.NotRequired[CreateSignedDistanceVolumeRoiOutParamsDict | None],
     "method": typing.NotRequired[str | None],
@@ -31,11 +33,11 @@ _CreateSignedDistanceVolumeParamsDictNoTag = typing.TypedDict('_CreateSignedDist
     "dist": typing.NotRequired[float | None],
     "dist": typing.NotRequired[float | None],
     "value": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "refspace": str,
 })
 CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDistanceVolumeParamsDictTagged', {
     "@type": typing.Literal["workbench/create-signed-distance-volume"],
+    "surface": InputPathType,
+    "refspace": str,
     "outvol": str,
     "roi-out": typing.NotRequired[CreateSignedDistanceVolumeRoiOutParamsDict | None],
     "method": typing.NotRequired[str | None],
@@ -43,8 +45,6 @@ CreateSignedDistanceVolumeParamsDictTagged = typing.TypedDict('CreateSignedDista
     "dist": typing.NotRequired[float | None],
     "dist": typing.NotRequired[float | None],
     "value": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "refspace": str,
 })
 CreateSignedDistanceVolumeParamsDict = _CreateSignedDistanceVolumeParamsDictNoTag | CreateSignedDistanceVolumeParamsDictTagged
 
@@ -149,9 +149,9 @@ class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
 
 
 def create_signed_distance_volume_params(
-    outvol: str,
     surface: InputPathType,
     refspace: str,
+    outvol: str,
     roi_out: CreateSignedDistanceVolumeRoiOutParamsDict | None = None,
     method: str | None = None,
     num: int | None = None,
@@ -163,9 +163,9 @@ def create_signed_distance_volume_params(
     Build parameters.
     
     Args:
-        outvol: the output volume.
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
+        outvol: the output volume.
         roi_out: output an roi volume of where the output has a computed value.
         method: winding method for point inside surface test\
             \
@@ -189,9 +189,9 @@ def create_signed_distance_volume_params(
     """
     params = {
         "@type": "workbench/create-signed-distance-volume",
-        "outvol": outvol,
         "surface": surface,
         "refspace": refspace,
+        "outvol": outvol,
     }
     if roi_out is not None:
         params["roi-out"] = roi_out
@@ -220,6 +220,14 @@ def create_signed_distance_volume_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("refspace", None) is None:
+        raise StyxValidationError("`refspace` must not be None")
+    if not isinstance(params["refspace"], str):
+        raise StyxValidationError(f'`refspace` has the wrong type: Received `{type(params.get("refspace", None))}` expected `str`')
     if params.get("outvol", None) is None:
         raise StyxValidationError("`outvol` must not be None")
     if not isinstance(params["outvol"], str):
@@ -241,14 +249,6 @@ def create_signed_distance_volume_validate(
     if params.get("value", None) is not None:
         if not isinstance(params["value"], (float, int)):
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("refspace", None) is None:
-        raise StyxValidationError("`refspace` must not be None")
-    if not isinstance(params["refspace"], str):
-        raise StyxValidationError(f'`refspace` has the wrong type: Received `{type(params.get("refspace", None))}` expected `str`')
 
 
 def create_signed_distance_volume_cargs(
@@ -269,10 +269,11 @@ def create_signed_distance_volume_cargs(
         "wb_command",
         "-create-signed-distance-volume"
     ])
-    cargs.extend([
-        params.get("outvol", None),
-        *(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution) if (params.get("roi-out", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("refspace", None))
+    cargs.append(params.get("outvol", None))
+    if params.get("roi-out", None) is not None:
+        cargs.extend(create_signed_distance_volume_roi_out_cargs(params.get("roi-out", None), execution))
     if params.get("method", None) is not None:
         cargs.extend([
             "-winding",
@@ -298,8 +299,6 @@ def create_signed_distance_volume_cargs(
             "-fill-value",
             str(params.get("value", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("refspace", None))
     return cargs
 
 
@@ -367,9 +366,9 @@ def create_signed_distance_volume_execute(
 
 
 def create_signed_distance_volume(
-    outvol: str,
     surface: InputPathType,
     refspace: str,
+    outvol: str,
     roi_out: CreateSignedDistanceVolumeRoiOutParamsDict | None = None,
     method: str | None = None,
     num: int | None = None,
@@ -401,9 +400,9 @@ def create_signed_distance_volume(
     total is odd, negative, or nonzero, respectively.
     
     Args:
-        outvol: the output volume.
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
+        outvol: the output volume.
         roi_out: output an roi volume of where the output has a computed value.
         method: winding method for point inside surface test\
             \
@@ -427,6 +426,8 @@ def create_signed_distance_volume(
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).
     """
     params = create_signed_distance_volume_params(
+        surface=surface,
+        refspace=refspace,
         outvol=outvol,
         roi_out=roi_out,
         method=method,
@@ -434,8 +435,6 @@ def create_signed_distance_volume(
         dist=dist,
         dist_=dist_,
         value=value,
-        surface=surface,
-        refspace=refspace,
     )
     return create_signed_distance_volume_execute(params, runner)
 

@@ -24,17 +24,17 @@ CiftiMergeDenseCiftiParamsDict = _CiftiMergeDenseCiftiParamsDictNoTag | CiftiMer
 
 
 _CiftiMergeDenseParamsDictNoTag = typing.TypedDict('_CiftiMergeDenseParamsDictNoTag', {
+    "direction": str,
     "cifti-out": str,
     "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParamsDict] | None],
     "action": typing.NotRequired[str | None],
-    "direction": str,
 })
 CiftiMergeDenseParamsDictTagged = typing.TypedDict('CiftiMergeDenseParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-merge-dense"],
+    "direction": str,
     "cifti-out": str,
     "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParamsDict] | None],
     "action": typing.NotRequired[str | None],
-    "direction": str,
 })
 CiftiMergeDenseParamsDict = _CiftiMergeDenseParamsDictNoTag | CiftiMergeDenseParamsDictTagged
 
@@ -107,8 +107,8 @@ class CiftiMergeDenseOutputs(typing.NamedTuple):
 
 
 def cifti_merge_dense_params(
-    cifti_out: str,
     direction: str,
+    cifti_out: str,
     cifti: list[CiftiMergeDenseCiftiParamsDict] | None = None,
     action: str | None = None,
 ) -> CiftiMergeDenseParamsDictTagged:
@@ -116,8 +116,8 @@ def cifti_merge_dense_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         direction: which dimension to merge along, ROW or COLUMN.
+        cifti_out: the output cifti file.
         cifti: specify an input cifti file.
         action: how to handle conflicts between label keys\
             \
@@ -128,8 +128,8 @@ def cifti_merge_dense_params(
     """
     params = {
         "@type": "workbench/cifti-merge-dense",
-        "cifti-out": cifti_out,
         "direction": direction,
+        "cifti-out": cifti_out,
     }
     if cifti is not None:
         params["cifti"] = cifti
@@ -150,6 +150,10 @@ def cifti_merge_dense_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -162,10 +166,6 @@ def cifti_merge_dense_validate(
     if params.get("action", None) is not None:
         if not isinstance(params["action"], str):
             raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_merge_dense_cargs(
@@ -186,16 +186,15 @@ def cifti_merge_dense_cargs(
         "wb_command",
         "-cifti-merge-dense"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *([a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-    ])
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     if params.get("action", None) is not None:
         cargs.extend([
             "-label-collision",
             params.get("action", None)
         ])
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -247,8 +246,8 @@ def cifti_merge_dense_execute(
 
 
 def cifti_merge_dense(
-    cifti_out: str,
     direction: str,
+    cifti_out: str,
     cifti: list[CiftiMergeDenseCiftiParamsDict] | None = None,
     action: str | None = None,
     runner: Runner | None = None,
@@ -261,8 +260,8 @@ def cifti_merge_dense(
     models.
     
     Args:
-        cifti_out: the output cifti file.
         direction: which dimension to merge along, ROW or COLUMN.
+        cifti_out: the output cifti file.
         cifti: specify an input cifti file.
         action: how to handle conflicts between label keys\
             \
@@ -273,10 +272,10 @@ def cifti_merge_dense(
         NamedTuple of outputs (described in `CiftiMergeDenseOutputs`).
     """
     params = cifti_merge_dense_params(
+        direction=direction,
         cifti_out=cifti_out,
         cifti=cifti,
         action=action,
-        direction=direction,
     )
     return cifti_merge_dense_execute(params, runner)
 

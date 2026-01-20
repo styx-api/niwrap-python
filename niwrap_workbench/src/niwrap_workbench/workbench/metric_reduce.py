@@ -26,19 +26,19 @@ MetricReduceExcludeOutliersParamsDict = _MetricReduceExcludeOutliersParamsDictNo
 
 
 _MetricReduceParamsDictNoTag = typing.TypedDict('_MetricReduceParamsDictNoTag', {
+    "metric-in": InputPathType,
+    "operation": str,
     "metric-out": str,
     "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
-    "metric-in": InputPathType,
-    "operation": str,
 })
 MetricReduceParamsDictTagged = typing.TypedDict('MetricReduceParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-reduce"],
+    "metric-in": InputPathType,
+    "operation": str,
     "metric-out": str,
     "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
-    "metric-in": InputPathType,
-    "operation": str,
 })
 MetricReduceParamsDict = _MetricReduceParamsDictNoTag | MetricReduceParamsDictTagged
 
@@ -119,9 +119,9 @@ class MetricReduceOutputs(typing.NamedTuple):
 
 
 def metric_reduce_params(
-    metric_out: str,
     metric_in: InputPathType,
     operation: str,
+    metric_out: str,
     exclude_outliers: MetricReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
 ) -> MetricReduceParamsDictTagged:
@@ -129,9 +129,9 @@ def metric_reduce_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         metric_in: the metric to reduce.
         operation: the reduction operator to use.
+        metric_out: the output metric.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
         only_numeric: exclude non-numeric values.
@@ -140,10 +140,10 @@ def metric_reduce_params(
     """
     params = {
         "@type": "workbench/metric-reduce",
-        "metric-out": metric_out,
-        "only-numeric": only_numeric,
         "metric-in": metric_in,
         "operation": operation,
+        "metric-out": metric_out,
+        "only-numeric": only_numeric,
     }
     if exclude_outliers is not None:
         params["exclude-outliers"] = exclude_outliers
@@ -162,6 +162,14 @@ def metric_reduce_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -172,14 +180,6 @@ def metric_reduce_validate(
         raise StyxValidationError("`only-numeric` must not be None")
     if not isinstance(params["only-numeric"], bool):
         raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
-    if params.get("operation", None) is None:
-        raise StyxValidationError("`operation` must not be None")
-    if not isinstance(params["operation"], str):
-        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
 
 
 def metric_reduce_cargs(
@@ -200,14 +200,13 @@ def metric_reduce_cargs(
         "wb_command",
         "-metric-reduce"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else [])
-    ])
-    if params.get("only-numeric", False):
-        cargs.append("-only-numeric")
     cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(params.get("operation", None))
+    cargs.append(params.get("metric-out", None))
+    if params.get("exclude-outliers", None) is not None:
+        cargs.extend(metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution))
+    if params.get("only-numeric", False):
+        cargs.append("-only-numeric")
     return cargs
 
 
@@ -277,9 +276,9 @@ def metric_reduce_execute(
 
 
 def metric_reduce(
-    metric_out: str,
     metric_in: InputPathType,
     operation: str,
+    metric_out: str,
     exclude_outliers: MetricReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
@@ -310,9 +309,9 @@ def metric_reduce(
     .
     
     Args:
-        metric_out: the output metric.
         metric_in: the metric to reduce.
         operation: the reduction operator to use.
+        metric_out: the output metric.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
         only_numeric: exclude non-numeric values.
@@ -321,11 +320,11 @@ def metric_reduce(
         NamedTuple of outputs (described in `MetricReduceOutputs`).
     """
     params = metric_reduce_params(
+        metric_in=metric_in,
+        operation=operation,
         metric_out=metric_out,
         exclude_outliers=exclude_outliers,
         only_numeric=only_numeric,
-        metric_in=metric_in,
-        operation=operation,
     )
     return metric_reduce_execute(params, runner)
 

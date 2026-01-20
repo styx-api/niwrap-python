@@ -14,17 +14,17 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 _VolumeLabelModifyKeysParamsDictNoTag = typing.TypedDict('_VolumeLabelModifyKeysParamsDictNoTag', {
-    "volume-out": str,
-    "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
     "remap-file": str,
+    "volume-out": str,
+    "subvolume": typing.NotRequired[str | None],
 })
 VolumeLabelModifyKeysParamsDictTagged = typing.TypedDict('VolumeLabelModifyKeysParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-modify-keys"],
-    "volume-out": str,
-    "subvolume": typing.NotRequired[str | None],
     "volume-in": InputPathType,
     "remap-file": str,
+    "volume-out": str,
+    "subvolume": typing.NotRequired[str | None],
 })
 VolumeLabelModifyKeysParamsDict = _VolumeLabelModifyKeysParamsDictNoTag | VolumeLabelModifyKeysParamsDictTagged
 
@@ -40,18 +40,18 @@ class VolumeLabelModifyKeysOutputs(typing.NamedTuple):
 
 
 def volume_label_modify_keys_params(
-    volume_out: str,
     volume_in: InputPathType,
     remap_file: str,
+    volume_out: str,
     subvolume: str | None = None,
 ) -> VolumeLabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        volume_out: the output volume label file.
         volume_in: the input volume label file.
         remap_file: text file with old and new key values.
+        volume_out: the output volume label file.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
@@ -60,9 +60,9 @@ def volume_label_modify_keys_params(
     """
     params = {
         "@type": "workbench/volume-label-modify-keys",
-        "volume-out": volume_out,
         "volume-in": volume_in,
         "remap-file": remap_file,
+        "volume-out": volume_out,
     }
     if subvolume is not None:
         params["subvolume"] = subvolume
@@ -81,13 +81,6 @@ def volume_label_modify_keys_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
-    if params.get("subvolume", None) is not None:
-        if not isinstance(params["subvolume"], str):
-            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def volume_label_modify_keys_validate(
         raise StyxValidationError("`remap-file` must not be None")
     if not isinstance(params["remap-file"], str):
         raise StyxValidationError(f'`remap-file` has the wrong type: Received `{type(params.get("remap-file", None))}` expected `str`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
 
 
 def volume_label_modify_keys_cargs(
@@ -116,14 +116,14 @@ def volume_label_modify_keys_cargs(
         "wb_command",
         "-volume-label-modify-keys"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(params.get("remap-file", None))
     cargs.append(params.get("volume-out", None))
     if params.get("subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
             params.get("subvolume", None)
         ])
-    cargs.append(execution.input_file(params.get("volume-in", None)))
-    cargs.append(params.get("remap-file", None))
     return cargs
 
 
@@ -185,9 +185,9 @@ def volume_label_modify_keys_execute(
 
 
 def volume_label_modify_keys(
-    volume_out: str,
     volume_in: InputPathType,
     remap_file: str,
+    volume_out: str,
     subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
@@ -209,9 +209,9 @@ def volume_label_modify_keys(
     values in the data at the same time.
     
     Args:
-        volume_out: the output volume label file.
         volume_in: the input volume label file.
         remap_file: text file with old and new key values.
+        volume_out: the output volume label file.
         subvolume: select a single subvolume\
             \
             the subvolume number or name.
@@ -220,10 +220,10 @@ def volume_label_modify_keys(
         NamedTuple of outputs (described in `VolumeLabelModifyKeysOutputs`).
     """
     params = volume_label_modify_keys_params(
-        volume_out=volume_out,
-        subvolume=subvolume,
         volume_in=volume_in,
         remap_file=remap_file,
+        volume_out=volume_out,
+        subvolume=subvolume,
     )
     return volume_label_modify_keys_execute(params, runner)
 

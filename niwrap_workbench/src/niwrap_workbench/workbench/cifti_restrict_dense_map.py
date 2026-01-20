@@ -14,25 +14,25 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 
 
 _CiftiRestrictDenseMapParamsDictNoTag = typing.TypedDict('_CiftiRestrictDenseMapParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
-    "cifti-in": InputPathType,
-    "direction": str,
 })
 CiftiRestrictDenseMapParamsDictTagged = typing.TypedDict('CiftiRestrictDenseMapParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-restrict-dense-map"],
+    "cifti-in": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "roi-vol": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "roi-cifti": typing.NotRequired[InputPathType | None],
-    "cifti-in": InputPathType,
-    "direction": str,
 })
 CiftiRestrictDenseMapParamsDict = _CiftiRestrictDenseMapParamsDictNoTag | CiftiRestrictDenseMapParamsDictTagged
 
@@ -48,9 +48,9 @@ class CiftiRestrictDenseMapOutputs(typing.NamedTuple):
 
 
 def cifti_restrict_dense_map_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
+    cifti_out: str,
     roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
@@ -61,10 +61,10 @@ def cifti_restrict_dense_map_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti_in: the input cifti.
         direction: which dimension to change the mapping on (integer, 'ROW', or\
             'COLUMN').
+        cifti_out: the output cifti.
         roi_vol: voxels to use\
             \
             the roi volume file.
@@ -85,9 +85,9 @@ def cifti_restrict_dense_map_params(
     """
     params = {
         "@type": "workbench/cifti-restrict-dense-map",
-        "cifti-out": cifti_out,
         "cifti-in": cifti_in,
         "direction": direction,
+        "cifti-out": cifti_out,
     }
     if roi_vol is not None:
         params["roi-vol"] = roi_vol
@@ -114,6 +114,14 @@ def cifti_restrict_dense_map_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -133,14 +141,6 @@ def cifti_restrict_dense_map_validate(
     if params.get("roi-cifti", None) is not None:
         if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_restrict_dense_map_cargs(
@@ -161,6 +161,8 @@ def cifti_restrict_dense_map_cargs(
         "wb_command",
         "-cifti-restrict-dense-map"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("direction", None))
     cargs.append(params.get("cifti-out", None))
     if params.get("roi-vol", None) is not None:
         cargs.extend([
@@ -187,8 +189,6 @@ def cifti_restrict_dense_map_cargs(
             "-cifti-roi",
             execution.input_file(params.get("roi-cifti", None))
         ])
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -243,9 +243,9 @@ def cifti_restrict_dense_map_execute(
 
 
 def cifti_restrict_dense_map(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
+    cifti_out: str,
     roi_vol: InputPathType | None = None,
     roi_metric: InputPathType | None = None,
     roi_metric_: InputPathType | None = None,
@@ -264,10 +264,10 @@ def cifti_restrict_dense_map(
     structure, if present in the input file.
     
     Args:
-        cifti_out: the output cifti.
         cifti_in: the input cifti.
         direction: which dimension to change the mapping on (integer, 'ROW', or\
             'COLUMN').
+        cifti_out: the output cifti.
         roi_vol: voxels to use\
             \
             the roi volume file.
@@ -288,14 +288,14 @@ def cifti_restrict_dense_map(
         NamedTuple of outputs (described in `CiftiRestrictDenseMapOutputs`).
     """
     params = cifti_restrict_dense_map_params(
+        cifti_in=cifti_in,
+        direction=direction,
         cifti_out=cifti_out,
         roi_vol=roi_vol,
         roi_metric=roi_metric,
         roi_metric_=roi_metric_,
         roi_metric_2=roi_metric_2,
         roi_cifti=roi_cifti,
-        cifti_in=cifti_in,
-        direction=direction,
     )
     return cifti_restrict_dense_map_execute(params, runner)
 

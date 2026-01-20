@@ -14,25 +14,25 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 
 
 _VolumeLabelImportParamsDictNoTag = typing.TypedDict('_VolumeLabelImportParamsDictNoTag', {
+    "input": InputPathType,
+    "label-list-file": str,
     "output": str,
     "file": typing.NotRequired[str | None],
     "subvol": typing.NotRequired[str | None],
     "value": typing.NotRequired[int | None],
     "drop-unused-labels": bool,
     "discard-others": bool,
-    "input": InputPathType,
-    "label-list-file": str,
 })
 VolumeLabelImportParamsDictTagged = typing.TypedDict('VolumeLabelImportParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-import"],
+    "input": InputPathType,
+    "label-list-file": str,
     "output": str,
     "file": typing.NotRequired[str | None],
     "subvol": typing.NotRequired[str | None],
     "value": typing.NotRequired[int | None],
     "drop-unused-labels": bool,
     "discard-others": bool,
-    "input": InputPathType,
-    "label-list-file": str,
 })
 VolumeLabelImportParamsDict = _VolumeLabelImportParamsDictNoTag | VolumeLabelImportParamsDictTagged
 
@@ -48,9 +48,9 @@ class VolumeLabelImportOutputs(typing.NamedTuple):
 
 
 def volume_label_import_params(
-    output: str,
     input_: InputPathType,
     label_list_file: str,
+    output: str,
     file: str | None = None,
     subvol: str | None = None,
     value: int | None = None,
@@ -61,9 +61,9 @@ def volume_label_import_params(
     Build parameters.
     
     Args:
-        output: the output workbench label volume.
         input_: the input volume file.
         label_list_file: text file containing the values and names for labels.
+        output: the output workbench label volume.
         file: read label name hierarchy from a json file\
             \
             the input json file.
@@ -81,11 +81,11 @@ def volume_label_import_params(
     """
     params = {
         "@type": "workbench/volume-label-import",
+        "input": input_,
+        "label-list-file": label_list_file,
         "output": output,
         "drop-unused-labels": drop_unused_labels,
         "discard-others": discard_others,
-        "input": input_,
-        "label-list-file": label_list_file,
     }
     if file is not None:
         params["file"] = file
@@ -108,6 +108,14 @@ def volume_label_import_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("label-list-file", None) is None:
+        raise StyxValidationError("`label-list-file` must not be None")
+    if not isinstance(params["label-list-file"], str):
+        raise StyxValidationError(f'`label-list-file` has the wrong type: Received `{type(params.get("label-list-file", None))}` expected `str`')
     if params.get("output", None) is None:
         raise StyxValidationError("`output` must not be None")
     if not isinstance(params["output"], str):
@@ -129,14 +137,6 @@ def volume_label_import_validate(
         raise StyxValidationError("`discard-others` must not be None")
     if not isinstance(params["discard-others"], bool):
         raise StyxValidationError(f'`discard-others` has the wrong type: Received `{type(params.get("discard-others", False))}` expected `bool`')
-    if params.get("input", None) is None:
-        raise StyxValidationError("`input` must not be None")
-    if not isinstance(params["input"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
-    if params.get("label-list-file", None) is None:
-        raise StyxValidationError("`label-list-file` must not be None")
-    if not isinstance(params["label-list-file"], str):
-        raise StyxValidationError(f'`label-list-file` has the wrong type: Received `{type(params.get("label-list-file", None))}` expected `str`')
 
 
 def volume_label_import_cargs(
@@ -157,6 +157,8 @@ def volume_label_import_cargs(
         "wb_command",
         "-volume-label-import"
     ])
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("label-list-file", None))
     cargs.append(params.get("output", None))
     if params.get("file", None) is not None:
         cargs.extend([
@@ -177,8 +179,6 @@ def volume_label_import_cargs(
         cargs.append("-drop-unused-labels")
     if params.get("discard-others", False):
         cargs.append("-discard-others")
-    cargs.append(execution.input_file(params.get("input", None)))
-    cargs.append(params.get("label-list-file", None))
     return cargs
 
 
@@ -252,9 +252,9 @@ def volume_label_import_execute(
 
 
 def volume_label_import(
-    output: str,
     input_: InputPathType,
     label_list_file: str,
+    output: str,
     file: str | None = None,
     subvol: str | None = None,
     value: int | None = None,
@@ -292,9 +292,9 @@ def volume_label_import(
     -discard-others to instead set these values to the "unlabeled" key.
     
     Args:
-        output: the output workbench label volume.
         input_: the input volume file.
         label_list_file: text file containing the values and names for labels.
+        output: the output workbench label volume.
         file: read label name hierarchy from a json file\
             \
             the input json file.
@@ -312,14 +312,14 @@ def volume_label_import(
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).
     """
     params = volume_label_import_params(
+        input_=input_,
+        label_list_file=label_list_file,
         output=output,
         file=file,
         subvol=subvol,
         value=value,
         drop_unused_labels=drop_unused_labels,
         discard_others=discard_others,
-        input_=input_,
-        label_list_file=label_list_file,
     )
     return volume_label_import_execute(params, runner)
 

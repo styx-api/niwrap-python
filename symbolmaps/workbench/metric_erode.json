@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "metric_erode",
   "properties": {
+    "metric": {
+      "var_param": "metric"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -12,15 +21,6 @@
     },
     "roi-metric": {
       "var_param": "roi_metric"
-    },
-    "metric": {
-      "var_param": "metric"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "distance": {
-      "var_param": "distance"
     }
   }
 }

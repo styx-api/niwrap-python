@@ -94,8 +94,6 @@ def metadata_remove_provenance_cargs(
         "wb_command",
         "-metadata-remove-provenance"
     ])
-    cargs.extend([
-    ])
     cargs.append(params.get("input-file", None))
     cargs.append(params.get("output-file", None))
     return cargs

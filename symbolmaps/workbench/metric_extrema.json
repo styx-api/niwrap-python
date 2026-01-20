@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "metric_extrema",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric-in": {
+      "var_param": "metric_in"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -45,15 +54,6 @@
     },
     "sum-columns": {
       "var_param": "sum_columns"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
-    },
-    "distance": {
-      "var_param": "distance"
     }
   }
 }

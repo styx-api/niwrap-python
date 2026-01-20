@@ -40,15 +40,15 @@ SpecFileModifyRemoveParamsDict = _SpecFileModifyRemoveParamsDictNoTag | SpecFile
 
 
 _SpecFileModifyParamsDictNoTag = typing.TypedDict('_SpecFileModifyParamsDictNoTag', {
+    "spec-file": str,
     "add": typing.NotRequired[list[SpecFileModifyAddParamsDict] | None],
     "remove": typing.NotRequired[list[SpecFileModifyRemoveParamsDict] | None],
-    "spec-file": str,
 })
 SpecFileModifyParamsDictTagged = typing.TypedDict('SpecFileModifyParamsDictTagged', {
     "@type": typing.Literal["workbench/spec-file-modify"],
+    "spec-file": str,
     "add": typing.NotRequired[list[SpecFileModifyAddParamsDict] | None],
     "remove": typing.NotRequired[list[SpecFileModifyRemoveParamsDict] | None],
-    "spec-file": str,
 })
 SpecFileModifyParamsDict = _SpecFileModifyParamsDictNoTag | SpecFileModifyParamsDictTagged
 
@@ -241,6 +241,10 @@ def spec_file_modify_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec-file", None) is None:
+        raise StyxValidationError("`spec-file` must not be None")
+    if not isinstance(params["spec-file"], str):
+        raise StyxValidationError(f'`spec-file` has the wrong type: Received `{type(params.get("spec-file", None))}` expected `str`')
     if params.get("add", None) is not None:
         if not isinstance(params["add"], list):
             raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `list[SpecFileModifyAddParamsDict] | None`')
@@ -251,10 +255,6 @@ def spec_file_modify_validate(
             raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", None))}` expected `list[SpecFileModifyRemoveParamsDict] | None`')
         for e in params["remove"]:
             spec_file_modify_remove_validate(e)
-    if params.get("spec-file", None) is None:
-        raise StyxValidationError("`spec-file` must not be None")
-    if not isinstance(params["spec-file"], str):
-        raise StyxValidationError(f'`spec-file` has the wrong type: Received `{type(params.get("spec-file", None))}` expected `str`')
 
 
 def spec_file_modify_cargs(
@@ -275,12 +275,12 @@ def spec_file_modify_cargs(
         "wb_command",
         "-spec-file-modify"
     ])
+    cargs.append(params.get("spec-file", None))
     if params.get("add", None) is not None or params.get("remove", None) is not None:
         cargs.extend([
             *([a for c in [spec_file_modify_add_cargs(s, execution) for s in params.get("add", None)] for a in c] if (params.get("add", None) is not None) else []),
             *([a for c in [spec_file_modify_remove_cargs(s, execution) for s in params.get("remove", None)] for a in c] if (params.get("remove", None) is not None) else [])
         ])
-    cargs.append(params.get("spec-file", None))
     return cargs
 
 
@@ -432,9 +432,9 @@ def spec_file_modify(
         NamedTuple of outputs (described in `SpecFileModifyOutputs`).
     """
     params = spec_file_modify_params(
+        spec_file=spec_file,
         add=add,
         remove=remove,
-        spec_file=spec_file,
     )
     return spec_file_modify_execute(params, runner)
 

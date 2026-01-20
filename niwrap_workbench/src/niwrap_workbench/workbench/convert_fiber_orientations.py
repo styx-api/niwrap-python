@@ -36,15 +36,15 @@ ConvertFiberOrientationsFiberParamsDict = _ConvertFiberOrientationsFiberParamsDi
 
 
 _ConvertFiberOrientationsParamsDictNoTag = typing.TypedDict('_ConvertFiberOrientationsParamsDictNoTag', {
+    "label-volume": InputPathType,
     "fiber-out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParamsDict] | None],
-    "label-volume": InputPathType,
 })
 ConvertFiberOrientationsParamsDictTagged = typing.TypedDict('ConvertFiberOrientationsParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-fiber-orientations"],
+    "label-volume": InputPathType,
     "fiber-out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParamsDict] | None],
-    "label-volume": InputPathType,
 })
 ConvertFiberOrientationsParamsDict = _ConvertFiberOrientationsParamsDictNoTag | ConvertFiberOrientationsParamsDictTagged
 
@@ -165,24 +165,24 @@ class ConvertFiberOrientationsOutputs(typing.NamedTuple):
 
 
 def convert_fiber_orientations_params(
-    fiber_out: str,
     label_volume: InputPathType,
+    fiber_out: str,
     fiber: list[ConvertFiberOrientationsFiberParamsDict] | None = None,
 ) -> ConvertFiberOrientationsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        fiber_out: the output fiber orientation file.
         label_volume: volume of cifti structure labels.
+        fiber_out: the output fiber orientation file.
         fiber: specify the parameter volumes for a fiber.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/convert-fiber-orientations",
-        "fiber-out": fiber_out,
         "label-volume": label_volume,
+        "fiber-out": fiber_out,
     }
     if fiber is not None:
         params["fiber"] = fiber
@@ -201,6 +201,10 @@ def convert_fiber_orientations_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-volume", None) is None:
+        raise StyxValidationError("`label-volume` must not be None")
+    if not isinstance(params["label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
     if params.get("fiber-out", None) is None:
         raise StyxValidationError("`fiber-out` must not be None")
     if not isinstance(params["fiber-out"], str):
@@ -210,10 +214,6 @@ def convert_fiber_orientations_validate(
             raise StyxValidationError(f'`fiber` has the wrong type: Received `{type(params.get("fiber", None))}` expected `list[ConvertFiberOrientationsFiberParamsDict] | None`')
         for e in params["fiber"]:
             convert_fiber_orientations_fiber_validate(e)
-    if params.get("label-volume", None) is None:
-        raise StyxValidationError("`label-volume` must not be None")
-    if not isinstance(params["label-volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
 
 
 def convert_fiber_orientations_cargs(
@@ -234,11 +234,10 @@ def convert_fiber_orientations_cargs(
         "wb_command",
         "-convert-fiber-orientations"
     ])
-    cargs.extend([
-        params.get("fiber-out", None),
-        *([a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c] if (params.get("fiber", None) is not None) else [])
-    ])
     cargs.append(execution.input_file(params.get("label-volume", None)))
+    cargs.append(params.get("fiber-out", None))
+    if params.get("fiber", None) is not None:
+        cargs.extend([a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c])
     return cargs
 
 
@@ -327,8 +326,8 @@ def convert_fiber_orientations_execute(
 
 
 def convert_fiber_orientations(
-    fiber_out: str,
     label_volume: InputPathType,
+    fiber_out: str,
     fiber: list[ConvertFiberOrientationsFiberParamsDict] | None = None,
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
@@ -377,17 +376,17 @@ def convert_fiber_orientations(
     THALAMUS_RIGHT.
     
     Args:
-        fiber_out: the output fiber orientation file.
         label_volume: volume of cifti structure labels.
+        fiber_out: the output fiber orientation file.
         fiber: specify the parameter volumes for a fiber.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertFiberOrientationsOutputs`).
     """
     params = convert_fiber_orientations_params(
+        label_volume=label_volume,
         fiber_out=fiber_out,
         fiber=fiber,
-        label_volume=label_volume,
     )
     return convert_fiber_orientations_execute(params, runner)
 

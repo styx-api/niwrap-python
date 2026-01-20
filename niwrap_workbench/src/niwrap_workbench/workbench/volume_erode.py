@@ -14,19 +14,19 @@ VOLUME_ERODE_METADATA = Metadata(
 
 
 _VolumeErodeParamsDictNoTag = typing.TypedDict('_VolumeErodeParamsDictNoTag', {
+    "volume": InputPathType,
+    "distance": float,
     "volume-out": str,
     "subvol": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "volume": InputPathType,
-    "distance": float,
 })
 VolumeErodeParamsDictTagged = typing.TypedDict('VolumeErodeParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-erode"],
+    "volume": InputPathType,
+    "distance": float,
     "volume-out": str,
     "subvol": typing.NotRequired[str | None],
     "roi-volume": typing.NotRequired[InputPathType | None],
-    "volume": InputPathType,
-    "distance": float,
 })
 VolumeErodeParamsDict = _VolumeErodeParamsDictNoTag | VolumeErodeParamsDictTagged
 
@@ -42,9 +42,9 @@ class VolumeErodeOutputs(typing.NamedTuple):
 
 
 def volume_erode_params(
-    volume_out: str,
     volume: InputPathType,
     distance: float,
+    volume_out: str,
     subvol: str | None = None,
     roi_volume: InputPathType | None = None,
 ) -> VolumeErodeParamsDictTagged:
@@ -52,9 +52,9 @@ def volume_erode_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         volume: the volume to erode.
         distance: distance in mm to erode.
+        volume_out: the output volume.
         subvol: select a single subvolume to dilate\
             \
             the subvolume number or name.
@@ -66,9 +66,9 @@ def volume_erode_params(
     """
     params = {
         "@type": "workbench/volume-erode",
-        "volume-out": volume_out,
         "volume": volume,
         "distance": distance,
+        "volume-out": volume_out,
     }
     if subvol is not None:
         params["subvol"] = subvol
@@ -89,6 +89,14 @@ def volume_erode_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -99,14 +107,6 @@ def volume_erode_validate(
     if params.get("roi-volume", None) is not None:
         if not isinstance(params["roi-volume"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
-    if params.get("volume", None) is None:
-        raise StyxValidationError("`volume` must not be None")
-    if not isinstance(params["volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
-    if params.get("distance", None) is None:
-        raise StyxValidationError("`distance` must not be None")
-    if not isinstance(params["distance"], (float, int)):
-        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
 
 
 def volume_erode_cargs(
@@ -127,6 +127,8 @@ def volume_erode_cargs(
         "wb_command",
         "-volume-erode"
     ])
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(str(params.get("distance", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("subvol", None) is not None:
         cargs.extend([
@@ -138,8 +140,6 @@ def volume_erode_cargs(
             "-roi",
             execution.input_file(params.get("roi-volume", None))
         ])
-    cargs.append(execution.input_file(params.get("volume", None)))
-    cargs.append(str(params.get("distance", None)))
     return cargs
 
 
@@ -191,9 +191,9 @@ def volume_erode_execute(
 
 
 def volume_erode(
-    volume_out: str,
     volume: InputPathType,
     distance: float,
+    volume_out: str,
     subvol: str | None = None,
     roi_volume: InputPathType | None = None,
     runner: Runner | None = None,
@@ -206,9 +206,9 @@ def volume_erode(
     specified distance (center to center).
     
     Args:
-        volume_out: the output volume.
         volume: the volume to erode.
         distance: distance in mm to erode.
+        volume_out: the output volume.
         subvol: select a single subvolume to dilate\
             \
             the subvolume number or name.
@@ -220,11 +220,11 @@ def volume_erode(
         NamedTuple of outputs (described in `VolumeErodeOutputs`).
     """
     params = volume_erode_params(
+        volume=volume,
+        distance=distance,
         volume_out=volume_out,
         subvol=subvol,
         roi_volume=roi_volume,
-        volume=volume,
-        distance=distance,
     )
     return volume_erode_execute(params, runner)
 

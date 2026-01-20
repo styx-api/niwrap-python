@@ -14,19 +14,19 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 _MetricEstimateFwhmParamsDictNoTag = typing.TypedDict('_MetricEstimateFwhmParamsDictNoTag', {
+    "surface": InputPathType,
+    "metric-in": InputPathType,
     "demean": typing.NotRequired[bool | None],
     "column": typing.NotRequired[str | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "surface": InputPathType,
-    "metric-in": InputPathType,
 })
 MetricEstimateFwhmParamsDictTagged = typing.TypedDict('MetricEstimateFwhmParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-estimate-fwhm"],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
     "demean": typing.NotRequired[bool | None],
     "column": typing.NotRequired[str | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
-    "surface": InputPathType,
-    "metric-in": InputPathType,
 })
 MetricEstimateFwhmParamsDict = _MetricEstimateFwhmParamsDictNoTag | MetricEstimateFwhmParamsDictTagged
 
@@ -90,6 +90,14 @@ def metric_estimate_fwhm_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
     if params.get("demean", None) is not None:
         if not isinstance(params["demean"], bool):
             raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", None))}` expected `bool | None`')
@@ -99,14 +107,6 @@ def metric_estimate_fwhm_validate(
     if params.get("roi-metric", None) is not None:
         if not isinstance(params["roi-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
 
 
 def metric_estimate_fwhm_cargs(
@@ -127,6 +127,8 @@ def metric_estimate_fwhm_cargs(
         "wb_command",
         "-metric-estimate-fwhm"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     if params.get("demean", None) is not None:
         cargs.extend([
             "-whole-file",
@@ -142,8 +144,6 @@ def metric_estimate_fwhm_cargs(
             "-roi",
             execution.input_file(params.get("roi-metric", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -223,11 +223,11 @@ def metric_estimate_fwhm(
         NamedTuple of outputs (described in `MetricEstimateFwhmOutputs`).
     """
     params = metric_estimate_fwhm_params(
+        surface=surface,
+        metric_in=metric_in,
         demean=demean,
         column=column,
         roi_metric=roi_metric,
-        surface=surface,
-        metric_in=metric_in,
     )
     return metric_estimate_fwhm_execute(params, runner)
 

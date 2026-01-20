@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "label_to_border",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "label-in": {
+      "var_param": "label_in"
+    },
     "border-out": {
       "var_param": "border_out"
     },
@@ -9,12 +15,6 @@
     },
     "fraction": {
       "var_param": "fraction"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "label-in": {
-      "var_param": "label_in"
     }
   }
 }

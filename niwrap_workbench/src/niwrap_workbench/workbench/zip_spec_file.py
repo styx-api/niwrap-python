@@ -14,19 +14,19 @@ ZIP_SPEC_FILE_METADATA = Metadata(
 
 
 _ZipSpecFileParamsDictNoTag = typing.TypedDict('_ZipSpecFileParamsDictNoTag', {
-    "directory": typing.NotRequired[str | None],
-    "skip-missing": bool,
     "spec-file": str,
     "extract-folder": str,
     "zip-file": str,
+    "directory": typing.NotRequired[str | None],
+    "skip-missing": bool,
 })
 ZipSpecFileParamsDictTagged = typing.TypedDict('ZipSpecFileParamsDictTagged', {
     "@type": typing.Literal["workbench/zip-spec-file"],
-    "directory": typing.NotRequired[str | None],
-    "skip-missing": bool,
     "spec-file": str,
     "extract-folder": str,
     "zip-file": str,
+    "directory": typing.NotRequired[str | None],
+    "skip-missing": bool,
 })
 ZipSpecFileParamsDict = _ZipSpecFileParamsDictNoTag | ZipSpecFileParamsDictTagged
 
@@ -65,10 +65,10 @@ def zip_spec_file_params(
     """
     params = {
         "@type": "workbench/zip-spec-file",
-        "skip-missing": skip_missing,
         "spec-file": spec_file,
         "extract-folder": extract_folder,
         "zip-file": zip_file,
+        "skip-missing": skip_missing,
     }
     if directory is not None:
         params["directory"] = directory
@@ -87,13 +87,6 @@ def zip_spec_file_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("directory", None) is not None:
-        if not isinstance(params["directory"], str):
-            raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str | None`')
-    if params.get("skip-missing", False) is None:
-        raise StyxValidationError("`skip-missing` must not be None")
-    if not isinstance(params["skip-missing"], bool):
-        raise StyxValidationError(f'`skip-missing` has the wrong type: Received `{type(params.get("skip-missing", False))}` expected `bool`')
     if params.get("spec-file", None) is None:
         raise StyxValidationError("`spec-file` must not be None")
     if not isinstance(params["spec-file"], str):
@@ -106,6 +99,13 @@ def zip_spec_file_validate(
         raise StyxValidationError("`zip-file` must not be None")
     if not isinstance(params["zip-file"], str):
         raise StyxValidationError(f'`zip-file` has the wrong type: Received `{type(params.get("zip-file", None))}` expected `str`')
+    if params.get("directory", None) is not None:
+        if not isinstance(params["directory"], str):
+            raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str | None`')
+    if params.get("skip-missing", False) is None:
+        raise StyxValidationError("`skip-missing` must not be None")
+    if not isinstance(params["skip-missing"], bool):
+        raise StyxValidationError(f'`skip-missing` has the wrong type: Received `{type(params.get("skip-missing", False))}` expected `bool`')
 
 
 def zip_spec_file_cargs(
@@ -126,6 +126,9 @@ def zip_spec_file_cargs(
         "wb_command",
         "-zip-spec-file"
     ])
+    cargs.append(params.get("spec-file", None))
+    cargs.append(params.get("extract-folder", None))
+    cargs.append(params.get("zip-file", None))
     if params.get("directory", None) is not None:
         cargs.extend([
             "-base-dir",
@@ -133,9 +136,6 @@ def zip_spec_file_cargs(
         ])
     if params.get("skip-missing", False):
         cargs.append("-skip-missing")
-    cargs.append(params.get("spec-file", None))
-    cargs.append(params.get("extract-folder", None))
-    cargs.append(params.get("zip-file", None))
     return cargs
 
 
@@ -222,11 +222,11 @@ def zip_spec_file(
         NamedTuple of outputs (described in `ZipSpecFileOutputs`).
     """
     params = zip_spec_file_params(
-        directory=directory,
-        skip_missing=skip_missing,
         spec_file=spec_file,
         extract_folder=extract_folder,
         zip_file=zip_file,
+        directory=directory,
+        skip_missing=skip_missing,
     )
     return zip_spec_file_execute(params, runner)
 

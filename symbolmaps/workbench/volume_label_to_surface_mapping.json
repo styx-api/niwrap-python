@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_label_to_surface_mapping",
   "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
     "label-out": {
       "var_param": "label_out"
     },
@@ -30,12 +36,6 @@
     },
     "subvol": {
       "var_param": "subvol"
-    },
-    "volume": {
-      "var_param": "volume"
-    },
-    "surface": {
-      "var_param": "surface"
     }
   }
 }

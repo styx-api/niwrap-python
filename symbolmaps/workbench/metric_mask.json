@@ -1,17 +1,17 @@
 {
   "fn_root_make_params_and_execute": "metric_mask",
   "properties": {
-    "metric-out": {
-      "var_param": "metric_out"
-    },
-    "column": {
-      "var_param": "column"
-    },
     "metric": {
       "var_param": "metric"
     },
     "mask": {
       "var_param": "mask"
+    },
+    "metric-out": {
+      "var_param": "metric_out"
+    },
+    "column": {
+      "var_param": "column"
     }
   }
 }

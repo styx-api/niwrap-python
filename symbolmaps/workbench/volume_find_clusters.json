@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "volume_find_clusters",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "value-threshold": {
+      "var_param": "value_threshold"
+    },
+    "minimum-volume": {
+      "var_param": "minimum_volume"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -21,15 +30,6 @@
     },
     "less-than": {
       "var_param": "less_than"
-    },
-    "volume-in": {
-      "var_param": "volume_in"
-    },
-    "value-threshold": {
-      "var_param": "value_threshold"
-    },
-    "minimum-volume": {
-      "var_param": "minimum_volume"
     }
   }
 }

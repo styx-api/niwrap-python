@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "volume_label_to_roi",
   "properties": {
+    "label-in": {
+      "var_param": "label_in"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -12,9 +15,6 @@
     },
     "label-name": {
       "var_param": "label_name"
-    },
-    "label-in": {
-      "var_param": "label_in"
     }
   }
 }

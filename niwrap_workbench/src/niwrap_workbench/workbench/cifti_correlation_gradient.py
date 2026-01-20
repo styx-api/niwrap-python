@@ -64,6 +64,7 @@ CiftiCorrelationGradientDoubleCorrelationParamsDict = _CiftiCorrelationGradientD
 
 
 _CiftiCorrelationGradientParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGradientParamsDictNoTag', {
+    "cifti": InputPathType,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
@@ -78,10 +79,10 @@ _CiftiCorrelationGradientParamsDictNoTag = typing.TypedDict('_CiftiCorrelationGr
     "fisher-z": bool,
     "undo-fisher-z": bool,
     "presmooth-fwhm": bool,
-    "cifti": InputPathType,
 })
 CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGradientParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-correlation-gradient"],
+    "cifti": InputPathType,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParamsDict | None],
@@ -96,7 +97,6 @@ CiftiCorrelationGradientParamsDictTagged = typing.TypedDict('CiftiCorrelationGra
     "fisher-z": bool,
     "undo-fisher-z": bool,
     "presmooth-fwhm": bool,
-    "cifti": InputPathType,
 })
 CiftiCorrelationGradientParamsDict = _CiftiCorrelationGradientParamsDictNoTag | CiftiCorrelationGradientParamsDictTagged
 
@@ -405,8 +405,8 @@ class CiftiCorrelationGradientOutputs(typing.NamedTuple):
 
 
 def cifti_correlation_gradient_params(
-    cifti_out: str,
     cifti: InputPathType,
+    cifti_out: str,
     left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
@@ -425,8 +425,8 @@ def cifti_correlation_gradient_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
+        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -458,12 +458,12 @@ def cifti_correlation_gradient_params(
     """
     params = {
         "@type": "workbench/cifti-correlation-gradient",
+        "cifti": cifti,
         "cifti-out": cifti_out,
         "covariance": covariance,
         "fisher-z": fisher_z,
         "undo-fisher-z": undo_fisher_z,
         "presmooth-fwhm": presmooth_fwhm,
-        "cifti": cifti,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -498,6 +498,10 @@ def cifti_correlation_gradient_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -541,10 +545,6 @@ def cifti_correlation_gradient_validate(
         raise StyxValidationError("`presmooth-fwhm` must not be None")
     if not isinstance(params["presmooth-fwhm"], bool):
         raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
 
 
 def cifti_correlation_gradient_cargs(
@@ -565,13 +565,15 @@ def cifti_correlation_gradient_cargs(
         "wb_command",
         "-cifti-correlation-gradient"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_correlation_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_correlation_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_correlation_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        *(cifti_correlation_gradient_double_correlation_cargs(params.get("double-correlation", None), execution) if (params.get("double-correlation", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("double-correlation", None) is not None:
+        cargs.extend([
+            *(cifti_correlation_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_correlation_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_correlation_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
+            *(cifti_correlation_gradient_double_correlation_cargs(params.get("double-correlation", None), execution) if (params.get("double-correlation", None) is not None) else [])
+        ])
     if params.get("limit-GB", None) is not None:
         cargs.extend([
             "-mem-limit",
@@ -605,7 +607,6 @@ def cifti_correlation_gradient_cargs(
         cargs.append("-undo-fisher-z")
     if params.get("presmooth-fwhm", False):
         cargs.append("-presmooth-fwhm")
-    cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 
 
@@ -658,8 +659,8 @@ def cifti_correlation_gradient_execute(
 
 
 def cifti_correlation_gradient(
-    cifti_out: str,
     cifti: InputPathType,
+    cifti_out: str,
     left_surface: CiftiCorrelationGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParamsDict | None = None,
@@ -684,8 +685,8 @@ def cifti_correlation_gradient(
     little memory as possible (this may be very slow).
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
+        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -717,6 +718,7 @@ def cifti_correlation_gradient(
         NamedTuple of outputs (described in `CiftiCorrelationGradientOutputs`).
     """
     params = cifti_correlation_gradient_params(
+        cifti=cifti,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
@@ -731,7 +733,6 @@ def cifti_correlation_gradient(
         fisher_z=fisher_z,
         undo_fisher_z=undo_fisher_z,
         presmooth_fwhm=presmooth_fwhm,
-        cifti=cifti,
     )
     return cifti_correlation_gradient_execute(params, runner)
 

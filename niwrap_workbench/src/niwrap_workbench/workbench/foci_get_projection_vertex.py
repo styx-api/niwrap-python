@@ -14,17 +14,17 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
 
 
 _FociGetProjectionVertexParamsDictNoTag = typing.TypedDict('_FociGetProjectionVertexParamsDictNoTag', {
-    "metric-out": str,
-    "name": typing.NotRequired[str | None],
     "foci": InputPathType,
     "surface": InputPathType,
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
 })
 FociGetProjectionVertexParamsDictTagged = typing.TypedDict('FociGetProjectionVertexParamsDictTagged', {
     "@type": typing.Literal["workbench/foci-get-projection-vertex"],
-    "metric-out": str,
-    "name": typing.NotRequired[str | None],
     "foci": InputPathType,
     "surface": InputPathType,
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
 })
 FociGetProjectionVertexParamsDict = _FociGetProjectionVertexParamsDictNoTag | FociGetProjectionVertexParamsDictTagged
 
@@ -40,18 +40,18 @@ class FociGetProjectionVertexOutputs(typing.NamedTuple):
 
 
 def foci_get_projection_vertex_params(
-    metric_out: str,
     foci: InputPathType,
     surface: InputPathType,
+    metric_out: str,
     name: str | None = None,
 ) -> FociGetProjectionVertexParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output metric file.
         foci: the foci file.
         surface: the surface related to the foci file.
+        metric_out: the output metric file.
         name: select a focus by name\
             \
             the name of the focus.
@@ -60,9 +60,9 @@ def foci_get_projection_vertex_params(
     """
     params = {
         "@type": "workbench/foci-get-projection-vertex",
-        "metric-out": metric_out,
         "foci": foci,
         "surface": surface,
+        "metric-out": metric_out,
     }
     if name is not None:
         params["name"] = name
@@ -81,13 +81,6 @@ def foci_get_projection_vertex_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("name", None) is not None:
-        if not isinstance(params["name"], str):
-            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
     if params.get("foci", None) is None:
         raise StyxValidationError("`foci` must not be None")
     if not isinstance(params["foci"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def foci_get_projection_vertex_validate(
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
 
 
 def foci_get_projection_vertex_cargs(
@@ -116,14 +116,14 @@ def foci_get_projection_vertex_cargs(
         "wb_command",
         "-foci-get-projection-vertex"
     ])
+    cargs.append(execution.input_file(params.get("foci", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("name", None) is not None:
         cargs.extend([
             "-name",
             params.get("name", None)
         ])
-    cargs.append(execution.input_file(params.get("foci", None)))
-    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -175,9 +175,9 @@ def foci_get_projection_vertex_execute(
 
 
 def foci_get_projection_vertex(
-    metric_out: str,
     foci: InputPathType,
     surface: InputPathType,
+    metric_out: str,
     name: str | None = None,
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
@@ -189,9 +189,9 @@ def foci_get_projection_vertex(
     with all other vertices 0. If -name is used, only one focus will be used.
     
     Args:
-        metric_out: the output metric file.
         foci: the foci file.
         surface: the surface related to the foci file.
+        metric_out: the output metric file.
         name: select a focus by name\
             \
             the name of the focus.
@@ -200,10 +200,10 @@ def foci_get_projection_vertex(
         NamedTuple of outputs (described in `FociGetProjectionVertexOutputs`).
     """
     params = foci_get_projection_vertex_params(
-        metric_out=metric_out,
-        name=name,
         foci=foci,
         surface=surface,
+        metric_out=metric_out,
+        name=name,
     )
     return foci_get_projection_vertex_execute(params, runner)
 

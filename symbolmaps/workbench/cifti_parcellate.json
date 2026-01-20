@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "cifti_parcellate",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "cifti-label": {
+      "var_param": "cifti_label"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -66,15 +75,6 @@
     },
     "only-numeric": {
       "var_param": "only_numeric"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "cifti-label": {
-      "var_param": "cifti_label"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

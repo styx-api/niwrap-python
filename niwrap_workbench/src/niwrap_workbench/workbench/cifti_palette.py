@@ -78,6 +78,8 @@ CiftiPaletteThresholdingParamsDict = _CiftiPaletteThresholdingParamsDictNoTag | 
 
 
 _CiftiPaletteParamsDictNoTag = typing.TypedDict('_CiftiPaletteParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "mode": str,
     "cifti-out": str,
     "pos-percent": typing.NotRequired[CiftiPalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[CiftiPaletteNegPercentParamsDict | None],
@@ -92,11 +94,11 @@ _CiftiPaletteParamsDictNoTag = typing.TypedDict('_CiftiPaletteParamsDictNoTag', 
     "display": typing.NotRequired[bool | None],
     "interpolate": typing.NotRequired[bool | None],
     "column": typing.NotRequired[str | None],
-    "cifti-in": InputPathType,
-    "mode": str,
 })
 CiftiPaletteParamsDictTagged = typing.TypedDict('CiftiPaletteParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-palette"],
+    "cifti-in": InputPathType,
+    "mode": str,
     "cifti-out": str,
     "pos-percent": typing.NotRequired[CiftiPalettePosPercentParamsDict | None],
     "neg-percent": typing.NotRequired[CiftiPaletteNegPercentParamsDict | None],
@@ -111,8 +113,6 @@ CiftiPaletteParamsDictTagged = typing.TypedDict('CiftiPaletteParamsDictTagged', 
     "display": typing.NotRequired[bool | None],
     "interpolate": typing.NotRequired[bool | None],
     "column": typing.NotRequired[str | None],
-    "cifti-in": InputPathType,
-    "mode": str,
 })
 CiftiPaletteParamsDict = _CiftiPaletteParamsDictNoTag | CiftiPaletteParamsDictTagged
 
@@ -469,9 +469,9 @@ class CiftiPaletteOutputs(typing.NamedTuple):
 
 
 def cifti_palette_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     mode: str,
+    cifti_out: str,
     pos_percent: CiftiPalettePosPercentParamsDict | None = None,
     neg_percent: CiftiPaletteNegPercentParamsDict | None = None,
     pos_user: CiftiPalettePosUserParamsDict | None = None,
@@ -490,9 +490,9 @@ def cifti_palette_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the cifti input.
         mode: the mapping mode.
+        cifti_out: the output cifti file.
         pos_percent: percentage min/max for positive data coloring.
         neg_percent: percentage min/max for negative data coloring.
         pos_user: user min/max values for positive data coloring.
@@ -528,9 +528,9 @@ def cifti_palette_params(
     """
     params = {
         "@type": "workbench/cifti-palette",
-        "cifti-out": cifti_out,
         "cifti-in": cifti_in,
         "mode": mode,
+        "cifti-out": cifti_out,
     }
     if pos_percent is not None:
         params["pos-percent"] = pos_percent
@@ -573,6 +573,14 @@ def cifti_palette_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -611,14 +619,6 @@ def cifti_palette_validate(
     if params.get("column", None) is not None:
         if not isinstance(params["column"], str):
             raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
-    if params.get("mode", None) is None:
-        raise StyxValidationError("`mode` must not be None")
-    if not isinstance(params["mode"], str):
-        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
 
 
 def cifti_palette_cargs(
@@ -639,14 +639,17 @@ def cifti_palette_cargs(
         "wb_command",
         "-cifti-palette"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
-        *(cifti_palette_neg_percent_cargs(params.get("neg-percent", None), execution) if (params.get("neg-percent", None) is not None) else []),
-        *(cifti_palette_pos_user_cargs(params.get("pos-user", None), execution) if (params.get("pos-user", None) is not None) else []),
-        *(cifti_palette_neg_user_cargs(params.get("neg-user", None), execution) if (params.get("neg-user", None) is not None) else []),
-        *(cifti_palette_thresholding_cargs(params.get("thresholding", None), execution) if (params.get("thresholding", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("mode", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("thresholding", None) is not None:
+        cargs.extend([
+            *(cifti_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
+            *(cifti_palette_neg_percent_cargs(params.get("neg-percent", None), execution) if (params.get("neg-percent", None) is not None) else []),
+            *(cifti_palette_pos_user_cargs(params.get("pos-user", None), execution) if (params.get("pos-user", None) is not None) else []),
+            *(cifti_palette_neg_user_cargs(params.get("neg-user", None), execution) if (params.get("neg-user", None) is not None) else []),
+            *(cifti_palette_thresholding_cargs(params.get("thresholding", None), execution) if (params.get("thresholding", None) is not None) else [])
+        ])
     if params.get("type", None) is not None:
         cargs.extend([
             "-normalization",
@@ -687,8 +690,6 @@ def cifti_palette_cargs(
             "-column",
             params.get("column", None)
         ])
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(params.get("mode", None))
     return cargs
 
 
@@ -818,9 +819,9 @@ def cifti_palette_execute(
 
 
 def cifti_palette(
-    cifti_out: str,
     cifti_in: InputPathType,
     mode: str,
+    cifti_out: str,
     pos_percent: CiftiPalettePosPercentParamsDict | None = None,
     neg_percent: CiftiPaletteNegPercentParamsDict | None = None,
     pos_user: CiftiPalettePosUserParamsDict | None = None,
@@ -922,9 +923,9 @@ def cifti_palette(
     .
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the cifti input.
         mode: the mapping mode.
+        cifti_out: the output cifti file.
         pos_percent: percentage min/max for positive data coloring.
         neg_percent: percentage min/max for negative data coloring.
         pos_user: user min/max values for positive data coloring.
@@ -960,6 +961,8 @@ def cifti_palette(
         NamedTuple of outputs (described in `CiftiPaletteOutputs`).
     """
     params = cifti_palette_params(
+        cifti_in=cifti_in,
+        mode=mode,
         cifti_out=cifti_out,
         pos_percent=pos_percent,
         neg_percent=neg_percent,
@@ -974,8 +977,6 @@ def cifti_palette(
         display_2=display_2,
         interpolate=interpolate,
         column=column,
-        cifti_in=cifti_in,
-        mode=mode,
     )
     return cifti_palette_execute(params, runner)
 

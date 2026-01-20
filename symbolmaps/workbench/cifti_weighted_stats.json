@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_weighted_stats",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
     "spatial-weights": {
       "var_param": "spatial_weights",
       "fn_struct_make_params": "cifti_weighted_stats_spatial_weights",
@@ -57,9 +60,6 @@
     },
     "mean": {
       "var_param": "mean"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
     }
   }
 }

@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_change_mapping",
   "properties": {
+    "data-cifti": {
+      "var_param": "data_cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -39,12 +45,6 @@
           "var_param": "direction"
         }
       }
-    },
-    "data-cifti": {
-      "var_param": "data_cifti"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

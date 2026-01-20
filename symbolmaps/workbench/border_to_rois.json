@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "border_to_rois",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "border-file": {
+      "var_param": "border_file"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -12,12 +18,6 @@
     },
     "inverse": {
       "var_param": "inverse"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "border-file": {
-      "var_param": "border_file"
     }
   }
 }

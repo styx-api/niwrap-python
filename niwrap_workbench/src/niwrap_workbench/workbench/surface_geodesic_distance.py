@@ -14,21 +14,21 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 
 
 _SurfaceGeodesicDistanceParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceParamsDictNoTag', {
+    "surface": InputPathType,
+    "vertex": int,
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "limit-mm": typing.NotRequired[float | None],
     "naive": bool,
-    "surface": InputPathType,
-    "vertex": int,
 })
 SurfaceGeodesicDistanceParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance"],
+    "surface": InputPathType,
+    "vertex": int,
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "limit-mm": typing.NotRequired[float | None],
     "naive": bool,
-    "surface": InputPathType,
-    "vertex": int,
 })
 SurfaceGeodesicDistanceParamsDict = _SurfaceGeodesicDistanceParamsDictNoTag | SurfaceGeodesicDistanceParamsDictTagged
 
@@ -44,9 +44,9 @@ class SurfaceGeodesicDistanceOutputs(typing.NamedTuple):
 
 
 def surface_geodesic_distance_params(
-    metric_out: str,
     surface: InputPathType,
     vertex: int,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     limit_mm: float | None = None,
     naive: bool = False,
@@ -55,9 +55,9 @@ def surface_geodesic_distance_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         vertex: the vertex to compute geodesic distance from.
+        metric_out: the output metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -71,10 +71,10 @@ def surface_geodesic_distance_params(
     """
     params = {
         "@type": "workbench/surface-geodesic-distance",
-        "metric-out": metric_out,
-        "naive": naive,
         "surface": surface,
         "vertex": vertex,
+        "metric-out": metric_out,
+        "naive": naive,
     }
     if area_metric is not None:
         params["area-metric"] = area_metric
@@ -95,6 +95,14 @@ def surface_geodesic_distance_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("vertex", None) is None:
+        raise StyxValidationError("`vertex` must not be None")
+    if not isinstance(params["vertex"], int):
+        raise StyxValidationError(f'`vertex` has the wrong type: Received `{type(params.get("vertex", None))}` expected `int`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -109,14 +117,6 @@ def surface_geodesic_distance_validate(
         raise StyxValidationError("`naive` must not be None")
     if not isinstance(params["naive"], bool):
         raise StyxValidationError(f'`naive` has the wrong type: Received `{type(params.get("naive", False))}` expected `bool`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("vertex", None) is None:
-        raise StyxValidationError("`vertex` must not be None")
-    if not isinstance(params["vertex"], int):
-        raise StyxValidationError(f'`vertex` has the wrong type: Received `{type(params.get("vertex", None))}` expected `int`')
 
 
 def surface_geodesic_distance_cargs(
@@ -137,6 +137,8 @@ def surface_geodesic_distance_cargs(
         "wb_command",
         "-surface-geodesic-distance"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("vertex", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("area-metric", None) is not None:
         cargs.extend([
@@ -150,8 +152,6 @@ def surface_geodesic_distance_cargs(
         ])
     if params.get("naive", False):
         cargs.append("-naive")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(str(params.get("vertex", None)))
     return cargs
 
 
@@ -215,9 +215,9 @@ def surface_geodesic_distance_execute(
 
 
 def surface_geodesic_distance(
-    metric_out: str,
     surface: InputPathType,
     vertex: int,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     limit_mm: float | None = None,
     naive: bool = False,
@@ -243,9 +243,9 @@ def surface_geodesic_distance(
     share an edge.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         vertex: the vertex to compute geodesic distance from.
+        metric_out: the output metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -259,12 +259,12 @@ def surface_geodesic_distance(
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceOutputs`).
     """
     params = surface_geodesic_distance_params(
+        surface=surface,
+        vertex=vertex,
         metric_out=metric_out,
         area_metric=area_metric,
         limit_mm=limit_mm,
         naive=naive,
-        surface=surface,
-        vertex=vertex,
     )
     return surface_geodesic_distance_execute(params, runner)
 

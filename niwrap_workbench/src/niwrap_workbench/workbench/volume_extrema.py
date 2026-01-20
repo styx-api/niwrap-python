@@ -38,6 +38,8 @@ VolumeExtremaThresholdParamsDict = _VolumeExtremaThresholdParamsDictNoTag | Volu
 
 
 _VolumeExtremaParamsDictNoTag = typing.TypedDict('_VolumeExtremaParamsDictNoTag', {
+    "volume-in": InputPathType,
+    "distance": float,
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
     "threshold": typing.NotRequired[VolumeExtremaThresholdParamsDict | None],
@@ -47,11 +49,11 @@ _VolumeExtremaParamsDictNoTag = typing.TypedDict('_VolumeExtremaParamsDictNoTag'
     "only-maxima": bool,
     "consolidate-mode": bool,
     "sum-subvols": bool,
-    "volume-in": InputPathType,
-    "distance": float,
 })
 VolumeExtremaParamsDictTagged = typing.TypedDict('VolumeExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-extrema"],
+    "volume-in": InputPathType,
+    "distance": float,
     "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParamsDict | None],
     "threshold": typing.NotRequired[VolumeExtremaThresholdParamsDict | None],
@@ -61,8 +63,6 @@ VolumeExtremaParamsDictTagged = typing.TypedDict('VolumeExtremaParamsDictTagged'
     "only-maxima": bool,
     "consolidate-mode": bool,
     "sum-subvols": bool,
-    "volume-in": InputPathType,
-    "distance": float,
 })
 VolumeExtremaParamsDict = _VolumeExtremaParamsDictNoTag | VolumeExtremaParamsDictTagged
 
@@ -210,9 +210,9 @@ class VolumeExtremaOutputs(typing.NamedTuple):
 
 
 def volume_extrema_params(
-    volume_out: str,
     volume_in: InputPathType,
     distance: float,
+    volume_out: str,
     presmooth: VolumeExtremaPresmoothParamsDict | None = None,
     threshold: VolumeExtremaThresholdParamsDict | None = None,
     subvolume: str | None = None,
@@ -226,10 +226,10 @@ def volume_extrema_params(
     Build parameters.
     
     Args:
-        volume_out: the output extrema volume.
         volume_in: volume file to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
+        volume_out: the output extrema volume.
         presmooth: smooth the volume before finding extrema.
         threshold: ignore small extrema.
         subvolume: select a single subvolume to find extrema in\
@@ -249,13 +249,13 @@ def volume_extrema_params(
     """
     params = {
         "@type": "workbench/volume-extrema",
+        "volume-in": volume_in,
+        "distance": distance,
         "volume-out": volume_out,
         "only-minima": only_minima,
         "only-maxima": only_maxima,
         "consolidate-mode": consolidate_mode,
         "sum-subvols": sum_subvols,
-        "volume-in": volume_in,
-        "distance": distance,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -280,6 +280,14 @@ def volume_extrema_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -310,14 +318,6 @@ def volume_extrema_validate(
         raise StyxValidationError("`sum-subvols` must not be None")
     if not isinstance(params["sum-subvols"], bool):
         raise StyxValidationError(f'`sum-subvols` has the wrong type: Received `{type(params.get("sum-subvols", False))}` expected `bool`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
-    if params.get("distance", None) is None:
-        raise StyxValidationError("`distance` must not be None")
-    if not isinstance(params["distance"], (float, int)):
-        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
 
 
 def volume_extrema_cargs(
@@ -338,11 +338,14 @@ def volume_extrema_cargs(
         "wb_command",
         "-volume-extrema"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
-        *(volume_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("volume-out", None))
+    if params.get("presmooth", None) is not None or params.get("threshold", None) is not None:
+        cargs.extend([
+            *(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
+            *(volume_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else [])
+        ])
     if params.get("subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
@@ -361,8 +364,6 @@ def volume_extrema_cargs(
         cargs.append("-consolidate-mode")
     if params.get("sum-subvols", False):
         cargs.append("-sum-subvols")
-    cargs.append(execution.input_file(params.get("volume-in", None)))
-    cargs.append(str(params.get("distance", None)))
     return cargs
 
 
@@ -431,9 +432,9 @@ def volume_extrema_execute(
 
 
 def volume_extrema(
-    volume_out: str,
     volume_in: InputPathType,
     distance: float,
+    volume_out: str,
     presmooth: VolumeExtremaPresmoothParamsDict | None = None,
     threshold: VolumeExtremaThresholdParamsDict | None = None,
     subvolume: str | None = None,
@@ -469,10 +470,10 @@ def volume_extrema(
     before finding the extrema.
     
     Args:
-        volume_out: the output extrema volume.
         volume_in: volume file to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
+        volume_out: the output extrema volume.
         presmooth: smooth the volume before finding extrema.
         threshold: ignore small extrema.
         subvolume: select a single subvolume to find extrema in\
@@ -492,6 +493,8 @@ def volume_extrema(
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).
     """
     params = volume_extrema_params(
+        volume_in=volume_in,
+        distance=distance,
         volume_out=volume_out,
         presmooth=presmooth,
         threshold=threshold,
@@ -501,8 +504,6 @@ def volume_extrema(
         only_maxima=only_maxima,
         consolidate_mode=consolidate_mode,
         sum_subvols=sum_subvols,
-        volume_in=volume_in,
-        distance=distance,
     )
     return volume_extrema_execute(params, runner)
 

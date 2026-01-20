@@ -50,21 +50,21 @@ CiftiChangeMappingFromCiftiParamsDict = _CiftiChangeMappingFromCiftiParamsDictNo
 
 
 _CiftiChangeMappingParamsDictNoTag = typing.TypedDict('_CiftiChangeMappingParamsDictNoTag', {
+    "data-cifti": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "series": typing.NotRequired[CiftiChangeMappingSeriesParamsDict | None],
     "scalar": typing.NotRequired[CiftiChangeMappingScalarParamsDict | None],
     "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParamsDict | None],
-    "data-cifti": InputPathType,
-    "direction": str,
 })
 CiftiChangeMappingParamsDictTagged = typing.TypedDict('CiftiChangeMappingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-change-mapping"],
+    "data-cifti": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "series": typing.NotRequired[CiftiChangeMappingSeriesParamsDict | None],
     "scalar": typing.NotRequired[CiftiChangeMappingScalarParamsDict | None],
     "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParamsDict | None],
-    "data-cifti": InputPathType,
-    "direction": str,
 })
 CiftiChangeMappingParamsDict = _CiftiChangeMappingParamsDictNoTag | CiftiChangeMappingParamsDictTagged
 
@@ -285,9 +285,9 @@ class CiftiChangeMappingOutputs(typing.NamedTuple):
 
 
 def cifti_change_mapping_params(
-    cifti_out: str,
     data_cifti: InputPathType,
     direction: str,
+    cifti_out: str,
     series: CiftiChangeMappingSeriesParamsDict | None = None,
     scalar: CiftiChangeMappingScalarParamsDict | None = None,
     from_cifti: CiftiChangeMappingFromCiftiParamsDict | None = None,
@@ -296,9 +296,9 @@ def cifti_change_mapping_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         data_cifti: the cifti file to use the data from.
         direction: which direction on <data-cifti> to replace the mapping.
+        cifti_out: the output cifti file.
         series: set the mapping to series.
         scalar: set the mapping to scalar.
         from_cifti: copy mapping from another cifti file.
@@ -307,9 +307,9 @@ def cifti_change_mapping_params(
     """
     params = {
         "@type": "workbench/cifti-change-mapping",
-        "cifti-out": cifti_out,
         "data-cifti": data_cifti,
         "direction": direction,
+        "cifti-out": cifti_out,
     }
     if series is not None:
         params["series"] = series
@@ -332,6 +332,14 @@ def cifti_change_mapping_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data-cifti", None) is None:
+        raise StyxValidationError("`data-cifti` must not be None")
+    if not isinstance(params["data-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data-cifti` has the wrong type: Received `{type(params.get("data-cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -342,14 +350,6 @@ def cifti_change_mapping_validate(
         cifti_change_mapping_scalar_validate(params["scalar"])
     if params.get("from-cifti", None) is not None:
         cifti_change_mapping_from_cifti_validate(params["from-cifti"])
-    if params.get("data-cifti", None) is None:
-        raise StyxValidationError("`data-cifti` must not be None")
-    if not isinstance(params["data-cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`data-cifti` has the wrong type: Received `{type(params.get("data-cifti", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_change_mapping_cargs(
@@ -370,14 +370,15 @@ def cifti_change_mapping_cargs(
         "wb_command",
         "-cifti-change-mapping"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_change_mapping_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
-        *(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution) if (params.get("scalar", None) is not None) else []),
-        *(cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution) if (params.get("from-cifti", None) is not None) else [])
-    ])
     cargs.append(execution.input_file(params.get("data-cifti", None)))
     cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("series", None) is not None or params.get("scalar", None) is not None or params.get("from-cifti", None) is not None:
+        cargs.extend([
+            *(cifti_change_mapping_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
+            *(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution) if (params.get("scalar", None) is not None) else []),
+            *(cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution) if (params.get("from-cifti", None) is not None) else [])
+        ])
     return cargs
 
 
@@ -436,9 +437,9 @@ def cifti_change_mapping_execute(
 
 
 def cifti_change_mapping(
-    cifti_out: str,
     data_cifti: InputPathType,
     direction: str,
+    cifti_out: str,
     series: CiftiChangeMappingSeriesParamsDict | None = None,
     scalar: CiftiChangeMappingScalarParamsDict | None = None,
     from_cifti: CiftiChangeMappingFromCiftiParamsDict | None = None,
@@ -459,9 +460,9 @@ def cifti_change_mapping(
     RADIAN.
     
     Args:
-        cifti_out: the output cifti file.
         data_cifti: the cifti file to use the data from.
         direction: which direction on <data-cifti> to replace the mapping.
+        cifti_out: the output cifti file.
         series: set the mapping to series.
         scalar: set the mapping to scalar.
         from_cifti: copy mapping from another cifti file.
@@ -470,12 +471,12 @@ def cifti_change_mapping(
         NamedTuple of outputs (described in `CiftiChangeMappingOutputs`).
     """
     params = cifti_change_mapping_params(
+        data_cifti=data_cifti,
+        direction=direction,
         cifti_out=cifti_out,
         series=series,
         scalar=scalar,
         from_cifti=from_cifti,
-        data_cifti=data_cifti,
-        direction=direction,
     )
     return cifti_change_mapping_execute(params, runner)
 

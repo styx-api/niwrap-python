@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "metric_resample",
   "properties": {
+    "metric-in": {
+      "var_param": "metric_in"
+    },
+    "current-sphere": {
+      "var_param": "current_sphere"
+    },
+    "new-sphere": {
+      "var_param": "new_sphere"
+    },
+    "method": {
+      "var_param": "method"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -45,18 +57,6 @@
     },
     "largest": {
       "var_param": "largest"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
-    },
-    "current-sphere": {
-      "var_param": "current_sphere"
-    },
-    "new-sphere": {
-      "var_param": "new_sphere"
-    },
-    "method": {
-      "var_param": "method"
     }
   }
 }

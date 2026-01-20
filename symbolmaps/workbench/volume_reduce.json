@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_reduce",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -18,12 +24,6 @@
     },
     "only-numeric": {
       "var_param": "only_numeric"
-    },
-    "volume-in": {
-      "var_param": "volume_in"
-    },
-    "operation": {
-      "var_param": "operation"
     }
   }
 }

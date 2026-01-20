@@ -14,13 +14,13 @@ SURFACE_NORMALS_METADATA = Metadata(
 
 
 _SurfaceNormalsParamsDictNoTag = typing.TypedDict('_SurfaceNormalsParamsDictNoTag', {
-    "metric-out": str,
     "surface": InputPathType,
+    "metric-out": str,
 })
 SurfaceNormalsParamsDictTagged = typing.TypedDict('SurfaceNormalsParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-normals"],
-    "metric-out": str,
     "surface": InputPathType,
+    "metric-out": str,
 })
 SurfaceNormalsParamsDict = _SurfaceNormalsParamsDictNoTag | SurfaceNormalsParamsDictTagged
 
@@ -36,22 +36,22 @@ class SurfaceNormalsOutputs(typing.NamedTuple):
 
 
 def surface_normals_params(
-    metric_out: str,
     surface: InputPathType,
+    metric_out: str,
 ) -> SurfaceNormalsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the normal vectors.
         surface: the surface to output the normals of.
+        metric_out: the normal vectors.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-normals",
-        "metric-out": metric_out,
         "surface": surface,
+        "metric-out": metric_out,
     }
     return params
 
@@ -68,14 +68,14 @@ def surface_normals_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
 
 
 def surface_normals_cargs(
@@ -96,8 +96,8 @@ def surface_normals_cargs(
         "wb_command",
         "-surface-normals"
     ])
-    cargs.append(params.get("metric-out", None))
     cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric-out", None))
     return cargs
 
 
@@ -148,8 +148,8 @@ def surface_normals_execute(
 
 
 def surface_normals(
-    metric_out: str,
     surface: InputPathType,
+    metric_out: str,
     runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
@@ -159,15 +159,15 @@ def surface_normals(
     column metric file.
     
     Args:
-        metric_out: the normal vectors.
         surface: the surface to output the normals of.
+        metric_out: the normal vectors.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceNormalsOutputs`).
     """
     params = surface_normals_params(
-        metric_out=metric_out,
         surface=surface,
+        metric_out=metric_out,
     )
     return surface_normals_execute(params, runner)
 

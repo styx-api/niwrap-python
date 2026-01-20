@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_separate",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "volume-all": {
       "var_param": "volume_all",
       "fn_struct_make_params": "cifti_separate_volume_all",
@@ -96,12 +102,6 @@
           "var_param": "crop"
         }
       }
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

@@ -14,13 +14,13 @@ VOLUME_FILL_HOLES_METADATA = Metadata(
 
 
 _VolumeFillHolesParamsDictNoTag = typing.TypedDict('_VolumeFillHolesParamsDictNoTag', {
-    "volume-out": str,
     "volume-in": InputPathType,
+    "volume-out": str,
 })
 VolumeFillHolesParamsDictTagged = typing.TypedDict('VolumeFillHolesParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-fill-holes"],
-    "volume-out": str,
     "volume-in": InputPathType,
+    "volume-out": str,
 })
 VolumeFillHolesParamsDict = _VolumeFillHolesParamsDictNoTag | VolumeFillHolesParamsDictTagged
 
@@ -36,22 +36,22 @@ class VolumeFillHolesOutputs(typing.NamedTuple):
 
 
 def volume_fill_holes_params(
-    volume_out: str,
     volume_in: InputPathType,
+    volume_out: str,
 ) -> VolumeFillHolesParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        volume_out: the output ROI volume.
         volume_in: the input ROI volume.
+        volume_out: the output ROI volume.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-fill-holes",
-        "volume-out": volume_out,
         "volume-in": volume_in,
+        "volume-out": volume_out,
     }
     return params
 
@@ -68,14 +68,14 @@ def volume_fill_holes_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
     if params.get("volume-in", None) is None:
         raise StyxValidationError("`volume-in` must not be None")
     if not isinstance(params["volume-in"], (pathlib.Path, str)):
         raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
 
 
 def volume_fill_holes_cargs(
@@ -96,8 +96,8 @@ def volume_fill_holes_cargs(
         "wb_command",
         "-volume-fill-holes"
     ])
-    cargs.append(params.get("volume-out", None))
     cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(params.get("volume-out", None))
     return cargs
 
 
@@ -148,8 +148,8 @@ def volume_fill_holes_execute(
 
 
 def volume_fill_holes(
-    volume_out: str,
     volume_in: InputPathType,
+    volume_out: str,
     runner: Runner | None = None,
 ) -> VolumeFillHolesOutputs:
     """
@@ -159,15 +159,15 @@ def volume_fill_holes(
     all but the largest one with ones.
     
     Args:
-        volume_out: the output ROI volume.
         volume_in: the input ROI volume.
+        volume_out: the output ROI volume.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeFillHolesOutputs`).
     """
     params = volume_fill_holes_params(
-        volume_out=volume_out,
         volume_in=volume_in,
+        volume_out=volume_out,
     )
     return volume_fill_holes_execute(params, runner)
 

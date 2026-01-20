@@ -94,8 +94,6 @@ def scene_file_relocate_cargs(
         "wb_command",
         "-scene-file-relocate"
     ])
-    cargs.extend([
-    ])
     cargs.append(params.get("input-scene", None))
     cargs.append(params.get("output-scene", None))
     return cargs

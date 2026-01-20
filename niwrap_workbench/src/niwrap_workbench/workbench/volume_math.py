@@ -30,17 +30,17 @@ VolumeMathVarParamsDict = _VolumeMathVarParamsDictNoTag | VolumeMathVarParamsDic
 
 
 _VolumeMathParamsDictNoTag = typing.TypedDict('_VolumeMathParamsDictNoTag', {
+    "expression": str,
     "volume-out": str,
     "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
     "replace": typing.NotRequired[float | None],
-    "expression": str,
 })
 VolumeMathParamsDictTagged = typing.TypedDict('VolumeMathParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-math"],
+    "expression": str,
     "volume-out": str,
     "var": typing.NotRequired[list[VolumeMathVarParamsDict] | None],
     "replace": typing.NotRequired[float | None],
-    "expression": str,
 })
 VolumeMathParamsDict = _VolumeMathParamsDictNoTag | VolumeMathParamsDictTagged
 
@@ -144,8 +144,8 @@ class VolumeMathOutputs(typing.NamedTuple):
 
 
 def volume_math_params(
-    volume_out: str,
     expression: str,
+    volume_out: str,
     var: list[VolumeMathVarParamsDict] | None = None,
     replace: float | None = None,
 ) -> VolumeMathParamsDictTagged:
@@ -153,8 +153,8 @@ def volume_math_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         expression: the expression to evaluate, in quotes.
+        volume_out: the output volume.
         var: a volume file to use as a variable.
         replace: replace NaN results with a value\
             \
@@ -164,8 +164,8 @@ def volume_math_params(
     """
     params = {
         "@type": "workbench/volume-math",
-        "volume-out": volume_out,
         "expression": expression,
+        "volume-out": volume_out,
     }
     if var is not None:
         params["var"] = var
@@ -186,6 +186,10 @@ def volume_math_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -198,10 +202,6 @@ def volume_math_validate(
     if params.get("replace", None) is not None:
         if not isinstance(params["replace"], (float, int)):
             raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
-    if params.get("expression", None) is None:
-        raise StyxValidationError("`expression` must not be None")
-    if not isinstance(params["expression"], str):
-        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
 
 
 def volume_math_cargs(
@@ -222,16 +222,15 @@ def volume_math_cargs(
         "wb_command",
         "-volume-math"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
-    ])
+    cargs.append(params.get("expression", None))
+    cargs.append(params.get("volume-out", None))
+    if params.get("var", None) is not None:
+        cargs.extend([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
     if params.get("replace", None) is not None:
         cargs.extend([
             "-fixnan",
             str(params.get("replace", None))
         ])
-    cargs.append(params.get("expression", None))
     return cargs
 
 
@@ -348,8 +347,8 @@ def volume_math_execute(
 
 
 def volume_math(
-    volume_out: str,
     expression: str,
+    volume_out: str,
     var: list[VolumeMathVarParamsDict] | None = None,
     replace: float | None = None,
     runner: Runner | None = None,
@@ -427,8 +426,8 @@ def volume_math(
     .
     
     Args:
-        volume_out: the output volume.
         expression: the expression to evaluate, in quotes.
+        volume_out: the output volume.
         var: a volume file to use as a variable.
         replace: replace NaN results with a value\
             \
@@ -438,10 +437,10 @@ def volume_math(
         NamedTuple of outputs (described in `VolumeMathOutputs`).
     """
     params = volume_math_params(
+        expression=expression,
         volume_out=volume_out,
         var=var,
         replace=replace,
-        expression=expression,
     )
     return volume_math_execute(params, runner)
 

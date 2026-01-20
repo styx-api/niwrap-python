@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "metric_weighted_stats",
   "properties": {
+    "metric-in": {
+      "var_param": "metric_in"
+    },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "metric_weighted_stats_roi",
@@ -36,9 +39,6 @@
     },
     "mean": {
       "var_param": "mean"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
     }
   }
 }

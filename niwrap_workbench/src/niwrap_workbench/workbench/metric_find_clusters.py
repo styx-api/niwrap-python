@@ -14,6 +14,10 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 
 
 _MetricFindClustersParamsDictNoTag = typing.TypedDict('_MetricFindClustersParamsDictNoTag', {
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "value-threshold": float,
+    "minimum-area": float,
     "metric-out": str,
     "startval": typing.NotRequired[int | None],
     "distance": typing.NotRequired[float | None],
@@ -22,13 +26,13 @@ _MetricFindClustersParamsDictNoTag = typing.TypedDict('_MetricFindClustersParams
     "area-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "less-than": bool,
-    "surface": InputPathType,
-    "metric-in": InputPathType,
-    "value-threshold": float,
-    "minimum-area": float,
 })
 MetricFindClustersParamsDictTagged = typing.TypedDict('MetricFindClustersParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-find-clusters"],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "value-threshold": float,
+    "minimum-area": float,
     "metric-out": str,
     "startval": typing.NotRequired[int | None],
     "distance": typing.NotRequired[float | None],
@@ -37,10 +41,6 @@ MetricFindClustersParamsDictTagged = typing.TypedDict('MetricFindClustersParamsD
     "area-metric": typing.NotRequired[InputPathType | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "less-than": bool,
-    "surface": InputPathType,
-    "metric-in": InputPathType,
-    "value-threshold": float,
-    "minimum-area": float,
 })
 MetricFindClustersParamsDict = _MetricFindClustersParamsDictNoTag | MetricFindClustersParamsDictTagged
 
@@ -56,11 +56,11 @@ class MetricFindClustersOutputs(typing.NamedTuple):
 
 
 def metric_find_clusters_params(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
+    metric_out: str,
     startval: int | None = None,
     distance: float | None = None,
     ratio: float | None = None,
@@ -73,11 +73,11 @@ def metric_find_clusters_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         metric_in: the input metric.
         value_threshold: threshold for data values.
         minimum_area: threshold for cluster area, in mm^2.
+        metric_out: the output metric.
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
@@ -106,12 +106,12 @@ def metric_find_clusters_params(
     """
     params = {
         "@type": "workbench/metric-find-clusters",
-        "metric-out": metric_out,
-        "less-than": less_than,
         "surface": surface,
         "metric-in": metric_in,
         "value-threshold": value_threshold,
         "minimum-area": minimum_area,
+        "metric-out": metric_out,
+        "less-than": less_than,
     }
     if startval is not None:
         params["startval"] = startval
@@ -140,6 +140,22 @@ def metric_find_clusters_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("value-threshold", None) is None:
+        raise StyxValidationError("`value-threshold` must not be None")
+    if not isinstance(params["value-threshold"], (float, int)):
+        raise StyxValidationError(f'`value-threshold` has the wrong type: Received `{type(params.get("value-threshold", None))}` expected `float`')
+    if params.get("minimum-area", None) is None:
+        raise StyxValidationError("`minimum-area` must not be None")
+    if not isinstance(params["minimum-area"], (float, int)):
+        raise StyxValidationError(f'`minimum-area` has the wrong type: Received `{type(params.get("minimum-area", None))}` expected `float`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -166,22 +182,6 @@ def metric_find_clusters_validate(
         raise StyxValidationError("`less-than` must not be None")
     if not isinstance(params["less-than"], bool):
         raise StyxValidationError(f'`less-than` has the wrong type: Received `{type(params.get("less-than", False))}` expected `bool`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
-    if params.get("value-threshold", None) is None:
-        raise StyxValidationError("`value-threshold` must not be None")
-    if not isinstance(params["value-threshold"], (float, int)):
-        raise StyxValidationError(f'`value-threshold` has the wrong type: Received `{type(params.get("value-threshold", None))}` expected `float`')
-    if params.get("minimum-area", None) is None:
-        raise StyxValidationError("`minimum-area` must not be None")
-    if not isinstance(params["minimum-area"], (float, int)):
-        raise StyxValidationError(f'`minimum-area` has the wrong type: Received `{type(params.get("minimum-area", None))}` expected `float`')
 
 
 def metric_find_clusters_cargs(
@@ -202,6 +202,10 @@ def metric_find_clusters_cargs(
         "wb_command",
         "-metric-find-clusters"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("value-threshold", None)))
+    cargs.append(str(params.get("minimum-area", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("startval", None) is not None:
         cargs.extend([
@@ -235,10 +239,6 @@ def metric_find_clusters_cargs(
         ])
     if params.get("less-than", False):
         cargs.append("-less-than")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
-    cargs.append(str(params.get("value-threshold", None)))
-    cargs.append(str(params.get("minimum-area", None)))
     return cargs
 
 
@@ -295,11 +295,11 @@ def metric_find_clusters_execute(
 
 
 def metric_find_clusters(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
+    metric_out: str,
     startval: int | None = None,
     distance: float | None = None,
     ratio: float | None = None,
@@ -322,11 +322,11 @@ def metric_find_clusters(
     complicated thresholding, see -metric-math.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         metric_in: the input metric.
         value_threshold: threshold for data values.
         minimum_area: threshold for cluster area, in mm^2.
+        metric_out: the output metric.
         startval: start labeling clusters from a value other than 1\
             \
             the value to give the first cluster found.
@@ -355,6 +355,10 @@ def metric_find_clusters(
         NamedTuple of outputs (described in `MetricFindClustersOutputs`).
     """
     params = metric_find_clusters_params(
+        surface=surface,
+        metric_in=metric_in,
+        value_threshold=value_threshold,
+        minimum_area=minimum_area,
         metric_out=metric_out,
         startval=startval,
         distance=distance,
@@ -363,10 +367,6 @@ def metric_find_clusters(
         area_metric=area_metric,
         roi_metric=roi_metric,
         less_than=less_than,
-        surface=surface,
-        metric_in=metric_in,
-        value_threshold=value_threshold,
-        minimum_area=minimum_area,
     )
     return metric_find_clusters_execute(params, runner)
 

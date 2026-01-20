@@ -14,17 +14,17 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
 
 
 _MetricVectorTowardRoiParamsDictNoTag = typing.TypedDict('_MetricVectorTowardRoiParamsDictNoTag', {
-    "metric-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "target-roi": InputPathType,
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 MetricVectorTowardRoiParamsDictTagged = typing.TypedDict('MetricVectorTowardRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-vector-toward-roi"],
-    "metric-out": str,
-    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "target-roi": InputPathType,
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 MetricVectorTowardRoiParamsDict = _MetricVectorTowardRoiParamsDictNoTag | MetricVectorTowardRoiParamsDictTagged
 
@@ -40,18 +40,18 @@ class MetricVectorTowardRoiOutputs(typing.NamedTuple):
 
 
 def metric_vector_toward_roi_params(
-    metric_out: str,
     surface: InputPathType,
     target_roi: InputPathType,
+    metric_out: str,
     roi_metric: InputPathType | None = None,
 ) -> MetricVectorTowardRoiParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         target_roi: the roi to find the shortest path to.
+        metric_out: the output metric.
         roi_metric: don't compute for vertices outside an roi\
             \
             the region to compute inside, as a metric.
@@ -60,9 +60,9 @@ def metric_vector_toward_roi_params(
     """
     params = {
         "@type": "workbench/metric-vector-toward-roi",
-        "metric-out": metric_out,
         "surface": surface,
         "target-roi": target_roi,
+        "metric-out": metric_out,
     }
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
@@ -81,13 +81,6 @@ def metric_vector_toward_roi_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("roi-metric", None) is not None:
-        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def metric_vector_toward_roi_validate(
         raise StyxValidationError("`target-roi` must not be None")
     if not isinstance(params["target-roi"], (pathlib.Path, str)):
         raise StyxValidationError(f'`target-roi` has the wrong type: Received `{type(params.get("target-roi", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def metric_vector_toward_roi_cargs(
@@ -116,14 +116,14 @@ def metric_vector_toward_roi_cargs(
         "wb_command",
         "-metric-vector-toward-roi"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("target-roi", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("roi-metric", None) is not None:
         cargs.extend([
             "-roi",
             execution.input_file(params.get("roi-metric", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("target-roi", None)))
     return cargs
 
 
@@ -174,9 +174,9 @@ def metric_vector_toward_roi_execute(
 
 
 def metric_vector_toward_roi(
-    metric_out: str,
     surface: InputPathType,
     target_roi: InputPathType,
+    metric_out: str,
     roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
@@ -187,9 +187,9 @@ def metric_vector_toward_roi(
     the ROI.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to compute on.
         target_roi: the roi to find the shortest path to.
+        metric_out: the output metric.
         roi_metric: don't compute for vertices outside an roi\
             \
             the region to compute inside, as a metric.
@@ -198,10 +198,10 @@ def metric_vector_toward_roi(
         NamedTuple of outputs (described in `MetricVectorTowardRoiOutputs`).
     """
     params = metric_vector_toward_roi_params(
-        metric_out=metric_out,
-        roi_metric=roi_metric,
         surface=surface,
         target_roi=target_roi,
+        metric_out=metric_out,
+        roi_metric=roi_metric,
     )
     return metric_vector_toward_roi_execute(params, runner)
 

@@ -74,6 +74,8 @@ CiftiGradientSurfaceParamsDict = _CiftiGradientSurfaceParamsDictNoTag | CiftiGra
 
 
 _CiftiGradientParamsDictNoTag = typing.TypedDict('_CiftiGradientParamsDictNoTag', {
+    "cifti": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiGradientRightSurfaceParamsDict | None],
@@ -84,11 +86,11 @@ _CiftiGradientParamsDictNoTag = typing.TypedDict('_CiftiGradientParamsDictNoTag'
     "surface-kernel": typing.NotRequired[float | None],
     "average-output": bool,
     "presmooth-fwhm": bool,
-    "cifti": InputPathType,
-    "direction": str,
 })
 CiftiGradientParamsDictTagged = typing.TypedDict('CiftiGradientParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-gradient"],
+    "cifti": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiGradientLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiGradientRightSurfaceParamsDict | None],
@@ -99,8 +101,6 @@ CiftiGradientParamsDictTagged = typing.TypedDict('CiftiGradientParamsDictTagged'
     "surface-kernel": typing.NotRequired[float | None],
     "average-output": bool,
     "presmooth-fwhm": bool,
-    "cifti": InputPathType,
-    "direction": str,
 })
 CiftiGradientParamsDict = _CiftiGradientParamsDictNoTag | CiftiGradientParamsDictTagged
 
@@ -501,9 +501,9 @@ class CiftiGradientOutputs(typing.NamedTuple):
 
 
 def cifti_gradient_params(
-    cifti_out: str,
     cifti: InputPathType,
     direction: str,
+    cifti_out: str,
     left_surface: CiftiGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiGradientCerebellumSurfaceParamsDict | None = None,
@@ -518,9 +518,9 @@ def cifti_gradient_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         direction: which dimension to take the gradient along, ROW or COLUMN.
+        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -542,11 +542,11 @@ def cifti_gradient_params(
     """
     params = {
         "@type": "workbench/cifti-gradient",
+        "cifti": cifti,
+        "direction": direction,
         "cifti-out": cifti_out,
         "average-output": average_output,
         "presmooth-fwhm": presmooth_fwhm,
-        "cifti": cifti,
-        "direction": direction,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -577,6 +577,14 @@ def cifti_gradient_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -608,14 +616,6 @@ def cifti_gradient_validate(
         raise StyxValidationError("`presmooth-fwhm` must not be None")
     if not isinstance(params["presmooth-fwhm"], bool):
         raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_gradient_cargs(
@@ -636,14 +636,17 @@ def cifti_gradient_cargs(
         "wb_command",
         "-cifti-gradient"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        *(cifti_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
-        *([a for c in [cifti_gradient_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("vectors", None) is not None or params.get("surface", None) is not None:
+        cargs.extend([
+            *(cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
+            *(cifti_gradient_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else []),
+            *([a for c in [cifti_gradient_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
+        ])
     if params.get("volume-kernel", None) is not None:
         cargs.extend([
             "-volume-presmooth",
@@ -658,8 +661,6 @@ def cifti_gradient_cargs(
         cargs.append("-average-output")
     if params.get("presmooth-fwhm", False):
         cargs.append("-presmooth-fwhm")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -753,9 +754,9 @@ def cifti_gradient_execute(
 
 
 def cifti_gradient(
-    cifti_out: str,
     cifti: InputPathType,
     direction: str,
+    cifti_out: str,
     left_surface: CiftiGradientLeftSurfaceParamsDict | None = None,
     right_surface: CiftiGradientRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiGradientCerebellumSurfaceParamsDict | None = None,
@@ -816,9 +817,9 @@ def cifti_gradient(
     THALAMUS_RIGHT.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         direction: which dimension to take the gradient along, ROW or COLUMN.
+        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -840,6 +841,8 @@ def cifti_gradient(
         NamedTuple of outputs (described in `CiftiGradientOutputs`).
     """
     params = cifti_gradient_params(
+        cifti=cifti,
+        direction=direction,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
@@ -850,8 +853,6 @@ def cifti_gradient(
         surface_kernel=surface_kernel,
         average_output=average_output,
         presmooth_fwhm=presmooth_fwhm,
-        cifti=cifti,
-        direction=direction,
     )
     return cifti_gradient_execute(params, runner)
 

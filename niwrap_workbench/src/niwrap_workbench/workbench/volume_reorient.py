@@ -103,8 +103,6 @@ def volume_reorient_cargs(
         "wb_command",
         "-volume-reorient"
     ])
-    cargs.extend([
-    ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(params.get("orient-string", None))
     cargs.append(params.get("volume-out", None))

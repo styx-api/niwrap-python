@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_roi_average",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "text-out": {
+      "var_param": "text_out"
+    },
     "roi-vol": {
       "var_param": "roi_vol"
     },
@@ -9,12 +15,6 @@
     },
     "roi-cifti": {
       "var_param": "roi_cifti"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "text-out": {
-      "var_param": "text_out"
     }
   }
 }

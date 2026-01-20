@@ -229,8 +229,6 @@ def volume_capture_plane_cargs(
         "wb_command",
         "-volume-capture-plane"
     ])
-    cargs.extend([
-    ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(params.get("subvolume", None))
     cargs.append(params.get("interp", None))

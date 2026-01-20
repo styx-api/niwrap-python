@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "convert_fiber_orientations",
   "properties": {
+    "label-volume": {
+      "var_param": "label_volume"
+    },
     "fiber-out": {
       "var_param": "fiber_out"
     },
@@ -30,9 +33,6 @@
           "var_param": "kb"
         }
       }
-    },
-    "label-volume": {
-      "var_param": "label_volume"
     }
   }
 }

@@ -14,17 +14,17 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
 
 
 _SurfaceCutResampleParamsDictNoTag = typing.TypedDict('_SurfaceCutResampleParamsDictNoTag', {
-    "surface-out": str,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
+    "surface-out": str,
 })
 SurfaceCutResampleParamsDictTagged = typing.TypedDict('SurfaceCutResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-cut-resample"],
-    "surface-out": str,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
+    "surface-out": str,
 })
 SurfaceCutResampleParamsDict = _SurfaceCutResampleParamsDictNoTag | SurfaceCutResampleParamsDictTagged
 
@@ -40,30 +40,30 @@ class SurfaceCutResampleOutputs(typing.NamedTuple):
 
 
 def surface_cut_resample_params(
-    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
+    surface_out: str,
 ) -> SurfaceCutResampleParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
+        surface_out: the output surface file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-cut-resample",
-        "surface-out": surface_out,
         "surface-in": surface_in,
         "current-sphere": current_sphere,
         "new-sphere": new_sphere,
+        "surface-out": surface_out,
     }
     return params
 
@@ -80,10 +80,6 @@ def surface_cut_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("surface-out", None) is None:
-        raise StyxValidationError("`surface-out` must not be None")
-    if not isinstance(params["surface-out"], str):
-        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
     if params.get("surface-in", None) is None:
         raise StyxValidationError("`surface-in` must not be None")
     if not isinstance(params["surface-in"], (pathlib.Path, str)):
@@ -96,6 +92,10 @@ def surface_cut_resample_validate(
         raise StyxValidationError("`new-sphere` must not be None")
     if not isinstance(params["new-sphere"], (pathlib.Path, str)):
         raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
 
 
 def surface_cut_resample_cargs(
@@ -116,10 +116,10 @@ def surface_cut_resample_cargs(
         "wb_command",
         "-surface-cut-resample"
     ])
-    cargs.append(params.get("surface-out", None))
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))
+    cargs.append(params.get("surface-out", None))
     return cargs
 
 
@@ -171,10 +171,10 @@ def surface_cut_resample_execute(
 
 
 def surface_cut_resample(
-    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
+    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
@@ -185,21 +185,21 @@ def surface_cut_resample(
     surfaces, and because it is needed to figure out the new topology anyway.
     
     Args:
-        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
+        surface_out: the output surface file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCutResampleOutputs`).
     """
     params = surface_cut_resample_params(
-        surface_out=surface_out,
         surface_in=surface_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
+        surface_out=surface_out,
     )
     return surface_cut_resample_execute(params, runner)
 

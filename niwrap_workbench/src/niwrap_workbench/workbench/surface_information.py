@@ -85,8 +85,6 @@ def surface_information_cargs(
         "wb_command",
         "-surface-information"
     ])
-    cargs.extend([
-    ])
     cargs.append(execution.input_file(params.get("Surface File", None)))
     return cargs
 

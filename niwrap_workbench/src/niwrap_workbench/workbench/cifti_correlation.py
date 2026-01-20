@@ -32,6 +32,7 @@ CiftiCorrelationRoiOverrideParamsDict = _CiftiCorrelationRoiOverrideParamsDictNo
 
 
 _CiftiCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCorrelationParamsDictNoTag', {
+    "cifti": InputPathType,
     "cifti-out": str,
     "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
     "limit-GB": typing.NotRequired[float | None],
@@ -39,10 +40,10 @@ _CiftiCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCorrelationParamsDict
     "covariance": bool,
     "no-demean": bool,
     "fisher-z": bool,
-    "cifti": InputPathType,
 })
 CiftiCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-correlation"],
+    "cifti": InputPathType,
     "cifti-out": str,
     "roi-override": typing.NotRequired[CiftiCorrelationRoiOverrideParamsDict | None],
     "limit-GB": typing.NotRequired[float | None],
@@ -50,7 +51,6 @@ CiftiCorrelationParamsDictTagged = typing.TypedDict('CiftiCorrelationParamsDictT
     "covariance": bool,
     "no-demean": bool,
     "fisher-z": bool,
-    "cifti": InputPathType,
 })
 CiftiCorrelationParamsDict = _CiftiCorrelationParamsDictNoTag | CiftiCorrelationParamsDictTagged
 
@@ -183,8 +183,8 @@ class CiftiCorrelationOutputs(typing.NamedTuple):
 
 
 def cifti_correlation_params(
-    cifti_out: str,
     cifti: InputPathType,
+    cifti_out: str,
     roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
     limit_gb: float | None = None,
     weight_file: str | None = None,
@@ -196,8 +196,8 @@ def cifti_correlation_params(
     Build parameters.
     
     Args:
-        cifti_out: output cifti file.
         cifti: input cifti file.
+        cifti_out: output cifti file.
         roi_override: perform correlation from a subset of rows to all rows.
         limit_gb: restrict memory usage\
             \
@@ -214,11 +214,11 @@ def cifti_correlation_params(
     """
     params = {
         "@type": "workbench/cifti-correlation",
+        "cifti": cifti,
         "cifti-out": cifti_out,
         "covariance": covariance,
         "no-demean": no_demean,
         "fisher-z": fisher_z,
-        "cifti": cifti,
     }
     if roi_override is not None:
         params["roi-override"] = roi_override
@@ -241,6 +241,10 @@ def cifti_correlation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -265,10 +269,6 @@ def cifti_correlation_validate(
         raise StyxValidationError("`fisher-z` must not be None")
     if not isinstance(params["fisher-z"], bool):
         raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
 
 
 def cifti_correlation_cargs(
@@ -289,10 +289,10 @@ def cifti_correlation_cargs(
         "wb_command",
         "-cifti-correlation"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution) if (params.get("roi-override", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("roi-override", None) is not None:
+        cargs.extend(cifti_correlation_roi_override_cargs(params.get("roi-override", None), execution))
     if params.get("limit-GB", None) is not None:
         cargs.extend([
             "-mem-limit",
@@ -309,7 +309,6 @@ def cifti_correlation_cargs(
         cargs.append("-no-demean")
     if params.get("fisher-z", False):
         cargs.append("-fisher-z")
-    cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 
 
@@ -372,8 +371,8 @@ def cifti_correlation_execute(
 
 
 def cifti_correlation(
-    cifti_out: str,
     cifti: InputPathType,
+    cifti_out: str,
     roi_override: CiftiCorrelationRoiOverrideParamsDict | None = None,
     limit_gb: float | None = None,
     weight_file: str | None = None,
@@ -401,8 +400,8 @@ def cifti_correlation(
     a time (this may be very slow).
     
     Args:
-        cifti_out: output cifti file.
         cifti: input cifti file.
+        cifti_out: output cifti file.
         roi_override: perform correlation from a subset of rows to all rows.
         limit_gb: restrict memory usage\
             \
@@ -419,6 +418,7 @@ def cifti_correlation(
         NamedTuple of outputs (described in `CiftiCorrelationOutputs`).
     """
     params = cifti_correlation_params(
+        cifti=cifti,
         cifti_out=cifti_out,
         roi_override=roi_override,
         limit_gb=limit_gb,
@@ -426,7 +426,6 @@ def cifti_correlation(
         covariance=covariance,
         no_demean=no_demean,
         fisher_z=fisher_z,
-        cifti=cifti,
     )
     return cifti_correlation_execute(params, runner)
 

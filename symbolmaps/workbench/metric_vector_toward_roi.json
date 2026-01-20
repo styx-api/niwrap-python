@@ -1,17 +1,17 @@
 {
   "fn_root_make_params_and_execute": "metric_vector_toward_roi",
   "properties": {
-    "metric-out": {
-      "var_param": "metric_out"
-    },
-    "roi-metric": {
-      "var_param": "roi_metric"
-    },
     "surface": {
       "var_param": "surface"
     },
     "target-roi": {
       "var_param": "target_roi"
+    },
+    "metric-out": {
+      "var_param": "metric_out"
+    },
+    "roi-metric": {
+      "var_param": "roi_metric"
     }
   }
 }

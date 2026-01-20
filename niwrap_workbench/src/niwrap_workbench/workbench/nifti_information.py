@@ -24,17 +24,17 @@ NiftiInformationPrintXmlParamsDict = _NiftiInformationPrintXmlParamsDictNoTag | 
 
 
 _NiftiInformationParamsDictNoTag = typing.TypedDict('_NiftiInformationParamsDictNoTag', {
+    "nifti-file": str,
     "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
-    "nifti-file": str,
 })
 NiftiInformationParamsDictTagged = typing.TypedDict('NiftiInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/nifti-information"],
+    "nifti-file": str,
     "print-xml": typing.NotRequired[NiftiInformationPrintXmlParamsDict | None],
     "allow-truncated": typing.NotRequired[bool | None],
     "print-matrix": bool,
-    "nifti-file": str,
 })
 NiftiInformationParamsDict = _NiftiInformationParamsDictNoTag | NiftiInformationParamsDictTagged
 
@@ -130,8 +130,8 @@ def nifti_information_params(
     """
     params = {
         "@type": "workbench/nifti-information",
-        "print-matrix": print_matrix,
         "nifti-file": nifti_file,
+        "print-matrix": print_matrix,
     }
     if print_xml is not None:
         params["print-xml"] = print_xml
@@ -152,6 +152,10 @@ def nifti_information_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nifti-file", None) is None:
+        raise StyxValidationError("`nifti-file` must not be None")
+    if not isinstance(params["nifti-file"], str):
+        raise StyxValidationError(f'`nifti-file` has the wrong type: Received `{type(params.get("nifti-file", None))}` expected `str`')
     if params.get("print-xml", None) is not None:
         nifti_information_print_xml_validate(params["print-xml"])
     if params.get("allow-truncated", None) is not None:
@@ -161,10 +165,6 @@ def nifti_information_validate(
         raise StyxValidationError("`print-matrix` must not be None")
     if not isinstance(params["print-matrix"], bool):
         raise StyxValidationError(f'`print-matrix` has the wrong type: Received `{type(params.get("print-matrix", False))}` expected `bool`')
-    if params.get("nifti-file", None) is None:
-        raise StyxValidationError("`nifti-file` must not be None")
-    if not isinstance(params["nifti-file"], str):
-        raise StyxValidationError(f'`nifti-file` has the wrong type: Received `{type(params.get("nifti-file", None))}` expected `str`')
 
 
 def nifti_information_cargs(
@@ -185,6 +185,7 @@ def nifti_information_cargs(
         "wb_command",
         "-nifti-information"
     ])
+    cargs.append(params.get("nifti-file", None))
     if params.get("print-xml", None) is not None:
         cargs.extend(nifti_information_print_xml_cargs(params.get("print-xml", None), execution))
     if params.get("allow-truncated", None) is not None:
@@ -194,7 +195,6 @@ def nifti_information_cargs(
         ])
     if params.get("print-matrix", False):
         cargs.append("-print-matrix")
-    cargs.append(params.get("nifti-file", None))
     return cargs
 
 
@@ -266,10 +266,10 @@ def nifti_information(
         NamedTuple of outputs (described in `NiftiInformationOutputs`).
     """
     params = nifti_information_params(
+        nifti_file=nifti_file,
         print_xml=print_xml,
         allow_truncated=allow_truncated,
         print_matrix=print_matrix,
-        nifti_file=nifti_file,
     )
     return nifti_information_execute(params, runner)
 

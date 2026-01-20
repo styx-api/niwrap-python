@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_reduce",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -21,12 +27,6 @@
     },
     "only-numeric": {
       "var_param": "only_numeric"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "operation": {
-      "var_param": "operation"
     }
   }
 }

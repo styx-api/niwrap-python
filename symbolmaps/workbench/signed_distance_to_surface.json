@@ -1,17 +1,17 @@
 {
   "fn_root_make_params_and_execute": "signed_distance_to_surface",
   "properties": {
-    "metric": {
-      "var_param": "metric"
-    },
-    "method": {
-      "var_param": "method"
-    },
     "surface-comp": {
       "var_param": "surface_comp"
     },
     "surface-ref": {
       "var_param": "surface_ref"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "method": {
+      "var_param": "method"
     }
   }
 }

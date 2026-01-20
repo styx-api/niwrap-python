@@ -14,6 +14,9 @@ METRIC_DILATE_METADATA = Metadata(
 
 
 _MetricDilateParamsDictNoTag = typing.TypedDict('_MetricDilateParamsDictNoTag', {
+    "metric": InputPathType,
+    "surface": InputPathType,
+    "distance": float,
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "exponent": typing.NotRequired[float | None],
@@ -23,12 +26,12 @@ _MetricDilateParamsDictNoTag = typing.TypedDict('_MetricDilateParamsDictNoTag', 
     "legacy-cutoff": bool,
     "linear": bool,
     "nearest": bool,
-    "metric": InputPathType,
-    "surface": InputPathType,
-    "distance": float,
 })
 MetricDilateParamsDictTagged = typing.TypedDict('MetricDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-dilate"],
+    "metric": InputPathType,
+    "surface": InputPathType,
+    "distance": float,
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "exponent": typing.NotRequired[float | None],
@@ -38,9 +41,6 @@ MetricDilateParamsDictTagged = typing.TypedDict('MetricDilateParamsDictTagged', 
     "legacy-cutoff": bool,
     "linear": bool,
     "nearest": bool,
-    "metric": InputPathType,
-    "surface": InputPathType,
-    "distance": float,
 })
 MetricDilateParamsDict = _MetricDilateParamsDictNoTag | MetricDilateParamsDictTagged
 
@@ -56,10 +56,10 @@ class MetricDilateOutputs(typing.NamedTuple):
 
 
 def metric_dilate_params(
-    metric_out: str,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     exponent: float | None = None,
     column: str | None = None,
@@ -73,10 +73,10 @@ def metric_dilate_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         metric: the metric to dilate.
         surface: the surface to compute on.
         distance: distance in mm to dilate.
+        metric_out: the output metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -106,13 +106,13 @@ def metric_dilate_params(
     """
     params = {
         "@type": "workbench/metric-dilate",
+        "metric": metric,
+        "surface": surface,
+        "distance": distance,
         "metric-out": metric_out,
         "legacy-cutoff": legacy_cutoff,
         "linear": linear,
         "nearest": nearest,
-        "metric": metric,
-        "surface": surface,
-        "distance": distance,
     }
     if area_metric is not None:
         params["area-metric"] = area_metric
@@ -139,6 +139,18 @@ def metric_dilate_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -170,18 +182,6 @@ def metric_dilate_validate(
         raise StyxValidationError("`nearest` must not be None")
     if not isinstance(params["nearest"], bool):
         raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
-    if params.get("metric", None) is None:
-        raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("distance", None) is None:
-        raise StyxValidationError("`distance` must not be None")
-    if not isinstance(params["distance"], (float, int)):
-        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
 
 
 def metric_dilate_cargs(
@@ -202,6 +202,9 @@ def metric_dilate_cargs(
         "wb_command",
         "-metric-dilate"
     ])
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("distance", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("area-metric", None) is not None:
         cargs.extend([
@@ -234,9 +237,6 @@ def metric_dilate_cargs(
         cargs.append("-linear")
     if params.get("nearest", False):
         cargs.append("-nearest")
-    cargs.append(execution.input_file(params.get("metric", None)))
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(str(params.get("distance", None)))
     return cargs
 
 
@@ -303,10 +303,10 @@ def metric_dilate_execute(
 
 
 def metric_dilate(
-    metric_out: str,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     exponent: float | None = None,
     column: str | None = None,
@@ -340,10 +340,10 @@ def metric_dilate(
     -exponent 2'.
     
     Args:
-        metric_out: the output metric.
         metric: the metric to dilate.
         surface: the surface to compute on.
         distance: distance in mm to dilate.
+        metric_out: the output metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -373,6 +373,9 @@ def metric_dilate(
         NamedTuple of outputs (described in `MetricDilateOutputs`).
     """
     params = metric_dilate_params(
+        metric=metric,
+        surface=surface,
+        distance=distance,
         metric_out=metric_out,
         area_metric=area_metric,
         exponent=exponent,
@@ -382,9 +385,6 @@ def metric_dilate(
         legacy_cutoff=legacy_cutoff,
         linear=linear,
         nearest=nearest,
-        metric=metric,
-        surface=surface,
-        distance=distance,
     )
     return metric_dilate_execute(params, runner)
 

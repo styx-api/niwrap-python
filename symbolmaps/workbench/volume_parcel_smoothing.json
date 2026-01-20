@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "volume_parcel_smoothing",
   "properties": {
+    "data-volume": {
+      "var_param": "data_volume"
+    },
+    "label-volume": {
+      "var_param": "label_volume"
+    },
+    "kernel": {
+      "var_param": "kernel"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -12,15 +21,6 @@
     },
     "fwhm": {
       "var_param": "fwhm"
-    },
-    "data-volume": {
-      "var_param": "data_volume"
-    },
-    "label-volume": {
-      "var_param": "label_volume"
-    },
-    "kernel": {
-      "var_param": "kernel"
     }
   }
 }

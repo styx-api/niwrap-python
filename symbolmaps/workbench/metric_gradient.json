@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "metric_gradient",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric-in": {
+      "var_param": "metric_in"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -45,12 +51,6 @@
     },
     "average-normals": {
       "var_param": "average_normals"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
     }
   }
 }

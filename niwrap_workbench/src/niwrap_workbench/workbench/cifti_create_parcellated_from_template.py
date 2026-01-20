@@ -24,19 +24,19 @@ CiftiCreateParcellatedFromTemplateCiftiParamsDict = _CiftiCreateParcellatedFromT
 
 
 _CiftiCreateParcellatedFromTemplateParamsDictNoTag = typing.TypedDict('_CiftiCreateParcellatedFromTemplateParamsDictNoTag', {
+    "cifti-template": InputPathType,
+    "modify-direction": str,
     "cifti-out": str,
     "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None],
     "value": typing.NotRequired[float | None],
-    "cifti-template": InputPathType,
-    "modify-direction": str,
 })
 CiftiCreateParcellatedFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-parcellated-from-template"],
+    "cifti-template": InputPathType,
+    "modify-direction": str,
     "cifti-out": str,
     "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None],
     "value": typing.NotRequired[float | None],
-    "cifti-template": InputPathType,
-    "modify-direction": str,
 })
 CiftiCreateParcellatedFromTemplateParamsDict = _CiftiCreateParcellatedFromTemplateParamsDictNoTag | CiftiCreateParcellatedFromTemplateParamsDictTagged
 
@@ -109,9 +109,9 @@ class CiftiCreateParcellatedFromTemplateOutputs(typing.NamedTuple):
 
 
 def cifti_create_parcellated_from_template_params(
-    cifti_out: str,
     cifti_template: InputPathType,
     modify_direction: str,
+    cifti_out: str,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None = None,
     value: float | None = None,
 ) -> CiftiCreateParcellatedFromTemplateParamsDictTagged:
@@ -119,11 +119,11 @@ def cifti_create_parcellated_from_template_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_template: a cifti file with the template parcel mapping along\
             column.
         modify_direction: which dimension of the output file should match the\
             template (integer, 'ROW', or 'COLUMN').
+        cifti_out: the output cifti file.
         cifti: specify an input cifti file.
         value: specify value to be used in parcels that don't match\
             \
@@ -133,9 +133,9 @@ def cifti_create_parcellated_from_template_params(
     """
     params = {
         "@type": "workbench/cifti-create-parcellated-from-template",
-        "cifti-out": cifti_out,
         "cifti-template": cifti_template,
         "modify-direction": modify_direction,
+        "cifti-out": cifti_out,
     }
     if cifti is not None:
         params["cifti"] = cifti
@@ -156,6 +156,14 @@ def cifti_create_parcellated_from_template_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-template", None) is None:
+        raise StyxValidationError("`cifti-template` must not be None")
+    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
+    if params.get("modify-direction", None) is None:
+        raise StyxValidationError("`modify-direction` must not be None")
+    if not isinstance(params["modify-direction"], str):
+        raise StyxValidationError(f'`modify-direction` has the wrong type: Received `{type(params.get("modify-direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -168,14 +176,6 @@ def cifti_create_parcellated_from_template_validate(
     if params.get("value", None) is not None:
         if not isinstance(params["value"], (float, int)):
             raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
-    if params.get("cifti-template", None) is None:
-        raise StyxValidationError("`cifti-template` must not be None")
-    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
-    if params.get("modify-direction", None) is None:
-        raise StyxValidationError("`modify-direction` must not be None")
-    if not isinstance(params["modify-direction"], str):
-        raise StyxValidationError(f'`modify-direction` has the wrong type: Received `{type(params.get("modify-direction", None))}` expected `str`')
 
 
 def cifti_create_parcellated_from_template_cargs(
@@ -196,17 +196,16 @@ def cifti_create_parcellated_from_template_cargs(
         "wb_command",
         "-cifti-create-parcellated-from-template"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *([a for c in [cifti_create_parcellated_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti-template", None)))
+    cargs.append(params.get("modify-direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_create_parcellated_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     if params.get("value", None) is not None:
         cargs.extend([
             "-fill-value",
             str(params.get("value", None))
         ])
-    cargs.append(execution.input_file(params.get("cifti-template", None)))
-    cargs.append(params.get("modify-direction", None))
     return cargs
 
 
@@ -260,9 +259,9 @@ def cifti_create_parcellated_from_template_execute(
 
 
 def cifti_create_parcellated_from_template(
-    cifti_out: str,
     cifti_template: InputPathType,
     modify_direction: str,
+    cifti_out: str,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParamsDict] | None = None,
     value: float | None = None,
     runner: Runner | None = None,
@@ -277,11 +276,11 @@ def cifti_create_parcellated_from_template(
     the strings 'ROW' or 'COLUMN'.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_template: a cifti file with the template parcel mapping along\
             column.
         modify_direction: which dimension of the output file should match the\
             template (integer, 'ROW', or 'COLUMN').
+        cifti_out: the output cifti file.
         cifti: specify an input cifti file.
         value: specify value to be used in parcels that don't match\
             \
@@ -291,11 +290,11 @@ def cifti_create_parcellated_from_template(
         NamedTuple of outputs (described in `CiftiCreateParcellatedFromTemplateOutputs`).
     """
     params = cifti_create_parcellated_from_template_params(
+        cifti_template=cifti_template,
+        modify_direction=modify_direction,
         cifti_out=cifti_out,
         cifti=cifti,
         value=value,
-        cifti_template=cifti_template,
-        modify_direction=modify_direction,
     )
     return cifti_create_parcellated_from_template_execute(params, runner)
 

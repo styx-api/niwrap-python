@@ -14,21 +14,21 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
 
 
 _FiberDotProductsParamsDictNoTag = typing.TypedDict('_FiberDotProductsParamsDictNoTag', {
-    "dot-metric": str,
-    "f-metric": str,
     "white-surf": InputPathType,
     "fiber-file": InputPathType,
     "max-dist": float,
     "direction": str,
+    "dot-metric": str,
+    "f-metric": str,
 })
 FiberDotProductsParamsDictTagged = typing.TypedDict('FiberDotProductsParamsDictTagged', {
     "@type": typing.Literal["workbench/fiber-dot-products"],
-    "dot-metric": str,
-    "f-metric": str,
     "white-surf": InputPathType,
     "fiber-file": InputPathType,
     "max-dist": float,
     "direction": str,
+    "dot-metric": str,
+    "f-metric": str,
 })
 FiberDotProductsParamsDict = _FiberDotProductsParamsDictNoTag | FiberDotProductsParamsDictTagged
 
@@ -46,36 +46,36 @@ class FiberDotProductsOutputs(typing.NamedTuple):
 
 
 def fiber_dot_products_params(
-    dot_metric: str,
-    f_metric: str,
     white_surf: InputPathType,
     fiber_file: InputPathType,
     max_dist: float,
     direction: str,
+    dot_metric: str,
+    f_metric: str,
 ) -> FiberDotProductsParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        dot_metric: the metric of dot products.
-        f_metric: a metric of the f values of the fiber distributions.
         white_surf: the white/gray boundary surface.
         fiber_file: the fiber orientation file.
         max_dist: the maximum distance from any surface vertex a fiber\
             population may be, in mm.
         direction: test against surface for whether a fiber population should\
             be used.
+        dot_metric: the metric of dot products.
+        f_metric: a metric of the f values of the fiber distributions.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/fiber-dot-products",
-        "dot-metric": dot_metric,
-        "f-metric": f_metric,
         "white-surf": white_surf,
         "fiber-file": fiber_file,
         "max-dist": max_dist,
         "direction": direction,
+        "dot-metric": dot_metric,
+        "f-metric": f_metric,
     }
     return params
 
@@ -92,14 +92,6 @@ def fiber_dot_products_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("dot-metric", None) is None:
-        raise StyxValidationError("`dot-metric` must not be None")
-    if not isinstance(params["dot-metric"], str):
-        raise StyxValidationError(f'`dot-metric` has the wrong type: Received `{type(params.get("dot-metric", None))}` expected `str`')
-    if params.get("f-metric", None) is None:
-        raise StyxValidationError("`f-metric` must not be None")
-    if not isinstance(params["f-metric"], str):
-        raise StyxValidationError(f'`f-metric` has the wrong type: Received `{type(params.get("f-metric", None))}` expected `str`')
     if params.get("white-surf", None) is None:
         raise StyxValidationError("`white-surf` must not be None")
     if not isinstance(params["white-surf"], (pathlib.Path, str)):
@@ -116,6 +108,14 @@ def fiber_dot_products_validate(
         raise StyxValidationError("`direction` must not be None")
     if not isinstance(params["direction"], str):
         raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+    if params.get("dot-metric", None) is None:
+        raise StyxValidationError("`dot-metric` must not be None")
+    if not isinstance(params["dot-metric"], str):
+        raise StyxValidationError(f'`dot-metric` has the wrong type: Received `{type(params.get("dot-metric", None))}` expected `str`')
+    if params.get("f-metric", None) is None:
+        raise StyxValidationError("`f-metric` must not be None")
+    if not isinstance(params["f-metric"], str):
+        raise StyxValidationError(f'`f-metric` has the wrong type: Received `{type(params.get("f-metric", None))}` expected `str`')
 
 
 def fiber_dot_products_cargs(
@@ -136,14 +136,12 @@ def fiber_dot_products_cargs(
         "wb_command",
         "-fiber-dot-products"
     ])
-    cargs.extend([
-        params.get("dot-metric", None),
-        params.get("f-metric", None)
-    ])
     cargs.append(execution.input_file(params.get("white-surf", None)))
     cargs.append(execution.input_file(params.get("fiber-file", None)))
     cargs.append(str(params.get("max-dist", None)))
     cargs.append(params.get("direction", None))
+    cargs.append(params.get("dot-metric", None))
+    cargs.append(params.get("f-metric", None))
     return cargs
 
 
@@ -200,12 +198,12 @@ def fiber_dot_products_execute(
 
 
 def fiber_dot_products(
-    dot_metric: str,
-    f_metric: str,
     white_surf: InputPathType,
     fiber_file: InputPathType,
     max_dist: float,
     direction: str,
+    dot_metric: str,
+    f_metric: str,
     runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
@@ -220,25 +218,25 @@ def fiber_dot_products(
     surface. Each fiber population is output in a separate metric column.
     
     Args:
-        dot_metric: the metric of dot products.
-        f_metric: a metric of the f values of the fiber distributions.
         white_surf: the white/gray boundary surface.
         fiber_file: the fiber orientation file.
         max_dist: the maximum distance from any surface vertex a fiber\
             population may be, in mm.
         direction: test against surface for whether a fiber population should\
             be used.
+        dot_metric: the metric of dot products.
+        f_metric: a metric of the f values of the fiber distributions.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiberDotProductsOutputs`).
     """
     params = fiber_dot_products_params(
-        dot_metric=dot_metric,
-        f_metric=f_metric,
         white_surf=white_surf,
         fiber_file=fiber_file,
         max_dist=max_dist,
         direction=direction,
+        dot_metric=dot_metric,
+        f_metric=f_metric,
     )
     return fiber_dot_products_execute(params, runner)
 

@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "volume_gradient",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -30,9 +33,6 @@
     },
     "roi-volume": {
       "var_param": "roi_volume"
-    },
-    "volume-in": {
-      "var_param": "volume_in"
     }
   }
 }

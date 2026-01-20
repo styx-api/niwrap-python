@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "surface_apply_affine",
   "properties": {
+    "in-surf": {
+      "var_param": "in_surf"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
     "out-surf": {
       "var_param": "out_surf"
     },
@@ -15,12 +21,6 @@
           "var_param": "target_volume"
         }
       }
-    },
-    "in-surf": {
-      "var_param": "in_surf"
-    },
-    "affine": {
-      "var_param": "affine"
     }
   }
 }

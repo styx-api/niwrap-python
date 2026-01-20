@@ -14,15 +14,15 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 _GiftiAllLabelsToRoisParamsDictNoTag = typing.TypedDict('_GiftiAllLabelsToRoisParamsDictNoTag', {
-    "metric-out": str,
     "label-in": InputPathType,
     "map": str,
+    "metric-out": str,
 })
 GiftiAllLabelsToRoisParamsDictTagged = typing.TypedDict('GiftiAllLabelsToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-all-labels-to-rois"],
-    "metric-out": str,
     "label-in": InputPathType,
     "map": str,
+    "metric-out": str,
 })
 GiftiAllLabelsToRoisParamsDict = _GiftiAllLabelsToRoisParamsDictNoTag | GiftiAllLabelsToRoisParamsDictTagged
 
@@ -38,25 +38,25 @@ class GiftiAllLabelsToRoisOutputs(typing.NamedTuple):
 
 
 def gifti_all_labels_to_rois_params(
-    metric_out: str,
     label_in: InputPathType,
     map_: str,
+    metric_out: str,
 ) -> GiftiAllLabelsToRoisParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output metric file.
         label_in: the input gifti label file.
         map_: the number or name of the label map to use.
+        metric_out: the output metric file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/gifti-all-labels-to-rois",
-        "metric-out": metric_out,
         "label-in": label_in,
         "map": map_,
+        "metric-out": metric_out,
     }
     return params
 
@@ -73,10 +73,6 @@ def gifti_all_labels_to_rois_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -85,6 +81,10 @@ def gifti_all_labels_to_rois_validate(
         raise StyxValidationError("`map` must not be None")
     if not isinstance(params["map"], str):
         raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
 
 
 def gifti_all_labels_to_rois_cargs(
@@ -105,9 +105,9 @@ def gifti_all_labels_to_rois_cargs(
         "wb_command",
         "-gifti-all-labels-to-rois"
     ])
-    cargs.append(params.get("metric-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
+    cargs.append(params.get("metric-out", None))
     return cargs
 
 
@@ -159,9 +159,9 @@ def gifti_all_labels_to_rois_execute(
 
 
 def gifti_all_labels_to_rois(
-    metric_out: str,
     label_in: InputPathType,
     map_: str,
+    metric_out: str,
     runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
@@ -172,17 +172,17 @@ def gifti_all_labels_to_rois(
     that are set to the corresponding label.
     
     Args:
-        metric_out: the output metric file.
         label_in: the input gifti label file.
         map_: the number or name of the label map to use.
+        metric_out: the output metric file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiAllLabelsToRoisOutputs`).
     """
     params = gifti_all_labels_to_rois_params(
-        metric_out=metric_out,
         label_in=label_in,
         map_=map_,
+        metric_out=metric_out,
     )
     return gifti_all_labels_to_rois_execute(params, runner)
 

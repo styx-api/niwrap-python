@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_false_correlation",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "3D-dist": {
+      "var_param": "v_3_d_dist"
+    },
+    "geo-outer": {
+      "var_param": "geo_outer"
+    },
+    "geo-inner": {
+      "var_param": "geo_inner"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -39,18 +51,6 @@
           "var_param": "text_out"
         }
       }
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "3D-dist": {
-      "var_param": "v_3_d_dist"
-    },
-    "geo-outer": {
-      "var_param": "geo_outer"
-    },
-    "geo-inner": {
-      "var_param": "geo_inner"
     }
   }
 }

@@ -14,21 +14,21 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 
 
 _CiftiCrossCorrelationParamsDictNoTag = typing.TypedDict('_CiftiCrossCorrelationParamsDictNoTag', {
+    "cifti-a": InputPathType,
+    "cifti-b": InputPathType,
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
-    "cifti-a": InputPathType,
-    "cifti-b": InputPathType,
 })
 CiftiCrossCorrelationParamsDictTagged = typing.TypedDict('CiftiCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-cross-correlation"],
+    "cifti-a": InputPathType,
+    "cifti-b": InputPathType,
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
     "weight-file": typing.NotRequired[str | None],
     "fisher-z": bool,
-    "cifti-a": InputPathType,
-    "cifti-b": InputPathType,
 })
 CiftiCrossCorrelationParamsDict = _CiftiCrossCorrelationParamsDictNoTag | CiftiCrossCorrelationParamsDictTagged
 
@@ -44,9 +44,9 @@ class CiftiCrossCorrelationOutputs(typing.NamedTuple):
 
 
 def cifti_cross_correlation_params(
-    cifti_out: str,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
+    cifti_out: str,
     limit_gb: float | None = None,
     weight_file: str | None = None,
     fisher_z: bool = False,
@@ -55,9 +55,9 @@ def cifti_cross_correlation_params(
     Build parameters.
     
     Args:
-        cifti_out: output cifti file.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
+        cifti_out: output cifti file.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
@@ -70,10 +70,10 @@ def cifti_cross_correlation_params(
     """
     params = {
         "@type": "workbench/cifti-cross-correlation",
-        "cifti-out": cifti_out,
-        "fisher-z": fisher_z,
         "cifti-a": cifti_a,
         "cifti-b": cifti_b,
+        "cifti-out": cifti_out,
+        "fisher-z": fisher_z,
     }
     if limit_gb is not None:
         params["limit-GB"] = limit_gb
@@ -94,6 +94,14 @@ def cifti_cross_correlation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-a", None) is None:
+        raise StyxValidationError("`cifti-a` must not be None")
+    if not isinstance(params["cifti-a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-a` has the wrong type: Received `{type(params.get("cifti-a", None))}` expected `InputPathType`')
+    if params.get("cifti-b", None) is None:
+        raise StyxValidationError("`cifti-b` must not be None")
+    if not isinstance(params["cifti-b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-b` has the wrong type: Received `{type(params.get("cifti-b", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -108,14 +116,6 @@ def cifti_cross_correlation_validate(
         raise StyxValidationError("`fisher-z` must not be None")
     if not isinstance(params["fisher-z"], bool):
         raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
-    if params.get("cifti-a", None) is None:
-        raise StyxValidationError("`cifti-a` must not be None")
-    if not isinstance(params["cifti-a"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-a` has the wrong type: Received `{type(params.get("cifti-a", None))}` expected `InputPathType`')
-    if params.get("cifti-b", None) is None:
-        raise StyxValidationError("`cifti-b` must not be None")
-    if not isinstance(params["cifti-b"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-b` has the wrong type: Received `{type(params.get("cifti-b", None))}` expected `InputPathType`')
 
 
 def cifti_cross_correlation_cargs(
@@ -136,6 +136,8 @@ def cifti_cross_correlation_cargs(
         "wb_command",
         "-cifti-cross-correlation"
     ])
+    cargs.append(execution.input_file(params.get("cifti-a", None)))
+    cargs.append(execution.input_file(params.get("cifti-b", None)))
     cargs.append(params.get("cifti-out", None))
     if params.get("limit-GB", None) is not None:
         cargs.extend([
@@ -149,8 +151,6 @@ def cifti_cross_correlation_cargs(
         ])
     if params.get("fisher-z", False):
         cargs.append("-fisher-z")
-    cargs.append(execution.input_file(params.get("cifti-a", None)))
-    cargs.append(execution.input_file(params.get("cifti-b", None)))
     return cargs
 
 
@@ -207,9 +207,9 @@ def cifti_cross_correlation_execute(
 
 
 def cifti_cross_correlation(
-    cifti_out: str,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
+    cifti_out: str,
     limit_gb: float | None = None,
     weight_file: str | None = None,
     fisher_z: bool = False,
@@ -228,9 +228,9 @@ def cifti_cross_correlation(
     reading through <cifti-b> multiple times.
     
     Args:
-        cifti_out: output cifti file.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
+        cifti_out: output cifti file.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
@@ -243,12 +243,12 @@ def cifti_cross_correlation(
         NamedTuple of outputs (described in `CiftiCrossCorrelationOutputs`).
     """
     params = cifti_cross_correlation_params(
+        cifti_a=cifti_a,
+        cifti_b=cifti_b,
         cifti_out=cifti_out,
         limit_gb=limit_gb,
         weight_file=weight_file,
         fisher_z=fisher_z,
-        cifti_a=cifti_a,
-        cifti_b=cifti_b,
     )
     return cifti_cross_correlation_execute(params, runner)
 

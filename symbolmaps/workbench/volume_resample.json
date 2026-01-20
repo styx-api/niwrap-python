@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "volume_resample",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "volume-space": {
+      "var_param": "volume_space"
+    },
+    "method": {
+      "var_param": "method"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -60,15 +69,6 @@
     },
     "value": {
       "var_param": "value"
-    },
-    "volume-in": {
-      "var_param": "volume_in"
-    },
-    "volume-space": {
-      "var_param": "volume_space"
-    },
-    "method": {
-      "var_param": "method"
     }
   }
 }

@@ -26,6 +26,10 @@ CiftiRoisFromExtremaGaussianParamsDict = _CiftiRoisFromExtremaGaussianParamsDict
 
 
 _CiftiRoisFromExtremaParamsDictNoTag = typing.TypedDict('_CiftiRoisFromExtremaParamsDictNoTag', {
+    "cifti": InputPathType,
+    "surf-limit": float,
+    "vol-limit": float,
+    "direction": str,
     "cifti-out": str,
     "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParamsDict | None],
     "method": typing.NotRequired[str | None],
@@ -33,13 +37,13 @@ _CiftiRoisFromExtremaParamsDictNoTag = typing.TypedDict('_CiftiRoisFromExtremaPa
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
     "merged-volume": bool,
-    "cifti": InputPathType,
-    "surf-limit": float,
-    "vol-limit": float,
-    "direction": str,
 })
 CiftiRoisFromExtremaParamsDictTagged = typing.TypedDict('CiftiRoisFromExtremaParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-rois-from-extrema"],
+    "cifti": InputPathType,
+    "surf-limit": float,
+    "vol-limit": float,
+    "direction": str,
     "cifti-out": str,
     "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParamsDict | None],
     "method": typing.NotRequired[str | None],
@@ -47,10 +51,6 @@ CiftiRoisFromExtremaParamsDictTagged = typing.TypedDict('CiftiRoisFromExtremaPar
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
     "merged-volume": bool,
-    "cifti": InputPathType,
-    "surf-limit": float,
-    "vol-limit": float,
-    "direction": str,
 })
 CiftiRoisFromExtremaParamsDict = _CiftiRoisFromExtremaParamsDictNoTag | CiftiRoisFromExtremaParamsDictTagged
 
@@ -131,11 +131,11 @@ class CiftiRoisFromExtremaOutputs(typing.NamedTuple):
 
 
 def cifti_rois_from_extrema_params(
-    cifti_out: str,
     cifti: InputPathType,
     surf_limit: float,
     vol_limit: float,
     direction: str,
+    cifti_out: str,
     gaussian: CiftiRoisFromExtremaGaussianParamsDict | None = None,
     method: str | None = None,
     surface: InputPathType | None = None,
@@ -147,11 +147,11 @@ def cifti_rois_from_extrema_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surf_limit: geodesic distance limit from vertex, in mm.
         vol_limit: euclidean distance limit from voxel center, in mm.
         direction: which dimension an extrema map is along, ROW or COLUMN.
+        cifti_out: the output cifti.
         gaussian: generate gaussian kernels instead of flat ROIs.
         method: how to handle overlapping ROIs, default ALLOW\
             \
@@ -172,12 +172,12 @@ def cifti_rois_from_extrema_params(
     """
     params = {
         "@type": "workbench/cifti-rois-from-extrema",
-        "cifti-out": cifti_out,
-        "merged-volume": merged_volume,
         "cifti": cifti,
         "surf-limit": surf_limit,
         "vol-limit": vol_limit,
         "direction": direction,
+        "cifti-out": cifti_out,
+        "merged-volume": merged_volume,
     }
     if gaussian is not None:
         params["gaussian"] = gaussian
@@ -204,6 +204,22 @@ def cifti_rois_from_extrema_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("surf-limit", None) is None:
+        raise StyxValidationError("`surf-limit` must not be None")
+    if not isinstance(params["surf-limit"], (float, int)):
+        raise StyxValidationError(f'`surf-limit` has the wrong type: Received `{type(params.get("surf-limit", None))}` expected `float`')
+    if params.get("vol-limit", None) is None:
+        raise StyxValidationError("`vol-limit` must not be None")
+    if not isinstance(params["vol-limit"], (float, int)):
+        raise StyxValidationError(f'`vol-limit` has the wrong type: Received `{type(params.get("vol-limit", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -226,22 +242,6 @@ def cifti_rois_from_extrema_validate(
         raise StyxValidationError("`merged-volume` must not be None")
     if not isinstance(params["merged-volume"], bool):
         raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
-    if params.get("surf-limit", None) is None:
-        raise StyxValidationError("`surf-limit` must not be None")
-    if not isinstance(params["surf-limit"], (float, int)):
-        raise StyxValidationError(f'`surf-limit` has the wrong type: Received `{type(params.get("surf-limit", None))}` expected `float`')
-    if params.get("vol-limit", None) is None:
-        raise StyxValidationError("`vol-limit` must not be None")
-    if not isinstance(params["vol-limit"], (float, int)):
-        raise StyxValidationError(f'`vol-limit` has the wrong type: Received `{type(params.get("vol-limit", None))}` expected `float`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_rois_from_extrema_cargs(
@@ -262,10 +262,13 @@ def cifti_rois_from_extrema_cargs(
         "wb_command",
         "-cifti-rois-from-extrema"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_rois_from_extrema_gaussian_cargs(params.get("gaussian", None), execution) if (params.get("gaussian", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surf-limit", None)))
+    cargs.append(str(params.get("vol-limit", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("gaussian", None) is not None:
+        cargs.extend(cifti_rois_from_extrema_gaussian_cargs(params.get("gaussian", None), execution))
     if params.get("method", None) is not None:
         cargs.extend([
             "-overlap-logic",
@@ -288,10 +291,6 @@ def cifti_rois_from_extrema_cargs(
         ])
     if params.get("merged-volume", False):
         cargs.append("-merged-volume")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(str(params.get("surf-limit", None)))
-    cargs.append(str(params.get("vol-limit", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -348,11 +347,11 @@ def cifti_rois_from_extrema_execute(
 
 
 def cifti_rois_from_extrema(
-    cifti_out: str,
     cifti: InputPathType,
     surf_limit: float,
     vol_limit: float,
     direction: str,
+    cifti_out: str,
     gaussian: CiftiRoisFromExtremaGaussianParamsDict | None = None,
     method: str | None = None,
     surface: InputPathType | None = None,
@@ -374,11 +373,11 @@ def cifti_rois_from_extrema(
     vertex within range of more than one ROI does not belong to any ROI.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surf_limit: geodesic distance limit from vertex, in mm.
         vol_limit: euclidean distance limit from voxel center, in mm.
         direction: which dimension an extrema map is along, ROW or COLUMN.
+        cifti_out: the output cifti.
         gaussian: generate gaussian kernels instead of flat ROIs.
         method: how to handle overlapping ROIs, default ALLOW\
             \
@@ -399,6 +398,10 @@ def cifti_rois_from_extrema(
         NamedTuple of outputs (described in `CiftiRoisFromExtremaOutputs`).
     """
     params = cifti_rois_from_extrema_params(
+        cifti=cifti,
+        surf_limit=surf_limit,
+        vol_limit=vol_limit,
+        direction=direction,
         cifti_out=cifti_out,
         gaussian=gaussian,
         method=method,
@@ -406,10 +409,6 @@ def cifti_rois_from_extrema(
         surface_=surface_,
         surface_2=surface_2,
         merged_volume=merged_volume,
-        cifti=cifti,
-        surf_limit=surf_limit,
-        vol_limit=vol_limit,
-        direction=direction,
     )
     return cifti_rois_from_extrema_execute(params, runner)
 

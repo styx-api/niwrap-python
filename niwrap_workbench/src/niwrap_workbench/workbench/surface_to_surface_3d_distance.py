@@ -24,17 +24,17 @@ SurfaceToSurface3dDistanceVectorsParamsDict = _SurfaceToSurface3dDistanceVectors
 
 
 _SurfaceToSurface3dDistanceParamsDictNoTag = typing.TypedDict('_SurfaceToSurface3dDistanceParamsDictNoTag', {
-    "dists-out": str,
-    "vectors": typing.NotRequired[SurfaceToSurface3dDistanceVectorsParamsDict | None],
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
+    "dists-out": str,
+    "vectors": typing.NotRequired[SurfaceToSurface3dDistanceVectorsParamsDict | None],
 })
 SurfaceToSurface3dDistanceParamsDictTagged = typing.TypedDict('SurfaceToSurface3dDistanceParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-to-surface-3d-distance"],
-    "dists-out": str,
-    "vectors": typing.NotRequired[SurfaceToSurface3dDistanceVectorsParamsDict | None],
     "surface-comp": InputPathType,
     "surface-ref": InputPathType,
+    "dists-out": str,
+    "vectors": typing.NotRequired[SurfaceToSurface3dDistanceVectorsParamsDict | None],
 })
 SurfaceToSurface3dDistanceParamsDict = _SurfaceToSurface3dDistanceParamsDictNoTag | SurfaceToSurface3dDistanceParamsDictTagged
 
@@ -139,27 +139,27 @@ class SurfaceToSurface3dDistanceOutputs(typing.NamedTuple):
 
 
 def surface_to_surface_3d_distance_params(
-    dists_out: str,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    dists_out: str,
     vectors: SurfaceToSurface3dDistanceVectorsParamsDict | None = None,
 ) -> SurfaceToSurface3dDistanceParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        dists_out: the output distances.
         surface_comp: the surface to compare to the reference.
         surface_ref: the surface to use as the reference.
+        dists_out: the output distances.
         vectors: output the displacement vectors.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-to-surface-3d-distance",
-        "dists-out": dists_out,
         "surface-comp": surface_comp,
         "surface-ref": surface_ref,
+        "dists-out": dists_out,
     }
     if vectors is not None:
         params["vectors"] = vectors
@@ -178,12 +178,6 @@ def surface_to_surface_3d_distance_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("dists-out", None) is None:
-        raise StyxValidationError("`dists-out` must not be None")
-    if not isinstance(params["dists-out"], str):
-        raise StyxValidationError(f'`dists-out` has the wrong type: Received `{type(params.get("dists-out", None))}` expected `str`')
-    if params.get("vectors", None) is not None:
-        surface_to_surface_3d_distance_vectors_validate(params["vectors"])
     if params.get("surface-comp", None) is None:
         raise StyxValidationError("`surface-comp` must not be None")
     if not isinstance(params["surface-comp"], (pathlib.Path, str)):
@@ -192,6 +186,12 @@ def surface_to_surface_3d_distance_validate(
         raise StyxValidationError("`surface-ref` must not be None")
     if not isinstance(params["surface-ref"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface-ref` has the wrong type: Received `{type(params.get("surface-ref", None))}` expected `InputPathType`')
+    if params.get("dists-out", None) is None:
+        raise StyxValidationError("`dists-out` must not be None")
+    if not isinstance(params["dists-out"], str):
+        raise StyxValidationError(f'`dists-out` has the wrong type: Received `{type(params.get("dists-out", None))}` expected `str`')
+    if params.get("vectors", None) is not None:
+        surface_to_surface_3d_distance_vectors_validate(params["vectors"])
 
 
 def surface_to_surface_3d_distance_cargs(
@@ -212,12 +212,11 @@ def surface_to_surface_3d_distance_cargs(
         "wb_command",
         "-surface-to-surface-3d-distance"
     ])
-    cargs.extend([
-        params.get("dists-out", None),
-        *(surface_to_surface_3d_distance_vectors_cargs(params.get("vectors", None), execution) if (params.get("vectors", None) is not None) else [])
-    ])
     cargs.append(execution.input_file(params.get("surface-comp", None)))
     cargs.append(execution.input_file(params.get("surface-ref", None)))
+    cargs.append(params.get("dists-out", None))
+    if params.get("vectors", None) is not None:
+        cargs.extend(surface_to_surface_3d_distance_vectors_cargs(params.get("vectors", None), execution))
     return cargs
 
 
@@ -270,9 +269,9 @@ def surface_to_surface_3d_distance_execute(
 
 
 def surface_to_surface_3d_distance(
-    dists_out: str,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
+    dists_out: str,
     vectors: SurfaceToSurface3dDistanceVectorsParamsDict | None = None,
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
@@ -284,19 +283,19 @@ def surface_to_surface_3d_distance(
     displacement vectors.
     
     Args:
-        dists_out: the output distances.
         surface_comp: the surface to compare to the reference.
         surface_ref: the surface to use as the reference.
+        dists_out: the output distances.
         vectors: output the displacement vectors.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceToSurface3dDistanceOutputs`).
     """
     params = surface_to_surface_3d_distance_params(
-        dists_out=dists_out,
-        vectors=vectors,
         surface_comp=surface_comp,
         surface_ref=surface_ref,
+        dists_out=dists_out,
+        vectors=vectors,
     )
     return surface_to_surface_3d_distance_execute(params, runner)
 

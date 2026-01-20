@@ -14,19 +14,19 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
 
 
 _CiftiLabelAdjacencyParamsDictNoTag = typing.TypedDict('_CiftiLabelAdjacencyParamsDictNoTag', {
+    "label-in": InputPathType,
     "adjacency-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
-    "label-in": InputPathType,
 })
 CiftiLabelAdjacencyParamsDictTagged = typing.TypedDict('CiftiLabelAdjacencyParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-adjacency"],
+    "label-in": InputPathType,
     "adjacency-out": str,
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
     "surface": typing.NotRequired[InputPathType | None],
-    "label-in": InputPathType,
 })
 CiftiLabelAdjacencyParamsDict = _CiftiLabelAdjacencyParamsDictNoTag | CiftiLabelAdjacencyParamsDictTagged
 
@@ -42,8 +42,8 @@ class CiftiLabelAdjacencyOutputs(typing.NamedTuple):
 
 
 def cifti_label_adjacency_params(
-    adjacency_out: str,
     label_in: InputPathType,
+    adjacency_out: str,
     surface: InputPathType | None = None,
     surface_: InputPathType | None = None,
     surface_2: InputPathType | None = None,
@@ -52,8 +52,8 @@ def cifti_label_adjacency_params(
     Build parameters.
     
     Args:
-        adjacency_out: the output cifti pconn adjacency matrix.
         label_in: the input cifti label file.
+        adjacency_out: the output cifti pconn adjacency matrix.
         surface: specify the cerebellum surface to use\
             \
             the cerebellum surface file.
@@ -68,8 +68,8 @@ def cifti_label_adjacency_params(
     """
     params = {
         "@type": "workbench/cifti-label-adjacency",
-        "adjacency-out": adjacency_out,
         "label-in": label_in,
+        "adjacency-out": adjacency_out,
     }
     if surface is not None:
         params["surface"] = surface
@@ -92,6 +92,10 @@ def cifti_label_adjacency_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
     if params.get("adjacency-out", None) is None:
         raise StyxValidationError("`adjacency-out` must not be None")
     if not isinstance(params["adjacency-out"], str):
@@ -105,10 +109,6 @@ def cifti_label_adjacency_validate(
     if params.get("surface", None) is not None:
         if not isinstance(params["surface"], (pathlib.Path, str)):
             raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
-    if params.get("label-in", None) is None:
-        raise StyxValidationError("`label-in` must not be None")
-    if not isinstance(params["label-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
 
 
 def cifti_label_adjacency_cargs(
@@ -129,6 +129,7 @@ def cifti_label_adjacency_cargs(
         "wb_command",
         "-cifti-label-adjacency"
     ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("adjacency-out", None))
     if params.get("surface", None) is not None:
         cargs.extend([
@@ -145,7 +146,6 @@ def cifti_label_adjacency_cargs(
             "-left-surface",
             execution.input_file(params.get("surface", None))
         ])
-    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -198,8 +198,8 @@ def cifti_label_adjacency_execute(
 
 
 def cifti_label_adjacency(
-    adjacency_out: str,
     label_in: InputPathType,
+    adjacency_out: str,
     surface: InputPathType | None = None,
     surface_: InputPathType | None = None,
     surface_2: InputPathType | None = None,
@@ -214,8 +214,8 @@ def cifti_label_adjacency(
     rough estimate of how long or expansive the border between two labels is.
     
     Args:
-        adjacency_out: the output cifti pconn adjacency matrix.
         label_in: the input cifti label file.
+        adjacency_out: the output cifti pconn adjacency matrix.
         surface: specify the cerebellum surface to use\
             \
             the cerebellum surface file.
@@ -230,11 +230,11 @@ def cifti_label_adjacency(
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).
     """
     params = cifti_label_adjacency_params(
+        label_in=label_in,
         adjacency_out=adjacency_out,
         surface=surface,
         surface_=surface_,
         surface_2=surface_2,
-        label_in=label_in,
     )
     return cifti_label_adjacency_execute(params, runner)
 

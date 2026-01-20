@@ -14,13 +14,13 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
 
 
 _SurfaceVertexAreasParamsDictNoTag = typing.TypedDict('_SurfaceVertexAreasParamsDictNoTag', {
-    "metric": str,
     "surface": InputPathType,
+    "metric": str,
 })
 SurfaceVertexAreasParamsDictTagged = typing.TypedDict('SurfaceVertexAreasParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-vertex-areas"],
-    "metric": str,
     "surface": InputPathType,
+    "metric": str,
 })
 SurfaceVertexAreasParamsDict = _SurfaceVertexAreasParamsDictNoTag | SurfaceVertexAreasParamsDictTagged
 
@@ -36,22 +36,22 @@ class SurfaceVertexAreasOutputs(typing.NamedTuple):
 
 
 def surface_vertex_areas_params(
-    metric: str,
     surface: InputPathType,
+    metric: str,
 ) -> SurfaceVertexAreasParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric: the output metric.
         surface: the surface to measure.
+        metric: the output metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-vertex-areas",
-        "metric": metric,
         "surface": surface,
+        "metric": metric,
     }
     return params
 
@@ -68,14 +68,14 @@ def surface_vertex_areas_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric", None) is None:
-        raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], str):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
 
 
 def surface_vertex_areas_cargs(
@@ -96,8 +96,8 @@ def surface_vertex_areas_cargs(
         "wb_command",
         "-surface-vertex-areas"
     ])
-    cargs.append(params.get("metric", None))
     cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric", None))
     return cargs
 
 
@@ -148,8 +148,8 @@ def surface_vertex_areas_execute(
 
 
 def surface_vertex_areas(
-    metric: str,
     surface: InputPathType,
+    metric: str,
     runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
@@ -159,15 +159,15 @@ def surface_vertex_areas(
     Units are mm^2.
     
     Args:
-        metric: the output metric.
         surface: the surface to measure.
+        metric: the output metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceVertexAreasOutputs`).
     """
     params = surface_vertex_areas_params(
-        metric=metric,
         surface=surface,
+        metric=metric,
     )
     return surface_vertex_areas_execute(params, runner)
 

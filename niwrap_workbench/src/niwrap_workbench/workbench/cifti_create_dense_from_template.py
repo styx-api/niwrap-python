@@ -88,6 +88,7 @@ CiftiCreateDenseFromTemplateVolumeParamsDict = _CiftiCreateDenseFromTemplateVolu
 
 
 _CiftiCreateDenseFromTemplateParamsDictNoTag = typing.TypedDict('_CiftiCreateDenseFromTemplateParamsDictNoTag', {
+    "template-cifti": InputPathType,
     "cifti-out": str,
     "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParamsDict | None],
     "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParamsDict | None],
@@ -96,10 +97,10 @@ _CiftiCreateDenseFromTemplateParamsDictNoTag = typing.TypedDict('_CiftiCreateDen
     "label": typing.NotRequired[list[CiftiCreateDenseFromTemplateLabelParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None],
     "action": typing.NotRequired[str | None],
-    "template-cifti": InputPathType,
 })
 CiftiCreateDenseFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateDenseFromTemplateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-from-template"],
+    "template-cifti": InputPathType,
     "cifti-out": str,
     "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParamsDict | None],
     "volume-all": typing.NotRequired[CiftiCreateDenseFromTemplateVolumeAllParamsDict | None],
@@ -108,7 +109,6 @@ CiftiCreateDenseFromTemplateParamsDictTagged = typing.TypedDict('CiftiCreateDens
     "label": typing.NotRequired[list[CiftiCreateDenseFromTemplateLabelParamsDict] | None],
     "volume": typing.NotRequired[list[CiftiCreateDenseFromTemplateVolumeParamsDict] | None],
     "action": typing.NotRequired[str | None],
-    "template-cifti": InputPathType,
 })
 CiftiCreateDenseFromTemplateParamsDict = _CiftiCreateDenseFromTemplateParamsDictNoTag | CiftiCreateDenseFromTemplateParamsDictTagged
 
@@ -531,8 +531,8 @@ class CiftiCreateDenseFromTemplateOutputs(typing.NamedTuple):
 
 
 def cifti_create_dense_from_template_params(
-    cifti_out: str,
     template_cifti: InputPathType,
+    cifti_out: str,
     series: CiftiCreateDenseFromTemplateSeriesParamsDict | None = None,
     volume_all: CiftiCreateDenseFromTemplateVolumeAllParamsDict | None = None,
     cifti: list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None = None,
@@ -545,8 +545,8 @@ def cifti_create_dense_from_template_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         template_cifti: file to match brainordinates of.
+        cifti_out: the output cifti file.
         series: make a dtseries file instead of a dscalar.
         volume_all: specify an input volume file for all voxel data.
         cifti: use input data from a cifti file.
@@ -562,8 +562,8 @@ def cifti_create_dense_from_template_params(
     """
     params = {
         "@type": "workbench/cifti-create-dense-from-template",
-        "cifti-out": cifti_out,
         "template-cifti": template_cifti,
+        "cifti-out": cifti_out,
     }
     if series is not None:
         params["series"] = series
@@ -594,6 +594,10 @@ def cifti_create_dense_from_template_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template-cifti", None) is None:
+        raise StyxValidationError("`template-cifti` must not be None")
+    if not isinstance(params["template-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template-cifti` has the wrong type: Received `{type(params.get("template-cifti", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -625,10 +629,6 @@ def cifti_create_dense_from_template_validate(
     if params.get("action", None) is not None:
         if not isinstance(params["action"], str):
             raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
-    if params.get("template-cifti", None) is None:
-        raise StyxValidationError("`template-cifti` must not be None")
-    if not isinstance(params["template-cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`template-cifti` has the wrong type: Received `{type(params.get("template-cifti", None))}` expected `InputPathType`')
 
 
 def cifti_create_dense_from_template_cargs(
@@ -649,21 +649,22 @@ def cifti_create_dense_from_template_cargs(
         "wb_command",
         "-cifti-create-dense-from-template"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_create_dense_from_template_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
-        *(cifti_create_dense_from_template_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
-        *([a for c in [cifti_create_dense_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else []),
-        *([a for c in [cifti_create_dense_from_template_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
-        *([a for c in [cifti_create_dense_from_template_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
-        *([a for c in [cifti_create_dense_from_template_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("template-cifti", None)))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("series", None) is not None or params.get("volume-all", None) is not None or params.get("cifti", None) is not None or params.get("metric", None) is not None or params.get("label", None) is not None or params.get("volume", None) is not None:
+        cargs.extend([
+            *(cifti_create_dense_from_template_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
+            *(cifti_create_dense_from_template_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
+            *([a for c in [cifti_create_dense_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else []),
+            *([a for c in [cifti_create_dense_from_template_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
+            *([a for c in [cifti_create_dense_from_template_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
+            *([a for c in [cifti_create_dense_from_template_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
+        ])
     if params.get("action", None) is not None:
         cargs.extend([
             "-label-collision",
             params.get("action", None)
         ])
-    cargs.append(execution.input_file(params.get("template-cifti", None)))
     return cargs
 
 
@@ -770,8 +771,8 @@ def cifti_create_dense_from_template_execute(
 
 
 def cifti_create_dense_from_template(
-    cifti_out: str,
     template_cifti: InputPathType,
+    cifti_out: str,
     series: CiftiCreateDenseFromTemplateSeriesParamsDict | None = None,
     volume_all: CiftiCreateDenseFromTemplateVolumeAllParamsDict | None = None,
     cifti: list[CiftiCreateDenseFromTemplateCiftiParamsDict] | None = None,
@@ -844,8 +845,8 @@ def cifti_create_dense_from_template(
     RADIAN.
     
     Args:
-        cifti_out: the output cifti file.
         template_cifti: file to match brainordinates of.
+        cifti_out: the output cifti file.
         series: make a dtseries file instead of a dscalar.
         volume_all: specify an input volume file for all voxel data.
         cifti: use input data from a cifti file.
@@ -861,6 +862,7 @@ def cifti_create_dense_from_template(
         NamedTuple of outputs (described in `CiftiCreateDenseFromTemplateOutputs`).
     """
     params = cifti_create_dense_from_template_params(
+        template_cifti=template_cifti,
         cifti_out=cifti_out,
         series=series,
         volume_all=volume_all,
@@ -869,7 +871,6 @@ def cifti_create_dense_from_template(
         label=label,
         volume=volume,
         action=action,
-        template_cifti=template_cifti,
     )
     return cifti_create_dense_from_template_execute(params, runner)
 

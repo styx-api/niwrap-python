@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "metric_find_clusters",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric-in": {
+      "var_param": "metric_in"
+    },
+    "value-threshold": {
+      "var_param": "value_threshold"
+    },
+    "minimum-area": {
+      "var_param": "minimum_area"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -24,18 +36,6 @@
     },
     "less-than": {
       "var_param": "less_than"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
-    },
-    "value-threshold": {
-      "var_param": "value_threshold"
-    },
-    "minimum-area": {
-      "var_param": "minimum_area"
     }
   }
 }

@@ -14,13 +14,13 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
 
 
 _VolumeComponentsToFramesParamsDictNoTag = typing.TypedDict('_VolumeComponentsToFramesParamsDictNoTag', {
-    "output": str,
     "input": InputPathType,
+    "output": str,
 })
 VolumeComponentsToFramesParamsDictTagged = typing.TypedDict('VolumeComponentsToFramesParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-components-to-frames"],
-    "output": str,
     "input": InputPathType,
+    "output": str,
 })
 VolumeComponentsToFramesParamsDict = _VolumeComponentsToFramesParamsDictNoTag | VolumeComponentsToFramesParamsDictTagged
 
@@ -36,22 +36,22 @@ class VolumeComponentsToFramesOutputs(typing.NamedTuple):
 
 
 def volume_components_to_frames_params(
-    output: str,
     input_: InputPathType,
+    output: str,
 ) -> VolumeComponentsToFramesParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        output: the input volume converted to multiple frames of scalar type.
         input_: the RGB/complex-type volume.
+        output: the input volume converted to multiple frames of scalar type.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-components-to-frames",
-        "output": output,
         "input": input_,
+        "output": output,
     }
     return params
 
@@ -68,14 +68,14 @@ def volume_components_to_frames_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("output", None) is None:
-        raise StyxValidationError("`output` must not be None")
-    if not isinstance(params["output"], str):
-        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
     if params.get("input", None) is None:
         raise StyxValidationError("`input` must not be None")
     if not isinstance(params["input"], (pathlib.Path, str)):
         raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def volume_components_to_frames_cargs(
@@ -96,8 +96,8 @@ def volume_components_to_frames_cargs(
         "wb_command",
         "-volume-components-to-frames"
     ])
-    cargs.append(params.get("output", None))
     cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -148,8 +148,8 @@ def volume_components_to_frames_execute(
 
 
 def volume_components_to_frames(
-    output: str,
     input_: InputPathType,
+    output: str,
     runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
@@ -159,15 +159,15 @@ def volume_components_to_frames(
     separating them into standard subvolumes for better support.
     
     Args:
-        output: the input volume converted to multiple frames of scalar type.
         input_: the RGB/complex-type volume.
+        output: the input volume converted to multiple frames of scalar type.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeComponentsToFramesOutputs`).
     """
     params = volume_components_to_frames_params(
-        output=output,
         input_=input_,
+        output=output,
     )
     return volume_components_to_frames_execute(params, runner)
 

@@ -26,21 +26,21 @@ VolumeStatsRoiParamsDict = _VolumeStatsRoiParamsDictNoTag | VolumeStatsRoiParams
 
 
 _VolumeStatsParamsDictNoTag = typing.TypedDict('_VolumeStatsParamsDictNoTag', {
+    "volume-in": InputPathType,
     "roi": typing.NotRequired[VolumeStatsRoiParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
-    "volume-in": InputPathType,
 })
 VolumeStatsParamsDictTagged = typing.TypedDict('VolumeStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-stats"],
+    "volume-in": InputPathType,
     "roi": typing.NotRequired[VolumeStatsRoiParamsDict | None],
     "subvolume": typing.NotRequired[str | None],
     "percent": typing.NotRequired[float | None],
     "operation": typing.NotRequired[str | None],
     "show-map-name": bool,
-    "volume-in": InputPathType,
 })
 VolumeStatsParamsDict = _VolumeStatsParamsDictNoTag | VolumeStatsParamsDictTagged
 
@@ -149,8 +149,8 @@ def volume_stats_params(
     """
     params = {
         "@type": "workbench/volume-stats",
-        "show-map-name": show_map_name,
         "volume-in": volume_in,
+        "show-map-name": show_map_name,
     }
     if roi is not None:
         params["roi"] = roi
@@ -175,6 +175,10 @@ def volume_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
     if params.get("roi", None) is not None:
         volume_stats_roi_validate(params["roi"])
     if params.get("subvolume", None) is not None:
@@ -190,10 +194,6 @@ def volume_stats_validate(
         raise StyxValidationError("`show-map-name` must not be None")
     if not isinstance(params["show-map-name"], bool):
         raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
 
 
 def volume_stats_cargs(
@@ -214,6 +214,7 @@ def volume_stats_cargs(
         "wb_command",
         "-volume-stats"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     if params.get("roi", None) is not None:
         cargs.extend(volume_stats_roi_cargs(params.get("roi", None), execution))
     if params.get("subvolume", None) is not None:
@@ -233,7 +234,6 @@ def volume_stats_cargs(
         ])
     if params.get("show-map-name", False):
         cargs.append("-show-map-name")
-    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -363,12 +363,12 @@ def volume_stats(
         NamedTuple of outputs (described in `VolumeStatsOutputs`).
     """
     params = volume_stats_params(
+        volume_in=volume_in,
         roi=roi,
         subvolume=subvolume,
         percent=percent,
         operation=operation,
         show_map_name=show_map_name,
-        volume_in=volume_in,
     )
     return volume_stats_execute(params, runner)
 

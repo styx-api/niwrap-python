@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "scene_file_update",
   "properties": {
+    "input-scene-file": {
+      "var_param": "input_scene_file"
+    },
+    "output-scene-file": {
+      "var_param": "output_scene_file"
+    },
+    "scene-name-or-number": {
+      "var_param": "scene_name_or_number"
+    },
     "copy-map-one-palette": {
       "var_param": "copy_map_one_palette",
       "fn_struct_make_params": "scene_file_update_copy_map_one_palette",
@@ -39,15 +48,6 @@
     },
     "fix-map-palette-settings": {
       "var_param": "fix_map_palette_settings"
-    },
-    "input-scene-file": {
-      "var_param": "input_scene_file"
-    },
-    "output-scene-file": {
-      "var_param": "output_scene_file"
-    },
-    "scene-name-or-number": {
-      "var_param": "scene_name_or_number"
     }
   }
 }

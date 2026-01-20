@@ -26,6 +26,9 @@ MetricSmoothingRoiParamsDict = _MetricSmoothingRoiParamsDictNoTag | MetricSmooth
 
 
 _MetricSmoothingParamsDictNoTag = typing.TypedDict('_MetricSmoothingParamsDictNoTag', {
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "smoothing-kernel": float,
     "metric-out": str,
     "roi": typing.NotRequired[MetricSmoothingRoiParamsDict | None],
     "method": typing.NotRequired[str | None],
@@ -33,12 +36,12 @@ _MetricSmoothingParamsDictNoTag = typing.TypedDict('_MetricSmoothingParamsDictNo
     "column": typing.NotRequired[str | None],
     "fix-zeros": bool,
     "fwhm": bool,
-    "surface": InputPathType,
-    "metric-in": InputPathType,
-    "smoothing-kernel": float,
 })
 MetricSmoothingParamsDictTagged = typing.TypedDict('MetricSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-smoothing"],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "smoothing-kernel": float,
     "metric-out": str,
     "roi": typing.NotRequired[MetricSmoothingRoiParamsDict | None],
     "method": typing.NotRequired[str | None],
@@ -46,9 +49,6 @@ MetricSmoothingParamsDictTagged = typing.TypedDict('MetricSmoothingParamsDictTag
     "column": typing.NotRequired[str | None],
     "fix-zeros": bool,
     "fwhm": bool,
-    "surface": InputPathType,
-    "metric-in": InputPathType,
-    "smoothing-kernel": float,
 })
 MetricSmoothingParamsDict = _MetricSmoothingParamsDictNoTag | MetricSmoothingParamsDictTagged
 
@@ -131,10 +131,10 @@ class MetricSmoothingOutputs(typing.NamedTuple):
 
 
 def metric_smoothing_params(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     smoothing_kernel: float,
+    metric_out: str,
     roi: MetricSmoothingRoiParamsDict | None = None,
     method: str | None = None,
     area_metric: InputPathType | None = None,
@@ -146,11 +146,11 @@ def metric_smoothing_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to smooth on.
         metric_in: the metric to smooth.
         smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
             sigma by default.
+        metric_out: the output metric.
         roi: select a region of interest to smooth.
         method: select smoothing method, default GEO_GAUSS_AREA\
             \
@@ -169,12 +169,12 @@ def metric_smoothing_params(
     """
     params = {
         "@type": "workbench/metric-smoothing",
-        "metric-out": metric_out,
-        "fix-zeros": fix_zeros,
-        "fwhm": fwhm,
         "surface": surface,
         "metric-in": metric_in,
         "smoothing-kernel": smoothing_kernel,
+        "metric-out": metric_out,
+        "fix-zeros": fix_zeros,
+        "fwhm": fwhm,
     }
     if roi is not None:
         params["roi"] = roi
@@ -199,6 +199,18 @@ def metric_smoothing_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("smoothing-kernel", None) is None:
+        raise StyxValidationError("`smoothing-kernel` must not be None")
+    if not isinstance(params["smoothing-kernel"], (float, int)):
+        raise StyxValidationError(f'`smoothing-kernel` has the wrong type: Received `{type(params.get("smoothing-kernel", None))}` expected `float`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -222,18 +234,6 @@ def metric_smoothing_validate(
         raise StyxValidationError("`fwhm` must not be None")
     if not isinstance(params["fwhm"], bool):
         raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
-    if params.get("smoothing-kernel", None) is None:
-        raise StyxValidationError("`smoothing-kernel` must not be None")
-    if not isinstance(params["smoothing-kernel"], (float, int)):
-        raise StyxValidationError(f'`smoothing-kernel` has the wrong type: Received `{type(params.get("smoothing-kernel", None))}` expected `float`')
 
 
 def metric_smoothing_cargs(
@@ -254,10 +254,12 @@ def metric_smoothing_cargs(
         "wb_command",
         "-metric-smoothing"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(metric_smoothing_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("smoothing-kernel", None)))
+    cargs.append(params.get("metric-out", None))
+    if params.get("roi", None) is not None:
+        cargs.extend(metric_smoothing_roi_cargs(params.get("roi", None), execution))
     if params.get("method", None) is not None:
         cargs.extend([
             "-method",
@@ -277,9 +279,6 @@ def metric_smoothing_cargs(
         cargs.append("-fix-zeros")
     if params.get("fwhm", False):
         cargs.append("-fwhm")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
-    cargs.append(str(params.get("smoothing-kernel", None)))
     return cargs
 
 
@@ -371,10 +370,10 @@ def metric_smoothing_execute(
 
 
 def metric_smoothing(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
     smoothing_kernel: float,
+    metric_out: str,
     roi: MetricSmoothingRoiParamsDict | None = None,
     method: str | None = None,
     area_metric: InputPathType | None = None,
@@ -431,11 +430,11 @@ def metric_smoothing(
     replicate methods of studies done with caret5's geodesic smoothing.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to smooth on.
         metric_in: the metric to smooth.
         smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
             sigma by default.
+        metric_out: the output metric.
         roi: select a region of interest to smooth.
         method: select smoothing method, default GEO_GAUSS_AREA\
             \
@@ -454,6 +453,9 @@ def metric_smoothing(
         NamedTuple of outputs (described in `MetricSmoothingOutputs`).
     """
     params = metric_smoothing_params(
+        surface=surface,
+        metric_in=metric_in,
+        smoothing_kernel=smoothing_kernel,
         metric_out=metric_out,
         roi=roi,
         method=method,
@@ -461,9 +463,6 @@ def metric_smoothing(
         column=column,
         fix_zeros=fix_zeros,
         fwhm=fwhm,
-        surface=surface,
-        metric_in=metric_in,
-        smoothing_kernel=smoothing_kernel,
     )
     return metric_smoothing_execute(params, runner)
 

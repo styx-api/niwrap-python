@@ -48,6 +48,10 @@ MetricResampleValidRoiOutParamsDict = _MetricResampleValidRoiOutParamsDictNoTag 
 
 
 _MetricResampleParamsDictNoTag = typing.TypedDict('_MetricResampleParamsDictNoTag', {
+    "metric-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
+    "method": str,
     "metric-out": str,
     "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
@@ -55,13 +59,13 @@ _MetricResampleParamsDictNoTag = typing.TypedDict('_MetricResampleParamsDictNoTa
     "roi-metric": typing.NotRequired[InputPathType | None],
     "bypass-sphere-check": bool,
     "largest": bool,
-    "metric-in": InputPathType,
-    "current-sphere": InputPathType,
-    "new-sphere": InputPathType,
-    "method": str,
 })
 MetricResampleParamsDictTagged = typing.TypedDict('MetricResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-resample"],
+    "metric-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
+    "method": str,
     "metric-out": str,
     "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParamsDict | None],
     "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParamsDict | None],
@@ -69,10 +73,6 @@ MetricResampleParamsDictTagged = typing.TypedDict('MetricResampleParamsDictTagge
     "roi-metric": typing.NotRequired[InputPathType | None],
     "bypass-sphere-check": bool,
     "largest": bool,
-    "metric-in": InputPathType,
-    "current-sphere": InputPathType,
-    "new-sphere": InputPathType,
-    "method": str,
 })
 MetricResampleParamsDict = _MetricResampleParamsDictNoTag | MetricResampleParamsDictTagged
 
@@ -307,11 +307,11 @@ class MetricResampleOutputs(typing.NamedTuple):
 
 
 def metric_resample_params(
-    metric_out: str,
     metric_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
+    metric_out: str,
     area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
     area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
     valid_roi_out: MetricResampleValidRoiOutParamsDict | None = None,
@@ -323,13 +323,13 @@ def metric_resample_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         metric_in: the metric file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
+        metric_out: the output metric.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
@@ -347,13 +347,13 @@ def metric_resample_params(
     """
     params = {
         "@type": "workbench/metric-resample",
-        "metric-out": metric_out,
-        "bypass-sphere-check": bypass_sphere_check,
-        "largest": largest,
         "metric-in": metric_in,
         "current-sphere": current_sphere,
         "new-sphere": new_sphere,
         "method": method,
+        "metric-out": metric_out,
+        "bypass-sphere-check": bypass_sphere_check,
+        "largest": largest,
     }
     if area_surfs is not None:
         params["area-surfs"] = area_surfs
@@ -378,6 +378,22 @@ def metric_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -399,22 +415,6 @@ def metric_resample_validate(
         raise StyxValidationError("`largest` must not be None")
     if not isinstance(params["largest"], bool):
         raise StyxValidationError(f'`largest` has the wrong type: Received `{type(params.get("largest", False))}` expected `bool`')
-    if params.get("metric-in", None) is None:
-        raise StyxValidationError("`metric-in` must not be None")
-    if not isinstance(params["metric-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
-    if params.get("current-sphere", None) is None:
-        raise StyxValidationError("`current-sphere` must not be None")
-    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
-    if params.get("new-sphere", None) is None:
-        raise StyxValidationError("`new-sphere` must not be None")
-    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
-    if params.get("method", None) is None:
-        raise StyxValidationError("`method` must not be None")
-    if not isinstance(params["method"], str):
-        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
 
 
 def metric_resample_cargs(
@@ -435,12 +435,17 @@ def metric_resample_cargs(
         "wb_command",
         "-metric-resample"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *(metric_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
-        *(metric_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
-        *(metric_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("metric-out", None))
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("valid-roi-out", None) is not None:
+        cargs.extend([
+            *(metric_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+            *(metric_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
+            *(metric_resample_valid_roi_out_cargs(params.get("valid-roi-out", None), execution) if (params.get("valid-roi-out", None) is not None) else [])
+        ])
     if params.get("roi-metric", None) is not None:
         cargs.extend([
             "-current-roi",
@@ -450,10 +455,6 @@ def metric_resample_cargs(
         cargs.append("-bypass-sphere-check")
     if params.get("largest", False):
         cargs.append("-largest")
-    cargs.append(execution.input_file(params.get("metric-in", None)))
-    cargs.append(execution.input_file(params.get("current-sphere", None)))
-    cargs.append(execution.input_file(params.get("new-sphere", None)))
-    cargs.append(params.get("method", None))
     return cargs
 
 
@@ -526,11 +527,11 @@ def metric_resample_execute(
 
 
 def metric_resample(
-    metric_out: str,
     metric_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
+    metric_out: str,
     area_surfs: MetricResampleAreaSurfsParamsDict | None = None,
     area_metrics: MetricResampleAreaMetricsParamsDict | None = None,
     valid_roi_out: MetricResampleValidRoiOutParamsDict | None = None,
@@ -567,13 +568,13 @@ def metric_resample(
     .
     
     Args:
-        metric_out: the output metric.
         metric_in: the metric file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
+        metric_out: the output metric.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
@@ -591,6 +592,10 @@ def metric_resample(
         NamedTuple of outputs (described in `MetricResampleOutputs`).
     """
     params = metric_resample_params(
+        metric_in=metric_in,
+        current_sphere=current_sphere,
+        new_sphere=new_sphere,
+        method=method,
         metric_out=metric_out,
         area_surfs=area_surfs,
         area_metrics=area_metrics,
@@ -598,10 +603,6 @@ def metric_resample(
         roi_metric=roi_metric,
         bypass_sphere_check=bypass_sphere_check,
         largest=largest,
-        metric_in=metric_in,
-        current_sphere=current_sphere,
-        new_sphere=new_sphere,
-        method=method,
     )
     return metric_resample_execute(params, runner)
 

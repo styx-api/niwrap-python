@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_gradient",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -75,12 +81,6 @@
     },
     "presmooth-fwhm": {
       "var_param": "presmooth_fwhm"
-    },
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

@@ -14,15 +14,15 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 _CiftiAllLabelsToRoisParamsDictNoTag = typing.TypedDict('_CiftiAllLabelsToRoisParamsDictNoTag', {
-    "cifti-out": str,
     "label-in": InputPathType,
     "map": str,
+    "cifti-out": str,
 })
 CiftiAllLabelsToRoisParamsDictTagged = typing.TypedDict('CiftiAllLabelsToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-all-labels-to-rois"],
-    "cifti-out": str,
     "label-in": InputPathType,
     "map": str,
+    "cifti-out": str,
 })
 CiftiAllLabelsToRoisParamsDict = _CiftiAllLabelsToRoisParamsDictNoTag | CiftiAllLabelsToRoisParamsDictTagged
 
@@ -38,25 +38,25 @@ class CiftiAllLabelsToRoisOutputs(typing.NamedTuple):
 
 
 def cifti_all_labels_to_rois_params(
-    cifti_out: str,
     label_in: InputPathType,
     map_: str,
+    cifti_out: str,
 ) -> CiftiAllLabelsToRoisParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         label_in: the input cifti label file.
         map_: the number or name of the label map to use.
+        cifti_out: the output cifti file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-all-labels-to-rois",
-        "cifti-out": cifti_out,
         "label-in": label_in,
         "map": map_,
+        "cifti-out": cifti_out,
     }
     return params
 
@@ -73,10 +73,6 @@ def cifti_all_labels_to_rois_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -85,6 +81,10 @@ def cifti_all_labels_to_rois_validate(
         raise StyxValidationError("`map` must not be None")
     if not isinstance(params["map"], str):
         raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
 
 
 def cifti_all_labels_to_rois_cargs(
@@ -105,9 +105,9 @@ def cifti_all_labels_to_rois_cargs(
         "wb_command",
         "-cifti-all-labels-to-rois"
     ])
-    cargs.append(params.get("cifti-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
+    cargs.append(params.get("cifti-out", None))
     return cargs
 
 
@@ -162,9 +162,9 @@ def cifti_all_labels_to_rois_execute(
 
 
 def cifti_all_labels_to_rois(
-    cifti_out: str,
     label_in: InputPathType,
     map_: str,
+    cifti_out: str,
     runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
@@ -178,17 +178,17 @@ def cifti_all_labels_to_rois(
     desired.
     
     Args:
-        cifti_out: the output cifti file.
         label_in: the input cifti label file.
         map_: the number or name of the label map to use.
+        cifti_out: the output cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAllLabelsToRoisOutputs`).
     """
     params = cifti_all_labels_to_rois_params(
-        cifti_out=cifti_out,
         label_in=label_in,
         map_=map_,
+        cifti_out=cifti_out,
     )
     return cifti_all_labels_to_rois_execute(params, runner)
 

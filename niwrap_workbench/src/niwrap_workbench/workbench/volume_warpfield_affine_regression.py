@@ -26,19 +26,19 @@ VolumeWarpfieldAffineRegressionFlirtOutParamsDict = _VolumeWarpfieldAffineRegres
 
 
 _VolumeWarpfieldAffineRegressionParamsDictNoTag = typing.TypedDict('_VolumeWarpfieldAffineRegressionParamsDictNoTag', {
+    "warpfield": str,
+    "affine-out": str,
     "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None],
     "source-volume": typing.NotRequired[str | None],
     "roi-vol": typing.NotRequired[InputPathType | None],
-    "warpfield": str,
-    "affine-out": str,
 })
 VolumeWarpfieldAffineRegressionParamsDictTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-warpfield-affine-regression"],
+    "warpfield": str,
+    "affine-out": str,
     "flirt-out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParamsDict | None],
     "source-volume": typing.NotRequired[str | None],
     "roi-vol": typing.NotRequired[InputPathType | None],
-    "warpfield": str,
-    "affine-out": str,
 })
 VolumeWarpfieldAffineRegressionParamsDict = _VolumeWarpfieldAffineRegressionParamsDictNoTag | VolumeWarpfieldAffineRegressionParamsDictTagged
 
@@ -167,14 +167,6 @@ def volume_warpfield_affine_regression_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("flirt-out", None) is not None:
-        volume_warpfield_affine_regression_flirt_out_validate(params["flirt-out"])
-    if params.get("source-volume", None) is not None:
-        if not isinstance(params["source-volume"], str):
-            raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str | None`')
-    if params.get("roi-vol", None) is not None:
-        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
     if params.get("warpfield", None) is None:
         raise StyxValidationError("`warpfield` must not be None")
     if not isinstance(params["warpfield"], str):
@@ -183,6 +175,14 @@ def volume_warpfield_affine_regression_validate(
         raise StyxValidationError("`affine-out` must not be None")
     if not isinstance(params["affine-out"], str):
         raise StyxValidationError(f'`affine-out` has the wrong type: Received `{type(params.get("affine-out", None))}` expected `str`')
+    if params.get("flirt-out", None) is not None:
+        volume_warpfield_affine_regression_flirt_out_validate(params["flirt-out"])
+    if params.get("source-volume", None) is not None:
+        if not isinstance(params["source-volume"], str):
+            raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str | None`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
 
 
 def volume_warpfield_affine_regression_cargs(
@@ -203,6 +203,8 @@ def volume_warpfield_affine_regression_cargs(
         "wb_command",
         "-volume-warpfield-affine-regression"
     ])
+    cargs.append(params.get("warpfield", None))
+    cargs.append(params.get("affine-out", None))
     if params.get("flirt-out", None) is not None:
         cargs.extend(volume_warpfield_affine_regression_flirt_out_cargs(params.get("flirt-out", None), execution))
     if params.get("source-volume", None) is not None:
@@ -215,8 +217,6 @@ def volume_warpfield_affine_regression_cargs(
             "-roi",
             execution.input_file(params.get("roi-vol", None))
         ])
-    cargs.append(params.get("warpfield", None))
-    cargs.append(params.get("affine-out", None))
     return cargs
 
 
@@ -307,11 +307,11 @@ def volume_warpfield_affine_regression(
         NamedTuple of outputs (described in `VolumeWarpfieldAffineRegressionOutputs`).
     """
     params = volume_warpfield_affine_regression_params(
+        warpfield=warpfield,
+        affine_out=affine_out,
         flirt_out=flirt_out,
         source_volume=source_volume,
         roi_vol=roi_vol,
-        warpfield=warpfield,
-        affine_out=affine_out,
     )
     return volume_warpfield_affine_regression_execute(params, runner)
 

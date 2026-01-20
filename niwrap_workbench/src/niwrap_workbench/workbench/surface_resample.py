@@ -38,25 +38,25 @@ SurfaceResampleAreaMetricsParamsDict = _SurfaceResampleAreaMetricsParamsDictNoTa
 
 
 _SurfaceResampleParamsDictNoTag = typing.TypedDict('_SurfaceResampleParamsDictNoTag', {
-    "surface-out": str,
-    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
-    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
-    "bypass-sphere-check": bool,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
     "method": str,
+    "surface-out": str,
+    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
+    "bypass-sphere-check": bool,
 })
 SurfaceResampleParamsDictTagged = typing.TypedDict('SurfaceResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-resample"],
-    "surface-out": str,
-    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
-    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
-    "bypass-sphere-check": bool,
     "surface-in": InputPathType,
     "current-sphere": InputPathType,
     "new-sphere": InputPathType,
     "method": str,
+    "surface-out": str,
+    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParamsDict | None],
+    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParamsDict | None],
+    "bypass-sphere-check": bool,
 })
 SurfaceResampleParamsDict = _SurfaceResampleParamsDictNoTag | SurfaceResampleParamsDictTagged
 
@@ -202,11 +202,11 @@ class SurfaceResampleOutputs(typing.NamedTuple):
 
 
 def surface_resample_params(
-    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
+    surface_out: str,
     area_surfs: SurfaceResampleAreaSurfsParamsDict | None = None,
     area_metrics: SurfaceResampleAreaMetricsParamsDict | None = None,
     bypass_sphere_check: bool = False,
@@ -215,13 +215,13 @@ def surface_resample_params(
     Build parameters.
     
     Args:
-        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
+        surface_out: the output surface file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
@@ -232,12 +232,12 @@ def surface_resample_params(
     """
     params = {
         "@type": "workbench/surface-resample",
-        "surface-out": surface_out,
-        "bypass-sphere-check": bypass_sphere_check,
         "surface-in": surface_in,
         "current-sphere": current_sphere,
         "new-sphere": new_sphere,
         "method": method,
+        "surface-out": surface_out,
+        "bypass-sphere-check": bypass_sphere_check,
     }
     if area_surfs is not None:
         params["area-surfs"] = area_surfs
@@ -258,18 +258,6 @@ def surface_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("surface-out", None) is None:
-        raise StyxValidationError("`surface-out` must not be None")
-    if not isinstance(params["surface-out"], str):
-        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
-    if params.get("area-surfs", None) is not None:
-        surface_resample_area_surfs_validate(params["area-surfs"])
-    if params.get("area-metrics", None) is not None:
-        surface_resample_area_metrics_validate(params["area-metrics"])
-    if params.get("bypass-sphere-check", False) is None:
-        raise StyxValidationError("`bypass-sphere-check` must not be None")
-    if not isinstance(params["bypass-sphere-check"], bool):
-        raise StyxValidationError(f'`bypass-sphere-check` has the wrong type: Received `{type(params.get("bypass-sphere-check", False))}` expected `bool`')
     if params.get("surface-in", None) is None:
         raise StyxValidationError("`surface-in` must not be None")
     if not isinstance(params["surface-in"], (pathlib.Path, str)):
@@ -286,6 +274,18 @@ def surface_resample_validate(
         raise StyxValidationError("`method` must not be None")
     if not isinstance(params["method"], str):
         raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
+    if params.get("area-surfs", None) is not None:
+        surface_resample_area_surfs_validate(params["area-surfs"])
+    if params.get("area-metrics", None) is not None:
+        surface_resample_area_metrics_validate(params["area-metrics"])
+    if params.get("bypass-sphere-check", False) is None:
+        raise StyxValidationError("`bypass-sphere-check` must not be None")
+    if not isinstance(params["bypass-sphere-check"], bool):
+        raise StyxValidationError(f'`bypass-sphere-check` has the wrong type: Received `{type(params.get("bypass-sphere-check", False))}` expected `bool`')
 
 
 def surface_resample_cargs(
@@ -306,17 +306,18 @@ def surface_resample_cargs(
         "wb_command",
         "-surface-resample"
     ])
-    cargs.extend([
-        params.get("surface-out", None),
-        *(surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
-        *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else [])
-    ])
-    if params.get("bypass-sphere-check", False):
-        cargs.append("-bypass-sphere-check")
     cargs.append(execution.input_file(params.get("surface-in", None)))
     cargs.append(execution.input_file(params.get("current-sphere", None)))
     cargs.append(execution.input_file(params.get("new-sphere", None)))
     cargs.append(params.get("method", None))
+    cargs.append(params.get("surface-out", None))
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None:
+        cargs.extend([
+            *(surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+            *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else [])
+        ])
+    if params.get("bypass-sphere-check", False):
+        cargs.append("-bypass-sphere-check")
     return cargs
 
 
@@ -383,11 +384,11 @@ def surface_resample_execute(
 
 
 def surface_resample(
-    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
+    surface_out: str,
     area_surfs: SurfaceResampleAreaSurfsParamsDict | None = None,
     area_metrics: SurfaceResampleAreaMetricsParamsDict | None = None,
     bypass_sphere_check: bool = False,
@@ -416,13 +417,13 @@ def surface_resample(
     .
     
     Args:
-        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
+        surface_out: the output surface file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
@@ -433,14 +434,14 @@ def surface_resample(
         NamedTuple of outputs (described in `SurfaceResampleOutputs`).
     """
     params = surface_resample_params(
-        surface_out=surface_out,
-        area_surfs=area_surfs,
-        area_metrics=area_metrics,
-        bypass_sphere_check=bypass_sphere_check,
         surface_in=surface_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
         method=method,
+        surface_out=surface_out,
+        area_surfs=area_surfs,
+        area_metrics=area_metrics,
+        bypass_sphere_check=bypass_sphere_check,
     )
     return surface_resample_execute(params, runner)
 

@@ -14,21 +14,21 @@ ZIP_SCENE_FILE_METADATA = Metadata(
 
 
 _ZipSceneFileParamsDictNoTag = typing.TypedDict('_ZipSceneFileParamsDictNoTag', {
-    "directory": typing.NotRequired[str | None],
-    "write-scene-file": bool,
-    "skip-missing": bool,
     "scene-file": str,
     "extract-folder": str,
     "zip-file": str,
+    "directory": typing.NotRequired[str | None],
+    "write-scene-file": bool,
+    "skip-missing": bool,
 })
 ZipSceneFileParamsDictTagged = typing.TypedDict('ZipSceneFileParamsDictTagged', {
     "@type": typing.Literal["workbench/zip-scene-file"],
-    "directory": typing.NotRequired[str | None],
-    "write-scene-file": bool,
-    "skip-missing": bool,
     "scene-file": str,
     "extract-folder": str,
     "zip-file": str,
+    "directory": typing.NotRequired[str | None],
+    "write-scene-file": bool,
+    "skip-missing": bool,
 })
 ZipSceneFileParamsDict = _ZipSceneFileParamsDictNoTag | ZipSceneFileParamsDictTagged
 
@@ -70,11 +70,11 @@ def zip_scene_file_params(
     """
     params = {
         "@type": "workbench/zip-scene-file",
-        "write-scene-file": write_scene_file,
-        "skip-missing": skip_missing,
         "scene-file": scene_file,
         "extract-folder": extract_folder,
         "zip-file": zip_file,
+        "write-scene-file": write_scene_file,
+        "skip-missing": skip_missing,
     }
     if directory is not None:
         params["directory"] = directory
@@ -93,17 +93,6 @@ def zip_scene_file_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("directory", None) is not None:
-        if not isinstance(params["directory"], str):
-            raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str | None`')
-    if params.get("write-scene-file", False) is None:
-        raise StyxValidationError("`write-scene-file` must not be None")
-    if not isinstance(params["write-scene-file"], bool):
-        raise StyxValidationError(f'`write-scene-file` has the wrong type: Received `{type(params.get("write-scene-file", False))}` expected `bool`')
-    if params.get("skip-missing", False) is None:
-        raise StyxValidationError("`skip-missing` must not be None")
-    if not isinstance(params["skip-missing"], bool):
-        raise StyxValidationError(f'`skip-missing` has the wrong type: Received `{type(params.get("skip-missing", False))}` expected `bool`')
     if params.get("scene-file", None) is None:
         raise StyxValidationError("`scene-file` must not be None")
     if not isinstance(params["scene-file"], str):
@@ -116,6 +105,17 @@ def zip_scene_file_validate(
         raise StyxValidationError("`zip-file` must not be None")
     if not isinstance(params["zip-file"], str):
         raise StyxValidationError(f'`zip-file` has the wrong type: Received `{type(params.get("zip-file", None))}` expected `str`')
+    if params.get("directory", None) is not None:
+        if not isinstance(params["directory"], str):
+            raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str | None`')
+    if params.get("write-scene-file", False) is None:
+        raise StyxValidationError("`write-scene-file` must not be None")
+    if not isinstance(params["write-scene-file"], bool):
+        raise StyxValidationError(f'`write-scene-file` has the wrong type: Received `{type(params.get("write-scene-file", False))}` expected `bool`')
+    if params.get("skip-missing", False) is None:
+        raise StyxValidationError("`skip-missing` must not be None")
+    if not isinstance(params["skip-missing"], bool):
+        raise StyxValidationError(f'`skip-missing` has the wrong type: Received `{type(params.get("skip-missing", False))}` expected `bool`')
 
 
 def zip_scene_file_cargs(
@@ -136,6 +136,9 @@ def zip_scene_file_cargs(
         "wb_command",
         "-zip-scene-file"
     ])
+    cargs.append(params.get("scene-file", None))
+    cargs.append(params.get("extract-folder", None))
+    cargs.append(params.get("zip-file", None))
     if params.get("directory", None) is not None:
         cargs.extend([
             "-base-dir",
@@ -145,9 +148,6 @@ def zip_scene_file_cargs(
         cargs.append("-write-scene-file")
     if params.get("skip-missing", False):
         cargs.append("-skip-missing")
-    cargs.append(params.get("scene-file", None))
-    cargs.append(params.get("extract-folder", None))
-    cargs.append(params.get("zip-file", None))
     return cargs
 
 
@@ -233,12 +233,12 @@ def zip_scene_file(
         NamedTuple of outputs (described in `ZipSceneFileOutputs`).
     """
     params = zip_scene_file_params(
-        directory=directory,
-        write_scene_file=write_scene_file,
-        skip_missing=skip_missing,
         scene_file=scene_file,
         extract_folder=extract_folder,
         zip_file=zip_file,
+        directory=directory,
+        write_scene_file=write_scene_file,
+        skip_missing=skip_missing,
     )
     return zip_scene_file_execute(params, runner)
 

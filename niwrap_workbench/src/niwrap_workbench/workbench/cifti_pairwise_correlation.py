@@ -14,19 +14,19 @@ CIFTI_PAIRWISE_CORRELATION_METADATA = Metadata(
 
 
 _CiftiPairwiseCorrelationParamsDictNoTag = typing.TypedDict('_CiftiPairwiseCorrelationParamsDictNoTag', {
+    "cifti-a": InputPathType,
+    "cifti-b": InputPathType,
     "cifti-out": str,
     "override-mapping-check": bool,
     "fisher-z": bool,
-    "cifti-a": InputPathType,
-    "cifti-b": InputPathType,
 })
 CiftiPairwiseCorrelationParamsDictTagged = typing.TypedDict('CiftiPairwiseCorrelationParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-pairwise-correlation"],
+    "cifti-a": InputPathType,
+    "cifti-b": InputPathType,
     "cifti-out": str,
     "override-mapping-check": bool,
     "fisher-z": bool,
-    "cifti-a": InputPathType,
-    "cifti-b": InputPathType,
 })
 CiftiPairwiseCorrelationParamsDict = _CiftiPairwiseCorrelationParamsDictNoTag | CiftiPairwiseCorrelationParamsDictTagged
 
@@ -42,9 +42,9 @@ class CiftiPairwiseCorrelationOutputs(typing.NamedTuple):
 
 
 def cifti_pairwise_correlation_params(
-    cifti_out: str,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
+    cifti_out: str,
     override_mapping_check: bool = False,
     fisher_z: bool = False,
 ) -> CiftiPairwiseCorrelationParamsDictTagged:
@@ -52,9 +52,9 @@ def cifti_pairwise_correlation_params(
     Build parameters.
     
     Args:
-        cifti_out: output cifti file.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
+        cifti_out: output cifti file.
         override_mapping_check: don't check the mappings for compatibility,\
             only check length.
         fisher_z: apply fisher small z transform (ie, artanh) to correlation.
@@ -63,11 +63,11 @@ def cifti_pairwise_correlation_params(
     """
     params = {
         "@type": "workbench/cifti-pairwise-correlation",
+        "cifti-a": cifti_a,
+        "cifti-b": cifti_b,
         "cifti-out": cifti_out,
         "override-mapping-check": override_mapping_check,
         "fisher-z": fisher_z,
-        "cifti-a": cifti_a,
-        "cifti-b": cifti_b,
     }
     return params
 
@@ -84,6 +84,14 @@ def cifti_pairwise_correlation_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-a", None) is None:
+        raise StyxValidationError("`cifti-a` must not be None")
+    if not isinstance(params["cifti-a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-a` has the wrong type: Received `{type(params.get("cifti-a", None))}` expected `InputPathType`')
+    if params.get("cifti-b", None) is None:
+        raise StyxValidationError("`cifti-b` must not be None")
+    if not isinstance(params["cifti-b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-b` has the wrong type: Received `{type(params.get("cifti-b", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -96,14 +104,6 @@ def cifti_pairwise_correlation_validate(
         raise StyxValidationError("`fisher-z` must not be None")
     if not isinstance(params["fisher-z"], bool):
         raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
-    if params.get("cifti-a", None) is None:
-        raise StyxValidationError("`cifti-a` must not be None")
-    if not isinstance(params["cifti-a"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-a` has the wrong type: Received `{type(params.get("cifti-a", None))}` expected `InputPathType`')
-    if params.get("cifti-b", None) is None:
-        raise StyxValidationError("`cifti-b` must not be None")
-    if not isinstance(params["cifti-b"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-b` has the wrong type: Received `{type(params.get("cifti-b", None))}` expected `InputPathType`')
 
 
 def cifti_pairwise_correlation_cargs(
@@ -124,13 +124,13 @@ def cifti_pairwise_correlation_cargs(
         "wb_command",
         "-cifti-pairwise-correlation"
     ])
+    cargs.append(execution.input_file(params.get("cifti-a", None)))
+    cargs.append(execution.input_file(params.get("cifti-b", None)))
     cargs.append(params.get("cifti-out", None))
     if params.get("override-mapping-check", False):
         cargs.append("-override-mapping-check")
     if params.get("fisher-z", False):
         cargs.append("-fisher-z")
-    cargs.append(execution.input_file(params.get("cifti-a", None)))
-    cargs.append(execution.input_file(params.get("cifti-b", None)))
     return cargs
 
 
@@ -181,9 +181,9 @@ def cifti_pairwise_correlation_execute(
 
 
 def cifti_pairwise_correlation(
-    cifti_out: str,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
+    cifti_out: str,
     override_mapping_check: bool = False,
     fisher_z: bool = False,
     runner: Runner | None = None,
@@ -195,9 +195,9 @@ def cifti_pairwise_correlation(
     put the result in the same row of <cifti-out>, which has only one column.
     
     Args:
-        cifti_out: output cifti file.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
+        cifti_out: output cifti file.
         override_mapping_check: don't check the mappings for compatibility,\
             only check length.
         fisher_z: apply fisher small z transform (ie, artanh) to correlation.
@@ -206,11 +206,11 @@ def cifti_pairwise_correlation(
         NamedTuple of outputs (described in `CiftiPairwiseCorrelationOutputs`).
     """
     params = cifti_pairwise_correlation_params(
+        cifti_a=cifti_a,
+        cifti_b=cifti_b,
         cifti_out=cifti_out,
         override_mapping_check=override_mapping_check,
         fisher_z=fisher_z,
-        cifti_a=cifti_a,
-        cifti_b=cifti_b,
     )
     return cifti_pairwise_correlation_execute(params, runner)
 

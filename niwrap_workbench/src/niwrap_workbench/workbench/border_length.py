@@ -14,19 +14,19 @@ BORDER_LENGTH_METADATA = Metadata(
 
 
 _BorderLengthParamsDictNoTag = typing.TypedDict('_BorderLengthParamsDictNoTag', {
+    "border": InputPathType,
+    "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
     "hide-border-name": bool,
     "separate-pieces": bool,
-    "border": InputPathType,
-    "surface": InputPathType,
 })
 BorderLengthParamsDictTagged = typing.TypedDict('BorderLengthParamsDictTagged', {
     "@type": typing.Literal["workbench/border-length"],
+    "border": InputPathType,
+    "surface": InputPathType,
     "area-metric": typing.NotRequired[InputPathType | None],
     "hide-border-name": bool,
     "separate-pieces": bool,
-    "border": InputPathType,
-    "surface": InputPathType,
 })
 BorderLengthParamsDict = _BorderLengthParamsDictNoTag | BorderLengthParamsDictTagged
 
@@ -64,10 +64,10 @@ def border_length_params(
     """
     params = {
         "@type": "workbench/border-length",
-        "hide-border-name": hide_border_name,
-        "separate-pieces": separate_pieces,
         "border": border,
         "surface": surface,
+        "hide-border-name": hide_border_name,
+        "separate-pieces": separate_pieces,
     }
     if area_metric is not None:
         params["area-metric"] = area_metric
@@ -86,6 +86,14 @@ def border_length_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border", None) is None:
+        raise StyxValidationError("`border` must not be None")
+    if not isinstance(params["border"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
     if params.get("area-metric", None) is not None:
         if not isinstance(params["area-metric"], (pathlib.Path, str)):
             raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
@@ -97,14 +105,6 @@ def border_length_validate(
         raise StyxValidationError("`separate-pieces` must not be None")
     if not isinstance(params["separate-pieces"], bool):
         raise StyxValidationError(f'`separate-pieces` has the wrong type: Received `{type(params.get("separate-pieces", False))}` expected `bool`')
-    if params.get("border", None) is None:
-        raise StyxValidationError("`border` must not be None")
-    if not isinstance(params["border"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `InputPathType`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
 
 
 def border_length_cargs(
@@ -125,6 +125,8 @@ def border_length_cargs(
         "wb_command",
         "-border-length"
     ])
+    cargs.append(execution.input_file(params.get("border", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
     if params.get("area-metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
@@ -134,8 +136,6 @@ def border_length_cargs(
         cargs.append("-hide-border-name")
     if params.get("separate-pieces", False):
         cargs.append("-separate-pieces")
-    cargs.append(execution.input_file(params.get("border", None)))
-    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -223,11 +223,11 @@ def border_length(
         NamedTuple of outputs (described in `BorderLengthOutputs`).
     """
     params = border_length_params(
+        border=border,
+        surface=surface,
         area_metric=area_metric,
         hide_border_name=hide_border_name,
         separate_pieces=separate_pieces,
-        border=border,
-        surface=surface,
     )
     return border_length_execute(params, runner)
 

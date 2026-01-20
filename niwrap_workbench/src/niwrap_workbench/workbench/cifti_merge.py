@@ -353,10 +353,9 @@ def cifti_merge_cargs(
         "wb_command",
         "-cifti-merge"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
-    ])
+    cargs.append(params.get("cifti-out", None))
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     if params.get("limit-GB", None) is not None:
         cargs.extend([
             "-mem-limit",

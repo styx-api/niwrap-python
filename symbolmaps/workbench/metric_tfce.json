@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "metric_tfce",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric-in": {
+      "var_param": "metric_in"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -36,12 +42,6 @@
     },
     "roi-metric": {
       "var_param": "roi_metric"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
     }
   }
 }

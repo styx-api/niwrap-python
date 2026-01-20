@@ -26,19 +26,19 @@ VolumeReduceExcludeOutliersParamsDict = _VolumeReduceExcludeOutliersParamsDictNo
 
 
 _VolumeReduceParamsDictNoTag = typing.TypedDict('_VolumeReduceParamsDictNoTag', {
+    "volume-in": InputPathType,
+    "operation": str,
     "volume-out": str,
     "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
-    "volume-in": InputPathType,
-    "operation": str,
 })
 VolumeReduceParamsDictTagged = typing.TypedDict('VolumeReduceParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-reduce"],
+    "volume-in": InputPathType,
+    "operation": str,
     "volume-out": str,
     "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParamsDict | None],
     "only-numeric": bool,
-    "volume-in": InputPathType,
-    "operation": str,
 })
 VolumeReduceParamsDict = _VolumeReduceParamsDictNoTag | VolumeReduceParamsDictTagged
 
@@ -119,9 +119,9 @@ class VolumeReduceOutputs(typing.NamedTuple):
 
 
 def volume_reduce_params(
-    volume_out: str,
     volume_in: InputPathType,
     operation: str,
+    volume_out: str,
     exclude_outliers: VolumeReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
 ) -> VolumeReduceParamsDictTagged:
@@ -129,9 +129,9 @@ def volume_reduce_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         volume_in: the volume file to reduce.
         operation: the reduction operator to use.
+        volume_out: the output volume.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
         only_numeric: exclude non-numeric values.
@@ -140,10 +140,10 @@ def volume_reduce_params(
     """
     params = {
         "@type": "workbench/volume-reduce",
-        "volume-out": volume_out,
-        "only-numeric": only_numeric,
         "volume-in": volume_in,
         "operation": operation,
+        "volume-out": volume_out,
+        "only-numeric": only_numeric,
     }
     if exclude_outliers is not None:
         params["exclude-outliers"] = exclude_outliers
@@ -162,6 +162,14 @@ def volume_reduce_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -172,14 +180,6 @@ def volume_reduce_validate(
         raise StyxValidationError("`only-numeric` must not be None")
     if not isinstance(params["only-numeric"], bool):
         raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
-    if params.get("operation", None) is None:
-        raise StyxValidationError("`operation` must not be None")
-    if not isinstance(params["operation"], str):
-        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
 
 
 def volume_reduce_cargs(
@@ -200,14 +200,13 @@ def volume_reduce_cargs(
         "wb_command",
         "-volume-reduce"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else [])
-    ])
-    if params.get("only-numeric", False):
-        cargs.append("-only-numeric")
     cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("operation", None))
+    cargs.append(params.get("volume-out", None))
+    if params.get("exclude-outliers", None) is not None:
+        cargs.extend(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution))
+    if params.get("only-numeric", False):
+        cargs.append("-only-numeric")
     return cargs
 
 
@@ -277,9 +276,9 @@ def volume_reduce_execute(
 
 
 def volume_reduce(
-    volume_out: str,
     volume_in: InputPathType,
     operation: str,
+    volume_out: str,
     exclude_outliers: VolumeReduceExcludeOutliersParamsDict | None = None,
     only_numeric: bool = False,
     runner: Runner | None = None,
@@ -310,9 +309,9 @@ def volume_reduce(
     .
     
     Args:
-        volume_out: the output volume.
         volume_in: the volume file to reduce.
         operation: the reduction operator to use.
+        volume_out: the output volume.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
         only_numeric: exclude non-numeric values.
@@ -321,11 +320,11 @@ def volume_reduce(
         NamedTuple of outputs (described in `VolumeReduceOutputs`).
     """
     params = volume_reduce_params(
+        volume_in=volume_in,
+        operation=operation,
         volume_out=volume_out,
         exclude_outliers=exclude_outliers,
         only_numeric=only_numeric,
-        volume_in=volume_in,
-        operation=operation,
     )
     return volume_reduce_execute(params, runner)
 

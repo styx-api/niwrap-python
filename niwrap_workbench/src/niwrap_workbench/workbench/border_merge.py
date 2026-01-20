@@ -331,10 +331,9 @@ def border_merge_cargs(
         "wb_command",
         "-border-merge"
     ])
-    cargs.extend([
-        params.get("border-file-out", None),
-        *([a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c] if (params.get("border", None) is not None) else [])
-    ])
+    cargs.append(params.get("border-file-out", None))
+    if params.get("border", None) is not None:
+        cargs.extend([a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c])
     return cargs
 
 

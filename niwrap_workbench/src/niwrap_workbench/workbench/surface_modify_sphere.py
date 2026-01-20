@@ -14,17 +14,17 @@ SURFACE_MODIFY_SPHERE_METADATA = Metadata(
 
 
 _SurfaceModifySphereParamsDictNoTag = typing.TypedDict('_SurfaceModifySphereParamsDictNoTag', {
-    "sphere-out": str,
-    "recenter": bool,
     "sphere-in": InputPathType,
     "radius": float,
+    "sphere-out": str,
+    "recenter": bool,
 })
 SurfaceModifySphereParamsDictTagged = typing.TypedDict('SurfaceModifySphereParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-modify-sphere"],
-    "sphere-out": str,
-    "recenter": bool,
     "sphere-in": InputPathType,
     "radius": float,
+    "sphere-out": str,
+    "recenter": bool,
 })
 SurfaceModifySphereParamsDict = _SurfaceModifySphereParamsDictNoTag | SurfaceModifySphereParamsDictTagged
 
@@ -40,28 +40,28 @@ class SurfaceModifySphereOutputs(typing.NamedTuple):
 
 
 def surface_modify_sphere_params(
-    sphere_out: str,
     sphere_in: InputPathType,
     radius: float,
+    sphere_out: str,
     recenter: bool = False,
 ) -> SurfaceModifySphereParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        sphere_out: the output sphere.
         sphere_in: the sphere to modify.
         radius: the radius the output sphere should have.
+        sphere_out: the output sphere.
         recenter: recenter the sphere by means of the bounding box.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-modify-sphere",
-        "sphere-out": sphere_out,
-        "recenter": recenter,
         "sphere-in": sphere_in,
         "radius": radius,
+        "sphere-out": sphere_out,
+        "recenter": recenter,
     }
     return params
 
@@ -78,14 +78,6 @@ def surface_modify_sphere_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("sphere-out", None) is None:
-        raise StyxValidationError("`sphere-out` must not be None")
-    if not isinstance(params["sphere-out"], str):
-        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
-    if params.get("recenter", False) is None:
-        raise StyxValidationError("`recenter` must not be None")
-    if not isinstance(params["recenter"], bool):
-        raise StyxValidationError(f'`recenter` has the wrong type: Received `{type(params.get("recenter", False))}` expected `bool`')
     if params.get("sphere-in", None) is None:
         raise StyxValidationError("`sphere-in` must not be None")
     if not isinstance(params["sphere-in"], (pathlib.Path, str)):
@@ -94,6 +86,14 @@ def surface_modify_sphere_validate(
         raise StyxValidationError("`radius` must not be None")
     if not isinstance(params["radius"], (float, int)):
         raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float`')
+    if params.get("sphere-out", None) is None:
+        raise StyxValidationError("`sphere-out` must not be None")
+    if not isinstance(params["sphere-out"], str):
+        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
+    if params.get("recenter", False) is None:
+        raise StyxValidationError("`recenter` must not be None")
+    if not isinstance(params["recenter"], bool):
+        raise StyxValidationError(f'`recenter` has the wrong type: Received `{type(params.get("recenter", False))}` expected `bool`')
 
 
 def surface_modify_sphere_cargs(
@@ -114,11 +114,11 @@ def surface_modify_sphere_cargs(
         "wb_command",
         "-surface-modify-sphere"
     ])
+    cargs.append(execution.input_file(params.get("sphere-in", None)))
+    cargs.append(str(params.get("radius", None)))
     cargs.append(params.get("sphere-out", None))
     if params.get("recenter", False):
         cargs.append("-recenter")
-    cargs.append(execution.input_file(params.get("sphere-in", None)))
-    cargs.append(str(params.get("radius", None)))
     return cargs
 
 
@@ -175,9 +175,9 @@ def surface_modify_sphere_execute(
 
 
 def surface_modify_sphere(
-    sphere_out: str,
     sphere_in: InputPathType,
     radius: float,
+    sphere_out: str,
     recenter: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
@@ -194,19 +194,19 @@ def surface_modify_sphere(
     and -recenter is not used, a warning is printed.
     
     Args:
-        sphere_out: the output sphere.
         sphere_in: the sphere to modify.
         radius: the radius the output sphere should have.
+        sphere_out: the output sphere.
         recenter: recenter the sphere by means of the bounding box.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceModifySphereOutputs`).
     """
     params = surface_modify_sphere_params(
-        sphere_out=sphere_out,
-        recenter=recenter,
         sphere_in=sphere_in,
         radius=radius,
+        sphere_out=sphere_out,
+        recenter=recenter,
     )
     return surface_modify_sphere_execute(params, runner)
 

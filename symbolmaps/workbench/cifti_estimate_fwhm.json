@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_estimate_fwhm",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
     "surface": {
       "var_param": "surface",
       "fn_struct_make_params": "cifti_estimate_fwhm_surface",
@@ -21,9 +24,6 @@
     },
     "merged-volume": {
       "var_param": "merged_volume"
-    },
-    "cifti": {
-      "var_param": "cifti"
     }
   }
 }

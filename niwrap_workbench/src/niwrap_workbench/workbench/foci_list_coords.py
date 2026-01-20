@@ -14,15 +14,15 @@ FOCI_LIST_COORDS_METADATA = Metadata(
 
 
 _FociListCoordsParamsDictNoTag = typing.TypedDict('_FociListCoordsParamsDictNoTag', {
-    "names-file-out": typing.NotRequired[str | None],
     "foci-file": InputPathType,
     "coord-file-out": str,
+    "names-file-out": typing.NotRequired[str | None],
 })
 FociListCoordsParamsDictTagged = typing.TypedDict('FociListCoordsParamsDictTagged', {
     "@type": typing.Literal["workbench/foci-list-coords"],
-    "names-file-out": typing.NotRequired[str | None],
     "foci-file": InputPathType,
     "coord-file-out": str,
+    "names-file-out": typing.NotRequired[str | None],
 })
 FociListCoordsParamsDict = _FociListCoordsParamsDictNoTag | FociListCoordsParamsDictTagged
 
@@ -74,9 +74,6 @@ def foci_list_coords_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("names-file-out", None) is not None:
-        if not isinstance(params["names-file-out"], str):
-            raise StyxValidationError(f'`names-file-out` has the wrong type: Received `{type(params.get("names-file-out", None))}` expected `str | None`')
     if params.get("foci-file", None) is None:
         raise StyxValidationError("`foci-file` must not be None")
     if not isinstance(params["foci-file"], (pathlib.Path, str)):
@@ -85,6 +82,9 @@ def foci_list_coords_validate(
         raise StyxValidationError("`coord-file-out` must not be None")
     if not isinstance(params["coord-file-out"], str):
         raise StyxValidationError(f'`coord-file-out` has the wrong type: Received `{type(params.get("coord-file-out", None))}` expected `str`')
+    if params.get("names-file-out", None) is not None:
+        if not isinstance(params["names-file-out"], str):
+            raise StyxValidationError(f'`names-file-out` has the wrong type: Received `{type(params.get("names-file-out", None))}` expected `str | None`')
 
 
 def foci_list_coords_cargs(
@@ -105,13 +105,13 @@ def foci_list_coords_cargs(
         "wb_command",
         "-foci-list-coords"
     ])
+    cargs.append(execution.input_file(params.get("foci-file", None)))
+    cargs.append(params.get("coord-file-out", None))
     if params.get("names-file-out", None) is not None:
         cargs.extend([
             "-names-out",
             params.get("names-file-out", None)
         ])
-    cargs.append(execution.input_file(params.get("foci-file", None)))
-    cargs.append(params.get("coord-file-out", None))
     return cargs
 
 
@@ -183,9 +183,9 @@ def foci_list_coords(
         NamedTuple of outputs (described in `FociListCoordsOutputs`).
     """
     params = foci_list_coords_params(
-        names_file_out=names_file_out,
         foci_file=foci_file,
         coord_file_out=coord_file_out,
+        names_file_out=names_file_out,
     )
     return foci_list_coords_execute(params, runner)
 

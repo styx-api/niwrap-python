@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "probtrackx_dot_convert",
   "properties": {
+    "dot-file": {
+      "var_param": "dot_file"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -60,9 +63,6 @@
     },
     "transpose": {
       "var_param": "transpose"
-    },
-    "dot-file": {
-      "var_param": "dot_file"
     }
   }
 }

@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "set_map_names",
   "properties": {
+    "data-file": {
+      "var_param": "data_file"
+    },
     "map": {
       "var_param": "map_",
       "fn_struct_make_params": "set_map_names_map",
@@ -15,9 +18,6 @@
     },
     "file": {
       "var_param": "file_"
-    },
-    "data-file": {
-      "var_param": "data_file"
     }
   }
 }

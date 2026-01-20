@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_pairwise_correlation",
   "properties": {
+    "cifti-a": {
+      "var_param": "cifti_a"
+    },
+    "cifti-b": {
+      "var_param": "cifti_b"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -9,12 +15,6 @@
     },
     "fisher-z": {
       "var_param": "fisher_z"
-    },
-    "cifti-a": {
-      "var_param": "cifti_a"
-    },
-    "cifti-b": {
-      "var_param": "cifti_b"
     }
   }
 }

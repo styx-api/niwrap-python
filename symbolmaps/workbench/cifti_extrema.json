@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_extrema",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surface-distance": {
+      "var_param": "surface_distance"
+    },
+    "volume-distance": {
+      "var_param": "volume_distance"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -42,18 +54,6 @@
     },
     "presmooth-fwhm": {
       "var_param": "presmooth_fwhm"
-    },
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "surface-distance": {
-      "var_param": "surface_distance"
-    },
-    "volume-distance": {
-      "var_param": "volume_distance"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

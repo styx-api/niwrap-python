@@ -24,6 +24,7 @@ FileInformationOnlyMetadataParamsDict = _FileInformationOnlyMetadataParamsDictNo
 
 
 _FileInformationParamsDictNoTag = typing.TypedDict('_FileInformationParamsDictNoTag', {
+    "data-file": str,
     "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParamsDict | None],
     "czi-xml": bool,
     "czi-all-sub-blocks": bool,
@@ -33,10 +34,10 @@ _FileInformationParamsDictNoTag = typing.TypedDict('_FileInformationParamsDictNo
     "only-number-of-maps": bool,
     "only-step-interval": bool,
     "no-map-info": bool,
-    "data-file": str,
 })
 FileInformationParamsDictTagged = typing.TypedDict('FileInformationParamsDictTagged', {
     "@type": typing.Literal["workbench/file-information"],
+    "data-file": str,
     "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParamsDict | None],
     "czi-xml": bool,
     "czi-all-sub-blocks": bool,
@@ -46,7 +47,6 @@ FileInformationParamsDictTagged = typing.TypedDict('FileInformationParamsDictTag
     "only-number-of-maps": bool,
     "only-step-interval": bool,
     "no-map-info": bool,
-    "data-file": str,
 })
 FileInformationParamsDict = _FileInformationParamsDictNoTag | FileInformationParamsDictTagged
 
@@ -155,6 +155,7 @@ def file_information_params(
     """
     params = {
         "@type": "workbench/file-information",
+        "data-file": data_file,
         "czi-xml": czi_xml,
         "czi-all-sub-blocks": czi_all_sub_blocks,
         "czi": czi,
@@ -163,7 +164,6 @@ def file_information_params(
         "only-number-of-maps": only_number_of_maps,
         "only-step-interval": only_step_interval,
         "no-map-info": no_map_info,
-        "data-file": data_file,
     }
     if only_metadata is not None:
         params["only-metadata"] = only_metadata
@@ -182,6 +182,10 @@ def file_information_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data-file", None) is None:
+        raise StyxValidationError("`data-file` must not be None")
+    if not isinstance(params["data-file"], str):
+        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
     if params.get("only-metadata", None) is not None:
         file_information_only_metadata_validate(params["only-metadata"])
     if params.get("czi-xml", False) is None:
@@ -216,10 +220,6 @@ def file_information_validate(
         raise StyxValidationError("`no-map-info` must not be None")
     if not isinstance(params["no-map-info"], bool):
         raise StyxValidationError(f'`no-map-info` has the wrong type: Received `{type(params.get("no-map-info", False))}` expected `bool`')
-    if params.get("data-file", None) is None:
-        raise StyxValidationError("`data-file` must not be None")
-    if not isinstance(params["data-file"], str):
-        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
 
 
 def file_information_cargs(
@@ -240,6 +240,7 @@ def file_information_cargs(
         "wb_command",
         "-file-information"
     ])
+    cargs.append(params.get("data-file", None))
     if params.get("only-metadata", None) is not None:
         cargs.extend(file_information_only_metadata_cargs(params.get("only-metadata", None), execution))
     if params.get("czi-xml", False):
@@ -258,7 +259,6 @@ def file_information_cargs(
         cargs.append("-only-step-interval")
     if params.get("no-map-info", False):
         cargs.append("-no-map-info")
-    cargs.append(params.get("data-file", None))
     return cargs
 
 
@@ -428,6 +428,7 @@ def file_information(
         NamedTuple of outputs (described in `FileInformationOutputs`).
     """
     params = file_information_params(
+        data_file=data_file,
         only_metadata=only_metadata,
         czi_xml=czi_xml,
         czi_all_sub_blocks=czi_all_sub_blocks,
@@ -437,7 +438,6 @@ def file_information(
         only_number_of_maps=only_number_of_maps,
         only_step_interval=only_step_interval,
         no_map_info=no_map_info,
-        data_file=data_file,
     )
     return file_information_execute(params, runner)
 

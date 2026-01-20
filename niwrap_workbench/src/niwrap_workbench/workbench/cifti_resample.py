@@ -224,6 +224,12 @@ CiftiResampleCerebellumSpheresParamsDict = _CiftiResampleCerebellumSpheresParams
 
 
 _CiftiResampleParamsDictNoTag = typing.TypedDict('_CiftiResampleParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "direction": str,
+    "cifti-template": InputPathType,
+    "template-direction": str,
+    "surface-method": str,
+    "volume-method": str,
     "cifti-out": str,
     "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParamsDict | None],
     "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParamsDict | None],
@@ -233,15 +239,15 @@ _CiftiResampleParamsDictNoTag = typing.TypedDict('_CiftiResampleParamsDictNoTag'
     "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParamsDict | None],
     "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParamsDict | None],
     "surface-largest": bool,
-    "cifti-in": InputPathType,
-    "direction": str,
-    "cifti-template": InputPathType,
-    "template-direction": str,
-    "surface-method": str,
-    "volume-method": str,
 })
 CiftiResampleParamsDictTagged = typing.TypedDict('CiftiResampleParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-resample"],
+    "cifti-in": InputPathType,
+    "direction": str,
+    "cifti-template": InputPathType,
+    "template-direction": str,
+    "surface-method": str,
+    "volume-method": str,
     "cifti-out": str,
     "volume-predilate": typing.NotRequired[CiftiResampleVolumePredilateParamsDict | None],
     "surface-postdilate": typing.NotRequired[CiftiResampleSurfacePostdilateParamsDict | None],
@@ -251,12 +257,6 @@ CiftiResampleParamsDictTagged = typing.TypedDict('CiftiResampleParamsDictTagged'
     "right-spheres": typing.NotRequired[CiftiResampleRightSpheresParamsDict | None],
     "cerebellum-spheres": typing.NotRequired[CiftiResampleCerebellumSpheresParamsDict | None],
     "surface-largest": bool,
-    "cifti-in": InputPathType,
-    "direction": str,
-    "cifti-template": InputPathType,
-    "template-direction": str,
-    "surface-method": str,
-    "volume-method": str,
 })
 CiftiResampleParamsDict = _CiftiResampleParamsDictNoTag | CiftiResampleParamsDictTagged
 
@@ -1408,13 +1408,13 @@ class CiftiResampleOutputs(typing.NamedTuple):
 
 
 def cifti_resample_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     cifti_template: InputPathType,
     template_direction: str,
     surface_method: str,
     volume_method: str,
+    cifti_out: str,
     volume_predilate: CiftiResampleVolumePredilateParamsDict | None = None,
     surface_postdilate: CiftiResampleSurfacePostdilateParamsDict | None = None,
     affine: CiftiResampleAffineParamsDict | None = None,
@@ -1428,7 +1428,6 @@ def cifti_resample_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the cifti file to resample.
         direction: the direction of the input that should be resampled, ROW or\
             COLUMN.
@@ -1437,6 +1436,7 @@ def cifti_resample_params(
             resampling space, ROW or COLUMN.
         surface_method: specify a surface resampling method.
         volume_method: specify a volume interpolation method.
+        cifti_out: the output cifti file.
         volume_predilate: dilate the volume components before resampling.
         surface_postdilate: dilate the surface components after resampling.
         affine: use an affine transformation on the volume components.
@@ -1451,14 +1451,14 @@ def cifti_resample_params(
     """
     params = {
         "@type": "workbench/cifti-resample",
-        "cifti-out": cifti_out,
-        "surface-largest": surface_largest,
         "cifti-in": cifti_in,
         "direction": direction,
         "cifti-template": cifti_template,
         "template-direction": template_direction,
         "surface-method": surface_method,
         "volume-method": volume_method,
+        "cifti-out": cifti_out,
+        "surface-largest": surface_largest,
     }
     if volume_predilate is not None:
         params["volume-predilate"] = volume_predilate
@@ -1489,28 +1489,6 @@ def cifti_resample_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("volume-predilate", None) is not None:
-        cifti_resample_volume_predilate_validate(params["volume-predilate"])
-    if params.get("surface-postdilate", None) is not None:
-        cifti_resample_surface_postdilate_validate(params["surface-postdilate"])
-    if params.get("affine", None) is not None:
-        cifti_resample_affine_validate(params["affine"])
-    if params.get("warpfield", None) is not None:
-        cifti_resample_warpfield_validate(params["warpfield"])
-    if params.get("left-spheres", None) is not None:
-        cifti_resample_left_spheres_validate(params["left-spheres"])
-    if params.get("right-spheres", None) is not None:
-        cifti_resample_right_spheres_validate(params["right-spheres"])
-    if params.get("cerebellum-spheres", None) is not None:
-        cifti_resample_cerebellum_spheres_validate(params["cerebellum-spheres"])
-    if params.get("surface-largest", False) is None:
-        raise StyxValidationError("`surface-largest` must not be None")
-    if not isinstance(params["surface-largest"], bool):
-        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -1535,6 +1513,28 @@ def cifti_resample_validate(
         raise StyxValidationError("`volume-method` must not be None")
     if not isinstance(params["volume-method"], str):
         raise StyxValidationError(f'`volume-method` has the wrong type: Received `{type(params.get("volume-method", None))}` expected `str`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("volume-predilate", None) is not None:
+        cifti_resample_volume_predilate_validate(params["volume-predilate"])
+    if params.get("surface-postdilate", None) is not None:
+        cifti_resample_surface_postdilate_validate(params["surface-postdilate"])
+    if params.get("affine", None) is not None:
+        cifti_resample_affine_validate(params["affine"])
+    if params.get("warpfield", None) is not None:
+        cifti_resample_warpfield_validate(params["warpfield"])
+    if params.get("left-spheres", None) is not None:
+        cifti_resample_left_spheres_validate(params["left-spheres"])
+    if params.get("right-spheres", None) is not None:
+        cifti_resample_right_spheres_validate(params["right-spheres"])
+    if params.get("cerebellum-spheres", None) is not None:
+        cifti_resample_cerebellum_spheres_validate(params["cerebellum-spheres"])
+    if params.get("surface-largest", False) is None:
+        raise StyxValidationError("`surface-largest` must not be None")
+    if not isinstance(params["surface-largest"], bool):
+        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
 
 
 def cifti_resample_cargs(
@@ -1555,24 +1555,25 @@ def cifti_resample_cargs(
         "wb_command",
         "-cifti-resample"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_resample_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),
-        *(cifti_resample_surface_postdilate_cargs(params.get("surface-postdilate", None), execution) if (params.get("surface-postdilate", None) is not None) else []),
-        *(cifti_resample_affine_cargs(params.get("affine", None), execution) if (params.get("affine", None) is not None) else []),
-        *(cifti_resample_warpfield_cargs(params.get("warpfield", None), execution) if (params.get("warpfield", None) is not None) else []),
-        *(cifti_resample_left_spheres_cargs(params.get("left-spheres", None), execution) if (params.get("left-spheres", None) is not None) else []),
-        *(cifti_resample_right_spheres_cargs(params.get("right-spheres", None), execution) if (params.get("right-spheres", None) is not None) else []),
-        *(cifti_resample_cerebellum_spheres_cargs(params.get("cerebellum-spheres", None), execution) if (params.get("cerebellum-spheres", None) is not None) else [])
-    ])
-    if params.get("surface-largest", False):
-        cargs.append("-surface-largest")
     cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
     cargs.append(execution.input_file(params.get("cifti-template", None)))
     cargs.append(params.get("template-direction", None))
     cargs.append(params.get("surface-method", None))
     cargs.append(params.get("volume-method", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("volume-predilate", None) is not None or params.get("surface-postdilate", None) is not None or params.get("affine", None) is not None or params.get("warpfield", None) is not None or params.get("left-spheres", None) is not None or params.get("right-spheres", None) is not None or params.get("cerebellum-spheres", None) is not None:
+        cargs.extend([
+            *(cifti_resample_volume_predilate_cargs(params.get("volume-predilate", None), execution) if (params.get("volume-predilate", None) is not None) else []),
+            *(cifti_resample_surface_postdilate_cargs(params.get("surface-postdilate", None), execution) if (params.get("surface-postdilate", None) is not None) else []),
+            *(cifti_resample_affine_cargs(params.get("affine", None), execution) if (params.get("affine", None) is not None) else []),
+            *(cifti_resample_warpfield_cargs(params.get("warpfield", None), execution) if (params.get("warpfield", None) is not None) else []),
+            *(cifti_resample_left_spheres_cargs(params.get("left-spheres", None), execution) if (params.get("left-spheres", None) is not None) else []),
+            *(cifti_resample_right_spheres_cargs(params.get("right-spheres", None), execution) if (params.get("right-spheres", None) is not None) else []),
+            *(cifti_resample_cerebellum_spheres_cargs(params.get("cerebellum-spheres", None), execution) if (params.get("cerebellum-spheres", None) is not None) else [])
+        ])
+    if params.get("surface-largest", False):
+        cargs.append("-surface-largest")
     return cargs
 
 
@@ -1653,13 +1654,13 @@ def cifti_resample_execute(
 
 
 def cifti_resample(
-    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     cifti_template: InputPathType,
     template_direction: str,
     surface_method: str,
     volume_method: str,
+    cifti_out: str,
     volume_predilate: CiftiResampleVolumePredilateParamsDict | None = None,
     surface_postdilate: CiftiResampleSurfacePostdilateParamsDict | None = None,
     affine: CiftiResampleAffineParamsDict | None = None,
@@ -1707,7 +1708,6 @@ def cifti_resample(
     .
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the cifti file to resample.
         direction: the direction of the input that should be resampled, ROW or\
             COLUMN.
@@ -1716,6 +1716,7 @@ def cifti_resample(
             resampling space, ROW or COLUMN.
         surface_method: specify a surface resampling method.
         volume_method: specify a volume interpolation method.
+        cifti_out: the output cifti file.
         volume_predilate: dilate the volume components before resampling.
         surface_postdilate: dilate the surface components after resampling.
         affine: use an affine transformation on the volume components.
@@ -1730,6 +1731,12 @@ def cifti_resample(
         NamedTuple of outputs (described in `CiftiResampleOutputs`).
     """
     params = cifti_resample_params(
+        cifti_in=cifti_in,
+        direction=direction,
+        cifti_template=cifti_template,
+        template_direction=template_direction,
+        surface_method=surface_method,
+        volume_method=volume_method,
         cifti_out=cifti_out,
         volume_predilate=volume_predilate,
         surface_postdilate=surface_postdilate,
@@ -1739,12 +1746,6 @@ def cifti_resample(
         right_spheres=right_spheres,
         cerebellum_spheres=cerebellum_spheres,
         surface_largest=surface_largest,
-        cifti_in=cifti_in,
-        direction=direction,
-        cifti_template=cifti_template,
-        template_direction=template_direction,
-        surface_method=surface_method,
-        volume_method=volume_method,
     )
     return cifti_resample_execute(params, runner)
 

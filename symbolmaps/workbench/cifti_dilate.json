@@ -1,6 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_dilate",
   "properties": {
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "surface-distance": {
+      "var_param": "surface_distance"
+    },
+    "volume-distance": {
+      "var_param": "volume_distance"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -51,18 +63,6 @@
     },
     "nearest": {
       "var_param": "nearest"
-    },
-    "cifti-in": {
-      "var_param": "cifti_in"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "surface-distance": {
-      "var_param": "surface_distance"
-    },
-    "volume-distance": {
-      "var_param": "volume_distance"
     }
   }
 }

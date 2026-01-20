@@ -26,25 +26,25 @@ ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict = _ConvertMatrix4ToWorkbenc
 
 
 _ConvertMatrix4ToWorkbenchSparseParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToWorkbenchSparseParamsDictNoTag', {
-    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
-    "seed-roi": typing.NotRequired[InputPathType | None],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
     "orientation-file": InputPathType,
     "voxel-list": str,
     "wb-sparse-out": str,
+    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
+    "seed-roi": typing.NotRequired[InputPathType | None],
 })
 ConvertMatrix4ToWorkbenchSparseParamsDictTagged = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-matrix4-to-workbench-sparse"],
-    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
-    "seed-roi": typing.NotRequired[InputPathType | None],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
     "orientation-file": InputPathType,
     "voxel-list": str,
     "wb-sparse-out": str,
+    "volume-seeds": typing.NotRequired[ConvertMatrix4ToWorkbenchSparseVolumeSeedsParamsDict | None],
+    "seed-roi": typing.NotRequired[InputPathType | None],
 })
 ConvertMatrix4ToWorkbenchSparseParamsDict = _ConvertMatrix4ToWorkbenchSparseParamsDictNoTag | ConvertMatrix4ToWorkbenchSparseParamsDictTagged
 
@@ -180,11 +180,6 @@ def convert_matrix4_to_workbench_sparse_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-seeds", None) is not None:
-        convert_matrix4_to_workbench_sparse_volume_seeds_validate(params["volume-seeds"])
-    if params.get("seed-roi", None) is not None:
-        if not isinstance(params["seed-roi"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`seed-roi` has the wrong type: Received `{type(params.get("seed-roi", None))}` expected `InputPathType | None`')
     if params.get("matrix4_1", None) is None:
         raise StyxValidationError("`matrix4_1` must not be None")
     if not isinstance(params["matrix4_1"], str):
@@ -209,6 +204,11 @@ def convert_matrix4_to_workbench_sparse_validate(
         raise StyxValidationError("`wb-sparse-out` must not be None")
     if not isinstance(params["wb-sparse-out"], str):
         raise StyxValidationError(f'`wb-sparse-out` has the wrong type: Received `{type(params.get("wb-sparse-out", None))}` expected `str`')
+    if params.get("volume-seeds", None) is not None:
+        convert_matrix4_to_workbench_sparse_volume_seeds_validate(params["volume-seeds"])
+    if params.get("seed-roi", None) is not None:
+        if not isinstance(params["seed-roi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seed-roi` has the wrong type: Received `{type(params.get("seed-roi", None))}` expected `InputPathType | None`')
 
 
 def convert_matrix4_to_workbench_sparse_cargs(
@@ -229,6 +229,12 @@ def convert_matrix4_to_workbench_sparse_cargs(
         "wb_command",
         "-convert-matrix4-to-workbench-sparse"
     ])
+    cargs.append(params.get("matrix4_1", None))
+    cargs.append(params.get("matrix4_2", None))
+    cargs.append(params.get("matrix4_3", None))
+    cargs.append(execution.input_file(params.get("orientation-file", None)))
+    cargs.append(params.get("voxel-list", None))
+    cargs.append(params.get("wb-sparse-out", None))
     if params.get("volume-seeds", None) is not None:
         cargs.extend(convert_matrix4_to_workbench_sparse_volume_seeds_cargs(params.get("volume-seeds", None), execution))
     if params.get("seed-roi", None) is not None:
@@ -236,12 +242,6 @@ def convert_matrix4_to_workbench_sparse_cargs(
             "-surface-seeds",
             execution.input_file(params.get("seed-roi", None))
         ])
-    cargs.append(params.get("matrix4_1", None))
-    cargs.append(params.get("matrix4_2", None))
-    cargs.append(params.get("matrix4_3", None))
-    cargs.append(execution.input_file(params.get("orientation-file", None)))
-    cargs.append(params.get("voxel-list", None))
-    cargs.append(params.get("wb-sparse-out", None))
     return cargs
 
 
@@ -325,14 +325,14 @@ def convert_matrix4_to_workbench_sparse(
         NamedTuple of outputs (described in `ConvertMatrix4ToWorkbenchSparseOutputs`).
     """
     params = convert_matrix4_to_workbench_sparse_params(
-        volume_seeds=volume_seeds,
-        seed_roi=seed_roi,
         matrix4_1=matrix4_1,
         matrix4_2=matrix4_2,
         matrix4_3=matrix4_3,
         orientation_file=orientation_file,
         voxel_list=voxel_list,
         wb_sparse_out=wb_sparse_out,
+        volume_seeds=volume_seeds,
+        seed_roi=seed_roi,
     )
     return convert_matrix4_to_workbench_sparse_execute(params, runner)
 

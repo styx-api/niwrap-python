@@ -1,9 +1,6 @@
 {
   "fn_root_make_params_and_execute": "surface_inflation",
   "properties": {
-    "surface-out": {
-      "var_param": "surface_out"
-    },
     "anatomical-surface-in": {
       "var_param": "anatomical_surface_in"
     },
@@ -21,6 +18,9 @@
     },
     "inflation-factor": {
       "var_param": "inflation_factor"
+    },
+    "surface-out": {
+      "var_param": "surface_out"
     }
   }
 }

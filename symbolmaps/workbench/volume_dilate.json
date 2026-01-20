@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "volume_dilate",
   "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
+    "method": {
+      "var_param": "method"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -33,15 +42,6 @@
     },
     "legacy-cutoff": {
       "var_param": "legacy_cutoff"
-    },
-    "volume": {
-      "var_param": "volume"
-    },
-    "distance": {
-      "var_param": "distance"
-    },
-    "method": {
-      "var_param": "method"
     }
   }
 }

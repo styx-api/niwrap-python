@@ -14,17 +14,17 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 _CiftiLabelModifyKeysParamsDictNoTag = typing.TypedDict('_CiftiLabelModifyKeysParamsDictNoTag', {
-    "cifti-out": str,
-    "column": typing.NotRequired[str | None],
     "cifti-in": InputPathType,
     "remap-file": str,
+    "cifti-out": str,
+    "column": typing.NotRequired[str | None],
 })
 CiftiLabelModifyKeysParamsDictTagged = typing.TypedDict('CiftiLabelModifyKeysParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-label-modify-keys"],
-    "cifti-out": str,
-    "column": typing.NotRequired[str | None],
     "cifti-in": InputPathType,
     "remap-file": str,
+    "cifti-out": str,
+    "column": typing.NotRequired[str | None],
 })
 CiftiLabelModifyKeysParamsDict = _CiftiLabelModifyKeysParamsDictNoTag | CiftiLabelModifyKeysParamsDictTagged
 
@@ -40,18 +40,18 @@ class CiftiLabelModifyKeysOutputs(typing.NamedTuple):
 
 
 def cifti_label_modify_keys_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     remap_file: str,
+    cifti_out: str,
     column: str | None = None,
 ) -> CiftiLabelModifyKeysParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        cifti_out: the output dlabel file.
         cifti_in: the input dlabel file.
         remap_file: text file with old and new key values.
+        cifti_out: the output dlabel file.
         column: select a single column to use\
             \
             the column number or name.
@@ -60,9 +60,9 @@ def cifti_label_modify_keys_params(
     """
     params = {
         "@type": "workbench/cifti-label-modify-keys",
-        "cifti-out": cifti_out,
         "cifti-in": cifti_in,
         "remap-file": remap_file,
+        "cifti-out": cifti_out,
     }
     if column is not None:
         params["column"] = column
@@ -81,13 +81,6 @@ def cifti_label_modify_keys_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("cifti-out", None) is None:
-        raise StyxValidationError("`cifti-out` must not be None")
-    if not isinstance(params["cifti-out"], str):
-        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("cifti-in", None) is None:
         raise StyxValidationError("`cifti-in` must not be None")
     if not isinstance(params["cifti-in"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def cifti_label_modify_keys_validate(
         raise StyxValidationError("`remap-file` must not be None")
     if not isinstance(params["remap-file"], str):
         raise StyxValidationError(f'`remap-file` has the wrong type: Received `{type(params.get("remap-file", None))}` expected `str`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
 
 
 def cifti_label_modify_keys_cargs(
@@ -116,14 +116,14 @@ def cifti_label_modify_keys_cargs(
         "wb_command",
         "-cifti-label-modify-keys"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("remap-file", None))
     cargs.append(params.get("cifti-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
             "-column",
             params.get("column", None)
         ])
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(params.get("remap-file", None))
     return cargs
 
 
@@ -185,9 +185,9 @@ def cifti_label_modify_keys_execute(
 
 
 def cifti_label_modify_keys(
-    cifti_out: str,
     cifti_in: InputPathType,
     remap_file: str,
+    cifti_out: str,
     column: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
@@ -209,9 +209,9 @@ def cifti_label_modify_keys(
     values in the data at the same time.
     
     Args:
-        cifti_out: the output dlabel file.
         cifti_in: the input dlabel file.
         remap_file: text file with old and new key values.
+        cifti_out: the output dlabel file.
         column: select a single column to use\
             \
             the column number or name.
@@ -220,10 +220,10 @@ def cifti_label_modify_keys(
         NamedTuple of outputs (described in `CiftiLabelModifyKeysOutputs`).
     """
     params = cifti_label_modify_keys_params(
-        cifti_out=cifti_out,
-        column=column,
         cifti_in=cifti_in,
         remap_file=remap_file,
+        cifti_out=cifti_out,
+        column=column,
     )
     return cifti_label_modify_keys_execute(params, runner)
 

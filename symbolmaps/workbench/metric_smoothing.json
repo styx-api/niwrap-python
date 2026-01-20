@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "metric_smoothing",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric-in": {
+      "var_param": "metric_in"
+    },
+    "smoothing-kernel": {
+      "var_param": "smoothing_kernel"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -30,15 +39,6 @@
     },
     "fwhm": {
       "var_param": "fwhm"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric-in": {
-      "var_param": "metric_in"
-    },
-    "smoothing-kernel": {
-      "var_param": "smoothing_kernel"
     }
   }
 }

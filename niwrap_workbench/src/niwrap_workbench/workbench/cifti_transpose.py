@@ -14,15 +14,15 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
 
 
 _CiftiTransposeParamsDictNoTag = typing.TypedDict('_CiftiTransposeParamsDictNoTag', {
+    "cifti-in": InputPathType,
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
-    "cifti-in": InputPathType,
 })
 CiftiTransposeParamsDictTagged = typing.TypedDict('CiftiTransposeParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-transpose"],
+    "cifti-in": InputPathType,
     "cifti-out": str,
     "limit-GB": typing.NotRequired[float | None],
-    "cifti-in": InputPathType,
 })
 CiftiTransposeParamsDict = _CiftiTransposeParamsDictNoTag | CiftiTransposeParamsDictTagged
 
@@ -38,16 +38,16 @@ class CiftiTransposeOutputs(typing.NamedTuple):
 
 
 def cifti_transpose_params(
-    cifti_out: str,
     cifti_in: InputPathType,
+    cifti_out: str,
     limit_gb: float | None = None,
 ) -> CiftiTransposeParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the input cifti file.
+        cifti_out: the output cifti file.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
@@ -56,8 +56,8 @@ def cifti_transpose_params(
     """
     params = {
         "@type": "workbench/cifti-transpose",
-        "cifti-out": cifti_out,
         "cifti-in": cifti_in,
+        "cifti-out": cifti_out,
     }
     if limit_gb is not None:
         params["limit-GB"] = limit_gb
@@ -76,6 +76,10 @@ def cifti_transpose_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -83,10 +87,6 @@ def cifti_transpose_validate(
     if params.get("limit-GB", None) is not None:
         if not isinstance(params["limit-GB"], (float, int)):
             raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
 
 
 def cifti_transpose_cargs(
@@ -107,13 +107,13 @@ def cifti_transpose_cargs(
         "wb_command",
         "-cifti-transpose"
     ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("cifti-out", None))
     if params.get("limit-GB", None) is not None:
         cargs.extend([
             "-mem-limit",
             str(params.get("limit-GB", None))
         ])
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -164,8 +164,8 @@ def cifti_transpose_execute(
 
 
 def cifti_transpose(
-    cifti_out: str,
     cifti_in: InputPathType,
+    cifti_out: str,
     limit_gb: float | None = None,
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
@@ -176,8 +176,8 @@ def cifti_transpose(
     where every row in the input is a column in the output.
     
     Args:
-        cifti_out: the output cifti file.
         cifti_in: the input cifti file.
+        cifti_out: the output cifti file.
         limit_gb: restrict memory usage\
             \
             memory limit in gigabytes.
@@ -186,9 +186,9 @@ def cifti_transpose(
         NamedTuple of outputs (described in `CiftiTransposeOutputs`).
     """
     params = cifti_transpose_params(
+        cifti_in=cifti_in,
         cifti_out=cifti_out,
         limit_gb=limit_gb,
-        cifti_in=cifti_in,
     )
     return cifti_transpose_execute(params, runner)
 

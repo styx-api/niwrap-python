@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "surface_geodesic_rois",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "limit": {
+      "var_param": "limit"
+    },
+    "vertex-list-file": {
+      "var_param": "vertex_list_file"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -15,15 +24,6 @@
     },
     "sigma": {
       "var_param": "sigma"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "limit": {
-      "var_param": "limit"
-    },
-    "vertex-list-file": {
-      "var_param": "vertex_list_file"
     }
   }
 }

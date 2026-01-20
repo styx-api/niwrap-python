@@ -331,10 +331,9 @@ def metric_merge_cargs(
         "wb_command",
         "-metric-merge"
     ])
-    cargs.extend([
-        params.get("metric-out", None),
-        *([a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
-    ])
+    cargs.append(params.get("metric-out", None))
+    if params.get("metric", None) is not None:
+        cargs.extend([a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c])
     return cargs
 
 

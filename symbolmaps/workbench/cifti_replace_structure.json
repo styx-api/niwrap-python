@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "cifti_replace_structure",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "volume-all": {
       "var_param": "volume_all",
       "fn_struct_make_params": "cifti_replace_structure_volume_all",
@@ -57,12 +63,6 @@
     },
     "discard-unused-labels": {
       "var_param": "discard_unused_labels"
-    },
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

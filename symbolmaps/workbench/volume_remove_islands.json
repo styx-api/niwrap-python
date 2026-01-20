@@ -1,11 +1,11 @@
 {
   "fn_root_make_params_and_execute": "volume_remove_islands",
   "properties": {
-    "volume-out": {
-      "var_param": "volume_out"
-    },
     "volume-in": {
       "var_param": "volume_in"
+    },
+    "volume-out": {
+      "var_param": "volume_out"
     }
   }
 }

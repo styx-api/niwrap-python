@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "metric_dilate",
   "properties": {
+    "metric": {
+      "var_param": "metric"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -24,15 +33,6 @@
     },
     "nearest": {
       "var_param": "nearest"
-    },
-    "metric": {
-      "var_param": "metric"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "distance": {
-      "var_param": "distance"
     }
   }
 }

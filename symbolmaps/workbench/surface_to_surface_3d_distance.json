@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "surface_to_surface_3d_distance",
   "properties": {
+    "surface-comp": {
+      "var_param": "surface_comp"
+    },
+    "surface-ref": {
+      "var_param": "surface_ref"
+    },
     "dists-out": {
       "var_param": "dists_out"
     },
@@ -12,12 +18,6 @@
           "var_param": "vectors_out"
         }
       }
-    },
-    "surface-comp": {
-      "var_param": "surface_comp"
-    },
-    "surface-ref": {
-      "var_param": "surface_ref"
     }
   }
 }

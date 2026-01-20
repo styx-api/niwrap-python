@@ -1,6 +1,24 @@
 {
   "fn_root_make_params_and_execute": "cifti_find_clusters",
   "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surface-value-threshold": {
+      "var_param": "surface_value_threshold"
+    },
+    "surface-minimum-area": {
+      "var_param": "surface_minimum_area"
+    },
+    "volume-value-threshold": {
+      "var_param": "volume_value_threshold"
+    },
+    "volume-minimum-size": {
+      "var_param": "volume_minimum_size"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -75,24 +93,6 @@
     },
     "less-than": {
       "var_param": "less_than"
-    },
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "surface-value-threshold": {
-      "var_param": "surface_value_threshold"
-    },
-    "surface-minimum-area": {
-      "var_param": "surface_minimum_area"
-    },
-    "volume-value-threshold": {
-      "var_param": "volume_value_threshold"
-    },
-    "volume-minimum-size": {
-      "var_param": "volume_minimum_size"
-    },
-    "direction": {
-      "var_param": "direction"
     }
   }
 }

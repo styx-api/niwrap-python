@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "cifti_create_scalar_series",
   "properties": {
+    "input": {
+      "var_param": "input_"
+    },
     "cifti-out": {
       "var_param": "cifti_out"
     },
@@ -24,9 +27,6 @@
     },
     "transpose": {
       "var_param": "transpose"
-    },
-    "input": {
-      "var_param": "input_"
     }
   }
 }

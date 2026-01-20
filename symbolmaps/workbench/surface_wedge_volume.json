@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "surface_wedge_volume",
   "properties": {
-    "metric": {
-      "var_param": "metric"
-    },
     "inner-surface": {
       "var_param": "inner_surface"
     },
     "outer-surface": {
       "var_param": "outer_surface"
+    },
+    "metric": {
+      "var_param": "metric"
     }
   }
 }

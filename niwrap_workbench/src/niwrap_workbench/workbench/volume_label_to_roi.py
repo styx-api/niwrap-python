@@ -14,19 +14,19 @@ VOLUME_LABEL_TO_ROI_METADATA = Metadata(
 
 
 _VolumeLabelToRoiParamsDictNoTag = typing.TypedDict('_VolumeLabelToRoiParamsDictNoTag', {
+    "label-in": InputPathType,
     "volume-out": str,
     "map": typing.NotRequired[str | None],
     "label-key": typing.NotRequired[int | None],
     "label-name": typing.NotRequired[str | None],
-    "label-in": InputPathType,
 })
 VolumeLabelToRoiParamsDictTagged = typing.TypedDict('VolumeLabelToRoiParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-to-roi"],
+    "label-in": InputPathType,
     "volume-out": str,
     "map": typing.NotRequired[str | None],
     "label-key": typing.NotRequired[int | None],
     "label-name": typing.NotRequired[str | None],
-    "label-in": InputPathType,
 })
 VolumeLabelToRoiParamsDict = _VolumeLabelToRoiParamsDictNoTag | VolumeLabelToRoiParamsDictTagged
 
@@ -42,8 +42,8 @@ class VolumeLabelToRoiOutputs(typing.NamedTuple):
 
 
 def volume_label_to_roi_params(
-    volume_out: str,
     label_in: InputPathType,
+    volume_out: str,
     map_: str | None = None,
     label_key: int | None = None,
     label_name: str | None = None,
@@ -52,8 +52,8 @@ def volume_label_to_roi_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume file.
         label_in: the input volume label file.
+        volume_out: the output volume file.
         map_: select a single label map to use\
             \
             the map number or name.
@@ -68,8 +68,8 @@ def volume_label_to_roi_params(
     """
     params = {
         "@type": "workbench/volume-label-to-roi",
-        "volume-out": volume_out,
         "label-in": label_in,
+        "volume-out": volume_out,
     }
     if map_ is not None:
         params["map"] = map_
@@ -92,6 +92,10 @@ def volume_label_to_roi_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -105,10 +109,6 @@ def volume_label_to_roi_validate(
     if params.get("label-name", None) is not None:
         if not isinstance(params["label-name"], str):
             raise StyxValidationError(f'`label-name` has the wrong type: Received `{type(params.get("label-name", None))}` expected `str | None`')
-    if params.get("label-in", None) is None:
-        raise StyxValidationError("`label-in` must not be None")
-    if not isinstance(params["label-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
 
 
 def volume_label_to_roi_cargs(
@@ -129,6 +129,7 @@ def volume_label_to_roi_cargs(
         "wb_command",
         "-volume-label-to-roi"
     ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("map", None) is not None:
         cargs.extend([
@@ -145,7 +146,6 @@ def volume_label_to_roi_cargs(
             "-name",
             params.get("label-name", None)
         ])
-    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -198,8 +198,8 @@ def volume_label_to_roi_execute(
 
 
 def volume_label_to_roi(
-    volume_out: str,
     label_in: InputPathType,
+    volume_out: str,
     map_: str | None = None,
     label_key: int | None = None,
     label_name: str | None = None,
@@ -214,8 +214,8 @@ def volume_label_to_roi(
     -key must be specified. Specify -map to use only one map from <label-in>.
     
     Args:
-        volume_out: the output volume file.
         label_in: the input volume label file.
+        volume_out: the output volume file.
         map_: select a single label map to use\
             \
             the map number or name.
@@ -230,11 +230,11 @@ def volume_label_to_roi(
         NamedTuple of outputs (described in `VolumeLabelToRoiOutputs`).
     """
     params = volume_label_to_roi_params(
+        label_in=label_in,
         volume_out=volume_out,
         map_=map_,
         label_key=label_key,
         label_name=label_name,
-        label_in=label_in,
     )
     return volume_label_to_roi_execute(params, runner)
 

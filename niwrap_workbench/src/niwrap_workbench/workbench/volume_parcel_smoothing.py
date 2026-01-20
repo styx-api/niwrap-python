@@ -14,23 +14,23 @@ VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
 
 
 _VolumeParcelSmoothingParamsDictNoTag = typing.TypedDict('_VolumeParcelSmoothingParamsDictNoTag', {
+    "data-volume": InputPathType,
+    "label-volume": InputPathType,
+    "kernel": float,
     "volume-out": str,
     "subvol": typing.NotRequired[str | None],
     "fix-zeros": bool,
     "fwhm": bool,
-    "data-volume": InputPathType,
-    "label-volume": InputPathType,
-    "kernel": float,
 })
 VolumeParcelSmoothingParamsDictTagged = typing.TypedDict('VolumeParcelSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-parcel-smoothing"],
+    "data-volume": InputPathType,
+    "label-volume": InputPathType,
+    "kernel": float,
     "volume-out": str,
     "subvol": typing.NotRequired[str | None],
     "fix-zeros": bool,
     "fwhm": bool,
-    "data-volume": InputPathType,
-    "label-volume": InputPathType,
-    "kernel": float,
 })
 VolumeParcelSmoothingParamsDict = _VolumeParcelSmoothingParamsDictNoTag | VolumeParcelSmoothingParamsDictTagged
 
@@ -46,10 +46,10 @@ class VolumeParcelSmoothingOutputs(typing.NamedTuple):
 
 
 def volume_parcel_smoothing_params(
-    volume_out: str,
     data_volume: InputPathType,
     label_volume: InputPathType,
     kernel: float,
+    volume_out: str,
     subvol: str | None = None,
     fix_zeros: bool = False,
     fwhm: bool = False,
@@ -58,11 +58,11 @@ def volume_parcel_smoothing_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         data_volume: the volume to smooth.
         label_volume: a label volume containing the parcels to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
+        volume_out: the output volume.
         subvol: select a single subvolume to smooth\
             \
             the subvolume number or name.
@@ -73,12 +73,12 @@ def volume_parcel_smoothing_params(
     """
     params = {
         "@type": "workbench/volume-parcel-smoothing",
-        "volume-out": volume_out,
-        "fix-zeros": fix_zeros,
-        "fwhm": fwhm,
         "data-volume": data_volume,
         "label-volume": label_volume,
         "kernel": kernel,
+        "volume-out": volume_out,
+        "fix-zeros": fix_zeros,
+        "fwhm": fwhm,
     }
     if subvol is not None:
         params["subvol"] = subvol
@@ -97,6 +97,18 @@ def volume_parcel_smoothing_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data-volume", None) is None:
+        raise StyxValidationError("`data-volume` must not be None")
+    if not isinstance(params["data-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data-volume` has the wrong type: Received `{type(params.get("data-volume", None))}` expected `InputPathType`')
+    if params.get("label-volume", None) is None:
+        raise StyxValidationError("`label-volume` must not be None")
+    if not isinstance(params["label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -112,18 +124,6 @@ def volume_parcel_smoothing_validate(
         raise StyxValidationError("`fwhm` must not be None")
     if not isinstance(params["fwhm"], bool):
         raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
-    if params.get("data-volume", None) is None:
-        raise StyxValidationError("`data-volume` must not be None")
-    if not isinstance(params["data-volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`data-volume` has the wrong type: Received `{type(params.get("data-volume", None))}` expected `InputPathType`')
-    if params.get("label-volume", None) is None:
-        raise StyxValidationError("`label-volume` must not be None")
-    if not isinstance(params["label-volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
-    if params.get("kernel", None) is None:
-        raise StyxValidationError("`kernel` must not be None")
-    if not isinstance(params["kernel"], (float, int)):
-        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
 
 
 def volume_parcel_smoothing_cargs(
@@ -144,6 +144,9 @@ def volume_parcel_smoothing_cargs(
         "wb_command",
         "-volume-parcel-smoothing"
     ])
+    cargs.append(execution.input_file(params.get("data-volume", None)))
+    cargs.append(execution.input_file(params.get("label-volume", None)))
+    cargs.append(str(params.get("kernel", None)))
     cargs.append(params.get("volume-out", None))
     if params.get("subvol", None) is not None:
         cargs.extend([
@@ -154,9 +157,6 @@ def volume_parcel_smoothing_cargs(
         cargs.append("-fix-zeros")
     if params.get("fwhm", False):
         cargs.append("-fwhm")
-    cargs.append(execution.input_file(params.get("data-volume", None)))
-    cargs.append(execution.input_file(params.get("label-volume", None)))
-    cargs.append(str(params.get("kernel", None)))
     return cargs
 
 
@@ -209,10 +209,10 @@ def volume_parcel_smoothing_execute(
 
 
 def volume_parcel_smoothing(
-    volume_out: str,
     data_volume: InputPathType,
     label_volume: InputPathType,
     kernel: float,
+    volume_out: str,
     subvol: str | None = None,
     fix_zeros: bool = False,
     fwhm: bool = False,
@@ -227,11 +227,11 @@ def volume_parcel_smoothing(
     faster.
     
     Args:
-        volume_out: the output volume.
         data_volume: the volume to smooth.
         label_volume: a label volume containing the parcels to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
+        volume_out: the output volume.
         subvol: select a single subvolume to smooth\
             \
             the subvolume number or name.
@@ -242,13 +242,13 @@ def volume_parcel_smoothing(
         NamedTuple of outputs (described in `VolumeParcelSmoothingOutputs`).
     """
     params = volume_parcel_smoothing_params(
+        data_volume=data_volume,
+        label_volume=label_volume,
+        kernel=kernel,
         volume_out=volume_out,
         subvol=subvol,
         fix_zeros=fix_zeros,
         fwhm=fwhm,
-        data_volume=data_volume,
-        label_volume=label_volume,
-        kernel=kernel,
     )
     return volume_parcel_smoothing_execute(params, runner)
 

@@ -14,25 +14,25 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 
 
 _SurfaceGeodesicRoisParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicRoisParamsDictNoTag', {
+    "surface": InputPathType,
+    "limit": float,
+    "vertex-list-file": str,
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "name-list-file": typing.NotRequired[str | None],
     "method": typing.NotRequired[str | None],
     "sigma": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "limit": float,
-    "vertex-list-file": str,
 })
 SurfaceGeodesicRoisParamsDictTagged = typing.TypedDict('SurfaceGeodesicRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-rois"],
+    "surface": InputPathType,
+    "limit": float,
+    "vertex-list-file": str,
     "metric-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "name-list-file": typing.NotRequired[str | None],
     "method": typing.NotRequired[str | None],
     "sigma": typing.NotRequired[float | None],
-    "surface": InputPathType,
-    "limit": float,
-    "vertex-list-file": str,
 })
 SurfaceGeodesicRoisParamsDict = _SurfaceGeodesicRoisParamsDictNoTag | SurfaceGeodesicRoisParamsDictTagged
 
@@ -48,10 +48,10 @@ class SurfaceGeodesicRoisOutputs(typing.NamedTuple):
 
 
 def surface_geodesic_rois_params(
-    metric_out: str,
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     name_list_file: str | None = None,
     method: str | None = None,
@@ -61,11 +61,11 @@ def surface_geodesic_rois_params(
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to draw on.
         limit: geodesic distance limit from vertex, in mm.
         vertex_list_file: a text file containing the vertices to draw ROIs\
             around.
+        metric_out: the output metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -84,10 +84,10 @@ def surface_geodesic_rois_params(
     """
     params = {
         "@type": "workbench/surface-geodesic-rois",
-        "metric-out": metric_out,
         "surface": surface,
         "limit": limit,
         "vertex-list-file": vertex_list_file,
+        "metric-out": metric_out,
     }
     if area_metric is not None:
         params["area-metric"] = area_metric
@@ -112,6 +112,18 @@ def surface_geodesic_rois_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("limit", None) is None:
+        raise StyxValidationError("`limit` must not be None")
+    if not isinstance(params["limit"], (float, int)):
+        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
+    if params.get("vertex-list-file", None) is None:
+        raise StyxValidationError("`vertex-list-file` must not be None")
+    if not isinstance(params["vertex-list-file"], str):
+        raise StyxValidationError(f'`vertex-list-file` has the wrong type: Received `{type(params.get("vertex-list-file", None))}` expected `str`')
     if params.get("metric-out", None) is None:
         raise StyxValidationError("`metric-out` must not be None")
     if not isinstance(params["metric-out"], str):
@@ -128,18 +140,6 @@ def surface_geodesic_rois_validate(
     if params.get("sigma", None) is not None:
         if not isinstance(params["sigma"], (float, int)):
             raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
-    if params.get("limit", None) is None:
-        raise StyxValidationError("`limit` must not be None")
-    if not isinstance(params["limit"], (float, int)):
-        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
-    if params.get("vertex-list-file", None) is None:
-        raise StyxValidationError("`vertex-list-file` must not be None")
-    if not isinstance(params["vertex-list-file"], str):
-        raise StyxValidationError(f'`vertex-list-file` has the wrong type: Received `{type(params.get("vertex-list-file", None))}` expected `str`')
 
 
 def surface_geodesic_rois_cargs(
@@ -160,6 +160,9 @@ def surface_geodesic_rois_cargs(
         "wb_command",
         "-surface-geodesic-rois"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("limit", None)))
+    cargs.append(params.get("vertex-list-file", None))
     cargs.append(params.get("metric-out", None))
     if params.get("area-metric", None) is not None:
         cargs.extend([
@@ -181,9 +184,6 @@ def surface_geodesic_rois_cargs(
             "-gaussian",
             str(params.get("sigma", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(str(params.get("limit", None)))
-    cargs.append(params.get("vertex-list-file", None))
     return cargs
 
 
@@ -244,10 +244,10 @@ def surface_geodesic_rois_execute(
 
 
 def surface_geodesic_rois(
-    metric_out: str,
     surface: InputPathType,
     limit: float,
     vertex_list_file: str,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     name_list_file: str | None = None,
     method: str | None = None,
@@ -271,11 +271,11 @@ def surface_geodesic_rois(
     within range of more than one ROI does not belong to any ROI.
     
     Args:
-        metric_out: the output metric.
         surface: the surface to draw on.
         limit: geodesic distance limit from vertex, in mm.
         vertex_list_file: a text file containing the vertices to draw ROIs\
             around.
+        metric_out: the output metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -294,14 +294,14 @@ def surface_geodesic_rois(
         NamedTuple of outputs (described in `SurfaceGeodesicRoisOutputs`).
     """
     params = surface_geodesic_rois_params(
+        surface=surface,
+        limit=limit,
+        vertex_list_file=vertex_list_file,
         metric_out=metric_out,
         area_metric=area_metric,
         name_list_file=name_list_file,
         method=method,
         sigma=sigma,
-        surface=surface,
-        limit=limit,
-        vertex_list_file=vertex_list_file,
     )
     return surface_geodesic_rois_execute(params, runner)
 

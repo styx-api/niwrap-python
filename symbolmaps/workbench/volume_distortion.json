@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "volume_distortion",
   "properties": {
+    "warpfield": {
+      "var_param": "warpfield"
+    },
     "volume-out": {
       "var_param": "volume_out"
     },
@@ -12,9 +15,6 @@
     },
     "circular": {
       "var_param": "circular"
-    },
-    "warpfield": {
-      "var_param": "warpfield"
     }
   }
 }

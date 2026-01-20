@@ -14,17 +14,17 @@ METRIC_MASK_METADATA = Metadata(
 
 
 _MetricMaskParamsDictNoTag = typing.TypedDict('_MetricMaskParamsDictNoTag', {
-    "metric-out": str,
-    "column": typing.NotRequired[str | None],
     "metric": InputPathType,
     "mask": InputPathType,
+    "metric-out": str,
+    "column": typing.NotRequired[str | None],
 })
 MetricMaskParamsDictTagged = typing.TypedDict('MetricMaskParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-mask"],
-    "metric-out": str,
-    "column": typing.NotRequired[str | None],
     "metric": InputPathType,
     "mask": InputPathType,
+    "metric-out": str,
+    "column": typing.NotRequired[str | None],
 })
 MetricMaskParamsDict = _MetricMaskParamsDictNoTag | MetricMaskParamsDictTagged
 
@@ -40,18 +40,18 @@ class MetricMaskOutputs(typing.NamedTuple):
 
 
 def metric_mask_params(
-    metric_out: str,
     metric: InputPathType,
     mask: InputPathType,
+    metric_out: str,
     column: str | None = None,
 ) -> MetricMaskParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output metric.
         metric: the input metric.
         mask: the mask metric.
+        metric_out: the output metric.
         column: select a single column\
             \
             the column number or name.
@@ -60,9 +60,9 @@ def metric_mask_params(
     """
     params = {
         "@type": "workbench/metric-mask",
-        "metric-out": metric_out,
         "metric": metric,
         "mask": mask,
+        "metric-out": metric_out,
     }
     if column is not None:
         params["column"] = column
@@ -81,13 +81,6 @@ def metric_mask_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("column", None) is not None:
-        if not isinstance(params["column"], str):
-            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
     if params.get("metric", None) is None:
         raise StyxValidationError("`metric` must not be None")
     if not isinstance(params["metric"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def metric_mask_validate(
         raise StyxValidationError("`mask` must not be None")
     if not isinstance(params["mask"], (pathlib.Path, str)):
         raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
 
 
 def metric_mask_cargs(
@@ -116,14 +116,14 @@ def metric_mask_cargs(
         "wb_command",
         "-metric-mask"
     ])
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("column", None) is not None:
         cargs.extend([
             "-column",
             params.get("column", None)
         ])
-    cargs.append(execution.input_file(params.get("metric", None)))
-    cargs.append(execution.input_file(params.get("mask", None)))
     return cargs
 
 
@@ -176,9 +176,9 @@ def metric_mask_execute(
 
 
 def metric_mask(
-    metric_out: str,
     metric: InputPathType,
     mask: InputPathType,
+    metric_out: str,
     column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricMaskOutputs:
@@ -191,9 +191,9 @@ def metric_mask(
     column.
     
     Args:
-        metric_out: the output metric.
         metric: the input metric.
         mask: the mask metric.
+        metric_out: the output metric.
         column: select a single column\
             \
             the column number or name.
@@ -202,10 +202,10 @@ def metric_mask(
         NamedTuple of outputs (described in `MetricMaskOutputs`).
     """
     params = metric_mask_params(
-        metric_out=metric_out,
-        column=column,
         metric=metric,
         mask=mask,
+        metric_out=metric_out,
+        column=column,
     )
     return metric_mask_execute(params, runner)
 

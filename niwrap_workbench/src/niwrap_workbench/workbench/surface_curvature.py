@@ -34,15 +34,15 @@ SurfaceCurvatureGaussParamsDict = _SurfaceCurvatureGaussParamsDictNoTag | Surfac
 
 
 _SurfaceCurvatureParamsDictNoTag = typing.TypedDict('_SurfaceCurvatureParamsDictNoTag', {
+    "surface": InputPathType,
     "mean": typing.NotRequired[SurfaceCurvatureMeanParamsDict | None],
     "gauss": typing.NotRequired[SurfaceCurvatureGaussParamsDict | None],
-    "surface": InputPathType,
 })
 SurfaceCurvatureParamsDictTagged = typing.TypedDict('SurfaceCurvatureParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-curvature"],
+    "surface": InputPathType,
     "mean": typing.NotRequired[SurfaceCurvatureMeanParamsDict | None],
     "gauss": typing.NotRequired[SurfaceCurvatureGaussParamsDict | None],
-    "surface": InputPathType,
 })
 SurfaceCurvatureParamsDict = _SurfaceCurvatureParamsDictNoTag | SurfaceCurvatureParamsDictTagged
 
@@ -271,14 +271,14 @@ def surface_curvature_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("mean", None) is not None:
-        surface_curvature_mean_validate(params["mean"])
-    if params.get("gauss", None) is not None:
-        surface_curvature_gauss_validate(params["gauss"])
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
         raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("mean", None) is not None:
+        surface_curvature_mean_validate(params["mean"])
+    if params.get("gauss", None) is not None:
+        surface_curvature_gauss_validate(params["gauss"])
 
 
 def surface_curvature_cargs(
@@ -299,12 +299,12 @@ def surface_curvature_cargs(
         "wb_command",
         "-surface-curvature"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
     if params.get("mean", None) is not None or params.get("gauss", None) is not None:
         cargs.extend([
             *(surface_curvature_mean_cargs(params.get("mean", None), execution) if (params.get("mean", None) is not None) else []),
             *(surface_curvature_gauss_cargs(params.get("gauss", None), execution) if (params.get("gauss", None) is not None) else [])
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -378,9 +378,9 @@ def surface_curvature(
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
     params = surface_curvature_params(
+        surface=surface,
         mean=mean,
         gauss=gauss,
-        surface=surface,
     )
     return surface_curvature_execute(params, runner)
 

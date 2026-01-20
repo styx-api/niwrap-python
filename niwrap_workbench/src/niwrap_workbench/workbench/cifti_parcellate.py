@@ -56,6 +56,9 @@ CiftiParcellateNonemptyMaskOutParamsDict = _CiftiParcellateNonemptyMaskOutParams
 
 
 _CiftiParcellateParamsDictNoTag = typing.TypedDict('_CiftiParcellateParamsDictNoTag', {
+    "cifti-in": InputPathType,
+    "cifti-label": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
     "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
@@ -66,12 +69,12 @@ _CiftiParcellateParamsDictNoTag = typing.TypedDict('_CiftiParcellateParamsDictNo
     "include-empty": bool,
     "legacy-mode": bool,
     "only-numeric": bool,
-    "cifti-in": InputPathType,
-    "cifti-label": InputPathType,
-    "direction": str,
 })
 CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-parcellate"],
+    "cifti-in": InputPathType,
+    "cifti-label": InputPathType,
+    "direction": str,
     "cifti-out": str,
     "spatial-weights": typing.NotRequired[CiftiParcellateSpatialWeightsParamsDict | None],
     "exclude-outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParamsDict | None],
@@ -82,9 +85,6 @@ CiftiParcellateParamsDictTagged = typing.TypedDict('CiftiParcellateParamsDictTag
     "include-empty": bool,
     "legacy-mode": bool,
     "only-numeric": bool,
-    "cifti-in": InputPathType,
-    "cifti-label": InputPathType,
-    "direction": str,
 })
 CiftiParcellateParamsDict = _CiftiParcellateParamsDictNoTag | CiftiParcellateParamsDictTagged
 
@@ -385,10 +385,10 @@ class CiftiParcellateOutputs(typing.NamedTuple):
 
 
 def cifti_parcellate_params(
-    cifti_out: str,
     cifti_in: InputPathType,
     cifti_label: InputPathType,
     direction: str,
+    cifti_out: str,
     spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     nonempty_mask_out: CiftiParcellateNonemptyMaskOutParamsDict | None = None,
@@ -403,10 +403,10 @@ def cifti_parcellate_params(
     Build parameters.
     
     Args:
-        cifti_out: output cifti file.
         cifti_in: the cifti file to parcellate.
         cifti_label: a cifti label file to use for the parcellation.
         direction: which mapping to parcellate (integer, ROW, or COLUMN).
+        cifti_out: output cifti file.
         spatial_weights: use voxel volume and either vertex areas or metric\
             files as weights.
         exclude_outliers: exclude non-numeric values and outliers from each\
@@ -434,13 +434,13 @@ def cifti_parcellate_params(
     """
     params = {
         "@type": "workbench/cifti-parcellate",
+        "cifti-in": cifti_in,
+        "cifti-label": cifti_label,
+        "direction": direction,
         "cifti-out": cifti_out,
         "include-empty": include_empty,
         "legacy-mode": legacy_mode,
         "only-numeric": only_numeric,
-        "cifti-in": cifti_in,
-        "cifti-label": cifti_label,
-        "direction": direction,
     }
     if spatial_weights is not None:
         params["spatial-weights"] = spatial_weights
@@ -469,6 +469,18 @@ def cifti_parcellate_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("cifti-label", None) is None:
+        raise StyxValidationError("`cifti-label` must not be None")
+    if not isinstance(params["cifti-label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-label` has the wrong type: Received `{type(params.get("cifti-label", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -500,18 +512,6 @@ def cifti_parcellate_validate(
         raise StyxValidationError("`only-numeric` must not be None")
     if not isinstance(params["only-numeric"], bool):
         raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
-    if params.get("cifti-in", None) is None:
-        raise StyxValidationError("`cifti-in` must not be None")
-    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
-    if params.get("cifti-label", None) is None:
-        raise StyxValidationError("`cifti-label` must not be None")
-    if not isinstance(params["cifti-label"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti-label` has the wrong type: Received `{type(params.get("cifti-label", None))}` expected `InputPathType`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_parcellate_cargs(
@@ -532,12 +532,16 @@ def cifti_parcellate_cargs(
         "wb_command",
         "-cifti-parcellate"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
-        *(cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
-        *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(execution.input_file(params.get("cifti-label", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("spatial-weights", None) is not None or params.get("exclude-outliers", None) is not None or params.get("nonempty-mask-out", None) is not None:
+        cargs.extend([
+            *(cifti_parcellate_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
+            *(cifti_parcellate_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
+            *(cifti_parcellate_nonempty_mask_out_cargs(params.get("nonempty-mask-out", None), execution) if (params.get("nonempty-mask-out", None) is not None) else [])
+        ])
     if params.get("value", None) is not None:
         cargs.extend([
             "-fill-value",
@@ -559,9 +563,6 @@ def cifti_parcellate_cargs(
         cargs.append("-legacy-mode")
     if params.get("only-numeric", False):
         cargs.append("-only-numeric")
-    cargs.append(execution.input_file(params.get("cifti-in", None)))
-    cargs.append(execution.input_file(params.get("cifti-label", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -646,10 +647,10 @@ def cifti_parcellate_execute(
 
 
 def cifti_parcellate(
-    cifti_out: str,
     cifti_in: InputPathType,
     cifti_label: InputPathType,
     direction: str,
+    cifti_out: str,
     spatial_weights: CiftiParcellateSpatialWeightsParamsDict | None = None,
     exclude_outliers: CiftiParcellateExcludeOutliersParamsDict | None = None,
     nonempty_mask_out: CiftiParcellateNonemptyMaskOutParamsDict | None = None,
@@ -701,10 +702,10 @@ def cifti_parcellate(
     label data).
     
     Args:
-        cifti_out: output cifti file.
         cifti_in: the cifti file to parcellate.
         cifti_label: a cifti label file to use for the parcellation.
         direction: which mapping to parcellate (integer, ROW, or COLUMN).
+        cifti_out: output cifti file.
         spatial_weights: use voxel volume and either vertex areas or metric\
             files as weights.
         exclude_outliers: exclude non-numeric values and outliers from each\
@@ -732,6 +733,9 @@ def cifti_parcellate(
         NamedTuple of outputs (described in `CiftiParcellateOutputs`).
     """
     params = cifti_parcellate_params(
+        cifti_in=cifti_in,
+        cifti_label=cifti_label,
+        direction=direction,
         cifti_out=cifti_out,
         spatial_weights=spatial_weights,
         exclude_outliers=exclude_outliers,
@@ -742,9 +746,6 @@ def cifti_parcellate(
         include_empty=include_empty,
         legacy_mode=legacy_mode,
         only_numeric=only_numeric,
-        cifti_in=cifti_in,
-        cifti_label=cifti_label,
-        direction=direction,
     )
     return cifti_parcellate_execute(params, runner)
 

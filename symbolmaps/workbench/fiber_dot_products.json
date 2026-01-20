@@ -1,12 +1,6 @@
 {
   "fn_root_make_params_and_execute": "fiber_dot_products",
   "properties": {
-    "dot-metric": {
-      "var_param": "dot_metric"
-    },
-    "f-metric": {
-      "var_param": "f_metric"
-    },
     "white-surf": {
       "var_param": "white_surf"
     },
@@ -18,6 +12,12 @@
     },
     "direction": {
       "var_param": "direction"
+    },
+    "dot-metric": {
+      "var_param": "dot_metric"
+    },
+    "f-metric": {
+      "var_param": "f_metric"
     }
   }
 }

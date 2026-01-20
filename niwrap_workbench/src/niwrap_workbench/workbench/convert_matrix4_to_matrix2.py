@@ -38,17 +38,17 @@ ConvertMatrix4ToMatrix2IndividualFibersParamsDict = _ConvertMatrix4ToMatrix2Indi
 
 
 _ConvertMatrix4ToMatrix2ParamsDictNoTag = typing.TypedDict('_ConvertMatrix4ToMatrix2ParamsDictNoTag', {
+    "matrix4-wbsparse": str,
     "counts-out": str,
     "distances": typing.NotRequired[ConvertMatrix4ToMatrix2DistancesParamsDict | None],
     "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None],
-    "matrix4-wbsparse": str,
 })
 ConvertMatrix4ToMatrix2ParamsDictTagged = typing.TypedDict('ConvertMatrix4ToMatrix2ParamsDictTagged', {
     "@type": typing.Literal["workbench/convert-matrix4-to-matrix2"],
+    "matrix4-wbsparse": str,
     "counts-out": str,
     "distances": typing.NotRequired[ConvertMatrix4ToMatrix2DistancesParamsDict | None],
     "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None],
-    "matrix4-wbsparse": str,
 })
 ConvertMatrix4ToMatrix2ParamsDict = _ConvertMatrix4ToMatrix2ParamsDictNoTag | ConvertMatrix4ToMatrix2ParamsDictTagged
 
@@ -264,8 +264,8 @@ class ConvertMatrix4ToMatrix2Outputs(typing.NamedTuple):
 
 
 def convert_matrix4_to_matrix2_params(
-    counts_out: str,
     matrix4_wbsparse: str,
+    counts_out: str,
     distances: ConvertMatrix4ToMatrix2DistancesParamsDict | None = None,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None = None,
 ) -> ConvertMatrix4ToMatrix2ParamsDictTagged:
@@ -273,8 +273,8 @@ def convert_matrix4_to_matrix2_params(
     Build parameters.
     
     Args:
-        counts_out: the total fiber counts, as a cifti file.
         matrix4_wbsparse: a wbsparse matrix4 file.
+        counts_out: the total fiber counts, as a cifti file.
         distances: output average trajectory distance.
         individual_fibers: output files for each fiber direction.
     Returns:
@@ -282,8 +282,8 @@ def convert_matrix4_to_matrix2_params(
     """
     params = {
         "@type": "workbench/convert-matrix4-to-matrix2",
-        "counts-out": counts_out,
         "matrix4-wbsparse": matrix4_wbsparse,
+        "counts-out": counts_out,
     }
     if distances is not None:
         params["distances"] = distances
@@ -304,6 +304,10 @@ def convert_matrix4_to_matrix2_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matrix4-wbsparse", None) is None:
+        raise StyxValidationError("`matrix4-wbsparse` must not be None")
+    if not isinstance(params["matrix4-wbsparse"], str):
+        raise StyxValidationError(f'`matrix4-wbsparse` has the wrong type: Received `{type(params.get("matrix4-wbsparse", None))}` expected `str`')
     if params.get("counts-out", None) is None:
         raise StyxValidationError("`counts-out` must not be None")
     if not isinstance(params["counts-out"], str):
@@ -312,10 +316,6 @@ def convert_matrix4_to_matrix2_validate(
         convert_matrix4_to_matrix2_distances_validate(params["distances"])
     if params.get("individual-fibers", None) is not None:
         convert_matrix4_to_matrix2_individual_fibers_validate(params["individual-fibers"])
-    if params.get("matrix4-wbsparse", None) is None:
-        raise StyxValidationError("`matrix4-wbsparse` must not be None")
-    if not isinstance(params["matrix4-wbsparse"], str):
-        raise StyxValidationError(f'`matrix4-wbsparse` has the wrong type: Received `{type(params.get("matrix4-wbsparse", None))}` expected `str`')
 
 
 def convert_matrix4_to_matrix2_cargs(
@@ -336,12 +336,13 @@ def convert_matrix4_to_matrix2_cargs(
         "wb_command",
         "-convert-matrix4-to-matrix2"
     ])
-    cargs.extend([
-        params.get("counts-out", None),
-        *(convert_matrix4_to_matrix2_distances_cargs(params.get("distances", None), execution) if (params.get("distances", None) is not None) else []),
-        *(convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual-fibers", None), execution) if (params.get("individual-fibers", None) is not None) else [])
-    ])
     cargs.append(params.get("matrix4-wbsparse", None))
+    cargs.append(params.get("counts-out", None))
+    if params.get("distances", None) is not None or params.get("individual-fibers", None) is not None:
+        cargs.extend([
+            *(convert_matrix4_to_matrix2_distances_cargs(params.get("distances", None), execution) if (params.get("distances", None) is not None) else []),
+            *(convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual-fibers", None), execution) if (params.get("individual-fibers", None) is not None) else [])
+        ])
     return cargs
 
 
@@ -397,8 +398,8 @@ def convert_matrix4_to_matrix2_execute(
 
 
 def convert_matrix4_to_matrix2(
-    counts_out: str,
     matrix4_wbsparse: str,
+    counts_out: str,
     distances: ConvertMatrix4ToMatrix2DistancesParamsDict | None = None,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParamsDict | None = None,
     runner: Runner | None = None,
@@ -413,8 +414,8 @@ def convert_matrix4_to_matrix2(
     nonintegers.
     
     Args:
-        counts_out: the total fiber counts, as a cifti file.
         matrix4_wbsparse: a wbsparse matrix4 file.
+        counts_out: the total fiber counts, as a cifti file.
         distances: output average trajectory distance.
         individual_fibers: output files for each fiber direction.
         runner: Command runner.
@@ -422,10 +423,10 @@ def convert_matrix4_to_matrix2(
         NamedTuple of outputs (described in `ConvertMatrix4ToMatrix2Outputs`).
     """
     params = convert_matrix4_to_matrix2_params(
+        matrix4_wbsparse=matrix4_wbsparse,
         counts_out=counts_out,
         distances=distances,
         individual_fibers=individual_fibers,
-        matrix4_wbsparse=matrix4_wbsparse,
     )
     return convert_matrix4_to_matrix2_execute(params, runner)
 

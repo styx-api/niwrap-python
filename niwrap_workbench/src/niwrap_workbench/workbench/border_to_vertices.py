@@ -14,17 +14,17 @@ BORDER_TO_VERTICES_METADATA = Metadata(
 
 
 _BorderToVerticesParamsDictNoTag = typing.TypedDict('_BorderToVerticesParamsDictNoTag', {
-    "metric-out": str,
-    "name": typing.NotRequired[str | None],
     "surface": InputPathType,
     "border-file": InputPathType,
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
 })
 BorderToVerticesParamsDictTagged = typing.TypedDict('BorderToVerticesParamsDictTagged', {
     "@type": typing.Literal["workbench/border-to-vertices"],
-    "metric-out": str,
-    "name": typing.NotRequired[str | None],
     "surface": InputPathType,
     "border-file": InputPathType,
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
 })
 BorderToVerticesParamsDict = _BorderToVerticesParamsDictNoTag | BorderToVerticesParamsDictTagged
 
@@ -40,18 +40,18 @@ class BorderToVerticesOutputs(typing.NamedTuple):
 
 
 def border_to_vertices_params(
-    metric_out: str,
     surface: InputPathType,
     border_file: InputPathType,
+    metric_out: str,
     name: str | None = None,
 ) -> BorderToVerticesParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output metric file.
         surface: the surface the borders are drawn on.
         border_file: the border file.
+        metric_out: the output metric file.
         name: create ROI for only one border\
             \
             the name of the border.
@@ -60,9 +60,9 @@ def border_to_vertices_params(
     """
     params = {
         "@type": "workbench/border-to-vertices",
-        "metric-out": metric_out,
         "surface": surface,
         "border-file": border_file,
+        "metric-out": metric_out,
     }
     if name is not None:
         params["name"] = name
@@ -81,13 +81,6 @@ def border_to_vertices_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("name", None) is not None:
-        if not isinstance(params["name"], str):
-            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -96,6 +89,13 @@ def border_to_vertices_validate(
         raise StyxValidationError("`border-file` must not be None")
     if not isinstance(params["border-file"], (pathlib.Path, str)):
         raise StyxValidationError(f'`border-file` has the wrong type: Received `{type(params.get("border-file", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
 
 
 def border_to_vertices_cargs(
@@ -116,14 +116,14 @@ def border_to_vertices_cargs(
         "wb_command",
         "-border-to-vertices"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("border-file", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("name", None) is not None:
         cargs.extend([
             "-border",
             params.get("name", None)
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("border-file", None)))
     return cargs
 
 
@@ -174,9 +174,9 @@ def border_to_vertices_execute(
 
 
 def border_to_vertices(
-    metric_out: str,
     surface: InputPathType,
     border_file: InputPathType,
+    metric_out: str,
     name: str | None = None,
     runner: Runner | None = None,
 ) -> BorderToVerticesOutputs:
@@ -187,9 +187,9 @@ def border_to_vertices(
     By default, a separate metric column is created for each border.
     
     Args:
-        metric_out: the output metric file.
         surface: the surface the borders are drawn on.
         border_file: the border file.
+        metric_out: the output metric file.
         name: create ROI for only one border\
             \
             the name of the border.
@@ -198,10 +198,10 @@ def border_to_vertices(
         NamedTuple of outputs (described in `BorderToVerticesOutputs`).
     """
     params = border_to_vertices_params(
-        metric_out=metric_out,
-        name=name,
         surface=surface,
         border_file=border_file,
+        metric_out=metric_out,
+        name=name,
     )
     return border_to_vertices_execute(params, runner)
 

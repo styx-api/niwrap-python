@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_palette",
   "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
     "pos-percent": {
       "var_param": "pos_percent",
       "fn_struct_make_params": "volume_palette_pos_percent",
@@ -81,12 +87,6 @@
     },
     "subvolume": {
       "var_param": "subvolume"
-    },
-    "volume": {
-      "var_param": "volume"
-    },
-    "mode": {
-      "var_param": "mode"
     }
   }
 }

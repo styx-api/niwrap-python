@@ -36,6 +36,9 @@ VolumeDilateGradExtrapolateParamsDict = _VolumeDilateGradExtrapolateParamsDictNo
 
 
 _VolumeDilateParamsDictNoTag = typing.TypedDict('_VolumeDilateParamsDictNoTag', {
+    "volume": InputPathType,
+    "distance": float,
+    "method": str,
     "volume-out": str,
     "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParamsDict | None],
     "subvol": typing.NotRequired[str | None],
@@ -43,12 +46,12 @@ _VolumeDilateParamsDictNoTag = typing.TypedDict('_VolumeDilateParamsDictNoTag', 
     "roi-volume": typing.NotRequired[InputPathType | None],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
-    "volume": InputPathType,
-    "distance": float,
-    "method": str,
 })
 VolumeDilateParamsDictTagged = typing.TypedDict('VolumeDilateParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-dilate"],
+    "volume": InputPathType,
+    "distance": float,
+    "method": str,
     "volume-out": str,
     "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParamsDict | None],
     "subvol": typing.NotRequired[str | None],
@@ -56,9 +59,6 @@ VolumeDilateParamsDictTagged = typing.TypedDict('VolumeDilateParamsDictTagged', 
     "roi-volume": typing.NotRequired[InputPathType | None],
     "exponent": typing.NotRequired[float | None],
     "legacy-cutoff": bool,
-    "volume": InputPathType,
-    "distance": float,
-    "method": str,
 })
 VolumeDilateParamsDict = _VolumeDilateParamsDictNoTag | VolumeDilateParamsDictTagged
 
@@ -199,10 +199,10 @@ class VolumeDilateOutputs(typing.NamedTuple):
 
 
 def volume_dilate_params(
-    volume_out: str,
     volume: InputPathType,
     distance: float,
     method: str,
+    volume_out: str,
     grad_extrapolate: VolumeDilateGradExtrapolateParamsDict | None = None,
     subvol: str | None = None,
     roi_volume: InputPathType | None = None,
@@ -214,10 +214,10 @@ def volume_dilate_params(
     Build parameters.
     
     Args:
-        volume_out: the output volume.
         volume: the volume to dilate.
         distance: distance in mm to dilate.
         method: dilation method to use.
+        volume_out: the output volume.
         grad_extrapolate: additionally use the gradient to extrapolate,\
             intended to be used with WEIGHTED.
         subvol: select a single subvolume to dilate\
@@ -242,11 +242,11 @@ def volume_dilate_params(
     """
     params = {
         "@type": "workbench/volume-dilate",
-        "volume-out": volume_out,
-        "legacy-cutoff": legacy_cutoff,
         "volume": volume,
         "distance": distance,
         "method": method,
+        "volume-out": volume_out,
+        "legacy-cutoff": legacy_cutoff,
     }
     if grad_extrapolate is not None:
         params["grad-extrapolate"] = grad_extrapolate
@@ -273,6 +273,18 @@ def volume_dilate_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
     if params.get("volume-out", None) is None:
         raise StyxValidationError("`volume-out` must not be None")
     if not isinstance(params["volume-out"], str):
@@ -295,18 +307,6 @@ def volume_dilate_validate(
         raise StyxValidationError("`legacy-cutoff` must not be None")
     if not isinstance(params["legacy-cutoff"], bool):
         raise StyxValidationError(f'`legacy-cutoff` has the wrong type: Received `{type(params.get("legacy-cutoff", False))}` expected `bool`')
-    if params.get("volume", None) is None:
-        raise StyxValidationError("`volume` must not be None")
-    if not isinstance(params["volume"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
-    if params.get("distance", None) is None:
-        raise StyxValidationError("`distance` must not be None")
-    if not isinstance(params["distance"], (float, int)):
-        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
-    if params.get("method", None) is None:
-        raise StyxValidationError("`method` must not be None")
-    if not isinstance(params["method"], str):
-        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
 
 
 def volume_dilate_cargs(
@@ -327,10 +327,12 @@ def volume_dilate_cargs(
         "wb_command",
         "-volume-dilate"
     ])
-    cargs.extend([
-        params.get("volume-out", None),
-        *(volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution) if (params.get("grad-extrapolate", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("volume-out", None))
+    if params.get("grad-extrapolate", None) is not None:
+        cargs.extend(volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution))
     if params.get("subvol", None) is not None:
         cargs.extend([
             "-subvolume",
@@ -353,9 +355,6 @@ def volume_dilate_cargs(
         ])
     if params.get("legacy-cutoff", False):
         cargs.append("-legacy-cutoff")
-    cargs.append(execution.input_file(params.get("volume", None)))
-    cargs.append(str(params.get("distance", None)))
-    cargs.append(params.get("method", None))
     return cargs
 
 
@@ -421,10 +420,10 @@ def volume_dilate_execute(
 
 
 def volume_dilate(
-    volume_out: str,
     volume: InputPathType,
     distance: float,
     method: str,
+    volume_out: str,
     grad_extrapolate: VolumeDilateGradExtrapolateParamsDict | None = None,
     subvol: str | None = None,
     roi_volume: InputPathType | None = None,
@@ -455,10 +454,10 @@ def volume_dilate(
     WEIGHTED - use a weighted average based on distance.
     
     Args:
-        volume_out: the output volume.
         volume: the volume to dilate.
         distance: distance in mm to dilate.
         method: dilation method to use.
+        volume_out: the output volume.
         grad_extrapolate: additionally use the gradient to extrapolate,\
             intended to be used with WEIGHTED.
         subvol: select a single subvolume to dilate\
@@ -483,6 +482,9 @@ def volume_dilate(
         NamedTuple of outputs (described in `VolumeDilateOutputs`).
     """
     params = volume_dilate_params(
+        volume=volume,
+        distance=distance,
+        method=method,
         volume_out=volume_out,
         grad_extrapolate=grad_extrapolate,
         subvol=subvol,
@@ -490,9 +492,6 @@ def volume_dilate(
         roi_volume_=roi_volume_,
         exponent=exponent,
         legacy_cutoff=legacy_cutoff,
-        volume=volume,
-        distance=distance,
-        method=method,
     )
     return volume_dilate_execute(params, runner)
 

@@ -14,21 +14,21 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 
 
 _SurfaceGeodesicDistanceAllToAllParamsDictNoTag = typing.TypedDict('_SurfaceGeodesicDistanceAllToAllParamsDictNoTag', {
+    "surface": InputPathType,
     "cifti-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "limit-mm": typing.NotRequired[float | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
-    "surface": InputPathType,
 })
 SurfaceGeodesicDistanceAllToAllParamsDictTagged = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParamsDictTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance-all-to-all"],
+    "surface": InputPathType,
     "cifti-out": str,
     "area-metric": typing.NotRequired[InputPathType | None],
     "limit-mm": typing.NotRequired[float | None],
     "roi-metric": typing.NotRequired[InputPathType | None],
     "naive": bool,
-    "surface": InputPathType,
 })
 SurfaceGeodesicDistanceAllToAllParamsDict = _SurfaceGeodesicDistanceAllToAllParamsDictNoTag | SurfaceGeodesicDistanceAllToAllParamsDictTagged
 
@@ -44,8 +44,8 @@ class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):
 
 
 def surface_geodesic_distance_all_to_all_params(
-    cifti_out: str,
     surface: InputPathType,
+    cifti_out: str,
     area_metric: InputPathType | None = None,
     limit_mm: float | None = None,
     roi_metric: InputPathType | None = None,
@@ -55,8 +55,8 @@ def surface_geodesic_distance_all_to_all_params(
     Build parameters.
     
     Args:
-        cifti_out: single-hemisphere dconn containing the distances.
         surface: the surface to compute on.
+        cifti_out: single-hemisphere dconn containing the distances.
         area_metric: vertex areas to use to correct the distances on a\
             group-average surface\
             \
@@ -73,9 +73,9 @@ def surface_geodesic_distance_all_to_all_params(
     """
     params = {
         "@type": "workbench/surface-geodesic-distance-all-to-all",
+        "surface": surface,
         "cifti-out": cifti_out,
         "naive": naive,
-        "surface": surface,
     }
     if area_metric is not None:
         params["area-metric"] = area_metric
@@ -98,6 +98,10 @@ def surface_geodesic_distance_all_to_all_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -115,10 +119,6 @@ def surface_geodesic_distance_all_to_all_validate(
         raise StyxValidationError("`naive` must not be None")
     if not isinstance(params["naive"], bool):
         raise StyxValidationError(f'`naive` has the wrong type: Received `{type(params.get("naive", False))}` expected `bool`')
-    if params.get("surface", None) is None:
-        raise StyxValidationError("`surface` must not be None")
-    if not isinstance(params["surface"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
 
 
 def surface_geodesic_distance_all_to_all_cargs(
@@ -139,6 +139,7 @@ def surface_geodesic_distance_all_to_all_cargs(
         "wb_command",
         "-surface-geodesic-distance-all-to-all"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("cifti-out", None))
     if params.get("area-metric", None) is not None:
         cargs.extend([
@@ -157,7 +158,6 @@ def surface_geodesic_distance_all_to_all_cargs(
         ])
     if params.get("naive", False):
         cargs.append("-naive")
-    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -225,8 +225,8 @@ def surface_geodesic_distance_all_to_all_execute(
 
 
 def surface_geodesic_distance_all_to_all(
-    cifti_out: str,
     surface: InputPathType,
+    cifti_out: str,
     area_metric: InputPathType | None = None,
     limit_mm: float | None = None,
     roi_metric: InputPathType | None = None,
@@ -257,8 +257,8 @@ def surface_geodesic_distance_all_to_all(
     share an edge.
     
     Args:
-        cifti_out: single-hemisphere dconn containing the distances.
         surface: the surface to compute on.
+        cifti_out: single-hemisphere dconn containing the distances.
         area_metric: vertex areas to use to correct the distances on a\
             group-average surface\
             \
@@ -275,12 +275,12 @@ def surface_geodesic_distance_all_to_all(
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceAllToAllOutputs`).
     """
     params = surface_geodesic_distance_all_to_all_params(
+        surface=surface,
         cifti_out=cifti_out,
         area_metric=area_metric,
         limit_mm=limit_mm,
         roi_metric=roi_metric,
         naive=naive,
-        surface=surface,
     )
     return surface_geodesic_distance_all_to_all_execute(params, runner)
 

@@ -14,17 +14,17 @@ METRIC_FILL_HOLES_METADATA = Metadata(
 
 
 _MetricFillHolesParamsDictNoTag = typing.TypedDict('_MetricFillHolesParamsDictNoTag', {
-    "metric-out": str,
-    "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
+    "metric-out": str,
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 MetricFillHolesParamsDictTagged = typing.TypedDict('MetricFillHolesParamsDictTagged', {
     "@type": typing.Literal["workbench/metric-fill-holes"],
-    "metric-out": str,
-    "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "metric-in": InputPathType,
+    "metric-out": str,
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 MetricFillHolesParamsDict = _MetricFillHolesParamsDictNoTag | MetricFillHolesParamsDictTagged
 
@@ -40,18 +40,18 @@ class MetricFillHolesOutputs(typing.NamedTuple):
 
 
 def metric_fill_holes_params(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
+    metric_out: str,
     area_metric: InputPathType | None = None,
 ) -> MetricFillHolesParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        metric_out: the output ROI metric.
         surface: the surface to use for neighbor information.
         metric_in: the input ROI metric.
+        metric_out: the output ROI metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -61,9 +61,9 @@ def metric_fill_holes_params(
     """
     params = {
         "@type": "workbench/metric-fill-holes",
-        "metric-out": metric_out,
         "surface": surface,
         "metric-in": metric_in,
+        "metric-out": metric_out,
     }
     if area_metric is not None:
         params["area-metric"] = area_metric
@@ -82,13 +82,6 @@ def metric_fill_holes_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("metric-out", None) is None:
-        raise StyxValidationError("`metric-out` must not be None")
-    if not isinstance(params["metric-out"], str):
-        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
-    if params.get("area-metric", None) is not None:
-        if not isinstance(params["area-metric"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
     if params.get("surface", None) is None:
         raise StyxValidationError("`surface` must not be None")
     if not isinstance(params["surface"], (pathlib.Path, str)):
@@ -97,6 +90,13 @@ def metric_fill_holes_validate(
         raise StyxValidationError("`metric-in` must not be None")
     if not isinstance(params["metric-in"], (pathlib.Path, str)):
         raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
 
 
 def metric_fill_holes_cargs(
@@ -117,14 +117,14 @@ def metric_fill_holes_cargs(
         "wb_command",
         "-metric-fill-holes"
     ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(params.get("metric-out", None))
     if params.get("area-metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
             execution.input_file(params.get("area-metric", None))
         ])
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -175,9 +175,9 @@ def metric_fill_holes_execute(
 
 
 def metric_fill_holes(
-    metric_out: str,
     surface: InputPathType,
     metric_in: InputPathType,
+    metric_out: str,
     area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricFillHolesOutputs:
@@ -188,9 +188,9 @@ def metric_fill_holes(
     into all but the largest one, in terms of surface area.
     
     Args:
-        metric_out: the output ROI metric.
         surface: the surface to use for neighbor information.
         metric_in: the input ROI metric.
+        metric_out: the output ROI metric.
         area_metric: vertex areas to use instead of computing them from the\
             surface\
             \
@@ -200,10 +200,10 @@ def metric_fill_holes(
         NamedTuple of outputs (described in `MetricFillHolesOutputs`).
     """
     params = metric_fill_holes_params(
-        metric_out=metric_out,
-        area_metric=area_metric,
         surface=surface,
         metric_in=metric_in,
+        metric_out=metric_out,
+        area_metric=area_metric,
     )
     return metric_fill_holes_execute(params, runner)
 

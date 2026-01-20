@@ -14,15 +14,15 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 _VolumeAllLabelsToRoisParamsDictNoTag = typing.TypedDict('_VolumeAllLabelsToRoisParamsDictNoTag', {
-    "volume-out": str,
     "label-in": InputPathType,
     "map": str,
+    "volume-out": str,
 })
 VolumeAllLabelsToRoisParamsDictTagged = typing.TypedDict('VolumeAllLabelsToRoisParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-all-labels-to-rois"],
-    "volume-out": str,
     "label-in": InputPathType,
     "map": str,
+    "volume-out": str,
 })
 VolumeAllLabelsToRoisParamsDict = _VolumeAllLabelsToRoisParamsDictNoTag | VolumeAllLabelsToRoisParamsDictTagged
 
@@ -38,25 +38,25 @@ class VolumeAllLabelsToRoisOutputs(typing.NamedTuple):
 
 
 def volume_all_labels_to_rois_params(
-    volume_out: str,
     label_in: InputPathType,
     map_: str,
+    volume_out: str,
 ) -> VolumeAllLabelsToRoisParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        volume_out: the output volume file.
         label_in: the input volume label file.
         map_: the number or name of the label map to use.
+        volume_out: the output volume file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-all-labels-to-rois",
-        "volume-out": volume_out,
         "label-in": label_in,
         "map": map_,
+        "volume-out": volume_out,
     }
     return params
 
@@ -73,10 +73,6 @@ def volume_all_labels_to_rois_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("volume-out", None) is None:
-        raise StyxValidationError("`volume-out` must not be None")
-    if not isinstance(params["volume-out"], str):
-        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -85,6 +81,10 @@ def volume_all_labels_to_rois_validate(
         raise StyxValidationError("`map` must not be None")
     if not isinstance(params["map"], str):
         raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
 
 
 def volume_all_labels_to_rois_cargs(
@@ -105,9 +105,9 @@ def volume_all_labels_to_rois_cargs(
         "wb_command",
         "-volume-all-labels-to-rois"
     ])
-    cargs.append(params.get("volume-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
+    cargs.append(params.get("volume-out", None))
     return cargs
 
 
@@ -159,9 +159,9 @@ def volume_all_labels_to_rois_execute(
 
 
 def volume_all_labels_to_rois(
-    volume_out: str,
     label_in: InputPathType,
     map_: str,
+    volume_out: str,
     runner: Runner | None = None,
 ) -> VolumeAllLabelsToRoisOutputs:
     """
@@ -172,17 +172,17 @@ def volume_all_labels_to_rois(
     are set to the corresponding label.
     
     Args:
-        volume_out: the output volume file.
         label_in: the input volume label file.
         map_: the number or name of the label map to use.
+        volume_out: the output volume file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeAllLabelsToRoisOutputs`).
     """
     params = volume_all_labels_to_rois_params(
-        volume_out=volume_out,
         label_in=label_in,
         map_=map_,
+        volume_out=volume_out,
     )
     return volume_all_labels_to_rois_execute(params, runner)
 

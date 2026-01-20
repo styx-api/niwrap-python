@@ -64,6 +64,10 @@ CiftiSmoothingSurfaceParamsDict = _CiftiSmoothingSurfaceParamsDictNoTag | CiftiS
 
 
 _CiftiSmoothingParamsDictNoTag = typing.TypedDict('_CiftiSmoothingParamsDictNoTag', {
+    "cifti": InputPathType,
+    "surface-kernel": float,
+    "volume-kernel": float,
+    "direction": str,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParamsDict | None],
@@ -74,13 +78,13 @@ _CiftiSmoothingParamsDictNoTag = typing.TypedDict('_CiftiSmoothingParamsDictNoTa
     "fix-zeros-surface": bool,
     "fix-zeros-volume": bool,
     "fwhm": bool,
-    "cifti": InputPathType,
-    "surface-kernel": float,
-    "volume-kernel": float,
-    "direction": str,
 })
 CiftiSmoothingParamsDictTagged = typing.TypedDict('CiftiSmoothingParamsDictTagged', {
     "@type": typing.Literal["workbench/cifti-smoothing"],
+    "cifti": InputPathType,
+    "surface-kernel": float,
+    "volume-kernel": float,
+    "direction": str,
     "cifti-out": str,
     "left-surface": typing.NotRequired[CiftiSmoothingLeftSurfaceParamsDict | None],
     "right-surface": typing.NotRequired[CiftiSmoothingRightSurfaceParamsDict | None],
@@ -91,10 +95,6 @@ CiftiSmoothingParamsDictTagged = typing.TypedDict('CiftiSmoothingParamsDictTagge
     "fix-zeros-surface": bool,
     "fix-zeros-volume": bool,
     "fwhm": bool,
-    "cifti": InputPathType,
-    "surface-kernel": float,
-    "volume-kernel": float,
-    "direction": str,
 })
 CiftiSmoothingParamsDict = _CiftiSmoothingParamsDictNoTag | CiftiSmoothingParamsDictTagged
 
@@ -406,11 +406,11 @@ class CiftiSmoothingOutputs(typing.NamedTuple):
 
 
 def cifti_smoothing_params(
-    cifti_out: str,
     cifti: InputPathType,
     surface_kernel: float,
     volume_kernel: float,
     direction: str,
+    cifti_out: str,
     left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
     right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
@@ -425,13 +425,13 @@ def cifti_smoothing_params(
     Build parameters.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surface_kernel: the size of the gaussian surface smoothing kernel in\
             mm, as sigma by default.
         volume_kernel: the size of the gaussian volume smoothing kernel in mm,\
             as sigma by default.
         direction: which dimension to smooth along, ROW or COLUMN.
+        cifti_out: the output cifti.
         left_surface: specify the left cortical surface to use.
         right_surface: specify the right cortical surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -448,15 +448,15 @@ def cifti_smoothing_params(
     """
     params = {
         "@type": "workbench/cifti-smoothing",
+        "cifti": cifti,
+        "surface-kernel": surface_kernel,
+        "volume-kernel": volume_kernel,
+        "direction": direction,
         "cifti-out": cifti_out,
         "merged-volume": merged_volume,
         "fix-zeros-surface": fix_zeros_surface,
         "fix-zeros-volume": fix_zeros_volume,
         "fwhm": fwhm,
-        "cifti": cifti,
-        "surface-kernel": surface_kernel,
-        "volume-kernel": volume_kernel,
-        "direction": direction,
     }
     if left_surface is not None:
         params["left-surface"] = left_surface
@@ -483,6 +483,22 @@ def cifti_smoothing_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("surface-kernel", None) is None:
+        raise StyxValidationError("`surface-kernel` must not be None")
+    if not isinstance(params["surface-kernel"], (float, int)):
+        raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float`')
+    if params.get("volume-kernel", None) is None:
+        raise StyxValidationError("`volume-kernel` must not be None")
+    if not isinstance(params["volume-kernel"], (float, int)):
+        raise StyxValidationError(f'`volume-kernel` has the wrong type: Received `{type(params.get("volume-kernel", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
     if params.get("cifti-out", None) is None:
         raise StyxValidationError("`cifti-out` must not be None")
     if not isinstance(params["cifti-out"], str):
@@ -517,22 +533,6 @@ def cifti_smoothing_validate(
         raise StyxValidationError("`fwhm` must not be None")
     if not isinstance(params["fwhm"], bool):
         raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
-    if params.get("cifti", None) is None:
-        raise StyxValidationError("`cifti` must not be None")
-    if not isinstance(params["cifti"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
-    if params.get("surface-kernel", None) is None:
-        raise StyxValidationError("`surface-kernel` must not be None")
-    if not isinstance(params["surface-kernel"], (float, int)):
-        raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float`')
-    if params.get("volume-kernel", None) is None:
-        raise StyxValidationError("`volume-kernel` must not be None")
-    if not isinstance(params["volume-kernel"], (float, int)):
-        raise StyxValidationError(f'`volume-kernel` has the wrong type: Received `{type(params.get("volume-kernel", None))}` expected `float`')
-    if params.get("direction", None) is None:
-        raise StyxValidationError("`direction` must not be None")
-    if not isinstance(params["direction"], str):
-        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_smoothing_cargs(
@@ -553,13 +553,18 @@ def cifti_smoothing_cargs(
         "wb_command",
         "-cifti-smoothing"
     ])
-    cargs.extend([
-        params.get("cifti-out", None),
-        *(cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
-        *(cifti_smoothing_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
-        *(cifti_smoothing_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
-        *([a for c in [cifti_smoothing_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
-    ])
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surface-kernel", None)))
+    cargs.append(str(params.get("volume-kernel", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti-out", None))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("surface", None) is not None:
+        cargs.extend([
+            *(cifti_smoothing_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_smoothing_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_smoothing_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
+            *([a for c in [cifti_smoothing_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
+        ])
     if params.get("roi-cifti", None) is not None:
         cargs.extend([
             "-cifti-roi",
@@ -573,10 +578,6 @@ def cifti_smoothing_cargs(
         cargs.append("-fix-zeros-volume")
     if params.get("fwhm", False):
         cargs.append("-fwhm")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(str(params.get("surface-kernel", None)))
-    cargs.append(str(params.get("volume-kernel", None)))
-    cargs.append(params.get("direction", None))
     return cargs
 
 
@@ -680,11 +681,11 @@ def cifti_smoothing_execute(
 
 
 def cifti_smoothing(
-    cifti_out: str,
     cifti: InputPathType,
     surface_kernel: float,
     volume_kernel: float,
     direction: str,
+    cifti_out: str,
     left_surface: CiftiSmoothingLeftSurfaceParamsDict | None = None,
     right_surface: CiftiSmoothingRightSurfaceParamsDict | None = None,
     cerebellum_surface: CiftiSmoothingCerebellumSurfaceParamsDict | None = None,
@@ -756,13 +757,13 @@ def cifti_smoothing(
     THALAMUS_RIGHT.
     
     Args:
-        cifti_out: the output cifti.
         cifti: the input cifti.
         surface_kernel: the size of the gaussian surface smoothing kernel in\
             mm, as sigma by default.
         volume_kernel: the size of the gaussian volume smoothing kernel in mm,\
             as sigma by default.
         direction: which dimension to smooth along, ROW or COLUMN.
+        cifti_out: the output cifti.
         left_surface: specify the left cortical surface to use.
         right_surface: specify the right cortical surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -779,6 +780,10 @@ def cifti_smoothing(
         NamedTuple of outputs (described in `CiftiSmoothingOutputs`).
     """
     params = cifti_smoothing_params(
+        cifti=cifti,
+        surface_kernel=surface_kernel,
+        volume_kernel=volume_kernel,
+        direction=direction,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
@@ -789,10 +794,6 @@ def cifti_smoothing(
         fix_zeros_surface=fix_zeros_surface,
         fix_zeros_volume=fix_zeros_volume,
         fwhm=fwhm,
-        cifti=cifti,
-        surface_kernel=surface_kernel,
-        volume_kernel=volume_kernel,
-        direction=direction,
     )
     return cifti_smoothing_execute(params, runner)
 

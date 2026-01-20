@@ -14,15 +14,15 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
 
 
 _GiftiLabelAddPrefixParamsDictNoTag = typing.TypedDict('_GiftiLabelAddPrefixParamsDictNoTag', {
-    "label-out": str,
     "label-in": InputPathType,
     "prefix": str,
+    "label-out": str,
 })
 GiftiLabelAddPrefixParamsDictTagged = typing.TypedDict('GiftiLabelAddPrefixParamsDictTagged', {
     "@type": typing.Literal["workbench/gifti-label-add-prefix"],
-    "label-out": str,
     "label-in": InputPathType,
     "prefix": str,
+    "label-out": str,
 })
 GiftiLabelAddPrefixParamsDict = _GiftiLabelAddPrefixParamsDictNoTag | GiftiLabelAddPrefixParamsDictTagged
 
@@ -38,25 +38,25 @@ class GiftiLabelAddPrefixOutputs(typing.NamedTuple):
 
 
 def gifti_label_add_prefix_params(
-    label_out: str,
     label_in: InputPathType,
     prefix: str,
+    label_out: str,
 ) -> GiftiLabelAddPrefixParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        label_out: the output label file.
         label_in: the input label file.
         prefix: the prefix string to add.
+        label_out: the output label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/gifti-label-add-prefix",
-        "label-out": label_out,
         "label-in": label_in,
         "prefix": prefix,
+        "label-out": label_out,
     }
     return params
 
@@ -73,10 +73,6 @@ def gifti_label_add_prefix_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("label-out", None) is None:
-        raise StyxValidationError("`label-out` must not be None")
-    if not isinstance(params["label-out"], str):
-        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -85,6 +81,10 @@ def gifti_label_add_prefix_validate(
         raise StyxValidationError("`prefix` must not be None")
     if not isinstance(params["prefix"], str):
         raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
 
 
 def gifti_label_add_prefix_cargs(
@@ -105,9 +105,9 @@ def gifti_label_add_prefix_cargs(
         "wb_command",
         "-gifti-label-add-prefix"
     ])
-    cargs.append(params.get("label-out", None))
     cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("prefix", None))
+    cargs.append(params.get("label-out", None))
     return cargs
 
 
@@ -157,9 +157,9 @@ def gifti_label_add_prefix_execute(
 
 
 def gifti_label_add_prefix(
-    label_out: str,
     label_in: InputPathType,
     prefix: str,
+    label_out: str,
     runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
@@ -168,17 +168,17 @@ def gifti_label_add_prefix(
     For each label other than '???', prepend <prefix> to the label name.
     
     Args:
-        label_out: the output label file.
         label_in: the input label file.
         prefix: the prefix string to add.
+        label_out: the output label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelAddPrefixOutputs`).
     """
     params = gifti_label_add_prefix_params(
-        label_out=label_out,
         label_in=label_in,
         prefix=prefix,
+        label_out=label_out,
     )
     return gifti_label_add_prefix_execute(params, runner)
 

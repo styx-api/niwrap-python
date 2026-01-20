@@ -38,6 +38,7 @@ VolumeWeightedStatsRoiParamsDict = _VolumeWeightedStatsRoiParamsDictNoTag | Volu
 
 
 _VolumeWeightedStatsParamsDictNoTag = typing.TypedDict('_VolumeWeightedStatsParamsDictNoTag', {
+    "volume-in": InputPathType,
     "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
     "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
     "percent": typing.NotRequired[float | None],
@@ -46,10 +47,10 @@ _VolumeWeightedStatsParamsDictNoTag = typing.TypedDict('_VolumeWeightedStatsPara
     "show-map-name": bool,
     "sum": bool,
     "mean": bool,
-    "volume-in": InputPathType,
 })
 VolumeWeightedStatsParamsDictTagged = typing.TypedDict('VolumeWeightedStatsParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-weighted-stats"],
+    "volume-in": InputPathType,
     "weight-volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParamsDict | None],
     "roi": typing.NotRequired[VolumeWeightedStatsRoiParamsDict | None],
     "percent": typing.NotRequired[float | None],
@@ -58,7 +59,6 @@ VolumeWeightedStatsParamsDictTagged = typing.TypedDict('VolumeWeightedStatsParam
     "show-map-name": bool,
     "sum": bool,
     "mean": bool,
-    "volume-in": InputPathType,
 })
 VolumeWeightedStatsParamsDict = _VolumeWeightedStatsParamsDictNoTag | VolumeWeightedStatsParamsDictTagged
 
@@ -240,10 +240,10 @@ def volume_weighted_stats_params(
     """
     params = {
         "@type": "workbench/volume-weighted-stats",
+        "volume-in": volume_in,
         "show-map-name": show_map_name,
         "sum": sum_,
         "mean": mean,
-        "volume-in": volume_in,
     }
     if weight_volume is not None:
         params["weight-volume"] = weight_volume
@@ -270,6 +270,10 @@ def volume_weighted_stats_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
     if params.get("weight-volume", None) is not None:
         volume_weighted_stats_weight_volume_validate(params["weight-volume"])
     if params.get("roi", None) is not None:
@@ -295,10 +299,6 @@ def volume_weighted_stats_validate(
         raise StyxValidationError("`mean` must not be None")
     if not isinstance(params["mean"], bool):
         raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
-    if params.get("volume-in", None) is None:
-        raise StyxValidationError("`volume-in` must not be None")
-    if not isinstance(params["volume-in"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
 
 
 def volume_weighted_stats_cargs(
@@ -319,6 +319,7 @@ def volume_weighted_stats_cargs(
         "wb_command",
         "-volume-weighted-stats"
     ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     if params.get("weight-volume", None) is not None or params.get("roi", None) is not None:
         cargs.extend([
             *(volume_weighted_stats_weight_volume_cargs(params.get("weight-volume", None), execution) if (params.get("weight-volume", None) is not None) else []),
@@ -345,7 +346,6 @@ def volume_weighted_stats_cargs(
         cargs.append("-sum")
     if params.get("mean", False):
         cargs.append("-mean")
-    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -449,6 +449,7 @@ def volume_weighted_stats(
         NamedTuple of outputs (described in `VolumeWeightedStatsOutputs`).
     """
     params = volume_weighted_stats_params(
+        volume_in=volume_in,
         weight_volume=weight_volume,
         roi=roi,
         percent=percent,
@@ -457,7 +458,6 @@ def volume_weighted_stats(
         show_map_name=show_map_name,
         sum_=sum_,
         mean=mean,
-        volume_in=volume_in,
     )
     return volume_weighted_stats_execute(params, runner)
 

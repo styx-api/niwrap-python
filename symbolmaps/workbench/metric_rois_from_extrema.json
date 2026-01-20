@@ -1,6 +1,15 @@
 {
   "fn_root_make_params_and_execute": "metric_rois_from_extrema",
   "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "limit": {
+      "var_param": "limit"
+    },
     "metric-out": {
       "var_param": "metric_out"
     },
@@ -15,15 +24,6 @@
     },
     "sigma": {
       "var_param": "sigma"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric": {
-      "var_param": "metric"
-    },
-    "limit": {
-      "var_param": "limit"
     }
   }
 }

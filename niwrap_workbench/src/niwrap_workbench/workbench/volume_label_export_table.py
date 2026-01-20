@@ -14,17 +14,17 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 _VolumeLabelExportTableParamsDictNoTag = typing.TypedDict('_VolumeLabelExportTableParamsDictNoTag', {
-    "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "map": str,
     "table-out": str,
+    "json-out": typing.NotRequired[str | None],
 })
 VolumeLabelExportTableParamsDictTagged = typing.TypedDict('VolumeLabelExportTableParamsDictTagged', {
     "@type": typing.Literal["workbench/volume-label-export-table"],
-    "json-out": typing.NotRequired[str | None],
     "label-in": InputPathType,
     "map": str,
     "table-out": str,
+    "json-out": typing.NotRequired[str | None],
 })
 VolumeLabelExportTableParamsDict = _VolumeLabelExportTableParamsDictNoTag | VolumeLabelExportTableParamsDictTagged
 
@@ -79,9 +79,6 @@ def volume_label_export_table_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("json-out", None) is not None:
-        if not isinstance(params["json-out"], str):
-            raise StyxValidationError(f'`json-out` has the wrong type: Received `{type(params.get("json-out", None))}` expected `str | None`')
     if params.get("label-in", None) is None:
         raise StyxValidationError("`label-in` must not be None")
     if not isinstance(params["label-in"], (pathlib.Path, str)):
@@ -94,6 +91,9 @@ def volume_label_export_table_validate(
         raise StyxValidationError("`table-out` must not be None")
     if not isinstance(params["table-out"], str):
         raise StyxValidationError(f'`table-out` has the wrong type: Received `{type(params.get("table-out", None))}` expected `str`')
+    if params.get("json-out", None) is not None:
+        if not isinstance(params["json-out"], str):
+            raise StyxValidationError(f'`json-out` has the wrong type: Received `{type(params.get("json-out", None))}` expected `str | None`')
 
 
 def volume_label_export_table_cargs(
@@ -114,14 +114,14 @@ def volume_label_export_table_cargs(
         "wb_command",
         "-volume-label-export-table"
     ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("table-out", None))
     if params.get("json-out", None) is not None:
         cargs.extend([
             "-hierarchy",
             params.get("json-out", None)
         ])
-    cargs.append(execution.input_file(params.get("label-in", None)))
-    cargs.append(params.get("map", None))
-    cargs.append(params.get("table-out", None))
     return cargs
 
 
@@ -195,10 +195,10 @@ def volume_label_export_table(
         NamedTuple of outputs (described in `VolumeLabelExportTableOutputs`).
     """
     params = volume_label_export_table_params(
-        json_out=json_out,
         label_in=label_in,
         map_=map_,
         table_out=table_out,
+        json_out=json_out,
     )
     return volume_label_export_table_execute(params, runner)
 

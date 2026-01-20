@@ -1,6 +1,12 @@
 {
   "fn_root_make_params_and_execute": "volume_set_space",
   "properties": {
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "volume-out": {
+      "var_param": "volume_out"
+    },
     "plumb": {
       "var_param": "plumb",
       "fn_struct_make_params": "volume_set_space_plumb",
@@ -81,12 +87,6 @@
           "var_param": "ignore_dims"
         }
       }
-    },
-    "volume-in": {
-      "var_param": "volume_in"
-    },
-    "volume-out": {
-      "var_param": "volume_out"
     }
   }
 }

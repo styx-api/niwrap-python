@@ -62,6 +62,9 @@ SceneCaptureImageConnDbLoginParamsDict = _SceneCaptureImageConnDbLoginParamsDict
 
 
 _SceneCaptureImageParamsDictNoTag = typing.TypedDict('_SceneCaptureImageParamsDictNoTag', {
+    "scene-file": str,
+    "scene-name-or-number": str,
+    "image-file-name": str,
     "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParamsDict | None],
     "resolution": typing.NotRequired[SceneCaptureImageResolutionParamsDict | None],
     "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParamsDict | None],
@@ -76,12 +79,12 @@ _SceneCaptureImageParamsDictNoTag = typing.TypedDict('_SceneCaptureImageParamsDi
     "no-scene-colors": bool,
     "size-capture": bool,
     "size-window": bool,
-    "scene-file": str,
-    "scene-name-or-number": str,
-    "image-file-name": str,
 })
 SceneCaptureImageParamsDictTagged = typing.TypedDict('SceneCaptureImageParamsDictTagged', {
     "@type": typing.Literal["workbench/scene-capture-image"],
+    "scene-file": str,
+    "scene-name-or-number": str,
+    "image-file-name": str,
     "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParamsDict | None],
     "resolution": typing.NotRequired[SceneCaptureImageResolutionParamsDict | None],
     "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParamsDict | None],
@@ -96,9 +99,6 @@ SceneCaptureImageParamsDictTagged = typing.TypedDict('SceneCaptureImageParamsDic
     "no-scene-colors": bool,
     "size-capture": bool,
     "size-window": bool,
-    "scene-file": str,
-    "scene-name-or-number": str,
-    "image-file-name": str,
 })
 SceneCaptureImageParamsDict = _SceneCaptureImageParamsDictNoTag | SceneCaptureImageParamsDictTagged
 
@@ -457,14 +457,14 @@ def scene_capture_image_params(
     """
     params = {
         "@type": "workbench/scene-capture-image",
+        "scene-file": scene_file,
+        "scene-name-or-number": scene_name_or_number,
+        "image-file-name": image_file_name,
         "print-image-info": print_image_info,
         "show-capture-settings": show_capture_settings,
         "no-scene-colors": no_scene_colors,
         "size-capture": size_capture,
         "size-window": size_window,
-        "scene-file": scene_file,
-        "scene-name-or-number": scene_name_or_number,
-        "image-file-name": image_file_name,
     }
     if size_width_height is not None:
         params["size-width-height"] = size_width_height
@@ -499,6 +499,18 @@ def scene_capture_image_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scene-file", None) is None:
+        raise StyxValidationError("`scene-file` must not be None")
+    if not isinstance(params["scene-file"], str):
+        raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `str`')
+    if params.get("scene-name-or-number", None) is None:
+        raise StyxValidationError("`scene-name-or-number` must not be None")
+    if not isinstance(params["scene-name-or-number"], str):
+        raise StyxValidationError(f'`scene-name-or-number` has the wrong type: Received `{type(params.get("scene-name-or-number", None))}` expected `str`')
+    if params.get("image-file-name", None) is None:
+        raise StyxValidationError("`image-file-name` must not be None")
+    if not isinstance(params["image-file-name"], str):
+        raise StyxValidationError(f'`image-file-name` has the wrong type: Received `{type(params.get("image-file-name", None))}` expected `str`')
     if params.get("size-width-height", None) is not None:
         scene_capture_image_size_width_height_validate(params["size-width-height"])
     if params.get("resolution", None) is not None:
@@ -542,18 +554,6 @@ def scene_capture_image_validate(
         raise StyxValidationError("`size-window` must not be None")
     if not isinstance(params["size-window"], bool):
         raise StyxValidationError(f'`size-window` has the wrong type: Received `{type(params.get("size-window", False))}` expected `bool`')
-    if params.get("scene-file", None) is None:
-        raise StyxValidationError("`scene-file` must not be None")
-    if not isinstance(params["scene-file"], str):
-        raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `str`')
-    if params.get("scene-name-or-number", None) is None:
-        raise StyxValidationError("`scene-name-or-number` must not be None")
-    if not isinstance(params["scene-name-or-number"], str):
-        raise StyxValidationError(f'`scene-name-or-number` has the wrong type: Received `{type(params.get("scene-name-or-number", None))}` expected `str`')
-    if params.get("image-file-name", None) is None:
-        raise StyxValidationError("`image-file-name` must not be None")
-    if not isinstance(params["image-file-name"], str):
-        raise StyxValidationError(f'`image-file-name` has the wrong type: Received `{type(params.get("image-file-name", None))}` expected `str`')
 
 
 def scene_capture_image_cargs(
@@ -574,6 +574,9 @@ def scene_capture_image_cargs(
         "wb_command",
         "-scene-capture-image"
     ])
+    cargs.append(params.get("scene-file", None))
+    cargs.append(params.get("scene-name-or-number", None))
+    cargs.append(params.get("image-file-name", None))
     if params.get("size-width-height", None) is not None or params.get("resolution", None) is not None or params.get("set-map-yoke", None) is not None or params.get("conn-db-login", None) is not None:
         cargs.extend([
             *(scene_capture_image_size_width_height_cargs(params.get("size-width-height", None), execution) if (params.get("size-width-height", None) is not None) else []),
@@ -616,9 +619,6 @@ def scene_capture_image_cargs(
         cargs.append("-size-capture")
     if params.get("size-window", False):
         cargs.append("-size-window")
-    cargs.append(params.get("scene-file", None))
-    cargs.append(params.get("scene-name-or-number", None))
-    cargs.append(params.get("image-file-name", None))
     return cargs
 
 
@@ -832,6 +832,9 @@ def scene_capture_image(
         NamedTuple of outputs (described in `SceneCaptureImageOutputs`).
     """
     params = scene_capture_image_params(
+        scene_file=scene_file,
+        scene_name_or_number=scene_name_or_number,
+        image_file_name=image_file_name,
         size_width_height=size_width_height,
         resolution=resolution,
         set_map_yoke=set_map_yoke,
@@ -846,9 +849,6 @@ def scene_capture_image(
         no_scene_colors=no_scene_colors,
         size_capture=size_capture,
         size_window=size_window,
-        scene_file=scene_file,
-        scene_name_or_number=scene_name_or_number,
-        image_file_name=image_file_name,
     )
     return scene_capture_image_execute(params, runner)
 
