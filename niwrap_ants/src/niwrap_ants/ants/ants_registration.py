@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_REGISTRATION_METADATA = Metadata(
-    id="86707a12f497c1fc5ce28e8b8d8b83ce0463ad5f.boutiques",
+    id="595eeb7ba9023f3ad07e8d85841e09fcc59f9eff.boutiques",
     name="antsRegistration",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -418,15 +418,15 @@ AntsRegistrationRadiusParamsDict = _AntsRegistrationRadiusParamsDictNoTag | Ants
 
 
 _AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "radius": typing.NotRequired[AntsRegistrationRadiusParamsDict | None],
 })
 AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged', {
     "@type": typing.Literal["metric_ants_neighbourhood_cross_correlation"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "radius": typing.NotRequired[AntsRegistrationRadiusParamsDict | None],
 })
@@ -480,15 +480,15 @@ AntsRegistrationNumberOfBinsParamsDict = _AntsRegistrationNumberOfBinsParamsDict
 
 
 _AntsRegistrationMetricMutualInformationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMutualInformationParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBinsParamsDict | None],
 })
 AntsRegistrationMetricMutualInformationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricMutualInformationParamsDictTagged', {
     "@type": typing.Literal["metric_mutual_information"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBinsParamsDict | None],
 })
@@ -542,15 +542,15 @@ AntsRegistrationNumberOfBins1ParamsDict = _AntsRegistrationNumberOfBins1ParamsDi
 
 
 _AntsRegistrationMetricMattesParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMattesParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins1ParamsDict | None],
 })
 AntsRegistrationMetricMattesParamsDictTagged = typing.TypedDict('AntsRegistrationMetricMattesParamsDictTagged', {
     "@type": typing.Literal["metric_mattes"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins1ParamsDict | None],
 })
@@ -604,15 +604,15 @@ AntsRegistrationRadius1ParamsDict = _AntsRegistrationRadius1ParamsDictNoTag | An
 
 
 _AntsRegistrationMetricMeanSquaresParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricMeanSquaresParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "radius": typing.NotRequired[AntsRegistrationRadius1ParamsDict | None],
 })
 AntsRegistrationMetricMeanSquaresParamsDictTagged = typing.TypedDict('AntsRegistrationMetricMeanSquaresParamsDictTagged', {
     "@type": typing.Literal["metric_mean_squares"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "radius": typing.NotRequired[AntsRegistrationRadius1ParamsDict | None],
 })
@@ -666,15 +666,15 @@ AntsRegistrationNumberOfBins2ParamsDict = _AntsRegistrationNumberOfBins2ParamsDi
 
 
 _AntsRegistrationMetricDemonsParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricDemonsParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins2ParamsDict | None],
 })
 AntsRegistrationMetricDemonsParamsDictTagged = typing.TypedDict('AntsRegistrationMetricDemonsParamsDictTagged', {
     "@type": typing.Literal["metric_demons"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "number_of_bins": typing.NotRequired[AntsRegistrationNumberOfBins2ParamsDict | None],
 })
@@ -728,15 +728,15 @@ AntsRegistrationRadius2ParamsDict = _AntsRegistrationRadius2ParamsDictNoTag | An
 
 
 _AntsRegistrationMetricGlobalCorrelationParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricGlobalCorrelationParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "radius": typing.NotRequired[AntsRegistrationRadius2ParamsDict | None],
 })
 AntsRegistrationMetricGlobalCorrelationParamsDictTagged = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParamsDictTagged', {
     "@type": typing.Literal["metric_global_correlation"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "radius": typing.NotRequired[AntsRegistrationRadius2ParamsDict | None],
 })
@@ -964,8 +964,8 @@ AntsRegistrationNeighborhoodRadiusParamsDict = _AntsRegistrationNeighborhoodRadi
 
 
 _AntsRegistrationMetricIgdmParamsDictNoTag = typing.TypedDict('_AntsRegistrationMetricIgdmParamsDictNoTag', {
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "fixed_mask": str,
     "moving_mask": str,
@@ -973,8 +973,8 @@ _AntsRegistrationMetricIgdmParamsDictNoTag = typing.TypedDict('_AntsRegistration
 })
 AntsRegistrationMetricIgdmParamsDictTagged = typing.TypedDict('AntsRegistrationMetricIgdmParamsDictTagged', {
     "@type": typing.Literal["metric_igdm"],
-    "fixed_image": str,
-    "moving_image": str,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
     "metric_weight": float,
     "fixed_mask": str,
     "moving_mask": str,
@@ -3295,8 +3295,8 @@ def ants_registration_radius_cargs(
 
 
 def ants_registration_metric_ants_neighbourhood_cross_correlation(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     radius: AntsRegistrationRadiusParamsDict | None = None,
 ) -> AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParamsDictTagged:
@@ -3336,12 +3336,12 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -3364,7 +3364,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
+    cargs.append("CC[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -3607,8 +3607,8 @@ def ants_registration_number_of_bins_cargs(
 
 
 def ants_registration_metric_mutual_information(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     number_of_bins: AntsRegistrationNumberOfBinsParamsDict | None = None,
 ) -> AntsRegistrationMetricMutualInformationParamsDictTagged:
@@ -3648,12 +3648,12 @@ def ants_registration_metric_mutual_information_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -3676,7 +3676,7 @@ def ants_registration_metric_mutual_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
+    cargs.append("MI[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -3919,8 +3919,8 @@ def ants_registration_number_of_bins_1_cargs(
 
 
 def ants_registration_metric_mattes(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     number_of_bins: AntsRegistrationNumberOfBins1ParamsDict | None = None,
 ) -> AntsRegistrationMetricMattesParamsDictTagged:
@@ -3960,12 +3960,12 @@ def ants_registration_metric_mattes_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -3988,7 +3988,7 @@ def ants_registration_metric_mattes_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_1_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
+    cargs.append("Mattes[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_1_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4231,8 +4231,8 @@ def ants_registration_radius_1_cargs(
 
 
 def ants_registration_metric_mean_squares(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     radius: AntsRegistrationRadius1ParamsDict | None = None,
 ) -> AntsRegistrationMetricMeanSquaresParamsDictTagged:
@@ -4272,12 +4272,12 @@ def ants_registration_metric_mean_squares_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -4300,7 +4300,7 @@ def ants_registration_metric_mean_squares_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_1_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
+    cargs.append("MeanSquares[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_1_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4543,8 +4543,8 @@ def ants_registration_number_of_bins_2_cargs(
 
 
 def ants_registration_metric_demons(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     number_of_bins: AntsRegistrationNumberOfBins2ParamsDict | None = None,
 ) -> AntsRegistrationMetricDemonsParamsDictTagged:
@@ -4584,12 +4584,12 @@ def ants_registration_metric_demons_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -4612,7 +4612,7 @@ def ants_registration_metric_demons_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_2_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
+    cargs.append("Demons[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_number_of_bins_2_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -4855,8 +4855,8 @@ def ants_registration_radius_2_cargs(
 
 
 def ants_registration_metric_global_correlation(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     radius: AntsRegistrationRadius2ParamsDict | None = None,
 ) -> AntsRegistrationMetricGlobalCorrelationParamsDictTagged:
@@ -4896,12 +4896,12 @@ def ants_registration_metric_global_correlation_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -4924,7 +4924,7 @@ def ants_registration_metric_global_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_2_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
+    cargs.append("GC[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "".join((ants_registration_radius_2_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
     return cargs
 
 
@@ -6039,8 +6039,8 @@ def ants_registration_neighborhood_radius_cargs(
 
 
 def ants_registration_metric_igdm(
-    fixed_image: str,
-    moving_image: str,
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
     metric_weight: float,
     fixed_mask: str,
     moving_mask: str,
@@ -6086,12 +6086,12 @@ def ants_registration_metric_igdm_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("fixed_image", None) is None:
         raise StyxValidationError("`fixed_image` must not be None")
-    if not isinstance(params["fixed_image"], str):
-        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
     if params.get("moving_image", None) is None:
         raise StyxValidationError("`moving_image` must not be None")
-    if not isinstance(params["moving_image"], str):
-        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
     if params.get("metric_weight", None) is None:
         raise StyxValidationError("`metric_weight` must not be None")
     if not isinstance(params["metric_weight"], (float, int)):
@@ -6122,7 +6122,7 @@ def ants_registration_metric_igdm_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("IGDM[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + params.get("fixed_mask", None) + "," + params.get("moving_mask", None) + "".join((ants_registration_neighborhood_radius_cargs(params.get("neighborhood_radius", None), execution) if (params.get("neighborhood_radius", None) is not None) else [])) + "]")
+    cargs.append("IGDM[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("metric_weight", None)) + "," + params.get("fixed_mask", None) + "," + params.get("moving_mask", None) + "".join((ants_registration_neighborhood_radius_cargs(params.get("neighborhood_radius", None), execution) if (params.get("neighborhood_radius", None) is not None) else [])) + "]")
     return cargs
 
 
