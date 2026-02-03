@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
-    id="b2a458e411cfbc6687dbc4a31f95f2b6ac33d716.boutiques",
+    id="acf430f5cb18795b9d919a9679bc7ccd5e72e51d.boutiques",
     name="antsApplyTransforms",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -546,7 +546,7 @@ def ants_apply_transforms_composite_displacement_field_output_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + params.get("compositeDisplacementField", None) + ",printOutCompositeWarpFile=" + (("1" if params.get("printOutCompositeWarpFile", None) else "0") if (params.get("printOutCompositeWarpFile", None) is not None) else "") + "]")
+    cargs.append("[" + params.get("compositeDisplacementField", None) + "," + (("1" if params.get("printOutCompositeWarpFile", None) else "0") if (params.get("printOutCompositeWarpFile", None) is not None) else "") + "]")
     return cargs
 
 
@@ -637,7 +637,7 @@ def ants_apply_transforms_generic_affine_transform_output_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Linear[" + params.get("genericAffineTransformFile", None) + ",calculateInverse=" + (("1" if params.get("calculateInverse", None) else "0") if (params.get("calculateInverse", None) is not None) else "") + "]")
+    cargs.append("Linear[" + params.get("genericAffineTransformFile", None) + "," + (("1" if params.get("calculateInverse", None) else "0") if (params.get("calculateInverse", None) is not None) else "") + "]")
     return cargs
 
 
@@ -852,7 +852,7 @@ def ants_apply_transforms_sigma_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("sigma=" + str(params.get("sigma", None)))
+    cargs.append(str(params.get("sigma", None)))
     return cargs
 
 
@@ -906,7 +906,7 @@ def ants_apply_transforms_alpha_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("alpha=" + str(params.get("alpha", None)))
+    cargs.append(str(params.get("alpha", None)))
     return cargs
 
 
@@ -1083,7 +1083,7 @@ def ants_apply_transforms_gaussian_cargs(
     """
     cargs = []
     if params.get("sigma", None) is not None or params.get("alpha", None) is not None:
-        cargs.append("Gaussian[sigma=" + (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else "") + ",alpha=" + (str(params.get("alpha", None)) if (params.get("alpha", None) is not None) else "") + "]")
+        cargs.append("Gaussian[" + (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else "") + "," + (str(params.get("alpha", None)) if (params.get("alpha", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1381,7 +1381,7 @@ def ants_apply_transforms_generic_label_cargs(
     """
     cargs = []
     if params.get("interpolator", None) is not None:
-        cargs.append("GenericLabel[interpolator=" + params.get("interpolator", None) + "]")
+        cargs.append("GenericLabel[" + params.get("interpolator", None) + "]")
     return cargs
 
 
