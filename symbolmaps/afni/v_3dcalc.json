@@ -1,35 +1,116 @@
 {
   "fn_root_make_params_and_execute": "v_3dcalc",
   "properties": {
-    "in_file_a": {
-      "var_param": "in_file_a"
+    "dataset_a": {
+      "var_param": "dataset_a",
+      "variants": {
+        "dataset_a_file": {
+          "fn_struct_make_params": "v_3dcalc_dataset_a_file",
+          "properties": {
+            "cx2r": {
+              "var_param": "cx2r"
+            },
+            "file": {
+              "var_param": "file"
+            },
+            "selectors": {
+              "var_param": "selectors_"
+            }
+          }
+        },
+        "dataset_a_synthetic": {
+          "fn_struct_make_params": "v_3dcalc_dataset_a_synthetic",
+          "properties": {
+            "cx2r": {
+              "var_param": "cx2r"
+            },
+            "synth_string": {
+              "var_param": "synth_string"
+            }
+          }
+        }
+      }
     },
-    "in_file_b": {
-      "var_param": "in_file_b"
+    "other_datasets": {
+      "var_param": "other_datasets",
+      "fn_struct_make_params": "v_3dcalc_other_dataset_config",
+      "properties": {
+        "cx2r": {
+          "var_param": "cx2r"
+        },
+        "variable_letter": {
+          "var_param": "variable_letter"
+        },
+        "file": {
+          "var_param": "file"
+        },
+        "selectors": {
+          "var_param": "selectors_"
+        }
+      }
     },
-    "in_file_c": {
-      "var_param": "in_file_c"
-    },
-    "other": {
-      "var_param": "other"
-    },
-    "overwrite": {
-      "var_param": "overwrite"
-    },
-    "single_idx": {
-      "var_param": "single_idx"
-    },
-    "start_idx": {
-      "var_param": "start_idx"
-    },
-    "stop_idx": {
-      "var_param": "stop_idx"
-    },
-    "expr": {
-      "var_param": "expr"
+    "expression": {
+      "var_param": "expression"
     },
     "prefix": {
       "var_param": "prefix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "fscale": {
+      "var_param": "fscale"
+    },
+    "gscale": {
+      "var_param": "gscale"
+    },
+    "nscale": {
+      "var_param": "nscale"
+    },
+    "usetemp": {
+      "var_param": "usetemp"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "taxis": {
+      "var_param": "taxis",
+      "fn_struct_make_params": "v_3dcalc_taxis_config",
+      "properties": {
+        "num_points": {
+          "var_param": "num_points"
+        },
+        "time_step": {
+          "var_param": "time_step"
+        }
+      }
+    },
+    "rgbfac": {
+      "var_param": "rgbfac",
+      "fn_struct_make_params": "v_3dcalc_rgbfac_config",
+      "properties": {
+        "a": {
+          "var_param": "a"
+        },
+        "b": {
+          "var_param": "b"
+        },
+        "c": {
+          "var_param": "c"
+        }
+      }
+    },
+    "sort_mode": {
+      "var_param": "sort_mode"
+    },
+    "isola": {
+      "var_param": "isola"
+    },
+    "coordinate_system": {
+      "var_param": "coordinate_system"
     }
   }
 }

@@ -6,39 +6,518 @@ import pathlib
 from styxdefs import *
 
 V_3DCALC_METADATA = Metadata(
-    id="4ecc4bd9710b038a889275d36ce45265ee4b3f81.boutiques",
+    id="61bba3b4853d5aefabaf672965d70abeb5ac91de.boutiques",
     name="3dcalc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
+_V3dcalcDatasetAFileParamsDictNoTag = typing.TypedDict('_V3dcalcDatasetAFileParamsDictNoTag', {
+    "cx2r": typing.NotRequired[typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None],
+    "file": InputPathType,
+    "selectors": typing.NotRequired[str | None],
+})
+V3dcalcDatasetAFileParamsDictTagged = typing.TypedDict('V3dcalcDatasetAFileParamsDictTagged', {
+    "@type": typing.Literal["dataset_a_file"],
+    "cx2r": typing.NotRequired[typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None],
+    "file": InputPathType,
+    "selectors": typing.NotRequired[str | None],
+})
+V3dcalcDatasetAFileParamsDict = _V3dcalcDatasetAFileParamsDictNoTag | V3dcalcDatasetAFileParamsDictTagged
+
+
+_V3dcalcDatasetASyntheticParamsDictNoTag = typing.TypedDict('_V3dcalcDatasetASyntheticParamsDictNoTag', {
+    "cx2r": typing.NotRequired[typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None],
+    "synth_string": str,
+})
+V3dcalcDatasetASyntheticParamsDictTagged = typing.TypedDict('V3dcalcDatasetASyntheticParamsDictTagged', {
+    "@type": typing.Literal["dataset_a_synthetic"],
+    "cx2r": typing.NotRequired[typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None],
+    "synth_string": str,
+})
+V3dcalcDatasetASyntheticParamsDict = _V3dcalcDatasetASyntheticParamsDictNoTag | V3dcalcDatasetASyntheticParamsDictTagged
+
+
+_V3dcalcOtherDatasetConfigParamsDictNoTag = typing.TypedDict('_V3dcalcOtherDatasetConfigParamsDictNoTag', {
+    "cx2r": typing.NotRequired[typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None],
+    "variable_letter": str,
+    "file": InputPathType,
+    "selectors": typing.NotRequired[str | None],
+})
+V3dcalcOtherDatasetConfigParamsDictTagged = typing.TypedDict('V3dcalcOtherDatasetConfigParamsDictTagged', {
+    "@type": typing.Literal["other_dataset_config"],
+    "cx2r": typing.NotRequired[typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None],
+    "variable_letter": str,
+    "file": InputPathType,
+    "selectors": typing.NotRequired[str | None],
+})
+V3dcalcOtherDatasetConfigParamsDict = _V3dcalcOtherDatasetConfigParamsDictNoTag | V3dcalcOtherDatasetConfigParamsDictTagged
+
+
+_V3dcalcTaxisConfigParamsDictNoTag = typing.TypedDict('_V3dcalcTaxisConfigParamsDictNoTag', {
+    "num_points": int,
+    "time_step": typing.NotRequired[float | None],
+})
+V3dcalcTaxisConfigParamsDictTagged = typing.TypedDict('V3dcalcTaxisConfigParamsDictTagged', {
+    "@type": typing.Literal["taxis_config"],
+    "num_points": int,
+    "time_step": typing.NotRequired[float | None],
+})
+V3dcalcTaxisConfigParamsDict = _V3dcalcTaxisConfigParamsDictNoTag | V3dcalcTaxisConfigParamsDictTagged
+
+
+_V3dcalcRgbfacConfigParamsDictNoTag = typing.TypedDict('_V3dcalcRgbfacConfigParamsDictNoTag', {
+    "a": float,
+    "b": float,
+    "c": float,
+})
+V3dcalcRgbfacConfigParamsDictTagged = typing.TypedDict('V3dcalcRgbfacConfigParamsDictTagged', {
+    "@type": typing.Literal["rgbfac_config"],
+    "a": float,
+    "b": float,
+    "c": float,
+})
+V3dcalcRgbfacConfigParamsDict = _V3dcalcRgbfacConfigParamsDictNoTag | V3dcalcRgbfacConfigParamsDictTagged
+
+
 _V3dcalcParamsDictNoTag = typing.TypedDict('_V3dcalcParamsDictNoTag', {
-    "in_file_a": InputPathType,
-    "in_file_b": typing.NotRequired[InputPathType | None],
-    "in_file_c": typing.NotRequired[InputPathType | None],
-    "other": typing.NotRequired[InputPathType | None],
-    "overwrite": bool,
-    "single_idx": typing.NotRequired[int | None],
-    "start_idx": typing.NotRequired[int | None],
-    "stop_idx": typing.NotRequired[int | None],
-    "expr": str,
+    "dataset_a": typing.Union[V3dcalcDatasetAFileParamsDictTagged, V3dcalcDatasetASyntheticParamsDictTagged],
+    "other_datasets": typing.NotRequired[list[V3dcalcOtherDatasetConfigParamsDict] | None],
+    "expression": str,
     "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
+    "fscale": bool,
+    "gscale": bool,
+    "nscale": bool,
+    "usetemp": bool,
+    "dt": typing.NotRequired[float | None],
+    "taxis": typing.NotRequired[V3dcalcTaxisConfigParamsDict | None],
+    "rgbfac": typing.NotRequired[V3dcalcRgbfacConfigParamsDict | None],
+    "sort_mode": typing.NotRequired[typing.Literal["sort", "SORT"] | None],
+    "isola": bool,
+    "coordinate_system": typing.NotRequired[typing.Literal["dicom", "RAI", "SPM", "LPI"] | None],
 })
 V3dcalcParamsDictTagged = typing.TypedDict('V3dcalcParamsDictTagged', {
     "@type": typing.Literal["afni/3dcalc"],
-    "in_file_a": InputPathType,
-    "in_file_b": typing.NotRequired[InputPathType | None],
-    "in_file_c": typing.NotRequired[InputPathType | None],
-    "other": typing.NotRequired[InputPathType | None],
-    "overwrite": bool,
-    "single_idx": typing.NotRequired[int | None],
-    "start_idx": typing.NotRequired[int | None],
-    "stop_idx": typing.NotRequired[int | None],
-    "expr": str,
+    "dataset_a": typing.Union[V3dcalcDatasetAFileParamsDictTagged, V3dcalcDatasetASyntheticParamsDictTagged],
+    "other_datasets": typing.NotRequired[list[V3dcalcOtherDatasetConfigParamsDict] | None],
+    "expression": str,
     "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
+    "fscale": bool,
+    "gscale": bool,
+    "nscale": bool,
+    "usetemp": bool,
+    "dt": typing.NotRequired[float | None],
+    "taxis": typing.NotRequired[V3dcalcTaxisConfigParamsDict | None],
+    "rgbfac": typing.NotRequired[V3dcalcRgbfacConfigParamsDict | None],
+    "sort_mode": typing.NotRequired[typing.Literal["sort", "SORT"] | None],
+    "isola": bool,
+    "coordinate_system": typing.NotRequired[typing.Literal["dicom", "RAI", "SPM", "LPI"] | None],
 })
 V3dcalcParamsDict = _V3dcalcParamsDictNoTag | V3dcalcParamsDictTagged
+
+
+def v_3dcalc_dataset_a_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "dataset_a_file": v_3dcalc_dataset_a_file_cargs,
+        "dataset_a_synthetic": v_3dcalc_dataset_a_synthetic_cargs,
+    }.get(t)
+
+
+def v_3dcalc_dataset_a_validate_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get validate params function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Validate params function.
+    """
+    return {
+        "dataset_a_file": v_3dcalc_dataset_a_file_validate,
+        "dataset_a_synthetic": v_3dcalc_dataset_a_synthetic_validate,
+    }.get(t)
+
+
+def v_3dcalc_dataset_a_file(
+    file: InputPathType,
+    cx2r: typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None = None,
+    selectors_: str | None = None,
+) -> V3dcalcDatasetAFileParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        file:.
+        cx2r: Method to convert complex numbers to real before loading this\
+            dataset.
+        selectors_: AFNI sub-brick selectors, e.g., '[2..$]' or '<100..200>'.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "dataset_a_file",
+        "file": file,
+    }
+    if cx2r is not None:
+        params["cx2r"] = cx2r
+    if selectors_ is not None:
+        params["selectors"] = selectors_
+    return params
+
+
+def v_3dcalc_dataset_a_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dcalcDatasetAFileParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cx2r", None) is not None:
+        if not isinstance(params["cx2r"], str):
+            raise StyxValidationError(f'`cx2r` has the wrong type: Received `{type(params.get("cx2r", None))}` expected `typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None`')
+        if params["cx2r"] not in ["REAL", "IMAG", "ABS", "PHASE"]:
+            raise StyxValidationError("Parameter `cx2r` must be one of [\"REAL\", \"IMAG\", \"ABS\", \"PHASE\"]")
+    if params.get("file", None) is None:
+        raise StyxValidationError("`file` must not be None")
+    if not isinstance(params["file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `InputPathType`')
+    if params.get("selectors", None) is not None:
+        if not isinstance(params["selectors"], str):
+            raise StyxValidationError(f'`selectors` has the wrong type: Received `{type(params.get("selectors", None))}` expected `str | None`')
+
+
+def v_3dcalc_dataset_a_file_cargs(
+    params: V3dcalcDatasetAFileParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("cx2r", None) is not None:
+        cargs.extend([
+            "-cx2r",
+            params.get("cx2r", None)
+        ])
+    cargs.append("-a")
+    cargs.append(execution.input_file(params.get("file", None)) + (params.get("selectors", None) if (params.get("selectors", None) is not None) else ""))
+    return cargs
+
+
+def v_3dcalc_dataset_a_synthetic(
+    synth_string: str,
+    cx2r: typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None = None,
+) -> V3dcalcDatasetASyntheticParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        synth_string: String definition for 1D or random dataset (e.g.,\
+            '1D:5@0,5@1').
+        cx2r:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "dataset_a_synthetic",
+        "synth_string": synth_string,
+    }
+    if cx2r is not None:
+        params["cx2r"] = cx2r
+    return params
+
+
+def v_3dcalc_dataset_a_synthetic_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dcalcDatasetASyntheticParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cx2r", None) is not None:
+        if not isinstance(params["cx2r"], str):
+            raise StyxValidationError(f'`cx2r` has the wrong type: Received `{type(params.get("cx2r", None))}` expected `typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None`')
+        if params["cx2r"] not in ["REAL", "IMAG", "ABS", "PHASE"]:
+            raise StyxValidationError("Parameter `cx2r` must be one of [\"REAL\", \"IMAG\", \"ABS\", \"PHASE\"]")
+    if params.get("synth_string", None) is None:
+        raise StyxValidationError("`synth_string` must not be None")
+    if not isinstance(params["synth_string"], str):
+        raise StyxValidationError(f'`synth_string` has the wrong type: Received `{type(params.get("synth_string", None))}` expected `str`')
+
+
+def v_3dcalc_dataset_a_synthetic_cargs(
+    params: V3dcalcDatasetASyntheticParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("cx2r", None) is not None:
+        cargs.extend([
+            "-cx2r",
+            params.get("cx2r", None)
+        ])
+    cargs.append("-a")
+    cargs.append(params.get("synth_string", None))
+    return cargs
+
+
+def v_3dcalc_other_dataset_config(
+    variable_letter: str,
+    file: InputPathType,
+    cx2r: typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None = None,
+    selectors_: str | None = None,
+) -> V3dcalcOtherDatasetConfigParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        variable_letter: The variable letter used in the expression (e.g., 'b',\
+            'c').
+        file:.
+        cx2r: Method to convert complex numbers to real for *this specific\
+            dataset*.
+        selectors_: AFNI sub-brick selectors, e.g., '[2]' or '[2..$]'.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "other_dataset_config",
+        "variable_letter": variable_letter,
+        "file": file,
+    }
+    if cx2r is not None:
+        params["cx2r"] = cx2r
+    if selectors_ is not None:
+        params["selectors"] = selectors_
+    return params
+
+
+def v_3dcalc_other_dataset_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dcalcOtherDatasetConfigParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cx2r", None) is not None:
+        if not isinstance(params["cx2r"], str):
+            raise StyxValidationError(f'`cx2r` has the wrong type: Received `{type(params.get("cx2r", None))}` expected `typing.Literal["REAL", "IMAG", "ABS", "PHASE"] | None`')
+        if params["cx2r"] not in ["REAL", "IMAG", "ABS", "PHASE"]:
+            raise StyxValidationError("Parameter `cx2r` must be one of [\"REAL\", \"IMAG\", \"ABS\", \"PHASE\"]")
+    if params.get("variable_letter", None) is None:
+        raise StyxValidationError("`variable_letter` must not be None")
+    if not isinstance(params["variable_letter"], str):
+        raise StyxValidationError(f'`variable_letter` has the wrong type: Received `{type(params.get("variable_letter", None))}` expected `str`')
+    if params.get("file", None) is None:
+        raise StyxValidationError("`file` must not be None")
+    if not isinstance(params["file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `InputPathType`')
+    if params.get("selectors", None) is not None:
+        if not isinstance(params["selectors"], str):
+            raise StyxValidationError(f'`selectors` has the wrong type: Received `{type(params.get("selectors", None))}` expected `str | None`')
+
+
+def v_3dcalc_other_dataset_config_cargs(
+    params: V3dcalcOtherDatasetConfigParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("cx2r", None) is not None:
+        cargs.extend([
+            "-cx2r",
+            params.get("cx2r", None)
+        ])
+    cargs.append("-" + params.get("variable_letter", None))
+    cargs.append(execution.input_file(params.get("file", None)) + (params.get("selectors", None) if (params.get("selectors", None) is not None) else ""))
+    return cargs
+
+
+def v_3dcalc_taxis_config(
+    num_points: int,
+    time_step: float | None = None,
+) -> V3dcalcTaxisConfigParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        num_points: Length of the time axis.
+        time_step: Time step in seconds.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "taxis_config",
+        "num_points": num_points,
+    }
+    if time_step is not None:
+        params["time_step"] = time_step
+    return params
+
+
+def v_3dcalc_taxis_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dcalcTaxisConfigParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("num_points", None) is None:
+        raise StyxValidationError("`num_points` must not be None")
+    if not isinstance(params["num_points"], int):
+        raise StyxValidationError(f'`num_points` has the wrong type: Received `{type(params.get("num_points", None))}` expected `int`')
+    if params.get("time_step", None) is not None:
+        if not isinstance(params["time_step"], (float, int)):
+            raise StyxValidationError(f'`time_step` has the wrong type: Received `{type(params.get("time_step", None))}` expected `float | None`')
+
+
+def v_3dcalc_taxis_config_cargs(
+    params: V3dcalcTaxisConfigParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("-taxis")
+    cargs.append(str(params.get("num_points", None)) + ":" + (str(params.get("time_step", None)) if (params.get("time_step", None) is not None) else ""))
+    return cargs
+
+
+def v_3dcalc_rgbfac_config(
+    a: float,
+    b: float,
+    c: float,
+) -> V3dcalcRgbfacConfigParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        a:.
+        b:.
+        c:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "rgbfac_config",
+        "a": a,
+        "b": b,
+        "c": c,
+    }
+    return params
+
+
+def v_3dcalc_rgbfac_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dcalcRgbfacConfigParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("a", None) is None:
+        raise StyxValidationError("`a` must not be None")
+    if not isinstance(params["a"], (float, int)):
+        raise StyxValidationError(f'`a` has the wrong type: Received `{type(params.get("a", None))}` expected `float`')
+    if params.get("b", None) is None:
+        raise StyxValidationError("`b` must not be None")
+    if not isinstance(params["b"], (float, int)):
+        raise StyxValidationError(f'`b` has the wrong type: Received `{type(params.get("b", None))}` expected `float`')
+    if params.get("c", None) is None:
+        raise StyxValidationError("`c` must not be None")
+    if not isinstance(params["c"], (float, int)):
+        raise StyxValidationError(f'`c` has the wrong type: Received `{type(params.get("c", None))}` expected `float`')
+
+
+def v_3dcalc_rgbfac_config_cargs(
+    params: V3dcalcRgbfacConfigParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("-rgbfac")
+    cargs.append(str(params.get("a", None)))
+    cargs.append(str(params.get("b", None)))
+    cargs.append(str(params.get("c", None)))
+    return cargs
 
 
 class V3dcalcOutputs(typing.NamedTuple):
@@ -47,59 +526,95 @@ class V3dcalcOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    out_file: OutputPathType | None
-    """Output image file name."""
+    output_head: OutputPathType | None
+    """Output dataset header file (if AFNI format is used)."""
+    output_brik: OutputPathType | None
+    """Output dataset binary file (if AFNI format is used)."""
+    output_file: OutputPathType | None
+    """Output dataset file (if NIfTI or other format is used)."""
 
 
 def v_3dcalc_params(
-    in_file_a: InputPathType,
-    expr: str,
-    in_file_b: InputPathType | None = None,
-    in_file_c: InputPathType | None = None,
-    other: InputPathType | None = None,
-    overwrite: bool = False,
-    single_idx: int | None = None,
-    start_idx: int | None = None,
-    stop_idx: int | None = None,
+    dataset_a: typing.Union[V3dcalcDatasetAFileParamsDictTagged, V3dcalcDatasetASyntheticParamsDictTagged],
+    expression: str,
+    other_datasets: list[V3dcalcOtherDatasetConfigParamsDict] | None = None,
     prefix: str | None = None,
+    verbose: bool = False,
+    datum: typing.Literal["byte", "short", "float"] | None = None,
+    fscale: bool = False,
+    gscale: bool = False,
+    nscale: bool = False,
+    usetemp: bool = False,
+    dt: float | None = None,
+    taxis: V3dcalcTaxisConfigParamsDict | None = None,
+    rgbfac: V3dcalcRgbfacConfigParamsDict | None = None,
+    sort_mode: typing.Literal["sort", "SORT"] | None = None,
+    isola: bool = False,
+    coordinate_system: typing.Literal["dicom", "RAI", "SPM", "LPI"] | None = None,
 ) -> V3dcalcParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        in_file_a: Input file to 3dcalc.
-        expr: Expr.
-        in_file_b: Operand file to 3dcalc.
-        in_file_c: Operand file to 3dcalc.
-        other: Other options.
-        overwrite: Overwrite output.
-        single_idx: Volume index for in_file_a.
-        start_idx: Start index for in_file_a.
-        stop_idx: Stop index for in_file_a.
-        prefix: Output image file name.
+        dataset_a: Input dataset 'a' (required). This can be a standard file or\
+            a synthetic '1D:'/'jRandomDataset:' string. This dataset serves as the\
+            template for the output.
+        expression: Arithmetic expression to apply to the input datasets\
+            (within quotes).
+        other_datasets: Additional input datasets (b, c, etc.). Includes 'cx2r'\
+            support to ensure the flag precedes the specific dataset.
+        prefix: Use 'pname' for the output dataset prefix name.
+        verbose: Makes the program print out various information as it\
+            progresses.
+        datum: Coerce the output data to be stored as the given type.
+        fscale: Force scaling of the output to the maximum integer range (for\
+            byte or short output).
+        gscale: Same as -fscale, but also forces each output sub-brick to get\
+            the same scaling factor. Incompatible with -usetemp.
+        nscale: Don't do any scaling on output to byte or short datasets.
+        usetemp: Create a temporary file to hold intermediate results.\
+            Incompatible with -gscale.
+        dt: Use 'tstep' as the TR for 'manufactured' 3D+time datasets (in\
+            seconds).
+        taxis: Force the creation of a time axis. Replaces string input with\
+            strict micro-syntax structure 'N:tstep'.
+        rgbfac: Factors A, B, C for collapsing RGB input datasets (value = A*r\
+            + B*g + C*b).
+        sort_mode: Sort each output brick separately. 'sort' = increasing,\
+            'SORT' = decreasing.
+        isola: After computation, remove isolated non-zero voxels.
+        coordinate_system: Set the coordinate display order (DICOM/RAI or\
+            SPM/LPI).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "afni/3dcalc",
-        "in_file_a": in_file_a,
-        "overwrite": overwrite,
-        "expr": expr,
+        "dataset_a": dataset_a,
+        "expression": expression,
+        "verbose": verbose,
+        "fscale": fscale,
+        "gscale": gscale,
+        "nscale": nscale,
+        "usetemp": usetemp,
+        "isola": isola,
     }
-    if in_file_b is not None:
-        params["in_file_b"] = in_file_b
-    if in_file_c is not None:
-        params["in_file_c"] = in_file_c
-    if other is not None:
-        params["other"] = other
-    if single_idx is not None:
-        params["single_idx"] = single_idx
-    if start_idx is not None:
-        params["start_idx"] = start_idx
-    if stop_idx is not None:
-        params["stop_idx"] = stop_idx
+    if other_datasets is not None:
+        params["other_datasets"] = other_datasets
     if prefix is not None:
         params["prefix"] = prefix
+    if datum is not None:
+        params["datum"] = datum
+    if dt is not None:
+        params["dt"] = dt
+    if taxis is not None:
+        params["taxis"] = taxis
+    if rgbfac is not None:
+        params["rgbfac"] = rgbfac
+    if sort_mode is not None:
+        params["sort_mode"] = sort_mode
+    if coordinate_system is not None:
+        params["coordinate_system"] = coordinate_system
     return params
 
 
@@ -115,39 +630,73 @@ def v_3dcalc_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("in_file_a", None) is None:
-        raise StyxValidationError("`in_file_a` must not be None")
-    if not isinstance(params["in_file_a"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`in_file_a` has the wrong type: Received `{type(params.get("in_file_a", None))}` expected `InputPathType`')
-    if params.get("in_file_b", None) is not None:
-        if not isinstance(params["in_file_b"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`in_file_b` has the wrong type: Received `{type(params.get("in_file_b", None))}` expected `InputPathType | None`')
-    if params.get("in_file_c", None) is not None:
-        if not isinstance(params["in_file_c"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`in_file_c` has the wrong type: Received `{type(params.get("in_file_c", None))}` expected `InputPathType | None`')
-    if params.get("other", None) is not None:
-        if not isinstance(params["other"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`other` has the wrong type: Received `{type(params.get("other", None))}` expected `InputPathType | None`')
-    if params.get("overwrite", False) is None:
-        raise StyxValidationError("`overwrite` must not be None")
-    if not isinstance(params["overwrite"], bool):
-        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
-    if params.get("single_idx", None) is not None:
-        if not isinstance(params["single_idx"], int):
-            raise StyxValidationError(f'`single_idx` has the wrong type: Received `{type(params.get("single_idx", None))}` expected `int | None`')
-    if params.get("start_idx", None) is not None:
-        if not isinstance(params["start_idx"], int):
-            raise StyxValidationError(f'`start_idx` has the wrong type: Received `{type(params.get("start_idx", None))}` expected `int | None`')
-    if params.get("stop_idx", None) is not None:
-        if not isinstance(params["stop_idx"], int):
-            raise StyxValidationError(f'`stop_idx` has the wrong type: Received `{type(params.get("stop_idx", None))}` expected `int | None`')
-    if params.get("expr", None) is None:
-        raise StyxValidationError("`expr` must not be None")
-    if not isinstance(params["expr"], str):
-        raise StyxValidationError(f'`expr` has the wrong type: Received `{type(params.get("expr", None))}` expected `str`')
+    if params.get("dataset_a", None) is None:
+        raise StyxValidationError("`dataset_a` must not be None")
+    if not isinstance(params["dataset_a"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["dataset_a"])}\'')
+    if "@type" not in params["dataset_a"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    if params["dataset_a"]["@type"] not in ["dataset_a_file", "dataset_a_synthetic"]:
+        raise StyxValidationError("Parameter `dataset_a`s `@type` must be one of [\"dataset_a_file\", \"dataset_a_synthetic\"]")
+    v_3dcalc_dataset_a_validate_dyn_fn(params["dataset_a"]["@type"])(params["dataset_a"])
+    if params.get("other_datasets", None) is not None:
+        if not isinstance(params["other_datasets"], list):
+            raise StyxValidationError(f'`other_datasets` has the wrong type: Received `{type(params.get("other_datasets", None))}` expected `list[V3dcalcOtherDatasetConfigParamsDict] | None`')
+        for e in params["other_datasets"]:
+            v_3dcalc_other_dataset_config_validate(e)
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
     if params.get("prefix", None) is not None:
         if not isinstance(params["prefix"], str):
             raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `typing.Literal["byte", "short", "float"] | None`')
+        if params["datum"] not in ["byte", "short", "float"]:
+            raise StyxValidationError("Parameter `datum` must be one of [\"byte\", \"short\", \"float\"]")
+    if params.get("fscale", False) is None:
+        raise StyxValidationError("`fscale` must not be None")
+    if not isinstance(params["fscale"], bool):
+        raise StyxValidationError(f'`fscale` has the wrong type: Received `{type(params.get("fscale", False))}` expected `bool`')
+    if params.get("gscale", False) is None:
+        raise StyxValidationError("`gscale` must not be None")
+    if not isinstance(params["gscale"], bool):
+        raise StyxValidationError(f'`gscale` has the wrong type: Received `{type(params.get("gscale", False))}` expected `bool`')
+    if params.get("nscale", False) is None:
+        raise StyxValidationError("`nscale` must not be None")
+    if not isinstance(params["nscale"], bool):
+        raise StyxValidationError(f'`nscale` has the wrong type: Received `{type(params.get("nscale", False))}` expected `bool`')
+    if params.get("usetemp", False) is None:
+        raise StyxValidationError("`usetemp` must not be None")
+    if not isinstance(params["usetemp"], bool):
+        raise StyxValidationError(f'`usetemp` has the wrong type: Received `{type(params.get("usetemp", False))}` expected `bool`')
+    if params.get("dt", None) is not None:
+        if not isinstance(params["dt"], (float, int)):
+            raise StyxValidationError(f'`dt` has the wrong type: Received `{type(params.get("dt", None))}` expected `float | None`')
+    if params.get("taxis", None) is not None:
+        v_3dcalc_taxis_config_validate(params["taxis"])
+    if params.get("rgbfac", None) is not None:
+        v_3dcalc_rgbfac_config_validate(params["rgbfac"])
+    if params.get("sort_mode", None) is not None:
+        if not isinstance(params["sort_mode"], str):
+            raise StyxValidationError(f'`sort_mode` has the wrong type: Received `{type(params.get("sort_mode", None))}` expected `typing.Literal["sort", "SORT"] | None`')
+        if params["sort_mode"] not in ["sort", "SORT"]:
+            raise StyxValidationError("Parameter `sort_mode` must be one of [\"sort\", \"SORT\"]")
+    if params.get("isola", False) is None:
+        raise StyxValidationError("`isola` must not be None")
+    if not isinstance(params["isola"], bool):
+        raise StyxValidationError(f'`isola` has the wrong type: Received `{type(params.get("isola", False))}` expected `bool`')
+    if params.get("coordinate_system", None) is not None:
+        if not isinstance(params["coordinate_system"], str):
+            raise StyxValidationError(f'`coordinate_system` has the wrong type: Received `{type(params.get("coordinate_system", None))}` expected `typing.Literal["dicom", "RAI", "SPM", "LPI"] | None`')
+        if params["coordinate_system"] not in ["dicom", "RAI", "SPM", "LPI"]:
+            raise StyxValidationError("Parameter `coordinate_system` must be one of [\"dicom\", \"RAI\", \"SPM\", \"LPI\"]")
 
 
 def v_3dcalc_cargs(
@@ -165,39 +714,49 @@ def v_3dcalc_cargs(
     """
     cargs = []
     cargs.append("3dcalc")
-    cargs.extend([
-        "-a",
-        execution.input_file(params.get("in_file_a", None))
-    ])
-    if params.get("in_file_b", None) is not None:
-        cargs.extend([
-            "-b",
-            execution.input_file(params.get("in_file_b", None))
-        ])
-    if params.get("in_file_c", None) is not None:
-        cargs.extend([
-            "-c",
-            execution.input_file(params.get("in_file_c", None))
-        ])
-    if params.get("other", None) is not None:
-        cargs.append(execution.input_file(params.get("other", None)))
-    if params.get("overwrite", False):
-        cargs.append("-overwrite")
-    if params.get("single_idx", None) is not None:
-        cargs.append(str(params.get("single_idx", None)))
-    if params.get("start_idx", None) is not None:
-        cargs.append(str(params.get("start_idx", None)))
-    if params.get("stop_idx", None) is not None:
-        cargs.append(str(params.get("stop_idx", None)))
+    cargs.extend(v_3dcalc_dataset_a_cargs_dyn_fn(params.get("dataset_a", None)["@type"])(params.get("dataset_a", None), execution))
+    if params.get("other_datasets", None) is not None:
+        cargs.extend([a for c in [v_3dcalc_other_dataset_config_cargs(s, execution) for s in params.get("other_datasets", None)] for a in c])
+    cargs.append("-expr")
     cargs.extend([
         "-expr",
-        params.get("expr", None)
+        params.get("expression", None)
     ])
     if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
             params.get("prefix", None)
         ])
+    if params.get("verbose", False):
+        cargs.append("-verbose")
+    if params.get("datum", None) is not None:
+        cargs.extend([
+            "-datum",
+            params.get("datum", None)
+        ])
+    if params.get("fscale", False):
+        cargs.append("-fscale")
+    if params.get("gscale", False):
+        cargs.append("-gscale")
+    if params.get("nscale", False):
+        cargs.append("-nscale")
+    if params.get("usetemp", False):
+        cargs.append("-usetemp")
+    if params.get("dt", None) is not None:
+        cargs.extend([
+            "-dt",
+            str(params.get("dt", None))
+        ])
+    if params.get("taxis", None) is not None:
+        cargs.extend(v_3dcalc_taxis_config_cargs(params.get("taxis", None), execution))
+    if params.get("rgbfac", None) is not None:
+        cargs.extend(v_3dcalc_rgbfac_config_cargs(params.get("rgbfac", None), execution))
+    if params.get("sort_mode", None) is not None:
+        cargs.append(params.get("sort_mode", None))
+    if params.get("isola", False):
+        cargs.append("-isola")
+    if params.get("coordinate_system", None) is not None:
+        cargs.append(params.get("coordinate_system", None))
     return cargs
 
 
@@ -216,7 +775,9 @@ def v_3dcalc_outputs(
     """
     ret = V3dcalcOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -228,11 +789,9 @@ def v_3dcalc_execute(
     """
     3dcalc
     
-    AFNI's calculator program.
-    
-    Author: AFNI Developers
-    
-    URL: https://afni.nimh.nih.gov/
+    AFNI's calculator program. Performs voxel-by-voxel arithmetic on 3D
+    datasets, with strict handling of complex/synthetic inputs and
+    state-dependent flags.
     
     Args:
         params: The parameters.
@@ -251,63 +810,107 @@ def v_3dcalc_execute(
 
 
 def v_3dcalc(
-    in_file_a: InputPathType,
-    expr: str,
-    in_file_b: InputPathType | None = None,
-    in_file_c: InputPathType | None = None,
-    other: InputPathType | None = None,
-    overwrite: bool = False,
-    single_idx: int | None = None,
-    start_idx: int | None = None,
-    stop_idx: int | None = None,
+    dataset_a: typing.Union[V3dcalcDatasetAFileParamsDictTagged, V3dcalcDatasetASyntheticParamsDictTagged],
+    expression: str,
+    other_datasets: list[V3dcalcOtherDatasetConfigParamsDict] | None = None,
     prefix: str | None = None,
+    verbose: bool = False,
+    datum: typing.Literal["byte", "short", "float"] | None = None,
+    fscale: bool = False,
+    gscale: bool = False,
+    nscale: bool = False,
+    usetemp: bool = False,
+    dt: float | None = None,
+    taxis: V3dcalcTaxisConfigParamsDict | None = None,
+    rgbfac: V3dcalcRgbfacConfigParamsDict | None = None,
+    sort_mode: typing.Literal["sort", "SORT"] | None = None,
+    isola: bool = False,
+    coordinate_system: typing.Literal["dicom", "RAI", "SPM", "LPI"] | None = None,
     runner: Runner | None = None,
 ) -> V3dcalcOutputs:
     """
     3dcalc
     
-    AFNI's calculator program.
-    
-    Author: AFNI Developers
-    
-    URL: https://afni.nimh.nih.gov/
+    AFNI's calculator program. Performs voxel-by-voxel arithmetic on 3D
+    datasets, with strict handling of complex/synthetic inputs and
+    state-dependent flags.
     
     Args:
-        in_file_a: Input file to 3dcalc.
-        expr: Expr.
-        in_file_b: Operand file to 3dcalc.
-        in_file_c: Operand file to 3dcalc.
-        other: Other options.
-        overwrite: Overwrite output.
-        single_idx: Volume index for in_file_a.
-        start_idx: Start index for in_file_a.
-        stop_idx: Stop index for in_file_a.
-        prefix: Output image file name.
+        dataset_a: Input dataset 'a' (required). This can be a standard file or\
+            a synthetic '1D:'/'jRandomDataset:' string. This dataset serves as the\
+            template for the output.
+        expression: Arithmetic expression to apply to the input datasets\
+            (within quotes).
+        other_datasets: Additional input datasets (b, c, etc.). Includes 'cx2r'\
+            support to ensure the flag precedes the specific dataset.
+        prefix: Use 'pname' for the output dataset prefix name.
+        verbose: Makes the program print out various information as it\
+            progresses.
+        datum: Coerce the output data to be stored as the given type.
+        fscale: Force scaling of the output to the maximum integer range (for\
+            byte or short output).
+        gscale: Same as -fscale, but also forces each output sub-brick to get\
+            the same scaling factor. Incompatible with -usetemp.
+        nscale: Don't do any scaling on output to byte or short datasets.
+        usetemp: Create a temporary file to hold intermediate results.\
+            Incompatible with -gscale.
+        dt: Use 'tstep' as the TR for 'manufactured' 3D+time datasets (in\
+            seconds).
+        taxis: Force the creation of a time axis. Replaces string input with\
+            strict micro-syntax structure 'N:tstep'.
+        rgbfac: Factors A, B, C for collapsing RGB input datasets (value = A*r\
+            + B*g + C*b).
+        sort_mode: Sort each output brick separately. 'sort' = increasing,\
+            'SORT' = decreasing.
+        isola: After computation, remove isolated non-zero voxels.
+        coordinate_system: Set the coordinate display order (DICOM/RAI or\
+            SPM/LPI).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dcalcOutputs`).
     """
     params = v_3dcalc_params(
-        in_file_a=in_file_a,
-        in_file_b=in_file_b,
-        in_file_c=in_file_c,
-        other=other,
-        overwrite=overwrite,
-        single_idx=single_idx,
-        start_idx=start_idx,
-        stop_idx=stop_idx,
-        expr=expr,
+        dataset_a=dataset_a,
+        other_datasets=other_datasets,
+        expression=expression,
         prefix=prefix,
+        verbose=verbose,
+        datum=datum,
+        fscale=fscale,
+        gscale=gscale,
+        nscale=nscale,
+        usetemp=usetemp,
+        dt=dt,
+        taxis=taxis,
+        rgbfac=rgbfac,
+        sort_mode=sort_mode,
+        isola=isola,
+        coordinate_system=coordinate_system,
     )
     return v_3dcalc_execute(params, runner)
 
 
 __all__ = [
+    "V3dcalcDatasetAFileParamsDict",
+    "V3dcalcDatasetAFileParamsDictTagged",
+    "V3dcalcDatasetASyntheticParamsDict",
+    "V3dcalcDatasetASyntheticParamsDictTagged",
+    "V3dcalcOtherDatasetConfigParamsDict",
+    "V3dcalcOtherDatasetConfigParamsDictTagged",
     "V3dcalcOutputs",
     "V3dcalcParamsDict",
     "V3dcalcParamsDictTagged",
+    "V3dcalcRgbfacConfigParamsDict",
+    "V3dcalcRgbfacConfigParamsDictTagged",
+    "V3dcalcTaxisConfigParamsDict",
+    "V3dcalcTaxisConfigParamsDictTagged",
     "V_3DCALC_METADATA",
     "v_3dcalc",
+    "v_3dcalc_dataset_a_file",
+    "v_3dcalc_dataset_a_synthetic",
     "v_3dcalc_execute",
+    "v_3dcalc_other_dataset_config",
     "v_3dcalc_params",
+    "v_3dcalc_rgbfac_config",
+    "v_3dcalc_taxis_config",
 ]
