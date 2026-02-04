@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_fsl"
-version = "0.8.4"
+version = "0.8.5"
 description = "Neuroimaging wrappers."
 license = "MIT"
 authors = [{ name = "CMI DAIR" }]
