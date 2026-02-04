@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
-    id="acf430f5cb18795b9d919a9679bc7ccd5e72e51d.boutiques",
+    id="1c048ebc540b3b7b3e89b3891e2dbf90ecd87dc3.boutiques",
     name="antsApplyTransforms",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -1489,7 +1489,7 @@ def ants_apply_transforms_use_inverse_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + execution.input_file(params.get("transformFileName", None)) + ",useInverse]")
+    cargs.append("[" + execution.input_file(params.get("transformFileName", None)) + ",1]")
     return cargs
 
 
