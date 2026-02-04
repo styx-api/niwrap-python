@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DCALC_METADATA = Metadata(
-    id="61bba3b4853d5aefabaf672965d70abeb5ac91de.boutiques",
+    id="99612896b438053febb4d2e09a3dfdacf6248f06.boutiques",
     name="3dcalc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -717,7 +717,6 @@ def v_3dcalc_cargs(
     cargs.extend(v_3dcalc_dataset_a_cargs_dyn_fn(params.get("dataset_a", None)["@type"])(params.get("dataset_a", None), execution))
     if params.get("other_datasets", None) is not None:
         cargs.extend([a for c in [v_3dcalc_other_dataset_config_cargs(s, execution) for s in params.get("other_datasets", None)] for a in c])
-    cargs.append("-expr")
     cargs.extend([
         "-expr",
         params.get("expression", None)
