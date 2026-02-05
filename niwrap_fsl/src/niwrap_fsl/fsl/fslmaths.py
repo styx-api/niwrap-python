@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMATHS_METADATA = Metadata(
-    id="17a5a4282e9fdf33c9fa4e794632c9da02d2c911.boutiques",
+    id="631824cf78cb774076a4c68e6253996918877e52.boutiques",
     name="fslmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -14,161 +14,161 @@ FSLMATHS_METADATA = Metadata(
 
 
 _FslmathsOperationAddParamsDictNoTag = typing.TypedDict('_FslmathsOperationAddParamsDictNoTag', {
-    "add": typing.NotRequired[float | None],
+    "add": float,
 })
 FslmathsOperationAddParamsDictTagged = typing.TypedDict('FslmathsOperationAddParamsDictTagged', {
     "@type": typing.Literal["operation_add"],
-    "add": typing.NotRequired[float | None],
+    "add": float,
 })
 FslmathsOperationAddParamsDict = _FslmathsOperationAddParamsDictNoTag | FslmathsOperationAddParamsDictTagged
 
 
 _FslmathsOperationSubParamsDictNoTag = typing.TypedDict('_FslmathsOperationSubParamsDictNoTag', {
-    "sub": typing.NotRequired[float | None],
+    "sub": float,
 })
 FslmathsOperationSubParamsDictTagged = typing.TypedDict('FslmathsOperationSubParamsDictTagged', {
     "@type": typing.Literal["operation_sub"],
-    "sub": typing.NotRequired[float | None],
+    "sub": float,
 })
 FslmathsOperationSubParamsDict = _FslmathsOperationSubParamsDictNoTag | FslmathsOperationSubParamsDictTagged
 
 
 _FslmathsOperationMulParamsDictNoTag = typing.TypedDict('_FslmathsOperationMulParamsDictNoTag', {
-    "mul": typing.NotRequired[float | None],
+    "mul": float,
 })
 FslmathsOperationMulParamsDictTagged = typing.TypedDict('FslmathsOperationMulParamsDictTagged', {
     "@type": typing.Literal["operation_mul"],
-    "mul": typing.NotRequired[float | None],
+    "mul": float,
 })
 FslmathsOperationMulParamsDict = _FslmathsOperationMulParamsDictNoTag | FslmathsOperationMulParamsDictTagged
 
 
 _FslmathsOperationDivParamsDictNoTag = typing.TypedDict('_FslmathsOperationDivParamsDictNoTag', {
-    "div": typing.NotRequired[float | None],
+    "div": float,
 })
 FslmathsOperationDivParamsDictTagged = typing.TypedDict('FslmathsOperationDivParamsDictTagged', {
     "@type": typing.Literal["operation_div"],
-    "div": typing.NotRequired[float | None],
+    "div": float,
 })
 FslmathsOperationDivParamsDict = _FslmathsOperationDivParamsDictNoTag | FslmathsOperationDivParamsDictTagged
 
 
 _FslmathsOperationRemParamsDictNoTag = typing.TypedDict('_FslmathsOperationRemParamsDictNoTag', {
-    "rem": typing.NotRequired[float | None],
+    "rem": float,
 })
 FslmathsOperationRemParamsDictTagged = typing.TypedDict('FslmathsOperationRemParamsDictTagged', {
     "@type": typing.Literal["operation_rem"],
-    "rem": typing.NotRequired[float | None],
+    "rem": float,
 })
 FslmathsOperationRemParamsDict = _FslmathsOperationRemParamsDictNoTag | FslmathsOperationRemParamsDictTagged
 
 
 _FslmathsOperationMasParamsDictNoTag = typing.TypedDict('_FslmathsOperationMasParamsDictNoTag', {
-    "mas": typing.NotRequired[InputPathType | None],
+    "mas": InputPathType,
 })
 FslmathsOperationMasParamsDictTagged = typing.TypedDict('FslmathsOperationMasParamsDictTagged', {
     "@type": typing.Literal["operation_mas"],
-    "mas": typing.NotRequired[InputPathType | None],
+    "mas": InputPathType,
 })
 FslmathsOperationMasParamsDict = _FslmathsOperationMasParamsDictNoTag | FslmathsOperationMasParamsDictTagged
 
 
 _FslmathsOperationThrParamsDictNoTag = typing.TypedDict('_FslmathsOperationThrParamsDictNoTag', {
-    "thr": typing.NotRequired[float | None],
+    "thr": float,
 })
 FslmathsOperationThrParamsDictTagged = typing.TypedDict('FslmathsOperationThrParamsDictTagged', {
     "@type": typing.Literal["operation_thr"],
-    "thr": typing.NotRequired[float | None],
+    "thr": float,
 })
 FslmathsOperationThrParamsDict = _FslmathsOperationThrParamsDictNoTag | FslmathsOperationThrParamsDictTagged
 
 
 _FslmathsOperationThrpParamsDictNoTag = typing.TypedDict('_FslmathsOperationThrpParamsDictNoTag', {
-    "thrp": typing.NotRequired[float | None],
+    "thrp": float,
 })
 FslmathsOperationThrpParamsDictTagged = typing.TypedDict('FslmathsOperationThrpParamsDictTagged', {
     "@type": typing.Literal["operation_thrp"],
-    "thrp": typing.NotRequired[float | None],
+    "thrp": float,
 })
 FslmathsOperationThrpParamsDict = _FslmathsOperationThrpParamsDictNoTag | FslmathsOperationThrpParamsDictTagged
 
 
 _FslmathsOperationThrPParamsDictNoTag = typing.TypedDict('_FslmathsOperationThrPParamsDictNoTag', {
-    "thrP": typing.NotRequired[float | None],
+    "thrP": float,
 })
 FslmathsOperationThrPParamsDictTagged = typing.TypedDict('FslmathsOperationThrPParamsDictTagged', {
     "@type": typing.Literal["operation_thrP"],
-    "thrP": typing.NotRequired[float | None],
+    "thrP": float,
 })
 FslmathsOperationThrPParamsDict = _FslmathsOperationThrPParamsDictNoTag | FslmathsOperationThrPParamsDictTagged
 
 
 _FslmathsOperationUthrParamsDictNoTag = typing.TypedDict('_FslmathsOperationUthrParamsDictNoTag', {
-    "uthr": typing.NotRequired[float | None],
+    "uthr": float,
 })
 FslmathsOperationUthrParamsDictTagged = typing.TypedDict('FslmathsOperationUthrParamsDictTagged', {
     "@type": typing.Literal["operation_uthr"],
-    "uthr": typing.NotRequired[float | None],
+    "uthr": float,
 })
 FslmathsOperationUthrParamsDict = _FslmathsOperationUthrParamsDictNoTag | FslmathsOperationUthrParamsDictTagged
 
 
 _FslmathsOperationUthrpParamsDictNoTag = typing.TypedDict('_FslmathsOperationUthrpParamsDictNoTag', {
-    "uthrp": typing.NotRequired[float | None],
+    "uthrp": float,
 })
 FslmathsOperationUthrpParamsDictTagged = typing.TypedDict('FslmathsOperationUthrpParamsDictTagged', {
     "@type": typing.Literal["operation_uthrp"],
-    "uthrp": typing.NotRequired[float | None],
+    "uthrp": float,
 })
 FslmathsOperationUthrpParamsDict = _FslmathsOperationUthrpParamsDictNoTag | FslmathsOperationUthrpParamsDictTagged
 
 
 _FslmathsOperationUthrPParamsDictNoTag = typing.TypedDict('_FslmathsOperationUthrPParamsDictNoTag', {
-    "uthrP": typing.NotRequired[float | None],
+    "uthrP": float,
 })
 FslmathsOperationUthrPParamsDictTagged = typing.TypedDict('FslmathsOperationUthrPParamsDictTagged', {
     "@type": typing.Literal["operation_uthrP"],
-    "uthrP": typing.NotRequired[float | None],
+    "uthrP": float,
 })
 FslmathsOperationUthrPParamsDict = _FslmathsOperationUthrPParamsDictNoTag | FslmathsOperationUthrPParamsDictTagged
 
 
 _FslmathsOperationMaxParamsDictNoTag = typing.TypedDict('_FslmathsOperationMaxParamsDictNoTag', {
-    "max": typing.NotRequired[float | None],
+    "max": float,
 })
 FslmathsOperationMaxParamsDictTagged = typing.TypedDict('FslmathsOperationMaxParamsDictTagged', {
     "@type": typing.Literal["operation_max"],
-    "max": typing.NotRequired[float | None],
+    "max": float,
 })
 FslmathsOperationMaxParamsDict = _FslmathsOperationMaxParamsDictNoTag | FslmathsOperationMaxParamsDictTagged
 
 
 _FslmathsOperationMinParamsDictNoTag = typing.TypedDict('_FslmathsOperationMinParamsDictNoTag', {
-    "min": typing.NotRequired[float | None],
+    "min": float,
 })
 FslmathsOperationMinParamsDictTagged = typing.TypedDict('FslmathsOperationMinParamsDictTagged', {
     "@type": typing.Literal["operation_min"],
-    "min": typing.NotRequired[float | None],
+    "min": float,
 })
 FslmathsOperationMinParamsDict = _FslmathsOperationMinParamsDictNoTag | FslmathsOperationMinParamsDictTagged
 
 
 _FslmathsOperationSeedParamsDictNoTag = typing.TypedDict('_FslmathsOperationSeedParamsDictNoTag', {
-    "seed": typing.NotRequired[float | None],
+    "seed": float,
 })
 FslmathsOperationSeedParamsDictTagged = typing.TypedDict('FslmathsOperationSeedParamsDictTagged', {
     "@type": typing.Literal["operation_seed"],
-    "seed": typing.NotRequired[float | None],
+    "seed": float,
 })
 FslmathsOperationSeedParamsDict = _FslmathsOperationSeedParamsDictNoTag | FslmathsOperationSeedParamsDictTagged
 
 
 _FslmathsOperationRestartParamsDictNoTag = typing.TypedDict('_FslmathsOperationRestartParamsDictNoTag', {
-    "restart": typing.NotRequired[InputPathType | None],
+    "restart": InputPathType,
 })
 FslmathsOperationRestartParamsDictTagged = typing.TypedDict('FslmathsOperationRestartParamsDictTagged', {
     "@type": typing.Literal["operation_restart"],
-    "restart": typing.NotRequired[InputPathType | None],
+    "restart": InputPathType,
 })
 FslmathsOperationRestartParamsDict = _FslmathsOperationRestartParamsDictNoTag | FslmathsOperationRestartParamsDictTagged
 
@@ -354,11 +354,11 @@ FslmathsOperationIndexParamsDict = _FslmathsOperationIndexParamsDictNoTag | Fslm
 
 
 _FslmathsOperationGridParamsDictNoTag = typing.TypedDict('_FslmathsOperationGridParamsDictNoTag', {
-    "grid": typing.NotRequired[list[float] | None],
+    "grid": list[float],
 })
 FslmathsOperationGridParamsDictTagged = typing.TypedDict('FslmathsOperationGridParamsDictTagged', {
     "@type": typing.Literal["operation_grid"],
-    "grid": typing.NotRequired[list[float] | None],
+    "grid": list[float],
 })
 FslmathsOperationGridParamsDict = _FslmathsOperationGridParamsDictNoTag | FslmathsOperationGridParamsDictTagged
 
@@ -374,21 +374,21 @@ FslmathsOperationEdgeParamsDict = _FslmathsOperationEdgeParamsDictNoTag | Fslmat
 
 
 _FslmathsOperationTfceParamsDictNoTag = typing.TypedDict('_FslmathsOperationTfceParamsDictNoTag', {
-    "tfce": typing.NotRequired[list[float] | None],
+    "tfce": list[float],
 })
 FslmathsOperationTfceParamsDictTagged = typing.TypedDict('FslmathsOperationTfceParamsDictTagged', {
     "@type": typing.Literal["operation_tfce"],
-    "tfce": typing.NotRequired[list[float] | None],
+    "tfce": list[float],
 })
 FslmathsOperationTfceParamsDict = _FslmathsOperationTfceParamsDictNoTag | FslmathsOperationTfceParamsDictTagged
 
 
 _FslmathsOperationTfceSParamsDictNoTag = typing.TypedDict('_FslmathsOperationTfceSParamsDictNoTag', {
-    "tfceS": typing.NotRequired[list[float] | None],
+    "tfceS": list[float],
 })
 FslmathsOperationTfceSParamsDictTagged = typing.TypedDict('FslmathsOperationTfceSParamsDictTagged', {
     "@type": typing.Literal["operation_tfceS"],
-    "tfceS": typing.NotRequired[list[float] | None],
+    "tfceS": list[float],
 })
 FslmathsOperationTfceSParamsDict = _FslmathsOperationTfceSParamsDictNoTag | FslmathsOperationTfceSParamsDictTagged
 
@@ -434,21 +434,21 @@ FslmathsOperationRandnParamsDict = _FslmathsOperationRandnParamsDictNoTag | Fslm
 
 
 _FslmathsOperationInmParamsDictNoTag = typing.TypedDict('_FslmathsOperationInmParamsDictNoTag', {
-    "inm": typing.NotRequired[float | None],
+    "inm": float,
 })
 FslmathsOperationInmParamsDictTagged = typing.TypedDict('FslmathsOperationInmParamsDictTagged', {
     "@type": typing.Literal["operation_inm"],
-    "inm": typing.NotRequired[float | None],
+    "inm": float,
 })
 FslmathsOperationInmParamsDict = _FslmathsOperationInmParamsDictNoTag | FslmathsOperationInmParamsDictTagged
 
 
 _FslmathsOperationIngParamsDictNoTag = typing.TypedDict('_FslmathsOperationIngParamsDictNoTag', {
-    "ing": typing.NotRequired[float | None],
+    "ing": float,
 })
 FslmathsOperationIngParamsDictTagged = typing.TypedDict('FslmathsOperationIngParamsDictTagged', {
     "@type": typing.Literal["operation_ing"],
-    "ing": typing.NotRequired[float | None],
+    "ing": float,
 })
 FslmathsOperationIngParamsDict = _FslmathsOperationIngParamsDictNoTag | FslmathsOperationIngParamsDictTagged
 
@@ -494,61 +494,61 @@ FslmathsOperationKernel2DParamsDict = _FslmathsOperationKernel2DParamsDictNoTag 
 
 
 _FslmathsOperationKernelBoxParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelBoxParamsDictNoTag', {
-    "kernel_box": typing.NotRequired[float | None],
+    "kernel_box": float,
 })
 FslmathsOperationKernelBoxParamsDictTagged = typing.TypedDict('FslmathsOperationKernelBoxParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_box"],
-    "kernel_box": typing.NotRequired[float | None],
+    "kernel_box": float,
 })
 FslmathsOperationKernelBoxParamsDict = _FslmathsOperationKernelBoxParamsDictNoTag | FslmathsOperationKernelBoxParamsDictTagged
 
 
 _FslmathsOperationKernelBoxvParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelBoxvParamsDictNoTag', {
-    "kernel_boxv": typing.NotRequired[float | None],
+    "kernel_boxv": float,
 })
 FslmathsOperationKernelBoxvParamsDictTagged = typing.TypedDict('FslmathsOperationKernelBoxvParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_boxv"],
-    "kernel_boxv": typing.NotRequired[float | None],
+    "kernel_boxv": float,
 })
 FslmathsOperationKernelBoxvParamsDict = _FslmathsOperationKernelBoxvParamsDictNoTag | FslmathsOperationKernelBoxvParamsDictTagged
 
 
 _FslmathsOperationKernelBoxv3ParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelBoxv3ParamsDictNoTag', {
-    "kernel_boxv3": typing.NotRequired[list[float] | None],
+    "kernel_boxv3": list[float],
 })
 FslmathsOperationKernelBoxv3ParamsDictTagged = typing.TypedDict('FslmathsOperationKernelBoxv3ParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_boxv3"],
-    "kernel_boxv3": typing.NotRequired[list[float] | None],
+    "kernel_boxv3": list[float],
 })
 FslmathsOperationKernelBoxv3ParamsDict = _FslmathsOperationKernelBoxv3ParamsDictNoTag | FslmathsOperationKernelBoxv3ParamsDictTagged
 
 
 _FslmathsOperationKernelGaussParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelGaussParamsDictNoTag', {
-    "kernel_gauss": typing.NotRequired[float | None],
+    "kernel_gauss": float,
 })
 FslmathsOperationKernelGaussParamsDictTagged = typing.TypedDict('FslmathsOperationKernelGaussParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_gauss"],
-    "kernel_gauss": typing.NotRequired[float | None],
+    "kernel_gauss": float,
 })
 FslmathsOperationKernelGaussParamsDict = _FslmathsOperationKernelGaussParamsDictNoTag | FslmathsOperationKernelGaussParamsDictTagged
 
 
 _FslmathsOperationKernelSphereParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelSphereParamsDictNoTag', {
-    "kernel_sphere": typing.NotRequired[float | None],
+    "kernel_sphere": float,
 })
 FslmathsOperationKernelSphereParamsDictTagged = typing.TypedDict('FslmathsOperationKernelSphereParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_sphere"],
-    "kernel_sphere": typing.NotRequired[float | None],
+    "kernel_sphere": float,
 })
 FslmathsOperationKernelSphereParamsDict = _FslmathsOperationKernelSphereParamsDictNoTag | FslmathsOperationKernelSphereParamsDictTagged
 
 
 _FslmathsOperationKernelFileParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelFileParamsDictNoTag', {
-    "kernel_file": typing.NotRequired[InputPathType | None],
+    "kernel_file": InputPathType,
 })
 FslmathsOperationKernelFileParamsDictTagged = typing.TypedDict('FslmathsOperationKernelFileParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_file"],
-    "kernel_file": typing.NotRequired[InputPathType | None],
+    "kernel_file": InputPathType,
 })
 FslmathsOperationKernelFileParamsDict = _FslmathsOperationKernelFileParamsDictNoTag | FslmathsOperationKernelFileParamsDictTagged
 
@@ -644,11 +644,11 @@ FslmathsOperationFmeanuParamsDict = _FslmathsOperationFmeanuParamsDictNoTag | Fs
 
 
 _FslmathsOperationSParamsDictNoTag = typing.TypedDict('_FslmathsOperationSParamsDictNoTag', {
-    "s": typing.NotRequired[float | None],
+    "s": float,
 })
 FslmathsOperationSParamsDictTagged = typing.TypedDict('FslmathsOperationSParamsDictTagged', {
     "@type": typing.Literal["operation_s"],
-    "s": typing.NotRequired[float | None],
+    "s": float,
 })
 FslmathsOperationSParamsDict = _FslmathsOperationSParamsDictNoTag | FslmathsOperationSParamsDictTagged
 
@@ -914,41 +914,41 @@ FslmathsOperationZmedianParamsDict = _FslmathsOperationZmedianParamsDictNoTag | 
 
 
 _FslmathsOperationTpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationTpercParamsDictNoTag', {
-    "Tperc": typing.NotRequired[float | None],
+    "Tperc": float,
 })
 FslmathsOperationTpercParamsDictTagged = typing.TypedDict('FslmathsOperationTpercParamsDictTagged', {
     "@type": typing.Literal["operation_Tperc"],
-    "Tperc": typing.NotRequired[float | None],
+    "Tperc": float,
 })
 FslmathsOperationTpercParamsDict = _FslmathsOperationTpercParamsDictNoTag | FslmathsOperationTpercParamsDictTagged
 
 
 _FslmathsOperationXpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationXpercParamsDictNoTag', {
-    "Xperc": typing.NotRequired[float | None],
+    "Xperc": float,
 })
 FslmathsOperationXpercParamsDictTagged = typing.TypedDict('FslmathsOperationXpercParamsDictTagged', {
     "@type": typing.Literal["operation_Xperc"],
-    "Xperc": typing.NotRequired[float | None],
+    "Xperc": float,
 })
 FslmathsOperationXpercParamsDict = _FslmathsOperationXpercParamsDictNoTag | FslmathsOperationXpercParamsDictTagged
 
 
 _FslmathsOperationYpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationYpercParamsDictNoTag', {
-    "Yperc": typing.NotRequired[float | None],
+    "Yperc": float,
 })
 FslmathsOperationYpercParamsDictTagged = typing.TypedDict('FslmathsOperationYpercParamsDictTagged', {
     "@type": typing.Literal["operation_Yperc"],
-    "Yperc": typing.NotRequired[float | None],
+    "Yperc": float,
 })
 FslmathsOperationYpercParamsDict = _FslmathsOperationYpercParamsDictNoTag | FslmathsOperationYpercParamsDictTagged
 
 
 _FslmathsOperationZpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationZpercParamsDictNoTag', {
-    "Zperc": typing.NotRequired[float | None],
+    "Zperc": float,
 })
 FslmathsOperationZpercParamsDictTagged = typing.TypedDict('FslmathsOperationZpercParamsDictTagged', {
     "@type": typing.Literal["operation_Zperc"],
-    "Zperc": typing.NotRequired[float | None],
+    "Zperc": float,
 })
 FslmathsOperationZpercParamsDict = _FslmathsOperationZpercParamsDictNoTag | FslmathsOperationZpercParamsDictTagged
 
@@ -964,31 +964,31 @@ FslmathsOperationTar1ParamsDict = _FslmathsOperationTar1ParamsDictNoTag | Fslmat
 
 
 _FslmathsOperationRoiParamsDictNoTag = typing.TypedDict('_FslmathsOperationRoiParamsDictNoTag', {
-    "roi": typing.NotRequired[list[float] | None],
+    "roi": list[float],
 })
 FslmathsOperationRoiParamsDictTagged = typing.TypedDict('FslmathsOperationRoiParamsDictTagged', {
     "@type": typing.Literal["operation_roi"],
-    "roi": typing.NotRequired[list[float] | None],
+    "roi": list[float],
 })
 FslmathsOperationRoiParamsDict = _FslmathsOperationRoiParamsDictNoTag | FslmathsOperationRoiParamsDictTagged
 
 
 _FslmathsOperationBptfParamsDictNoTag = typing.TypedDict('_FslmathsOperationBptfParamsDictNoTag', {
-    "bptf": typing.NotRequired[list[float] | None],
+    "bptf": list[float],
 })
 FslmathsOperationBptfParamsDictTagged = typing.TypedDict('FslmathsOperationBptfParamsDictTagged', {
     "@type": typing.Literal["operation_bptf"],
-    "bptf": typing.NotRequired[list[float] | None],
+    "bptf": list[float],
 })
 FslmathsOperationBptfParamsDict = _FslmathsOperationBptfParamsDictNoTag | FslmathsOperationBptfParamsDictTagged
 
 
 _FslmathsOperationRocParamsDictNoTag = typing.TypedDict('_FslmathsOperationRocParamsDictNoTag', {
-    "roc": typing.NotRequired[list[float] | None],
+    "roc": list[float],
 })
 FslmathsOperationRocParamsDictTagged = typing.TypedDict('FslmathsOperationRocParamsDictTagged', {
     "@type": typing.Literal["operation_roc"],
-    "roc": typing.NotRequired[list[float] | None],
+    "roc": list[float],
 })
 FslmathsOperationRocParamsDict = _FslmathsOperationRocParamsDictNoTag | FslmathsOperationRocParamsDictTagged
 
@@ -1238,7 +1238,7 @@ def fslmaths_operations_validate_dyn_fn(
 
 
 def fslmaths_operation_add(
-    add: float | None = None,
+    add: float,
 ) -> FslmathsOperationAddParamsDictTagged:
     """
     Build parameters.
@@ -1250,9 +1250,8 @@ def fslmaths_operation_add(
     """
     params = {
         "@type": "operation_add",
+        "add": add,
     }
-    if add is not None:
-        params["add"] = add
     return params
 
 
@@ -1268,9 +1267,10 @@ def fslmaths_operation_add_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("add", None) is not None:
-        if not isinstance(params["add"], (float, int)):
-            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `float | None`')
+    if params.get("add", None) is None:
+        raise StyxValidationError("`add` must not be None")
+    if not isinstance(params["add"], (float, int)):
+        raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `float`')
 
 
 def fslmaths_operation_add_cargs(
@@ -1287,16 +1287,15 @@ def fslmaths_operation_add_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("add", None) is not None:
-        cargs.extend([
-            "-add",
-            str(params.get("add", None))
-        ])
+    cargs.extend([
+        "-add",
+        str(params.get("add", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_sub(
-    sub: float | None = None,
+    sub: float,
 ) -> FslmathsOperationSubParamsDictTagged:
     """
     Build parameters.
@@ -1308,9 +1307,8 @@ def fslmaths_operation_sub(
     """
     params = {
         "@type": "operation_sub",
+        "sub": sub,
     }
-    if sub is not None:
-        params["sub"] = sub
     return params
 
 
@@ -1326,9 +1324,10 @@ def fslmaths_operation_sub_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("sub", None) is not None:
-        if not isinstance(params["sub"], (float, int)):
-            raise StyxValidationError(f'`sub` has the wrong type: Received `{type(params.get("sub", None))}` expected `float | None`')
+    if params.get("sub", None) is None:
+        raise StyxValidationError("`sub` must not be None")
+    if not isinstance(params["sub"], (float, int)):
+        raise StyxValidationError(f'`sub` has the wrong type: Received `{type(params.get("sub", None))}` expected `float`')
 
 
 def fslmaths_operation_sub_cargs(
@@ -1345,16 +1344,15 @@ def fslmaths_operation_sub_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sub", None) is not None:
-        cargs.extend([
-            "-sub",
-            str(params.get("sub", None))
-        ])
+    cargs.extend([
+        "-sub",
+        str(params.get("sub", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_mul(
-    mul: float | None = None,
+    mul: float,
 ) -> FslmathsOperationMulParamsDictTagged:
     """
     Build parameters.
@@ -1366,9 +1364,8 @@ def fslmaths_operation_mul(
     """
     params = {
         "@type": "operation_mul",
+        "mul": mul,
     }
-    if mul is not None:
-        params["mul"] = mul
     return params
 
 
@@ -1384,9 +1381,10 @@ def fslmaths_operation_mul_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("mul", None) is not None:
-        if not isinstance(params["mul"], (float, int)):
-            raise StyxValidationError(f'`mul` has the wrong type: Received `{type(params.get("mul", None))}` expected `float | None`')
+    if params.get("mul", None) is None:
+        raise StyxValidationError("`mul` must not be None")
+    if not isinstance(params["mul"], (float, int)):
+        raise StyxValidationError(f'`mul` has the wrong type: Received `{type(params.get("mul", None))}` expected `float`')
 
 
 def fslmaths_operation_mul_cargs(
@@ -1403,16 +1401,15 @@ def fslmaths_operation_mul_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("mul", None) is not None:
-        cargs.extend([
-            "-mul",
-            str(params.get("mul", None))
-        ])
+    cargs.extend([
+        "-mul",
+        str(params.get("mul", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_div(
-    div: float | None = None,
+    div: float,
 ) -> FslmathsOperationDivParamsDictTagged:
     """
     Build parameters.
@@ -1424,9 +1421,8 @@ def fslmaths_operation_div(
     """
     params = {
         "@type": "operation_div",
+        "div": div,
     }
-    if div is not None:
-        params["div"] = div
     return params
 
 
@@ -1442,9 +1438,10 @@ def fslmaths_operation_div_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("div", None) is not None:
-        if not isinstance(params["div"], (float, int)):
-            raise StyxValidationError(f'`div` has the wrong type: Received `{type(params.get("div", None))}` expected `float | None`')
+    if params.get("div", None) is None:
+        raise StyxValidationError("`div` must not be None")
+    if not isinstance(params["div"], (float, int)):
+        raise StyxValidationError(f'`div` has the wrong type: Received `{type(params.get("div", None))}` expected `float`')
 
 
 def fslmaths_operation_div_cargs(
@@ -1461,16 +1458,15 @@ def fslmaths_operation_div_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("div", None) is not None:
-        cargs.extend([
-            "-div",
-            str(params.get("div", None))
-        ])
+    cargs.extend([
+        "-div",
+        str(params.get("div", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_rem(
-    rem: float | None = None,
+    rem: float,
 ) -> FslmathsOperationRemParamsDictTagged:
     """
     Build parameters.
@@ -1483,9 +1479,8 @@ def fslmaths_operation_rem(
     """
     params = {
         "@type": "operation_rem",
+        "rem": rem,
     }
-    if rem is not None:
-        params["rem"] = rem
     return params
 
 
@@ -1501,9 +1496,10 @@ def fslmaths_operation_rem_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("rem", None) is not None:
-        if not isinstance(params["rem"], (float, int)):
-            raise StyxValidationError(f'`rem` has the wrong type: Received `{type(params.get("rem", None))}` expected `float | None`')
+    if params.get("rem", None) is None:
+        raise StyxValidationError("`rem` must not be None")
+    if not isinstance(params["rem"], (float, int)):
+        raise StyxValidationError(f'`rem` has the wrong type: Received `{type(params.get("rem", None))}` expected `float`')
 
 
 def fslmaths_operation_rem_cargs(
@@ -1520,16 +1516,15 @@ def fslmaths_operation_rem_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("rem", None) is not None:
-        cargs.extend([
-            "-rem",
-            str(params.get("rem", None))
-        ])
+    cargs.extend([
+        "-rem",
+        str(params.get("rem", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_mas(
-    mas: InputPathType | None = None,
+    mas: InputPathType,
 ) -> FslmathsOperationMasParamsDictTagged:
     """
     Build parameters.
@@ -1541,9 +1536,8 @@ def fslmaths_operation_mas(
     """
     params = {
         "@type": "operation_mas",
+        "mas": mas,
     }
-    if mas is not None:
-        params["mas"] = mas
     return params
 
 
@@ -1559,9 +1553,10 @@ def fslmaths_operation_mas_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("mas", None) is not None:
-        if not isinstance(params["mas"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`mas` has the wrong type: Received `{type(params.get("mas", None))}` expected `InputPathType | None`')
+    if params.get("mas", None) is None:
+        raise StyxValidationError("`mas` must not be None")
+    if not isinstance(params["mas"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mas` has the wrong type: Received `{type(params.get("mas", None))}` expected `InputPathType`')
 
 
 def fslmaths_operation_mas_cargs(
@@ -1578,16 +1573,15 @@ def fslmaths_operation_mas_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("mas", None) is not None:
-        cargs.extend([
-            "-mas",
-            execution.input_file(params.get("mas", None))
-        ])
+    cargs.extend([
+        "-mas",
+        execution.input_file(params.get("mas", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_thr(
-    thr: float | None = None,
+    thr: float,
 ) -> FslmathsOperationThrParamsDictTagged:
     """
     Build parameters.
@@ -1600,9 +1594,8 @@ def fslmaths_operation_thr(
     """
     params = {
         "@type": "operation_thr",
+        "thr": thr,
     }
-    if thr is not None:
-        params["thr"] = thr
     return params
 
 
@@ -1618,9 +1611,10 @@ def fslmaths_operation_thr_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("thr", None) is not None:
-        if not isinstance(params["thr"], (float, int)):
-            raise StyxValidationError(f'`thr` has the wrong type: Received `{type(params.get("thr", None))}` expected `float | None`')
+    if params.get("thr", None) is None:
+        raise StyxValidationError("`thr` must not be None")
+    if not isinstance(params["thr"], (float, int)):
+        raise StyxValidationError(f'`thr` has the wrong type: Received `{type(params.get("thr", None))}` expected `float`')
 
 
 def fslmaths_operation_thr_cargs(
@@ -1637,16 +1631,15 @@ def fslmaths_operation_thr_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("thr", None) is not None:
-        cargs.extend([
-            "-thr",
-            str(params.get("thr", None))
-        ])
+    cargs.extend([
+        "-thr",
+        str(params.get("thr", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_thrp(
-    thrp: float | None = None,
+    thrp: float,
 ) -> FslmathsOperationThrpParamsDictTagged:
     """
     Build parameters.
@@ -1659,9 +1652,8 @@ def fslmaths_operation_thrp(
     """
     params = {
         "@type": "operation_thrp",
+        "thrp": thrp,
     }
-    if thrp is not None:
-        params["thrp"] = thrp
     return params
 
 
@@ -1677,11 +1669,12 @@ def fslmaths_operation_thrp_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("thrp", None) is not None:
-        if not isinstance(params["thrp"], (float, int)):
-            raise StyxValidationError(f'`thrp` has the wrong type: Received `{type(params.get("thrp", None))}` expected `float | None`')
-        if not (0 <= params["thrp"] <= 100):
-            raise StyxValidationError("Parameter `thrp` must be between 0 and 100 (inclusive)")
+    if params.get("thrp", None) is None:
+        raise StyxValidationError("`thrp` must not be None")
+    if not isinstance(params["thrp"], (float, int)):
+        raise StyxValidationError(f'`thrp` has the wrong type: Received `{type(params.get("thrp", None))}` expected `float`')
+    if not (0 <= params["thrp"] <= 100):
+        raise StyxValidationError("Parameter `thrp` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_thrp_cargs(
@@ -1698,16 +1691,15 @@ def fslmaths_operation_thrp_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("thrp", None) is not None:
-        cargs.extend([
-            "-thrp",
-            str(params.get("thrp", None))
-        ])
+    cargs.extend([
+        "-thrp",
+        str(params.get("thrp", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_thr_p(
-    thr_p: float | None = None,
+    thr_p: float,
 ) -> FslmathsOperationThrPParamsDictTagged:
     """
     Build parameters.
@@ -1720,9 +1712,8 @@ def fslmaths_operation_thr_p(
     """
     params = {
         "@type": "operation_thrP",
+        "thrP": thr_p,
     }
-    if thr_p is not None:
-        params["thrP"] = thr_p
     return params
 
 
@@ -1738,11 +1729,12 @@ def fslmaths_operation_thr_p_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("thrP", None) is not None:
-        if not isinstance(params["thrP"], (float, int)):
-            raise StyxValidationError(f'`thrP` has the wrong type: Received `{type(params.get("thrP", None))}` expected `float | None`')
-        if not (0 <= params["thrP"] <= 100):
-            raise StyxValidationError("Parameter `thrP` must be between 0 and 100 (inclusive)")
+    if params.get("thrP", None) is None:
+        raise StyxValidationError("`thrP` must not be None")
+    if not isinstance(params["thrP"], (float, int)):
+        raise StyxValidationError(f'`thrP` has the wrong type: Received `{type(params.get("thrP", None))}` expected `float`')
+    if not (0 <= params["thrP"] <= 100):
+        raise StyxValidationError("Parameter `thrP` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_thr_p_cargs(
@@ -1759,16 +1751,15 @@ def fslmaths_operation_thr_p_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("thrP", None) is not None:
-        cargs.extend([
-            "-thrP",
-            str(params.get("thrP", None))
-        ])
+    cargs.extend([
+        "-thrP",
+        str(params.get("thrP", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_uthr(
-    uthr: float | None = None,
+    uthr: float,
 ) -> FslmathsOperationUthrParamsDictTagged:
     """
     Build parameters.
@@ -1781,9 +1772,8 @@ def fslmaths_operation_uthr(
     """
     params = {
         "@type": "operation_uthr",
+        "uthr": uthr,
     }
-    if uthr is not None:
-        params["uthr"] = uthr
     return params
 
 
@@ -1799,9 +1789,10 @@ def fslmaths_operation_uthr_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("uthr", None) is not None:
-        if not isinstance(params["uthr"], (float, int)):
-            raise StyxValidationError(f'`uthr` has the wrong type: Received `{type(params.get("uthr", None))}` expected `float | None`')
+    if params.get("uthr", None) is None:
+        raise StyxValidationError("`uthr` must not be None")
+    if not isinstance(params["uthr"], (float, int)):
+        raise StyxValidationError(f'`uthr` has the wrong type: Received `{type(params.get("uthr", None))}` expected `float`')
 
 
 def fslmaths_operation_uthr_cargs(
@@ -1818,16 +1809,15 @@ def fslmaths_operation_uthr_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("uthr", None) is not None:
-        cargs.extend([
-            "-uthr",
-            str(params.get("uthr", None))
-        ])
+    cargs.extend([
+        "-uthr",
+        str(params.get("uthr", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_uthrp(
-    uthrp: float | None = None,
+    uthrp: float,
 ) -> FslmathsOperationUthrpParamsDictTagged:
     """
     Build parameters.
@@ -1840,9 +1830,8 @@ def fslmaths_operation_uthrp(
     """
     params = {
         "@type": "operation_uthrp",
+        "uthrp": uthrp,
     }
-    if uthrp is not None:
-        params["uthrp"] = uthrp
     return params
 
 
@@ -1858,11 +1847,12 @@ def fslmaths_operation_uthrp_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("uthrp", None) is not None:
-        if not isinstance(params["uthrp"], (float, int)):
-            raise StyxValidationError(f'`uthrp` has the wrong type: Received `{type(params.get("uthrp", None))}` expected `float | None`')
-        if not (0 <= params["uthrp"] <= 100):
-            raise StyxValidationError("Parameter `uthrp` must be between 0 and 100 (inclusive)")
+    if params.get("uthrp", None) is None:
+        raise StyxValidationError("`uthrp` must not be None")
+    if not isinstance(params["uthrp"], (float, int)):
+        raise StyxValidationError(f'`uthrp` has the wrong type: Received `{type(params.get("uthrp", None))}` expected `float`')
+    if not (0 <= params["uthrp"] <= 100):
+        raise StyxValidationError("Parameter `uthrp` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_uthrp_cargs(
@@ -1879,16 +1869,15 @@ def fslmaths_operation_uthrp_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("uthrp", None) is not None:
-        cargs.extend([
-            "-uthrp",
-            str(params.get("uthrp", None))
-        ])
+    cargs.extend([
+        "-uthrp",
+        str(params.get("uthrp", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_uthr_p(
-    uthr_p: float | None = None,
+    uthr_p: float,
 ) -> FslmathsOperationUthrPParamsDictTagged:
     """
     Build parameters.
@@ -1901,9 +1890,8 @@ def fslmaths_operation_uthr_p(
     """
     params = {
         "@type": "operation_uthrP",
+        "uthrP": uthr_p,
     }
-    if uthr_p is not None:
-        params["uthrP"] = uthr_p
     return params
 
 
@@ -1919,11 +1907,12 @@ def fslmaths_operation_uthr_p_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("uthrP", None) is not None:
-        if not isinstance(params["uthrP"], (float, int)):
-            raise StyxValidationError(f'`uthrP` has the wrong type: Received `{type(params.get("uthrP", None))}` expected `float | None`')
-        if not (0 <= params["uthrP"] <= 100):
-            raise StyxValidationError("Parameter `uthrP` must be between 0 and 100 (inclusive)")
+    if params.get("uthrP", None) is None:
+        raise StyxValidationError("`uthrP` must not be None")
+    if not isinstance(params["uthrP"], (float, int)):
+        raise StyxValidationError(f'`uthrP` has the wrong type: Received `{type(params.get("uthrP", None))}` expected `float`')
+    if not (0 <= params["uthrP"] <= 100):
+        raise StyxValidationError("Parameter `uthrP` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_uthr_p_cargs(
@@ -1940,16 +1929,15 @@ def fslmaths_operation_uthr_p_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("uthrP", None) is not None:
-        cargs.extend([
-            "-uthrP",
-            str(params.get("uthrP", None))
-        ])
+    cargs.extend([
+        "-uthrP",
+        str(params.get("uthrP", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_max(
-    max_: float | None = None,
+    max_: float,
 ) -> FslmathsOperationMaxParamsDictTagged:
     """
     Build parameters.
@@ -1961,9 +1949,8 @@ def fslmaths_operation_max(
     """
     params = {
         "@type": "operation_max",
+        "max": max_,
     }
-    if max_ is not None:
-        params["max"] = max_
     return params
 
 
@@ -1979,9 +1966,10 @@ def fslmaths_operation_max_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("max", None) is not None:
-        if not isinstance(params["max"], (float, int)):
-            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
+    if params.get("max", None) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], (float, int)):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float`')
 
 
 def fslmaths_operation_max_cargs(
@@ -1998,16 +1986,15 @@ def fslmaths_operation_max_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("max", None) is not None:
-        cargs.extend([
-            "-max",
-            str(params.get("max", None))
-        ])
+    cargs.extend([
+        "-max",
+        str(params.get("max", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_min(
-    min_: float | None = None,
+    min_: float,
 ) -> FslmathsOperationMinParamsDictTagged:
     """
     Build parameters.
@@ -2019,9 +2006,8 @@ def fslmaths_operation_min(
     """
     params = {
         "@type": "operation_min",
+        "min": min_,
     }
-    if min_ is not None:
-        params["min"] = min_
     return params
 
 
@@ -2037,9 +2023,10 @@ def fslmaths_operation_min_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("min", None) is not None:
-        if not isinstance(params["min"], (float, int)):
-            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float | None`')
+    if params.get("min", None) is None:
+        raise StyxValidationError("`min` must not be None")
+    if not isinstance(params["min"], (float, int)):
+        raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float`')
 
 
 def fslmaths_operation_min_cargs(
@@ -2056,16 +2043,15 @@ def fslmaths_operation_min_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("min", None) is not None:
-        cargs.extend([
-            "-min",
-            str(params.get("min", None))
-        ])
+    cargs.extend([
+        "-min",
+        str(params.get("min", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_seed(
-    seed: float | None = None,
+    seed: float,
 ) -> FslmathsOperationSeedParamsDictTagged:
     """
     Build parameters.
@@ -2077,9 +2063,8 @@ def fslmaths_operation_seed(
     """
     params = {
         "@type": "operation_seed",
+        "seed": seed,
     }
-    if seed is not None:
-        params["seed"] = seed
     return params
 
 
@@ -2095,9 +2080,10 @@ def fslmaths_operation_seed_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("seed", None) is not None:
-        if not isinstance(params["seed"], (float, int)):
-            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("seed", None) is None:
+        raise StyxValidationError("`seed` must not be None")
+    if not isinstance(params["seed"], (float, int)):
+        raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float`')
 
 
 def fslmaths_operation_seed_cargs(
@@ -2114,16 +2100,15 @@ def fslmaths_operation_seed_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("seed", None) is not None:
-        cargs.extend([
-            "-seed",
-            str(params.get("seed", None))
-        ])
+    cargs.extend([
+        "-seed",
+        str(params.get("seed", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_restart(
-    restart: InputPathType | None = None,
+    restart: InputPathType,
 ) -> FslmathsOperationRestartParamsDictTagged:
     """
     Build parameters.
@@ -2136,9 +2121,8 @@ def fslmaths_operation_restart(
     """
     params = {
         "@type": "operation_restart",
+        "restart": restart,
     }
-    if restart is not None:
-        params["restart"] = restart
     return params
 
 
@@ -2154,9 +2138,10 @@ def fslmaths_operation_restart_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("restart", None) is not None:
-        if not isinstance(params["restart"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`restart` has the wrong type: Received `{type(params.get("restart", None))}` expected `InputPathType | None`')
+    if params.get("restart", None) is None:
+        raise StyxValidationError("`restart` must not be None")
+    if not isinstance(params["restart"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`restart` has the wrong type: Received `{type(params.get("restart", None))}` expected `InputPathType`')
 
 
 def fslmaths_operation_restart_cargs(
@@ -2173,11 +2158,10 @@ def fslmaths_operation_restart_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("restart", None) is not None:
-        cargs.extend([
-            "-restart",
-            execution.input_file(params.get("restart", None))
-        ])
+    cargs.extend([
+        "-restart",
+        execution.input_file(params.get("restart", None))
+    ])
     return cargs
 
 
@@ -3174,7 +3158,7 @@ def fslmaths_operation_index_cargs(
 
 
 def fslmaths_operation_grid(
-    grid: list[float] | None = None,
+    grid: list[float],
 ) -> FslmathsOperationGridParamsDictTagged:
     """
     Build parameters.
@@ -3186,9 +3170,8 @@ def fslmaths_operation_grid(
     """
     params = {
         "@type": "operation_grid",
+        "grid": grid,
     }
-    if grid is not None:
-        params["grid"] = grid
     return params
 
 
@@ -3204,12 +3187,13 @@ def fslmaths_operation_grid_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("grid", None) is not None:
-        if not isinstance(params["grid"], list):
-            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
-        for e in params["grid"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
+    if params.get("grid", None) is None:
+        raise StyxValidationError("`grid` must not be None")
+    if not isinstance(params["grid"], list):
+        raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float]`')
+    for e in params["grid"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_grid_cargs(
@@ -3226,11 +3210,10 @@ def fslmaths_operation_grid_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("grid", None) is not None:
-        cargs.extend([
-            "-grid",
-            *map(str, params.get("grid", None))
-        ])
+    cargs.extend([
+        "-grid",
+        *map(str, params.get("grid", None))
+    ])
     return cargs
 
 
@@ -3290,7 +3273,7 @@ def fslmaths_operation_edge_cargs(
 
 
 def fslmaths_operation_tfce(
-    tfce: list[float] | None = None,
+    tfce: list[float],
 ) -> FslmathsOperationTfceParamsDictTagged:
     """
     Build parameters.
@@ -3303,9 +3286,8 @@ def fslmaths_operation_tfce(
     """
     params = {
         "@type": "operation_tfce",
+        "tfce": tfce,
     }
-    if tfce is not None:
-        params["tfce"] = tfce
     return params
 
 
@@ -3321,12 +3303,13 @@ def fslmaths_operation_tfce_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("tfce", None) is not None:
-        if not isinstance(params["tfce"], list):
-            raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float] | None`')
-        for e in params["tfce"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float] | None`')
+    if params.get("tfce", None) is None:
+        raise StyxValidationError("`tfce` must not be None")
+    if not isinstance(params["tfce"], list):
+        raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float]`')
+    for e in params["tfce"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_tfce_cargs(
@@ -3343,16 +3326,15 @@ def fslmaths_operation_tfce_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("tfce", None) is not None:
-        cargs.extend([
-            "-tfce",
-            *map(str, params.get("tfce", None))
-        ])
+    cargs.extend([
+        "-tfce",
+        *map(str, params.get("tfce", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_tfce_s(
-    tfce_s: list[float] | None = None,
+    tfce_s: list[float],
 ) -> FslmathsOperationTfceSParamsDictTagged:
     """
     Build parameters.
@@ -3364,9 +3346,8 @@ def fslmaths_operation_tfce_s(
     """
     params = {
         "@type": "operation_tfceS",
+        "tfceS": tfce_s,
     }
-    if tfce_s is not None:
-        params["tfceS"] = tfce_s
     return params
 
 
@@ -3382,12 +3363,13 @@ def fslmaths_operation_tfce_s_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("tfceS", None) is not None:
-        if not isinstance(params["tfceS"], list):
-            raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float] | None`')
-        for e in params["tfceS"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float] | None`')
+    if params.get("tfceS", None) is None:
+        raise StyxValidationError("`tfceS` must not be None")
+    if not isinstance(params["tfceS"], list):
+        raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float]`')
+    for e in params["tfceS"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_tfce_s_cargs(
@@ -3404,11 +3386,10 @@ def fslmaths_operation_tfce_s_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("tfceS", None) is not None:
-        cargs.extend([
-            "-tfceS",
-            *map(str, params.get("tfceS", None))
-        ])
+    cargs.extend([
+        "-tfceS",
+        *map(str, params.get("tfceS", None))
+    ])
     return cargs
 
 
@@ -3634,7 +3615,7 @@ def fslmaths_operation_randn_cargs(
 
 
 def fslmaths_operation_inm(
-    inm: float | None = None,
+    inm: float,
 ) -> FslmathsOperationInmParamsDictTagged:
     """
     Build parameters.
@@ -3646,9 +3627,8 @@ def fslmaths_operation_inm(
     """
     params = {
         "@type": "operation_inm",
+        "inm": inm,
     }
-    if inm is not None:
-        params["inm"] = inm
     return params
 
 
@@ -3664,9 +3644,10 @@ def fslmaths_operation_inm_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("inm", None) is not None:
-        if not isinstance(params["inm"], (float, int)):
-            raise StyxValidationError(f'`inm` has the wrong type: Received `{type(params.get("inm", None))}` expected `float | None`')
+    if params.get("inm", None) is None:
+        raise StyxValidationError("`inm` must not be None")
+    if not isinstance(params["inm"], (float, int)):
+        raise StyxValidationError(f'`inm` has the wrong type: Received `{type(params.get("inm", None))}` expected `float`')
 
 
 def fslmaths_operation_inm_cargs(
@@ -3683,16 +3664,15 @@ def fslmaths_operation_inm_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("inm", None) is not None:
-        cargs.extend([
-            "-inm",
-            str(params.get("inm", None))
-        ])
+    cargs.extend([
+        "-inm",
+        str(params.get("inm", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_ing(
-    ing: float | None = None,
+    ing: float,
 ) -> FslmathsOperationIngParamsDictTagged:
     """
     Build parameters.
@@ -3704,9 +3684,8 @@ def fslmaths_operation_ing(
     """
     params = {
         "@type": "operation_ing",
+        "ing": ing,
     }
-    if ing is not None:
-        params["ing"] = ing
     return params
 
 
@@ -3722,9 +3701,10 @@ def fslmaths_operation_ing_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("ing", None) is not None:
-        if not isinstance(params["ing"], (float, int)):
-            raise StyxValidationError(f'`ing` has the wrong type: Received `{type(params.get("ing", None))}` expected `float | None`')
+    if params.get("ing", None) is None:
+        raise StyxValidationError("`ing` must not be None")
+    if not isinstance(params["ing"], (float, int)):
+        raise StyxValidationError(f'`ing` has the wrong type: Received `{type(params.get("ing", None))}` expected `float`')
 
 
 def fslmaths_operation_ing_cargs(
@@ -3741,11 +3721,10 @@ def fslmaths_operation_ing_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("ing", None) is not None:
-        cargs.extend([
-            "-ing",
-            str(params.get("ing", None))
-        ])
+    cargs.extend([
+        "-ing",
+        str(params.get("ing", None))
+    ])
     return cargs
 
 
@@ -3971,7 +3950,7 @@ def fslmaths_operation_kernel_2_d_cargs(
 
 
 def fslmaths_operation_kernel_box(
-    kernel_box: float | None = None,
+    kernel_box: float,
 ) -> FslmathsOperationKernelBoxParamsDictTagged:
     """
     Build parameters.
@@ -3984,9 +3963,8 @@ def fslmaths_operation_kernel_box(
     """
     params = {
         "@type": "operation_kernel_box",
+        "kernel_box": kernel_box,
     }
-    if kernel_box is not None:
-        params["kernel_box"] = kernel_box
     return params
 
 
@@ -4002,9 +3980,10 @@ def fslmaths_operation_kernel_box_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_box", None) is not None:
-        if not isinstance(params["kernel_box"], (float, int)):
-            raise StyxValidationError(f'`kernel_box` has the wrong type: Received `{type(params.get("kernel_box", None))}` expected `float | None`')
+    if params.get("kernel_box", None) is None:
+        raise StyxValidationError("`kernel_box` must not be None")
+    if not isinstance(params["kernel_box"], (float, int)):
+        raise StyxValidationError(f'`kernel_box` has the wrong type: Received `{type(params.get("kernel_box", None))}` expected `float`')
 
 
 def fslmaths_operation_kernel_box_cargs(
@@ -4021,16 +4000,15 @@ def fslmaths_operation_kernel_box_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_box", None) is not None:
-        cargs.extend([
-            "-kernel box",
-            str(params.get("kernel_box", None))
-        ])
+    cargs.extend([
+        "-kernel box",
+        str(params.get("kernel_box", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_kernel_boxv(
-    kernel_boxv: float | None = None,
+    kernel_boxv: float,
 ) -> FslmathsOperationKernelBoxvParamsDictTagged:
     """
     Build parameters.
@@ -4043,9 +4021,8 @@ def fslmaths_operation_kernel_boxv(
     """
     params = {
         "@type": "operation_kernel_boxv",
+        "kernel_boxv": kernel_boxv,
     }
-    if kernel_boxv is not None:
-        params["kernel_boxv"] = kernel_boxv
     return params
 
 
@@ -4061,9 +4038,10 @@ def fslmaths_operation_kernel_boxv_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_boxv", None) is not None:
-        if not isinstance(params["kernel_boxv"], (float, int)):
-            raise StyxValidationError(f'`kernel_boxv` has the wrong type: Received `{type(params.get("kernel_boxv", None))}` expected `float | None`')
+    if params.get("kernel_boxv", None) is None:
+        raise StyxValidationError("`kernel_boxv` must not be None")
+    if not isinstance(params["kernel_boxv"], (float, int)):
+        raise StyxValidationError(f'`kernel_boxv` has the wrong type: Received `{type(params.get("kernel_boxv", None))}` expected `float`')
 
 
 def fslmaths_operation_kernel_boxv_cargs(
@@ -4080,16 +4058,15 @@ def fslmaths_operation_kernel_boxv_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_boxv", None) is not None:
-        cargs.extend([
-            "-kernel boxv",
-            str(params.get("kernel_boxv", None))
-        ])
+    cargs.extend([
+        "-kernel boxv",
+        str(params.get("kernel_boxv", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_kernel_boxv3(
-    kernel_boxv3: list[float] | None = None,
+    kernel_boxv3: list[float],
 ) -> FslmathsOperationKernelBoxv3ParamsDictTagged:
     """
     Build parameters.
@@ -4102,9 +4079,8 @@ def fslmaths_operation_kernel_boxv3(
     """
     params = {
         "@type": "operation_kernel_boxv3",
+        "kernel_boxv3": kernel_boxv3,
     }
-    if kernel_boxv3 is not None:
-        params["kernel_boxv3"] = kernel_boxv3
     return params
 
 
@@ -4120,14 +4096,15 @@ def fslmaths_operation_kernel_boxv3_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_boxv3", None) is not None:
-        if not isinstance(params["kernel_boxv3"], list):
-            raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
-        if len(params["kernel_boxv3"]) != 3:
-            raise StyxValidationError("Parameter `kernel_boxv3` must contain exactly 3 elements")
-        for e in params["kernel_boxv3"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
+    if params.get("kernel_boxv3", None) is None:
+        raise StyxValidationError("`kernel_boxv3` must not be None")
+    if not isinstance(params["kernel_boxv3"], list):
+        raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float]`')
+    if len(params["kernel_boxv3"]) != 3:
+        raise StyxValidationError("Parameter `kernel_boxv3` must contain exactly 3 elements")
+    for e in params["kernel_boxv3"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_kernel_boxv3_cargs(
@@ -4144,16 +4121,15 @@ def fslmaths_operation_kernel_boxv3_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_boxv3", None) is not None:
-        cargs.extend([
-            "-kernel boxv3",
-            *map(str, params.get("kernel_boxv3", None))
-        ])
+    cargs.extend([
+        "-kernel boxv3",
+        *map(str, params.get("kernel_boxv3", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_kernel_gauss(
-    kernel_gauss: float | None = None,
+    kernel_gauss: float,
 ) -> FslmathsOperationKernelGaussParamsDictTagged:
     """
     Build parameters.
@@ -4165,9 +4141,8 @@ def fslmaths_operation_kernel_gauss(
     """
     params = {
         "@type": "operation_kernel_gauss",
+        "kernel_gauss": kernel_gauss,
     }
-    if kernel_gauss is not None:
-        params["kernel_gauss"] = kernel_gauss
     return params
 
 
@@ -4183,9 +4158,10 @@ def fslmaths_operation_kernel_gauss_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_gauss", None) is not None:
-        if not isinstance(params["kernel_gauss"], (float, int)):
-            raise StyxValidationError(f'`kernel_gauss` has the wrong type: Received `{type(params.get("kernel_gauss", None))}` expected `float | None`')
+    if params.get("kernel_gauss", None) is None:
+        raise StyxValidationError("`kernel_gauss` must not be None")
+    if not isinstance(params["kernel_gauss"], (float, int)):
+        raise StyxValidationError(f'`kernel_gauss` has the wrong type: Received `{type(params.get("kernel_gauss", None))}` expected `float`')
 
 
 def fslmaths_operation_kernel_gauss_cargs(
@@ -4202,16 +4178,15 @@ def fslmaths_operation_kernel_gauss_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_gauss", None) is not None:
-        cargs.extend([
-            "-kernel gauss",
-            str(params.get("kernel_gauss", None))
-        ])
+    cargs.extend([
+        "-kernel gauss",
+        str(params.get("kernel_gauss", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_kernel_sphere(
-    kernel_sphere: float | None = None,
+    kernel_sphere: float,
 ) -> FslmathsOperationKernelSphereParamsDictTagged:
     """
     Build parameters.
@@ -4224,9 +4199,8 @@ def fslmaths_operation_kernel_sphere(
     """
     params = {
         "@type": "operation_kernel_sphere",
+        "kernel_sphere": kernel_sphere,
     }
-    if kernel_sphere is not None:
-        params["kernel_sphere"] = kernel_sphere
     return params
 
 
@@ -4242,9 +4216,10 @@ def fslmaths_operation_kernel_sphere_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_sphere", None) is not None:
-        if not isinstance(params["kernel_sphere"], (float, int)):
-            raise StyxValidationError(f'`kernel_sphere` has the wrong type: Received `{type(params.get("kernel_sphere", None))}` expected `float | None`')
+    if params.get("kernel_sphere", None) is None:
+        raise StyxValidationError("`kernel_sphere` must not be None")
+    if not isinstance(params["kernel_sphere"], (float, int)):
+        raise StyxValidationError(f'`kernel_sphere` has the wrong type: Received `{type(params.get("kernel_sphere", None))}` expected `float`')
 
 
 def fslmaths_operation_kernel_sphere_cargs(
@@ -4261,16 +4236,15 @@ def fslmaths_operation_kernel_sphere_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_sphere", None) is not None:
-        cargs.extend([
-            "-kernel sphere",
-            str(params.get("kernel_sphere", None))
-        ])
+    cargs.extend([
+        "-kernel sphere",
+        str(params.get("kernel_sphere", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_kernel_file(
-    kernel_file: InputPathType | None = None,
+    kernel_file: InputPathType,
 ) -> FslmathsOperationKernelFileParamsDictTagged:
     """
     Build parameters.
@@ -4282,9 +4256,8 @@ def fslmaths_operation_kernel_file(
     """
     params = {
         "@type": "operation_kernel_file",
+        "kernel_file": kernel_file,
     }
-    if kernel_file is not None:
-        params["kernel_file"] = kernel_file
     return params
 
 
@@ -4300,9 +4273,10 @@ def fslmaths_operation_kernel_file_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_file", None) is not None:
-        if not isinstance(params["kernel_file"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`kernel_file` has the wrong type: Received `{type(params.get("kernel_file", None))}` expected `InputPathType | None`')
+    if params.get("kernel_file", None) is None:
+        raise StyxValidationError("`kernel_file` must not be None")
+    if not isinstance(params["kernel_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`kernel_file` has the wrong type: Received `{type(params.get("kernel_file", None))}` expected `InputPathType`')
 
 
 def fslmaths_operation_kernel_file_cargs(
@@ -4319,11 +4293,10 @@ def fslmaths_operation_kernel_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_file", None) is not None:
-        cargs.extend([
-            "-kernel file",
-            execution.input_file(params.get("kernel_file", None))
-        ])
+    cargs.extend([
+        "-kernel file",
+        execution.input_file(params.get("kernel_file", None))
+    ])
     return cargs
 
 
@@ -4825,7 +4798,7 @@ def fslmaths_operation_fmeanu_cargs(
 
 
 def fslmaths_operation_s(
-    s: float | None = None,
+    s: float,
 ) -> FslmathsOperationSParamsDictTagged:
     """
     Build parameters.
@@ -4837,9 +4810,8 @@ def fslmaths_operation_s(
     """
     params = {
         "@type": "operation_s",
+        "s": s,
     }
-    if s is not None:
-        params["s"] = s
     return params
 
 
@@ -4855,9 +4827,10 @@ def fslmaths_operation_s_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("s", None) is not None:
-        if not isinstance(params["s"], (float, int)):
-            raise StyxValidationError(f'`s` has the wrong type: Received `{type(params.get("s", None))}` expected `float | None`')
+    if params.get("s", None) is None:
+        raise StyxValidationError("`s` must not be None")
+    if not isinstance(params["s"], (float, int)):
+        raise StyxValidationError(f'`s` has the wrong type: Received `{type(params.get("s", None))}` expected `float`')
 
 
 def fslmaths_operation_s_cargs(
@@ -4874,11 +4847,10 @@ def fslmaths_operation_s_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("s", None) is not None:
-        cargs.extend([
-            "-s",
-            str(params.get("s", None))
-        ])
+    cargs.extend([
+        "-s",
+        str(params.get("s", None))
+    ])
     return cargs
 
 
@@ -6314,7 +6286,7 @@ def fslmaths_operation_zmedian_cargs(
 
 
 def fslmaths_operation_tperc(
-    tperc: float | None = None,
+    tperc: float,
 ) -> FslmathsOperationTpercParamsDictTagged:
     """
     Build parameters.
@@ -6326,9 +6298,8 @@ def fslmaths_operation_tperc(
     """
     params = {
         "@type": "operation_Tperc",
+        "Tperc": tperc,
     }
-    if tperc is not None:
-        params["Tperc"] = tperc
     return params
 
 
@@ -6344,11 +6315,12 @@ def fslmaths_operation_tperc_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("Tperc", None) is not None:
-        if not isinstance(params["Tperc"], (float, int)):
-            raise StyxValidationError(f'`Tperc` has the wrong type: Received `{type(params.get("Tperc", None))}` expected `float | None`')
-        if not (0 <= params["Tperc"] <= 100):
-            raise StyxValidationError("Parameter `Tperc` must be between 0 and 100 (inclusive)")
+    if params.get("Tperc", None) is None:
+        raise StyxValidationError("`Tperc` must not be None")
+    if not isinstance(params["Tperc"], (float, int)):
+        raise StyxValidationError(f'`Tperc` has the wrong type: Received `{type(params.get("Tperc", None))}` expected `float`')
+    if not (0 <= params["Tperc"] <= 100):
+        raise StyxValidationError("Parameter `Tperc` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_tperc_cargs(
@@ -6365,16 +6337,15 @@ def fslmaths_operation_tperc_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("Tperc", None) is not None:
-        cargs.extend([
-            "-Tperc",
-            str(params.get("Tperc", None))
-        ])
+    cargs.extend([
+        "-Tperc",
+        str(params.get("Tperc", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_xperc(
-    xperc: float | None = None,
+    xperc: float,
 ) -> FslmathsOperationXpercParamsDictTagged:
     """
     Build parameters.
@@ -6386,9 +6357,8 @@ def fslmaths_operation_xperc(
     """
     params = {
         "@type": "operation_Xperc",
+        "Xperc": xperc,
     }
-    if xperc is not None:
-        params["Xperc"] = xperc
     return params
 
 
@@ -6404,11 +6374,12 @@ def fslmaths_operation_xperc_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("Xperc", None) is not None:
-        if not isinstance(params["Xperc"], (float, int)):
-            raise StyxValidationError(f'`Xperc` has the wrong type: Received `{type(params.get("Xperc", None))}` expected `float | None`')
-        if not (0 <= params["Xperc"] <= 100):
-            raise StyxValidationError("Parameter `Xperc` must be between 0 and 100 (inclusive)")
+    if params.get("Xperc", None) is None:
+        raise StyxValidationError("`Xperc` must not be None")
+    if not isinstance(params["Xperc"], (float, int)):
+        raise StyxValidationError(f'`Xperc` has the wrong type: Received `{type(params.get("Xperc", None))}` expected `float`')
+    if not (0 <= params["Xperc"] <= 100):
+        raise StyxValidationError("Parameter `Xperc` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_xperc_cargs(
@@ -6425,16 +6396,15 @@ def fslmaths_operation_xperc_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("Xperc", None) is not None:
-        cargs.extend([
-            "-Xperc",
-            str(params.get("Xperc", None))
-        ])
+    cargs.extend([
+        "-Xperc",
+        str(params.get("Xperc", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_yperc(
-    yperc: float | None = None,
+    yperc: float,
 ) -> FslmathsOperationYpercParamsDictTagged:
     """
     Build parameters.
@@ -6446,9 +6416,8 @@ def fslmaths_operation_yperc(
     """
     params = {
         "@type": "operation_Yperc",
+        "Yperc": yperc,
     }
-    if yperc is not None:
-        params["Yperc"] = yperc
     return params
 
 
@@ -6464,11 +6433,12 @@ def fslmaths_operation_yperc_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("Yperc", None) is not None:
-        if not isinstance(params["Yperc"], (float, int)):
-            raise StyxValidationError(f'`Yperc` has the wrong type: Received `{type(params.get("Yperc", None))}` expected `float | None`')
-        if not (0 <= params["Yperc"] <= 100):
-            raise StyxValidationError("Parameter `Yperc` must be between 0 and 100 (inclusive)")
+    if params.get("Yperc", None) is None:
+        raise StyxValidationError("`Yperc` must not be None")
+    if not isinstance(params["Yperc"], (float, int)):
+        raise StyxValidationError(f'`Yperc` has the wrong type: Received `{type(params.get("Yperc", None))}` expected `float`')
+    if not (0 <= params["Yperc"] <= 100):
+        raise StyxValidationError("Parameter `Yperc` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_yperc_cargs(
@@ -6485,16 +6455,15 @@ def fslmaths_operation_yperc_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("Yperc", None) is not None:
-        cargs.extend([
-            "-Yperc",
-            str(params.get("Yperc", None))
-        ])
+    cargs.extend([
+        "-Yperc",
+        str(params.get("Yperc", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_zperc(
-    zperc: float | None = None,
+    zperc: float,
 ) -> FslmathsOperationZpercParamsDictTagged:
     """
     Build parameters.
@@ -6506,9 +6475,8 @@ def fslmaths_operation_zperc(
     """
     params = {
         "@type": "operation_Zperc",
+        "Zperc": zperc,
     }
-    if zperc is not None:
-        params["Zperc"] = zperc
     return params
 
 
@@ -6524,11 +6492,12 @@ def fslmaths_operation_zperc_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("Zperc", None) is not None:
-        if not isinstance(params["Zperc"], (float, int)):
-            raise StyxValidationError(f'`Zperc` has the wrong type: Received `{type(params.get("Zperc", None))}` expected `float | None`')
-        if not (0 <= params["Zperc"] <= 100):
-            raise StyxValidationError("Parameter `Zperc` must be between 0 and 100 (inclusive)")
+    if params.get("Zperc", None) is None:
+        raise StyxValidationError("`Zperc` must not be None")
+    if not isinstance(params["Zperc"], (float, int)):
+        raise StyxValidationError(f'`Zperc` has the wrong type: Received `{type(params.get("Zperc", None))}` expected `float`')
+    if not (0 <= params["Zperc"] <= 100):
+        raise StyxValidationError("Parameter `Zperc` must be between 0 and 100 (inclusive)")
 
 
 def fslmaths_operation_zperc_cargs(
@@ -6545,11 +6514,10 @@ def fslmaths_operation_zperc_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("Zperc", None) is not None:
-        cargs.extend([
-            "-Zperc",
-            str(params.get("Zperc", None))
-        ])
+    cargs.extend([
+        "-Zperc",
+        str(params.get("Zperc", None))
+    ])
     return cargs
 
 
@@ -6610,7 +6578,7 @@ def fslmaths_operation_tar1_cargs(
 
 
 def fslmaths_operation_roi(
-    roi: list[float] | None = None,
+    roi: list[float],
 ) -> FslmathsOperationRoiParamsDictTagged:
     """
     Build parameters.
@@ -6624,9 +6592,8 @@ def fslmaths_operation_roi(
     """
     params = {
         "@type": "operation_roi",
+        "roi": roi,
     }
-    if roi is not None:
-        params["roi"] = roi
     return params
 
 
@@ -6642,14 +6609,15 @@ def fslmaths_operation_roi_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("roi", None) is not None:
-        if not isinstance(params["roi"], list):
-            raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
-        if len(params["roi"]) != 6:
-            raise StyxValidationError("Parameter `roi` must contain exactly 6 elements")
-        for e in params["roi"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
+    if params.get("roi", None) is None:
+        raise StyxValidationError("`roi` must not be None")
+    if not isinstance(params["roi"], list):
+        raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float]`')
+    if len(params["roi"]) != 6:
+        raise StyxValidationError("Parameter `roi` must contain exactly 6 elements")
+    for e in params["roi"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_roi_cargs(
@@ -6666,16 +6634,15 @@ def fslmaths_operation_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roi", None) is not None:
-        cargs.extend([
-            "-roi",
-            *map(str, params.get("roi", None))
-        ])
+    cargs.extend([
+        "-roi",
+        *map(str, params.get("roi", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_bptf(
-    bptf: list[float] | None = None,
+    bptf: list[float],
 ) -> FslmathsOperationBptfParamsDictTagged:
     """
     Build parameters.
@@ -6688,9 +6655,8 @@ def fslmaths_operation_bptf(
     """
     params = {
         "@type": "operation_bptf",
+        "bptf": bptf,
     }
-    if bptf is not None:
-        params["bptf"] = bptf
     return params
 
 
@@ -6706,14 +6672,15 @@ def fslmaths_operation_bptf_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("bptf", None) is not None:
-        if not isinstance(params["bptf"], list):
-            raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
-        if len(params["bptf"]) != 2:
-            raise StyxValidationError("Parameter `bptf` must contain exactly 2 elements")
-        for e in params["bptf"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
+    if params.get("bptf", None) is None:
+        raise StyxValidationError("`bptf` must not be None")
+    if not isinstance(params["bptf"], list):
+        raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float]`')
+    if len(params["bptf"]) != 2:
+        raise StyxValidationError("Parameter `bptf` must contain exactly 2 elements")
+    for e in params["bptf"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_bptf_cargs(
@@ -6730,16 +6697,15 @@ def fslmaths_operation_bptf_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("bptf", None) is not None:
-        cargs.extend([
-            "-bptf",
-            *map(str, params.get("bptf", None))
-        ])
+    cargs.extend([
+        "-bptf",
+        *map(str, params.get("bptf", None))
+    ])
     return cargs
 
 
 def fslmaths_operation_roc(
-    roc: list[float] | None = None,
+    roc: list[float],
 ) -> FslmathsOperationRocParamsDictTagged:
     """
     Build parameters.
@@ -6751,9 +6717,8 @@ def fslmaths_operation_roc(
     """
     params = {
         "@type": "operation_roc",
+        "roc": roc,
     }
-    if roc is not None:
-        params["roc"] = roc
     return params
 
 
@@ -6769,12 +6734,13 @@ def fslmaths_operation_roc_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("roc", None) is not None:
-        if not isinstance(params["roc"], list):
-            raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float] | None`')
-        for e in params["roc"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float] | None`')
+    if params.get("roc", None) is None:
+        raise StyxValidationError("`roc` must not be None")
+    if not isinstance(params["roc"], list):
+        raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float]`')
+    for e in params["roc"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float]`')
 
 
 def fslmaths_operation_roc_cargs(
@@ -6791,11 +6757,10 @@ def fslmaths_operation_roc_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("roc", None) is not None:
-        cargs.extend([
-            "-roc",
-            *map(str, params.get("roc", None))
-        ])
+    cargs.extend([
+        "-roc",
+        *map(str, params.get("roc", None))
+    ])
     return cargs
 
 
