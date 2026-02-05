@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_greedy"
-version = "0.8.5"
+version = "0.8.6"
 description = "Neuroimaging wrappers."
 license = "MIT"
 authors = [{ name = "CMI DAIR" }]
