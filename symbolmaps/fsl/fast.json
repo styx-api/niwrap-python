@@ -64,6 +64,9 @@
     "iters_afterbias": {
       "var_param": "iters_afterbias"
     },
+    "output_probabilities": {
+      "var_param": "output_probabilities"
+    },
     "in_files": {
       "var_param": "in_files"
     }

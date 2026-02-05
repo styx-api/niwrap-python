@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAST_METADATA = Metadata(
-    id="71882fb7c4050cfbb372686192607f9f7bd8489d.boutiques",
+    id="b308c56439a15f5d65f3450bf5ce835008e43fec.boutiques",
     name="fast",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -35,6 +35,7 @@ _FastParamsDictNoTag = typing.TypedDict('_FastParamsDictNoTag', {
     "verbose": bool,
     "manual_seg": typing.NotRequired[InputPathType | None],
     "iters_afterbias": typing.NotRequired[int | None],
+    "output_probabilities": bool,
     "in_files": list[InputPathType],
 })
 FastParamsDictTagged = typing.TypedDict('FastParamsDictTagged', {
@@ -60,6 +61,7 @@ FastParamsDictTagged = typing.TypedDict('FastParamsDictTagged', {
     "verbose": bool,
     "manual_seg": typing.NotRequired[InputPathType | None],
     "iters_afterbias": typing.NotRequired[int | None],
+    "output_probabilities": bool,
     "in_files": list[InputPathType],
 })
 FastParamsDict = _FastParamsDictNoTag | FastParamsDictTagged
@@ -71,16 +73,16 @@ class FastOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
+    tissue_class_map: OutputPathType | None
+    """Path/name of binary segmented volume file one val for each class _seg."""
+    partial_volume_map: OutputPathType | None
+    """Path/name of partial volume file _pveseg."""
     mixeltype: OutputPathType | None
     """Path/name of mixeltype volume file _mixeltype."""
     bias_field: OutputPathType | None
-    """No description provided."""
-    partial_volume_map: OutputPathType | None
-    """Path/name of partial volume file _pveseg."""
+    """Estimated bias field (if -b flag is set)."""
     restored_image: OutputPathType | None
-    """No description provided."""
-    tissue_class_map: OutputPathType | None
-    """Path/name of binary segmented volume file one val for each class _seg."""
+    """Bias-corrected image (if -B flag is set)."""
 
 
 def fast_params(
@@ -106,6 +108,7 @@ def fast_params(
     verbose: bool = False,
     manual_seg: InputPathType | None = None,
     iters_afterbias: int | None = None,
+    output_probabilities: bool = False,
 ) -> FastParamsDictTagged:
     """
     Build parameters.
@@ -122,23 +125,24 @@ def fast_params(
         segments: outputs a separate binary image for each tissue type.
         init_transform: initialise using priors; you must supply a FLIRT\
             transform.
-        other_priors: Alternative prior images.
+        other_priors: Alternative prior images (requires 3 files: prior1 prior2\
+            prior3).
         output_biasfield: Output estimated bias field.
         output_biascorrected: Output restored image (bias-corrected image).
         no_bias: Do not remove bias field.
         channels: number of input images (channels); default 1.
         out_basename: Base name of output files.
-        use_priors: Use priors throughout.
+        use_priors: Use priors throughout (requires -a option).
         no_pve: Turn off pve (partial volume estimation).
         segment_iters: number of segmentation-initialisation iterations;\
             default=15.
         mixel_smooth: spatial smoothness for mixeltype; default=0.3.
-        hyper: 0.0 <= a floating point number <= 1.0. segmentation spatial\
-            smoothness; default=0.1.
+        hyper: segmentation spatial smoothness (0.0 to 1.0); default=0.1.
         verbose: Switch on diagnostic messages.
         manual_seg: Filename containing intensities.
         iters_afterbias: number of main-loop iterations after bias-field\
             removal; default=4.
+        output_probabilities: outputs individual probability maps.
     Returns:
         Parameter dictionary
     """
@@ -151,6 +155,7 @@ def fast_params(
         "use_priors": use_priors,
         "no_pve": no_pve,
         "verbose": verbose,
+        "output_probabilities": output_probabilities,
         "in_files": in_files,
     }
     if number_classes is not None:
@@ -229,6 +234,8 @@ def fast_validate(
     if params.get("other_priors", None) is not None:
         if not isinstance(params["other_priors"], list):
             raise StyxValidationError(f'`other_priors` has the wrong type: Received `{type(params.get("other_priors", None))}` expected `list[InputPathType] | None`')
+        if len(params["other_priors"]) != 3:
+            raise StyxValidationError("Parameter `other_priors` must contain exactly 3 elements")
         for e in params["other_priors"]:
             if not isinstance(e, (pathlib.Path, str)):
                 raise StyxValidationError(f'`other_priors` has the wrong type: Received `{type(params.get("other_priors", None))}` expected `list[InputPathType] | None`')
@@ -247,6 +254,8 @@ def fast_validate(
     if params.get("channels", None) is not None:
         if not isinstance(params["channels"], int):
             raise StyxValidationError(f'`channels` has the wrong type: Received `{type(params.get("channels", None))}` expected `int | None`')
+        if params["channels"] < 1:
+            raise StyxValidationError("Parameter `channels` must be at least 1")
     if params.get("out_basename", None) is not None:
         if not isinstance(params["out_basename"], str):
             raise StyxValidationError(f'`out_basename` has the wrong type: Received `{type(params.get("out_basename", None))}` expected `str | None`')
@@ -283,6 +292,10 @@ def fast_validate(
             raise StyxValidationError(f'`iters_afterbias` has the wrong type: Received `{type(params.get("iters_afterbias", None))}` expected `int | None`')
         if params["iters_afterbias"] < 1:
             raise StyxValidationError("Parameter `iters_afterbias` must be at least 1")
+    if params.get("output_probabilities", False) is None:
+        raise StyxValidationError("`output_probabilities` must not be None")
+    if not isinstance(params["output_probabilities"], bool):
+        raise StyxValidationError(f'`output_probabilities` has the wrong type: Received `{type(params.get("output_probabilities", False))}` expected `bool`')
     if params.get("in_files", None) is None:
         raise StyxValidationError("`in_files` must not be None")
     if not isinstance(params["in_files"], list):
@@ -391,6 +404,8 @@ def fast_cargs(
             "-O",
             str(params.get("iters_afterbias", None))
         ])
+    if params.get("output_probabilities", False):
+        cargs.append("-p")
     cargs.extend([execution.input_file(f) for f in params.get("in_files", None)])
     return cargs
 
@@ -410,11 +425,11 @@ def fast_outputs(
     """
     ret = FastOutputs(
         root=execution.output_file("."),
+        tissue_class_map=execution.output_file(params.get("out_basename", None) + "_seg.nii.gz") if (params.get("out_basename") is not None) else None,
+        partial_volume_map=execution.output_file(params.get("out_basename", None) + "_pveseg.nii.gz") if (params.get("out_basename") is not None) else None,
         mixeltype=execution.output_file(params.get("out_basename", None) + "_mixeltype.nii.gz") if (params.get("out_basename") is not None) else None,
         bias_field=execution.output_file(params.get("out_basename", None) + "_bias.nii.gz") if (params.get("out_basename") is not None) else None,
-        partial_volume_map=execution.output_file(params.get("out_basename", None) + "_pveseg.nii.gz") if (params.get("out_basename") is not None) else None,
         restored_image=execution.output_file(params.get("out_basename", None) + "_restore.nii.gz") if (params.get("out_basename") is not None) else None,
-        tissue_class_map=execution.output_file(params.get("out_basename", None) + "_seg.nii.gz") if (params.get("out_basename") is not None) else None,
     )
     return ret
 
@@ -479,6 +494,7 @@ def fast(
     verbose: bool = False,
     manual_seg: InputPathType | None = None,
     iters_afterbias: int | None = None,
+    output_probabilities: bool = False,
     runner: Runner | None = None,
 ) -> FastOutputs:
     """
@@ -510,23 +526,24 @@ def fast(
         segments: outputs a separate binary image for each tissue type.
         init_transform: initialise using priors; you must supply a FLIRT\
             transform.
-        other_priors: Alternative prior images.
+        other_priors: Alternative prior images (requires 3 files: prior1 prior2\
+            prior3).
         output_biasfield: Output estimated bias field.
         output_biascorrected: Output restored image (bias-corrected image).
         no_bias: Do not remove bias field.
         channels: number of input images (channels); default 1.
         out_basename: Base name of output files.
-        use_priors: Use priors throughout.
+        use_priors: Use priors throughout (requires -a option).
         no_pve: Turn off pve (partial volume estimation).
         segment_iters: number of segmentation-initialisation iterations;\
             default=15.
         mixel_smooth: spatial smoothness for mixeltype; default=0.3.
-        hyper: 0.0 <= a floating point number <= 1.0. segmentation spatial\
-            smoothness; default=0.1.
+        hyper: segmentation spatial smoothness (0.0 to 1.0); default=0.1.
         verbose: Switch on diagnostic messages.
         manual_seg: Filename containing intensities.
         iters_afterbias: number of main-loop iterations after bias-field\
             removal; default=4.
+        output_probabilities: outputs individual probability maps.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FastOutputs`).
@@ -553,6 +570,7 @@ def fast(
         verbose=verbose,
         manual_seg=manual_seg,
         iters_afterbias=iters_afterbias,
+        output_probabilities=output_probabilities,
         in_files=in_files,
     )
     return fast_execute(params, runner)
