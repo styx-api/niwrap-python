@@ -9,301 +9,790 @@
     },
     "operations": {
       "var_param": "operations",
-      "fn_struct_make_params": "fslmaths_operation",
-      "properties": {
-        "add": {
-          "var_param": "add"
-        },
-        "sub": {
-          "var_param": "sub"
-        },
-        "mul": {
-          "var_param": "mul"
-        },
-        "div": {
-          "var_param": "div"
-        },
-        "rem": {
-          "var_param": "rem"
-        },
-        "mas": {
-          "var_param": "mas"
-        },
-        "thr": {
-          "var_param": "thr"
-        },
-        "thrp": {
-          "var_param": "thrp"
-        },
-        "thrP": {
-          "var_param": "thr_p"
-        },
-        "uthr": {
-          "var_param": "uthr"
-        },
-        "uthrp": {
-          "var_param": "uthrp"
-        },
-        "uthrP": {
-          "var_param": "uthr_p"
-        },
-        "max": {
-          "var_param": "max_"
-        },
-        "min": {
-          "var_param": "min_"
-        },
-        "seed": {
-          "var_param": "seed"
-        },
-        "restart": {
-          "var_param": "restart"
-        },
-        "save": {
-          "var_param": "save"
-        },
-        "exp": {
-          "var_param": "exp"
-        },
-        "log": {
-          "var_param": "log"
-        },
-        "sin": {
-          "var_param": "sin"
-        },
-        "cos": {
-          "var_param": "cos"
-        },
-        "tan": {
-          "var_param": "tan"
-        },
-        "asin": {
-          "var_param": "asin"
-        },
-        "acos": {
-          "var_param": "acos"
-        },
-        "atan": {
-          "var_param": "atan"
-        },
-        "sqr": {
-          "var_param": "sqr"
-        },
-        "sqrt": {
-          "var_param": "sqrt"
-        },
-        "recip": {
-          "var_param": "recip"
-        },
-        "abs": {
-          "var_param": "abs_"
-        },
-        "bin": {
-          "var_param": "bin_"
-        },
-        "binv": {
-          "var_param": "binv"
-        },
-        "fillh": {
-          "var_param": "fillh"
-        },
-        "fillh26": {
-          "var_param": "fillh26"
-        },
-        "index": {
-          "var_param": "index"
-        },
-        "grid": {
-          "var_param": "grid"
-        },
-        "edge": {
-          "var_param": "edge"
-        },
-        "tfce": {
-          "var_param": "tfce"
-        },
-        "tfceS": {
-          "var_param": "tfce_s"
-        },
-        "nan": {
-          "var_param": "nan"
-        },
-        "nanm": {
-          "var_param": "nanm"
-        },
-        "rand": {
-          "var_param": "rand"
-        },
-        "randn": {
-          "var_param": "randn"
-        },
-        "inm": {
-          "var_param": "inm"
-        },
-        "ing": {
-          "var_param": "ing"
-        },
-        "range": {
-          "var_param": "range_"
-        },
-        "tensor_decomp": {
-          "var_param": "tensor_decomp"
-        },
-        "kernel_3D": {
-          "var_param": "kernel_3_d"
-        },
-        "kernel_2D": {
-          "var_param": "kernel_2_d"
-        },
-        "kernel_box": {
-          "var_param": "kernel_box"
-        },
-        "kernel_boxv": {
-          "var_param": "kernel_boxv"
-        },
-        "kernel_boxv3": {
-          "var_param": "kernel_boxv3"
-        },
-        "kernel_gauss": {
-          "var_param": "kernel_gauss"
-        },
-        "kernel_sphere": {
-          "var_param": "kernel_sphere"
-        },
-        "kernel_file": {
-          "var_param": "kernel_file"
-        },
-        "dilM": {
-          "var_param": "dil_m"
-        },
-        "dilD": {
-          "var_param": "dil_d"
-        },
-        "dilF": {
-          "var_param": "dil_f"
-        },
-        "dilall": {
-          "var_param": "dilall"
-        },
-        "ero": {
-          "var_param": "ero"
-        },
-        "eroF": {
-          "var_param": "ero_f"
-        },
-        "fmedian": {
-          "var_param": "fmedian"
-        },
-        "fmean": {
-          "var_param": "fmean"
-        },
-        "fmeanu": {
-          "var_param": "fmeanu"
-        },
-        "s": {
-          "var_param": "s"
-        },
-        "subsamp2": {
-          "var_param": "subsamp2"
-        },
-        "subsamp2offc": {
-          "var_param": "subsamp2offc"
-        },
-        "Tmean": {
-          "var_param": "tmean"
-        },
-        "Xmean": {
-          "var_param": "xmean"
-        },
-        "Ymean": {
-          "var_param": "ymean"
-        },
-        "Zmean": {
-          "var_param": "zmean"
-        },
-        "Tstd": {
-          "var_param": "tstd"
-        },
-        "Xstd": {
-          "var_param": "xstd"
-        },
-        "Ystd": {
-          "var_param": "ystd"
-        },
-        "Zstd": {
-          "var_param": "zstd"
-        },
-        "Tmax": {
-          "var_param": "tmax"
-        },
-        "Xmax": {
-          "var_param": "xmax"
-        },
-        "Ymax": {
-          "var_param": "ymax"
-        },
-        "Zmax": {
-          "var_param": "zmax"
-        },
-        "Tmaxn": {
-          "var_param": "tmaxn"
-        },
-        "Xmaxn": {
-          "var_param": "xmaxn"
-        },
-        "Ymaxn": {
-          "var_param": "ymaxn"
-        },
-        "Zmaxn": {
-          "var_param": "zmaxn"
-        },
-        "Tmin": {
-          "var_param": "tmin"
-        },
-        "Xmin": {
-          "var_param": "xmin"
-        },
-        "Ymin": {
-          "var_param": "ymin"
-        },
-        "Zmin": {
-          "var_param": "zmin"
-        },
-        "Tmedian": {
-          "var_param": "tmedian"
-        },
-        "Xmedian": {
-          "var_param": "xmedian"
-        },
-        "Ymedian": {
-          "var_param": "ymedian"
-        },
-        "Zmedian": {
-          "var_param": "zmedian"
-        },
-        "Tperc": {
-          "var_param": "tperc"
-        },
-        "Xperc": {
-          "var_param": "xperc"
-        },
-        "Yperc": {
-          "var_param": "yperc"
-        },
-        "Zperc": {
-          "var_param": "zperc"
-        },
-        "Tar1": {
-          "var_param": "tar1"
-        },
-        "roi": {
-          "var_param": "roi"
-        },
-        "bptf": {
-          "var_param": "bptf"
-        },
-        "roc": {
-          "var_param": "roc"
+      "variants": {
+        "operation_add": {
+          "fn_struct_make_params": "fslmaths_operation_add",
+          "properties": {
+            "add": {
+              "var_param": "add"
+            }
+          }
+        },
+        "operation_sub": {
+          "fn_struct_make_params": "fslmaths_operation_sub",
+          "properties": {
+            "sub": {
+              "var_param": "sub"
+            }
+          }
+        },
+        "operation_mul": {
+          "fn_struct_make_params": "fslmaths_operation_mul",
+          "properties": {
+            "mul": {
+              "var_param": "mul"
+            }
+          }
+        },
+        "operation_div": {
+          "fn_struct_make_params": "fslmaths_operation_div",
+          "properties": {
+            "div": {
+              "var_param": "div"
+            }
+          }
+        },
+        "operation_rem": {
+          "fn_struct_make_params": "fslmaths_operation_rem",
+          "properties": {
+            "rem": {
+              "var_param": "rem"
+            }
+          }
+        },
+        "operation_mas": {
+          "fn_struct_make_params": "fslmaths_operation_mas",
+          "properties": {
+            "mas": {
+              "var_param": "mas"
+            }
+          }
+        },
+        "operation_thr": {
+          "fn_struct_make_params": "fslmaths_operation_thr",
+          "properties": {
+            "thr": {
+              "var_param": "thr"
+            }
+          }
+        },
+        "operation_thrp": {
+          "fn_struct_make_params": "fslmaths_operation_thrp",
+          "properties": {
+            "thrp": {
+              "var_param": "thrp"
+            }
+          }
+        },
+        "operation_thrP": {
+          "fn_struct_make_params": "fslmaths_operation_thr_p",
+          "properties": {
+            "thrP": {
+              "var_param": "thr_p"
+            }
+          }
+        },
+        "operation_uthr": {
+          "fn_struct_make_params": "fslmaths_operation_uthr",
+          "properties": {
+            "uthr": {
+              "var_param": "uthr"
+            }
+          }
+        },
+        "operation_uthrp": {
+          "fn_struct_make_params": "fslmaths_operation_uthrp",
+          "properties": {
+            "uthrp": {
+              "var_param": "uthrp"
+            }
+          }
+        },
+        "operation_uthrP": {
+          "fn_struct_make_params": "fslmaths_operation_uthr_p",
+          "properties": {
+            "uthrP": {
+              "var_param": "uthr_p"
+            }
+          }
+        },
+        "operation_max": {
+          "fn_struct_make_params": "fslmaths_operation_max",
+          "properties": {
+            "max": {
+              "var_param": "max_"
+            }
+          }
+        },
+        "operation_min": {
+          "fn_struct_make_params": "fslmaths_operation_min",
+          "properties": {
+            "min": {
+              "var_param": "min_"
+            }
+          }
+        },
+        "operation_seed": {
+          "fn_struct_make_params": "fslmaths_operation_seed",
+          "properties": {
+            "seed": {
+              "var_param": "seed"
+            }
+          }
+        },
+        "operation_restart": {
+          "fn_struct_make_params": "fslmaths_operation_restart",
+          "properties": {
+            "restart": {
+              "var_param": "restart"
+            }
+          }
+        },
+        "operation_save": {
+          "fn_struct_make_params": "fslmaths_operation_save",
+          "properties": {
+            "save": {
+              "var_param": "save"
+            }
+          }
+        },
+        "operation_exp": {
+          "fn_struct_make_params": "fslmaths_operation_exp",
+          "properties": {
+            "exp": {
+              "var_param": "exp"
+            }
+          }
+        },
+        "operation_log": {
+          "fn_struct_make_params": "fslmaths_operation_log",
+          "properties": {
+            "log": {
+              "var_param": "log"
+            }
+          }
+        },
+        "operation_sin": {
+          "fn_struct_make_params": "fslmaths_operation_sin",
+          "properties": {
+            "sin": {
+              "var_param": "sin"
+            }
+          }
+        },
+        "operation_cos": {
+          "fn_struct_make_params": "fslmaths_operation_cos",
+          "properties": {
+            "cos": {
+              "var_param": "cos"
+            }
+          }
+        },
+        "operation_tan": {
+          "fn_struct_make_params": "fslmaths_operation_tan",
+          "properties": {
+            "tan": {
+              "var_param": "tan"
+            }
+          }
+        },
+        "operation_asin": {
+          "fn_struct_make_params": "fslmaths_operation_asin",
+          "properties": {
+            "asin": {
+              "var_param": "asin"
+            }
+          }
+        },
+        "operation_acos": {
+          "fn_struct_make_params": "fslmaths_operation_acos",
+          "properties": {
+            "acos": {
+              "var_param": "acos"
+            }
+          }
+        },
+        "operation_atan": {
+          "fn_struct_make_params": "fslmaths_operation_atan",
+          "properties": {
+            "atan": {
+              "var_param": "atan"
+            }
+          }
+        },
+        "operation_sqr": {
+          "fn_struct_make_params": "fslmaths_operation_sqr",
+          "properties": {
+            "sqr": {
+              "var_param": "sqr"
+            }
+          }
+        },
+        "operation_sqrt": {
+          "fn_struct_make_params": "fslmaths_operation_sqrt",
+          "properties": {
+            "sqrt": {
+              "var_param": "sqrt"
+            }
+          }
+        },
+        "operation_recip": {
+          "fn_struct_make_params": "fslmaths_operation_recip",
+          "properties": {
+            "recip": {
+              "var_param": "recip"
+            }
+          }
+        },
+        "operation_abs": {
+          "fn_struct_make_params": "fslmaths_operation_abs",
+          "properties": {
+            "abs": {
+              "var_param": "abs_"
+            }
+          }
+        },
+        "operation_bin": {
+          "fn_struct_make_params": "fslmaths_operation_bin",
+          "properties": {
+            "bin": {
+              "var_param": "bin_"
+            }
+          }
+        },
+        "operation_binv": {
+          "fn_struct_make_params": "fslmaths_operation_binv",
+          "properties": {
+            "binv": {
+              "var_param": "binv"
+            }
+          }
+        },
+        "operation_fillh": {
+          "fn_struct_make_params": "fslmaths_operation_fillh",
+          "properties": {
+            "fillh": {
+              "var_param": "fillh"
+            }
+          }
+        },
+        "operation_fillh26": {
+          "fn_struct_make_params": "fslmaths_operation_fillh26",
+          "properties": {
+            "fillh26": {
+              "var_param": "fillh26"
+            }
+          }
+        },
+        "operation_index": {
+          "fn_struct_make_params": "fslmaths_operation_index",
+          "properties": {
+            "index": {
+              "var_param": "index"
+            }
+          }
+        },
+        "operation_grid": {
+          "fn_struct_make_params": "fslmaths_operation_grid",
+          "properties": {
+            "grid": {
+              "var_param": "grid"
+            }
+          }
+        },
+        "operation_edge": {
+          "fn_struct_make_params": "fslmaths_operation_edge",
+          "properties": {
+            "edge": {
+              "var_param": "edge"
+            }
+          }
+        },
+        "operation_tfce": {
+          "fn_struct_make_params": "fslmaths_operation_tfce",
+          "properties": {
+            "tfce": {
+              "var_param": "tfce"
+            }
+          }
+        },
+        "operation_tfceS": {
+          "fn_struct_make_params": "fslmaths_operation_tfce_s",
+          "properties": {
+            "tfceS": {
+              "var_param": "tfce_s"
+            }
+          }
+        },
+        "operation_nan": {
+          "fn_struct_make_params": "fslmaths_operation_nan",
+          "properties": {
+            "nan": {
+              "var_param": "nan"
+            }
+          }
+        },
+        "operation_nanm": {
+          "fn_struct_make_params": "fslmaths_operation_nanm",
+          "properties": {
+            "nanm": {
+              "var_param": "nanm"
+            }
+          }
+        },
+        "operation_rand": {
+          "fn_struct_make_params": "fslmaths_operation_rand",
+          "properties": {
+            "rand": {
+              "var_param": "rand"
+            }
+          }
+        },
+        "operation_randn": {
+          "fn_struct_make_params": "fslmaths_operation_randn",
+          "properties": {
+            "randn": {
+              "var_param": "randn"
+            }
+          }
+        },
+        "operation_inm": {
+          "fn_struct_make_params": "fslmaths_operation_inm",
+          "properties": {
+            "inm": {
+              "var_param": "inm"
+            }
+          }
+        },
+        "operation_ing": {
+          "fn_struct_make_params": "fslmaths_operation_ing",
+          "properties": {
+            "ing": {
+              "var_param": "ing"
+            }
+          }
+        },
+        "operation_range": {
+          "fn_struct_make_params": "fslmaths_operation_range",
+          "properties": {
+            "range": {
+              "var_param": "range_"
+            }
+          }
+        },
+        "operation_tensor_decomp": {
+          "fn_struct_make_params": "fslmaths_operation_tensor_decomp",
+          "properties": {
+            "tensor_decomp": {
+              "var_param": "tensor_decomp"
+            }
+          }
+        },
+        "operation_kernel_3D": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_3_d",
+          "properties": {
+            "kernel_3D": {
+              "var_param": "kernel_3_d"
+            }
+          }
+        },
+        "operation_kernel_2D": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_2_d",
+          "properties": {
+            "kernel_2D": {
+              "var_param": "kernel_2_d"
+            }
+          }
+        },
+        "operation_kernel_box": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_box",
+          "properties": {
+            "kernel_box": {
+              "var_param": "kernel_box"
+            }
+          }
+        },
+        "operation_kernel_boxv": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_boxv",
+          "properties": {
+            "kernel_boxv": {
+              "var_param": "kernel_boxv"
+            }
+          }
+        },
+        "operation_kernel_boxv3": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_boxv3",
+          "properties": {
+            "kernel_boxv3": {
+              "var_param": "kernel_boxv3"
+            }
+          }
+        },
+        "operation_kernel_gauss": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_gauss",
+          "properties": {
+            "kernel_gauss": {
+              "var_param": "kernel_gauss"
+            }
+          }
+        },
+        "operation_kernel_sphere": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_sphere",
+          "properties": {
+            "kernel_sphere": {
+              "var_param": "kernel_sphere"
+            }
+          }
+        },
+        "operation_kernel_file": {
+          "fn_struct_make_params": "fslmaths_operation_kernel_file",
+          "properties": {
+            "kernel_file": {
+              "var_param": "kernel_file"
+            }
+          }
+        },
+        "operation_dilM": {
+          "fn_struct_make_params": "fslmaths_operation_dil_m",
+          "properties": {
+            "dilM": {
+              "var_param": "dil_m"
+            }
+          }
+        },
+        "operation_dilD": {
+          "fn_struct_make_params": "fslmaths_operation_dil_d",
+          "properties": {
+            "dilD": {
+              "var_param": "dil_d"
+            }
+          }
+        },
+        "operation_dilF": {
+          "fn_struct_make_params": "fslmaths_operation_dil_f",
+          "properties": {
+            "dilF": {
+              "var_param": "dil_f"
+            }
+          }
+        },
+        "operation_dilall": {
+          "fn_struct_make_params": "fslmaths_operation_dilall",
+          "properties": {
+            "dilall": {
+              "var_param": "dilall"
+            }
+          }
+        },
+        "operation_ero": {
+          "fn_struct_make_params": "fslmaths_operation_ero",
+          "properties": {
+            "ero": {
+              "var_param": "ero"
+            }
+          }
+        },
+        "operation_eroF": {
+          "fn_struct_make_params": "fslmaths_operation_ero_f",
+          "properties": {
+            "eroF": {
+              "var_param": "ero_f"
+            }
+          }
+        },
+        "operation_fmedian": {
+          "fn_struct_make_params": "fslmaths_operation_fmedian",
+          "properties": {
+            "fmedian": {
+              "var_param": "fmedian"
+            }
+          }
+        },
+        "operation_fmean": {
+          "fn_struct_make_params": "fslmaths_operation_fmean",
+          "properties": {
+            "fmean": {
+              "var_param": "fmean"
+            }
+          }
+        },
+        "operation_fmeanu": {
+          "fn_struct_make_params": "fslmaths_operation_fmeanu",
+          "properties": {
+            "fmeanu": {
+              "var_param": "fmeanu"
+            }
+          }
+        },
+        "operation_s": {
+          "fn_struct_make_params": "fslmaths_operation_s",
+          "properties": {
+            "s": {
+              "var_param": "s"
+            }
+          }
+        },
+        "operation_subsamp2": {
+          "fn_struct_make_params": "fslmaths_operation_subsamp2",
+          "properties": {
+            "subsamp2": {
+              "var_param": "subsamp2"
+            }
+          }
+        },
+        "operation_subsamp2offc": {
+          "fn_struct_make_params": "fslmaths_operation_subsamp2offc",
+          "properties": {
+            "subsamp2offc": {
+              "var_param": "subsamp2offc"
+            }
+          }
+        },
+        "operation_Tmean": {
+          "fn_struct_make_params": "fslmaths_operation_tmean",
+          "properties": {
+            "Tmean": {
+              "var_param": "tmean"
+            }
+          }
+        },
+        "operation_Xmean": {
+          "fn_struct_make_params": "fslmaths_operation_xmean",
+          "properties": {
+            "Xmean": {
+              "var_param": "xmean"
+            }
+          }
+        },
+        "operation_Ymean": {
+          "fn_struct_make_params": "fslmaths_operation_ymean",
+          "properties": {
+            "Ymean": {
+              "var_param": "ymean"
+            }
+          }
+        },
+        "operation_Zmean": {
+          "fn_struct_make_params": "fslmaths_operation_zmean",
+          "properties": {
+            "Zmean": {
+              "var_param": "zmean"
+            }
+          }
+        },
+        "operation_Tstd": {
+          "fn_struct_make_params": "fslmaths_operation_tstd",
+          "properties": {
+            "Tstd": {
+              "var_param": "tstd"
+            }
+          }
+        },
+        "operation_Xstd": {
+          "fn_struct_make_params": "fslmaths_operation_xstd",
+          "properties": {
+            "Xstd": {
+              "var_param": "xstd"
+            }
+          }
+        },
+        "operation_Ystd": {
+          "fn_struct_make_params": "fslmaths_operation_ystd",
+          "properties": {
+            "Ystd": {
+              "var_param": "ystd"
+            }
+          }
+        },
+        "operation_Zstd": {
+          "fn_struct_make_params": "fslmaths_operation_zstd",
+          "properties": {
+            "Zstd": {
+              "var_param": "zstd"
+            }
+          }
+        },
+        "operation_Tmax": {
+          "fn_struct_make_params": "fslmaths_operation_tmax",
+          "properties": {
+            "Tmax": {
+              "var_param": "tmax"
+            }
+          }
+        },
+        "operation_Xmax": {
+          "fn_struct_make_params": "fslmaths_operation_xmax",
+          "properties": {
+            "Xmax": {
+              "var_param": "xmax"
+            }
+          }
+        },
+        "operation_Ymax": {
+          "fn_struct_make_params": "fslmaths_operation_ymax",
+          "properties": {
+            "Ymax": {
+              "var_param": "ymax"
+            }
+          }
+        },
+        "operation_Zmax": {
+          "fn_struct_make_params": "fslmaths_operation_zmax",
+          "properties": {
+            "Zmax": {
+              "var_param": "zmax"
+            }
+          }
+        },
+        "operation_Tmaxn": {
+          "fn_struct_make_params": "fslmaths_operation_tmaxn",
+          "properties": {
+            "Tmaxn": {
+              "var_param": "tmaxn"
+            }
+          }
+        },
+        "operation_Xmaxn": {
+          "fn_struct_make_params": "fslmaths_operation_xmaxn",
+          "properties": {
+            "Xmaxn": {
+              "var_param": "xmaxn"
+            }
+          }
+        },
+        "operation_Ymaxn": {
+          "fn_struct_make_params": "fslmaths_operation_ymaxn",
+          "properties": {
+            "Ymaxn": {
+              "var_param": "ymaxn"
+            }
+          }
+        },
+        "operation_Zmaxn": {
+          "fn_struct_make_params": "fslmaths_operation_zmaxn",
+          "properties": {
+            "Zmaxn": {
+              "var_param": "zmaxn"
+            }
+          }
+        },
+        "operation_Tmin": {
+          "fn_struct_make_params": "fslmaths_operation_tmin",
+          "properties": {
+            "Tmin": {
+              "var_param": "tmin"
+            }
+          }
+        },
+        "operation_Xmin": {
+          "fn_struct_make_params": "fslmaths_operation_xmin",
+          "properties": {
+            "Xmin": {
+              "var_param": "xmin"
+            }
+          }
+        },
+        "operation_Ymin": {
+          "fn_struct_make_params": "fslmaths_operation_ymin",
+          "properties": {
+            "Ymin": {
+              "var_param": "ymin"
+            }
+          }
+        },
+        "operation_Zmin": {
+          "fn_struct_make_params": "fslmaths_operation_zmin",
+          "properties": {
+            "Zmin": {
+              "var_param": "zmin"
+            }
+          }
+        },
+        "operation_Tmedian": {
+          "fn_struct_make_params": "fslmaths_operation_tmedian",
+          "properties": {
+            "Tmedian": {
+              "var_param": "tmedian"
+            }
+          }
+        },
+        "operation_Xmedian": {
+          "fn_struct_make_params": "fslmaths_operation_xmedian",
+          "properties": {
+            "Xmedian": {
+              "var_param": "xmedian"
+            }
+          }
+        },
+        "operation_Ymedian": {
+          "fn_struct_make_params": "fslmaths_operation_ymedian",
+          "properties": {
+            "Ymedian": {
+              "var_param": "ymedian"
+            }
+          }
+        },
+        "operation_Zmedian": {
+          "fn_struct_make_params": "fslmaths_operation_zmedian",
+          "properties": {
+            "Zmedian": {
+              "var_param": "zmedian"
+            }
+          }
+        },
+        "operation_Tperc": {
+          "fn_struct_make_params": "fslmaths_operation_tperc",
+          "properties": {
+            "Tperc": {
+              "var_param": "tperc"
+            }
+          }
+        },
+        "operation_Xperc": {
+          "fn_struct_make_params": "fslmaths_operation_xperc",
+          "properties": {
+            "Xperc": {
+              "var_param": "xperc"
+            }
+          }
+        },
+        "operation_Yperc": {
+          "fn_struct_make_params": "fslmaths_operation_yperc",
+          "properties": {
+            "Yperc": {
+              "var_param": "yperc"
+            }
+          }
+        },
+        "operation_Zperc": {
+          "fn_struct_make_params": "fslmaths_operation_zperc",
+          "properties": {
+            "Zperc": {
+              "var_param": "zperc"
+            }
+          }
+        },
+        "operation_Tar1": {
+          "fn_struct_make_params": "fslmaths_operation_tar1",
+          "properties": {
+            "Tar1": {
+              "var_param": "tar1"
+            }
+          }
+        },
+        "operation_roi": {
+          "fn_struct_make_params": "fslmaths_operation_roi",
+          "properties": {
+            "roi": {
+              "var_param": "roi"
+            }
+          }
+        },
+        "operation_bptf": {
+          "fn_struct_make_params": "fslmaths_operation_bptf",
+          "properties": {
+            "bptf": {
+              "var_param": "bptf"
+            }
+          }
+        },
+        "operation_roc": {
+          "fn_struct_make_params": "fslmaths_operation_roc",
+          "properties": {
+            "roc": {
+              "var_param": "roc"
+            }
+          }
         }
       }
     },

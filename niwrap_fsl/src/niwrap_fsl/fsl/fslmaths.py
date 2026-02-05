@@ -6,221 +6,997 @@ import pathlib
 from styxdefs import *
 
 FSLMATHS_METADATA = Metadata(
-    id="c312ba1b97ad7f4433f8466f287cefb9d488d3d4.boutiques",
+    id="17a5a4282e9fdf33c9fa4e794632c9da02d2c911.boutiques",
     name="fslmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
 )
 
 
-_FslmathsOperationParamsDictNoTag = typing.TypedDict('_FslmathsOperationParamsDictNoTag', {
+_FslmathsOperationAddParamsDictNoTag = typing.TypedDict('_FslmathsOperationAddParamsDictNoTag', {
     "add": typing.NotRequired[float | None],
+})
+FslmathsOperationAddParamsDictTagged = typing.TypedDict('FslmathsOperationAddParamsDictTagged', {
+    "@type": typing.Literal["operation_add"],
+    "add": typing.NotRequired[float | None],
+})
+FslmathsOperationAddParamsDict = _FslmathsOperationAddParamsDictNoTag | FslmathsOperationAddParamsDictTagged
+
+
+_FslmathsOperationSubParamsDictNoTag = typing.TypedDict('_FslmathsOperationSubParamsDictNoTag', {
     "sub": typing.NotRequired[float | None],
+})
+FslmathsOperationSubParamsDictTagged = typing.TypedDict('FslmathsOperationSubParamsDictTagged', {
+    "@type": typing.Literal["operation_sub"],
+    "sub": typing.NotRequired[float | None],
+})
+FslmathsOperationSubParamsDict = _FslmathsOperationSubParamsDictNoTag | FslmathsOperationSubParamsDictTagged
+
+
+_FslmathsOperationMulParamsDictNoTag = typing.TypedDict('_FslmathsOperationMulParamsDictNoTag', {
     "mul": typing.NotRequired[float | None],
+})
+FslmathsOperationMulParamsDictTagged = typing.TypedDict('FslmathsOperationMulParamsDictTagged', {
+    "@type": typing.Literal["operation_mul"],
+    "mul": typing.NotRequired[float | None],
+})
+FslmathsOperationMulParamsDict = _FslmathsOperationMulParamsDictNoTag | FslmathsOperationMulParamsDictTagged
+
+
+_FslmathsOperationDivParamsDictNoTag = typing.TypedDict('_FslmathsOperationDivParamsDictNoTag', {
     "div": typing.NotRequired[float | None],
+})
+FslmathsOperationDivParamsDictTagged = typing.TypedDict('FslmathsOperationDivParamsDictTagged', {
+    "@type": typing.Literal["operation_div"],
+    "div": typing.NotRequired[float | None],
+})
+FslmathsOperationDivParamsDict = _FslmathsOperationDivParamsDictNoTag | FslmathsOperationDivParamsDictTagged
+
+
+_FslmathsOperationRemParamsDictNoTag = typing.TypedDict('_FslmathsOperationRemParamsDictNoTag', {
     "rem": typing.NotRequired[float | None],
+})
+FslmathsOperationRemParamsDictTagged = typing.TypedDict('FslmathsOperationRemParamsDictTagged', {
+    "@type": typing.Literal["operation_rem"],
+    "rem": typing.NotRequired[float | None],
+})
+FslmathsOperationRemParamsDict = _FslmathsOperationRemParamsDictNoTag | FslmathsOperationRemParamsDictTagged
+
+
+_FslmathsOperationMasParamsDictNoTag = typing.TypedDict('_FslmathsOperationMasParamsDictNoTag', {
     "mas": typing.NotRequired[InputPathType | None],
+})
+FslmathsOperationMasParamsDictTagged = typing.TypedDict('FslmathsOperationMasParamsDictTagged', {
+    "@type": typing.Literal["operation_mas"],
+    "mas": typing.NotRequired[InputPathType | None],
+})
+FslmathsOperationMasParamsDict = _FslmathsOperationMasParamsDictNoTag | FslmathsOperationMasParamsDictTagged
+
+
+_FslmathsOperationThrParamsDictNoTag = typing.TypedDict('_FslmathsOperationThrParamsDictNoTag', {
     "thr": typing.NotRequired[float | None],
+})
+FslmathsOperationThrParamsDictTagged = typing.TypedDict('FslmathsOperationThrParamsDictTagged', {
+    "@type": typing.Literal["operation_thr"],
+    "thr": typing.NotRequired[float | None],
+})
+FslmathsOperationThrParamsDict = _FslmathsOperationThrParamsDictNoTag | FslmathsOperationThrParamsDictTagged
+
+
+_FslmathsOperationThrpParamsDictNoTag = typing.TypedDict('_FslmathsOperationThrpParamsDictNoTag', {
     "thrp": typing.NotRequired[float | None],
+})
+FslmathsOperationThrpParamsDictTagged = typing.TypedDict('FslmathsOperationThrpParamsDictTagged', {
+    "@type": typing.Literal["operation_thrp"],
+    "thrp": typing.NotRequired[float | None],
+})
+FslmathsOperationThrpParamsDict = _FslmathsOperationThrpParamsDictNoTag | FslmathsOperationThrpParamsDictTagged
+
+
+_FslmathsOperationThrPParamsDictNoTag = typing.TypedDict('_FslmathsOperationThrPParamsDictNoTag', {
     "thrP": typing.NotRequired[float | None],
+})
+FslmathsOperationThrPParamsDictTagged = typing.TypedDict('FslmathsOperationThrPParamsDictTagged', {
+    "@type": typing.Literal["operation_thrP"],
+    "thrP": typing.NotRequired[float | None],
+})
+FslmathsOperationThrPParamsDict = _FslmathsOperationThrPParamsDictNoTag | FslmathsOperationThrPParamsDictTagged
+
+
+_FslmathsOperationUthrParamsDictNoTag = typing.TypedDict('_FslmathsOperationUthrParamsDictNoTag', {
     "uthr": typing.NotRequired[float | None],
+})
+FslmathsOperationUthrParamsDictTagged = typing.TypedDict('FslmathsOperationUthrParamsDictTagged', {
+    "@type": typing.Literal["operation_uthr"],
+    "uthr": typing.NotRequired[float | None],
+})
+FslmathsOperationUthrParamsDict = _FslmathsOperationUthrParamsDictNoTag | FslmathsOperationUthrParamsDictTagged
+
+
+_FslmathsOperationUthrpParamsDictNoTag = typing.TypedDict('_FslmathsOperationUthrpParamsDictNoTag', {
     "uthrp": typing.NotRequired[float | None],
+})
+FslmathsOperationUthrpParamsDictTagged = typing.TypedDict('FslmathsOperationUthrpParamsDictTagged', {
+    "@type": typing.Literal["operation_uthrp"],
+    "uthrp": typing.NotRequired[float | None],
+})
+FslmathsOperationUthrpParamsDict = _FslmathsOperationUthrpParamsDictNoTag | FslmathsOperationUthrpParamsDictTagged
+
+
+_FslmathsOperationUthrPParamsDictNoTag = typing.TypedDict('_FslmathsOperationUthrPParamsDictNoTag', {
     "uthrP": typing.NotRequired[float | None],
+})
+FslmathsOperationUthrPParamsDictTagged = typing.TypedDict('FslmathsOperationUthrPParamsDictTagged', {
+    "@type": typing.Literal["operation_uthrP"],
+    "uthrP": typing.NotRequired[float | None],
+})
+FslmathsOperationUthrPParamsDict = _FslmathsOperationUthrPParamsDictNoTag | FslmathsOperationUthrPParamsDictTagged
+
+
+_FslmathsOperationMaxParamsDictNoTag = typing.TypedDict('_FslmathsOperationMaxParamsDictNoTag', {
     "max": typing.NotRequired[float | None],
+})
+FslmathsOperationMaxParamsDictTagged = typing.TypedDict('FslmathsOperationMaxParamsDictTagged', {
+    "@type": typing.Literal["operation_max"],
+    "max": typing.NotRequired[float | None],
+})
+FslmathsOperationMaxParamsDict = _FslmathsOperationMaxParamsDictNoTag | FslmathsOperationMaxParamsDictTagged
+
+
+_FslmathsOperationMinParamsDictNoTag = typing.TypedDict('_FslmathsOperationMinParamsDictNoTag', {
     "min": typing.NotRequired[float | None],
+})
+FslmathsOperationMinParamsDictTagged = typing.TypedDict('FslmathsOperationMinParamsDictTagged', {
+    "@type": typing.Literal["operation_min"],
+    "min": typing.NotRequired[float | None],
+})
+FslmathsOperationMinParamsDict = _FslmathsOperationMinParamsDictNoTag | FslmathsOperationMinParamsDictTagged
+
+
+_FslmathsOperationSeedParamsDictNoTag = typing.TypedDict('_FslmathsOperationSeedParamsDictNoTag', {
     "seed": typing.NotRequired[float | None],
+})
+FslmathsOperationSeedParamsDictTagged = typing.TypedDict('FslmathsOperationSeedParamsDictTagged', {
+    "@type": typing.Literal["operation_seed"],
+    "seed": typing.NotRequired[float | None],
+})
+FslmathsOperationSeedParamsDict = _FslmathsOperationSeedParamsDictNoTag | FslmathsOperationSeedParamsDictTagged
+
+
+_FslmathsOperationRestartParamsDictNoTag = typing.TypedDict('_FslmathsOperationRestartParamsDictNoTag', {
     "restart": typing.NotRequired[InputPathType | None],
+})
+FslmathsOperationRestartParamsDictTagged = typing.TypedDict('FslmathsOperationRestartParamsDictTagged', {
+    "@type": typing.Literal["operation_restart"],
+    "restart": typing.NotRequired[InputPathType | None],
+})
+FslmathsOperationRestartParamsDict = _FslmathsOperationRestartParamsDictNoTag | FslmathsOperationRestartParamsDictTagged
+
+
+_FslmathsOperationSaveParamsDictNoTag = typing.TypedDict('_FslmathsOperationSaveParamsDictNoTag', {
     "save": bool,
+})
+FslmathsOperationSaveParamsDictTagged = typing.TypedDict('FslmathsOperationSaveParamsDictTagged', {
+    "@type": typing.Literal["operation_save"],
+    "save": bool,
+})
+FslmathsOperationSaveParamsDict = _FslmathsOperationSaveParamsDictNoTag | FslmathsOperationSaveParamsDictTagged
+
+
+_FslmathsOperationExpParamsDictNoTag = typing.TypedDict('_FslmathsOperationExpParamsDictNoTag', {
     "exp": bool,
+})
+FslmathsOperationExpParamsDictTagged = typing.TypedDict('FslmathsOperationExpParamsDictTagged', {
+    "@type": typing.Literal["operation_exp"],
+    "exp": bool,
+})
+FslmathsOperationExpParamsDict = _FslmathsOperationExpParamsDictNoTag | FslmathsOperationExpParamsDictTagged
+
+
+_FslmathsOperationLogParamsDictNoTag = typing.TypedDict('_FslmathsOperationLogParamsDictNoTag', {
     "log": bool,
+})
+FslmathsOperationLogParamsDictTagged = typing.TypedDict('FslmathsOperationLogParamsDictTagged', {
+    "@type": typing.Literal["operation_log"],
+    "log": bool,
+})
+FslmathsOperationLogParamsDict = _FslmathsOperationLogParamsDictNoTag | FslmathsOperationLogParamsDictTagged
+
+
+_FslmathsOperationSinParamsDictNoTag = typing.TypedDict('_FslmathsOperationSinParamsDictNoTag', {
     "sin": bool,
+})
+FslmathsOperationSinParamsDictTagged = typing.TypedDict('FslmathsOperationSinParamsDictTagged', {
+    "@type": typing.Literal["operation_sin"],
+    "sin": bool,
+})
+FslmathsOperationSinParamsDict = _FslmathsOperationSinParamsDictNoTag | FslmathsOperationSinParamsDictTagged
+
+
+_FslmathsOperationCosParamsDictNoTag = typing.TypedDict('_FslmathsOperationCosParamsDictNoTag', {
     "cos": bool,
+})
+FslmathsOperationCosParamsDictTagged = typing.TypedDict('FslmathsOperationCosParamsDictTagged', {
+    "@type": typing.Literal["operation_cos"],
+    "cos": bool,
+})
+FslmathsOperationCosParamsDict = _FslmathsOperationCosParamsDictNoTag | FslmathsOperationCosParamsDictTagged
+
+
+_FslmathsOperationTanParamsDictNoTag = typing.TypedDict('_FslmathsOperationTanParamsDictNoTag', {
     "tan": bool,
+})
+FslmathsOperationTanParamsDictTagged = typing.TypedDict('FslmathsOperationTanParamsDictTagged', {
+    "@type": typing.Literal["operation_tan"],
+    "tan": bool,
+})
+FslmathsOperationTanParamsDict = _FslmathsOperationTanParamsDictNoTag | FslmathsOperationTanParamsDictTagged
+
+
+_FslmathsOperationAsinParamsDictNoTag = typing.TypedDict('_FslmathsOperationAsinParamsDictNoTag', {
     "asin": bool,
+})
+FslmathsOperationAsinParamsDictTagged = typing.TypedDict('FslmathsOperationAsinParamsDictTagged', {
+    "@type": typing.Literal["operation_asin"],
+    "asin": bool,
+})
+FslmathsOperationAsinParamsDict = _FslmathsOperationAsinParamsDictNoTag | FslmathsOperationAsinParamsDictTagged
+
+
+_FslmathsOperationAcosParamsDictNoTag = typing.TypedDict('_FslmathsOperationAcosParamsDictNoTag', {
     "acos": bool,
+})
+FslmathsOperationAcosParamsDictTagged = typing.TypedDict('FslmathsOperationAcosParamsDictTagged', {
+    "@type": typing.Literal["operation_acos"],
+    "acos": bool,
+})
+FslmathsOperationAcosParamsDict = _FslmathsOperationAcosParamsDictNoTag | FslmathsOperationAcosParamsDictTagged
+
+
+_FslmathsOperationAtanParamsDictNoTag = typing.TypedDict('_FslmathsOperationAtanParamsDictNoTag', {
     "atan": bool,
+})
+FslmathsOperationAtanParamsDictTagged = typing.TypedDict('FslmathsOperationAtanParamsDictTagged', {
+    "@type": typing.Literal["operation_atan"],
+    "atan": bool,
+})
+FslmathsOperationAtanParamsDict = _FslmathsOperationAtanParamsDictNoTag | FslmathsOperationAtanParamsDictTagged
+
+
+_FslmathsOperationSqrParamsDictNoTag = typing.TypedDict('_FslmathsOperationSqrParamsDictNoTag', {
     "sqr": bool,
+})
+FslmathsOperationSqrParamsDictTagged = typing.TypedDict('FslmathsOperationSqrParamsDictTagged', {
+    "@type": typing.Literal["operation_sqr"],
+    "sqr": bool,
+})
+FslmathsOperationSqrParamsDict = _FslmathsOperationSqrParamsDictNoTag | FslmathsOperationSqrParamsDictTagged
+
+
+_FslmathsOperationSqrtParamsDictNoTag = typing.TypedDict('_FslmathsOperationSqrtParamsDictNoTag', {
     "sqrt": bool,
+})
+FslmathsOperationSqrtParamsDictTagged = typing.TypedDict('FslmathsOperationSqrtParamsDictTagged', {
+    "@type": typing.Literal["operation_sqrt"],
+    "sqrt": bool,
+})
+FslmathsOperationSqrtParamsDict = _FslmathsOperationSqrtParamsDictNoTag | FslmathsOperationSqrtParamsDictTagged
+
+
+_FslmathsOperationRecipParamsDictNoTag = typing.TypedDict('_FslmathsOperationRecipParamsDictNoTag', {
     "recip": bool,
+})
+FslmathsOperationRecipParamsDictTagged = typing.TypedDict('FslmathsOperationRecipParamsDictTagged', {
+    "@type": typing.Literal["operation_recip"],
+    "recip": bool,
+})
+FslmathsOperationRecipParamsDict = _FslmathsOperationRecipParamsDictNoTag | FslmathsOperationRecipParamsDictTagged
+
+
+_FslmathsOperationAbsParamsDictNoTag = typing.TypedDict('_FslmathsOperationAbsParamsDictNoTag', {
     "abs": bool,
+})
+FslmathsOperationAbsParamsDictTagged = typing.TypedDict('FslmathsOperationAbsParamsDictTagged', {
+    "@type": typing.Literal["operation_abs"],
+    "abs": bool,
+})
+FslmathsOperationAbsParamsDict = _FslmathsOperationAbsParamsDictNoTag | FslmathsOperationAbsParamsDictTagged
+
+
+_FslmathsOperationBinParamsDictNoTag = typing.TypedDict('_FslmathsOperationBinParamsDictNoTag', {
     "bin": bool,
+})
+FslmathsOperationBinParamsDictTagged = typing.TypedDict('FslmathsOperationBinParamsDictTagged', {
+    "@type": typing.Literal["operation_bin"],
+    "bin": bool,
+})
+FslmathsOperationBinParamsDict = _FslmathsOperationBinParamsDictNoTag | FslmathsOperationBinParamsDictTagged
+
+
+_FslmathsOperationBinvParamsDictNoTag = typing.TypedDict('_FslmathsOperationBinvParamsDictNoTag', {
     "binv": bool,
+})
+FslmathsOperationBinvParamsDictTagged = typing.TypedDict('FslmathsOperationBinvParamsDictTagged', {
+    "@type": typing.Literal["operation_binv"],
+    "binv": bool,
+})
+FslmathsOperationBinvParamsDict = _FslmathsOperationBinvParamsDictNoTag | FslmathsOperationBinvParamsDictTagged
+
+
+_FslmathsOperationFillhParamsDictNoTag = typing.TypedDict('_FslmathsOperationFillhParamsDictNoTag', {
     "fillh": bool,
+})
+FslmathsOperationFillhParamsDictTagged = typing.TypedDict('FslmathsOperationFillhParamsDictTagged', {
+    "@type": typing.Literal["operation_fillh"],
+    "fillh": bool,
+})
+FslmathsOperationFillhParamsDict = _FslmathsOperationFillhParamsDictNoTag | FslmathsOperationFillhParamsDictTagged
+
+
+_FslmathsOperationFillh26ParamsDictNoTag = typing.TypedDict('_FslmathsOperationFillh26ParamsDictNoTag', {
     "fillh26": bool,
+})
+FslmathsOperationFillh26ParamsDictTagged = typing.TypedDict('FslmathsOperationFillh26ParamsDictTagged', {
+    "@type": typing.Literal["operation_fillh26"],
+    "fillh26": bool,
+})
+FslmathsOperationFillh26ParamsDict = _FslmathsOperationFillh26ParamsDictNoTag | FslmathsOperationFillh26ParamsDictTagged
+
+
+_FslmathsOperationIndexParamsDictNoTag = typing.TypedDict('_FslmathsOperationIndexParamsDictNoTag', {
     "index": bool,
+})
+FslmathsOperationIndexParamsDictTagged = typing.TypedDict('FslmathsOperationIndexParamsDictTagged', {
+    "@type": typing.Literal["operation_index"],
+    "index": bool,
+})
+FslmathsOperationIndexParamsDict = _FslmathsOperationIndexParamsDictNoTag | FslmathsOperationIndexParamsDictTagged
+
+
+_FslmathsOperationGridParamsDictNoTag = typing.TypedDict('_FslmathsOperationGridParamsDictNoTag', {
     "grid": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationGridParamsDictTagged = typing.TypedDict('FslmathsOperationGridParamsDictTagged', {
+    "@type": typing.Literal["operation_grid"],
+    "grid": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationGridParamsDict = _FslmathsOperationGridParamsDictNoTag | FslmathsOperationGridParamsDictTagged
+
+
+_FslmathsOperationEdgeParamsDictNoTag = typing.TypedDict('_FslmathsOperationEdgeParamsDictNoTag', {
     "edge": bool,
+})
+FslmathsOperationEdgeParamsDictTagged = typing.TypedDict('FslmathsOperationEdgeParamsDictTagged', {
+    "@type": typing.Literal["operation_edge"],
+    "edge": bool,
+})
+FslmathsOperationEdgeParamsDict = _FslmathsOperationEdgeParamsDictNoTag | FslmathsOperationEdgeParamsDictTagged
+
+
+_FslmathsOperationTfceParamsDictNoTag = typing.TypedDict('_FslmathsOperationTfceParamsDictNoTag', {
     "tfce": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationTfceParamsDictTagged = typing.TypedDict('FslmathsOperationTfceParamsDictTagged', {
+    "@type": typing.Literal["operation_tfce"],
+    "tfce": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationTfceParamsDict = _FslmathsOperationTfceParamsDictNoTag | FslmathsOperationTfceParamsDictTagged
+
+
+_FslmathsOperationTfceSParamsDictNoTag = typing.TypedDict('_FslmathsOperationTfceSParamsDictNoTag', {
     "tfceS": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationTfceSParamsDictTagged = typing.TypedDict('FslmathsOperationTfceSParamsDictTagged', {
+    "@type": typing.Literal["operation_tfceS"],
+    "tfceS": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationTfceSParamsDict = _FslmathsOperationTfceSParamsDictNoTag | FslmathsOperationTfceSParamsDictTagged
+
+
+_FslmathsOperationNanParamsDictNoTag = typing.TypedDict('_FslmathsOperationNanParamsDictNoTag', {
     "nan": bool,
+})
+FslmathsOperationNanParamsDictTagged = typing.TypedDict('FslmathsOperationNanParamsDictTagged', {
+    "@type": typing.Literal["operation_nan"],
+    "nan": bool,
+})
+FslmathsOperationNanParamsDict = _FslmathsOperationNanParamsDictNoTag | FslmathsOperationNanParamsDictTagged
+
+
+_FslmathsOperationNanmParamsDictNoTag = typing.TypedDict('_FslmathsOperationNanmParamsDictNoTag', {
     "nanm": bool,
+})
+FslmathsOperationNanmParamsDictTagged = typing.TypedDict('FslmathsOperationNanmParamsDictTagged', {
+    "@type": typing.Literal["operation_nanm"],
+    "nanm": bool,
+})
+FslmathsOperationNanmParamsDict = _FslmathsOperationNanmParamsDictNoTag | FslmathsOperationNanmParamsDictTagged
+
+
+_FslmathsOperationRandParamsDictNoTag = typing.TypedDict('_FslmathsOperationRandParamsDictNoTag', {
     "rand": bool,
+})
+FslmathsOperationRandParamsDictTagged = typing.TypedDict('FslmathsOperationRandParamsDictTagged', {
+    "@type": typing.Literal["operation_rand"],
+    "rand": bool,
+})
+FslmathsOperationRandParamsDict = _FslmathsOperationRandParamsDictNoTag | FslmathsOperationRandParamsDictTagged
+
+
+_FslmathsOperationRandnParamsDictNoTag = typing.TypedDict('_FslmathsOperationRandnParamsDictNoTag', {
     "randn": bool,
+})
+FslmathsOperationRandnParamsDictTagged = typing.TypedDict('FslmathsOperationRandnParamsDictTagged', {
+    "@type": typing.Literal["operation_randn"],
+    "randn": bool,
+})
+FslmathsOperationRandnParamsDict = _FslmathsOperationRandnParamsDictNoTag | FslmathsOperationRandnParamsDictTagged
+
+
+_FslmathsOperationInmParamsDictNoTag = typing.TypedDict('_FslmathsOperationInmParamsDictNoTag', {
     "inm": typing.NotRequired[float | None],
+})
+FslmathsOperationInmParamsDictTagged = typing.TypedDict('FslmathsOperationInmParamsDictTagged', {
+    "@type": typing.Literal["operation_inm"],
+    "inm": typing.NotRequired[float | None],
+})
+FslmathsOperationInmParamsDict = _FslmathsOperationInmParamsDictNoTag | FslmathsOperationInmParamsDictTagged
+
+
+_FslmathsOperationIngParamsDictNoTag = typing.TypedDict('_FslmathsOperationIngParamsDictNoTag', {
     "ing": typing.NotRequired[float | None],
+})
+FslmathsOperationIngParamsDictTagged = typing.TypedDict('FslmathsOperationIngParamsDictTagged', {
+    "@type": typing.Literal["operation_ing"],
+    "ing": typing.NotRequired[float | None],
+})
+FslmathsOperationIngParamsDict = _FslmathsOperationIngParamsDictNoTag | FslmathsOperationIngParamsDictTagged
+
+
+_FslmathsOperationRangeParamsDictNoTag = typing.TypedDict('_FslmathsOperationRangeParamsDictNoTag', {
     "range": bool,
+})
+FslmathsOperationRangeParamsDictTagged = typing.TypedDict('FslmathsOperationRangeParamsDictTagged', {
+    "@type": typing.Literal["operation_range"],
+    "range": bool,
+})
+FslmathsOperationRangeParamsDict = _FslmathsOperationRangeParamsDictNoTag | FslmathsOperationRangeParamsDictTagged
+
+
+_FslmathsOperationTensorDecompParamsDictNoTag = typing.TypedDict('_FslmathsOperationTensorDecompParamsDictNoTag', {
     "tensor_decomp": bool,
+})
+FslmathsOperationTensorDecompParamsDictTagged = typing.TypedDict('FslmathsOperationTensorDecompParamsDictTagged', {
+    "@type": typing.Literal["operation_tensor_decomp"],
+    "tensor_decomp": bool,
+})
+FslmathsOperationTensorDecompParamsDict = _FslmathsOperationTensorDecompParamsDictNoTag | FslmathsOperationTensorDecompParamsDictTagged
+
+
+_FslmathsOperationKernel3DParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernel3DParamsDictNoTag', {
     "kernel_3D": bool,
+})
+FslmathsOperationKernel3DParamsDictTagged = typing.TypedDict('FslmathsOperationKernel3DParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_3D"],
+    "kernel_3D": bool,
+})
+FslmathsOperationKernel3DParamsDict = _FslmathsOperationKernel3DParamsDictNoTag | FslmathsOperationKernel3DParamsDictTagged
+
+
+_FslmathsOperationKernel2DParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernel2DParamsDictNoTag', {
     "kernel_2D": bool,
+})
+FslmathsOperationKernel2DParamsDictTagged = typing.TypedDict('FslmathsOperationKernel2DParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_2D"],
+    "kernel_2D": bool,
+})
+FslmathsOperationKernel2DParamsDict = _FslmathsOperationKernel2DParamsDictNoTag | FslmathsOperationKernel2DParamsDictTagged
+
+
+_FslmathsOperationKernelBoxParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelBoxParamsDictNoTag', {
     "kernel_box": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelBoxParamsDictTagged = typing.TypedDict('FslmathsOperationKernelBoxParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_box"],
+    "kernel_box": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelBoxParamsDict = _FslmathsOperationKernelBoxParamsDictNoTag | FslmathsOperationKernelBoxParamsDictTagged
+
+
+_FslmathsOperationKernelBoxvParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelBoxvParamsDictNoTag', {
     "kernel_boxv": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelBoxvParamsDictTagged = typing.TypedDict('FslmathsOperationKernelBoxvParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_boxv"],
+    "kernel_boxv": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelBoxvParamsDict = _FslmathsOperationKernelBoxvParamsDictNoTag | FslmathsOperationKernelBoxvParamsDictTagged
+
+
+_FslmathsOperationKernelBoxv3ParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelBoxv3ParamsDictNoTag', {
     "kernel_boxv3": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationKernelBoxv3ParamsDictTagged = typing.TypedDict('FslmathsOperationKernelBoxv3ParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_boxv3"],
+    "kernel_boxv3": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationKernelBoxv3ParamsDict = _FslmathsOperationKernelBoxv3ParamsDictNoTag | FslmathsOperationKernelBoxv3ParamsDictTagged
+
+
+_FslmathsOperationKernelGaussParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelGaussParamsDictNoTag', {
     "kernel_gauss": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelGaussParamsDictTagged = typing.TypedDict('FslmathsOperationKernelGaussParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_gauss"],
+    "kernel_gauss": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelGaussParamsDict = _FslmathsOperationKernelGaussParamsDictNoTag | FslmathsOperationKernelGaussParamsDictTagged
+
+
+_FslmathsOperationKernelSphereParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelSphereParamsDictNoTag', {
     "kernel_sphere": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelSphereParamsDictTagged = typing.TypedDict('FslmathsOperationKernelSphereParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_sphere"],
+    "kernel_sphere": typing.NotRequired[float | None],
+})
+FslmathsOperationKernelSphereParamsDict = _FslmathsOperationKernelSphereParamsDictNoTag | FslmathsOperationKernelSphereParamsDictTagged
+
+
+_FslmathsOperationKernelFileParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernelFileParamsDictNoTag', {
     "kernel_file": typing.NotRequired[InputPathType | None],
+})
+FslmathsOperationKernelFileParamsDictTagged = typing.TypedDict('FslmathsOperationKernelFileParamsDictTagged', {
+    "@type": typing.Literal["operation_kernel_file"],
+    "kernel_file": typing.NotRequired[InputPathType | None],
+})
+FslmathsOperationKernelFileParamsDict = _FslmathsOperationKernelFileParamsDictNoTag | FslmathsOperationKernelFileParamsDictTagged
+
+
+_FslmathsOperationDilMParamsDictNoTag = typing.TypedDict('_FslmathsOperationDilMParamsDictNoTag', {
     "dilM": bool,
+})
+FslmathsOperationDilMParamsDictTagged = typing.TypedDict('FslmathsOperationDilMParamsDictTagged', {
+    "@type": typing.Literal["operation_dilM"],
+    "dilM": bool,
+})
+FslmathsOperationDilMParamsDict = _FslmathsOperationDilMParamsDictNoTag | FslmathsOperationDilMParamsDictTagged
+
+
+_FslmathsOperationDilDParamsDictNoTag = typing.TypedDict('_FslmathsOperationDilDParamsDictNoTag', {
     "dilD": bool,
+})
+FslmathsOperationDilDParamsDictTagged = typing.TypedDict('FslmathsOperationDilDParamsDictTagged', {
+    "@type": typing.Literal["operation_dilD"],
+    "dilD": bool,
+})
+FslmathsOperationDilDParamsDict = _FslmathsOperationDilDParamsDictNoTag | FslmathsOperationDilDParamsDictTagged
+
+
+_FslmathsOperationDilFParamsDictNoTag = typing.TypedDict('_FslmathsOperationDilFParamsDictNoTag', {
     "dilF": bool,
+})
+FslmathsOperationDilFParamsDictTagged = typing.TypedDict('FslmathsOperationDilFParamsDictTagged', {
+    "@type": typing.Literal["operation_dilF"],
+    "dilF": bool,
+})
+FslmathsOperationDilFParamsDict = _FslmathsOperationDilFParamsDictNoTag | FslmathsOperationDilFParamsDictTagged
+
+
+_FslmathsOperationDilallParamsDictNoTag = typing.TypedDict('_FslmathsOperationDilallParamsDictNoTag', {
     "dilall": bool,
+})
+FslmathsOperationDilallParamsDictTagged = typing.TypedDict('FslmathsOperationDilallParamsDictTagged', {
+    "@type": typing.Literal["operation_dilall"],
+    "dilall": bool,
+})
+FslmathsOperationDilallParamsDict = _FslmathsOperationDilallParamsDictNoTag | FslmathsOperationDilallParamsDictTagged
+
+
+_FslmathsOperationEroParamsDictNoTag = typing.TypedDict('_FslmathsOperationEroParamsDictNoTag', {
     "ero": bool,
+})
+FslmathsOperationEroParamsDictTagged = typing.TypedDict('FslmathsOperationEroParamsDictTagged', {
+    "@type": typing.Literal["operation_ero"],
+    "ero": bool,
+})
+FslmathsOperationEroParamsDict = _FslmathsOperationEroParamsDictNoTag | FslmathsOperationEroParamsDictTagged
+
+
+_FslmathsOperationEroFParamsDictNoTag = typing.TypedDict('_FslmathsOperationEroFParamsDictNoTag', {
     "eroF": bool,
+})
+FslmathsOperationEroFParamsDictTagged = typing.TypedDict('FslmathsOperationEroFParamsDictTagged', {
+    "@type": typing.Literal["operation_eroF"],
+    "eroF": bool,
+})
+FslmathsOperationEroFParamsDict = _FslmathsOperationEroFParamsDictNoTag | FslmathsOperationEroFParamsDictTagged
+
+
+_FslmathsOperationFmedianParamsDictNoTag = typing.TypedDict('_FslmathsOperationFmedianParamsDictNoTag', {
     "fmedian": bool,
+})
+FslmathsOperationFmedianParamsDictTagged = typing.TypedDict('FslmathsOperationFmedianParamsDictTagged', {
+    "@type": typing.Literal["operation_fmedian"],
+    "fmedian": bool,
+})
+FslmathsOperationFmedianParamsDict = _FslmathsOperationFmedianParamsDictNoTag | FslmathsOperationFmedianParamsDictTagged
+
+
+_FslmathsOperationFmeanParamsDictNoTag = typing.TypedDict('_FslmathsOperationFmeanParamsDictNoTag', {
     "fmean": bool,
+})
+FslmathsOperationFmeanParamsDictTagged = typing.TypedDict('FslmathsOperationFmeanParamsDictTagged', {
+    "@type": typing.Literal["operation_fmean"],
+    "fmean": bool,
+})
+FslmathsOperationFmeanParamsDict = _FslmathsOperationFmeanParamsDictNoTag | FslmathsOperationFmeanParamsDictTagged
+
+
+_FslmathsOperationFmeanuParamsDictNoTag = typing.TypedDict('_FslmathsOperationFmeanuParamsDictNoTag', {
     "fmeanu": bool,
+})
+FslmathsOperationFmeanuParamsDictTagged = typing.TypedDict('FslmathsOperationFmeanuParamsDictTagged', {
+    "@type": typing.Literal["operation_fmeanu"],
+    "fmeanu": bool,
+})
+FslmathsOperationFmeanuParamsDict = _FslmathsOperationFmeanuParamsDictNoTag | FslmathsOperationFmeanuParamsDictTagged
+
+
+_FslmathsOperationSParamsDictNoTag = typing.TypedDict('_FslmathsOperationSParamsDictNoTag', {
     "s": typing.NotRequired[float | None],
+})
+FslmathsOperationSParamsDictTagged = typing.TypedDict('FslmathsOperationSParamsDictTagged', {
+    "@type": typing.Literal["operation_s"],
+    "s": typing.NotRequired[float | None],
+})
+FslmathsOperationSParamsDict = _FslmathsOperationSParamsDictNoTag | FslmathsOperationSParamsDictTagged
+
+
+_FslmathsOperationSubsamp2ParamsDictNoTag = typing.TypedDict('_FslmathsOperationSubsamp2ParamsDictNoTag', {
     "subsamp2": bool,
+})
+FslmathsOperationSubsamp2ParamsDictTagged = typing.TypedDict('FslmathsOperationSubsamp2ParamsDictTagged', {
+    "@type": typing.Literal["operation_subsamp2"],
+    "subsamp2": bool,
+})
+FslmathsOperationSubsamp2ParamsDict = _FslmathsOperationSubsamp2ParamsDictNoTag | FslmathsOperationSubsamp2ParamsDictTagged
+
+
+_FslmathsOperationSubsamp2offcParamsDictNoTag = typing.TypedDict('_FslmathsOperationSubsamp2offcParamsDictNoTag', {
     "subsamp2offc": bool,
+})
+FslmathsOperationSubsamp2offcParamsDictTagged = typing.TypedDict('FslmathsOperationSubsamp2offcParamsDictTagged', {
+    "@type": typing.Literal["operation_subsamp2offc"],
+    "subsamp2offc": bool,
+})
+FslmathsOperationSubsamp2offcParamsDict = _FslmathsOperationSubsamp2offcParamsDictNoTag | FslmathsOperationSubsamp2offcParamsDictTagged
+
+
+_FslmathsOperationTmeanParamsDictNoTag = typing.TypedDict('_FslmathsOperationTmeanParamsDictNoTag', {
     "Tmean": bool,
+})
+FslmathsOperationTmeanParamsDictTagged = typing.TypedDict('FslmathsOperationTmeanParamsDictTagged', {
+    "@type": typing.Literal["operation_Tmean"],
+    "Tmean": bool,
+})
+FslmathsOperationTmeanParamsDict = _FslmathsOperationTmeanParamsDictNoTag | FslmathsOperationTmeanParamsDictTagged
+
+
+_FslmathsOperationXmeanParamsDictNoTag = typing.TypedDict('_FslmathsOperationXmeanParamsDictNoTag', {
     "Xmean": bool,
+})
+FslmathsOperationXmeanParamsDictTagged = typing.TypedDict('FslmathsOperationXmeanParamsDictTagged', {
+    "@type": typing.Literal["operation_Xmean"],
+    "Xmean": bool,
+})
+FslmathsOperationXmeanParamsDict = _FslmathsOperationXmeanParamsDictNoTag | FslmathsOperationXmeanParamsDictTagged
+
+
+_FslmathsOperationYmeanParamsDictNoTag = typing.TypedDict('_FslmathsOperationYmeanParamsDictNoTag', {
     "Ymean": bool,
+})
+FslmathsOperationYmeanParamsDictTagged = typing.TypedDict('FslmathsOperationYmeanParamsDictTagged', {
+    "@type": typing.Literal["operation_Ymean"],
+    "Ymean": bool,
+})
+FslmathsOperationYmeanParamsDict = _FslmathsOperationYmeanParamsDictNoTag | FslmathsOperationYmeanParamsDictTagged
+
+
+_FslmathsOperationZmeanParamsDictNoTag = typing.TypedDict('_FslmathsOperationZmeanParamsDictNoTag', {
     "Zmean": bool,
+})
+FslmathsOperationZmeanParamsDictTagged = typing.TypedDict('FslmathsOperationZmeanParamsDictTagged', {
+    "@type": typing.Literal["operation_Zmean"],
+    "Zmean": bool,
+})
+FslmathsOperationZmeanParamsDict = _FslmathsOperationZmeanParamsDictNoTag | FslmathsOperationZmeanParamsDictTagged
+
+
+_FslmathsOperationTstdParamsDictNoTag = typing.TypedDict('_FslmathsOperationTstdParamsDictNoTag', {
     "Tstd": bool,
+})
+FslmathsOperationTstdParamsDictTagged = typing.TypedDict('FslmathsOperationTstdParamsDictTagged', {
+    "@type": typing.Literal["operation_Tstd"],
+    "Tstd": bool,
+})
+FslmathsOperationTstdParamsDict = _FslmathsOperationTstdParamsDictNoTag | FslmathsOperationTstdParamsDictTagged
+
+
+_FslmathsOperationXstdParamsDictNoTag = typing.TypedDict('_FslmathsOperationXstdParamsDictNoTag', {
     "Xstd": bool,
+})
+FslmathsOperationXstdParamsDictTagged = typing.TypedDict('FslmathsOperationXstdParamsDictTagged', {
+    "@type": typing.Literal["operation_Xstd"],
+    "Xstd": bool,
+})
+FslmathsOperationXstdParamsDict = _FslmathsOperationXstdParamsDictNoTag | FslmathsOperationXstdParamsDictTagged
+
+
+_FslmathsOperationYstdParamsDictNoTag = typing.TypedDict('_FslmathsOperationYstdParamsDictNoTag', {
     "Ystd": bool,
+})
+FslmathsOperationYstdParamsDictTagged = typing.TypedDict('FslmathsOperationYstdParamsDictTagged', {
+    "@type": typing.Literal["operation_Ystd"],
+    "Ystd": bool,
+})
+FslmathsOperationYstdParamsDict = _FslmathsOperationYstdParamsDictNoTag | FslmathsOperationYstdParamsDictTagged
+
+
+_FslmathsOperationZstdParamsDictNoTag = typing.TypedDict('_FslmathsOperationZstdParamsDictNoTag', {
     "Zstd": bool,
+})
+FslmathsOperationZstdParamsDictTagged = typing.TypedDict('FslmathsOperationZstdParamsDictTagged', {
+    "@type": typing.Literal["operation_Zstd"],
+    "Zstd": bool,
+})
+FslmathsOperationZstdParamsDict = _FslmathsOperationZstdParamsDictNoTag | FslmathsOperationZstdParamsDictTagged
+
+
+_FslmathsOperationTmaxParamsDictNoTag = typing.TypedDict('_FslmathsOperationTmaxParamsDictNoTag', {
     "Tmax": bool,
+})
+FslmathsOperationTmaxParamsDictTagged = typing.TypedDict('FslmathsOperationTmaxParamsDictTagged', {
+    "@type": typing.Literal["operation_Tmax"],
+    "Tmax": bool,
+})
+FslmathsOperationTmaxParamsDict = _FslmathsOperationTmaxParamsDictNoTag | FslmathsOperationTmaxParamsDictTagged
+
+
+_FslmathsOperationXmaxParamsDictNoTag = typing.TypedDict('_FslmathsOperationXmaxParamsDictNoTag', {
     "Xmax": bool,
+})
+FslmathsOperationXmaxParamsDictTagged = typing.TypedDict('FslmathsOperationXmaxParamsDictTagged', {
+    "@type": typing.Literal["operation_Xmax"],
+    "Xmax": bool,
+})
+FslmathsOperationXmaxParamsDict = _FslmathsOperationXmaxParamsDictNoTag | FslmathsOperationXmaxParamsDictTagged
+
+
+_FslmathsOperationYmaxParamsDictNoTag = typing.TypedDict('_FslmathsOperationYmaxParamsDictNoTag', {
     "Ymax": bool,
+})
+FslmathsOperationYmaxParamsDictTagged = typing.TypedDict('FslmathsOperationYmaxParamsDictTagged', {
+    "@type": typing.Literal["operation_Ymax"],
+    "Ymax": bool,
+})
+FslmathsOperationYmaxParamsDict = _FslmathsOperationYmaxParamsDictNoTag | FslmathsOperationYmaxParamsDictTagged
+
+
+_FslmathsOperationZmaxParamsDictNoTag = typing.TypedDict('_FslmathsOperationZmaxParamsDictNoTag', {
     "Zmax": bool,
+})
+FslmathsOperationZmaxParamsDictTagged = typing.TypedDict('FslmathsOperationZmaxParamsDictTagged', {
+    "@type": typing.Literal["operation_Zmax"],
+    "Zmax": bool,
+})
+FslmathsOperationZmaxParamsDict = _FslmathsOperationZmaxParamsDictNoTag | FslmathsOperationZmaxParamsDictTagged
+
+
+_FslmathsOperationTmaxnParamsDictNoTag = typing.TypedDict('_FslmathsOperationTmaxnParamsDictNoTag', {
     "Tmaxn": bool,
+})
+FslmathsOperationTmaxnParamsDictTagged = typing.TypedDict('FslmathsOperationTmaxnParamsDictTagged', {
+    "@type": typing.Literal["operation_Tmaxn"],
+    "Tmaxn": bool,
+})
+FslmathsOperationTmaxnParamsDict = _FslmathsOperationTmaxnParamsDictNoTag | FslmathsOperationTmaxnParamsDictTagged
+
+
+_FslmathsOperationXmaxnParamsDictNoTag = typing.TypedDict('_FslmathsOperationXmaxnParamsDictNoTag', {
     "Xmaxn": bool,
+})
+FslmathsOperationXmaxnParamsDictTagged = typing.TypedDict('FslmathsOperationXmaxnParamsDictTagged', {
+    "@type": typing.Literal["operation_Xmaxn"],
+    "Xmaxn": bool,
+})
+FslmathsOperationXmaxnParamsDict = _FslmathsOperationXmaxnParamsDictNoTag | FslmathsOperationXmaxnParamsDictTagged
+
+
+_FslmathsOperationYmaxnParamsDictNoTag = typing.TypedDict('_FslmathsOperationYmaxnParamsDictNoTag', {
     "Ymaxn": bool,
+})
+FslmathsOperationYmaxnParamsDictTagged = typing.TypedDict('FslmathsOperationYmaxnParamsDictTagged', {
+    "@type": typing.Literal["operation_Ymaxn"],
+    "Ymaxn": bool,
+})
+FslmathsOperationYmaxnParamsDict = _FslmathsOperationYmaxnParamsDictNoTag | FslmathsOperationYmaxnParamsDictTagged
+
+
+_FslmathsOperationZmaxnParamsDictNoTag = typing.TypedDict('_FslmathsOperationZmaxnParamsDictNoTag', {
     "Zmaxn": bool,
+})
+FslmathsOperationZmaxnParamsDictTagged = typing.TypedDict('FslmathsOperationZmaxnParamsDictTagged', {
+    "@type": typing.Literal["operation_Zmaxn"],
+    "Zmaxn": bool,
+})
+FslmathsOperationZmaxnParamsDict = _FslmathsOperationZmaxnParamsDictNoTag | FslmathsOperationZmaxnParamsDictTagged
+
+
+_FslmathsOperationTminParamsDictNoTag = typing.TypedDict('_FslmathsOperationTminParamsDictNoTag', {
     "Tmin": bool,
+})
+FslmathsOperationTminParamsDictTagged = typing.TypedDict('FslmathsOperationTminParamsDictTagged', {
+    "@type": typing.Literal["operation_Tmin"],
+    "Tmin": bool,
+})
+FslmathsOperationTminParamsDict = _FslmathsOperationTminParamsDictNoTag | FslmathsOperationTminParamsDictTagged
+
+
+_FslmathsOperationXminParamsDictNoTag = typing.TypedDict('_FslmathsOperationXminParamsDictNoTag', {
     "Xmin": bool,
+})
+FslmathsOperationXminParamsDictTagged = typing.TypedDict('FslmathsOperationXminParamsDictTagged', {
+    "@type": typing.Literal["operation_Xmin"],
+    "Xmin": bool,
+})
+FslmathsOperationXminParamsDict = _FslmathsOperationXminParamsDictNoTag | FslmathsOperationXminParamsDictTagged
+
+
+_FslmathsOperationYminParamsDictNoTag = typing.TypedDict('_FslmathsOperationYminParamsDictNoTag', {
     "Ymin": bool,
+})
+FslmathsOperationYminParamsDictTagged = typing.TypedDict('FslmathsOperationYminParamsDictTagged', {
+    "@type": typing.Literal["operation_Ymin"],
+    "Ymin": bool,
+})
+FslmathsOperationYminParamsDict = _FslmathsOperationYminParamsDictNoTag | FslmathsOperationYminParamsDictTagged
+
+
+_FslmathsOperationZminParamsDictNoTag = typing.TypedDict('_FslmathsOperationZminParamsDictNoTag', {
     "Zmin": bool,
+})
+FslmathsOperationZminParamsDictTagged = typing.TypedDict('FslmathsOperationZminParamsDictTagged', {
+    "@type": typing.Literal["operation_Zmin"],
+    "Zmin": bool,
+})
+FslmathsOperationZminParamsDict = _FslmathsOperationZminParamsDictNoTag | FslmathsOperationZminParamsDictTagged
+
+
+_FslmathsOperationTmedianParamsDictNoTag = typing.TypedDict('_FslmathsOperationTmedianParamsDictNoTag', {
     "Tmedian": bool,
+})
+FslmathsOperationTmedianParamsDictTagged = typing.TypedDict('FslmathsOperationTmedianParamsDictTagged', {
+    "@type": typing.Literal["operation_Tmedian"],
+    "Tmedian": bool,
+})
+FslmathsOperationTmedianParamsDict = _FslmathsOperationTmedianParamsDictNoTag | FslmathsOperationTmedianParamsDictTagged
+
+
+_FslmathsOperationXmedianParamsDictNoTag = typing.TypedDict('_FslmathsOperationXmedianParamsDictNoTag', {
     "Xmedian": bool,
+})
+FslmathsOperationXmedianParamsDictTagged = typing.TypedDict('FslmathsOperationXmedianParamsDictTagged', {
+    "@type": typing.Literal["operation_Xmedian"],
+    "Xmedian": bool,
+})
+FslmathsOperationXmedianParamsDict = _FslmathsOperationXmedianParamsDictNoTag | FslmathsOperationXmedianParamsDictTagged
+
+
+_FslmathsOperationYmedianParamsDictNoTag = typing.TypedDict('_FslmathsOperationYmedianParamsDictNoTag', {
     "Ymedian": bool,
+})
+FslmathsOperationYmedianParamsDictTagged = typing.TypedDict('FslmathsOperationYmedianParamsDictTagged', {
+    "@type": typing.Literal["operation_Ymedian"],
+    "Ymedian": bool,
+})
+FslmathsOperationYmedianParamsDict = _FslmathsOperationYmedianParamsDictNoTag | FslmathsOperationYmedianParamsDictTagged
+
+
+_FslmathsOperationZmedianParamsDictNoTag = typing.TypedDict('_FslmathsOperationZmedianParamsDictNoTag', {
     "Zmedian": bool,
+})
+FslmathsOperationZmedianParamsDictTagged = typing.TypedDict('FslmathsOperationZmedianParamsDictTagged', {
+    "@type": typing.Literal["operation_Zmedian"],
+    "Zmedian": bool,
+})
+FslmathsOperationZmedianParamsDict = _FslmathsOperationZmedianParamsDictNoTag | FslmathsOperationZmedianParamsDictTagged
+
+
+_FslmathsOperationTpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationTpercParamsDictNoTag', {
     "Tperc": typing.NotRequired[float | None],
+})
+FslmathsOperationTpercParamsDictTagged = typing.TypedDict('FslmathsOperationTpercParamsDictTagged', {
+    "@type": typing.Literal["operation_Tperc"],
+    "Tperc": typing.NotRequired[float | None],
+})
+FslmathsOperationTpercParamsDict = _FslmathsOperationTpercParamsDictNoTag | FslmathsOperationTpercParamsDictTagged
+
+
+_FslmathsOperationXpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationXpercParamsDictNoTag', {
     "Xperc": typing.NotRequired[float | None],
+})
+FslmathsOperationXpercParamsDictTagged = typing.TypedDict('FslmathsOperationXpercParamsDictTagged', {
+    "@type": typing.Literal["operation_Xperc"],
+    "Xperc": typing.NotRequired[float | None],
+})
+FslmathsOperationXpercParamsDict = _FslmathsOperationXpercParamsDictNoTag | FslmathsOperationXpercParamsDictTagged
+
+
+_FslmathsOperationYpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationYpercParamsDictNoTag', {
     "Yperc": typing.NotRequired[float | None],
+})
+FslmathsOperationYpercParamsDictTagged = typing.TypedDict('FslmathsOperationYpercParamsDictTagged', {
+    "@type": typing.Literal["operation_Yperc"],
+    "Yperc": typing.NotRequired[float | None],
+})
+FslmathsOperationYpercParamsDict = _FslmathsOperationYpercParamsDictNoTag | FslmathsOperationYpercParamsDictTagged
+
+
+_FslmathsOperationZpercParamsDictNoTag = typing.TypedDict('_FslmathsOperationZpercParamsDictNoTag', {
     "Zperc": typing.NotRequired[float | None],
+})
+FslmathsOperationZpercParamsDictTagged = typing.TypedDict('FslmathsOperationZpercParamsDictTagged', {
+    "@type": typing.Literal["operation_Zperc"],
+    "Zperc": typing.NotRequired[float | None],
+})
+FslmathsOperationZpercParamsDict = _FslmathsOperationZpercParamsDictNoTag | FslmathsOperationZpercParamsDictTagged
+
+
+_FslmathsOperationTar1ParamsDictNoTag = typing.TypedDict('_FslmathsOperationTar1ParamsDictNoTag', {
     "Tar1": bool,
+})
+FslmathsOperationTar1ParamsDictTagged = typing.TypedDict('FslmathsOperationTar1ParamsDictTagged', {
+    "@type": typing.Literal["operation_Tar1"],
+    "Tar1": bool,
+})
+FslmathsOperationTar1ParamsDict = _FslmathsOperationTar1ParamsDictNoTag | FslmathsOperationTar1ParamsDictTagged
+
+
+_FslmathsOperationRoiParamsDictNoTag = typing.TypedDict('_FslmathsOperationRoiParamsDictNoTag', {
     "roi": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationRoiParamsDictTagged = typing.TypedDict('FslmathsOperationRoiParamsDictTagged', {
+    "@type": typing.Literal["operation_roi"],
+    "roi": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationRoiParamsDict = _FslmathsOperationRoiParamsDictNoTag | FslmathsOperationRoiParamsDictTagged
+
+
+_FslmathsOperationBptfParamsDictNoTag = typing.TypedDict('_FslmathsOperationBptfParamsDictNoTag', {
     "bptf": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationBptfParamsDictTagged = typing.TypedDict('FslmathsOperationBptfParamsDictTagged', {
+    "@type": typing.Literal["operation_bptf"],
+    "bptf": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationBptfParamsDict = _FslmathsOperationBptfParamsDictNoTag | FslmathsOperationBptfParamsDictTagged
+
+
+_FslmathsOperationRocParamsDictNoTag = typing.TypedDict('_FslmathsOperationRocParamsDictNoTag', {
     "roc": typing.NotRequired[list[float] | None],
 })
-FslmathsOperationParamsDictTagged = typing.TypedDict('FslmathsOperationParamsDictTagged', {
-    "@type": typing.Literal["operation"],
-    "add": typing.NotRequired[float | None],
-    "sub": typing.NotRequired[float | None],
-    "mul": typing.NotRequired[float | None],
-    "div": typing.NotRequired[float | None],
-    "rem": typing.NotRequired[float | None],
-    "mas": typing.NotRequired[InputPathType | None],
-    "thr": typing.NotRequired[float | None],
-    "thrp": typing.NotRequired[float | None],
-    "thrP": typing.NotRequired[float | None],
-    "uthr": typing.NotRequired[float | None],
-    "uthrp": typing.NotRequired[float | None],
-    "uthrP": typing.NotRequired[float | None],
-    "max": typing.NotRequired[float | None],
-    "min": typing.NotRequired[float | None],
-    "seed": typing.NotRequired[float | None],
-    "restart": typing.NotRequired[InputPathType | None],
-    "save": bool,
-    "exp": bool,
-    "log": bool,
-    "sin": bool,
-    "cos": bool,
-    "tan": bool,
-    "asin": bool,
-    "acos": bool,
-    "atan": bool,
-    "sqr": bool,
-    "sqrt": bool,
-    "recip": bool,
-    "abs": bool,
-    "bin": bool,
-    "binv": bool,
-    "fillh": bool,
-    "fillh26": bool,
-    "index": bool,
-    "grid": typing.NotRequired[list[float] | None],
-    "edge": bool,
-    "tfce": typing.NotRequired[list[float] | None],
-    "tfceS": typing.NotRequired[list[float] | None],
-    "nan": bool,
-    "nanm": bool,
-    "rand": bool,
-    "randn": bool,
-    "inm": typing.NotRequired[float | None],
-    "ing": typing.NotRequired[float | None],
-    "range": bool,
-    "tensor_decomp": bool,
-    "kernel_3D": bool,
-    "kernel_2D": bool,
-    "kernel_box": typing.NotRequired[float | None],
-    "kernel_boxv": typing.NotRequired[float | None],
-    "kernel_boxv3": typing.NotRequired[list[float] | None],
-    "kernel_gauss": typing.NotRequired[float | None],
-    "kernel_sphere": typing.NotRequired[float | None],
-    "kernel_file": typing.NotRequired[InputPathType | None],
-    "dilM": bool,
-    "dilD": bool,
-    "dilF": bool,
-    "dilall": bool,
-    "ero": bool,
-    "eroF": bool,
-    "fmedian": bool,
-    "fmean": bool,
-    "fmeanu": bool,
-    "s": typing.NotRequired[float | None],
-    "subsamp2": bool,
-    "subsamp2offc": bool,
-    "Tmean": bool,
-    "Xmean": bool,
-    "Ymean": bool,
-    "Zmean": bool,
-    "Tstd": bool,
-    "Xstd": bool,
-    "Ystd": bool,
-    "Zstd": bool,
-    "Tmax": bool,
-    "Xmax": bool,
-    "Ymax": bool,
-    "Zmax": bool,
-    "Tmaxn": bool,
-    "Xmaxn": bool,
-    "Ymaxn": bool,
-    "Zmaxn": bool,
-    "Tmin": bool,
-    "Xmin": bool,
-    "Ymin": bool,
-    "Zmin": bool,
-    "Tmedian": bool,
-    "Xmedian": bool,
-    "Ymedian": bool,
-    "Zmedian": bool,
-    "Tperc": typing.NotRequired[float | None],
-    "Xperc": typing.NotRequired[float | None],
-    "Yperc": typing.NotRequired[float | None],
-    "Zperc": typing.NotRequired[float | None],
-    "Tar1": bool,
-    "roi": typing.NotRequired[list[float] | None],
-    "bptf": typing.NotRequired[list[float] | None],
+FslmathsOperationRocParamsDictTagged = typing.TypedDict('FslmathsOperationRocParamsDictTagged', {
+    "@type": typing.Literal["operation_roc"],
     "roc": typing.NotRequired[list[float] | None],
 })
-FslmathsOperationParamsDict = _FslmathsOperationParamsDictNoTag | FslmathsOperationParamsDictTagged
+FslmathsOperationRocParamsDict = _FslmathsOperationRocParamsDictNoTag | FslmathsOperationRocParamsDictTagged
 
 
 _FslmathsParamsDictNoTag = typing.TypedDict('_FslmathsParamsDictNoTag', {
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
-    "operations": list[FslmathsOperationParamsDict],
+    "operations": list[typing.Union[FslmathsOperationAddParamsDictTagged, FslmathsOperationSubParamsDictTagged, FslmathsOperationMulParamsDictTagged, FslmathsOperationDivParamsDictTagged, FslmathsOperationRemParamsDictTagged, FslmathsOperationMasParamsDictTagged, FslmathsOperationThrParamsDictTagged, FslmathsOperationThrpParamsDictTagged, FslmathsOperationThrPParamsDictTagged, FslmathsOperationUthrParamsDictTagged, FslmathsOperationUthrpParamsDictTagged, FslmathsOperationUthrPParamsDictTagged, FslmathsOperationMaxParamsDictTagged, FslmathsOperationMinParamsDictTagged, FslmathsOperationSeedParamsDictTagged, FslmathsOperationRestartParamsDictTagged, FslmathsOperationSaveParamsDictTagged, FslmathsOperationExpParamsDictTagged, FslmathsOperationLogParamsDictTagged, FslmathsOperationSinParamsDictTagged, FslmathsOperationCosParamsDictTagged, FslmathsOperationTanParamsDictTagged, FslmathsOperationAsinParamsDictTagged, FslmathsOperationAcosParamsDictTagged, FslmathsOperationAtanParamsDictTagged, FslmathsOperationSqrParamsDictTagged, FslmathsOperationSqrtParamsDictTagged, FslmathsOperationRecipParamsDictTagged, FslmathsOperationAbsParamsDictTagged, FslmathsOperationBinParamsDictTagged, FslmathsOperationBinvParamsDictTagged, FslmathsOperationFillhParamsDictTagged, FslmathsOperationFillh26ParamsDictTagged, FslmathsOperationIndexParamsDictTagged, FslmathsOperationGridParamsDictTagged, FslmathsOperationEdgeParamsDictTagged, FslmathsOperationTfceParamsDictTagged, FslmathsOperationTfceSParamsDictTagged, FslmathsOperationNanParamsDictTagged, FslmathsOperationNanmParamsDictTagged, FslmathsOperationRandParamsDictTagged, FslmathsOperationRandnParamsDictTagged, FslmathsOperationInmParamsDictTagged, FslmathsOperationIngParamsDictTagged, FslmathsOperationRangeParamsDictTagged, FslmathsOperationTensorDecompParamsDictTagged, FslmathsOperationKernel3DParamsDictTagged, FslmathsOperationKernel2DParamsDictTagged, FslmathsOperationKernelBoxParamsDictTagged, FslmathsOperationKernelBoxvParamsDictTagged, FslmathsOperationKernelBoxv3ParamsDictTagged, FslmathsOperationKernelGaussParamsDictTagged, FslmathsOperationKernelSphereParamsDictTagged, FslmathsOperationKernelFileParamsDictTagged, FslmathsOperationDilMParamsDictTagged, FslmathsOperationDilDParamsDictTagged, FslmathsOperationDilFParamsDictTagged, FslmathsOperationDilallParamsDictTagged, FslmathsOperationEroParamsDictTagged, FslmathsOperationEroFParamsDictTagged, FslmathsOperationFmedianParamsDictTagged, FslmathsOperationFmeanParamsDictTagged, FslmathsOperationFmeanuParamsDictTagged, FslmathsOperationSParamsDictTagged, FslmathsOperationSubsamp2ParamsDictTagged, FslmathsOperationSubsamp2offcParamsDictTagged, FslmathsOperationTmeanParamsDictTagged, FslmathsOperationXmeanParamsDictTagged, FslmathsOperationYmeanParamsDictTagged, FslmathsOperationZmeanParamsDictTagged, FslmathsOperationTstdParamsDictTagged, FslmathsOperationXstdParamsDictTagged, FslmathsOperationYstdParamsDictTagged, FslmathsOperationZstdParamsDictTagged, FslmathsOperationTmaxParamsDictTagged, FslmathsOperationXmaxParamsDictTagged, FslmathsOperationYmaxParamsDictTagged, FslmathsOperationZmaxParamsDictTagged, FslmathsOperationTmaxnParamsDictTagged, FslmathsOperationXmaxnParamsDictTagged, FslmathsOperationYmaxnParamsDictTagged, FslmathsOperationZmaxnParamsDictTagged, FslmathsOperationTminParamsDictTagged, FslmathsOperationXminParamsDictTagged, FslmathsOperationYminParamsDictTagged, FslmathsOperationZminParamsDictTagged, FslmathsOperationTmedianParamsDictTagged, FslmathsOperationXmedianParamsDictTagged, FslmathsOperationYmedianParamsDictTagged, FslmathsOperationZmedianParamsDictTagged, FslmathsOperationTpercParamsDictTagged, FslmathsOperationXpercParamsDictTagged, FslmathsOperationYpercParamsDictTagged, FslmathsOperationZpercParamsDictTagged, FslmathsOperationTar1ParamsDictTagged, FslmathsOperationRoiParamsDictTagged, FslmathsOperationBptfParamsDictTagged, FslmathsOperationRocParamsDictTagged]],
     "output": str,
     "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
 })
@@ -228,387 +1004,264 @@ FslmathsParamsDictTagged = typing.TypedDict('FslmathsParamsDictTagged', {
     "@type": typing.Literal["fsl/fslmaths"],
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
-    "operations": list[FslmathsOperationParamsDict],
+    "operations": list[typing.Union[FslmathsOperationAddParamsDictTagged, FslmathsOperationSubParamsDictTagged, FslmathsOperationMulParamsDictTagged, FslmathsOperationDivParamsDictTagged, FslmathsOperationRemParamsDictTagged, FslmathsOperationMasParamsDictTagged, FslmathsOperationThrParamsDictTagged, FslmathsOperationThrpParamsDictTagged, FslmathsOperationThrPParamsDictTagged, FslmathsOperationUthrParamsDictTagged, FslmathsOperationUthrpParamsDictTagged, FslmathsOperationUthrPParamsDictTagged, FslmathsOperationMaxParamsDictTagged, FslmathsOperationMinParamsDictTagged, FslmathsOperationSeedParamsDictTagged, FslmathsOperationRestartParamsDictTagged, FslmathsOperationSaveParamsDictTagged, FslmathsOperationExpParamsDictTagged, FslmathsOperationLogParamsDictTagged, FslmathsOperationSinParamsDictTagged, FslmathsOperationCosParamsDictTagged, FslmathsOperationTanParamsDictTagged, FslmathsOperationAsinParamsDictTagged, FslmathsOperationAcosParamsDictTagged, FslmathsOperationAtanParamsDictTagged, FslmathsOperationSqrParamsDictTagged, FslmathsOperationSqrtParamsDictTagged, FslmathsOperationRecipParamsDictTagged, FslmathsOperationAbsParamsDictTagged, FslmathsOperationBinParamsDictTagged, FslmathsOperationBinvParamsDictTagged, FslmathsOperationFillhParamsDictTagged, FslmathsOperationFillh26ParamsDictTagged, FslmathsOperationIndexParamsDictTagged, FslmathsOperationGridParamsDictTagged, FslmathsOperationEdgeParamsDictTagged, FslmathsOperationTfceParamsDictTagged, FslmathsOperationTfceSParamsDictTagged, FslmathsOperationNanParamsDictTagged, FslmathsOperationNanmParamsDictTagged, FslmathsOperationRandParamsDictTagged, FslmathsOperationRandnParamsDictTagged, FslmathsOperationInmParamsDictTagged, FslmathsOperationIngParamsDictTagged, FslmathsOperationRangeParamsDictTagged, FslmathsOperationTensorDecompParamsDictTagged, FslmathsOperationKernel3DParamsDictTagged, FslmathsOperationKernel2DParamsDictTagged, FslmathsOperationKernelBoxParamsDictTagged, FslmathsOperationKernelBoxvParamsDictTagged, FslmathsOperationKernelBoxv3ParamsDictTagged, FslmathsOperationKernelGaussParamsDictTagged, FslmathsOperationKernelSphereParamsDictTagged, FslmathsOperationKernelFileParamsDictTagged, FslmathsOperationDilMParamsDictTagged, FslmathsOperationDilDParamsDictTagged, FslmathsOperationDilFParamsDictTagged, FslmathsOperationDilallParamsDictTagged, FslmathsOperationEroParamsDictTagged, FslmathsOperationEroFParamsDictTagged, FslmathsOperationFmedianParamsDictTagged, FslmathsOperationFmeanParamsDictTagged, FslmathsOperationFmeanuParamsDictTagged, FslmathsOperationSParamsDictTagged, FslmathsOperationSubsamp2ParamsDictTagged, FslmathsOperationSubsamp2offcParamsDictTagged, FslmathsOperationTmeanParamsDictTagged, FslmathsOperationXmeanParamsDictTagged, FslmathsOperationYmeanParamsDictTagged, FslmathsOperationZmeanParamsDictTagged, FslmathsOperationTstdParamsDictTagged, FslmathsOperationXstdParamsDictTagged, FslmathsOperationYstdParamsDictTagged, FslmathsOperationZstdParamsDictTagged, FslmathsOperationTmaxParamsDictTagged, FslmathsOperationXmaxParamsDictTagged, FslmathsOperationYmaxParamsDictTagged, FslmathsOperationZmaxParamsDictTagged, FslmathsOperationTmaxnParamsDictTagged, FslmathsOperationXmaxnParamsDictTagged, FslmathsOperationYmaxnParamsDictTagged, FslmathsOperationZmaxnParamsDictTagged, FslmathsOperationTminParamsDictTagged, FslmathsOperationXminParamsDictTagged, FslmathsOperationYminParamsDictTagged, FslmathsOperationZminParamsDictTagged, FslmathsOperationTmedianParamsDictTagged, FslmathsOperationXmedianParamsDictTagged, FslmathsOperationYmedianParamsDictTagged, FslmathsOperationZmedianParamsDictTagged, FslmathsOperationTpercParamsDictTagged, FslmathsOperationXpercParamsDictTagged, FslmathsOperationYpercParamsDictTagged, FslmathsOperationZpercParamsDictTagged, FslmathsOperationTar1ParamsDictTagged, FslmathsOperationRoiParamsDictTagged, FslmathsOperationBptfParamsDictTagged, FslmathsOperationRocParamsDictTagged]],
     "output": str,
     "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
 })
 FslmathsParamsDict = _FslmathsParamsDictNoTag | FslmathsParamsDictTagged
 
 
-def fslmaths_operation(
+def fslmaths_operations_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "operation_add": fslmaths_operation_add_cargs,
+        "operation_sub": fslmaths_operation_sub_cargs,
+        "operation_mul": fslmaths_operation_mul_cargs,
+        "operation_div": fslmaths_operation_div_cargs,
+        "operation_rem": fslmaths_operation_rem_cargs,
+        "operation_mas": fslmaths_operation_mas_cargs,
+        "operation_thr": fslmaths_operation_thr_cargs,
+        "operation_thrp": fslmaths_operation_thrp_cargs,
+        "operation_thrP": fslmaths_operation_thr_p_cargs,
+        "operation_uthr": fslmaths_operation_uthr_cargs,
+        "operation_uthrp": fslmaths_operation_uthrp_cargs,
+        "operation_uthrP": fslmaths_operation_uthr_p_cargs,
+        "operation_max": fslmaths_operation_max_cargs,
+        "operation_min": fslmaths_operation_min_cargs,
+        "operation_seed": fslmaths_operation_seed_cargs,
+        "operation_restart": fslmaths_operation_restart_cargs,
+        "operation_save": fslmaths_operation_save_cargs,
+        "operation_exp": fslmaths_operation_exp_cargs,
+        "operation_log": fslmaths_operation_log_cargs,
+        "operation_sin": fslmaths_operation_sin_cargs,
+        "operation_cos": fslmaths_operation_cos_cargs,
+        "operation_tan": fslmaths_operation_tan_cargs,
+        "operation_asin": fslmaths_operation_asin_cargs,
+        "operation_acos": fslmaths_operation_acos_cargs,
+        "operation_atan": fslmaths_operation_atan_cargs,
+        "operation_sqr": fslmaths_operation_sqr_cargs,
+        "operation_sqrt": fslmaths_operation_sqrt_cargs,
+        "operation_recip": fslmaths_operation_recip_cargs,
+        "operation_abs": fslmaths_operation_abs_cargs,
+        "operation_bin": fslmaths_operation_bin_cargs,
+        "operation_binv": fslmaths_operation_binv_cargs,
+        "operation_fillh": fslmaths_operation_fillh_cargs,
+        "operation_fillh26": fslmaths_operation_fillh26_cargs,
+        "operation_index": fslmaths_operation_index_cargs,
+        "operation_grid": fslmaths_operation_grid_cargs,
+        "operation_edge": fslmaths_operation_edge_cargs,
+        "operation_tfce": fslmaths_operation_tfce_cargs,
+        "operation_tfceS": fslmaths_operation_tfce_s_cargs,
+        "operation_nan": fslmaths_operation_nan_cargs,
+        "operation_nanm": fslmaths_operation_nanm_cargs,
+        "operation_rand": fslmaths_operation_rand_cargs,
+        "operation_randn": fslmaths_operation_randn_cargs,
+        "operation_inm": fslmaths_operation_inm_cargs,
+        "operation_ing": fslmaths_operation_ing_cargs,
+        "operation_range": fslmaths_operation_range_cargs,
+        "operation_tensor_decomp": fslmaths_operation_tensor_decomp_cargs,
+        "operation_kernel_3D": fslmaths_operation_kernel_3_d_cargs,
+        "operation_kernel_2D": fslmaths_operation_kernel_2_d_cargs,
+        "operation_kernel_box": fslmaths_operation_kernel_box_cargs,
+        "operation_kernel_boxv": fslmaths_operation_kernel_boxv_cargs,
+        "operation_kernel_boxv3": fslmaths_operation_kernel_boxv3_cargs,
+        "operation_kernel_gauss": fslmaths_operation_kernel_gauss_cargs,
+        "operation_kernel_sphere": fslmaths_operation_kernel_sphere_cargs,
+        "operation_kernel_file": fslmaths_operation_kernel_file_cargs,
+        "operation_dilM": fslmaths_operation_dil_m_cargs,
+        "operation_dilD": fslmaths_operation_dil_d_cargs,
+        "operation_dilF": fslmaths_operation_dil_f_cargs,
+        "operation_dilall": fslmaths_operation_dilall_cargs,
+        "operation_ero": fslmaths_operation_ero_cargs,
+        "operation_eroF": fslmaths_operation_ero_f_cargs,
+        "operation_fmedian": fslmaths_operation_fmedian_cargs,
+        "operation_fmean": fslmaths_operation_fmean_cargs,
+        "operation_fmeanu": fslmaths_operation_fmeanu_cargs,
+        "operation_s": fslmaths_operation_s_cargs,
+        "operation_subsamp2": fslmaths_operation_subsamp2_cargs,
+        "operation_subsamp2offc": fslmaths_operation_subsamp2offc_cargs,
+        "operation_Tmean": fslmaths_operation_tmean_cargs,
+        "operation_Xmean": fslmaths_operation_xmean_cargs,
+        "operation_Ymean": fslmaths_operation_ymean_cargs,
+        "operation_Zmean": fslmaths_operation_zmean_cargs,
+        "operation_Tstd": fslmaths_operation_tstd_cargs,
+        "operation_Xstd": fslmaths_operation_xstd_cargs,
+        "operation_Ystd": fslmaths_operation_ystd_cargs,
+        "operation_Zstd": fslmaths_operation_zstd_cargs,
+        "operation_Tmax": fslmaths_operation_tmax_cargs,
+        "operation_Xmax": fslmaths_operation_xmax_cargs,
+        "operation_Ymax": fslmaths_operation_ymax_cargs,
+        "operation_Zmax": fslmaths_operation_zmax_cargs,
+        "operation_Tmaxn": fslmaths_operation_tmaxn_cargs,
+        "operation_Xmaxn": fslmaths_operation_xmaxn_cargs,
+        "operation_Ymaxn": fslmaths_operation_ymaxn_cargs,
+        "operation_Zmaxn": fslmaths_operation_zmaxn_cargs,
+        "operation_Tmin": fslmaths_operation_tmin_cargs,
+        "operation_Xmin": fslmaths_operation_xmin_cargs,
+        "operation_Ymin": fslmaths_operation_ymin_cargs,
+        "operation_Zmin": fslmaths_operation_zmin_cargs,
+        "operation_Tmedian": fslmaths_operation_tmedian_cargs,
+        "operation_Xmedian": fslmaths_operation_xmedian_cargs,
+        "operation_Ymedian": fslmaths_operation_ymedian_cargs,
+        "operation_Zmedian": fslmaths_operation_zmedian_cargs,
+        "operation_Tperc": fslmaths_operation_tperc_cargs,
+        "operation_Xperc": fslmaths_operation_xperc_cargs,
+        "operation_Yperc": fslmaths_operation_yperc_cargs,
+        "operation_Zperc": fslmaths_operation_zperc_cargs,
+        "operation_Tar1": fslmaths_operation_tar1_cargs,
+        "operation_roi": fslmaths_operation_roi_cargs,
+        "operation_bptf": fslmaths_operation_bptf_cargs,
+        "operation_roc": fslmaths_operation_roc_cargs,
+    }.get(t)
+
+
+def fslmaths_operations_validate_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get validate params function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Validate params function.
+    """
+    return {
+        "operation_add": fslmaths_operation_add_validate,
+        "operation_sub": fslmaths_operation_sub_validate,
+        "operation_mul": fslmaths_operation_mul_validate,
+        "operation_div": fslmaths_operation_div_validate,
+        "operation_rem": fslmaths_operation_rem_validate,
+        "operation_mas": fslmaths_operation_mas_validate,
+        "operation_thr": fslmaths_operation_thr_validate,
+        "operation_thrp": fslmaths_operation_thrp_validate,
+        "operation_thrP": fslmaths_operation_thr_p_validate,
+        "operation_uthr": fslmaths_operation_uthr_validate,
+        "operation_uthrp": fslmaths_operation_uthrp_validate,
+        "operation_uthrP": fslmaths_operation_uthr_p_validate,
+        "operation_max": fslmaths_operation_max_validate,
+        "operation_min": fslmaths_operation_min_validate,
+        "operation_seed": fslmaths_operation_seed_validate,
+        "operation_restart": fslmaths_operation_restart_validate,
+        "operation_save": fslmaths_operation_save_validate,
+        "operation_exp": fslmaths_operation_exp_validate,
+        "operation_log": fslmaths_operation_log_validate,
+        "operation_sin": fslmaths_operation_sin_validate,
+        "operation_cos": fslmaths_operation_cos_validate,
+        "operation_tan": fslmaths_operation_tan_validate,
+        "operation_asin": fslmaths_operation_asin_validate,
+        "operation_acos": fslmaths_operation_acos_validate,
+        "operation_atan": fslmaths_operation_atan_validate,
+        "operation_sqr": fslmaths_operation_sqr_validate,
+        "operation_sqrt": fslmaths_operation_sqrt_validate,
+        "operation_recip": fslmaths_operation_recip_validate,
+        "operation_abs": fslmaths_operation_abs_validate,
+        "operation_bin": fslmaths_operation_bin_validate,
+        "operation_binv": fslmaths_operation_binv_validate,
+        "operation_fillh": fslmaths_operation_fillh_validate,
+        "operation_fillh26": fslmaths_operation_fillh26_validate,
+        "operation_index": fslmaths_operation_index_validate,
+        "operation_grid": fslmaths_operation_grid_validate,
+        "operation_edge": fslmaths_operation_edge_validate,
+        "operation_tfce": fslmaths_operation_tfce_validate,
+        "operation_tfceS": fslmaths_operation_tfce_s_validate,
+        "operation_nan": fslmaths_operation_nan_validate,
+        "operation_nanm": fslmaths_operation_nanm_validate,
+        "operation_rand": fslmaths_operation_rand_validate,
+        "operation_randn": fslmaths_operation_randn_validate,
+        "operation_inm": fslmaths_operation_inm_validate,
+        "operation_ing": fslmaths_operation_ing_validate,
+        "operation_range": fslmaths_operation_range_validate,
+        "operation_tensor_decomp": fslmaths_operation_tensor_decomp_validate,
+        "operation_kernel_3D": fslmaths_operation_kernel_3_d_validate,
+        "operation_kernel_2D": fslmaths_operation_kernel_2_d_validate,
+        "operation_kernel_box": fslmaths_operation_kernel_box_validate,
+        "operation_kernel_boxv": fslmaths_operation_kernel_boxv_validate,
+        "operation_kernel_boxv3": fslmaths_operation_kernel_boxv3_validate,
+        "operation_kernel_gauss": fslmaths_operation_kernel_gauss_validate,
+        "operation_kernel_sphere": fslmaths_operation_kernel_sphere_validate,
+        "operation_kernel_file": fslmaths_operation_kernel_file_validate,
+        "operation_dilM": fslmaths_operation_dil_m_validate,
+        "operation_dilD": fslmaths_operation_dil_d_validate,
+        "operation_dilF": fslmaths_operation_dil_f_validate,
+        "operation_dilall": fslmaths_operation_dilall_validate,
+        "operation_ero": fslmaths_operation_ero_validate,
+        "operation_eroF": fslmaths_operation_ero_f_validate,
+        "operation_fmedian": fslmaths_operation_fmedian_validate,
+        "operation_fmean": fslmaths_operation_fmean_validate,
+        "operation_fmeanu": fslmaths_operation_fmeanu_validate,
+        "operation_s": fslmaths_operation_s_validate,
+        "operation_subsamp2": fslmaths_operation_subsamp2_validate,
+        "operation_subsamp2offc": fslmaths_operation_subsamp2offc_validate,
+        "operation_Tmean": fslmaths_operation_tmean_validate,
+        "operation_Xmean": fslmaths_operation_xmean_validate,
+        "operation_Ymean": fslmaths_operation_ymean_validate,
+        "operation_Zmean": fslmaths_operation_zmean_validate,
+        "operation_Tstd": fslmaths_operation_tstd_validate,
+        "operation_Xstd": fslmaths_operation_xstd_validate,
+        "operation_Ystd": fslmaths_operation_ystd_validate,
+        "operation_Zstd": fslmaths_operation_zstd_validate,
+        "operation_Tmax": fslmaths_operation_tmax_validate,
+        "operation_Xmax": fslmaths_operation_xmax_validate,
+        "operation_Ymax": fslmaths_operation_ymax_validate,
+        "operation_Zmax": fslmaths_operation_zmax_validate,
+        "operation_Tmaxn": fslmaths_operation_tmaxn_validate,
+        "operation_Xmaxn": fslmaths_operation_xmaxn_validate,
+        "operation_Ymaxn": fslmaths_operation_ymaxn_validate,
+        "operation_Zmaxn": fslmaths_operation_zmaxn_validate,
+        "operation_Tmin": fslmaths_operation_tmin_validate,
+        "operation_Xmin": fslmaths_operation_xmin_validate,
+        "operation_Ymin": fslmaths_operation_ymin_validate,
+        "operation_Zmin": fslmaths_operation_zmin_validate,
+        "operation_Tmedian": fslmaths_operation_tmedian_validate,
+        "operation_Xmedian": fslmaths_operation_xmedian_validate,
+        "operation_Ymedian": fslmaths_operation_ymedian_validate,
+        "operation_Zmedian": fslmaths_operation_zmedian_validate,
+        "operation_Tperc": fslmaths_operation_tperc_validate,
+        "operation_Xperc": fslmaths_operation_xperc_validate,
+        "operation_Yperc": fslmaths_operation_yperc_validate,
+        "operation_Zperc": fslmaths_operation_zperc_validate,
+        "operation_Tar1": fslmaths_operation_tar1_validate,
+        "operation_roi": fslmaths_operation_roi_validate,
+        "operation_bptf": fslmaths_operation_bptf_validate,
+        "operation_roc": fslmaths_operation_roc_validate,
+    }.get(t)
+
+
+def fslmaths_operation_add(
     add: float | None = None,
-    sub: float | None = None,
-    mul: float | None = None,
-    div: float | None = None,
-    rem: float | None = None,
-    mas: InputPathType | None = None,
-    thr: float | None = None,
-    thrp: float | None = None,
-    thr_p: float | None = None,
-    uthr: float | None = None,
-    uthrp: float | None = None,
-    uthr_p: float | None = None,
-    max_: float | None = None,
-    min_: float | None = None,
-    seed: float | None = None,
-    restart: InputPathType | None = None,
-    save: bool = False,
-    exp: bool = False,
-    log: bool = False,
-    sin: bool = False,
-    cos: bool = False,
-    tan: bool = False,
-    asin: bool = False,
-    acos: bool = False,
-    atan: bool = False,
-    sqr: bool = False,
-    sqrt: bool = False,
-    recip: bool = False,
-    abs_: bool = False,
-    bin_: bool = False,
-    binv: bool = False,
-    fillh: bool = False,
-    fillh26: bool = False,
-    index: bool = False,
-    grid: list[float] | None = None,
-    edge: bool = False,
-    tfce: list[float] | None = None,
-    tfce_s: list[float] | None = None,
-    nan: bool = False,
-    nanm: bool = False,
-    rand: bool = False,
-    randn: bool = False,
-    inm: float | None = None,
-    ing: float | None = None,
-    range_: bool = False,
-    tensor_decomp: bool = False,
-    kernel_3_d: bool = False,
-    kernel_2_d: bool = False,
-    kernel_box: float | None = None,
-    kernel_boxv: float | None = None,
-    kernel_boxv3: list[float] | None = None,
-    kernel_gauss: float | None = None,
-    kernel_sphere: float | None = None,
-    kernel_file: InputPathType | None = None,
-    dil_m: bool = False,
-    dil_d: bool = False,
-    dil_f: bool = False,
-    dilall: bool = False,
-    ero: bool = False,
-    ero_f: bool = False,
-    fmedian: bool = False,
-    fmean: bool = False,
-    fmeanu: bool = False,
-    s: float | None = None,
-    subsamp2: bool = False,
-    subsamp2offc: bool = False,
-    tmean: bool = False,
-    xmean: bool = False,
-    ymean: bool = False,
-    zmean: bool = False,
-    tstd: bool = False,
-    xstd: bool = False,
-    ystd: bool = False,
-    zstd: bool = False,
-    tmax: bool = False,
-    xmax: bool = False,
-    ymax: bool = False,
-    zmax: bool = False,
-    tmaxn: bool = False,
-    xmaxn: bool = False,
-    ymaxn: bool = False,
-    zmaxn: bool = False,
-    tmin: bool = False,
-    xmin: bool = False,
-    ymin: bool = False,
-    zmin: bool = False,
-    tmedian: bool = False,
-    xmedian: bool = False,
-    ymedian: bool = False,
-    zmedian: bool = False,
-    tperc: float | None = None,
-    xperc: float | None = None,
-    yperc: float | None = None,
-    zperc: float | None = None,
-    tar1: bool = False,
-    roi: list[float] | None = None,
-    bptf: list[float] | None = None,
-    roc: list[float] | None = None,
-) -> FslmathsOperationParamsDictTagged:
+) -> FslmathsOperationAddParamsDictTagged:
     """
     Build parameters.
     
     Args:
         add: Add following input to current image.
-        sub: Subtract following input from current image.
-        mul: Multiply current image by following input.
-        div: Divide current image by following input.
-        rem: Modulus remainder - divide current image by following input and\
-            take remainder.
-        mas: Use (following image>0) to mask current image.
-        thr: Use following number to threshold current image (zero anything\
-            below the number).
-        thrp: Use following percentage (0-100) of ROBUST RANGE to threshold\
-            current image (zero anything below the number).
-        thr_p: Use following percentage (0-100) of ROBUST RANGE of non-zero\
-            voxels and threshold below.
-        uthr: Use following number to upper-threshold current image (zero\
-            anything above the number).
-        uthrp: Use following percentage (0-100) of ROBUST RANGE to\
-            upper-threshold current image (zero anything above the number).
-        uthr_p: Use following percentage (0-100) of ROBUST RANGE of non-zero\
-            voxels and threshold above.
-        max_: Take maximum of following input and current image.
-        min_: Take minimum of following input and current image.
-        seed: Seed random number generator with following number.
-        restart: Replace the current image with input for future processing\
-            operations.
-        save: Save the current working image to the input filename.
-        exp: Exponential.
-        log: Natural logarithm.
-        sin: Sine function.
-        cos: Cosine function.
-        tan: Tangent function.
-        asin: Arc sine function.
-        acos: Arc cosine function.
-        atan: Arc tangent function.
-        sqr: Square.
-        sqrt: Square root.
-        recip: Reciprocal (1/current image).
-        abs_: Absolute value.
-        bin_: Use (current image>0) to binarise.
-        binv: Binarise and invert (binarisation and logical inversion).
-        fillh: Fill holes in a binary mask (holes are internal - i.e. do not\
-            touch the edge of the FOV).
-        fillh26: Fill holes using 26 connectivity.
-        index: Replace each nonzero voxel with a unique (subject to wrapping)\
-            index number.
-        grid: Add a 3D grid of intensity <value> with grid spacing <spacing>.
-        edge: Edge strength.
-        tfce: Enhance with TFCE, e.g. -tfce 2 0.5 6 (maybe change 6 to 26 for\
-            skeletons).
-        tfce_s: Show support area for voxel (X,Y,Z).
-        nan: Replace NaNs (improper numbers) with 0.
-        nanm: Make NaN (improper number) mask with 1 for NaN voxels, 0\
-            otherwise.
-        rand: Add uniform noise (range 0:1).
-        randn: Add Gaussian noise (mean=0 sigma=1).
-        inm: Intensity normalisation (per 3D volume mean).
-        ing: Intensity normalisation, global 4D mean.
-        range_: Set the output calmin/max to full data range.
-        tensor_decomp: Convert a 4D (6-timepoint) tensor image into\
-            L1,2,3,FA,MD,MO,V1,2,3 (remaining image in pipeline is FA).
-        kernel_3_d: 3x3x3 box centered on target voxel (set as default kernel).
-        kernel_2_d: 3x3x1 box centered on target voxel.
-        kernel_box: All voxels in a cube of width <size> mm centered on target\
-            voxel.
-        kernel_boxv: All voxels in a cube of width <size> voxels centered on\
-            target voxel.
-        kernel_boxv3: All voxels in a cuboid of dimensions X x Y x Z centered\
-            on target voxel.
-        kernel_gauss: Gaussian kernel (sigma in mm, not voxels).
-        kernel_sphere: All voxels in a sphere of radius <size> mm centered on\
-            target voxel.
-        kernel_file: Use external file as kernel.
-        dil_m: Mean Dilation of non-zero voxels.
-        dil_d: Modal Dilation of non-zero voxels.
-        dil_f: Maximum filtering of all voxels.
-        dilall: Apply -dilM repeatedly until the entire FOV is covered.
-        ero: Erode by zeroing non-zero voxels when zero voxels found in kernel.
-        ero_f: Minimum filtering of all voxels.
-        fmedian: Median Filtering.
-        fmean: Mean filtering, kernel weighted (conventionally used with gauss\
-            kernel).
-        fmeanu: Mean filtering, kernel weighted, un-normalised (gives edge\
-            effects).
-        s: Create a gauss kernel of sigma mm and perform mean filtering.
-        subsamp2: Downsamples image by a factor of 2 (keeping new voxels\
-            centred on old).
-        subsamp2offc: Downsamples image by a factor of 2 (non-centred).
-        tmean: Mean across time.
-        xmean: Mean across X axis.
-        ymean: Mean across Y axis.
-        zmean: Mean across Z axis.
-        tstd: Standard deviation across time.
-        xstd: Standard deviation across X axis.
-        ystd: Standard deviation across Y axis.
-        zstd: Standard deviation across Z axis.
-        tmax: Max across time.
-        xmax: Max across X axis.
-        ymax: Max across Y axis.
-        zmax: Max across Z axis.
-        tmaxn: Time index of max across time.
-        xmaxn: X index of max across X axis.
-        ymaxn: Y index of max across Y axis.
-        zmaxn: Z index of max across Z axis.
-        tmin: Min across time.
-        xmin: Min across X axis.
-        ymin: Min across Y axis.
-        zmin: Min across Z axis.
-        tmedian: Median across time.
-        xmedian: Median across X axis.
-        ymedian: Median across Y axis.
-        zmedian: Median across Z axis.
-        tperc: Nth percentile (0-100) of FULL RANGE across time.
-        xperc: Nth percentile (0-100) of FULL RANGE across X axis.
-        yperc: Nth percentile (0-100) of FULL RANGE across Y axis.
-        zperc: Nth percentile (0-100) of FULL RANGE across Z axis.
-        tar1: Temporal AR(1) coefficient (use -odt float and probably demean\
-            first).
-        roi: <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize>. Zero\
-            outside roi (using voxel coordinates). Inputting -1 for a size will set\
-            it to the full image extent for that dimension.
-        bptf: <lowpass> <highpass>. Bandpass temporal filtering (use -odt float\
-            and probably demean first).
-        roc: <threshold> <output>. ROC analysis.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "operation",
-        "save": save,
-        "exp": exp,
-        "log": log,
-        "sin": sin,
-        "cos": cos,
-        "tan": tan,
-        "asin": asin,
-        "acos": acos,
-        "atan": atan,
-        "sqr": sqr,
-        "sqrt": sqrt,
-        "recip": recip,
-        "abs": abs_,
-        "bin": bin_,
-        "binv": binv,
-        "fillh": fillh,
-        "fillh26": fillh26,
-        "index": index,
-        "edge": edge,
-        "nan": nan,
-        "nanm": nanm,
-        "rand": rand,
-        "randn": randn,
-        "range": range_,
-        "tensor_decomp": tensor_decomp,
-        "kernel_3D": kernel_3_d,
-        "kernel_2D": kernel_2_d,
-        "dilM": dil_m,
-        "dilD": dil_d,
-        "dilF": dil_f,
-        "dilall": dilall,
-        "ero": ero,
-        "eroF": ero_f,
-        "fmedian": fmedian,
-        "fmean": fmean,
-        "fmeanu": fmeanu,
-        "subsamp2": subsamp2,
-        "subsamp2offc": subsamp2offc,
-        "Tmean": tmean,
-        "Xmean": xmean,
-        "Ymean": ymean,
-        "Zmean": zmean,
-        "Tstd": tstd,
-        "Xstd": xstd,
-        "Ystd": ystd,
-        "Zstd": zstd,
-        "Tmax": tmax,
-        "Xmax": xmax,
-        "Ymax": ymax,
-        "Zmax": zmax,
-        "Tmaxn": tmaxn,
-        "Xmaxn": xmaxn,
-        "Ymaxn": ymaxn,
-        "Zmaxn": zmaxn,
-        "Tmin": tmin,
-        "Xmin": xmin,
-        "Ymin": ymin,
-        "Zmin": zmin,
-        "Tmedian": tmedian,
-        "Xmedian": xmedian,
-        "Ymedian": ymedian,
-        "Zmedian": zmedian,
-        "Tar1": tar1,
+        "@type": "operation_add",
     }
     if add is not None:
         params["add"] = add
-    if sub is not None:
-        params["sub"] = sub
-    if mul is not None:
-        params["mul"] = mul
-    if div is not None:
-        params["div"] = div
-    if rem is not None:
-        params["rem"] = rem
-    if mas is not None:
-        params["mas"] = mas
-    if thr is not None:
-        params["thr"] = thr
-    if thrp is not None:
-        params["thrp"] = thrp
-    if thr_p is not None:
-        params["thrP"] = thr_p
-    if uthr is not None:
-        params["uthr"] = uthr
-    if uthrp is not None:
-        params["uthrp"] = uthrp
-    if uthr_p is not None:
-        params["uthrP"] = uthr_p
-    if max_ is not None:
-        params["max"] = max_
-    if min_ is not None:
-        params["min"] = min_
-    if seed is not None:
-        params["seed"] = seed
-    if restart is not None:
-        params["restart"] = restart
-    if grid is not None:
-        params["grid"] = grid
-    if tfce is not None:
-        params["tfce"] = tfce
-    if tfce_s is not None:
-        params["tfceS"] = tfce_s
-    if inm is not None:
-        params["inm"] = inm
-    if ing is not None:
-        params["ing"] = ing
-    if kernel_box is not None:
-        params["kernel_box"] = kernel_box
-    if kernel_boxv is not None:
-        params["kernel_boxv"] = kernel_boxv
-    if kernel_boxv3 is not None:
-        params["kernel_boxv3"] = kernel_boxv3
-    if kernel_gauss is not None:
-        params["kernel_gauss"] = kernel_gauss
-    if kernel_sphere is not None:
-        params["kernel_sphere"] = kernel_sphere
-    if kernel_file is not None:
-        params["kernel_file"] = kernel_file
-    if s is not None:
-        params["s"] = s
-    if tperc is not None:
-        params["Tperc"] = tperc
-    if xperc is not None:
-        params["Xperc"] = xperc
-    if yperc is not None:
-        params["Yperc"] = yperc
-    if zperc is not None:
-        params["Zperc"] = zperc
-    if roi is not None:
-        params["roi"] = roi
-    if bptf is not None:
-        params["bptf"] = bptf
-    if roc is not None:
-        params["roc"] = roc
     return params
 
 
-def fslmaths_operation_validate(
+def fslmaths_operation_add_validate(
     params: typing.Any,
 ) -> None:
     """
     Validate parameters. Throws an error if `params` is not a valid
-    `FslmathsOperationParamsDict` object.
+    `FslmathsOperationAddParamsDict` object.
     
     Args:
         params: The parameters object to validate.
@@ -618,407 +1271,10 @@ def fslmaths_operation_validate(
     if params.get("add", None) is not None:
         if not isinstance(params["add"], (float, int)):
             raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `float | None`')
-    if params.get("sub", None) is not None:
-        if not isinstance(params["sub"], (float, int)):
-            raise StyxValidationError(f'`sub` has the wrong type: Received `{type(params.get("sub", None))}` expected `float | None`')
-    if params.get("mul", None) is not None:
-        if not isinstance(params["mul"], (float, int)):
-            raise StyxValidationError(f'`mul` has the wrong type: Received `{type(params.get("mul", None))}` expected `float | None`')
-    if params.get("div", None) is not None:
-        if not isinstance(params["div"], (float, int)):
-            raise StyxValidationError(f'`div` has the wrong type: Received `{type(params.get("div", None))}` expected `float | None`')
-    if params.get("rem", None) is not None:
-        if not isinstance(params["rem"], (float, int)):
-            raise StyxValidationError(f'`rem` has the wrong type: Received `{type(params.get("rem", None))}` expected `float | None`')
-    if params.get("mas", None) is not None:
-        if not isinstance(params["mas"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`mas` has the wrong type: Received `{type(params.get("mas", None))}` expected `InputPathType | None`')
-    if params.get("thr", None) is not None:
-        if not isinstance(params["thr"], (float, int)):
-            raise StyxValidationError(f'`thr` has the wrong type: Received `{type(params.get("thr", None))}` expected `float | None`')
-    if params.get("thrp", None) is not None:
-        if not isinstance(params["thrp"], (float, int)):
-            raise StyxValidationError(f'`thrp` has the wrong type: Received `{type(params.get("thrp", None))}` expected `float | None`')
-        if not (0 <= params["thrp"] <= 100):
-            raise StyxValidationError("Parameter `thrp` must be between 0 and 100 (inclusive)")
-    if params.get("thrP", None) is not None:
-        if not isinstance(params["thrP"], (float, int)):
-            raise StyxValidationError(f'`thrP` has the wrong type: Received `{type(params.get("thrP", None))}` expected `float | None`')
-        if not (0 <= params["thrP"] <= 100):
-            raise StyxValidationError("Parameter `thrP` must be between 0 and 100 (inclusive)")
-    if params.get("uthr", None) is not None:
-        if not isinstance(params["uthr"], (float, int)):
-            raise StyxValidationError(f'`uthr` has the wrong type: Received `{type(params.get("uthr", None))}` expected `float | None`')
-    if params.get("uthrp", None) is not None:
-        if not isinstance(params["uthrp"], (float, int)):
-            raise StyxValidationError(f'`uthrp` has the wrong type: Received `{type(params.get("uthrp", None))}` expected `float | None`')
-        if not (0 <= params["uthrp"] <= 100):
-            raise StyxValidationError("Parameter `uthrp` must be between 0 and 100 (inclusive)")
-    if params.get("uthrP", None) is not None:
-        if not isinstance(params["uthrP"], (float, int)):
-            raise StyxValidationError(f'`uthrP` has the wrong type: Received `{type(params.get("uthrP", None))}` expected `float | None`')
-        if not (0 <= params["uthrP"] <= 100):
-            raise StyxValidationError("Parameter `uthrP` must be between 0 and 100 (inclusive)")
-    if params.get("max", None) is not None:
-        if not isinstance(params["max"], (float, int)):
-            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
-    if params.get("min", None) is not None:
-        if not isinstance(params["min"], (float, int)):
-            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float | None`')
-    if params.get("seed", None) is not None:
-        if not isinstance(params["seed"], (float, int)):
-            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
-    if params.get("restart", None) is not None:
-        if not isinstance(params["restart"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`restart` has the wrong type: Received `{type(params.get("restart", None))}` expected `InputPathType | None`')
-    if params.get("save", False) is None:
-        raise StyxValidationError("`save` must not be None")
-    if not isinstance(params["save"], bool):
-        raise StyxValidationError(f'`save` has the wrong type: Received `{type(params.get("save", False))}` expected `bool`')
-    if params.get("exp", False) is None:
-        raise StyxValidationError("`exp` must not be None")
-    if not isinstance(params["exp"], bool):
-        raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", False))}` expected `bool`')
-    if params.get("log", False) is None:
-        raise StyxValidationError("`log` must not be None")
-    if not isinstance(params["log"], bool):
-        raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", False))}` expected `bool`')
-    if params.get("sin", False) is None:
-        raise StyxValidationError("`sin` must not be None")
-    if not isinstance(params["sin"], bool):
-        raise StyxValidationError(f'`sin` has the wrong type: Received `{type(params.get("sin", False))}` expected `bool`')
-    if params.get("cos", False) is None:
-        raise StyxValidationError("`cos` must not be None")
-    if not isinstance(params["cos"], bool):
-        raise StyxValidationError(f'`cos` has the wrong type: Received `{type(params.get("cos", False))}` expected `bool`')
-    if params.get("tan", False) is None:
-        raise StyxValidationError("`tan` must not be None")
-    if not isinstance(params["tan"], bool):
-        raise StyxValidationError(f'`tan` has the wrong type: Received `{type(params.get("tan", False))}` expected `bool`')
-    if params.get("asin", False) is None:
-        raise StyxValidationError("`asin` must not be None")
-    if not isinstance(params["asin"], bool):
-        raise StyxValidationError(f'`asin` has the wrong type: Received `{type(params.get("asin", False))}` expected `bool`')
-    if params.get("acos", False) is None:
-        raise StyxValidationError("`acos` must not be None")
-    if not isinstance(params["acos"], bool):
-        raise StyxValidationError(f'`acos` has the wrong type: Received `{type(params.get("acos", False))}` expected `bool`')
-    if params.get("atan", False) is None:
-        raise StyxValidationError("`atan` must not be None")
-    if not isinstance(params["atan"], bool):
-        raise StyxValidationError(f'`atan` has the wrong type: Received `{type(params.get("atan", False))}` expected `bool`')
-    if params.get("sqr", False) is None:
-        raise StyxValidationError("`sqr` must not be None")
-    if not isinstance(params["sqr"], bool):
-        raise StyxValidationError(f'`sqr` has the wrong type: Received `{type(params.get("sqr", False))}` expected `bool`')
-    if params.get("sqrt", False) is None:
-        raise StyxValidationError("`sqrt` must not be None")
-    if not isinstance(params["sqrt"], bool):
-        raise StyxValidationError(f'`sqrt` has the wrong type: Received `{type(params.get("sqrt", False))}` expected `bool`')
-    if params.get("recip", False) is None:
-        raise StyxValidationError("`recip` must not be None")
-    if not isinstance(params["recip"], bool):
-        raise StyxValidationError(f'`recip` has the wrong type: Received `{type(params.get("recip", False))}` expected `bool`')
-    if params.get("abs", False) is None:
-        raise StyxValidationError("`abs` must not be None")
-    if not isinstance(params["abs"], bool):
-        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
-    if params.get("bin", False) is None:
-        raise StyxValidationError("`bin` must not be None")
-    if not isinstance(params["bin"], bool):
-        raise StyxValidationError(f'`bin` has the wrong type: Received `{type(params.get("bin", False))}` expected `bool`')
-    if params.get("binv", False) is None:
-        raise StyxValidationError("`binv` must not be None")
-    if not isinstance(params["binv"], bool):
-        raise StyxValidationError(f'`binv` has the wrong type: Received `{type(params.get("binv", False))}` expected `bool`')
-    if params.get("fillh", False) is None:
-        raise StyxValidationError("`fillh` must not be None")
-    if not isinstance(params["fillh"], bool):
-        raise StyxValidationError(f'`fillh` has the wrong type: Received `{type(params.get("fillh", False))}` expected `bool`')
-    if params.get("fillh26", False) is None:
-        raise StyxValidationError("`fillh26` must not be None")
-    if not isinstance(params["fillh26"], bool):
-        raise StyxValidationError(f'`fillh26` has the wrong type: Received `{type(params.get("fillh26", False))}` expected `bool`')
-    if params.get("index", False) is None:
-        raise StyxValidationError("`index` must not be None")
-    if not isinstance(params["index"], bool):
-        raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", False))}` expected `bool`')
-    if params.get("grid", None) is not None:
-        if not isinstance(params["grid"], list):
-            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
-        for e in params["grid"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
-    if params.get("edge", False) is None:
-        raise StyxValidationError("`edge` must not be None")
-    if not isinstance(params["edge"], bool):
-        raise StyxValidationError(f'`edge` has the wrong type: Received `{type(params.get("edge", False))}` expected `bool`')
-    if params.get("tfce", None) is not None:
-        if not isinstance(params["tfce"], list):
-            raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float] | None`')
-        for e in params["tfce"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float] | None`')
-    if params.get("tfceS", None) is not None:
-        if not isinstance(params["tfceS"], list):
-            raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float] | None`')
-        for e in params["tfceS"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float] | None`')
-    if params.get("nan", False) is None:
-        raise StyxValidationError("`nan` must not be None")
-    if not isinstance(params["nan"], bool):
-        raise StyxValidationError(f'`nan` has the wrong type: Received `{type(params.get("nan", False))}` expected `bool`')
-    if params.get("nanm", False) is None:
-        raise StyxValidationError("`nanm` must not be None")
-    if not isinstance(params["nanm"], bool):
-        raise StyxValidationError(f'`nanm` has the wrong type: Received `{type(params.get("nanm", False))}` expected `bool`')
-    if params.get("rand", False) is None:
-        raise StyxValidationError("`rand` must not be None")
-    if not isinstance(params["rand"], bool):
-        raise StyxValidationError(f'`rand` has the wrong type: Received `{type(params.get("rand", False))}` expected `bool`')
-    if params.get("randn", False) is None:
-        raise StyxValidationError("`randn` must not be None")
-    if not isinstance(params["randn"], bool):
-        raise StyxValidationError(f'`randn` has the wrong type: Received `{type(params.get("randn", False))}` expected `bool`')
-    if params.get("inm", None) is not None:
-        if not isinstance(params["inm"], (float, int)):
-            raise StyxValidationError(f'`inm` has the wrong type: Received `{type(params.get("inm", None))}` expected `float | None`')
-    if params.get("ing", None) is not None:
-        if not isinstance(params["ing"], (float, int)):
-            raise StyxValidationError(f'`ing` has the wrong type: Received `{type(params.get("ing", None))}` expected `float | None`')
-    if params.get("range", False) is None:
-        raise StyxValidationError("`range` must not be None")
-    if not isinstance(params["range"], bool):
-        raise StyxValidationError(f'`range` has the wrong type: Received `{type(params.get("range", False))}` expected `bool`')
-    if params.get("tensor_decomp", False) is None:
-        raise StyxValidationError("`tensor_decomp` must not be None")
-    if not isinstance(params["tensor_decomp"], bool):
-        raise StyxValidationError(f'`tensor_decomp` has the wrong type: Received `{type(params.get("tensor_decomp", False))}` expected `bool`')
-    if params.get("kernel_3D", False) is None:
-        raise StyxValidationError("`kernel_3D` must not be None")
-    if not isinstance(params["kernel_3D"], bool):
-        raise StyxValidationError(f'`kernel_3D` has the wrong type: Received `{type(params.get("kernel_3D", False))}` expected `bool`')
-    if params.get("kernel_2D", False) is None:
-        raise StyxValidationError("`kernel_2D` must not be None")
-    if not isinstance(params["kernel_2D"], bool):
-        raise StyxValidationError(f'`kernel_2D` has the wrong type: Received `{type(params.get("kernel_2D", False))}` expected `bool`')
-    if params.get("kernel_box", None) is not None:
-        if not isinstance(params["kernel_box"], (float, int)):
-            raise StyxValidationError(f'`kernel_box` has the wrong type: Received `{type(params.get("kernel_box", None))}` expected `float | None`')
-    if params.get("kernel_boxv", None) is not None:
-        if not isinstance(params["kernel_boxv"], (float, int)):
-            raise StyxValidationError(f'`kernel_boxv` has the wrong type: Received `{type(params.get("kernel_boxv", None))}` expected `float | None`')
-    if params.get("kernel_boxv3", None) is not None:
-        if not isinstance(params["kernel_boxv3"], list):
-            raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
-        if len(params["kernel_boxv3"]) != 3:
-            raise StyxValidationError("Parameter `kernel_boxv3` must contain exactly 3 elements")
-        for e in params["kernel_boxv3"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
-    if params.get("kernel_gauss", None) is not None:
-        if not isinstance(params["kernel_gauss"], (float, int)):
-            raise StyxValidationError(f'`kernel_gauss` has the wrong type: Received `{type(params.get("kernel_gauss", None))}` expected `float | None`')
-    if params.get("kernel_sphere", None) is not None:
-        if not isinstance(params["kernel_sphere"], (float, int)):
-            raise StyxValidationError(f'`kernel_sphere` has the wrong type: Received `{type(params.get("kernel_sphere", None))}` expected `float | None`')
-    if params.get("kernel_file", None) is not None:
-        if not isinstance(params["kernel_file"], (pathlib.Path, str)):
-            raise StyxValidationError(f'`kernel_file` has the wrong type: Received `{type(params.get("kernel_file", None))}` expected `InputPathType | None`')
-    if params.get("dilM", False) is None:
-        raise StyxValidationError("`dilM` must not be None")
-    if not isinstance(params["dilM"], bool):
-        raise StyxValidationError(f'`dilM` has the wrong type: Received `{type(params.get("dilM", False))}` expected `bool`')
-    if params.get("dilD", False) is None:
-        raise StyxValidationError("`dilD` must not be None")
-    if not isinstance(params["dilD"], bool):
-        raise StyxValidationError(f'`dilD` has the wrong type: Received `{type(params.get("dilD", False))}` expected `bool`')
-    if params.get("dilF", False) is None:
-        raise StyxValidationError("`dilF` must not be None")
-    if not isinstance(params["dilF"], bool):
-        raise StyxValidationError(f'`dilF` has the wrong type: Received `{type(params.get("dilF", False))}` expected `bool`')
-    if params.get("dilall", False) is None:
-        raise StyxValidationError("`dilall` must not be None")
-    if not isinstance(params["dilall"], bool):
-        raise StyxValidationError(f'`dilall` has the wrong type: Received `{type(params.get("dilall", False))}` expected `bool`')
-    if params.get("ero", False) is None:
-        raise StyxValidationError("`ero` must not be None")
-    if not isinstance(params["ero"], bool):
-        raise StyxValidationError(f'`ero` has the wrong type: Received `{type(params.get("ero", False))}` expected `bool`')
-    if params.get("eroF", False) is None:
-        raise StyxValidationError("`eroF` must not be None")
-    if not isinstance(params["eroF"], bool):
-        raise StyxValidationError(f'`eroF` has the wrong type: Received `{type(params.get("eroF", False))}` expected `bool`')
-    if params.get("fmedian", False) is None:
-        raise StyxValidationError("`fmedian` must not be None")
-    if not isinstance(params["fmedian"], bool):
-        raise StyxValidationError(f'`fmedian` has the wrong type: Received `{type(params.get("fmedian", False))}` expected `bool`')
-    if params.get("fmean", False) is None:
-        raise StyxValidationError("`fmean` must not be None")
-    if not isinstance(params["fmean"], bool):
-        raise StyxValidationError(f'`fmean` has the wrong type: Received `{type(params.get("fmean", False))}` expected `bool`')
-    if params.get("fmeanu", False) is None:
-        raise StyxValidationError("`fmeanu` must not be None")
-    if not isinstance(params["fmeanu"], bool):
-        raise StyxValidationError(f'`fmeanu` has the wrong type: Received `{type(params.get("fmeanu", False))}` expected `bool`')
-    if params.get("s", None) is not None:
-        if not isinstance(params["s"], (float, int)):
-            raise StyxValidationError(f'`s` has the wrong type: Received `{type(params.get("s", None))}` expected `float | None`')
-    if params.get("subsamp2", False) is None:
-        raise StyxValidationError("`subsamp2` must not be None")
-    if not isinstance(params["subsamp2"], bool):
-        raise StyxValidationError(f'`subsamp2` has the wrong type: Received `{type(params.get("subsamp2", False))}` expected `bool`')
-    if params.get("subsamp2offc", False) is None:
-        raise StyxValidationError("`subsamp2offc` must not be None")
-    if not isinstance(params["subsamp2offc"], bool):
-        raise StyxValidationError(f'`subsamp2offc` has the wrong type: Received `{type(params.get("subsamp2offc", False))}` expected `bool`')
-    if params.get("Tmean", False) is None:
-        raise StyxValidationError("`Tmean` must not be None")
-    if not isinstance(params["Tmean"], bool):
-        raise StyxValidationError(f'`Tmean` has the wrong type: Received `{type(params.get("Tmean", False))}` expected `bool`')
-    if params.get("Xmean", False) is None:
-        raise StyxValidationError("`Xmean` must not be None")
-    if not isinstance(params["Xmean"], bool):
-        raise StyxValidationError(f'`Xmean` has the wrong type: Received `{type(params.get("Xmean", False))}` expected `bool`')
-    if params.get("Ymean", False) is None:
-        raise StyxValidationError("`Ymean` must not be None")
-    if not isinstance(params["Ymean"], bool):
-        raise StyxValidationError(f'`Ymean` has the wrong type: Received `{type(params.get("Ymean", False))}` expected `bool`')
-    if params.get("Zmean", False) is None:
-        raise StyxValidationError("`Zmean` must not be None")
-    if not isinstance(params["Zmean"], bool):
-        raise StyxValidationError(f'`Zmean` has the wrong type: Received `{type(params.get("Zmean", False))}` expected `bool`')
-    if params.get("Tstd", False) is None:
-        raise StyxValidationError("`Tstd` must not be None")
-    if not isinstance(params["Tstd"], bool):
-        raise StyxValidationError(f'`Tstd` has the wrong type: Received `{type(params.get("Tstd", False))}` expected `bool`')
-    if params.get("Xstd", False) is None:
-        raise StyxValidationError("`Xstd` must not be None")
-    if not isinstance(params["Xstd"], bool):
-        raise StyxValidationError(f'`Xstd` has the wrong type: Received `{type(params.get("Xstd", False))}` expected `bool`')
-    if params.get("Ystd", False) is None:
-        raise StyxValidationError("`Ystd` must not be None")
-    if not isinstance(params["Ystd"], bool):
-        raise StyxValidationError(f'`Ystd` has the wrong type: Received `{type(params.get("Ystd", False))}` expected `bool`')
-    if params.get("Zstd", False) is None:
-        raise StyxValidationError("`Zstd` must not be None")
-    if not isinstance(params["Zstd"], bool):
-        raise StyxValidationError(f'`Zstd` has the wrong type: Received `{type(params.get("Zstd", False))}` expected `bool`')
-    if params.get("Tmax", False) is None:
-        raise StyxValidationError("`Tmax` must not be None")
-    if not isinstance(params["Tmax"], bool):
-        raise StyxValidationError(f'`Tmax` has the wrong type: Received `{type(params.get("Tmax", False))}` expected `bool`')
-    if params.get("Xmax", False) is None:
-        raise StyxValidationError("`Xmax` must not be None")
-    if not isinstance(params["Xmax"], bool):
-        raise StyxValidationError(f'`Xmax` has the wrong type: Received `{type(params.get("Xmax", False))}` expected `bool`')
-    if params.get("Ymax", False) is None:
-        raise StyxValidationError("`Ymax` must not be None")
-    if not isinstance(params["Ymax"], bool):
-        raise StyxValidationError(f'`Ymax` has the wrong type: Received `{type(params.get("Ymax", False))}` expected `bool`')
-    if params.get("Zmax", False) is None:
-        raise StyxValidationError("`Zmax` must not be None")
-    if not isinstance(params["Zmax"], bool):
-        raise StyxValidationError(f'`Zmax` has the wrong type: Received `{type(params.get("Zmax", False))}` expected `bool`')
-    if params.get("Tmaxn", False) is None:
-        raise StyxValidationError("`Tmaxn` must not be None")
-    if not isinstance(params["Tmaxn"], bool):
-        raise StyxValidationError(f'`Tmaxn` has the wrong type: Received `{type(params.get("Tmaxn", False))}` expected `bool`')
-    if params.get("Xmaxn", False) is None:
-        raise StyxValidationError("`Xmaxn` must not be None")
-    if not isinstance(params["Xmaxn"], bool):
-        raise StyxValidationError(f'`Xmaxn` has the wrong type: Received `{type(params.get("Xmaxn", False))}` expected `bool`')
-    if params.get("Ymaxn", False) is None:
-        raise StyxValidationError("`Ymaxn` must not be None")
-    if not isinstance(params["Ymaxn"], bool):
-        raise StyxValidationError(f'`Ymaxn` has the wrong type: Received `{type(params.get("Ymaxn", False))}` expected `bool`')
-    if params.get("Zmaxn", False) is None:
-        raise StyxValidationError("`Zmaxn` must not be None")
-    if not isinstance(params["Zmaxn"], bool):
-        raise StyxValidationError(f'`Zmaxn` has the wrong type: Received `{type(params.get("Zmaxn", False))}` expected `bool`')
-    if params.get("Tmin", False) is None:
-        raise StyxValidationError("`Tmin` must not be None")
-    if not isinstance(params["Tmin"], bool):
-        raise StyxValidationError(f'`Tmin` has the wrong type: Received `{type(params.get("Tmin", False))}` expected `bool`')
-    if params.get("Xmin", False) is None:
-        raise StyxValidationError("`Xmin` must not be None")
-    if not isinstance(params["Xmin"], bool):
-        raise StyxValidationError(f'`Xmin` has the wrong type: Received `{type(params.get("Xmin", False))}` expected `bool`')
-    if params.get("Ymin", False) is None:
-        raise StyxValidationError("`Ymin` must not be None")
-    if not isinstance(params["Ymin"], bool):
-        raise StyxValidationError(f'`Ymin` has the wrong type: Received `{type(params.get("Ymin", False))}` expected `bool`')
-    if params.get("Zmin", False) is None:
-        raise StyxValidationError("`Zmin` must not be None")
-    if not isinstance(params["Zmin"], bool):
-        raise StyxValidationError(f'`Zmin` has the wrong type: Received `{type(params.get("Zmin", False))}` expected `bool`')
-    if params.get("Tmedian", False) is None:
-        raise StyxValidationError("`Tmedian` must not be None")
-    if not isinstance(params["Tmedian"], bool):
-        raise StyxValidationError(f'`Tmedian` has the wrong type: Received `{type(params.get("Tmedian", False))}` expected `bool`')
-    if params.get("Xmedian", False) is None:
-        raise StyxValidationError("`Xmedian` must not be None")
-    if not isinstance(params["Xmedian"], bool):
-        raise StyxValidationError(f'`Xmedian` has the wrong type: Received `{type(params.get("Xmedian", False))}` expected `bool`')
-    if params.get("Ymedian", False) is None:
-        raise StyxValidationError("`Ymedian` must not be None")
-    if not isinstance(params["Ymedian"], bool):
-        raise StyxValidationError(f'`Ymedian` has the wrong type: Received `{type(params.get("Ymedian", False))}` expected `bool`')
-    if params.get("Zmedian", False) is None:
-        raise StyxValidationError("`Zmedian` must not be None")
-    if not isinstance(params["Zmedian"], bool):
-        raise StyxValidationError(f'`Zmedian` has the wrong type: Received `{type(params.get("Zmedian", False))}` expected `bool`')
-    if params.get("Tperc", None) is not None:
-        if not isinstance(params["Tperc"], (float, int)):
-            raise StyxValidationError(f'`Tperc` has the wrong type: Received `{type(params.get("Tperc", None))}` expected `float | None`')
-        if not (0 <= params["Tperc"] <= 100):
-            raise StyxValidationError("Parameter `Tperc` must be between 0 and 100 (inclusive)")
-    if params.get("Xperc", None) is not None:
-        if not isinstance(params["Xperc"], (float, int)):
-            raise StyxValidationError(f'`Xperc` has the wrong type: Received `{type(params.get("Xperc", None))}` expected `float | None`')
-        if not (0 <= params["Xperc"] <= 100):
-            raise StyxValidationError("Parameter `Xperc` must be between 0 and 100 (inclusive)")
-    if params.get("Yperc", None) is not None:
-        if not isinstance(params["Yperc"], (float, int)):
-            raise StyxValidationError(f'`Yperc` has the wrong type: Received `{type(params.get("Yperc", None))}` expected `float | None`')
-        if not (0 <= params["Yperc"] <= 100):
-            raise StyxValidationError("Parameter `Yperc` must be between 0 and 100 (inclusive)")
-    if params.get("Zperc", None) is not None:
-        if not isinstance(params["Zperc"], (float, int)):
-            raise StyxValidationError(f'`Zperc` has the wrong type: Received `{type(params.get("Zperc", None))}` expected `float | None`')
-        if not (0 <= params["Zperc"] <= 100):
-            raise StyxValidationError("Parameter `Zperc` must be between 0 and 100 (inclusive)")
-    if params.get("Tar1", False) is None:
-        raise StyxValidationError("`Tar1` must not be None")
-    if not isinstance(params["Tar1"], bool):
-        raise StyxValidationError(f'`Tar1` has the wrong type: Received `{type(params.get("Tar1", False))}` expected `bool`')
-    if params.get("roi", None) is not None:
-        if not isinstance(params["roi"], list):
-            raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
-        if len(params["roi"]) != 6:
-            raise StyxValidationError("Parameter `roi` must contain exactly 6 elements")
-        for e in params["roi"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
-    if params.get("bptf", None) is not None:
-        if not isinstance(params["bptf"], list):
-            raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
-        if len(params["bptf"]) != 2:
-            raise StyxValidationError("Parameter `bptf` must contain exactly 2 elements")
-        for e in params["bptf"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
-    if params.get("roc", None) is not None:
-        if not isinstance(params["roc"], list):
-            raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float] | None`')
-        for e in params["roc"]:
-            if not isinstance(e, (float, int)):
-                raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float] | None`')
 
 
-def fslmaths_operation_cargs(
-    params: FslmathsOperationParamsDict,
+def fslmaths_operation_add_cargs(
+    params: FslmathsOperationAddParamsDict,
     execution: Execution,
 ) -> list[str]:
     """
@@ -1036,297 +1292,5505 @@ def fslmaths_operation_cargs(
             "-add",
             str(params.get("add", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_sub(
+    sub: float | None = None,
+) -> FslmathsOperationSubParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sub: Subtract following input from current image.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_sub",
+    }
+    if sub is not None:
+        params["sub"] = sub
+    return params
+
+
+def fslmaths_operation_sub_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSubParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sub", None) is not None:
+        if not isinstance(params["sub"], (float, int)):
+            raise StyxValidationError(f'`sub` has the wrong type: Received `{type(params.get("sub", None))}` expected `float | None`')
+
+
+def fslmaths_operation_sub_cargs(
+    params: FslmathsOperationSubParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("sub", None) is not None:
         cargs.extend([
             "-sub",
             str(params.get("sub", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_mul(
+    mul: float | None = None,
+) -> FslmathsOperationMulParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        mul: Multiply current image by following input.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_mul",
+    }
+    if mul is not None:
+        params["mul"] = mul
+    return params
+
+
+def fslmaths_operation_mul_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationMulParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mul", None) is not None:
+        if not isinstance(params["mul"], (float, int)):
+            raise StyxValidationError(f'`mul` has the wrong type: Received `{type(params.get("mul", None))}` expected `float | None`')
+
+
+def fslmaths_operation_mul_cargs(
+    params: FslmathsOperationMulParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("mul", None) is not None:
         cargs.extend([
             "-mul",
             str(params.get("mul", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_div(
+    div: float | None = None,
+) -> FslmathsOperationDivParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        div: Divide current image by following input.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_div",
+    }
+    if div is not None:
+        params["div"] = div
+    return params
+
+
+def fslmaths_operation_div_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationDivParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("div", None) is not None:
+        if not isinstance(params["div"], (float, int)):
+            raise StyxValidationError(f'`div` has the wrong type: Received `{type(params.get("div", None))}` expected `float | None`')
+
+
+def fslmaths_operation_div_cargs(
+    params: FslmathsOperationDivParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("div", None) is not None:
         cargs.extend([
             "-div",
             str(params.get("div", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_rem(
+    rem: float | None = None,
+) -> FslmathsOperationRemParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        rem: Modulus remainder - divide current image by following input and\
+            take remainder.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_rem",
+    }
+    if rem is not None:
+        params["rem"] = rem
+    return params
+
+
+def fslmaths_operation_rem_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRemParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rem", None) is not None:
+        if not isinstance(params["rem"], (float, int)):
+            raise StyxValidationError(f'`rem` has the wrong type: Received `{type(params.get("rem", None))}` expected `float | None`')
+
+
+def fslmaths_operation_rem_cargs(
+    params: FslmathsOperationRemParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("rem", None) is not None:
         cargs.extend([
             "-rem",
             str(params.get("rem", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_mas(
+    mas: InputPathType | None = None,
+) -> FslmathsOperationMasParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        mas: Use (following image>0) to mask current image.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_mas",
+    }
+    if mas is not None:
+        params["mas"] = mas
+    return params
+
+
+def fslmaths_operation_mas_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationMasParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mas", None) is not None:
+        if not isinstance(params["mas"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mas` has the wrong type: Received `{type(params.get("mas", None))}` expected `InputPathType | None`')
+
+
+def fslmaths_operation_mas_cargs(
+    params: FslmathsOperationMasParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("mas", None) is not None:
         cargs.extend([
             "-mas",
             execution.input_file(params.get("mas", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_thr(
+    thr: float | None = None,
+) -> FslmathsOperationThrParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        thr: Use following number to threshold current image (zero anything\
+            below the number).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_thr",
+    }
+    if thr is not None:
+        params["thr"] = thr
+    return params
+
+
+def fslmaths_operation_thr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationThrParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("thr", None) is not None:
+        if not isinstance(params["thr"], (float, int)):
+            raise StyxValidationError(f'`thr` has the wrong type: Received `{type(params.get("thr", None))}` expected `float | None`')
+
+
+def fslmaths_operation_thr_cargs(
+    params: FslmathsOperationThrParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("thr", None) is not None:
         cargs.extend([
             "-thr",
             str(params.get("thr", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_thrp(
+    thrp: float | None = None,
+) -> FslmathsOperationThrpParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        thrp: Use following percentage (0-100) of ROBUST RANGE to threshold\
+            current image (zero anything below the number).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_thrp",
+    }
+    if thrp is not None:
+        params["thrp"] = thrp
+    return params
+
+
+def fslmaths_operation_thrp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationThrpParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("thrp", None) is not None:
+        if not isinstance(params["thrp"], (float, int)):
+            raise StyxValidationError(f'`thrp` has the wrong type: Received `{type(params.get("thrp", None))}` expected `float | None`')
+        if not (0 <= params["thrp"] <= 100):
+            raise StyxValidationError("Parameter `thrp` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_thrp_cargs(
+    params: FslmathsOperationThrpParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("thrp", None) is not None:
         cargs.extend([
             "-thrp",
             str(params.get("thrp", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_thr_p(
+    thr_p: float | None = None,
+) -> FslmathsOperationThrPParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        thr_p: Use following percentage (0-100) of ROBUST RANGE of non-zero\
+            voxels and threshold below.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_thrP",
+    }
+    if thr_p is not None:
+        params["thrP"] = thr_p
+    return params
+
+
+def fslmaths_operation_thr_p_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationThrPParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("thrP", None) is not None:
+        if not isinstance(params["thrP"], (float, int)):
+            raise StyxValidationError(f'`thrP` has the wrong type: Received `{type(params.get("thrP", None))}` expected `float | None`')
+        if not (0 <= params["thrP"] <= 100):
+            raise StyxValidationError("Parameter `thrP` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_thr_p_cargs(
+    params: FslmathsOperationThrPParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("thrP", None) is not None:
         cargs.extend([
             "-thrP",
             str(params.get("thrP", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_uthr(
+    uthr: float | None = None,
+) -> FslmathsOperationUthrParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        uthr: Use following number to upper-threshold current image (zero\
+            anything above the number).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_uthr",
+    }
+    if uthr is not None:
+        params["uthr"] = uthr
+    return params
+
+
+def fslmaths_operation_uthr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationUthrParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("uthr", None) is not None:
+        if not isinstance(params["uthr"], (float, int)):
+            raise StyxValidationError(f'`uthr` has the wrong type: Received `{type(params.get("uthr", None))}` expected `float | None`')
+
+
+def fslmaths_operation_uthr_cargs(
+    params: FslmathsOperationUthrParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("uthr", None) is not None:
         cargs.extend([
             "-uthr",
             str(params.get("uthr", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_uthrp(
+    uthrp: float | None = None,
+) -> FslmathsOperationUthrpParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        uthrp: Use following percentage (0-100) of ROBUST RANGE to\
+            upper-threshold current image (zero anything above the number).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_uthrp",
+    }
+    if uthrp is not None:
+        params["uthrp"] = uthrp
+    return params
+
+
+def fslmaths_operation_uthrp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationUthrpParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("uthrp", None) is not None:
+        if not isinstance(params["uthrp"], (float, int)):
+            raise StyxValidationError(f'`uthrp` has the wrong type: Received `{type(params.get("uthrp", None))}` expected `float | None`')
+        if not (0 <= params["uthrp"] <= 100):
+            raise StyxValidationError("Parameter `uthrp` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_uthrp_cargs(
+    params: FslmathsOperationUthrpParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("uthrp", None) is not None:
         cargs.extend([
             "-uthrp",
             str(params.get("uthrp", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_uthr_p(
+    uthr_p: float | None = None,
+) -> FslmathsOperationUthrPParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        uthr_p: Use following percentage (0-100) of ROBUST RANGE of non-zero\
+            voxels and threshold above.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_uthrP",
+    }
+    if uthr_p is not None:
+        params["uthrP"] = uthr_p
+    return params
+
+
+def fslmaths_operation_uthr_p_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationUthrPParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("uthrP", None) is not None:
+        if not isinstance(params["uthrP"], (float, int)):
+            raise StyxValidationError(f'`uthrP` has the wrong type: Received `{type(params.get("uthrP", None))}` expected `float | None`')
+        if not (0 <= params["uthrP"] <= 100):
+            raise StyxValidationError("Parameter `uthrP` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_uthr_p_cargs(
+    params: FslmathsOperationUthrPParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("uthrP", None) is not None:
         cargs.extend([
             "-uthrP",
             str(params.get("uthrP", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_max(
+    max_: float | None = None,
+) -> FslmathsOperationMaxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        max_: Take maximum of following input and current image.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_max",
+    }
+    if max_ is not None:
+        params["max"] = max_
+    return params
+
+
+def fslmaths_operation_max_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationMaxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("max", None) is not None:
+        if not isinstance(params["max"], (float, int)):
+            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
+
+
+def fslmaths_operation_max_cargs(
+    params: FslmathsOperationMaxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("max", None) is not None:
         cargs.extend([
             "-max",
             str(params.get("max", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_min(
+    min_: float | None = None,
+) -> FslmathsOperationMinParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        min_: Take minimum of following input and current image.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_min",
+    }
+    if min_ is not None:
+        params["min"] = min_
+    return params
+
+
+def fslmaths_operation_min_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationMinParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("min", None) is not None:
+        if not isinstance(params["min"], (float, int)):
+            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float | None`')
+
+
+def fslmaths_operation_min_cargs(
+    params: FslmathsOperationMinParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("min", None) is not None:
         cargs.extend([
             "-min",
             str(params.get("min", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_seed(
+    seed: float | None = None,
+) -> FslmathsOperationSeedParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        seed: Seed random number generator with following number.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_seed",
+    }
+    if seed is not None:
+        params["seed"] = seed
+    return params
+
+
+def fslmaths_operation_seed_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSeedParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+
+
+def fslmaths_operation_seed_cargs(
+    params: FslmathsOperationSeedParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
             str(params.get("seed", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_restart(
+    restart: InputPathType | None = None,
+) -> FslmathsOperationRestartParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        restart: Replace the current image with input for future processing\
+            operations.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_restart",
+    }
+    if restart is not None:
+        params["restart"] = restart
+    return params
+
+
+def fslmaths_operation_restart_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRestartParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("restart", None) is not None:
+        if not isinstance(params["restart"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`restart` has the wrong type: Received `{type(params.get("restart", None))}` expected `InputPathType | None`')
+
+
+def fslmaths_operation_restart_cargs(
+    params: FslmathsOperationRestartParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("restart", None) is not None:
         cargs.extend([
             "-restart",
             execution.input_file(params.get("restart", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_save(
+    save: bool = False,
+) -> FslmathsOperationSaveParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        save: Save the current working image to the input filename.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_save",
+        "save": save,
+    }
+    return params
+
+
+def fslmaths_operation_save_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSaveParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("save", False) is None:
+        raise StyxValidationError("`save` must not be None")
+    if not isinstance(params["save"], bool):
+        raise StyxValidationError(f'`save` has the wrong type: Received `{type(params.get("save", False))}` expected `bool`')
+
+
+def fslmaths_operation_save_cargs(
+    params: FslmathsOperationSaveParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("save", False):
         cargs.append("-save")
+    return cargs
+
+
+def fslmaths_operation_exp(
+    exp: bool = False,
+) -> FslmathsOperationExpParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        exp: Exponential.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_exp",
+        "exp": exp,
+    }
+    return params
+
+
+def fslmaths_operation_exp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationExpParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("exp", False) is None:
+        raise StyxValidationError("`exp` must not be None")
+    if not isinstance(params["exp"], bool):
+        raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", False))}` expected `bool`')
+
+
+def fslmaths_operation_exp_cargs(
+    params: FslmathsOperationExpParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("exp", False):
         cargs.append("-exp")
+    return cargs
+
+
+def fslmaths_operation_log(
+    log: bool = False,
+) -> FslmathsOperationLogParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        log: Natural logarithm.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_log",
+        "log": log,
+    }
+    return params
+
+
+def fslmaths_operation_log_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationLogParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("log", False) is None:
+        raise StyxValidationError("`log` must not be None")
+    if not isinstance(params["log"], bool):
+        raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", False))}` expected `bool`')
+
+
+def fslmaths_operation_log_cargs(
+    params: FslmathsOperationLogParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("log", False):
         cargs.append("-log")
+    return cargs
+
+
+def fslmaths_operation_sin(
+    sin: bool = False,
+) -> FslmathsOperationSinParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sin: Sine function.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_sin",
+        "sin": sin,
+    }
+    return params
+
+
+def fslmaths_operation_sin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSinParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sin", False) is None:
+        raise StyxValidationError("`sin` must not be None")
+    if not isinstance(params["sin"], bool):
+        raise StyxValidationError(f'`sin` has the wrong type: Received `{type(params.get("sin", False))}` expected `bool`')
+
+
+def fslmaths_operation_sin_cargs(
+    params: FslmathsOperationSinParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("sin", False):
         cargs.append("-sin")
+    return cargs
+
+
+def fslmaths_operation_cos(
+    cos: bool = False,
+) -> FslmathsOperationCosParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        cos: Cosine function.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_cos",
+        "cos": cos,
+    }
+    return params
+
+
+def fslmaths_operation_cos_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationCosParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cos", False) is None:
+        raise StyxValidationError("`cos` must not be None")
+    if not isinstance(params["cos"], bool):
+        raise StyxValidationError(f'`cos` has the wrong type: Received `{type(params.get("cos", False))}` expected `bool`')
+
+
+def fslmaths_operation_cos_cargs(
+    params: FslmathsOperationCosParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("cos", False):
         cargs.append("-cos")
+    return cargs
+
+
+def fslmaths_operation_tan(
+    tan: bool = False,
+) -> FslmathsOperationTanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tan: Tangent function.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_tan",
+        "tan": tan,
+    }
+    return params
+
+
+def fslmaths_operation_tan_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tan", False) is None:
+        raise StyxValidationError("`tan` must not be None")
+    if not isinstance(params["tan"], bool):
+        raise StyxValidationError(f'`tan` has the wrong type: Received `{type(params.get("tan", False))}` expected `bool`')
+
+
+def fslmaths_operation_tan_cargs(
+    params: FslmathsOperationTanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("tan", False):
         cargs.append("-tan")
+    return cargs
+
+
+def fslmaths_operation_asin(
+    asin: bool = False,
+) -> FslmathsOperationAsinParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        asin: Arc sine function.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_asin",
+        "asin": asin,
+    }
+    return params
+
+
+def fslmaths_operation_asin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationAsinParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("asin", False) is None:
+        raise StyxValidationError("`asin` must not be None")
+    if not isinstance(params["asin"], bool):
+        raise StyxValidationError(f'`asin` has the wrong type: Received `{type(params.get("asin", False))}` expected `bool`')
+
+
+def fslmaths_operation_asin_cargs(
+    params: FslmathsOperationAsinParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("asin", False):
         cargs.append("-asin")
+    return cargs
+
+
+def fslmaths_operation_acos(
+    acos: bool = False,
+) -> FslmathsOperationAcosParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        acos: Arc cosine function.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_acos",
+        "acos": acos,
+    }
+    return params
+
+
+def fslmaths_operation_acos_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationAcosParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("acos", False) is None:
+        raise StyxValidationError("`acos` must not be None")
+    if not isinstance(params["acos"], bool):
+        raise StyxValidationError(f'`acos` has the wrong type: Received `{type(params.get("acos", False))}` expected `bool`')
+
+
+def fslmaths_operation_acos_cargs(
+    params: FslmathsOperationAcosParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("acos", False):
         cargs.append("-acos")
+    return cargs
+
+
+def fslmaths_operation_atan(
+    atan: bool = False,
+) -> FslmathsOperationAtanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        atan: Arc tangent function.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_atan",
+        "atan": atan,
+    }
+    return params
+
+
+def fslmaths_operation_atan_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationAtanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("atan", False) is None:
+        raise StyxValidationError("`atan` must not be None")
+    if not isinstance(params["atan"], bool):
+        raise StyxValidationError(f'`atan` has the wrong type: Received `{type(params.get("atan", False))}` expected `bool`')
+
+
+def fslmaths_operation_atan_cargs(
+    params: FslmathsOperationAtanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("atan", False):
         cargs.append("-atan")
+    return cargs
+
+
+def fslmaths_operation_sqr(
+    sqr: bool = False,
+) -> FslmathsOperationSqrParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sqr: Square.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_sqr",
+        "sqr": sqr,
+    }
+    return params
+
+
+def fslmaths_operation_sqr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSqrParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sqr", False) is None:
+        raise StyxValidationError("`sqr` must not be None")
+    if not isinstance(params["sqr"], bool):
+        raise StyxValidationError(f'`sqr` has the wrong type: Received `{type(params.get("sqr", False))}` expected `bool`')
+
+
+def fslmaths_operation_sqr_cargs(
+    params: FslmathsOperationSqrParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("sqr", False):
         cargs.append("-sqr")
+    return cargs
+
+
+def fslmaths_operation_sqrt(
+    sqrt: bool = False,
+) -> FslmathsOperationSqrtParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sqrt: Square root.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_sqrt",
+        "sqrt": sqrt,
+    }
+    return params
+
+
+def fslmaths_operation_sqrt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSqrtParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sqrt", False) is None:
+        raise StyxValidationError("`sqrt` must not be None")
+    if not isinstance(params["sqrt"], bool):
+        raise StyxValidationError(f'`sqrt` has the wrong type: Received `{type(params.get("sqrt", False))}` expected `bool`')
+
+
+def fslmaths_operation_sqrt_cargs(
+    params: FslmathsOperationSqrtParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("sqrt", False):
         cargs.append("-sqrt")
+    return cargs
+
+
+def fslmaths_operation_recip(
+    recip: bool = False,
+) -> FslmathsOperationRecipParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        recip: Reciprocal (1/current image).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_recip",
+        "recip": recip,
+    }
+    return params
+
+
+def fslmaths_operation_recip_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRecipParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("recip", False) is None:
+        raise StyxValidationError("`recip` must not be None")
+    if not isinstance(params["recip"], bool):
+        raise StyxValidationError(f'`recip` has the wrong type: Received `{type(params.get("recip", False))}` expected `bool`')
+
+
+def fslmaths_operation_recip_cargs(
+    params: FslmathsOperationRecipParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("recip", False):
         cargs.append("-recip")
+    return cargs
+
+
+def fslmaths_operation_abs(
+    abs_: bool = False,
+) -> FslmathsOperationAbsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        abs_: Absolute value.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_abs",
+        "abs": abs_,
+    }
+    return params
+
+
+def fslmaths_operation_abs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationAbsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("abs", False) is None:
+        raise StyxValidationError("`abs` must not be None")
+    if not isinstance(params["abs"], bool):
+        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
+
+
+def fslmaths_operation_abs_cargs(
+    params: FslmathsOperationAbsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("abs", False):
         cargs.append("-abs")
+    return cargs
+
+
+def fslmaths_operation_bin(
+    bin_: bool = False,
+) -> FslmathsOperationBinParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        bin_: Use (current image>0) to binarise.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_bin",
+        "bin": bin_,
+    }
+    return params
+
+
+def fslmaths_operation_bin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationBinParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bin", False) is None:
+        raise StyxValidationError("`bin` must not be None")
+    if not isinstance(params["bin"], bool):
+        raise StyxValidationError(f'`bin` has the wrong type: Received `{type(params.get("bin", False))}` expected `bool`')
+
+
+def fslmaths_operation_bin_cargs(
+    params: FslmathsOperationBinParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("bin", False):
         cargs.append("-bin")
+    return cargs
+
+
+def fslmaths_operation_binv(
+    binv: bool = False,
+) -> FslmathsOperationBinvParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        binv: Binarise and invert (binarisation and logical inversion).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_binv",
+        "binv": binv,
+    }
+    return params
+
+
+def fslmaths_operation_binv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationBinvParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("binv", False) is None:
+        raise StyxValidationError("`binv` must not be None")
+    if not isinstance(params["binv"], bool):
+        raise StyxValidationError(f'`binv` has the wrong type: Received `{type(params.get("binv", False))}` expected `bool`')
+
+
+def fslmaths_operation_binv_cargs(
+    params: FslmathsOperationBinvParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("binv", False):
         cargs.append("-binv")
+    return cargs
+
+
+def fslmaths_operation_fillh(
+    fillh: bool = False,
+) -> FslmathsOperationFillhParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fillh: Fill holes in a binary mask (holes are internal - i.e. do not\
+            touch the edge of the FOV).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_fillh",
+        "fillh": fillh,
+    }
+    return params
+
+
+def fslmaths_operation_fillh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationFillhParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fillh", False) is None:
+        raise StyxValidationError("`fillh` must not be None")
+    if not isinstance(params["fillh"], bool):
+        raise StyxValidationError(f'`fillh` has the wrong type: Received `{type(params.get("fillh", False))}` expected `bool`')
+
+
+def fslmaths_operation_fillh_cargs(
+    params: FslmathsOperationFillhParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("fillh", False):
         cargs.append("-fillh")
+    return cargs
+
+
+def fslmaths_operation_fillh26(
+    fillh26: bool = False,
+) -> FslmathsOperationFillh26ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fillh26: Fill holes using 26 connectivity.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_fillh26",
+        "fillh26": fillh26,
+    }
+    return params
+
+
+def fslmaths_operation_fillh26_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationFillh26ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fillh26", False) is None:
+        raise StyxValidationError("`fillh26` must not be None")
+    if not isinstance(params["fillh26"], bool):
+        raise StyxValidationError(f'`fillh26` has the wrong type: Received `{type(params.get("fillh26", False))}` expected `bool`')
+
+
+def fslmaths_operation_fillh26_cargs(
+    params: FslmathsOperationFillh26ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("fillh26", False):
         cargs.append("-fillh26")
+    return cargs
+
+
+def fslmaths_operation_index(
+    index: bool = False,
+) -> FslmathsOperationIndexParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        index: Replace each nonzero voxel with a unique (subject to wrapping)\
+            index number.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_index",
+        "index": index,
+    }
+    return params
+
+
+def fslmaths_operation_index_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationIndexParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("index", False) is None:
+        raise StyxValidationError("`index` must not be None")
+    if not isinstance(params["index"], bool):
+        raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", False))}` expected `bool`')
+
+
+def fslmaths_operation_index_cargs(
+    params: FslmathsOperationIndexParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("index", False):
         cargs.append("-index")
+    return cargs
+
+
+def fslmaths_operation_grid(
+    grid: list[float] | None = None,
+) -> FslmathsOperationGridParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        grid: Add a 3D grid of intensity <value> with grid spacing <spacing>.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_grid",
+    }
+    if grid is not None:
+        params["grid"] = grid
+    return params
+
+
+def fslmaths_operation_grid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationGridParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("grid", None) is not None:
+        if not isinstance(params["grid"], list):
+            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
+        for e in params["grid"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_grid_cargs(
+    params: FslmathsOperationGridParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("grid", None) is not None:
         cargs.extend([
             "-grid",
             *map(str, params.get("grid", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_edge(
+    edge: bool = False,
+) -> FslmathsOperationEdgeParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        edge: Edge strength.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_edge",
+        "edge": edge,
+    }
+    return params
+
+
+def fslmaths_operation_edge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationEdgeParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("edge", False) is None:
+        raise StyxValidationError("`edge` must not be None")
+    if not isinstance(params["edge"], bool):
+        raise StyxValidationError(f'`edge` has the wrong type: Received `{type(params.get("edge", False))}` expected `bool`')
+
+
+def fslmaths_operation_edge_cargs(
+    params: FslmathsOperationEdgeParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("edge", False):
         cargs.append("-edge")
+    return cargs
+
+
+def fslmaths_operation_tfce(
+    tfce: list[float] | None = None,
+) -> FslmathsOperationTfceParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tfce: Enhance with TFCE, e.g. -tfce 2 0.5 6 (maybe change 6 to 26 for\
+            skeletons).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_tfce",
+    }
+    if tfce is not None:
+        params["tfce"] = tfce
+    return params
+
+
+def fslmaths_operation_tfce_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTfceParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tfce", None) is not None:
+        if not isinstance(params["tfce"], list):
+            raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float] | None`')
+        for e in params["tfce"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_tfce_cargs(
+    params: FslmathsOperationTfceParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("tfce", None) is not None:
         cargs.extend([
             "-tfce",
             *map(str, params.get("tfce", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_tfce_s(
+    tfce_s: list[float] | None = None,
+) -> FslmathsOperationTfceSParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tfce_s: Show support area for voxel (X,Y,Z).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_tfceS",
+    }
+    if tfce_s is not None:
+        params["tfceS"] = tfce_s
+    return params
+
+
+def fslmaths_operation_tfce_s_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTfceSParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tfceS", None) is not None:
+        if not isinstance(params["tfceS"], list):
+            raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float] | None`')
+        for e in params["tfceS"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`tfceS` has the wrong type: Received `{type(params.get("tfceS", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_tfce_s_cargs(
+    params: FslmathsOperationTfceSParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("tfceS", None) is not None:
         cargs.extend([
             "-tfceS",
             *map(str, params.get("tfceS", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_nan(
+    nan: bool = False,
+) -> FslmathsOperationNanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        nan: Replace NaNs (improper numbers) with 0.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_nan",
+        "nan": nan,
+    }
+    return params
+
+
+def fslmaths_operation_nan_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationNanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nan", False) is None:
+        raise StyxValidationError("`nan` must not be None")
+    if not isinstance(params["nan"], bool):
+        raise StyxValidationError(f'`nan` has the wrong type: Received `{type(params.get("nan", False))}` expected `bool`')
+
+
+def fslmaths_operation_nan_cargs(
+    params: FslmathsOperationNanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("nan", False):
         cargs.append("-nan")
+    return cargs
+
+
+def fslmaths_operation_nanm(
+    nanm: bool = False,
+) -> FslmathsOperationNanmParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        nanm: Make NaN (improper number) mask with 1 for NaN voxels, 0\
+            otherwise.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_nanm",
+        "nanm": nanm,
+    }
+    return params
+
+
+def fslmaths_operation_nanm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationNanmParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nanm", False) is None:
+        raise StyxValidationError("`nanm` must not be None")
+    if not isinstance(params["nanm"], bool):
+        raise StyxValidationError(f'`nanm` has the wrong type: Received `{type(params.get("nanm", False))}` expected `bool`')
+
+
+def fslmaths_operation_nanm_cargs(
+    params: FslmathsOperationNanmParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("nanm", False):
         cargs.append("-nanm")
+    return cargs
+
+
+def fslmaths_operation_rand(
+    rand: bool = False,
+) -> FslmathsOperationRandParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        rand: Add uniform noise (range 0:1).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_rand",
+        "rand": rand,
+    }
+    return params
+
+
+def fslmaths_operation_rand_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRandParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rand", False) is None:
+        raise StyxValidationError("`rand` must not be None")
+    if not isinstance(params["rand"], bool):
+        raise StyxValidationError(f'`rand` has the wrong type: Received `{type(params.get("rand", False))}` expected `bool`')
+
+
+def fslmaths_operation_rand_cargs(
+    params: FslmathsOperationRandParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("rand", False):
         cargs.append("-rand")
+    return cargs
+
+
+def fslmaths_operation_randn(
+    randn: bool = False,
+) -> FslmathsOperationRandnParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        randn: Add Gaussian noise (mean=0 sigma=1).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_randn",
+        "randn": randn,
+    }
+    return params
+
+
+def fslmaths_operation_randn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRandnParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("randn", False) is None:
+        raise StyxValidationError("`randn` must not be None")
+    if not isinstance(params["randn"], bool):
+        raise StyxValidationError(f'`randn` has the wrong type: Received `{type(params.get("randn", False))}` expected `bool`')
+
+
+def fslmaths_operation_randn_cargs(
+    params: FslmathsOperationRandnParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("randn", False):
         cargs.append("-randn")
+    return cargs
+
+
+def fslmaths_operation_inm(
+    inm: float | None = None,
+) -> FslmathsOperationInmParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        inm: Intensity normalisation (per 3D volume mean).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_inm",
+    }
+    if inm is not None:
+        params["inm"] = inm
+    return params
+
+
+def fslmaths_operation_inm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationInmParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inm", None) is not None:
+        if not isinstance(params["inm"], (float, int)):
+            raise StyxValidationError(f'`inm` has the wrong type: Received `{type(params.get("inm", None))}` expected `float | None`')
+
+
+def fslmaths_operation_inm_cargs(
+    params: FslmathsOperationInmParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("inm", None) is not None:
         cargs.extend([
             "-inm",
             str(params.get("inm", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_ing(
+    ing: float | None = None,
+) -> FslmathsOperationIngParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ing: Intensity normalisation, global 4D mean.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_ing",
+    }
+    if ing is not None:
+        params["ing"] = ing
+    return params
+
+
+def fslmaths_operation_ing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationIngParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ing", None) is not None:
+        if not isinstance(params["ing"], (float, int)):
+            raise StyxValidationError(f'`ing` has the wrong type: Received `{type(params.get("ing", None))}` expected `float | None`')
+
+
+def fslmaths_operation_ing_cargs(
+    params: FslmathsOperationIngParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("ing", None) is not None:
         cargs.extend([
             "-ing",
             str(params.get("ing", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_range(
+    range_: bool = False,
+) -> FslmathsOperationRangeParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        range_: Set the output calmin/max to full data range.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_range",
+        "range": range_,
+    }
+    return params
+
+
+def fslmaths_operation_range_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRangeParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("range", False) is None:
+        raise StyxValidationError("`range` must not be None")
+    if not isinstance(params["range"], bool):
+        raise StyxValidationError(f'`range` has the wrong type: Received `{type(params.get("range", False))}` expected `bool`')
+
+
+def fslmaths_operation_range_cargs(
+    params: FslmathsOperationRangeParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("range", False):
         cargs.append("-range")
+    return cargs
+
+
+def fslmaths_operation_tensor_decomp(
+    tensor_decomp: bool = False,
+) -> FslmathsOperationTensorDecompParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tensor_decomp: Convert a 4D (6-timepoint) tensor image into\
+            L1,2,3,FA,MD,MO,V1,2,3 (remaining image in pipeline is FA).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_tensor_decomp",
+        "tensor_decomp": tensor_decomp,
+    }
+    return params
+
+
+def fslmaths_operation_tensor_decomp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTensorDecompParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tensor_decomp", False) is None:
+        raise StyxValidationError("`tensor_decomp` must not be None")
+    if not isinstance(params["tensor_decomp"], bool):
+        raise StyxValidationError(f'`tensor_decomp` has the wrong type: Received `{type(params.get("tensor_decomp", False))}` expected `bool`')
+
+
+def fslmaths_operation_tensor_decomp_cargs(
+    params: FslmathsOperationTensorDecompParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("tensor_decomp", False):
         cargs.append("-tensor_decomp")
+    return cargs
+
+
+def fslmaths_operation_kernel_3_d(
+    kernel_3_d: bool = False,
+) -> FslmathsOperationKernel3DParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_3_d: 3x3x3 box centered on target voxel (set as default kernel).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_3D",
+        "kernel_3D": kernel_3_d,
+    }
+    return params
+
+
+def fslmaths_operation_kernel_3_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernel3DParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_3D", False) is None:
+        raise StyxValidationError("`kernel_3D` must not be None")
+    if not isinstance(params["kernel_3D"], bool):
+        raise StyxValidationError(f'`kernel_3D` has the wrong type: Received `{type(params.get("kernel_3D", False))}` expected `bool`')
+
+
+def fslmaths_operation_kernel_3_d_cargs(
+    params: FslmathsOperationKernel3DParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_3D", False):
         cargs.append("-kernel 3D")
+    return cargs
+
+
+def fslmaths_operation_kernel_2_d(
+    kernel_2_d: bool = False,
+) -> FslmathsOperationKernel2DParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_2_d: 3x3x1 box centered on target voxel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_2D",
+        "kernel_2D": kernel_2_d,
+    }
+    return params
+
+
+def fslmaths_operation_kernel_2_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernel2DParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_2D", False) is None:
+        raise StyxValidationError("`kernel_2D` must not be None")
+    if not isinstance(params["kernel_2D"], bool):
+        raise StyxValidationError(f'`kernel_2D` has the wrong type: Received `{type(params.get("kernel_2D", False))}` expected `bool`')
+
+
+def fslmaths_operation_kernel_2_d_cargs(
+    params: FslmathsOperationKernel2DParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_2D", False):
         cargs.append("-kernel 2D")
+    return cargs
+
+
+def fslmaths_operation_kernel_box(
+    kernel_box: float | None = None,
+) -> FslmathsOperationKernelBoxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_box: All voxels in a cube of width <size> mm centered on target\
+            voxel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_box",
+    }
+    if kernel_box is not None:
+        params["kernel_box"] = kernel_box
+    return params
+
+
+def fslmaths_operation_kernel_box_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernelBoxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_box", None) is not None:
+        if not isinstance(params["kernel_box"], (float, int)):
+            raise StyxValidationError(f'`kernel_box` has the wrong type: Received `{type(params.get("kernel_box", None))}` expected `float | None`')
+
+
+def fslmaths_operation_kernel_box_cargs(
+    params: FslmathsOperationKernelBoxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_box", None) is not None:
         cargs.extend([
             "-kernel box",
             str(params.get("kernel_box", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_kernel_boxv(
+    kernel_boxv: float | None = None,
+) -> FslmathsOperationKernelBoxvParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_boxv: All voxels in a cube of width <size> voxels centered on\
+            target voxel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_boxv",
+    }
+    if kernel_boxv is not None:
+        params["kernel_boxv"] = kernel_boxv
+    return params
+
+
+def fslmaths_operation_kernel_boxv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernelBoxvParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_boxv", None) is not None:
+        if not isinstance(params["kernel_boxv"], (float, int)):
+            raise StyxValidationError(f'`kernel_boxv` has the wrong type: Received `{type(params.get("kernel_boxv", None))}` expected `float | None`')
+
+
+def fslmaths_operation_kernel_boxv_cargs(
+    params: FslmathsOperationKernelBoxvParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_boxv", None) is not None:
         cargs.extend([
             "-kernel boxv",
             str(params.get("kernel_boxv", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_kernel_boxv3(
+    kernel_boxv3: list[float] | None = None,
+) -> FslmathsOperationKernelBoxv3ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_boxv3: All voxels in a cuboid of dimensions X x Y x Z centered\
+            on target voxel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_boxv3",
+    }
+    if kernel_boxv3 is not None:
+        params["kernel_boxv3"] = kernel_boxv3
+    return params
+
+
+def fslmaths_operation_kernel_boxv3_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernelBoxv3ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_boxv3", None) is not None:
+        if not isinstance(params["kernel_boxv3"], list):
+            raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
+        if len(params["kernel_boxv3"]) != 3:
+            raise StyxValidationError("Parameter `kernel_boxv3` must contain exactly 3 elements")
+        for e in params["kernel_boxv3"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`kernel_boxv3` has the wrong type: Received `{type(params.get("kernel_boxv3", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_kernel_boxv3_cargs(
+    params: FslmathsOperationKernelBoxv3ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_boxv3", None) is not None:
         cargs.extend([
             "-kernel boxv3",
             *map(str, params.get("kernel_boxv3", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_kernel_gauss(
+    kernel_gauss: float | None = None,
+) -> FslmathsOperationKernelGaussParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_gauss: Gaussian kernel (sigma in mm, not voxels).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_gauss",
+    }
+    if kernel_gauss is not None:
+        params["kernel_gauss"] = kernel_gauss
+    return params
+
+
+def fslmaths_operation_kernel_gauss_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernelGaussParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_gauss", None) is not None:
+        if not isinstance(params["kernel_gauss"], (float, int)):
+            raise StyxValidationError(f'`kernel_gauss` has the wrong type: Received `{type(params.get("kernel_gauss", None))}` expected `float | None`')
+
+
+def fslmaths_operation_kernel_gauss_cargs(
+    params: FslmathsOperationKernelGaussParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_gauss", None) is not None:
         cargs.extend([
             "-kernel gauss",
             str(params.get("kernel_gauss", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_kernel_sphere(
+    kernel_sphere: float | None = None,
+) -> FslmathsOperationKernelSphereParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_sphere: All voxels in a sphere of radius <size> mm centered on\
+            target voxel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_sphere",
+    }
+    if kernel_sphere is not None:
+        params["kernel_sphere"] = kernel_sphere
+    return params
+
+
+def fslmaths_operation_kernel_sphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernelSphereParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_sphere", None) is not None:
+        if not isinstance(params["kernel_sphere"], (float, int)):
+            raise StyxValidationError(f'`kernel_sphere` has the wrong type: Received `{type(params.get("kernel_sphere", None))}` expected `float | None`')
+
+
+def fslmaths_operation_kernel_sphere_cargs(
+    params: FslmathsOperationKernelSphereParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_sphere", None) is not None:
         cargs.extend([
             "-kernel sphere",
             str(params.get("kernel_sphere", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_kernel_file(
+    kernel_file: InputPathType | None = None,
+) -> FslmathsOperationKernelFileParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        kernel_file: Use external file as kernel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_kernel_file",
+    }
+    if kernel_file is not None:
+        params["kernel_file"] = kernel_file
+    return params
+
+
+def fslmaths_operation_kernel_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationKernelFileParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel_file", None) is not None:
+        if not isinstance(params["kernel_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`kernel_file` has the wrong type: Received `{type(params.get("kernel_file", None))}` expected `InputPathType | None`')
+
+
+def fslmaths_operation_kernel_file_cargs(
+    params: FslmathsOperationKernelFileParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("kernel_file", None) is not None:
         cargs.extend([
             "-kernel file",
             execution.input_file(params.get("kernel_file", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_dil_m(
+    dil_m: bool = False,
+) -> FslmathsOperationDilMParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        dil_m: Mean Dilation of non-zero voxels.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_dilM",
+        "dilM": dil_m,
+    }
+    return params
+
+
+def fslmaths_operation_dil_m_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationDilMParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilM", False) is None:
+        raise StyxValidationError("`dilM` must not be None")
+    if not isinstance(params["dilM"], bool):
+        raise StyxValidationError(f'`dilM` has the wrong type: Received `{type(params.get("dilM", False))}` expected `bool`')
+
+
+def fslmaths_operation_dil_m_cargs(
+    params: FslmathsOperationDilMParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("dilM", False):
         cargs.append("-dilM")
+    return cargs
+
+
+def fslmaths_operation_dil_d(
+    dil_d: bool = False,
+) -> FslmathsOperationDilDParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        dil_d: Modal Dilation of non-zero voxels.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_dilD",
+        "dilD": dil_d,
+    }
+    return params
+
+
+def fslmaths_operation_dil_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationDilDParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilD", False) is None:
+        raise StyxValidationError("`dilD` must not be None")
+    if not isinstance(params["dilD"], bool):
+        raise StyxValidationError(f'`dilD` has the wrong type: Received `{type(params.get("dilD", False))}` expected `bool`')
+
+
+def fslmaths_operation_dil_d_cargs(
+    params: FslmathsOperationDilDParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("dilD", False):
         cargs.append("-dilD")
+    return cargs
+
+
+def fslmaths_operation_dil_f(
+    dil_f: bool = False,
+) -> FslmathsOperationDilFParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        dil_f: Maximum filtering of all voxels.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_dilF",
+        "dilF": dil_f,
+    }
+    return params
+
+
+def fslmaths_operation_dil_f_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationDilFParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilF", False) is None:
+        raise StyxValidationError("`dilF` must not be None")
+    if not isinstance(params["dilF"], bool):
+        raise StyxValidationError(f'`dilF` has the wrong type: Received `{type(params.get("dilF", False))}` expected `bool`')
+
+
+def fslmaths_operation_dil_f_cargs(
+    params: FslmathsOperationDilFParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("dilF", False):
         cargs.append("-dilF")
+    return cargs
+
+
+def fslmaths_operation_dilall(
+    dilall: bool = False,
+) -> FslmathsOperationDilallParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        dilall: Apply -dilM repeatedly until the entire FOV is covered.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_dilall",
+        "dilall": dilall,
+    }
+    return params
+
+
+def fslmaths_operation_dilall_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationDilallParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilall", False) is None:
+        raise StyxValidationError("`dilall` must not be None")
+    if not isinstance(params["dilall"], bool):
+        raise StyxValidationError(f'`dilall` has the wrong type: Received `{type(params.get("dilall", False))}` expected `bool`')
+
+
+def fslmaths_operation_dilall_cargs(
+    params: FslmathsOperationDilallParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("dilall", False):
         cargs.append("-dilall")
+    return cargs
+
+
+def fslmaths_operation_ero(
+    ero: bool = False,
+) -> FslmathsOperationEroParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ero: Erode by zeroing non-zero voxels when zero voxels found in kernel.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_ero",
+        "ero": ero,
+    }
+    return params
+
+
+def fslmaths_operation_ero_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationEroParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ero", False) is None:
+        raise StyxValidationError("`ero` must not be None")
+    if not isinstance(params["ero"], bool):
+        raise StyxValidationError(f'`ero` has the wrong type: Received `{type(params.get("ero", False))}` expected `bool`')
+
+
+def fslmaths_operation_ero_cargs(
+    params: FslmathsOperationEroParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("ero", False):
         cargs.append("-ero")
+    return cargs
+
+
+def fslmaths_operation_ero_f(
+    ero_f: bool = False,
+) -> FslmathsOperationEroFParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ero_f: Minimum filtering of all voxels.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_eroF",
+        "eroF": ero_f,
+    }
+    return params
+
+
+def fslmaths_operation_ero_f_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationEroFParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("eroF", False) is None:
+        raise StyxValidationError("`eroF` must not be None")
+    if not isinstance(params["eroF"], bool):
+        raise StyxValidationError(f'`eroF` has the wrong type: Received `{type(params.get("eroF", False))}` expected `bool`')
+
+
+def fslmaths_operation_ero_f_cargs(
+    params: FslmathsOperationEroFParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("eroF", False):
         cargs.append("-eroF")
+    return cargs
+
+
+def fslmaths_operation_fmedian(
+    fmedian: bool = False,
+) -> FslmathsOperationFmedianParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fmedian: Median Filtering.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_fmedian",
+        "fmedian": fmedian,
+    }
+    return params
+
+
+def fslmaths_operation_fmedian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationFmedianParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fmedian", False) is None:
+        raise StyxValidationError("`fmedian` must not be None")
+    if not isinstance(params["fmedian"], bool):
+        raise StyxValidationError(f'`fmedian` has the wrong type: Received `{type(params.get("fmedian", False))}` expected `bool`')
+
+
+def fslmaths_operation_fmedian_cargs(
+    params: FslmathsOperationFmedianParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("fmedian", False):
         cargs.append("-fmedian")
+    return cargs
+
+
+def fslmaths_operation_fmean(
+    fmean: bool = False,
+) -> FslmathsOperationFmeanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fmean: Mean filtering, kernel weighted (conventionally used with gauss\
+            kernel).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_fmean",
+        "fmean": fmean,
+    }
+    return params
+
+
+def fslmaths_operation_fmean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationFmeanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fmean", False) is None:
+        raise StyxValidationError("`fmean` must not be None")
+    if not isinstance(params["fmean"], bool):
+        raise StyxValidationError(f'`fmean` has the wrong type: Received `{type(params.get("fmean", False))}` expected `bool`')
+
+
+def fslmaths_operation_fmean_cargs(
+    params: FslmathsOperationFmeanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("fmean", False):
         cargs.append("-fmean")
+    return cargs
+
+
+def fslmaths_operation_fmeanu(
+    fmeanu: bool = False,
+) -> FslmathsOperationFmeanuParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fmeanu: Mean filtering, kernel weighted, un-normalised (gives edge\
+            effects).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_fmeanu",
+        "fmeanu": fmeanu,
+    }
+    return params
+
+
+def fslmaths_operation_fmeanu_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationFmeanuParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fmeanu", False) is None:
+        raise StyxValidationError("`fmeanu` must not be None")
+    if not isinstance(params["fmeanu"], bool):
+        raise StyxValidationError(f'`fmeanu` has the wrong type: Received `{type(params.get("fmeanu", False))}` expected `bool`')
+
+
+def fslmaths_operation_fmeanu_cargs(
+    params: FslmathsOperationFmeanuParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("fmeanu", False):
         cargs.append("-fmeanu")
+    return cargs
+
+
+def fslmaths_operation_s(
+    s: float | None = None,
+) -> FslmathsOperationSParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        s: Create a gauss kernel of sigma mm and perform mean filtering.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_s",
+    }
+    if s is not None:
+        params["s"] = s
+    return params
+
+
+def fslmaths_operation_s_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("s", None) is not None:
+        if not isinstance(params["s"], (float, int)):
+            raise StyxValidationError(f'`s` has the wrong type: Received `{type(params.get("s", None))}` expected `float | None`')
+
+
+def fslmaths_operation_s_cargs(
+    params: FslmathsOperationSParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("s", None) is not None:
         cargs.extend([
             "-s",
             str(params.get("s", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_subsamp2(
+    subsamp2: bool = False,
+) -> FslmathsOperationSubsamp2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        subsamp2: Downsamples image by a factor of 2 (keeping new voxels\
+            centred on old).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_subsamp2",
+        "subsamp2": subsamp2,
+    }
+    return params
+
+
+def fslmaths_operation_subsamp2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSubsamp2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subsamp2", False) is None:
+        raise StyxValidationError("`subsamp2` must not be None")
+    if not isinstance(params["subsamp2"], bool):
+        raise StyxValidationError(f'`subsamp2` has the wrong type: Received `{type(params.get("subsamp2", False))}` expected `bool`')
+
+
+def fslmaths_operation_subsamp2_cargs(
+    params: FslmathsOperationSubsamp2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("subsamp2", False):
         cargs.append("-subsamp2")
+    return cargs
+
+
+def fslmaths_operation_subsamp2offc(
+    subsamp2offc: bool = False,
+) -> FslmathsOperationSubsamp2offcParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        subsamp2offc: Downsamples image by a factor of 2 (non-centred).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_subsamp2offc",
+        "subsamp2offc": subsamp2offc,
+    }
+    return params
+
+
+def fslmaths_operation_subsamp2offc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationSubsamp2offcParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subsamp2offc", False) is None:
+        raise StyxValidationError("`subsamp2offc` must not be None")
+    if not isinstance(params["subsamp2offc"], bool):
+        raise StyxValidationError(f'`subsamp2offc` has the wrong type: Received `{type(params.get("subsamp2offc", False))}` expected `bool`')
+
+
+def fslmaths_operation_subsamp2offc_cargs(
+    params: FslmathsOperationSubsamp2offcParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("subsamp2offc", False):
         cargs.append("-subsamp2offc")
+    return cargs
+
+
+def fslmaths_operation_tmean(
+    tmean: bool = False,
+) -> FslmathsOperationTmeanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tmean: Mean across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tmean",
+        "Tmean": tmean,
+    }
+    return params
+
+
+def fslmaths_operation_tmean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTmeanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tmean", False) is None:
+        raise StyxValidationError("`Tmean` must not be None")
+    if not isinstance(params["Tmean"], bool):
+        raise StyxValidationError(f'`Tmean` has the wrong type: Received `{type(params.get("Tmean", False))}` expected `bool`')
+
+
+def fslmaths_operation_tmean_cargs(
+    params: FslmathsOperationTmeanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tmean", False):
         cargs.append("-Tmean")
+    return cargs
+
+
+def fslmaths_operation_xmean(
+    xmean: bool = False,
+) -> FslmathsOperationXmeanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xmean: Mean across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xmean",
+        "Xmean": xmean,
+    }
+    return params
+
+
+def fslmaths_operation_xmean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXmeanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xmean", False) is None:
+        raise StyxValidationError("`Xmean` must not be None")
+    if not isinstance(params["Xmean"], bool):
+        raise StyxValidationError(f'`Xmean` has the wrong type: Received `{type(params.get("Xmean", False))}` expected `bool`')
+
+
+def fslmaths_operation_xmean_cargs(
+    params: FslmathsOperationXmeanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xmean", False):
         cargs.append("-Xmean")
+    return cargs
+
+
+def fslmaths_operation_ymean(
+    ymean: bool = False,
+) -> FslmathsOperationYmeanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ymean: Mean across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Ymean",
+        "Ymean": ymean,
+    }
+    return params
+
+
+def fslmaths_operation_ymean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYmeanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Ymean", False) is None:
+        raise StyxValidationError("`Ymean` must not be None")
+    if not isinstance(params["Ymean"], bool):
+        raise StyxValidationError(f'`Ymean` has the wrong type: Received `{type(params.get("Ymean", False))}` expected `bool`')
+
+
+def fslmaths_operation_ymean_cargs(
+    params: FslmathsOperationYmeanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Ymean", False):
         cargs.append("-Ymean")
+    return cargs
+
+
+def fslmaths_operation_zmean(
+    zmean: bool = False,
+) -> FslmathsOperationZmeanParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zmean: Mean across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zmean",
+        "Zmean": zmean,
+    }
+    return params
+
+
+def fslmaths_operation_zmean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZmeanParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zmean", False) is None:
+        raise StyxValidationError("`Zmean` must not be None")
+    if not isinstance(params["Zmean"], bool):
+        raise StyxValidationError(f'`Zmean` has the wrong type: Received `{type(params.get("Zmean", False))}` expected `bool`')
+
+
+def fslmaths_operation_zmean_cargs(
+    params: FslmathsOperationZmeanParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zmean", False):
         cargs.append("-Zmean")
+    return cargs
+
+
+def fslmaths_operation_tstd(
+    tstd: bool = False,
+) -> FslmathsOperationTstdParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tstd: Standard deviation across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tstd",
+        "Tstd": tstd,
+    }
+    return params
+
+
+def fslmaths_operation_tstd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTstdParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tstd", False) is None:
+        raise StyxValidationError("`Tstd` must not be None")
+    if not isinstance(params["Tstd"], bool):
+        raise StyxValidationError(f'`Tstd` has the wrong type: Received `{type(params.get("Tstd", False))}` expected `bool`')
+
+
+def fslmaths_operation_tstd_cargs(
+    params: FslmathsOperationTstdParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tstd", False):
         cargs.append("-Tstd")
+    return cargs
+
+
+def fslmaths_operation_xstd(
+    xstd: bool = False,
+) -> FslmathsOperationXstdParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xstd: Standard deviation across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xstd",
+        "Xstd": xstd,
+    }
+    return params
+
+
+def fslmaths_operation_xstd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXstdParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xstd", False) is None:
+        raise StyxValidationError("`Xstd` must not be None")
+    if not isinstance(params["Xstd"], bool):
+        raise StyxValidationError(f'`Xstd` has the wrong type: Received `{type(params.get("Xstd", False))}` expected `bool`')
+
+
+def fslmaths_operation_xstd_cargs(
+    params: FslmathsOperationXstdParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xstd", False):
         cargs.append("-Xstd")
+    return cargs
+
+
+def fslmaths_operation_ystd(
+    ystd: bool = False,
+) -> FslmathsOperationYstdParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ystd: Standard deviation across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Ystd",
+        "Ystd": ystd,
+    }
+    return params
+
+
+def fslmaths_operation_ystd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYstdParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Ystd", False) is None:
+        raise StyxValidationError("`Ystd` must not be None")
+    if not isinstance(params["Ystd"], bool):
+        raise StyxValidationError(f'`Ystd` has the wrong type: Received `{type(params.get("Ystd", False))}` expected `bool`')
+
+
+def fslmaths_operation_ystd_cargs(
+    params: FslmathsOperationYstdParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Ystd", False):
         cargs.append("-Ystd")
+    return cargs
+
+
+def fslmaths_operation_zstd(
+    zstd: bool = False,
+) -> FslmathsOperationZstdParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zstd: Standard deviation across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zstd",
+        "Zstd": zstd,
+    }
+    return params
+
+
+def fslmaths_operation_zstd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZstdParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zstd", False) is None:
+        raise StyxValidationError("`Zstd` must not be None")
+    if not isinstance(params["Zstd"], bool):
+        raise StyxValidationError(f'`Zstd` has the wrong type: Received `{type(params.get("Zstd", False))}` expected `bool`')
+
+
+def fslmaths_operation_zstd_cargs(
+    params: FslmathsOperationZstdParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zstd", False):
         cargs.append("-Zstd")
+    return cargs
+
+
+def fslmaths_operation_tmax(
+    tmax: bool = False,
+) -> FslmathsOperationTmaxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tmax: Max across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tmax",
+        "Tmax": tmax,
+    }
+    return params
+
+
+def fslmaths_operation_tmax_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTmaxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tmax", False) is None:
+        raise StyxValidationError("`Tmax` must not be None")
+    if not isinstance(params["Tmax"], bool):
+        raise StyxValidationError(f'`Tmax` has the wrong type: Received `{type(params.get("Tmax", False))}` expected `bool`')
+
+
+def fslmaths_operation_tmax_cargs(
+    params: FslmathsOperationTmaxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tmax", False):
         cargs.append("-Tmax")
+    return cargs
+
+
+def fslmaths_operation_xmax(
+    xmax: bool = False,
+) -> FslmathsOperationXmaxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xmax: Max across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xmax",
+        "Xmax": xmax,
+    }
+    return params
+
+
+def fslmaths_operation_xmax_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXmaxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xmax", False) is None:
+        raise StyxValidationError("`Xmax` must not be None")
+    if not isinstance(params["Xmax"], bool):
+        raise StyxValidationError(f'`Xmax` has the wrong type: Received `{type(params.get("Xmax", False))}` expected `bool`')
+
+
+def fslmaths_operation_xmax_cargs(
+    params: FslmathsOperationXmaxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xmax", False):
         cargs.append("-Xmax")
+    return cargs
+
+
+def fslmaths_operation_ymax(
+    ymax: bool = False,
+) -> FslmathsOperationYmaxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ymax: Max across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Ymax",
+        "Ymax": ymax,
+    }
+    return params
+
+
+def fslmaths_operation_ymax_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYmaxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Ymax", False) is None:
+        raise StyxValidationError("`Ymax` must not be None")
+    if not isinstance(params["Ymax"], bool):
+        raise StyxValidationError(f'`Ymax` has the wrong type: Received `{type(params.get("Ymax", False))}` expected `bool`')
+
+
+def fslmaths_operation_ymax_cargs(
+    params: FslmathsOperationYmaxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Ymax", False):
         cargs.append("-Ymax")
+    return cargs
+
+
+def fslmaths_operation_zmax(
+    zmax: bool = False,
+) -> FslmathsOperationZmaxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zmax: Max across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zmax",
+        "Zmax": zmax,
+    }
+    return params
+
+
+def fslmaths_operation_zmax_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZmaxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zmax", False) is None:
+        raise StyxValidationError("`Zmax` must not be None")
+    if not isinstance(params["Zmax"], bool):
+        raise StyxValidationError(f'`Zmax` has the wrong type: Received `{type(params.get("Zmax", False))}` expected `bool`')
+
+
+def fslmaths_operation_zmax_cargs(
+    params: FslmathsOperationZmaxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zmax", False):
         cargs.append("-Zmax")
+    return cargs
+
+
+def fslmaths_operation_tmaxn(
+    tmaxn: bool = False,
+) -> FslmathsOperationTmaxnParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tmaxn: Time index of max across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tmaxn",
+        "Tmaxn": tmaxn,
+    }
+    return params
+
+
+def fslmaths_operation_tmaxn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTmaxnParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tmaxn", False) is None:
+        raise StyxValidationError("`Tmaxn` must not be None")
+    if not isinstance(params["Tmaxn"], bool):
+        raise StyxValidationError(f'`Tmaxn` has the wrong type: Received `{type(params.get("Tmaxn", False))}` expected `bool`')
+
+
+def fslmaths_operation_tmaxn_cargs(
+    params: FslmathsOperationTmaxnParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tmaxn", False):
         cargs.append("-Tmaxn")
+    return cargs
+
+
+def fslmaths_operation_xmaxn(
+    xmaxn: bool = False,
+) -> FslmathsOperationXmaxnParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xmaxn: X index of max across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xmaxn",
+        "Xmaxn": xmaxn,
+    }
+    return params
+
+
+def fslmaths_operation_xmaxn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXmaxnParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xmaxn", False) is None:
+        raise StyxValidationError("`Xmaxn` must not be None")
+    if not isinstance(params["Xmaxn"], bool):
+        raise StyxValidationError(f'`Xmaxn` has the wrong type: Received `{type(params.get("Xmaxn", False))}` expected `bool`')
+
+
+def fslmaths_operation_xmaxn_cargs(
+    params: FslmathsOperationXmaxnParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xmaxn", False):
         cargs.append("-Xmaxn")
+    return cargs
+
+
+def fslmaths_operation_ymaxn(
+    ymaxn: bool = False,
+) -> FslmathsOperationYmaxnParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ymaxn: Y index of max across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Ymaxn",
+        "Ymaxn": ymaxn,
+    }
+    return params
+
+
+def fslmaths_operation_ymaxn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYmaxnParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Ymaxn", False) is None:
+        raise StyxValidationError("`Ymaxn` must not be None")
+    if not isinstance(params["Ymaxn"], bool):
+        raise StyxValidationError(f'`Ymaxn` has the wrong type: Received `{type(params.get("Ymaxn", False))}` expected `bool`')
+
+
+def fslmaths_operation_ymaxn_cargs(
+    params: FslmathsOperationYmaxnParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Ymaxn", False):
         cargs.append("-Ymaxn")
+    return cargs
+
+
+def fslmaths_operation_zmaxn(
+    zmaxn: bool = False,
+) -> FslmathsOperationZmaxnParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zmaxn: Z index of max across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zmaxn",
+        "Zmaxn": zmaxn,
+    }
+    return params
+
+
+def fslmaths_operation_zmaxn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZmaxnParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zmaxn", False) is None:
+        raise StyxValidationError("`Zmaxn` must not be None")
+    if not isinstance(params["Zmaxn"], bool):
+        raise StyxValidationError(f'`Zmaxn` has the wrong type: Received `{type(params.get("Zmaxn", False))}` expected `bool`')
+
+
+def fslmaths_operation_zmaxn_cargs(
+    params: FslmathsOperationZmaxnParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zmaxn", False):
         cargs.append("-Zmaxn")
+    return cargs
+
+
+def fslmaths_operation_tmin(
+    tmin: bool = False,
+) -> FslmathsOperationTminParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tmin: Min across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tmin",
+        "Tmin": tmin,
+    }
+    return params
+
+
+def fslmaths_operation_tmin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTminParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tmin", False) is None:
+        raise StyxValidationError("`Tmin` must not be None")
+    if not isinstance(params["Tmin"], bool):
+        raise StyxValidationError(f'`Tmin` has the wrong type: Received `{type(params.get("Tmin", False))}` expected `bool`')
+
+
+def fslmaths_operation_tmin_cargs(
+    params: FslmathsOperationTminParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tmin", False):
         cargs.append("-Tmin")
+    return cargs
+
+
+def fslmaths_operation_xmin(
+    xmin: bool = False,
+) -> FslmathsOperationXminParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xmin: Min across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xmin",
+        "Xmin": xmin,
+    }
+    return params
+
+
+def fslmaths_operation_xmin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXminParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xmin", False) is None:
+        raise StyxValidationError("`Xmin` must not be None")
+    if not isinstance(params["Xmin"], bool):
+        raise StyxValidationError(f'`Xmin` has the wrong type: Received `{type(params.get("Xmin", False))}` expected `bool`')
+
+
+def fslmaths_operation_xmin_cargs(
+    params: FslmathsOperationXminParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xmin", False):
         cargs.append("-Xmin")
+    return cargs
+
+
+def fslmaths_operation_ymin(
+    ymin: bool = False,
+) -> FslmathsOperationYminParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ymin: Min across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Ymin",
+        "Ymin": ymin,
+    }
+    return params
+
+
+def fslmaths_operation_ymin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYminParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Ymin", False) is None:
+        raise StyxValidationError("`Ymin` must not be None")
+    if not isinstance(params["Ymin"], bool):
+        raise StyxValidationError(f'`Ymin` has the wrong type: Received `{type(params.get("Ymin", False))}` expected `bool`')
+
+
+def fslmaths_operation_ymin_cargs(
+    params: FslmathsOperationYminParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Ymin", False):
         cargs.append("-Ymin")
+    return cargs
+
+
+def fslmaths_operation_zmin(
+    zmin: bool = False,
+) -> FslmathsOperationZminParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zmin: Min across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zmin",
+        "Zmin": zmin,
+    }
+    return params
+
+
+def fslmaths_operation_zmin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZminParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zmin", False) is None:
+        raise StyxValidationError("`Zmin` must not be None")
+    if not isinstance(params["Zmin"], bool):
+        raise StyxValidationError(f'`Zmin` has the wrong type: Received `{type(params.get("Zmin", False))}` expected `bool`')
+
+
+def fslmaths_operation_zmin_cargs(
+    params: FslmathsOperationZminParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zmin", False):
         cargs.append("-Zmin")
+    return cargs
+
+
+def fslmaths_operation_tmedian(
+    tmedian: bool = False,
+) -> FslmathsOperationTmedianParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tmedian: Median across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tmedian",
+        "Tmedian": tmedian,
+    }
+    return params
+
+
+def fslmaths_operation_tmedian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTmedianParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tmedian", False) is None:
+        raise StyxValidationError("`Tmedian` must not be None")
+    if not isinstance(params["Tmedian"], bool):
+        raise StyxValidationError(f'`Tmedian` has the wrong type: Received `{type(params.get("Tmedian", False))}` expected `bool`')
+
+
+def fslmaths_operation_tmedian_cargs(
+    params: FslmathsOperationTmedianParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tmedian", False):
         cargs.append("-Tmedian")
+    return cargs
+
+
+def fslmaths_operation_xmedian(
+    xmedian: bool = False,
+) -> FslmathsOperationXmedianParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xmedian: Median across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xmedian",
+        "Xmedian": xmedian,
+    }
+    return params
+
+
+def fslmaths_operation_xmedian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXmedianParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xmedian", False) is None:
+        raise StyxValidationError("`Xmedian` must not be None")
+    if not isinstance(params["Xmedian"], bool):
+        raise StyxValidationError(f'`Xmedian` has the wrong type: Received `{type(params.get("Xmedian", False))}` expected `bool`')
+
+
+def fslmaths_operation_xmedian_cargs(
+    params: FslmathsOperationXmedianParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xmedian", False):
         cargs.append("-Xmedian")
+    return cargs
+
+
+def fslmaths_operation_ymedian(
+    ymedian: bool = False,
+) -> FslmathsOperationYmedianParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        ymedian: Median across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Ymedian",
+        "Ymedian": ymedian,
+    }
+    return params
+
+
+def fslmaths_operation_ymedian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYmedianParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Ymedian", False) is None:
+        raise StyxValidationError("`Ymedian` must not be None")
+    if not isinstance(params["Ymedian"], bool):
+        raise StyxValidationError(f'`Ymedian` has the wrong type: Received `{type(params.get("Ymedian", False))}` expected `bool`')
+
+
+def fslmaths_operation_ymedian_cargs(
+    params: FslmathsOperationYmedianParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Ymedian", False):
         cargs.append("-Ymedian")
+    return cargs
+
+
+def fslmaths_operation_zmedian(
+    zmedian: bool = False,
+) -> FslmathsOperationZmedianParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zmedian: Median across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zmedian",
+        "Zmedian": zmedian,
+    }
+    return params
+
+
+def fslmaths_operation_zmedian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZmedianParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zmedian", False) is None:
+        raise StyxValidationError("`Zmedian` must not be None")
+    if not isinstance(params["Zmedian"], bool):
+        raise StyxValidationError(f'`Zmedian` has the wrong type: Received `{type(params.get("Zmedian", False))}` expected `bool`')
+
+
+def fslmaths_operation_zmedian_cargs(
+    params: FslmathsOperationZmedianParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zmedian", False):
         cargs.append("-Zmedian")
+    return cargs
+
+
+def fslmaths_operation_tperc(
+    tperc: float | None = None,
+) -> FslmathsOperationTpercParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tperc: Nth percentile (0-100) of FULL RANGE across time.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tperc",
+    }
+    if tperc is not None:
+        params["Tperc"] = tperc
+    return params
+
+
+def fslmaths_operation_tperc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTpercParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tperc", None) is not None:
+        if not isinstance(params["Tperc"], (float, int)):
+            raise StyxValidationError(f'`Tperc` has the wrong type: Received `{type(params.get("Tperc", None))}` expected `float | None`')
+        if not (0 <= params["Tperc"] <= 100):
+            raise StyxValidationError("Parameter `Tperc` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_tperc_cargs(
+    params: FslmathsOperationTpercParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tperc", None) is not None:
         cargs.extend([
             "-Tperc",
             str(params.get("Tperc", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_xperc(
+    xperc: float | None = None,
+) -> FslmathsOperationXpercParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        xperc: Nth percentile (0-100) of FULL RANGE across X axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Xperc",
+    }
+    if xperc is not None:
+        params["Xperc"] = xperc
+    return params
+
+
+def fslmaths_operation_xperc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationXpercParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Xperc", None) is not None:
+        if not isinstance(params["Xperc"], (float, int)):
+            raise StyxValidationError(f'`Xperc` has the wrong type: Received `{type(params.get("Xperc", None))}` expected `float | None`')
+        if not (0 <= params["Xperc"] <= 100):
+            raise StyxValidationError("Parameter `Xperc` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_xperc_cargs(
+    params: FslmathsOperationXpercParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Xperc", None) is not None:
         cargs.extend([
             "-Xperc",
             str(params.get("Xperc", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_yperc(
+    yperc: float | None = None,
+) -> FslmathsOperationYpercParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        yperc: Nth percentile (0-100) of FULL RANGE across Y axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Yperc",
+    }
+    if yperc is not None:
+        params["Yperc"] = yperc
+    return params
+
+
+def fslmaths_operation_yperc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationYpercParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Yperc", None) is not None:
+        if not isinstance(params["Yperc"], (float, int)):
+            raise StyxValidationError(f'`Yperc` has the wrong type: Received `{type(params.get("Yperc", None))}` expected `float | None`')
+        if not (0 <= params["Yperc"] <= 100):
+            raise StyxValidationError("Parameter `Yperc` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_yperc_cargs(
+    params: FslmathsOperationYpercParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Yperc", None) is not None:
         cargs.extend([
             "-Yperc",
             str(params.get("Yperc", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_zperc(
+    zperc: float | None = None,
+) -> FslmathsOperationZpercParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        zperc: Nth percentile (0-100) of FULL RANGE across Z axis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Zperc",
+    }
+    if zperc is not None:
+        params["Zperc"] = zperc
+    return params
+
+
+def fslmaths_operation_zperc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationZpercParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Zperc", None) is not None:
+        if not isinstance(params["Zperc"], (float, int)):
+            raise StyxValidationError(f'`Zperc` has the wrong type: Received `{type(params.get("Zperc", None))}` expected `float | None`')
+        if not (0 <= params["Zperc"] <= 100):
+            raise StyxValidationError("Parameter `Zperc` must be between 0 and 100 (inclusive)")
+
+
+def fslmaths_operation_zperc_cargs(
+    params: FslmathsOperationZpercParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Zperc", None) is not None:
         cargs.extend([
             "-Zperc",
             str(params.get("Zperc", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_tar1(
+    tar1: bool = False,
+) -> FslmathsOperationTar1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tar1: Temporal AR(1) coefficient (use -odt float and probably demean\
+            first).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_Tar1",
+        "Tar1": tar1,
+    }
+    return params
+
+
+def fslmaths_operation_tar1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationTar1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Tar1", False) is None:
+        raise StyxValidationError("`Tar1` must not be None")
+    if not isinstance(params["Tar1"], bool):
+        raise StyxValidationError(f'`Tar1` has the wrong type: Received `{type(params.get("Tar1", False))}` expected `bool`')
+
+
+def fslmaths_operation_tar1_cargs(
+    params: FslmathsOperationTar1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("Tar1", False):
         cargs.append("-Tar1")
+    return cargs
+
+
+def fslmaths_operation_roi(
+    roi: list[float] | None = None,
+) -> FslmathsOperationRoiParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        roi: <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize>. Zero\
+            outside roi (using voxel coordinates). Inputting -1 for a size will set\
+            it to the full image extent for that dimension.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_roi",
+    }
+    if roi is not None:
+        params["roi"] = roi
+    return params
+
+
+def fslmaths_operation_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRoiParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi", None) is not None:
+        if not isinstance(params["roi"], list):
+            raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
+        if len(params["roi"]) != 6:
+            raise StyxValidationError("Parameter `roi` must contain exactly 6 elements")
+        for e in params["roi"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_roi_cargs(
+    params: FslmathsOperationRoiParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("roi", None) is not None:
         cargs.extend([
             "-roi",
             *map(str, params.get("roi", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_bptf(
+    bptf: list[float] | None = None,
+) -> FslmathsOperationBptfParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        bptf: <lowpass> <highpass>. Bandpass temporal filtering (use -odt float\
+            and probably demean first).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_bptf",
+    }
+    if bptf is not None:
+        params["bptf"] = bptf
+    return params
+
+
+def fslmaths_operation_bptf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationBptfParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bptf", None) is not None:
+        if not isinstance(params["bptf"], list):
+            raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
+        if len(params["bptf"]) != 2:
+            raise StyxValidationError("Parameter `bptf` must contain exactly 2 elements")
+        for e in params["bptf"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`bptf` has the wrong type: Received `{type(params.get("bptf", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_bptf_cargs(
+    params: FslmathsOperationBptfParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("bptf", None) is not None:
         cargs.extend([
             "-bptf",
             *map(str, params.get("bptf", None))
         ])
+    return cargs
+
+
+def fslmaths_operation_roc(
+    roc: list[float] | None = None,
+) -> FslmathsOperationRocParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        roc: <threshold> <output>. ROC analysis.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "operation_roc",
+    }
+    if roc is not None:
+        params["roc"] = roc
+    return params
+
+
+def fslmaths_operation_roc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsOperationRocParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roc", None) is not None:
+        if not isinstance(params["roc"], list):
+            raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float] | None`')
+        for e in params["roc"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`roc` has the wrong type: Received `{type(params.get("roc", None))}` expected `list[float] | None`')
+
+
+def fslmaths_operation_roc_cargs(
+    params: FslmathsOperationRocParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
     if params.get("roc", None) is not None:
         cargs.extend([
             "-roc",
@@ -1347,7 +6811,7 @@ class FslmathsOutputs(typing.NamedTuple):
 
 def fslmaths_params(
     input_files: list[InputPathType],
-    operations: list[FslmathsOperationParamsDict],
+    operations: list[typing.Union[FslmathsOperationAddParamsDictTagged, FslmathsOperationSubParamsDictTagged, FslmathsOperationMulParamsDictTagged, FslmathsOperationDivParamsDictTagged, FslmathsOperationRemParamsDictTagged, FslmathsOperationMasParamsDictTagged, FslmathsOperationThrParamsDictTagged, FslmathsOperationThrpParamsDictTagged, FslmathsOperationThrPParamsDictTagged, FslmathsOperationUthrParamsDictTagged, FslmathsOperationUthrpParamsDictTagged, FslmathsOperationUthrPParamsDictTagged, FslmathsOperationMaxParamsDictTagged, FslmathsOperationMinParamsDictTagged, FslmathsOperationSeedParamsDictTagged, FslmathsOperationRestartParamsDictTagged, FslmathsOperationSaveParamsDictTagged, FslmathsOperationExpParamsDictTagged, FslmathsOperationLogParamsDictTagged, FslmathsOperationSinParamsDictTagged, FslmathsOperationCosParamsDictTagged, FslmathsOperationTanParamsDictTagged, FslmathsOperationAsinParamsDictTagged, FslmathsOperationAcosParamsDictTagged, FslmathsOperationAtanParamsDictTagged, FslmathsOperationSqrParamsDictTagged, FslmathsOperationSqrtParamsDictTagged, FslmathsOperationRecipParamsDictTagged, FslmathsOperationAbsParamsDictTagged, FslmathsOperationBinParamsDictTagged, FslmathsOperationBinvParamsDictTagged, FslmathsOperationFillhParamsDictTagged, FslmathsOperationFillh26ParamsDictTagged, FslmathsOperationIndexParamsDictTagged, FslmathsOperationGridParamsDictTagged, FslmathsOperationEdgeParamsDictTagged, FslmathsOperationTfceParamsDictTagged, FslmathsOperationTfceSParamsDictTagged, FslmathsOperationNanParamsDictTagged, FslmathsOperationNanmParamsDictTagged, FslmathsOperationRandParamsDictTagged, FslmathsOperationRandnParamsDictTagged, FslmathsOperationInmParamsDictTagged, FslmathsOperationIngParamsDictTagged, FslmathsOperationRangeParamsDictTagged, FslmathsOperationTensorDecompParamsDictTagged, FslmathsOperationKernel3DParamsDictTagged, FslmathsOperationKernel2DParamsDictTagged, FslmathsOperationKernelBoxParamsDictTagged, FslmathsOperationKernelBoxvParamsDictTagged, FslmathsOperationKernelBoxv3ParamsDictTagged, FslmathsOperationKernelGaussParamsDictTagged, FslmathsOperationKernelSphereParamsDictTagged, FslmathsOperationKernelFileParamsDictTagged, FslmathsOperationDilMParamsDictTagged, FslmathsOperationDilDParamsDictTagged, FslmathsOperationDilFParamsDictTagged, FslmathsOperationDilallParamsDictTagged, FslmathsOperationEroParamsDictTagged, FslmathsOperationEroFParamsDictTagged, FslmathsOperationFmedianParamsDictTagged, FslmathsOperationFmeanParamsDictTagged, FslmathsOperationFmeanuParamsDictTagged, FslmathsOperationSParamsDictTagged, FslmathsOperationSubsamp2ParamsDictTagged, FslmathsOperationSubsamp2offcParamsDictTagged, FslmathsOperationTmeanParamsDictTagged, FslmathsOperationXmeanParamsDictTagged, FslmathsOperationYmeanParamsDictTagged, FslmathsOperationZmeanParamsDictTagged, FslmathsOperationTstdParamsDictTagged, FslmathsOperationXstdParamsDictTagged, FslmathsOperationYstdParamsDictTagged, FslmathsOperationZstdParamsDictTagged, FslmathsOperationTmaxParamsDictTagged, FslmathsOperationXmaxParamsDictTagged, FslmathsOperationYmaxParamsDictTagged, FslmathsOperationZmaxParamsDictTagged, FslmathsOperationTmaxnParamsDictTagged, FslmathsOperationXmaxnParamsDictTagged, FslmathsOperationYmaxnParamsDictTagged, FslmathsOperationZmaxnParamsDictTagged, FslmathsOperationTminParamsDictTagged, FslmathsOperationXminParamsDictTagged, FslmathsOperationYminParamsDictTagged, FslmathsOperationZminParamsDictTagged, FslmathsOperationTmedianParamsDictTagged, FslmathsOperationXmedianParamsDictTagged, FslmathsOperationYmedianParamsDictTagged, FslmathsOperationZmedianParamsDictTagged, FslmathsOperationTpercParamsDictTagged, FslmathsOperationXpercParamsDictTagged, FslmathsOperationYpercParamsDictTagged, FslmathsOperationZpercParamsDictTagged, FslmathsOperationTar1ParamsDictTagged, FslmathsOperationRoiParamsDictTagged, FslmathsOperationBptfParamsDictTagged, FslmathsOperationRocParamsDictTagged]],
     output: str,
     datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
@@ -1404,9 +6868,15 @@ def fslmaths_validate(
     if params.get("operations", None) is None:
         raise StyxValidationError("`operations` must not be None")
     if not isinstance(params["operations"], list):
-        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[FslmathsOperationParamsDict]`')
+        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[typing.Union[FslmathsOperationAddParamsDictTagged, FslmathsOperationSubParamsDictTagged, FslmathsOperationMulParamsDictTagged, FslmathsOperationDivParamsDictTagged, FslmathsOperationRemParamsDictTagged, FslmathsOperationMasParamsDictTagged, FslmathsOperationThrParamsDictTagged, FslmathsOperationThrpParamsDictTagged, FslmathsOperationThrPParamsDictTagged, FslmathsOperationUthrParamsDictTagged, FslmathsOperationUthrpParamsDictTagged, FslmathsOperationUthrPParamsDictTagged, FslmathsOperationMaxParamsDictTagged, FslmathsOperationMinParamsDictTagged, FslmathsOperationSeedParamsDictTagged, FslmathsOperationRestartParamsDictTagged, FslmathsOperationSaveParamsDictTagged, FslmathsOperationExpParamsDictTagged, FslmathsOperationLogParamsDictTagged, FslmathsOperationSinParamsDictTagged, FslmathsOperationCosParamsDictTagged, FslmathsOperationTanParamsDictTagged, FslmathsOperationAsinParamsDictTagged, FslmathsOperationAcosParamsDictTagged, FslmathsOperationAtanParamsDictTagged, FslmathsOperationSqrParamsDictTagged, FslmathsOperationSqrtParamsDictTagged, FslmathsOperationRecipParamsDictTagged, FslmathsOperationAbsParamsDictTagged, FslmathsOperationBinParamsDictTagged, FslmathsOperationBinvParamsDictTagged, FslmathsOperationFillhParamsDictTagged, FslmathsOperationFillh26ParamsDictTagged, FslmathsOperationIndexParamsDictTagged, FslmathsOperationGridParamsDictTagged, FslmathsOperationEdgeParamsDictTagged, FslmathsOperationTfceParamsDictTagged, FslmathsOperationTfceSParamsDictTagged, FslmathsOperationNanParamsDictTagged, FslmathsOperationNanmParamsDictTagged, FslmathsOperationRandParamsDictTagged, FslmathsOperationRandnParamsDictTagged, FslmathsOperationInmParamsDictTagged, FslmathsOperationIngParamsDictTagged, FslmathsOperationRangeParamsDictTagged, FslmathsOperationTensorDecompParamsDictTagged, FslmathsOperationKernel3DParamsDictTagged, FslmathsOperationKernel2DParamsDictTagged, FslmathsOperationKernelBoxParamsDictTagged, FslmathsOperationKernelBoxvParamsDictTagged, FslmathsOperationKernelBoxv3ParamsDictTagged, FslmathsOperationKernelGaussParamsDictTagged, FslmathsOperationKernelSphereParamsDictTagged, FslmathsOperationKernelFileParamsDictTagged, FslmathsOperationDilMParamsDictTagged, FslmathsOperationDilDParamsDictTagged, FslmathsOperationDilFParamsDictTagged, FslmathsOperationDilallParamsDictTagged, FslmathsOperationEroParamsDictTagged, FslmathsOperationEroFParamsDictTagged, FslmathsOperationFmedianParamsDictTagged, FslmathsOperationFmeanParamsDictTagged, FslmathsOperationFmeanuParamsDictTagged, FslmathsOperationSParamsDictTagged, FslmathsOperationSubsamp2ParamsDictTagged, FslmathsOperationSubsamp2offcParamsDictTagged, FslmathsOperationTmeanParamsDictTagged, FslmathsOperationXmeanParamsDictTagged, FslmathsOperationYmeanParamsDictTagged, FslmathsOperationZmeanParamsDictTagged, FslmathsOperationTstdParamsDictTagged, FslmathsOperationXstdParamsDictTagged, FslmathsOperationYstdParamsDictTagged, FslmathsOperationZstdParamsDictTagged, FslmathsOperationTmaxParamsDictTagged, FslmathsOperationXmaxParamsDictTagged, FslmathsOperationYmaxParamsDictTagged, FslmathsOperationZmaxParamsDictTagged, FslmathsOperationTmaxnParamsDictTagged, FslmathsOperationXmaxnParamsDictTagged, FslmathsOperationYmaxnParamsDictTagged, FslmathsOperationZmaxnParamsDictTagged, FslmathsOperationTminParamsDictTagged, FslmathsOperationXminParamsDictTagged, FslmathsOperationYminParamsDictTagged, FslmathsOperationZminParamsDictTagged, FslmathsOperationTmedianParamsDictTagged, FslmathsOperationXmedianParamsDictTagged, FslmathsOperationYmedianParamsDictTagged, FslmathsOperationZmedianParamsDictTagged, FslmathsOperationTpercParamsDictTagged, FslmathsOperationXpercParamsDictTagged, FslmathsOperationYpercParamsDictTagged, FslmathsOperationZpercParamsDictTagged, FslmathsOperationTar1ParamsDictTagged, FslmathsOperationRoiParamsDictTagged, FslmathsOperationBptfParamsDictTagged, FslmathsOperationRocParamsDictTagged]]`')
     for e in params["operations"]:
-        fslmaths_operation_validate(e)
+        if not isinstance(e, dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
+        if "@type" not in e:
+            raise StyxValidationError("Params object is missing `@type`")
+        if e["@type"] not in ["operation_add", "operation_sub", "operation_mul", "operation_div", "operation_rem", "operation_mas", "operation_thr", "operation_thrp", "operation_thrP", "operation_uthr", "operation_uthrp", "operation_uthrP", "operation_max", "operation_min", "operation_seed", "operation_restart", "operation_save", "operation_exp", "operation_log", "operation_sin", "operation_cos", "operation_tan", "operation_asin", "operation_acos", "operation_atan", "operation_sqr", "operation_sqrt", "operation_recip", "operation_abs", "operation_bin", "operation_binv", "operation_fillh", "operation_fillh26", "operation_index", "operation_grid", "operation_edge", "operation_tfce", "operation_tfceS", "operation_nan", "operation_nanm", "operation_rand", "operation_randn", "operation_inm", "operation_ing", "operation_range", "operation_tensor_decomp", "operation_kernel_3D", "operation_kernel_2D", "operation_kernel_box", "operation_kernel_boxv", "operation_kernel_boxv3", "operation_kernel_gauss", "operation_kernel_sphere", "operation_kernel_file", "operation_dilM", "operation_dilD", "operation_dilF", "operation_dilall", "operation_ero", "operation_eroF", "operation_fmedian", "operation_fmean", "operation_fmeanu", "operation_s", "operation_subsamp2", "operation_subsamp2offc", "operation_Tmean", "operation_Xmean", "operation_Ymean", "operation_Zmean", "operation_Tstd", "operation_Xstd", "operation_Ystd", "operation_Zstd", "operation_Tmax", "operation_Xmax", "operation_Ymax", "operation_Zmax", "operation_Tmaxn", "operation_Xmaxn", "operation_Ymaxn", "operation_Zmaxn", "operation_Tmin", "operation_Xmin", "operation_Ymin", "operation_Zmin", "operation_Tmedian", "operation_Xmedian", "operation_Ymedian", "operation_Zmedian", "operation_Tperc", "operation_Xperc", "operation_Yperc", "operation_Zperc", "operation_Tar1", "operation_roi", "operation_bptf", "operation_roc"]:
+            raise StyxValidationError("Parameter `operations`s `@type` must be one of [\"operation_add\", \"operation_sub\", \"operation_mul\", \"operation_div\", \"operation_rem\", \"operation_mas\", \"operation_thr\", \"operation_thrp\", \"operation_thrP\", \"operation_uthr\", \"operation_uthrp\", \"operation_uthrP\", \"operation_max\", \"operation_min\", \"operation_seed\", \"operation_restart\", \"operation_save\", \"operation_exp\", \"operation_log\", \"operation_sin\", \"operation_cos\", \"operation_tan\", \"operation_asin\", \"operation_acos\", \"operation_atan\", \"operation_sqr\", \"operation_sqrt\", \"operation_recip\", \"operation_abs\", \"operation_bin\", \"operation_binv\", \"operation_fillh\", \"operation_fillh26\", \"operation_index\", \"operation_grid\", \"operation_edge\", \"operation_tfce\", \"operation_tfceS\", \"operation_nan\", \"operation_nanm\", \"operation_rand\", \"operation_randn\", \"operation_inm\", \"operation_ing\", \"operation_range\", \"operation_tensor_decomp\", \"operation_kernel_3D\", \"operation_kernel_2D\", \"operation_kernel_box\", \"operation_kernel_boxv\", \"operation_kernel_boxv3\", \"operation_kernel_gauss\", \"operation_kernel_sphere\", \"operation_kernel_file\", \"operation_dilM\", \"operation_dilD\", \"operation_dilF\", \"operation_dilall\", \"operation_ero\", \"operation_eroF\", \"operation_fmedian\", \"operation_fmean\", \"operation_fmeanu\", \"operation_s\", \"operation_subsamp2\", \"operation_subsamp2offc\", \"operation_Tmean\", \"operation_Xmean\", \"operation_Ymean\", \"operation_Zmean\", \"operation_Tstd\", \"operation_Xstd\", \"operation_Ystd\", \"operation_Zstd\", \"operation_Tmax\", \"operation_Xmax\", \"operation_Ymax\", \"operation_Zmax\", \"operation_Tmaxn\", \"operation_Xmaxn\", \"operation_Ymaxn\", \"operation_Zmaxn\", \"operation_Tmin\", \"operation_Xmin\", \"operation_Ymin\", \"operation_Zmin\", \"operation_Tmedian\", \"operation_Xmedian\", \"operation_Ymedian\", \"operation_Zmedian\", \"operation_Tperc\", \"operation_Xperc\", \"operation_Yperc\", \"operation_Zperc\", \"operation_Tar1\", \"operation_roi\", \"operation_bptf\", \"operation_roc\"]")
+        fslmaths_operations_validate_dyn_fn(e["@type"])(e)
     if params.get("output", None) is None:
         raise StyxValidationError("`output` must not be None")
     if not isinstance(params["output"], str):
@@ -1439,7 +6909,7 @@ def fslmaths_cargs(
             params.get("datatype_internal", None)
         ])
     cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
-    cargs.extend([a for c in [fslmaths_operation_cargs(s, execution) for s in params.get("operations", None)] for a in c])
+    cargs.extend([a for c in [fslmaths_operations_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("operations", None)] for a in c])
     cargs.append(params.get("output", None))
     if params.get("output_datatype", None) is not None:
         cargs.extend([
@@ -1500,7 +6970,7 @@ def fslmaths_execute(
 
 def fslmaths(
     input_files: list[InputPathType],
-    operations: list[FslmathsOperationParamsDict],
+    operations: list[typing.Union[FslmathsOperationAddParamsDictTagged, FslmathsOperationSubParamsDictTagged, FslmathsOperationMulParamsDictTagged, FslmathsOperationDivParamsDictTagged, FslmathsOperationRemParamsDictTagged, FslmathsOperationMasParamsDictTagged, FslmathsOperationThrParamsDictTagged, FslmathsOperationThrpParamsDictTagged, FslmathsOperationThrPParamsDictTagged, FslmathsOperationUthrParamsDictTagged, FslmathsOperationUthrpParamsDictTagged, FslmathsOperationUthrPParamsDictTagged, FslmathsOperationMaxParamsDictTagged, FslmathsOperationMinParamsDictTagged, FslmathsOperationSeedParamsDictTagged, FslmathsOperationRestartParamsDictTagged, FslmathsOperationSaveParamsDictTagged, FslmathsOperationExpParamsDictTagged, FslmathsOperationLogParamsDictTagged, FslmathsOperationSinParamsDictTagged, FslmathsOperationCosParamsDictTagged, FslmathsOperationTanParamsDictTagged, FslmathsOperationAsinParamsDictTagged, FslmathsOperationAcosParamsDictTagged, FslmathsOperationAtanParamsDictTagged, FslmathsOperationSqrParamsDictTagged, FslmathsOperationSqrtParamsDictTagged, FslmathsOperationRecipParamsDictTagged, FslmathsOperationAbsParamsDictTagged, FslmathsOperationBinParamsDictTagged, FslmathsOperationBinvParamsDictTagged, FslmathsOperationFillhParamsDictTagged, FslmathsOperationFillh26ParamsDictTagged, FslmathsOperationIndexParamsDictTagged, FslmathsOperationGridParamsDictTagged, FslmathsOperationEdgeParamsDictTagged, FslmathsOperationTfceParamsDictTagged, FslmathsOperationTfceSParamsDictTagged, FslmathsOperationNanParamsDictTagged, FslmathsOperationNanmParamsDictTagged, FslmathsOperationRandParamsDictTagged, FslmathsOperationRandnParamsDictTagged, FslmathsOperationInmParamsDictTagged, FslmathsOperationIngParamsDictTagged, FslmathsOperationRangeParamsDictTagged, FslmathsOperationTensorDecompParamsDictTagged, FslmathsOperationKernel3DParamsDictTagged, FslmathsOperationKernel2DParamsDictTagged, FslmathsOperationKernelBoxParamsDictTagged, FslmathsOperationKernelBoxvParamsDictTagged, FslmathsOperationKernelBoxv3ParamsDictTagged, FslmathsOperationKernelGaussParamsDictTagged, FslmathsOperationKernelSphereParamsDictTagged, FslmathsOperationKernelFileParamsDictTagged, FslmathsOperationDilMParamsDictTagged, FslmathsOperationDilDParamsDictTagged, FslmathsOperationDilFParamsDictTagged, FslmathsOperationDilallParamsDictTagged, FslmathsOperationEroParamsDictTagged, FslmathsOperationEroFParamsDictTagged, FslmathsOperationFmedianParamsDictTagged, FslmathsOperationFmeanParamsDictTagged, FslmathsOperationFmeanuParamsDictTagged, FslmathsOperationSParamsDictTagged, FslmathsOperationSubsamp2ParamsDictTagged, FslmathsOperationSubsamp2offcParamsDictTagged, FslmathsOperationTmeanParamsDictTagged, FslmathsOperationXmeanParamsDictTagged, FslmathsOperationYmeanParamsDictTagged, FslmathsOperationZmeanParamsDictTagged, FslmathsOperationTstdParamsDictTagged, FslmathsOperationXstdParamsDictTagged, FslmathsOperationYstdParamsDictTagged, FslmathsOperationZstdParamsDictTagged, FslmathsOperationTmaxParamsDictTagged, FslmathsOperationXmaxParamsDictTagged, FslmathsOperationYmaxParamsDictTagged, FslmathsOperationZmaxParamsDictTagged, FslmathsOperationTmaxnParamsDictTagged, FslmathsOperationXmaxnParamsDictTagged, FslmathsOperationYmaxnParamsDictTagged, FslmathsOperationZmaxnParamsDictTagged, FslmathsOperationTminParamsDictTagged, FslmathsOperationXminParamsDictTagged, FslmathsOperationYminParamsDictTagged, FslmathsOperationZminParamsDictTagged, FslmathsOperationTmedianParamsDictTagged, FslmathsOperationXmedianParamsDictTagged, FslmathsOperationYmedianParamsDictTagged, FslmathsOperationZmedianParamsDictTagged, FslmathsOperationTpercParamsDictTagged, FslmathsOperationXpercParamsDictTagged, FslmathsOperationYpercParamsDictTagged, FslmathsOperationZpercParamsDictTagged, FslmathsOperationTar1ParamsDictTagged, FslmathsOperationRoiParamsDictTagged, FslmathsOperationBptfParamsDictTagged, FslmathsOperationRocParamsDictTagged]],
     output: str,
     datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
@@ -1537,13 +7007,304 @@ def fslmaths(
 
 __all__ = [
     "FSLMATHS_METADATA",
-    "FslmathsOperationParamsDict",
-    "FslmathsOperationParamsDictTagged",
+    "FslmathsOperationAbsParamsDict",
+    "FslmathsOperationAbsParamsDictTagged",
+    "FslmathsOperationAcosParamsDict",
+    "FslmathsOperationAcosParamsDictTagged",
+    "FslmathsOperationAddParamsDict",
+    "FslmathsOperationAddParamsDictTagged",
+    "FslmathsOperationAsinParamsDict",
+    "FslmathsOperationAsinParamsDictTagged",
+    "FslmathsOperationAtanParamsDict",
+    "FslmathsOperationAtanParamsDictTagged",
+    "FslmathsOperationBinParamsDict",
+    "FslmathsOperationBinParamsDictTagged",
+    "FslmathsOperationBinvParamsDict",
+    "FslmathsOperationBinvParamsDictTagged",
+    "FslmathsOperationBptfParamsDict",
+    "FslmathsOperationBptfParamsDictTagged",
+    "FslmathsOperationCosParamsDict",
+    "FslmathsOperationCosParamsDictTagged",
+    "FslmathsOperationDilDParamsDict",
+    "FslmathsOperationDilDParamsDictTagged",
+    "FslmathsOperationDilFParamsDict",
+    "FslmathsOperationDilFParamsDictTagged",
+    "FslmathsOperationDilMParamsDict",
+    "FslmathsOperationDilMParamsDictTagged",
+    "FslmathsOperationDilallParamsDict",
+    "FslmathsOperationDilallParamsDictTagged",
+    "FslmathsOperationDivParamsDict",
+    "FslmathsOperationDivParamsDictTagged",
+    "FslmathsOperationEdgeParamsDict",
+    "FslmathsOperationEdgeParamsDictTagged",
+    "FslmathsOperationEroFParamsDict",
+    "FslmathsOperationEroFParamsDictTagged",
+    "FslmathsOperationEroParamsDict",
+    "FslmathsOperationEroParamsDictTagged",
+    "FslmathsOperationExpParamsDict",
+    "FslmathsOperationExpParamsDictTagged",
+    "FslmathsOperationFillh26ParamsDict",
+    "FslmathsOperationFillh26ParamsDictTagged",
+    "FslmathsOperationFillhParamsDict",
+    "FslmathsOperationFillhParamsDictTagged",
+    "FslmathsOperationFmeanParamsDict",
+    "FslmathsOperationFmeanParamsDictTagged",
+    "FslmathsOperationFmeanuParamsDict",
+    "FslmathsOperationFmeanuParamsDictTagged",
+    "FslmathsOperationFmedianParamsDict",
+    "FslmathsOperationFmedianParamsDictTagged",
+    "FslmathsOperationGridParamsDict",
+    "FslmathsOperationGridParamsDictTagged",
+    "FslmathsOperationIndexParamsDict",
+    "FslmathsOperationIndexParamsDictTagged",
+    "FslmathsOperationIngParamsDict",
+    "FslmathsOperationIngParamsDictTagged",
+    "FslmathsOperationInmParamsDict",
+    "FslmathsOperationInmParamsDictTagged",
+    "FslmathsOperationKernel2DParamsDict",
+    "FslmathsOperationKernel2DParamsDictTagged",
+    "FslmathsOperationKernel3DParamsDict",
+    "FslmathsOperationKernel3DParamsDictTagged",
+    "FslmathsOperationKernelBoxParamsDict",
+    "FslmathsOperationKernelBoxParamsDictTagged",
+    "FslmathsOperationKernelBoxv3ParamsDict",
+    "FslmathsOperationKernelBoxv3ParamsDictTagged",
+    "FslmathsOperationKernelBoxvParamsDict",
+    "FslmathsOperationKernelBoxvParamsDictTagged",
+    "FslmathsOperationKernelFileParamsDict",
+    "FslmathsOperationKernelFileParamsDictTagged",
+    "FslmathsOperationKernelGaussParamsDict",
+    "FslmathsOperationKernelGaussParamsDictTagged",
+    "FslmathsOperationKernelSphereParamsDict",
+    "FslmathsOperationKernelSphereParamsDictTagged",
+    "FslmathsOperationLogParamsDict",
+    "FslmathsOperationLogParamsDictTagged",
+    "FslmathsOperationMasParamsDict",
+    "FslmathsOperationMasParamsDictTagged",
+    "FslmathsOperationMaxParamsDict",
+    "FslmathsOperationMaxParamsDictTagged",
+    "FslmathsOperationMinParamsDict",
+    "FslmathsOperationMinParamsDictTagged",
+    "FslmathsOperationMulParamsDict",
+    "FslmathsOperationMulParamsDictTagged",
+    "FslmathsOperationNanParamsDict",
+    "FslmathsOperationNanParamsDictTagged",
+    "FslmathsOperationNanmParamsDict",
+    "FslmathsOperationNanmParamsDictTagged",
+    "FslmathsOperationRandParamsDict",
+    "FslmathsOperationRandParamsDictTagged",
+    "FslmathsOperationRandnParamsDict",
+    "FslmathsOperationRandnParamsDictTagged",
+    "FslmathsOperationRangeParamsDict",
+    "FslmathsOperationRangeParamsDictTagged",
+    "FslmathsOperationRecipParamsDict",
+    "FslmathsOperationRecipParamsDictTagged",
+    "FslmathsOperationRemParamsDict",
+    "FslmathsOperationRemParamsDictTagged",
+    "FslmathsOperationRestartParamsDict",
+    "FslmathsOperationRestartParamsDictTagged",
+    "FslmathsOperationRocParamsDict",
+    "FslmathsOperationRocParamsDictTagged",
+    "FslmathsOperationRoiParamsDict",
+    "FslmathsOperationRoiParamsDictTagged",
+    "FslmathsOperationSParamsDict",
+    "FslmathsOperationSParamsDictTagged",
+    "FslmathsOperationSaveParamsDict",
+    "FslmathsOperationSaveParamsDictTagged",
+    "FslmathsOperationSeedParamsDict",
+    "FslmathsOperationSeedParamsDictTagged",
+    "FslmathsOperationSinParamsDict",
+    "FslmathsOperationSinParamsDictTagged",
+    "FslmathsOperationSqrParamsDict",
+    "FslmathsOperationSqrParamsDictTagged",
+    "FslmathsOperationSqrtParamsDict",
+    "FslmathsOperationSqrtParamsDictTagged",
+    "FslmathsOperationSubParamsDict",
+    "FslmathsOperationSubParamsDictTagged",
+    "FslmathsOperationSubsamp2ParamsDict",
+    "FslmathsOperationSubsamp2ParamsDictTagged",
+    "FslmathsOperationSubsamp2offcParamsDict",
+    "FslmathsOperationSubsamp2offcParamsDictTagged",
+    "FslmathsOperationTanParamsDict",
+    "FslmathsOperationTanParamsDictTagged",
+    "FslmathsOperationTar1ParamsDict",
+    "FslmathsOperationTar1ParamsDictTagged",
+    "FslmathsOperationTensorDecompParamsDict",
+    "FslmathsOperationTensorDecompParamsDictTagged",
+    "FslmathsOperationTfceParamsDict",
+    "FslmathsOperationTfceParamsDictTagged",
+    "FslmathsOperationTfceSParamsDict",
+    "FslmathsOperationTfceSParamsDictTagged",
+    "FslmathsOperationThrPParamsDict",
+    "FslmathsOperationThrPParamsDictTagged",
+    "FslmathsOperationThrParamsDict",
+    "FslmathsOperationThrParamsDictTagged",
+    "FslmathsOperationThrpParamsDict",
+    "FslmathsOperationThrpParamsDictTagged",
+    "FslmathsOperationTmaxParamsDict",
+    "FslmathsOperationTmaxParamsDictTagged",
+    "FslmathsOperationTmaxnParamsDict",
+    "FslmathsOperationTmaxnParamsDictTagged",
+    "FslmathsOperationTmeanParamsDict",
+    "FslmathsOperationTmeanParamsDictTagged",
+    "FslmathsOperationTmedianParamsDict",
+    "FslmathsOperationTmedianParamsDictTagged",
+    "FslmathsOperationTminParamsDict",
+    "FslmathsOperationTminParamsDictTagged",
+    "FslmathsOperationTpercParamsDict",
+    "FslmathsOperationTpercParamsDictTagged",
+    "FslmathsOperationTstdParamsDict",
+    "FslmathsOperationTstdParamsDictTagged",
+    "FslmathsOperationUthrPParamsDict",
+    "FslmathsOperationUthrPParamsDictTagged",
+    "FslmathsOperationUthrParamsDict",
+    "FslmathsOperationUthrParamsDictTagged",
+    "FslmathsOperationUthrpParamsDict",
+    "FslmathsOperationUthrpParamsDictTagged",
+    "FslmathsOperationXmaxParamsDict",
+    "FslmathsOperationXmaxParamsDictTagged",
+    "FslmathsOperationXmaxnParamsDict",
+    "FslmathsOperationXmaxnParamsDictTagged",
+    "FslmathsOperationXmeanParamsDict",
+    "FslmathsOperationXmeanParamsDictTagged",
+    "FslmathsOperationXmedianParamsDict",
+    "FslmathsOperationXmedianParamsDictTagged",
+    "FslmathsOperationXminParamsDict",
+    "FslmathsOperationXminParamsDictTagged",
+    "FslmathsOperationXpercParamsDict",
+    "FslmathsOperationXpercParamsDictTagged",
+    "FslmathsOperationXstdParamsDict",
+    "FslmathsOperationXstdParamsDictTagged",
+    "FslmathsOperationYmaxParamsDict",
+    "FslmathsOperationYmaxParamsDictTagged",
+    "FslmathsOperationYmaxnParamsDict",
+    "FslmathsOperationYmaxnParamsDictTagged",
+    "FslmathsOperationYmeanParamsDict",
+    "FslmathsOperationYmeanParamsDictTagged",
+    "FslmathsOperationYmedianParamsDict",
+    "FslmathsOperationYmedianParamsDictTagged",
+    "FslmathsOperationYminParamsDict",
+    "FslmathsOperationYminParamsDictTagged",
+    "FslmathsOperationYpercParamsDict",
+    "FslmathsOperationYpercParamsDictTagged",
+    "FslmathsOperationYstdParamsDict",
+    "FslmathsOperationYstdParamsDictTagged",
+    "FslmathsOperationZmaxParamsDict",
+    "FslmathsOperationZmaxParamsDictTagged",
+    "FslmathsOperationZmaxnParamsDict",
+    "FslmathsOperationZmaxnParamsDictTagged",
+    "FslmathsOperationZmeanParamsDict",
+    "FslmathsOperationZmeanParamsDictTagged",
+    "FslmathsOperationZmedianParamsDict",
+    "FslmathsOperationZmedianParamsDictTagged",
+    "FslmathsOperationZminParamsDict",
+    "FslmathsOperationZminParamsDictTagged",
+    "FslmathsOperationZpercParamsDict",
+    "FslmathsOperationZpercParamsDictTagged",
+    "FslmathsOperationZstdParamsDict",
+    "FslmathsOperationZstdParamsDictTagged",
     "FslmathsOutputs",
     "FslmathsParamsDict",
     "FslmathsParamsDictTagged",
     "fslmaths",
     "fslmaths_execute",
-    "fslmaths_operation",
+    "fslmaths_operation_abs",
+    "fslmaths_operation_acos",
+    "fslmaths_operation_add",
+    "fslmaths_operation_asin",
+    "fslmaths_operation_atan",
+    "fslmaths_operation_bin",
+    "fslmaths_operation_binv",
+    "fslmaths_operation_bptf",
+    "fslmaths_operation_cos",
+    "fslmaths_operation_dil_d",
+    "fslmaths_operation_dil_f",
+    "fslmaths_operation_dil_m",
+    "fslmaths_operation_dilall",
+    "fslmaths_operation_div",
+    "fslmaths_operation_edge",
+    "fslmaths_operation_ero",
+    "fslmaths_operation_ero_f",
+    "fslmaths_operation_exp",
+    "fslmaths_operation_fillh",
+    "fslmaths_operation_fillh26",
+    "fslmaths_operation_fmean",
+    "fslmaths_operation_fmeanu",
+    "fslmaths_operation_fmedian",
+    "fslmaths_operation_grid",
+    "fslmaths_operation_index",
+    "fslmaths_operation_ing",
+    "fslmaths_operation_inm",
+    "fslmaths_operation_kernel_2_d",
+    "fslmaths_operation_kernel_3_d",
+    "fslmaths_operation_kernel_box",
+    "fslmaths_operation_kernel_boxv",
+    "fslmaths_operation_kernel_boxv3",
+    "fslmaths_operation_kernel_file",
+    "fslmaths_operation_kernel_gauss",
+    "fslmaths_operation_kernel_sphere",
+    "fslmaths_operation_log",
+    "fslmaths_operation_mas",
+    "fslmaths_operation_max",
+    "fslmaths_operation_min",
+    "fslmaths_operation_mul",
+    "fslmaths_operation_nan",
+    "fslmaths_operation_nanm",
+    "fslmaths_operation_rand",
+    "fslmaths_operation_randn",
+    "fslmaths_operation_range",
+    "fslmaths_operation_recip",
+    "fslmaths_operation_rem",
+    "fslmaths_operation_restart",
+    "fslmaths_operation_roc",
+    "fslmaths_operation_roi",
+    "fslmaths_operation_s",
+    "fslmaths_operation_save",
+    "fslmaths_operation_seed",
+    "fslmaths_operation_sin",
+    "fslmaths_operation_sqr",
+    "fslmaths_operation_sqrt",
+    "fslmaths_operation_sub",
+    "fslmaths_operation_subsamp2",
+    "fslmaths_operation_subsamp2offc",
+    "fslmaths_operation_tan",
+    "fslmaths_operation_tar1",
+    "fslmaths_operation_tensor_decomp",
+    "fslmaths_operation_tfce",
+    "fslmaths_operation_tfce_s",
+    "fslmaths_operation_thr",
+    "fslmaths_operation_thr_p",
+    "fslmaths_operation_thrp",
+    "fslmaths_operation_tmax",
+    "fslmaths_operation_tmaxn",
+    "fslmaths_operation_tmean",
+    "fslmaths_operation_tmedian",
+    "fslmaths_operation_tmin",
+    "fslmaths_operation_tperc",
+    "fslmaths_operation_tstd",
+    "fslmaths_operation_uthr",
+    "fslmaths_operation_uthr_p",
+    "fslmaths_operation_uthrp",
+    "fslmaths_operation_xmax",
+    "fslmaths_operation_xmaxn",
+    "fslmaths_operation_xmean",
+    "fslmaths_operation_xmedian",
+    "fslmaths_operation_xmin",
+    "fslmaths_operation_xperc",
+    "fslmaths_operation_xstd",
+    "fslmaths_operation_ymax",
+    "fslmaths_operation_ymaxn",
+    "fslmaths_operation_ymean",
+    "fslmaths_operation_ymedian",
+    "fslmaths_operation_ymin",
+    "fslmaths_operation_yperc",
+    "fslmaths_operation_ystd",
+    "fslmaths_operation_zmax",
+    "fslmaths_operation_zmaxn",
+    "fslmaths_operation_zmean",
+    "fslmaths_operation_zmedian",
+    "fslmaths_operation_zmin",
+    "fslmaths_operation_zperc",
+    "fslmaths_operation_zstd",
     "fslmaths_params",
 ]
