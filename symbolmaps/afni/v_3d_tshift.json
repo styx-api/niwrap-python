@@ -19,26 +19,90 @@
     "outputtype": {
       "var_param": "outputtype"
     },
-    "rlt": {
-      "var_param": "rlt"
+    "detrend_strategy": {
+      "var_param": "detrend_strategy",
+      "variants": {
+        "rlt": {
+          "fn_struct_make_params": "v_3d_tshift_rlt",
+          "properties": {}
+        },
+        "rlt_plus": {
+          "fn_struct_make_params": "v_3d_tshift_rlt_plus",
+          "properties": {}
+        },
+        "no_detrend": {
+          "fn_struct_make_params": "v_3d_tshift_no_detrend",
+          "properties": {}
+        }
+      }
     },
-    "rltplus": {
-      "var_param": "rltplus"
+    "shift_strategy": {
+      "var_param": "shift_strategy",
+      "variants": {
+        "align_to_tzero": {
+          "fn_struct_make_params": "v_3d_tshift_align_to_tzero",
+          "properties": {
+            "tzero": {
+              "var_param": "tzero"
+            }
+          }
+        },
+        "align_to_slice": {
+          "fn_struct_make_params": "v_3d_tshift_align_to_slice",
+          "properties": {
+            "slice_index": {
+              "var_param": "slice_index"
+            }
+          }
+        },
+        "align_voxel_wise": {
+          "fn_struct_make_params": "v_3d_tshift_align_voxel_wise",
+          "properties": {
+            "voxshift_file": {
+              "var_param": "voxshift_file"
+            }
+          }
+        }
+      }
     },
     "slice_encoding_direction": {
       "var_param": "slice_encoding_direction"
     },
     "tpattern": {
-      "var_param": "tpattern"
+      "var_param": "tpattern",
+      "variants": {
+        "tpattern_mode_string": {
+          "fn_struct_make_params": "v_3d_tshift_tpattern_mode_string",
+          "properties": {
+            "tpattern_string": {
+              "var_param": "tpattern_string"
+            }
+          }
+        },
+        "tpattern_mode_file": {
+          "fn_struct_make_params": "v_3d_tshift_tpattern_mode_file",
+          "properties": {
+            "tpattern_file": {
+              "var_param": "tpattern_file"
+            }
+          }
+        }
+      }
     },
     "tr": {
-      "var_param": "tr"
+      "var_param": "tr",
+      "fn_struct_make_params": "v_3d_tshift_tr_microsyntax",
+      "properties": {
+        "value": {
+          "var_param": "value"
+        },
+        "unit": {
+          "var_param": "unit"
+        }
+      }
     },
-    "tslice": {
-      "var_param": "tslice"
-    },
-    "tzero": {
-      "var_param": "tzero"
+    "verbose": {
+      "var_param": "verbose"
     }
   }
 }
