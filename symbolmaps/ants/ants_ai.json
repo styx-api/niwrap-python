@@ -5,28 +5,256 @@
       "var_param": "dimensionality"
     },
     "metric": {
-      "var_param": "metric"
+      "var_param": "metric",
+      "variants": {
+        "metric_mattes": {
+          "fn_struct_make_params": "ants_ai_metric_mattes",
+          "properties": {
+            "fixed_image": {
+              "var_param": "fixed_image"
+            },
+            "moving_image": {
+              "var_param": "moving_image"
+            },
+            "number_of_bins": {
+              "var_param": "number_of_bins",
+              "fn_struct_make_params": "ants_ai_number_of_bins",
+              "properties": {
+                "number_of_bins_value": {
+                  "var_param": "number_of_bins_value"
+                },
+                "sampling_strategy": {
+                  "var_param": "sampling_strategy",
+                  "fn_struct_make_params": "ants_ai_sampling_strategy",
+                  "properties": {
+                    "sampling_strategy_value": {
+                      "var_param": "sampling_strategy_value"
+                    },
+                    "sampling_percentage": {
+                      "var_param": "sampling_percentage",
+                      "fn_struct_make_params": "ants_ai_sampling_percentage",
+                      "properties": {
+                        "sampling_percentage_value": {
+                          "var_param": "sampling_percentage_value"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "metric_gc": {
+          "fn_struct_make_params": "ants_ai_metric_gc",
+          "properties": {
+            "fixed_image": {
+              "var_param": "fixed_image"
+            },
+            "moving_image": {
+              "var_param": "moving_image"
+            },
+            "radius": {
+              "var_param": "radius",
+              "fn_struct_make_params": "ants_ai_radius",
+              "properties": {
+                "radius_value": {
+                  "var_param": "radius_value"
+                },
+                "sampling_strategy": {
+                  "var_param": "sampling_strategy",
+                  "fn_struct_make_params": "ants_ai_sampling_strategy_1",
+                  "properties": {
+                    "sampling_strategy_value": {
+                      "var_param": "sampling_strategy_value"
+                    },
+                    "sampling_percentage": {
+                      "var_param": "sampling_percentage",
+                      "fn_struct_make_params": "ants_ai_sampling_percentage_1",
+                      "properties": {
+                        "sampling_percentage_value": {
+                          "var_param": "sampling_percentage_value"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "metric_mi": {
+          "fn_struct_make_params": "ants_ai_metric_mi",
+          "properties": {
+            "fixed_image": {
+              "var_param": "fixed_image"
+            },
+            "moving_image": {
+              "var_param": "moving_image"
+            },
+            "number_of_bins": {
+              "var_param": "number_of_bins",
+              "fn_struct_make_params": "ants_ai_number_of_bins_1",
+              "properties": {
+                "number_of_bins_value": {
+                  "var_param": "number_of_bins_value"
+                },
+                "sampling_strategy": {
+                  "var_param": "sampling_strategy",
+                  "fn_struct_make_params": "ants_ai_sampling_strategy_2",
+                  "properties": {
+                    "sampling_strategy_value": {
+                      "var_param": "sampling_strategy_value"
+                    },
+                    "sampling_percentage": {
+                      "var_param": "sampling_percentage",
+                      "fn_struct_make_params": "ants_ai_sampling_percentage_2",
+                      "properties": {
+                        "sampling_percentage_value": {
+                          "var_param": "sampling_percentage_value"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "transform": {
-      "var_param": "transform"
+      "var_param": "transform",
+      "variants": {
+        "transform_rigid": {
+          "fn_struct_make_params": "ants_ai_transform_rigid",
+          "properties": {
+            "gradient_step": {
+              "var_param": "gradient_step"
+            }
+          }
+        },
+        "transform_affine": {
+          "fn_struct_make_params": "ants_ai_transform_affine",
+          "properties": {
+            "gradient_step": {
+              "var_param": "gradient_step"
+            }
+          }
+        },
+        "transform_similarity": {
+          "fn_struct_make_params": "ants_ai_transform_similarity",
+          "properties": {
+            "gradient_step": {
+              "var_param": "gradient_step"
+            }
+          }
+        },
+        "transform_align_geometric_centers": {
+          "fn_struct_make_params": "ants_ai_transform_align_geometric_centers",
+          "properties": {}
+        },
+        "transform_align_centers_of_mass": {
+          "fn_struct_make_params": "ants_ai_transform_align_centers_of_mass",
+          "properties": {}
+        }
+      }
     },
     "align_principal_axes": {
       "var_param": "align_principal_axes"
     },
     "align_blobs": {
-      "var_param": "align_blobs"
+      "var_param": "align_blobs",
+      "fn_struct_make_params": "ants_ai_align_blobs",
+      "properties": {
+        "number_of_blobs_to_extract": {
+          "var_param": "number_of_blobs_to_extract"
+        },
+        "number_of_blobs_to_match": {
+          "var_param": "number_of_blobs_to_match",
+          "fn_struct_make_params": "ants_ai_number_of_blobs_to_match",
+          "properties": {
+            "number_of_blobs_to_match_value": {
+              "var_param": "number_of_blobs_to_match_value"
+            }
+          }
+        }
+      }
     },
     "search_factor": {
-      "var_param": "search_factor"
+      "var_param": "search_factor",
+      "fn_struct_make_params": "ants_ai_search_factor",
+      "properties": {
+        "search_factor_value": {
+          "var_param": "search_factor_value"
+        },
+        "arc_fraction": {
+          "var_param": "arc_fraction",
+          "fn_struct_make_params": "ants_ai_arc_fraction",
+          "properties": {
+            "arc_fraction_value": {
+              "var_param": "arc_fraction_value"
+            }
+          }
+        }
+      }
     },
     "translation_search_grid": {
-      "var_param": "translation_search_grid"
+      "var_param": "translation_search_grid",
+      "fn_struct_make_params": "ants_ai_translation_search_grid",
+      "properties": {
+        "step_size": {
+          "var_param": "step_size"
+        },
+        "grid": {
+          "var_param": "grid"
+        }
+      }
     },
     "convergence": {
-      "var_param": "convergence"
+      "var_param": "convergence",
+      "fn_struct_make_params": "ants_ai_convergence",
+      "properties": {
+        "number_of_iterations": {
+          "var_param": "number_of_iterations"
+        },
+        "convergence_threshold": {
+          "var_param": "convergence_threshold",
+          "fn_struct_make_params": "ants_ai_convergence_threshold",
+          "properties": {
+            "convergence_threshold_value": {
+              "var_param": "convergence_threshold_value"
+            },
+            "convergence_window_size": {
+              "var_param": "convergence_window_size",
+              "fn_struct_make_params": "ants_ai_convergence_window_size",
+              "properties": {
+                "convergence_window_size_value": {
+                  "var_param": "convergence_window_size_value"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "masks": {
-      "var_param": "masks"
+      "var_param": "masks",
+      "fn_struct_make_params": "ants_ai_masks",
+      "properties": {
+        "fixed_image_mask": {
+          "var_param": "fixed_image_mask"
+        },
+        "moving_image_mask": {
+          "var_param": "moving_image_mask",
+          "fn_struct_make_params": "ants_ai_moving_image_mask",
+          "properties": {
+            "moving_image_mask_value": {
+              "var_param": "moving_image_mask_value"
+            }
+          }
+        }
+      }
     },
     "output": {
       "var_param": "output"

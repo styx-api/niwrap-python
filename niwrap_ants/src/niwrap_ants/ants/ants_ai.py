@@ -6,23 +6,323 @@ import pathlib
 from styxdefs import *
 
 ANTS_AI_METADATA = Metadata(
-    id="678184c76f859365d010d230b1d56a4b04e420a7.boutiques",
+    id="f98d4c5aaab56b9502e0c53129bd6bd3268b4dbf.boutiques",
     name="antsAI",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
 )
 
 
+_AntsAiSamplingPercentageParamsDictNoTag = typing.TypedDict('_AntsAiSamplingPercentageParamsDictNoTag', {
+    "sampling_percentage_value": float,
+})
+AntsAiSamplingPercentageParamsDictTagged = typing.TypedDict('AntsAiSamplingPercentageParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage"],
+    "sampling_percentage_value": float,
+})
+AntsAiSamplingPercentageParamsDict = _AntsAiSamplingPercentageParamsDictNoTag | AntsAiSamplingPercentageParamsDictTagged
+
+
+_AntsAiSamplingStrategyParamsDictNoTag = typing.TypedDict('_AntsAiSamplingStrategyParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsAiSamplingPercentageParamsDict | None],
+})
+AntsAiSamplingStrategyParamsDictTagged = typing.TypedDict('AntsAiSamplingStrategyParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsAiSamplingPercentageParamsDict | None],
+})
+AntsAiSamplingStrategyParamsDict = _AntsAiSamplingStrategyParamsDictNoTag | AntsAiSamplingStrategyParamsDictTagged
+
+
+_AntsAiNumberOfBinsParamsDictNoTag = typing.TypedDict('_AntsAiNumberOfBinsParamsDictNoTag', {
+    "number_of_bins_value": int,
+    "sampling_strategy": typing.NotRequired[AntsAiSamplingStrategyParamsDict | None],
+})
+AntsAiNumberOfBinsParamsDictTagged = typing.TypedDict('AntsAiNumberOfBinsParamsDictTagged', {
+    "@type": typing.Literal["number_of_bins"],
+    "number_of_bins_value": int,
+    "sampling_strategy": typing.NotRequired[AntsAiSamplingStrategyParamsDict | None],
+})
+AntsAiNumberOfBinsParamsDict = _AntsAiNumberOfBinsParamsDictNoTag | AntsAiNumberOfBinsParamsDictTagged
+
+
+_AntsAiMetricMattesParamsDictNoTag = typing.TypedDict('_AntsAiMetricMattesParamsDictNoTag', {
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "number_of_bins": typing.NotRequired[AntsAiNumberOfBinsParamsDict | None],
+})
+AntsAiMetricMattesParamsDictTagged = typing.TypedDict('AntsAiMetricMattesParamsDictTagged', {
+    "@type": typing.Literal["metric_mattes"],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "number_of_bins": typing.NotRequired[AntsAiNumberOfBinsParamsDict | None],
+})
+AntsAiMetricMattesParamsDict = _AntsAiMetricMattesParamsDictNoTag | AntsAiMetricMattesParamsDictTagged
+
+
+_AntsAiSamplingPercentage1ParamsDictNoTag = typing.TypedDict('_AntsAiSamplingPercentage1ParamsDictNoTag', {
+    "sampling_percentage_value": float,
+})
+AntsAiSamplingPercentage1ParamsDictTagged = typing.TypedDict('AntsAiSamplingPercentage1ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_1"],
+    "sampling_percentage_value": float,
+})
+AntsAiSamplingPercentage1ParamsDict = _AntsAiSamplingPercentage1ParamsDictNoTag | AntsAiSamplingPercentage1ParamsDictTagged
+
+
+_AntsAiSamplingStrategy1ParamsDictNoTag = typing.TypedDict('_AntsAiSamplingStrategy1ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsAiSamplingPercentage1ParamsDict | None],
+})
+AntsAiSamplingStrategy1ParamsDictTagged = typing.TypedDict('AntsAiSamplingStrategy1ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_1"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsAiSamplingPercentage1ParamsDict | None],
+})
+AntsAiSamplingStrategy1ParamsDict = _AntsAiSamplingStrategy1ParamsDictNoTag | AntsAiSamplingStrategy1ParamsDictTagged
+
+
+_AntsAiRadiusParamsDictNoTag = typing.TypedDict('_AntsAiRadiusParamsDictNoTag', {
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsAiSamplingStrategy1ParamsDict | None],
+})
+AntsAiRadiusParamsDictTagged = typing.TypedDict('AntsAiRadiusParamsDictTagged', {
+    "@type": typing.Literal["radius"],
+    "radius_value": float,
+    "sampling_strategy": typing.NotRequired[AntsAiSamplingStrategy1ParamsDict | None],
+})
+AntsAiRadiusParamsDict = _AntsAiRadiusParamsDictNoTag | AntsAiRadiusParamsDictTagged
+
+
+_AntsAiMetricGcParamsDictNoTag = typing.TypedDict('_AntsAiMetricGcParamsDictNoTag', {
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "radius": typing.NotRequired[AntsAiRadiusParamsDict | None],
+})
+AntsAiMetricGcParamsDictTagged = typing.TypedDict('AntsAiMetricGcParamsDictTagged', {
+    "@type": typing.Literal["metric_gc"],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "radius": typing.NotRequired[AntsAiRadiusParamsDict | None],
+})
+AntsAiMetricGcParamsDict = _AntsAiMetricGcParamsDictNoTag | AntsAiMetricGcParamsDictTagged
+
+
+_AntsAiSamplingPercentage2ParamsDictNoTag = typing.TypedDict('_AntsAiSamplingPercentage2ParamsDictNoTag', {
+    "sampling_percentage_value": float,
+})
+AntsAiSamplingPercentage2ParamsDictTagged = typing.TypedDict('AntsAiSamplingPercentage2ParamsDictTagged', {
+    "@type": typing.Literal["sampling_percentage_2"],
+    "sampling_percentage_value": float,
+})
+AntsAiSamplingPercentage2ParamsDict = _AntsAiSamplingPercentage2ParamsDictNoTag | AntsAiSamplingPercentage2ParamsDictTagged
+
+
+_AntsAiSamplingStrategy2ParamsDictNoTag = typing.TypedDict('_AntsAiSamplingStrategy2ParamsDictNoTag', {
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsAiSamplingPercentage2ParamsDict | None],
+})
+AntsAiSamplingStrategy2ParamsDictTagged = typing.TypedDict('AntsAiSamplingStrategy2ParamsDictTagged', {
+    "@type": typing.Literal["sampling_strategy_2"],
+    "sampling_strategy_value": typing.Literal["None", "Regular", "Random"],
+    "sampling_percentage": typing.NotRequired[AntsAiSamplingPercentage2ParamsDict | None],
+})
+AntsAiSamplingStrategy2ParamsDict = _AntsAiSamplingStrategy2ParamsDictNoTag | AntsAiSamplingStrategy2ParamsDictTagged
+
+
+_AntsAiNumberOfBins1ParamsDictNoTag = typing.TypedDict('_AntsAiNumberOfBins1ParamsDictNoTag', {
+    "number_of_bins_value": int,
+    "sampling_strategy": typing.NotRequired[AntsAiSamplingStrategy2ParamsDict | None],
+})
+AntsAiNumberOfBins1ParamsDictTagged = typing.TypedDict('AntsAiNumberOfBins1ParamsDictTagged', {
+    "@type": typing.Literal["number_of_bins_1"],
+    "number_of_bins_value": int,
+    "sampling_strategy": typing.NotRequired[AntsAiSamplingStrategy2ParamsDict | None],
+})
+AntsAiNumberOfBins1ParamsDict = _AntsAiNumberOfBins1ParamsDictNoTag | AntsAiNumberOfBins1ParamsDictTagged
+
+
+_AntsAiMetricMiParamsDictNoTag = typing.TypedDict('_AntsAiMetricMiParamsDictNoTag', {
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "number_of_bins": typing.NotRequired[AntsAiNumberOfBins1ParamsDict | None],
+})
+AntsAiMetricMiParamsDictTagged = typing.TypedDict('AntsAiMetricMiParamsDictTagged', {
+    "@type": typing.Literal["metric_mi"],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "number_of_bins": typing.NotRequired[AntsAiNumberOfBins1ParamsDict | None],
+})
+AntsAiMetricMiParamsDict = _AntsAiMetricMiParamsDictNoTag | AntsAiMetricMiParamsDictTagged
+
+
+_AntsAiTransformRigidParamsDictNoTag = typing.TypedDict('_AntsAiTransformRigidParamsDictNoTag', {
+    "gradient_step": float,
+})
+AntsAiTransformRigidParamsDictTagged = typing.TypedDict('AntsAiTransformRigidParamsDictTagged', {
+    "@type": typing.Literal["transform_rigid"],
+    "gradient_step": float,
+})
+AntsAiTransformRigidParamsDict = _AntsAiTransformRigidParamsDictNoTag | AntsAiTransformRigidParamsDictTagged
+
+
+_AntsAiTransformAffineParamsDictNoTag = typing.TypedDict('_AntsAiTransformAffineParamsDictNoTag', {
+    "gradient_step": float,
+})
+AntsAiTransformAffineParamsDictTagged = typing.TypedDict('AntsAiTransformAffineParamsDictTagged', {
+    "@type": typing.Literal["transform_affine"],
+    "gradient_step": float,
+})
+AntsAiTransformAffineParamsDict = _AntsAiTransformAffineParamsDictNoTag | AntsAiTransformAffineParamsDictTagged
+
+
+_AntsAiTransformSimilarityParamsDictNoTag = typing.TypedDict('_AntsAiTransformSimilarityParamsDictNoTag', {
+    "gradient_step": float,
+})
+AntsAiTransformSimilarityParamsDictTagged = typing.TypedDict('AntsAiTransformSimilarityParamsDictTagged', {
+    "@type": typing.Literal["transform_similarity"],
+    "gradient_step": float,
+})
+AntsAiTransformSimilarityParamsDict = _AntsAiTransformSimilarityParamsDictNoTag | AntsAiTransformSimilarityParamsDictTagged
+
+
+_AntsAiTransformAlignGeometricCentersParamsDictNoTag = typing.TypedDict('_AntsAiTransformAlignGeometricCentersParamsDictNoTag', {})
+AntsAiTransformAlignGeometricCentersParamsDictTagged = typing.TypedDict('AntsAiTransformAlignGeometricCentersParamsDictTagged', {
+    "@type": typing.Literal["transform_align_geometric_centers"],
+})
+AntsAiTransformAlignGeometricCentersParamsDict = _AntsAiTransformAlignGeometricCentersParamsDictNoTag | AntsAiTransformAlignGeometricCentersParamsDictTagged
+
+
+_AntsAiTransformAlignCentersOfMassParamsDictNoTag = typing.TypedDict('_AntsAiTransformAlignCentersOfMassParamsDictNoTag', {})
+AntsAiTransformAlignCentersOfMassParamsDictTagged = typing.TypedDict('AntsAiTransformAlignCentersOfMassParamsDictTagged', {
+    "@type": typing.Literal["transform_align_centers_of_mass"],
+})
+AntsAiTransformAlignCentersOfMassParamsDict = _AntsAiTransformAlignCentersOfMassParamsDictNoTag | AntsAiTransformAlignCentersOfMassParamsDictTagged
+
+
+_AntsAiNumberOfBlobsToMatchParamsDictNoTag = typing.TypedDict('_AntsAiNumberOfBlobsToMatchParamsDictNoTag', {
+    "number_of_blobs_to_match_value": int,
+})
+AntsAiNumberOfBlobsToMatchParamsDictTagged = typing.TypedDict('AntsAiNumberOfBlobsToMatchParamsDictTagged', {
+    "@type": typing.Literal["number_of_blobs_to_match"],
+    "number_of_blobs_to_match_value": int,
+})
+AntsAiNumberOfBlobsToMatchParamsDict = _AntsAiNumberOfBlobsToMatchParamsDictNoTag | AntsAiNumberOfBlobsToMatchParamsDictTagged
+
+
+_AntsAiAlignBlobsParamsDictNoTag = typing.TypedDict('_AntsAiAlignBlobsParamsDictNoTag', {
+    "number_of_blobs_to_extract": int,
+    "number_of_blobs_to_match": typing.NotRequired[AntsAiNumberOfBlobsToMatchParamsDict | None],
+})
+AntsAiAlignBlobsParamsDictTagged = typing.TypedDict('AntsAiAlignBlobsParamsDictTagged', {
+    "@type": typing.Literal["align_blobs"],
+    "number_of_blobs_to_extract": int,
+    "number_of_blobs_to_match": typing.NotRequired[AntsAiNumberOfBlobsToMatchParamsDict | None],
+})
+AntsAiAlignBlobsParamsDict = _AntsAiAlignBlobsParamsDictNoTag | AntsAiAlignBlobsParamsDictTagged
+
+
+_AntsAiArcFractionParamsDictNoTag = typing.TypedDict('_AntsAiArcFractionParamsDictNoTag', {
+    "arc_fraction_value": float,
+})
+AntsAiArcFractionParamsDictTagged = typing.TypedDict('AntsAiArcFractionParamsDictTagged', {
+    "@type": typing.Literal["arc_fraction"],
+    "arc_fraction_value": float,
+})
+AntsAiArcFractionParamsDict = _AntsAiArcFractionParamsDictNoTag | AntsAiArcFractionParamsDictTagged
+
+
+_AntsAiSearchFactorParamsDictNoTag = typing.TypedDict('_AntsAiSearchFactorParamsDictNoTag', {
+    "search_factor_value": float,
+    "arc_fraction": typing.NotRequired[AntsAiArcFractionParamsDict | None],
+})
+AntsAiSearchFactorParamsDictTagged = typing.TypedDict('AntsAiSearchFactorParamsDictTagged', {
+    "@type": typing.Literal["search_factor"],
+    "search_factor_value": float,
+    "arc_fraction": typing.NotRequired[AntsAiArcFractionParamsDict | None],
+})
+AntsAiSearchFactorParamsDict = _AntsAiSearchFactorParamsDictNoTag | AntsAiSearchFactorParamsDictTagged
+
+
+_AntsAiTranslationSearchGridParamsDictNoTag = typing.TypedDict('_AntsAiTranslationSearchGridParamsDictNoTag', {
+    "step_size": float,
+    "grid": list[int],
+})
+AntsAiTranslationSearchGridParamsDictTagged = typing.TypedDict('AntsAiTranslationSearchGridParamsDictTagged', {
+    "@type": typing.Literal["translation_search_grid"],
+    "step_size": float,
+    "grid": list[int],
+})
+AntsAiTranslationSearchGridParamsDict = _AntsAiTranslationSearchGridParamsDictNoTag | AntsAiTranslationSearchGridParamsDictTagged
+
+
+_AntsAiConvergenceWindowSizeParamsDictNoTag = typing.TypedDict('_AntsAiConvergenceWindowSizeParamsDictNoTag', {
+    "convergence_window_size_value": int,
+})
+AntsAiConvergenceWindowSizeParamsDictTagged = typing.TypedDict('AntsAiConvergenceWindowSizeParamsDictTagged', {
+    "@type": typing.Literal["convergence_window_size"],
+    "convergence_window_size_value": int,
+})
+AntsAiConvergenceWindowSizeParamsDict = _AntsAiConvergenceWindowSizeParamsDictNoTag | AntsAiConvergenceWindowSizeParamsDictTagged
+
+
+_AntsAiConvergenceThresholdParamsDictNoTag = typing.TypedDict('_AntsAiConvergenceThresholdParamsDictNoTag', {
+    "convergence_threshold_value": float,
+    "convergence_window_size": typing.NotRequired[AntsAiConvergenceWindowSizeParamsDict | None],
+})
+AntsAiConvergenceThresholdParamsDictTagged = typing.TypedDict('AntsAiConvergenceThresholdParamsDictTagged', {
+    "@type": typing.Literal["convergence_threshold"],
+    "convergence_threshold_value": float,
+    "convergence_window_size": typing.NotRequired[AntsAiConvergenceWindowSizeParamsDict | None],
+})
+AntsAiConvergenceThresholdParamsDict = _AntsAiConvergenceThresholdParamsDictNoTag | AntsAiConvergenceThresholdParamsDictTagged
+
+
+_AntsAiConvergenceParamsDictNoTag = typing.TypedDict('_AntsAiConvergenceParamsDictNoTag', {
+    "number_of_iterations": int,
+    "convergence_threshold": typing.NotRequired[AntsAiConvergenceThresholdParamsDict | None],
+})
+AntsAiConvergenceParamsDictTagged = typing.TypedDict('AntsAiConvergenceParamsDictTagged', {
+    "@type": typing.Literal["convergence"],
+    "number_of_iterations": int,
+    "convergence_threshold": typing.NotRequired[AntsAiConvergenceThresholdParamsDict | None],
+})
+AntsAiConvergenceParamsDict = _AntsAiConvergenceParamsDictNoTag | AntsAiConvergenceParamsDictTagged
+
+
+_AntsAiMovingImageMaskParamsDictNoTag = typing.TypedDict('_AntsAiMovingImageMaskParamsDictNoTag', {
+    "moving_image_mask_value": InputPathType,
+})
+AntsAiMovingImageMaskParamsDictTagged = typing.TypedDict('AntsAiMovingImageMaskParamsDictTagged', {
+    "@type": typing.Literal["moving_image_mask"],
+    "moving_image_mask_value": InputPathType,
+})
+AntsAiMovingImageMaskParamsDict = _AntsAiMovingImageMaskParamsDictNoTag | AntsAiMovingImageMaskParamsDictTagged
+
+
+_AntsAiMasksParamsDictNoTag = typing.TypedDict('_AntsAiMasksParamsDictNoTag', {
+    "fixed_image_mask": InputPathType,
+    "moving_image_mask": typing.NotRequired[AntsAiMovingImageMaskParamsDict | None],
+})
+AntsAiMasksParamsDictTagged = typing.TypedDict('AntsAiMasksParamsDictTagged', {
+    "@type": typing.Literal["masks"],
+    "fixed_image_mask": InputPathType,
+    "moving_image_mask": typing.NotRequired[AntsAiMovingImageMaskParamsDict | None],
+})
+AntsAiMasksParamsDict = _AntsAiMasksParamsDictNoTag | AntsAiMasksParamsDictTagged
+
+
 _AntsAiParamsDictNoTag = typing.TypedDict('_AntsAiParamsDictNoTag', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
-    "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
-    "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
+    "metric": typing.Union[AntsAiMetricMattesParamsDictTagged, AntsAiMetricGcParamsDictTagged, AntsAiMetricMiParamsDictTagged],
+    "transform": typing.Union[AntsAiTransformRigidParamsDictTagged, AntsAiTransformAffineParamsDictTagged, AntsAiTransformSimilarityParamsDictTagged, AntsAiTransformAlignGeometricCentersParamsDictTagged, AntsAiTransformAlignCentersOfMassParamsDictTagged],
     "align_principal_axes": typing.NotRequired[bool | None],
-    "align_blobs": typing.NotRequired[typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None],
-    "search_factor": typing.NotRequired[typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None],
-    "translation_search_grid": typing.NotRequired[typing.Literal["[stepSize, AxBxC]"] | None],
-    "convergence": typing.NotRequired[typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None],
-    "masks": typing.NotRequired[typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None],
+    "align_blobs": typing.NotRequired[AntsAiAlignBlobsParamsDict | None],
+    "search_factor": typing.NotRequired[AntsAiSearchFactorParamsDict | None],
+    "translation_search_grid": typing.NotRequired[AntsAiTranslationSearchGridParamsDict | None],
+    "convergence": typing.NotRequired[AntsAiConvergenceParamsDict | None],
+    "masks": typing.NotRequired[AntsAiMasksParamsDict | None],
     "output": str,
     "random_seed": typing.NotRequired[int | None],
     "verbose": typing.NotRequired[bool | None],
@@ -30,19 +330,1667 @@ _AntsAiParamsDictNoTag = typing.TypedDict('_AntsAiParamsDictNoTag', {
 AntsAiParamsDictTagged = typing.TypedDict('AntsAiParamsDictTagged', {
     "@type": typing.Literal["ants/antsAI"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
-    "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
-    "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
+    "metric": typing.Union[AntsAiMetricMattesParamsDictTagged, AntsAiMetricGcParamsDictTagged, AntsAiMetricMiParamsDictTagged],
+    "transform": typing.Union[AntsAiTransformRigidParamsDictTagged, AntsAiTransformAffineParamsDictTagged, AntsAiTransformSimilarityParamsDictTagged, AntsAiTransformAlignGeometricCentersParamsDictTagged, AntsAiTransformAlignCentersOfMassParamsDictTagged],
     "align_principal_axes": typing.NotRequired[bool | None],
-    "align_blobs": typing.NotRequired[typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None],
-    "search_factor": typing.NotRequired[typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None],
-    "translation_search_grid": typing.NotRequired[typing.Literal["[stepSize, AxBxC]"] | None],
-    "convergence": typing.NotRequired[typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None],
-    "masks": typing.NotRequired[typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None],
+    "align_blobs": typing.NotRequired[AntsAiAlignBlobsParamsDict | None],
+    "search_factor": typing.NotRequired[AntsAiSearchFactorParamsDict | None],
+    "translation_search_grid": typing.NotRequired[AntsAiTranslationSearchGridParamsDict | None],
+    "convergence": typing.NotRequired[AntsAiConvergenceParamsDict | None],
+    "masks": typing.NotRequired[AntsAiMasksParamsDict | None],
     "output": str,
     "random_seed": typing.NotRequired[int | None],
     "verbose": typing.NotRequired[bool | None],
 })
 AntsAiParamsDict = _AntsAiParamsDictNoTag | AntsAiParamsDictTagged
+
+
+def ants_ai_metric_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "metric_mattes": ants_ai_metric_mattes_cargs,
+        "metric_gc": ants_ai_metric_gc_cargs,
+        "metric_mi": ants_ai_metric_mi_cargs,
+    }.get(t)
+
+
+def ants_ai_metric_validate_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get validate params function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Validate params function.
+    """
+    return {
+        "metric_mattes": ants_ai_metric_mattes_validate,
+        "metric_gc": ants_ai_metric_gc_validate,
+        "metric_mi": ants_ai_metric_mi_validate,
+    }.get(t)
+
+
+def ants_ai_transform_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "transform_rigid": ants_ai_transform_rigid_cargs,
+        "transform_affine": ants_ai_transform_affine_cargs,
+        "transform_similarity": ants_ai_transform_similarity_cargs,
+        "transform_align_geometric_centers": ants_ai_transform_align_geometric_centers_cargs,
+        "transform_align_centers_of_mass": ants_ai_transform_align_centers_of_mass_cargs,
+    }.get(t)
+
+
+def ants_ai_transform_validate_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get validate params function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Validate params function.
+    """
+    return {
+        "transform_rigid": ants_ai_transform_rigid_validate,
+        "transform_affine": ants_ai_transform_affine_validate,
+        "transform_similarity": ants_ai_transform_similarity_validate,
+        "transform_align_geometric_centers": ants_ai_transform_align_geometric_centers_validate,
+        "transform_align_centers_of_mass": ants_ai_transform_align_centers_of_mass_validate,
+    }.get(t)
+
+
+def ants_ai_sampling_percentage(
+    sampling_percentage_value: float,
+) -> AntsAiSamplingPercentageParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_percentage_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage",
+        "sampling_percentage_value": sampling_percentage_value,
+    }
+    return params
+
+
+def ants_ai_sampling_percentage_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSamplingPercentageParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_percentage_value", None) is None:
+        raise StyxValidationError("`sampling_percentage_value` must not be None")
+    if not isinstance(params["sampling_percentage_value"], (float, int)):
+        raise StyxValidationError(f'`sampling_percentage_value` has the wrong type: Received `{type(params.get("sampling_percentage_value", None))}` expected `float`')
+    if not (0 <= params["sampling_percentage_value"] <= 1):
+        raise StyxValidationError("Parameter `sampling_percentage_value` must be between 0 and 1 (inclusive)")
+
+
+def ants_ai_sampling_percentage_cargs(
+    params: AntsAiSamplingPercentageParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("sampling_percentage_value", None)))
+    return cargs
+
+
+def ants_ai_sampling_strategy(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsAiSamplingPercentageParamsDict | None = None,
+) -> AntsAiSamplingStrategyParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_ai_sampling_strategy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSamplingStrategyParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_ai_sampling_percentage_validate(params["sampling_percentage"])
+
+
+def ants_ai_sampling_strategy_cargs(
+    params: AntsAiSamplingStrategyParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_ai_sampling_percentage_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_number_of_bins(
+    number_of_bins_value: int,
+    sampling_strategy: AntsAiSamplingStrategyParamsDict | None = None,
+) -> AntsAiNumberOfBinsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_bins_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_bins",
+        "number_of_bins_value": number_of_bins_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_ai_number_of_bins_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiNumberOfBinsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_bins_value", None) is None:
+        raise StyxValidationError("`number_of_bins_value` must not be None")
+    if not isinstance(params["number_of_bins_value"], int):
+        raise StyxValidationError(f'`number_of_bins_value` has the wrong type: Received `{type(params.get("number_of_bins_value", None))}` expected `int`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_ai_sampling_strategy_validate(params["sampling_strategy"])
+
+
+def ants_ai_number_of_bins_cargs(
+    params: AntsAiNumberOfBinsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join((ants_ai_sampling_strategy_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_metric_mattes(
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
+    number_of_bins: AntsAiNumberOfBinsParamsDict | None = None,
+) -> AntsAiMetricMattesParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fixed_image:.
+        moving_image:.
+        number_of_bins:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "metric_mattes",
+        "fixed_image": fixed_image,
+        "moving_image": moving_image,
+    }
+    if number_of_bins is not None:
+        params["number_of_bins"] = number_of_bins
+    return params
+
+
+def ants_ai_metric_mattes_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiMetricMattesParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("number_of_bins", None) is not None:
+        ants_ai_number_of_bins_validate(params["number_of_bins"])
+
+
+def ants_ai_metric_mattes_cargs(
+    params: AntsAiMetricMattesParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("Mattes[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "".join((ants_ai_number_of_bins_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
+    return cargs
+
+
+def ants_ai_sampling_percentage_1(
+    sampling_percentage_value: float,
+) -> AntsAiSamplingPercentage1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_percentage_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_1",
+        "sampling_percentage_value": sampling_percentage_value,
+    }
+    return params
+
+
+def ants_ai_sampling_percentage_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSamplingPercentage1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_percentage_value", None) is None:
+        raise StyxValidationError("`sampling_percentage_value` must not be None")
+    if not isinstance(params["sampling_percentage_value"], (float, int)):
+        raise StyxValidationError(f'`sampling_percentage_value` has the wrong type: Received `{type(params.get("sampling_percentage_value", None))}` expected `float`')
+    if not (0 <= params["sampling_percentage_value"] <= 1):
+        raise StyxValidationError("Parameter `sampling_percentage_value` must be between 0 and 1 (inclusive)")
+
+
+def ants_ai_sampling_percentage_1_cargs(
+    params: AntsAiSamplingPercentage1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("sampling_percentage_value", None)))
+    return cargs
+
+
+def ants_ai_sampling_strategy_1(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsAiSamplingPercentage1ParamsDict | None = None,
+) -> AntsAiSamplingStrategy1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_1",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_ai_sampling_strategy_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSamplingStrategy1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_ai_sampling_percentage_1_validate(params["sampling_percentage"])
+
+
+def ants_ai_sampling_strategy_1_cargs(
+    params: AntsAiSamplingStrategy1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_ai_sampling_percentage_1_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_radius(
+    radius_value: float,
+    sampling_strategy: AntsAiSamplingStrategy1ParamsDict | None = None,
+) -> AntsAiRadiusParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        radius_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "radius",
+        "radius_value": radius_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_ai_radius_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiRadiusParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("radius_value", None) is None:
+        raise StyxValidationError("`radius_value` must not be None")
+    if not isinstance(params["radius_value"], (float, int)):
+        raise StyxValidationError(f'`radius_value` has the wrong type: Received `{type(params.get("radius_value", None))}` expected `float`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_ai_sampling_strategy_1_validate(params["sampling_strategy"])
+
+
+def ants_ai_radius_cargs(
+    params: AntsAiRadiusParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("radius_value", None)) + "".join((ants_ai_sampling_strategy_1_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_metric_gc(
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
+    radius: AntsAiRadiusParamsDict | None = None,
+) -> AntsAiMetricGcParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fixed_image:.
+        moving_image:.
+        radius:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "metric_gc",
+        "fixed_image": fixed_image,
+        "moving_image": moving_image,
+    }
+    if radius is not None:
+        params["radius"] = radius
+    return params
+
+
+def ants_ai_metric_gc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiMetricGcParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("radius", None) is not None:
+        ants_ai_radius_validate(params["radius"])
+
+
+def ants_ai_metric_gc_cargs(
+    params: AntsAiMetricGcParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("GC[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "".join((ants_ai_radius_cargs(params.get("radius", None), execution) if (params.get("radius", None) is not None) else [])) + "]")
+    return cargs
+
+
+def ants_ai_sampling_percentage_2(
+    sampling_percentage_value: float,
+) -> AntsAiSamplingPercentage2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_percentage_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_percentage_2",
+        "sampling_percentage_value": sampling_percentage_value,
+    }
+    return params
+
+
+def ants_ai_sampling_percentage_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSamplingPercentage2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_percentage_value", None) is None:
+        raise StyxValidationError("`sampling_percentage_value` must not be None")
+    if not isinstance(params["sampling_percentage_value"], (float, int)):
+        raise StyxValidationError(f'`sampling_percentage_value` has the wrong type: Received `{type(params.get("sampling_percentage_value", None))}` expected `float`')
+    if not (0 <= params["sampling_percentage_value"] <= 1):
+        raise StyxValidationError("Parameter `sampling_percentage_value` must be between 0 and 1 (inclusive)")
+
+
+def ants_ai_sampling_percentage_2_cargs(
+    params: AntsAiSamplingPercentage2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("sampling_percentage_value", None)))
+    return cargs
+
+
+def ants_ai_sampling_strategy_2(
+    sampling_strategy_value: typing.Literal["None", "Regular", "Random"],
+    sampling_percentage: AntsAiSamplingPercentage2ParamsDict | None = None,
+) -> AntsAiSamplingStrategy2ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        sampling_strategy_value:.
+        sampling_percentage:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "sampling_strategy_2",
+        "sampling_strategy_value": sampling_strategy_value,
+    }
+    if sampling_percentage is not None:
+        params["sampling_percentage"] = sampling_percentage
+    return params
+
+
+def ants_ai_sampling_strategy_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSamplingStrategy2ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sampling_strategy_value", None) is None:
+        raise StyxValidationError("`sampling_strategy_value` must not be None")
+    if not isinstance(params["sampling_strategy_value"], str):
+        raise StyxValidationError(f'`sampling_strategy_value` has the wrong type: Received `{type(params.get("sampling_strategy_value", None))}` expected `typing.Literal["None", "Regular", "Random"]`')
+    if params["sampling_strategy_value"] not in ["None", "Regular", "Random"]:
+        raise StyxValidationError("Parameter `sampling_strategy_value` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        ants_ai_sampling_percentage_2_validate(params["sampling_percentage"])
+
+
+def ants_ai_sampling_strategy_2_cargs(
+    params: AntsAiSamplingStrategy2ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + params.get("sampling_strategy_value", None) + "".join((ants_ai_sampling_percentage_2_cargs(params.get("sampling_percentage", None), execution) if (params.get("sampling_percentage", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_number_of_bins_1(
+    number_of_bins_value: int,
+    sampling_strategy: AntsAiSamplingStrategy2ParamsDict | None = None,
+) -> AntsAiNumberOfBins1ParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_bins_value:.
+        sampling_strategy:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_bins_1",
+        "number_of_bins_value": number_of_bins_value,
+    }
+    if sampling_strategy is not None:
+        params["sampling_strategy"] = sampling_strategy
+    return params
+
+
+def ants_ai_number_of_bins_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiNumberOfBins1ParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_bins_value", None) is None:
+        raise StyxValidationError("`number_of_bins_value` must not be None")
+    if not isinstance(params["number_of_bins_value"], int):
+        raise StyxValidationError(f'`number_of_bins_value` has the wrong type: Received `{type(params.get("number_of_bins_value", None))}` expected `int`')
+    if params.get("sampling_strategy", None) is not None:
+        ants_ai_sampling_strategy_2_validate(params["sampling_strategy"])
+
+
+def ants_ai_number_of_bins_1_cargs(
+    params: AntsAiNumberOfBins1ParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("number_of_bins_value", None)) + "".join((ants_ai_sampling_strategy_2_cargs(params.get("sampling_strategy", None), execution) if (params.get("sampling_strategy", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_metric_mi(
+    fixed_image: InputPathType,
+    moving_image: InputPathType,
+    number_of_bins: AntsAiNumberOfBins1ParamsDict | None = None,
+) -> AntsAiMetricMiParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fixed_image:.
+        moving_image:.
+        number_of_bins:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "metric_mi",
+        "fixed_image": fixed_image,
+        "moving_image": moving_image,
+    }
+    if number_of_bins is not None:
+        params["number_of_bins"] = number_of_bins
+    return params
+
+
+def ants_ai_metric_mi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiMetricMiParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("number_of_bins", None) is not None:
+        ants_ai_number_of_bins_1_validate(params["number_of_bins"])
+
+
+def ants_ai_metric_mi_cargs(
+    params: AntsAiMetricMiParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("MI[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "".join((ants_ai_number_of_bins_1_cargs(params.get("number_of_bins", None), execution) if (params.get("number_of_bins", None) is not None) else [])) + "]")
+    return cargs
+
+
+def ants_ai_transform_rigid(
+    gradient_step: float,
+) -> AntsAiTransformRigidParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        gradient_step:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "transform_rigid",
+        "gradient_step": gradient_step,
+    }
+    return params
+
+
+def ants_ai_transform_rigid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiTransformRigidParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+
+
+def ants_ai_transform_rigid_cargs(
+    params: AntsAiTransformRigidParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("Rigid[" + str(params.get("gradient_step", None)) + "]")
+    return cargs
+
+
+def ants_ai_transform_affine(
+    gradient_step: float,
+) -> AntsAiTransformAffineParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        gradient_step:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "transform_affine",
+        "gradient_step": gradient_step,
+    }
+    return params
+
+
+def ants_ai_transform_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiTransformAffineParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+
+
+def ants_ai_transform_affine_cargs(
+    params: AntsAiTransformAffineParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("Affine[" + str(params.get("gradient_step", None)) + "]")
+    return cargs
+
+
+def ants_ai_transform_similarity(
+    gradient_step: float,
+) -> AntsAiTransformSimilarityParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        gradient_step:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "transform_similarity",
+        "gradient_step": gradient_step,
+    }
+    return params
+
+
+def ants_ai_transform_similarity_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiTransformSimilarityParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+
+
+def ants_ai_transform_similarity_cargs(
+    params: AntsAiTransformSimilarityParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("Similarity[" + str(params.get("gradient_step", None)) + "]")
+    return cargs
+
+
+def ants_ai_transform_align_geometric_centers(
+) -> AntsAiTransformAlignGeometricCentersParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "transform_align_geometric_centers",
+    }
+    return params
+
+
+def ants_ai_transform_align_geometric_centers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiTransformAlignGeometricCentersParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
+def ants_ai_transform_align_geometric_centers_cargs(
+    params: AntsAiTransformAlignGeometricCentersParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("AlignGeometricCenters")
+    return cargs
+
+
+def ants_ai_transform_align_centers_of_mass(
+) -> AntsAiTransformAlignCentersOfMassParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "transform_align_centers_of_mass",
+    }
+    return params
+
+
+def ants_ai_transform_align_centers_of_mass_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiTransformAlignCentersOfMassParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
+def ants_ai_transform_align_centers_of_mass_cargs(
+    params: AntsAiTransformAlignCentersOfMassParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("AlignCentersOfMass")
+    return cargs
+
+
+def ants_ai_number_of_blobs_to_match(
+    number_of_blobs_to_match_value: int,
+) -> AntsAiNumberOfBlobsToMatchParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_blobs_to_match_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "number_of_blobs_to_match",
+        "number_of_blobs_to_match_value": number_of_blobs_to_match_value,
+    }
+    return params
+
+
+def ants_ai_number_of_blobs_to_match_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiNumberOfBlobsToMatchParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_blobs_to_match_value", None) is None:
+        raise StyxValidationError("`number_of_blobs_to_match_value` must not be None")
+    if not isinstance(params["number_of_blobs_to_match_value"], int):
+        raise StyxValidationError(f'`number_of_blobs_to_match_value` has the wrong type: Received `{type(params.get("number_of_blobs_to_match_value", None))}` expected `int`')
+
+
+def ants_ai_number_of_blobs_to_match_cargs(
+    params: AntsAiNumberOfBlobsToMatchParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("number_of_blobs_to_match_value", None)))
+    return cargs
+
+
+def ants_ai_align_blobs(
+    number_of_blobs_to_extract: int,
+    number_of_blobs_to_match: AntsAiNumberOfBlobsToMatchParamsDict | None = None,
+) -> AntsAiAlignBlobsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_blobs_to_extract:.
+        number_of_blobs_to_match:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "align_blobs",
+        "number_of_blobs_to_extract": number_of_blobs_to_extract,
+    }
+    if number_of_blobs_to_match is not None:
+        params["number_of_blobs_to_match"] = number_of_blobs_to_match
+    return params
+
+
+def ants_ai_align_blobs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiAlignBlobsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_blobs_to_extract", None) is None:
+        raise StyxValidationError("`number_of_blobs_to_extract` must not be None")
+    if not isinstance(params["number_of_blobs_to_extract"], int):
+        raise StyxValidationError(f'`number_of_blobs_to_extract` has the wrong type: Received `{type(params.get("number_of_blobs_to_extract", None))}` expected `int`')
+    if params.get("number_of_blobs_to_match", None) is not None:
+        ants_ai_number_of_blobs_to_match_validate(params["number_of_blobs_to_match"])
+
+
+def ants_ai_align_blobs_cargs(
+    params: AntsAiAlignBlobsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("[" + str(params.get("number_of_blobs_to_extract", None)) + "".join((ants_ai_number_of_blobs_to_match_cargs(params.get("number_of_blobs_to_match", None), execution) if (params.get("number_of_blobs_to_match", None) is not None) else [])) + "]")
+    return cargs
+
+
+def ants_ai_arc_fraction(
+    arc_fraction_value: float,
+) -> AntsAiArcFractionParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        arc_fraction_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "arc_fraction",
+        "arc_fraction_value": arc_fraction_value,
+    }
+    return params
+
+
+def ants_ai_arc_fraction_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiArcFractionParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("arc_fraction_value", None) is None:
+        raise StyxValidationError("`arc_fraction_value` must not be None")
+    if not isinstance(params["arc_fraction_value"], (float, int)):
+        raise StyxValidationError(f'`arc_fraction_value` has the wrong type: Received `{type(params.get("arc_fraction_value", None))}` expected `float`')
+
+
+def ants_ai_arc_fraction_cargs(
+    params: AntsAiArcFractionParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("arc_fraction_value", None)))
+    return cargs
+
+
+def ants_ai_search_factor(
+    search_factor_value: float,
+    arc_fraction: AntsAiArcFractionParamsDict | None = None,
+) -> AntsAiSearchFactorParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        search_factor_value:.
+        arc_fraction:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "search_factor",
+        "search_factor_value": search_factor_value,
+    }
+    if arc_fraction is not None:
+        params["arc_fraction"] = arc_fraction
+    return params
+
+
+def ants_ai_search_factor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiSearchFactorParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("search_factor_value", None) is None:
+        raise StyxValidationError("`search_factor_value` must not be None")
+    if not isinstance(params["search_factor_value"], (float, int)):
+        raise StyxValidationError(f'`search_factor_value` has the wrong type: Received `{type(params.get("search_factor_value", None))}` expected `float`')
+    if params.get("arc_fraction", None) is not None:
+        ants_ai_arc_fraction_validate(params["arc_fraction"])
+
+
+def ants_ai_search_factor_cargs(
+    params: AntsAiSearchFactorParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("[" + str(params.get("search_factor_value", None)) + "".join((ants_ai_arc_fraction_cargs(params.get("arc_fraction", None), execution) if (params.get("arc_fraction", None) is not None) else [])) + "]")
+    return cargs
+
+
+def ants_ai_translation_search_grid(
+    step_size: float,
+    grid: list[int],
+) -> AntsAiTranslationSearchGridParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        step_size: Translation step size in mm. Default is 25.
+        grid: Translation search grid extent in each dimension, specified as\
+            AxBxC. Default is 0x0x0.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "translation_search_grid",
+        "step_size": step_size,
+        "grid": grid,
+    }
+    return params
+
+
+def ants_ai_translation_search_grid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiTranslationSearchGridParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("step_size", None) is None:
+        raise StyxValidationError("`step_size` must not be None")
+    if not isinstance(params["step_size"], (float, int)):
+        raise StyxValidationError(f'`step_size` has the wrong type: Received `{type(params.get("step_size", None))}` expected `float`')
+    if params.get("grid", None) is None:
+        raise StyxValidationError("`grid` must not be None")
+    if not isinstance(params["grid"], list):
+        raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[int]`')
+    for e in params["grid"]:
+        if not isinstance(e, int):
+            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[int]`')
+
+
+def ants_ai_translation_search_grid_cargs(
+    params: AntsAiTranslationSearchGridParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("[" + str(params.get("step_size", None)) + "," + "x".join(map(str, params.get("grid", None))) + "]")
+    return cargs
+
+
+def ants_ai_convergence_window_size(
+    convergence_window_size_value: int,
+) -> AntsAiConvergenceWindowSizeParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        convergence_window_size_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "convergence_window_size",
+        "convergence_window_size_value": convergence_window_size_value,
+    }
+    return params
+
+
+def ants_ai_convergence_window_size_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiConvergenceWindowSizeParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("convergence_window_size_value", None) is None:
+        raise StyxValidationError("`convergence_window_size_value` must not be None")
+    if not isinstance(params["convergence_window_size_value"], int):
+        raise StyxValidationError(f'`convergence_window_size_value` has the wrong type: Received `{type(params.get("convergence_window_size_value", None))}` expected `int`')
+
+
+def ants_ai_convergence_window_size_cargs(
+    params: AntsAiConvergenceWindowSizeParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("convergence_window_size_value", None)))
+    return cargs
+
+
+def ants_ai_convergence_threshold(
+    convergence_threshold_value: float,
+    convergence_window_size: AntsAiConvergenceWindowSizeParamsDict | None = None,
+) -> AntsAiConvergenceThresholdParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        convergence_threshold_value:.
+        convergence_window_size:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "convergence_threshold",
+        "convergence_threshold_value": convergence_threshold_value,
+    }
+    if convergence_window_size is not None:
+        params["convergence_window_size"] = convergence_window_size
+    return params
+
+
+def ants_ai_convergence_threshold_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiConvergenceThresholdParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("convergence_threshold_value", None) is None:
+        raise StyxValidationError("`convergence_threshold_value` must not be None")
+    if not isinstance(params["convergence_threshold_value"], (float, int)):
+        raise StyxValidationError(f'`convergence_threshold_value` has the wrong type: Received `{type(params.get("convergence_threshold_value", None))}` expected `float`')
+    if params.get("convergence_window_size", None) is not None:
+        ants_ai_convergence_window_size_validate(params["convergence_window_size"])
+
+
+def ants_ai_convergence_threshold_cargs(
+    params: AntsAiConvergenceThresholdParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + str(params.get("convergence_threshold_value", None)) + "".join((ants_ai_convergence_window_size_cargs(params.get("convergence_window_size", None), execution) if (params.get("convergence_window_size", None) is not None) else [])))
+    return cargs
+
+
+def ants_ai_convergence(
+    number_of_iterations: int,
+    convergence_threshold: AntsAiConvergenceThresholdParamsDict | None = None,
+) -> AntsAiConvergenceParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        number_of_iterations:.
+        convergence_threshold:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "convergence",
+        "number_of_iterations": number_of_iterations,
+    }
+    if convergence_threshold is not None:
+        params["convergence_threshold"] = convergence_threshold
+    return params
+
+
+def ants_ai_convergence_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiConvergenceParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_iterations", None) is None:
+        raise StyxValidationError("`number_of_iterations` must not be None")
+    if not isinstance(params["number_of_iterations"], int):
+        raise StyxValidationError(f'`number_of_iterations` has the wrong type: Received `{type(params.get("number_of_iterations", None))}` expected `int`')
+    if params.get("convergence_threshold", None) is not None:
+        ants_ai_convergence_threshold_validate(params["convergence_threshold"])
+
+
+def ants_ai_convergence_cargs(
+    params: AntsAiConvergenceParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("[" + str(params.get("number_of_iterations", None)) + "".join((ants_ai_convergence_threshold_cargs(params.get("convergence_threshold", None), execution) if (params.get("convergence_threshold", None) is not None) else [])) + "]")
+    return cargs
+
+
+def ants_ai_moving_image_mask(
+    moving_image_mask_value: InputPathType,
+) -> AntsAiMovingImageMaskParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        moving_image_mask_value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "moving_image_mask",
+        "moving_image_mask_value": moving_image_mask_value,
+    }
+    return params
+
+
+def ants_ai_moving_image_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiMovingImageMaskParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("moving_image_mask_value", None) is None:
+        raise StyxValidationError("`moving_image_mask_value` must not be None")
+    if not isinstance(params["moving_image_mask_value"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image_mask_value` has the wrong type: Received `{type(params.get("moving_image_mask_value", None))}` expected `InputPathType`')
+
+
+def ants_ai_moving_image_mask_cargs(
+    params: AntsAiMovingImageMaskParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("," + execution.input_file(params.get("moving_image_mask_value", None)))
+    return cargs
+
+
+def ants_ai_masks(
+    fixed_image_mask: InputPathType,
+    moving_image_mask: AntsAiMovingImageMaskParamsDict | None = None,
+) -> AntsAiMasksParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        fixed_image_mask:.
+        moving_image_mask:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "masks",
+        "fixed_image_mask": fixed_image_mask,
+    }
+    if moving_image_mask is not None:
+        params["moving_image_mask"] = moving_image_mask
+    return params
+
+
+def ants_ai_masks_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiMasksParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image_mask", None) is None:
+        raise StyxValidationError("`fixed_image_mask` must not be None")
+    if not isinstance(params["fixed_image_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image_mask` has the wrong type: Received `{type(params.get("fixed_image_mask", None))}` expected `InputPathType`')
+    if params.get("moving_image_mask", None) is not None:
+        ants_ai_moving_image_mask_validate(params["moving_image_mask"])
+
+
+def ants_ai_masks_cargs(
+    params: AntsAiMasksParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("[" + execution.input_file(params.get("fixed_image_mask", None)) + "".join((ants_ai_moving_image_mask_cargs(params.get("moving_image_mask", None), execution) if (params.get("moving_image_mask", None) is not None) else [])) + "]")
+    return cargs
 
 
 class AntsAiOutputs(typing.NamedTuple):
@@ -52,20 +2000,20 @@ class AntsAiOutputs(typing.NamedTuple):
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     output_transform: OutputPathType
-    """The output transform (ITK .mat file)."""
+    """The output transform file."""
 
 
 def ants_ai_params(
-    metric: typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
-    transform: typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
+    metric: typing.Union[AntsAiMetricMattesParamsDictTagged, AntsAiMetricGcParamsDictTagged, AntsAiMetricMiParamsDictTagged],
+    transform: typing.Union[AntsAiTransformRigidParamsDictTagged, AntsAiTransformAffineParamsDictTagged, AntsAiTransformSimilarityParamsDictTagged, AntsAiTransformAlignGeometricCentersParamsDictTagged, AntsAiTransformAlignCentersOfMassParamsDictTagged],
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
     align_principal_axes: bool | None = None,
-    align_blobs: typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None = None,
-    search_factor: typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None = None,
-    translation_search_grid: typing.Literal["[stepSize, AxBxC]"] | None = None,
-    convergence: typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None = None,
-    masks: typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None = None,
+    align_blobs: AntsAiAlignBlobsParamsDict | None = None,
+    search_factor: AntsAiSearchFactorParamsDict | None = None,
+    translation_search_grid: AntsAiTranslationSearchGridParamsDict | None = None,
+    convergence: AntsAiConvergenceParamsDict | None = None,
+    masks: AntsAiMasksParamsDict | None = None,
     random_seed: int | None = None,
     verbose: bool | None = None,
 ) -> AntsAiParamsDictTagged:
@@ -73,29 +2021,44 @@ def ants_ai_params(
     Build parameters.
     
     Args:
-        metric: These image metrics are available: Mattes: Mattes mutual\
-            information (recommended), GC: global correlation, MI: joint histogram\
-            mutual information.
-        transform: Several transform options are available. For the rigid,\
-            affine, and similarity transforms, the gradientStep characterizes the\
-            gradient descent optimization. The other two transform types finds the\
-            simple translation transform which aligns the specified image feature.
-        output: Specify the output transform (output format an ITK .mat file).
+        metric: Image similarity metric. Available metrics: Mattes (Mattes\
+            mutual information, recommended), GC (global correlation), MI (joint\
+            histogram mutual information). Each metric takes a fixed and moving\
+            image, with optional sampling parameters.
+        transform: Transform type for alignment. The rigid, affine, and\
+            similarity transforms take a gradient step parameter that characterizes\
+            the gradient descent optimization and is scaled appropriately for each\
+            transform using the shift scales estimator. AlignGeometricCenters and\
+            AlignCentersOfMass find the simple translation transform aligning the\
+            specified image feature. Note that the images are read from the metric\
+            option although the metric value itself is not used for the latter two.
+        output: Specify the output transform filename (output format is an ITK\
+            .mat file).
         dimensionality: This option forces the image to be treated as a\
             specified-dimensional image. If not specified, we try to infer the\
             dimensionality from the input image.
-        align_principal_axes: Boolean indicating alignment by principal axes.\
-            Alternatively, one can align using blobs.
-        align_blobs: Boolean indicating alignment by a set of blobs.
+        align_principal_axes: Align images by their principal axes.\
+            Alternatively, one can align using blobs (see --align-blobs option).
+        align_blobs: Align images using a set of extracted blobs. Specify the\
+            number of blobs to extract, and optionally the number of blobs to match\
+            (defaults to numberOfBlobsToExtract). Alternatively, one can align\
+            using principal axes (see --align-principal-axes option).
         search_factor: Incremental search factor (in degrees) which will sample\
-            the arc fraction around the principal axis or default axis.
+            the arc fraction around the principal axis or default axis. Default\
+            search factor is 20 degrees with an arc fraction of 1.0.
         translation_search_grid: Translation search grid in mm, which will\
             translate the moving image in each dimension in increments of the step\
             size.
-        convergence: Number of iterations.
-        masks: Image masks to limit voxels considered by the metric.
-        random_seed: Use a fixed seed for random number generation.
-        verbose: Verbose output.
+        convergence: Convergence parameters for the optimization. Specify the\
+            number of iterations, and optionally a convergence threshold (default\
+            1e-6) and convergence window size (default 10).
+        masks: Image masks to limit the voxels considered by the metric.\
+            Specify a fixed image mask, and optionally a moving image mask.
+        random_seed: Use a fixed seed for random number generation. The default\
+            fixed seed is overwritten by this value. The fixed seed can be any\
+            nonzero int value. If the specified seed is zero, the system time will\
+            be used.
+        verbose: Verbose output. Default is 0 (off).
     Returns:
         Parameter dictionary
     """
@@ -145,44 +2108,35 @@ def ants_ai_validate(
             raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
     if params.get("metric", None) is None:
         raise StyxValidationError("`metric` must not be None")
-    if not isinstance(params["metric"], str):
-        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"]`')
-    if params["metric"] not in ["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"]:
-        raise StyxValidationError("Parameter `metric` must be one of [\"Mattes[fixedImage,movingImage]\", \"GC[fixedImage,movingImage]\", \"MI[fixedImage,movingImage]\"]")
+    if not isinstance(params["metric"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["metric"])}\'')
+    if "@type" not in params["metric"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    if params["metric"]["@type"] not in ["metric_mattes", "metric_gc", "metric_mi"]:
+        raise StyxValidationError("Parameter `metric`s `@type` must be one of [\"metric_mattes\", \"metric_gc\", \"metric_mi\"]")
+    ants_ai_metric_validate_dyn_fn(params["metric"]["@type"])(params["metric"])
     if params.get("transform", None) is None:
         raise StyxValidationError("`transform` must not be None")
-    if not isinstance(params["transform"], str):
-        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"]`')
-    if params["transform"] not in ["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"]:
-        raise StyxValidationError("Parameter `transform` must be one of [\"Rigid[gradientStep]\", \"Affine[gradientStep]\", \"Similarity[gradientStep]\", \"AlignGeometricCenters\", \"AlignCentersOfMass\"]")
+    if not isinstance(params["transform"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["transform"])}\'')
+    if "@type" not in params["transform"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    if params["transform"]["@type"] not in ["transform_rigid", "transform_affine", "transform_similarity", "transform_align_geometric_centers", "transform_align_centers_of_mass"]:
+        raise StyxValidationError("Parameter `transform`s `@type` must be one of [\"transform_rigid\", \"transform_affine\", \"transform_similarity\", \"transform_align_geometric_centers\", \"transform_align_centers_of_mass\"]")
+    ants_ai_transform_validate_dyn_fn(params["transform"]["@type"])(params["transform"])
     if params.get("align_principal_axes", None) is not None:
         if not isinstance(params["align_principal_axes"], bool):
             raise StyxValidationError(f'`align_principal_axes` has the wrong type: Received `{type(params.get("align_principal_axes", None))}` expected `bool | None`')
     if params.get("align_blobs", None) is not None:
-        if not isinstance(params["align_blobs"], str):
-            raise StyxValidationError(f'`align_blobs` has the wrong type: Received `{type(params.get("align_blobs", None))}` expected `typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None`')
-        if params["align_blobs"] not in ["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"]:
-            raise StyxValidationError("Parameter `align_blobs` must be one of [\"numberOfBlobsToExtract\", \"[numberOfBlobsToExtract,numberOfBlobsToMatch]\"]")
+        ants_ai_align_blobs_validate(params["align_blobs"])
     if params.get("search_factor", None) is not None:
-        if not isinstance(params["search_factor"], str):
-            raise StyxValidationError(f'`search_factor` has the wrong type: Received `{type(params.get("search_factor", None))}` expected `typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None`')
-        if params["search_factor"] not in ["searchFactor", "[searchFactor,arcFraction]"]:
-            raise StyxValidationError("Parameter `search_factor` must be one of [\"searchFactor\", \"[searchFactor,arcFraction]\"]")
+        ants_ai_search_factor_validate(params["search_factor"])
     if params.get("translation_search_grid", None) is not None:
-        if not isinstance(params["translation_search_grid"], str):
-            raise StyxValidationError(f'`translation_search_grid` has the wrong type: Received `{type(params.get("translation_search_grid", None))}` expected `typing.Literal["[stepSize, AxBxC]"] | None`')
-        if params["translation_search_grid"] not in ["[stepSize, AxBxC]"]:
-            raise StyxValidationError("Parameter `translation_search_grid` must be one of [\"[stepSize, AxBxC]\"]")
+        ants_ai_translation_search_grid_validate(params["translation_search_grid"])
     if params.get("convergence", None) is not None:
-        if not isinstance(params["convergence"], str):
-            raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None`')
-        if params["convergence"] not in ["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"]:
-            raise StyxValidationError("Parameter `convergence` must be one of [\"numberOfIterations\", \"[numberOfIterations,convergenceThreshold,convergenceWindowSize]\"]")
+        ants_ai_convergence_validate(params["convergence"])
     if params.get("masks", None) is not None:
-        if not isinstance(params["masks"], str):
-            raise StyxValidationError(f'`masks` has the wrong type: Received `{type(params.get("masks", None))}` expected `typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None`')
-        if params["masks"] not in ["fixedImageMask", "[fixedImageMask,movingImageMask]"]:
-            raise StyxValidationError("Parameter `masks` must be one of [\"fixedImageMask\", \"[fixedImageMask,movingImageMask]\"]")
+        ants_ai_masks_validate(params["masks"])
     if params.get("output", None) is None:
         raise StyxValidationError("`output` must not be None")
     if not isinstance(params["output"], str):
@@ -190,8 +2144,6 @@ def ants_ai_validate(
     if params.get("random_seed", None) is not None:
         if not isinstance(params["random_seed"], int):
             raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
-        if params["random_seed"] < 0:
-            raise StyxValidationError("Parameter `random_seed` must be at least 0")
     if params.get("verbose", None) is not None:
         if not isinstance(params["verbose"], bool):
             raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
@@ -218,45 +2170,45 @@ def ants_ai_cargs(
             str(params.get("dimensionality", None))
         ])
     cargs.extend([
-        "-m",
-        params.get("metric", None)
+        "--metric",
+        *ants_ai_metric_cargs_dyn_fn(params.get("metric", None)["@type"])(params.get("metric", None), execution)
     ])
     cargs.extend([
-        "-t",
-        params.get("transform", None)
+        "--transform",
+        *ants_ai_transform_cargs_dyn_fn(params.get("transform", None)["@type"])(params.get("transform", None), execution)
     ])
     if params.get("align_principal_axes", None) is not None:
         cargs.extend([
-            "-p",
+            "--align-principal-axes",
             ("1" if params.get("align_principal_axes", None) else "0")
         ])
     if params.get("align_blobs", None) is not None:
         cargs.extend([
-            "-b",
-            params.get("align_blobs", None)
+            "--align-blobs",
+            *ants_ai_align_blobs_cargs(params.get("align_blobs", None), execution)
         ])
     if params.get("search_factor", None) is not None:
         cargs.extend([
-            "-s",
-            params.get("search_factor", None)
+            "--search-factor",
+            *ants_ai_search_factor_cargs(params.get("search_factor", None), execution)
         ])
     if params.get("translation_search_grid", None) is not None:
         cargs.extend([
-            "-g",
-            params.get("translation_search_grid", None)
+            "--translation-search-grid",
+            *ants_ai_translation_search_grid_cargs(params.get("translation_search_grid", None), execution)
         ])
     if params.get("convergence", None) is not None:
         cargs.extend([
-            "-c",
-            params.get("convergence", None)
+            "--convergence",
+            *ants_ai_convergence_cargs(params.get("convergence", None), execution)
         ])
     if params.get("masks", None) is not None:
         cargs.extend([
-            "-x",
-            params.get("masks", None)
+            "--masks",
+            *ants_ai_masks_cargs(params.get("masks", None), execution)
         ])
     cargs.extend([
-        "-o",
+        "--output",
         params.get("output", None)
     ])
     if params.get("random_seed", None) is not None:
@@ -266,7 +2218,7 @@ def ants_ai_cargs(
         ])
     if params.get("verbose", None) is not None:
         cargs.extend([
-            "-v",
+            "--verbose",
             ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
@@ -287,7 +2239,7 @@ def ants_ai_outputs(
     """
     ret = AntsAiOutputs(
         root=execution.output_file("."),
-        output_transform=execution.output_file(params.get("output", None) + ".mat"),
+        output_transform=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -323,16 +2275,16 @@ def ants_ai_execute(
 
 
 def ants_ai(
-    metric: typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
-    transform: typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
+    metric: typing.Union[AntsAiMetricMattesParamsDictTagged, AntsAiMetricGcParamsDictTagged, AntsAiMetricMiParamsDictTagged],
+    transform: typing.Union[AntsAiTransformRigidParamsDictTagged, AntsAiTransformAffineParamsDictTagged, AntsAiTransformSimilarityParamsDictTagged, AntsAiTransformAlignGeometricCentersParamsDictTagged, AntsAiTransformAlignCentersOfMassParamsDictTagged],
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
     align_principal_axes: bool | None = None,
-    align_blobs: typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None = None,
-    search_factor: typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None = None,
-    translation_search_grid: typing.Literal["[stepSize, AxBxC]"] | None = None,
-    convergence: typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None = None,
-    masks: typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None = None,
+    align_blobs: AntsAiAlignBlobsParamsDict | None = None,
+    search_factor: AntsAiSearchFactorParamsDict | None = None,
+    translation_search_grid: AntsAiTranslationSearchGridParamsDict | None = None,
+    convergence: AntsAiConvergenceParamsDict | None = None,
+    masks: AntsAiMasksParamsDict | None = None,
     random_seed: int | None = None,
     verbose: bool | None = None,
     runner: Runner | None = None,
@@ -348,29 +2300,44 @@ def ants_ai(
     URL: https://github.com/ANTsX/ANTs
     
     Args:
-        metric: These image metrics are available: Mattes: Mattes mutual\
-            information (recommended), GC: global correlation, MI: joint histogram\
-            mutual information.
-        transform: Several transform options are available. For the rigid,\
-            affine, and similarity transforms, the gradientStep characterizes the\
-            gradient descent optimization. The other two transform types finds the\
-            simple translation transform which aligns the specified image feature.
-        output: Specify the output transform (output format an ITK .mat file).
+        metric: Image similarity metric. Available metrics: Mattes (Mattes\
+            mutual information, recommended), GC (global correlation), MI (joint\
+            histogram mutual information). Each metric takes a fixed and moving\
+            image, with optional sampling parameters.
+        transform: Transform type for alignment. The rigid, affine, and\
+            similarity transforms take a gradient step parameter that characterizes\
+            the gradient descent optimization and is scaled appropriately for each\
+            transform using the shift scales estimator. AlignGeometricCenters and\
+            AlignCentersOfMass find the simple translation transform aligning the\
+            specified image feature. Note that the images are read from the metric\
+            option although the metric value itself is not used for the latter two.
+        output: Specify the output transform filename (output format is an ITK\
+            .mat file).
         dimensionality: This option forces the image to be treated as a\
             specified-dimensional image. If not specified, we try to infer the\
             dimensionality from the input image.
-        align_principal_axes: Boolean indicating alignment by principal axes.\
-            Alternatively, one can align using blobs.
-        align_blobs: Boolean indicating alignment by a set of blobs.
+        align_principal_axes: Align images by their principal axes.\
+            Alternatively, one can align using blobs (see --align-blobs option).
+        align_blobs: Align images using a set of extracted blobs. Specify the\
+            number of blobs to extract, and optionally the number of blobs to match\
+            (defaults to numberOfBlobsToExtract). Alternatively, one can align\
+            using principal axes (see --align-principal-axes option).
         search_factor: Incremental search factor (in degrees) which will sample\
-            the arc fraction around the principal axis or default axis.
+            the arc fraction around the principal axis or default axis. Default\
+            search factor is 20 degrees with an arc fraction of 1.0.
         translation_search_grid: Translation search grid in mm, which will\
             translate the moving image in each dimension in increments of the step\
             size.
-        convergence: Number of iterations.
-        masks: Image masks to limit voxels considered by the metric.
-        random_seed: Use a fixed seed for random number generation.
-        verbose: Verbose output.
+        convergence: Convergence parameters for the optimization. Specify the\
+            number of iterations, and optionally a convergence threshold (default\
+            1e-6) and convergence window size (default 10).
+        masks: Image masks to limit the voxels considered by the metric.\
+            Specify a fixed image mask, and optionally a moving image mask.
+        random_seed: Use a fixed seed for random number generation. The default\
+            fixed seed is overwritten by this value. The fixed seed can be any\
+            nonzero int value. If the specified seed is zero, the system time will\
+            be used.
+        verbose: Verbose output. Default is 0 (off).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsAiOutputs`).
@@ -394,10 +2361,91 @@ def ants_ai(
 
 __all__ = [
     "ANTS_AI_METADATA",
+    "AntsAiAlignBlobsParamsDict",
+    "AntsAiAlignBlobsParamsDictTagged",
+    "AntsAiArcFractionParamsDict",
+    "AntsAiArcFractionParamsDictTagged",
+    "AntsAiConvergenceParamsDict",
+    "AntsAiConvergenceParamsDictTagged",
+    "AntsAiConvergenceThresholdParamsDict",
+    "AntsAiConvergenceThresholdParamsDictTagged",
+    "AntsAiConvergenceWindowSizeParamsDict",
+    "AntsAiConvergenceWindowSizeParamsDictTagged",
+    "AntsAiMasksParamsDict",
+    "AntsAiMasksParamsDictTagged",
+    "AntsAiMetricGcParamsDict",
+    "AntsAiMetricGcParamsDictTagged",
+    "AntsAiMetricMattesParamsDict",
+    "AntsAiMetricMattesParamsDictTagged",
+    "AntsAiMetricMiParamsDict",
+    "AntsAiMetricMiParamsDictTagged",
+    "AntsAiMovingImageMaskParamsDict",
+    "AntsAiMovingImageMaskParamsDictTagged",
+    "AntsAiNumberOfBins1ParamsDict",
+    "AntsAiNumberOfBins1ParamsDictTagged",
+    "AntsAiNumberOfBinsParamsDict",
+    "AntsAiNumberOfBinsParamsDictTagged",
+    "AntsAiNumberOfBlobsToMatchParamsDict",
+    "AntsAiNumberOfBlobsToMatchParamsDictTagged",
     "AntsAiOutputs",
     "AntsAiParamsDict",
     "AntsAiParamsDictTagged",
+    "AntsAiRadiusParamsDict",
+    "AntsAiRadiusParamsDictTagged",
+    "AntsAiSamplingPercentage1ParamsDict",
+    "AntsAiSamplingPercentage1ParamsDictTagged",
+    "AntsAiSamplingPercentage2ParamsDict",
+    "AntsAiSamplingPercentage2ParamsDictTagged",
+    "AntsAiSamplingPercentageParamsDict",
+    "AntsAiSamplingPercentageParamsDictTagged",
+    "AntsAiSamplingStrategy1ParamsDict",
+    "AntsAiSamplingStrategy1ParamsDictTagged",
+    "AntsAiSamplingStrategy2ParamsDict",
+    "AntsAiSamplingStrategy2ParamsDictTagged",
+    "AntsAiSamplingStrategyParamsDict",
+    "AntsAiSamplingStrategyParamsDictTagged",
+    "AntsAiSearchFactorParamsDict",
+    "AntsAiSearchFactorParamsDictTagged",
+    "AntsAiTransformAffineParamsDict",
+    "AntsAiTransformAffineParamsDictTagged",
+    "AntsAiTransformAlignCentersOfMassParamsDict",
+    "AntsAiTransformAlignCentersOfMassParamsDictTagged",
+    "AntsAiTransformAlignGeometricCentersParamsDict",
+    "AntsAiTransformAlignGeometricCentersParamsDictTagged",
+    "AntsAiTransformRigidParamsDict",
+    "AntsAiTransformRigidParamsDictTagged",
+    "AntsAiTransformSimilarityParamsDict",
+    "AntsAiTransformSimilarityParamsDictTagged",
+    "AntsAiTranslationSearchGridParamsDict",
+    "AntsAiTranslationSearchGridParamsDictTagged",
     "ants_ai",
+    "ants_ai_align_blobs",
+    "ants_ai_arc_fraction",
+    "ants_ai_convergence",
+    "ants_ai_convergence_threshold",
+    "ants_ai_convergence_window_size",
     "ants_ai_execute",
+    "ants_ai_masks",
+    "ants_ai_metric_gc",
+    "ants_ai_metric_mattes",
+    "ants_ai_metric_mi",
+    "ants_ai_moving_image_mask",
+    "ants_ai_number_of_bins",
+    "ants_ai_number_of_bins_1",
+    "ants_ai_number_of_blobs_to_match",
     "ants_ai_params",
+    "ants_ai_radius",
+    "ants_ai_sampling_percentage",
+    "ants_ai_sampling_percentage_1",
+    "ants_ai_sampling_percentage_2",
+    "ants_ai_sampling_strategy",
+    "ants_ai_sampling_strategy_1",
+    "ants_ai_sampling_strategy_2",
+    "ants_ai_search_factor",
+    "ants_ai_transform_affine",
+    "ants_ai_transform_align_centers_of_mass",
+    "ants_ai_transform_align_geometric_centers",
+    "ants_ai_transform_rigid",
+    "ants_ai_transform_similarity",
+    "ants_ai_translation_search_grid",
 ]
