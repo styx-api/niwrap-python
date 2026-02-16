@@ -30,6 +30,7 @@
   "ants/PrintHeader": "ants/print_header.json",
   "ants/RebaseTensorImage": "ants/rebase_tensor_image.json",
   "ants/ResampleImage": "ants/resample_image.json",
+  "ants/SetDirectionByMatrix": "ants/set_direction_by_matrix.json",
   "ants/SetSpacing": "ants/set_spacing.json",
   "ants/SimulateDisplacementField": "ants/simulate_displacement_field.json",
   "ants/SmoothDisplacementField": "ants/smooth_displacement_field.json",

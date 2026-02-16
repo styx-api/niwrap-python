@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_REGISTRATION_METADATA = Metadata(
-    id="595eeb7ba9023f3ad07e8d85841e09fcc59f9eff.boutiques",
+    id="4d33891610657b6461437b5157504a660d36f069.boutiques",
     name="antsRegistration",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -1407,7 +1407,7 @@ def ants_registration_initial_moving_transform_use_inverse_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("initial_moving_transform", None)) + "".join((ants_registration_use_inverse_cargs(params.get("use_inverse", None), execution) if (params.get("use_inverse", None) is not None) else [])))
+    cargs.append("[" + execution.input_file(params.get("initial_moving_transform", None)) + "".join((ants_registration_use_inverse_cargs(params.get("use_inverse", None), execution) if (params.get("use_inverse", None) is not None) else [])) + "]")
     return cargs
 
 

@@ -77,6 +77,7 @@ from .print_header import *
 from .rebase_tensor_image import *
 from .resample_image import *
 from .sccan import *
+from .set_direction_by_matrix import *
 from .set_spacing import *
 from .simple_syn_registration import *
 from .simulate_displacement_field import *
@@ -138,6 +139,7 @@ def execute(
         "ants/PrintHeader": print_header_execute,
         "ants/RebaseTensorImage": rebase_tensor_image_execute,
         "ants/ResampleImage": resample_image_execute,
+        "ants/SetDirectionByMatrix": set_direction_by_matrix_execute,
         "ants/SetSpacing": set_spacing_execute,
         "ants/SimulateDisplacementField": simulate_displacement_field_execute,
         "ants/SmoothDisplacementField": smooth_displacement_field_execute,

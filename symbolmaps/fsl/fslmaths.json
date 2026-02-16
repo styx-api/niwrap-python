@@ -30,7 +30,25 @@
           "fn_struct_make_params": "fslmaths_operation_mul",
           "properties": {
             "mul": {
-              "var_param": "mul"
+              "var_param": "mul",
+              "variants": {
+                "mul_value": {
+                  "fn_struct_make_params": "fslmaths_mul_value",
+                  "properties": {
+                    "value": {
+                      "var_param": "value"
+                    }
+                  }
+                },
+                "mul_image": {
+                  "fn_struct_make_params": "fslmaths_mul_image",
+                  "properties": {
+                    "image": {
+                      "var_param": "image"
+                    }
+                  }
+                }
+              }
             }
           }
         },

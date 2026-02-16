@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "set_direction_by_matrix",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "direction_matrix": {
+      "var_param": "direction_matrix"
+    }
+  }
+}

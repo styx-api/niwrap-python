@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMATHS_METADATA = Metadata(
-    id="631824cf78cb774076a4c68e6253996918877e52.boutiques",
+    id="7324d285c89c99367c00643b876935d59d0a8a33.boutiques",
     name="fslmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -33,12 +33,32 @@ FslmathsOperationSubParamsDictTagged = typing.TypedDict('FslmathsOperationSubPar
 FslmathsOperationSubParamsDict = _FslmathsOperationSubParamsDictNoTag | FslmathsOperationSubParamsDictTagged
 
 
+_FslmathsMulValueParamsDictNoTag = typing.TypedDict('_FslmathsMulValueParamsDictNoTag', {
+    "value": float,
+})
+FslmathsMulValueParamsDictTagged = typing.TypedDict('FslmathsMulValueParamsDictTagged', {
+    "@type": typing.Literal["mul_value"],
+    "value": float,
+})
+FslmathsMulValueParamsDict = _FslmathsMulValueParamsDictNoTag | FslmathsMulValueParamsDictTagged
+
+
+_FslmathsMulImageParamsDictNoTag = typing.TypedDict('_FslmathsMulImageParamsDictNoTag', {
+    "image": InputPathType,
+})
+FslmathsMulImageParamsDictTagged = typing.TypedDict('FslmathsMulImageParamsDictTagged', {
+    "@type": typing.Literal["mul_image"],
+    "image": InputPathType,
+})
+FslmathsMulImageParamsDict = _FslmathsMulImageParamsDictNoTag | FslmathsMulImageParamsDictTagged
+
+
 _FslmathsOperationMulParamsDictNoTag = typing.TypedDict('_FslmathsOperationMulParamsDictNoTag', {
-    "mul": float,
+    "mul": typing.Union[FslmathsMulValueParamsDictTagged, FslmathsMulImageParamsDictTagged],
 })
 FslmathsOperationMulParamsDictTagged = typing.TypedDict('FslmathsOperationMulParamsDictTagged', {
     "@type": typing.Literal["operation_mul"],
-    "mul": float,
+    "mul": typing.Union[FslmathsMulValueParamsDictTagged, FslmathsMulImageParamsDictTagged],
 })
 FslmathsOperationMulParamsDict = _FslmathsOperationMulParamsDictNoTag | FslmathsOperationMulParamsDictTagged
 
@@ -1237,6 +1257,40 @@ def fslmaths_operations_validate_dyn_fn(
     }.get(t)
 
 
+def fslmaths_mul_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "mul_value": fslmaths_mul_value_cargs,
+        "mul_image": fslmaths_mul_image_cargs,
+    }.get(t)
+
+
+def fslmaths_mul_validate_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get validate params function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Validate params function.
+    """
+    return {
+        "mul_value": fslmaths_mul_value_validate,
+        "mul_image": fslmaths_mul_image_validate,
+    }.get(t)
+
+
 def fslmaths_operation_add(
     add: float,
 ) -> FslmathsOperationAddParamsDictTagged:
@@ -1351,14 +1405,122 @@ def fslmaths_operation_sub_cargs(
     return cargs
 
 
+def fslmaths_mul_value(
+    value: float,
+) -> FslmathsMulValueParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        value:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "mul_value",
+        "value": value,
+    }
+    return params
+
+
+def fslmaths_mul_value_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsMulValueParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], (float, int)):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float`')
+
+
+def fslmaths_mul_value_cargs(
+    params: FslmathsMulValueParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append(str(params.get("value", None)))
+    return cargs
+
+
+def fslmaths_mul_image(
+    image: InputPathType,
+) -> FslmathsMulImageParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        image:.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "mul_image",
+        "image": image,
+    }
+    return params
+
+
+def fslmaths_mul_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmathsMulImageParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+
+
+def fslmaths_mul_image_cargs(
+    params: FslmathsMulImageParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append(execution.input_file(params.get("image", None)))
+    return cargs
+
+
 def fslmaths_operation_mul(
-    mul: float,
+    mul: typing.Union[FslmathsMulValueParamsDictTagged, FslmathsMulImageParamsDictTagged],
 ) -> FslmathsOperationMulParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        mul: Multiply current image by following input.
+        mul: Multiply current image by following input (a number or an image).
     Returns:
         Parameter dictionary
     """
@@ -1383,8 +1545,13 @@ def fslmaths_operation_mul_validate(
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
     if params.get("mul", None) is None:
         raise StyxValidationError("`mul` must not be None")
-    if not isinstance(params["mul"], (float, int)):
-        raise StyxValidationError(f'`mul` has the wrong type: Received `{type(params.get("mul", None))}` expected `float`')
+    if not isinstance(params["mul"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["mul"])}\'')
+    if "@type" not in params["mul"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    if params["mul"]["@type"] not in ["mul_value", "mul_image"]:
+        raise StyxValidationError("Parameter `mul`s `@type` must be one of [\"mul_value\", \"mul_image\"]")
+    fslmaths_mul_validate_dyn_fn(params["mul"]["@type"])(params["mul"])
 
 
 def fslmaths_operation_mul_cargs(
@@ -1403,7 +1570,7 @@ def fslmaths_operation_mul_cargs(
     cargs = []
     cargs.extend([
         "-mul",
-        str(params.get("mul", None))
+        *fslmaths_mul_cargs_dyn_fn(params.get("mul", None)["@type"])(params.get("mul", None), execution)
     ])
     return cargs
 
@@ -6972,6 +7139,10 @@ def fslmaths(
 
 __all__ = [
     "FSLMATHS_METADATA",
+    "FslmathsMulImageParamsDict",
+    "FslmathsMulImageParamsDictTagged",
+    "FslmathsMulValueParamsDict",
+    "FslmathsMulValueParamsDictTagged",
     "FslmathsOperationAbsParamsDict",
     "FslmathsOperationAbsParamsDictTagged",
     "FslmathsOperationAcosParamsDict",
@@ -7173,6 +7344,8 @@ __all__ = [
     "FslmathsParamsDictTagged",
     "fslmaths",
     "fslmaths_execute",
+    "fslmaths_mul_image",
+    "fslmaths_mul_value",
     "fslmaths_operation_abs",
     "fslmaths_operation_acos",
     "fslmaths_operation_add",

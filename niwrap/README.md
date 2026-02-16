@@ -43,7 +43,7 @@ pip install -r https://raw.githubusercontent.com/styx-api/niwrap-python/main/req
 | Package | Default Version | API Coverage |
 | --- | --- | --- |
 | [AFNI](https://afni.nimh.nih.gov/) | [`24.2.06`](https://hub.docker.com/r/afni/afni_make_build) | 565/611 (92.5%) |
-| [ANTs](https://github.com/ANTsX/ANTs) | [`2.5.3`](https://hub.docker.com/r/antsx/ants) | 71/113 (62.8%) |
+| [ANTs](https://github.com/ANTsX/ANTs) | [`2.5.3`](https://hub.docker.com/r/antsx/ants) | 72/113 (63.7%) |
 | [Convert3D](http://www.itksnap.org/pmwiki/pmwiki.php?n=Convert3D.Convert3D) | [`1.1.0`](https://hub.docker.com/r/pyushkevich/itksnap) | 4/4 (100% 🎉) |
 | [dcm2niix](https://github.com/rordenlab/dcm2niix) | [`1.0.20240202`](https://hub.docker.com/r/vnmd/dcm2niix_v1.0.20240202) | 1/1 (100% 🎉) |
 | [FastSurfer](https://github.com/Deep-MI/FastSurfer) | [`2.3.3`](https://hub.docker.com/r/nx10x/fastsurfer) | 1/1 (100% 🎉) |
