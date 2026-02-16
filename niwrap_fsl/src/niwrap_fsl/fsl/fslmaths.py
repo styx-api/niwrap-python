@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMATHS_METADATA = Metadata(
-    id="7324d285c89c99367c00643b876935d59d0a8a33.boutiques",
+    id="66a664a53298e25acc5b9db7ed981776672a8937.boutiques",
     name="fslmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -493,22 +493,16 @@ FslmathsOperationTensorDecompParamsDictTagged = typing.TypedDict('FslmathsOperat
 FslmathsOperationTensorDecompParamsDict = _FslmathsOperationTensorDecompParamsDictNoTag | FslmathsOperationTensorDecompParamsDictTagged
 
 
-_FslmathsOperationKernel3DParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernel3DParamsDictNoTag', {
-    "kernel_3D": bool,
-})
+_FslmathsOperationKernel3DParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernel3DParamsDictNoTag', {})
 FslmathsOperationKernel3DParamsDictTagged = typing.TypedDict('FslmathsOperationKernel3DParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_3D"],
-    "kernel_3D": bool,
 })
 FslmathsOperationKernel3DParamsDict = _FslmathsOperationKernel3DParamsDictNoTag | FslmathsOperationKernel3DParamsDictTagged
 
 
-_FslmathsOperationKernel2DParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernel2DParamsDictNoTag', {
-    "kernel_2D": bool,
-})
+_FslmathsOperationKernel2DParamsDictNoTag = typing.TypedDict('_FslmathsOperationKernel2DParamsDictNoTag', {})
 FslmathsOperationKernel2DParamsDictTagged = typing.TypedDict('FslmathsOperationKernel2DParamsDictTagged', {
     "@type": typing.Literal["operation_kernel_2D"],
-    "kernel_2D": bool,
 })
 FslmathsOperationKernel2DParamsDict = _FslmathsOperationKernel2DParamsDictNoTag | FslmathsOperationKernel2DParamsDictTagged
 
@@ -4007,19 +4001,16 @@ def fslmaths_operation_tensor_decomp_cargs(
 
 
 def fslmaths_operation_kernel_3_d(
-    kernel_3_d: bool = False,
 ) -> FslmathsOperationKernel3DParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        kernel_3_d: 3x3x3 box centered on target voxel (set as default kernel).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "operation_kernel_3D",
-        "kernel_3D": kernel_3_d,
     }
     return params
 
@@ -4036,10 +4027,6 @@ def fslmaths_operation_kernel_3_d_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_3D", False) is None:
-        raise StyxValidationError("`kernel_3D` must not be None")
-    if not isinstance(params["kernel_3D"], bool):
-        raise StyxValidationError(f'`kernel_3D` has the wrong type: Received `{type(params.get("kernel_3D", False))}` expected `bool`')
 
 
 def fslmaths_operation_kernel_3_d_cargs(
@@ -4056,25 +4043,22 @@ def fslmaths_operation_kernel_3_d_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_3D", False):
-        cargs.append("-kernel 3D")
+    cargs.append("-kernel")
+    cargs.append("3D")
     return cargs
 
 
 def fslmaths_operation_kernel_2_d(
-    kernel_2_d: bool = False,
 ) -> FslmathsOperationKernel2DParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        kernel_2_d: 3x3x1 box centered on target voxel.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "operation_kernel_2D",
-        "kernel_2D": kernel_2_d,
     }
     return params
 
@@ -4091,10 +4075,6 @@ def fslmaths_operation_kernel_2_d_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("kernel_2D", False) is None:
-        raise StyxValidationError("`kernel_2D` must not be None")
-    if not isinstance(params["kernel_2D"], bool):
-        raise StyxValidationError(f'`kernel_2D` has the wrong type: Received `{type(params.get("kernel_2D", False))}` expected `bool`')
 
 
 def fslmaths_operation_kernel_2_d_cargs(
@@ -4111,8 +4091,8 @@ def fslmaths_operation_kernel_2_d_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("kernel_2D", False):
-        cargs.append("-kernel 2D")
+    cargs.append("-kernel")
+    cargs.append("2D")
     return cargs
 
 
@@ -4167,10 +4147,9 @@ def fslmaths_operation_kernel_box_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.extend([
-        "-kernel box",
-        str(params.get("kernel_box", None))
-    ])
+    cargs.append("-kernel")
+    cargs.append("box")
+    cargs.append(str(params.get("kernel_box", None)))
     return cargs
 
 
@@ -4225,10 +4204,9 @@ def fslmaths_operation_kernel_boxv_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.extend([
-        "-kernel boxv",
-        str(params.get("kernel_boxv", None))
-    ])
+    cargs.append("-kernel")
+    cargs.append("boxv")
+    cargs.append(str(params.get("kernel_boxv", None)))
     return cargs
 
 
@@ -4288,10 +4266,9 @@ def fslmaths_operation_kernel_boxv3_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.extend([
-        "-kernel boxv3",
-        *map(str, params.get("kernel_boxv3", None))
-    ])
+    cargs.append("-kernel")
+    cargs.append("boxv3")
+    cargs.extend(map(str, params.get("kernel_boxv3", None)))
     return cargs
 
 
@@ -4345,10 +4322,9 @@ def fslmaths_operation_kernel_gauss_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.extend([
-        "-kernel gauss",
-        str(params.get("kernel_gauss", None))
-    ])
+    cargs.append("-kernel")
+    cargs.append("gauss")
+    cargs.append(str(params.get("kernel_gauss", None)))
     return cargs
 
 
@@ -4403,10 +4379,9 @@ def fslmaths_operation_kernel_sphere_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.extend([
-        "-kernel sphere",
-        str(params.get("kernel_sphere", None))
-    ])
+    cargs.append("-kernel")
+    cargs.append("sphere")
+    cargs.append(str(params.get("kernel_sphere", None)))
     return cargs
 
 
@@ -4460,10 +4435,9 @@ def fslmaths_operation_kernel_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.extend([
-        "-kernel file",
-        execution.input_file(params.get("kernel_file", None))
-    ])
+    cargs.append("-kernel")
+    cargs.append("file")
+    cargs.append(execution.input_file(params.get("kernel_file", None)))
     return cargs
 
 

@@ -398,19 +398,11 @@
         },
         "operation_kernel_3D": {
           "fn_struct_make_params": "fslmaths_operation_kernel_3_d",
-          "properties": {
-            "kernel_3D": {
-              "var_param": "kernel_3_d"
-            }
-          }
+          "properties": {}
         },
         "operation_kernel_2D": {
           "fn_struct_make_params": "fslmaths_operation_kernel_2_d",
-          "properties": {
-            "kernel_2D": {
-              "var_param": "kernel_2_d"
-            }
-          }
+          "properties": {}
         },
         "operation_kernel_box": {
           "fn_struct_make_params": "fslmaths_operation_kernel_box",
