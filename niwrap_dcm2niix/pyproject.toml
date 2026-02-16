@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_dcm2niix"
-version = "0.8.8"
+version = "0.8.9"
 description = "Neuroimaging wrappers."
 license = "MIT"
 authors = [{ name = "CMI DAIR" }]
