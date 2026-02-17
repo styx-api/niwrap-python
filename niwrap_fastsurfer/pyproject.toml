@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_fastsurfer"
-version = "0.8.10"
+version = "0.8.11"
 description = "Neuroimaging wrappers."
 license = "MIT"
 authors = [{ name = "CMI DAIR" }]
