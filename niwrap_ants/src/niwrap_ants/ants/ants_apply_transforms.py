@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
-    id="1c048ebc540b3b7b3e89b3891e2dbf90ecd87dc3.boutiques",
+    id="456edfe8dc18e4664a4f204e2869e20f05cd48b7.boutiques",
     name="antsApplyTransforms",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -1435,6 +1435,7 @@ def ants_apply_transforms_transform_file_name_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("--transform")
     cargs.append(execution.input_file(params.get("transformFileName", None)))
     return cargs
 
@@ -1724,10 +1725,7 @@ def ants_apply_transforms_cargs(
             params.get("output_data_type", None)
         ])
     if params.get("transform", None) is not None:
-        cargs.extend([
-            "--transform",
-            *[a for c in [ants_apply_transforms_transform_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("transform", None)] for a in c]
-        ])
+        cargs.extend([a for c in [ants_apply_transforms_transform_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("transform", None)] for a in c])
     if params.get("default_value", None) is not None:
         cargs.extend([
             "--default-value",
