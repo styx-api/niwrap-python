@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
-    id="456edfe8dc18e4664a4f204e2869e20f05cd48b7.boutiques",
+    id="d08f3b696aab49b8a116fc5c4aa41fc0b1db60c4.boutiques",
     name="antsApplyTransforms",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -108,24 +108,38 @@ AntsApplyTransformsMultiLabelParamsDictTagged = typing.TypedDict('AntsApplyTrans
 AntsApplyTransformsMultiLabelParamsDict = _AntsApplyTransformsMultiLabelParamsDictNoTag | AntsApplyTransformsMultiLabelParamsDictTagged
 
 
+_AntsApplyTransformsGaussianNoParamsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGaussianNoParamsParamsDictNoTag', {})
+AntsApplyTransformsGaussianNoParamsParamsDictTagged = typing.TypedDict('AntsApplyTransformsGaussianNoParamsParamsDictTagged', {
+    "@type": typing.Literal["gaussianNoParams"],
+})
+AntsApplyTransformsGaussianNoParamsParamsDict = _AntsApplyTransformsGaussianNoParamsParamsDictNoTag | AntsApplyTransformsGaussianNoParamsParamsDictTagged
+
+
 _AntsApplyTransformsGaussianParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGaussianParamsDictNoTag', {
-    "sigma": typing.NotRequired[float | None],
+    "sigma": float,
     "alpha": typing.NotRequired[float | None],
 })
 AntsApplyTransformsGaussianParamsDictTagged = typing.TypedDict('AntsApplyTransformsGaussianParamsDictTagged', {
     "@type": typing.Literal["gaussian"],
-    "sigma": typing.NotRequired[float | None],
+    "sigma": float,
     "alpha": typing.NotRequired[float | None],
 })
 AntsApplyTransformsGaussianParamsDict = _AntsApplyTransformsGaussianParamsDictNoTag | AntsApplyTransformsGaussianParamsDictTagged
 
 
+_AntsApplyTransformsBsplineNoParamsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsBsplineNoParamsParamsDictNoTag', {})
+AntsApplyTransformsBsplineNoParamsParamsDictTagged = typing.TypedDict('AntsApplyTransformsBsplineNoParamsParamsDictTagged', {
+    "@type": typing.Literal["bsplineNoParams"],
+})
+AntsApplyTransformsBsplineNoParamsParamsDict = _AntsApplyTransformsBsplineNoParamsParamsDictNoTag | AntsApplyTransformsBsplineNoParamsParamsDictTagged
+
+
 _AntsApplyTransformsBsplineParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsBsplineParamsDictNoTag', {
-    "order": typing.NotRequired[int | None],
+    "order": int,
 })
 AntsApplyTransformsBsplineParamsDictTagged = typing.TypedDict('AntsApplyTransformsBsplineParamsDictTagged', {
     "@type": typing.Literal["bspline"],
-    "order": typing.NotRequired[int | None],
+    "order": int,
 })
 AntsApplyTransformsBsplineParamsDict = _AntsApplyTransformsBsplineParamsDictNoTag | AntsApplyTransformsBsplineParamsDictTagged
 
@@ -158,12 +172,19 @@ AntsApplyTransformsLanczosWindowedSincParamsDictTagged = typing.TypedDict('AntsA
 AntsApplyTransformsLanczosWindowedSincParamsDict = _AntsApplyTransformsLanczosWindowedSincParamsDictNoTag | AntsApplyTransformsLanczosWindowedSincParamsDictTagged
 
 
+_AntsApplyTransformsGenericLabelNoParamsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGenericLabelNoParamsParamsDictNoTag', {})
+AntsApplyTransformsGenericLabelNoParamsParamsDictTagged = typing.TypedDict('AntsApplyTransformsGenericLabelNoParamsParamsDictTagged', {
+    "@type": typing.Literal["genericLabelNoParams"],
+})
+AntsApplyTransformsGenericLabelNoParamsParamsDict = _AntsApplyTransformsGenericLabelNoParamsParamsDictNoTag | AntsApplyTransformsGenericLabelNoParamsParamsDictTagged
+
+
 _AntsApplyTransformsGenericLabelParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsGenericLabelParamsDictNoTag', {
-    "interpolator": typing.NotRequired[str | None],
+    "interpolator": str,
 })
 AntsApplyTransformsGenericLabelParamsDictTagged = typing.TypedDict('AntsApplyTransformsGenericLabelParamsDictTagged', {
     "@type": typing.Literal["genericLabel"],
-    "interpolator": typing.NotRequired[str | None],
+    "interpolator": str,
 })
 AntsApplyTransformsGenericLabelParamsDict = _AntsApplyTransformsGenericLabelParamsDictNoTag | AntsApplyTransformsGenericLabelParamsDictTagged
 
@@ -194,7 +215,7 @@ _AntsApplyTransformsParamsDictNoTag = typing.TypedDict('_AntsApplyTransformsPara
     "input_image": typing.NotRequired[InputPathType | None],
     "reference_image": InputPathType,
     "output": typing.Union[AntsApplyTransformsWarpedOutputParamsDictTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged, AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged],
-    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None],
+    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianNoParamsParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineNoParamsParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelNoParamsParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None],
     "output_data_type": typing.NotRequired[typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None],
     "transform": typing.NotRequired[list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None],
     "default_value": typing.NotRequired[float | None],
@@ -209,7 +230,7 @@ AntsApplyTransformsParamsDictTagged = typing.TypedDict('AntsApplyTransformsParam
     "input_image": typing.NotRequired[InputPathType | None],
     "reference_image": InputPathType,
     "output": typing.Union[AntsApplyTransformsWarpedOutputParamsDictTagged, AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged, AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged],
-    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None],
+    "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianNoParamsParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineNoParamsParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelNoParamsParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None],
     "output_data_type": typing.NotRequired[typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None],
     "transform": typing.NotRequired[list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None],
     "default_value": typing.NotRequired[float | None],
@@ -290,12 +311,15 @@ def ants_apply_transforms_interpolation_cargs_dyn_fn(
         "nearestNeighbor": ants_apply_transforms_nearest_neighbor_cargs,
         "multiLabelnoparams": ants_apply_transforms_multi_labelnoparams_cargs,
         "multiLabel": ants_apply_transforms_multi_label_cargs,
+        "gaussianNoParams": ants_apply_transforms_gaussian_no_params_cargs,
         "gaussian": ants_apply_transforms_gaussian_cargs,
+        "bsplineNoParams": ants_apply_transforms_bspline_no_params_cargs,
         "bspline": ants_apply_transforms_bspline_cargs,
         "cosineWindowedSinc": ants_apply_transforms_cosine_windowed_sinc_cargs,
         "welchWindowedSinc": ants_apply_transforms_welch_windowed_sinc_cargs,
         "hammingWindowedSinc": ants_apply_transforms_hamming_windowed_sinc_cargs,
         "lanczosWindowedSinc": ants_apply_transforms_lanczos_windowed_sinc_cargs,
+        "genericLabelNoParams": ants_apply_transforms_generic_label_no_params_cargs,
         "genericLabel": ants_apply_transforms_generic_label_cargs,
     }.get(t)
 
@@ -316,12 +340,15 @@ def ants_apply_transforms_interpolation_validate_dyn_fn(
         "nearestNeighbor": ants_apply_transforms_nearest_neighbor_validate,
         "multiLabelnoparams": ants_apply_transforms_multi_labelnoparams_validate,
         "multiLabel": ants_apply_transforms_multi_label_validate,
+        "gaussianNoParams": ants_apply_transforms_gaussian_no_params_validate,
         "gaussian": ants_apply_transforms_gaussian_validate,
+        "bsplineNoParams": ants_apply_transforms_bspline_no_params_validate,
         "bspline": ants_apply_transforms_bspline_validate,
         "cosineWindowedSinc": ants_apply_transforms_cosine_windowed_sinc_validate,
         "welchWindowedSinc": ants_apply_transforms_welch_windowed_sinc_validate,
         "hammingWindowedSinc": ants_apply_transforms_hamming_windowed_sinc_validate,
         "lanczosWindowedSinc": ants_apply_transforms_lanczos_windowed_sinc_validate,
+        "genericLabelNoParams": ants_apply_transforms_generic_label_no_params_validate,
         "genericLabel": ants_apply_transforms_generic_label_validate,
     }.get(t)
 
@@ -1025,8 +1052,55 @@ def ants_apply_transforms_multi_label_cargs(
     return cargs
 
 
+def ants_apply_transforms_gaussian_no_params(
+) -> AntsApplyTransformsGaussianNoParamsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "gaussianNoParams",
+    }
+    return params
+
+
+def ants_apply_transforms_gaussian_no_params_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsGaussianNoParamsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
+def ants_apply_transforms_gaussian_no_params_cargs(
+    params: AntsApplyTransformsGaussianNoParamsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("Gaussian")
+    return cargs
+
+
 def ants_apply_transforms_gaussian(
-    sigma: float | None = None,
+    sigma: float,
     alpha: float | None = None,
 ) -> AntsApplyTransformsGaussianParamsDictTagged:
     """
@@ -1040,9 +1114,8 @@ def ants_apply_transforms_gaussian(
     """
     params = {
         "@type": "gaussian",
+        "sigma": sigma,
     }
-    if sigma is not None:
-        params["sigma"] = sigma
     if alpha is not None:
         params["alpha"] = alpha
     return params
@@ -1060,9 +1133,10 @@ def ants_apply_transforms_gaussian_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("sigma", None) is not None:
-        if not isinstance(params["sigma"], (float, int)):
-            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
     if params.get("alpha", None) is not None:
         if not isinstance(params["alpha"], (float, int)):
             raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
@@ -1082,13 +1156,59 @@ def ants_apply_transforms_gaussian_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sigma", None) is not None or params.get("alpha", None) is not None:
-        cargs.append("Gaussian[" + (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else "") + "," + (str(params.get("alpha", None)) if (params.get("alpha", None) is not None) else "") + "]")
+    cargs.append("Gaussian[" + str(params.get("sigma", None)) + "," + (str(params.get("alpha", None)) if (params.get("alpha", None) is not None) else "") + "]")
+    return cargs
+
+
+def ants_apply_transforms_bspline_no_params(
+) -> AntsApplyTransformsBsplineNoParamsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "bsplineNoParams",
+    }
+    return params
+
+
+def ants_apply_transforms_bspline_no_params_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsBsplineNoParamsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
+def ants_apply_transforms_bspline_no_params_cargs(
+    params: AntsApplyTransformsBsplineNoParamsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("BSpline")
     return cargs
 
 
 def ants_apply_transforms_bspline(
-    order: int | None = None,
+    order: int,
 ) -> AntsApplyTransformsBsplineParamsDictTagged:
     """
     Build parameters.
@@ -1100,9 +1220,8 @@ def ants_apply_transforms_bspline(
     """
     params = {
         "@type": "bspline",
+        "order": order,
     }
-    if order is not None:
-        params["order"] = order
     return params
 
 
@@ -1118,9 +1237,10 @@ def ants_apply_transforms_bspline_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("order", None) is not None:
-        if not isinstance(params["order"], int):
-            raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `int | None`')
+    if params.get("order", None) is None:
+        raise StyxValidationError("`order` must not be None")
+    if not isinstance(params["order"], int):
+        raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `int`')
 
 
 def ants_apply_transforms_bspline_cargs(
@@ -1137,8 +1257,7 @@ def ants_apply_transforms_bspline_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("order", None) is not None:
-        cargs.append("BSpline[" + str(params.get("order", None)) + "]")
+    cargs.append("BSpline[" + str(params.get("order", None)) + "]")
     return cargs
 
 
@@ -1330,8 +1449,55 @@ def ants_apply_transforms_lanczos_windowed_sinc_cargs(
     return cargs
 
 
+def ants_apply_transforms_generic_label_no_params(
+) -> AntsApplyTransformsGenericLabelNoParamsParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "genericLabelNoParams",
+    }
+    return params
+
+
+def ants_apply_transforms_generic_label_no_params_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsGenericLabelNoParamsParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
+def ants_apply_transforms_generic_label_no_params_cargs(
+    params: AntsApplyTransformsGenericLabelNoParamsParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("GenericLabel")
+    return cargs
+
+
 def ants_apply_transforms_generic_label(
-    interpolator: str | None = None,
+    interpolator: str,
 ) -> AntsApplyTransformsGenericLabelParamsDictTagged:
     """
     Build parameters.
@@ -1343,9 +1509,8 @@ def ants_apply_transforms_generic_label(
     """
     params = {
         "@type": "genericLabel",
+        "interpolator": interpolator,
     }
-    if interpolator is not None:
-        params["interpolator"] = interpolator
     return params
 
 
@@ -1361,9 +1526,10 @@ def ants_apply_transforms_generic_label_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("interpolator", None) is not None:
-        if not isinstance(params["interpolator"], str):
-            raise StyxValidationError(f'`interpolator` has the wrong type: Received `{type(params.get("interpolator", None))}` expected `str | None`')
+    if params.get("interpolator", None) is None:
+        raise StyxValidationError("`interpolator` must not be None")
+    if not isinstance(params["interpolator"], str):
+        raise StyxValidationError(f'`interpolator` has the wrong type: Received `{type(params.get("interpolator", None))}` expected `str`')
 
 
 def ants_apply_transforms_generic_label_cargs(
@@ -1380,8 +1546,7 @@ def ants_apply_transforms_generic_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("interpolator", None) is not None:
-        cargs.append("GenericLabel[" + params.get("interpolator", None) + "]")
+    cargs.append("GenericLabel[" + params.get("interpolator", None) + "]")
     return cargs
 
 
@@ -1490,6 +1655,7 @@ def ants_apply_transforms_use_inverse_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("--transform")
     cargs.append("[" + execution.input_file(params.get("transformFileName", None)) + ",1]")
     return cargs
 
@@ -1512,7 +1678,7 @@ def ants_apply_transforms_params(
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     input_image_type: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
     input_image: InputPathType | None = None,
-    interpolation: typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None = None,
+    interpolation: typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianNoParamsParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineNoParamsParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelNoParamsParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None = None,
     output_data_type: typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None = None,
     transform: list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None = None,
     default_value: float | None = None,
@@ -1643,8 +1809,8 @@ def ants_apply_transforms_validate(
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["interpolation"])}\'')
         if "@type" not in params["interpolation"]:
             raise StyxValidationError("Params object is missing `@type`")
-        if params["interpolation"]["@type"] not in ["linear", "nearestNeighbor", "multiLabelnoparams", "multiLabel", "gaussian", "bspline", "cosineWindowedSinc", "welchWindowedSinc", "hammingWindowedSinc", "lanczosWindowedSinc", "genericLabel"]:
-            raise StyxValidationError("Parameter `interpolation`s `@type` must be one of [\"linear\", \"nearestNeighbor\", \"multiLabelnoparams\", \"multiLabel\", \"gaussian\", \"bspline\", \"cosineWindowedSinc\", \"welchWindowedSinc\", \"hammingWindowedSinc\", \"lanczosWindowedSinc\", \"genericLabel\"]")
+        if params["interpolation"]["@type"] not in ["linear", "nearestNeighbor", "multiLabelnoparams", "multiLabel", "gaussianNoParams", "gaussian", "bsplineNoParams", "bspline", "cosineWindowedSinc", "welchWindowedSinc", "hammingWindowedSinc", "lanczosWindowedSinc", "genericLabelNoParams", "genericLabel"]:
+            raise StyxValidationError("Parameter `interpolation`s `@type` must be one of [\"linear\", \"nearestNeighbor\", \"multiLabelnoparams\", \"multiLabel\", \"gaussianNoParams\", \"gaussian\", \"bsplineNoParams\", \"bspline\", \"cosineWindowedSinc\", \"welchWindowedSinc\", \"hammingWindowedSinc\", \"lanczosWindowedSinc\", \"genericLabelNoParams\", \"genericLabel\"]")
         ants_apply_transforms_interpolation_validate_dyn_fn(params["interpolation"]["@type"])(params["interpolation"])
     if params.get("output_data_type", None) is not None:
         if not isinstance(params["output_data_type"], str):
@@ -1805,7 +1971,7 @@ def ants_apply_transforms(
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     input_image_type: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
     input_image: InputPathType | None = None,
-    interpolation: typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None = None,
+    interpolation: typing.Union[AntsApplyTransformsLinearParamsDictTagged, AntsApplyTransformsNearestNeighborParamsDictTagged, AntsApplyTransformsMultiLabelnoparamsParamsDictTagged, AntsApplyTransformsMultiLabelParamsDictTagged, AntsApplyTransformsGaussianNoParamsParamsDictTagged, AntsApplyTransformsGaussianParamsDictTagged, AntsApplyTransformsBsplineNoParamsParamsDictTagged, AntsApplyTransformsBsplineParamsDictTagged, AntsApplyTransformsCosineWindowedSincParamsDictTagged, AntsApplyTransformsWelchWindowedSincParamsDictTagged, AntsApplyTransformsHammingWindowedSincParamsDictTagged, AntsApplyTransformsLanczosWindowedSincParamsDictTagged, AntsApplyTransformsGenericLabelNoParamsParamsDictTagged, AntsApplyTransformsGenericLabelParamsDictTagged] | None = None,
     output_data_type: typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None = None,
     transform: list[typing.Union[AntsApplyTransformsTransformFileNameParamsDictTagged, AntsApplyTransformsUseInverseParamsDictTagged]] | None = None,
     default_value: float | None = None,
@@ -1895,6 +2061,8 @@ __all__ = [
     "ANTS_APPLY_TRANSFORMS_METADATA",
     "AntsApplyTransformsAlphaParamsDict",
     "AntsApplyTransformsAlphaParamsDictTagged",
+    "AntsApplyTransformsBsplineNoParamsParamsDict",
+    "AntsApplyTransformsBsplineNoParamsParamsDictTagged",
     "AntsApplyTransformsBsplineParamsDict",
     "AntsApplyTransformsBsplineParamsDictTagged",
     "AntsApplyTransformsCompositeDisplacementFieldOutputOutputs",
@@ -1902,11 +2070,15 @@ __all__ = [
     "AntsApplyTransformsCompositeDisplacementFieldOutputParamsDictTagged",
     "AntsApplyTransformsCosineWindowedSincParamsDict",
     "AntsApplyTransformsCosineWindowedSincParamsDictTagged",
+    "AntsApplyTransformsGaussianNoParamsParamsDict",
+    "AntsApplyTransformsGaussianNoParamsParamsDictTagged",
     "AntsApplyTransformsGaussianParamsDict",
     "AntsApplyTransformsGaussianParamsDictTagged",
     "AntsApplyTransformsGenericAffineTransformOutputOutputs",
     "AntsApplyTransformsGenericAffineTransformOutputParamsDict",
     "AntsApplyTransformsGenericAffineTransformOutputParamsDictTagged",
+    "AntsApplyTransformsGenericLabelNoParamsParamsDict",
+    "AntsApplyTransformsGenericLabelNoParamsParamsDictTagged",
     "AntsApplyTransformsGenericLabelParamsDict",
     "AntsApplyTransformsGenericLabelParamsDictTagged",
     "AntsApplyTransformsHammingWindowedSincParamsDict",
@@ -1940,12 +2112,15 @@ __all__ = [
     "ants_apply_transforms",
     "ants_apply_transforms_alpha",
     "ants_apply_transforms_bspline",
+    "ants_apply_transforms_bspline_no_params",
     "ants_apply_transforms_composite_displacement_field_output",
     "ants_apply_transforms_cosine_windowed_sinc",
     "ants_apply_transforms_execute",
     "ants_apply_transforms_gaussian",
+    "ants_apply_transforms_gaussian_no_params",
     "ants_apply_transforms_generic_affine_transform_output",
     "ants_apply_transforms_generic_label",
+    "ants_apply_transforms_generic_label_no_params",
     "ants_apply_transforms_hamming_windowed_sinc",
     "ants_apply_transforms_lanczos_windowed_sinc",
     "ants_apply_transforms_linear",

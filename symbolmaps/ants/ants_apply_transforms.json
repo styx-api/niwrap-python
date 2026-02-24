@@ -95,6 +95,10 @@
             }
           }
         },
+        "gaussianNoParams": {
+          "fn_struct_make_params": "ants_apply_transforms_gaussian_no_params",
+          "properties": {}
+        },
         "gaussian": {
           "fn_struct_make_params": "ants_apply_transforms_gaussian",
           "properties": {
@@ -105,6 +109,10 @@
               "var_param": "alpha"
             }
           }
+        },
+        "bsplineNoParams": {
+          "fn_struct_make_params": "ants_apply_transforms_bspline_no_params",
+          "properties": {}
         },
         "bspline": {
           "fn_struct_make_params": "ants_apply_transforms_bspline",
@@ -128,6 +136,10 @@
         },
         "lanczosWindowedSinc": {
           "fn_struct_make_params": "ants_apply_transforms_lanczos_windowed_sinc",
+          "properties": {}
+        },
+        "genericLabelNoParams": {
+          "fn_struct_make_params": "ants_apply_transforms_generic_label_no_params",
           "properties": {}
         },
         "genericLabel": {
