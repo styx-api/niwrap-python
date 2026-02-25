@@ -1,74 +1,74 @@
 {
   "fn_root_make_params_and_execute": "mri_robust_template",
   "properties": {
-    "mov_files": {
-      "var_param": "mov_files"
+    "mov": {
+      "var_param": "mov"
     },
-    "template_file": {
-      "var_param": "template_file"
+    "template": {
+      "var_param": "template"
     },
-    "sat_value": {
-      "var_param": "sat_value"
+    "sat": {
+      "var_param": "sat"
     },
-    "satit_flag": {
-      "var_param": "satit_flag"
+    "satit": {
+      "var_param": "satit"
     },
-    "lta_files": {
-      "var_param": "lta_files"
+    "lta": {
+      "var_param": "lta"
     },
-    "mapmov_files": {
-      "var_param": "mapmov_files"
+    "mapmov": {
+      "var_param": "mapmov"
     },
-    "mapmovhdr_files": {
-      "var_param": "mapmovhdr_files"
+    "mapmovhdr": {
+      "var_param": "mapmovhdr"
     },
-    "weights_files": {
-      "var_param": "weights_files"
+    "weights": {
+      "var_param": "weights"
     },
-    "oneminusw_flag": {
-      "var_param": "oneminusw_flag"
+    "oneminusw": {
+      "var_param": "oneminusw"
     },
-    "average_type": {
-      "var_param": "average_type"
+    "average": {
+      "var_param": "average"
     },
     "inittp": {
       "var_param": "inittp"
     },
-    "fixtp_flag": {
-      "var_param": "fixtp_flag"
+    "fixtp": {
+      "var_param": "fixtp"
     },
-    "iscale_flag": {
-      "var_param": "iscale_flag"
+    "iscale": {
+      "var_param": "iscale"
     },
-    "iscaleonly_flag": {
-      "var_param": "iscaleonly_flag"
+    "iscaleonly": {
+      "var_param": "iscaleonly"
     },
-    "iscalein_files": {
-      "var_param": "iscalein_files"
+    "iscalein": {
+      "var_param": "iscalein"
     },
-    "iscaleout_files": {
-      "var_param": "iscaleout_files"
+    "iscaleout": {
+      "var_param": "iscaleout"
     },
-    "transonly_flag": {
-      "var_param": "transonly_flag"
+    "transonly": {
+      "var_param": "transonly"
     },
-    "affine_flag": {
-      "var_param": "affine_flag"
+    "affine": {
+      "var_param": "affine"
     },
-    "ixforms_files": {
-      "var_param": "ixforms_files"
+    "ixforms": {
+      "var_param": "ixforms"
     },
-    "masks_files": {
-      "var_param": "masks_files"
+    "masks": {
+      "var_param": "masks"
     },
-    "vox2vox_flag": {
-      "var_param": "vox2vox_flag"
+    "vox2vox": {
+      "var_param": "vox2vox"
     },
-    "leastsquares_flag": {
-      "var_param": "leastsquares_flag"
+    "leastsquares": {
+      "var_param": "leastsquares"
     },
-    "noit_flag": {
-      "var_param": "noit_flag"
+    "noit": {
+      "var_param": "noit"
     },
     "maxit": {
       "var_param": "maxit"
@@ -88,20 +88,20 @@
     "subsample": {
       "var_param": "subsample"
     },
-    "nomulti_flag": {
-      "var_param": "nomulti_flag"
+    "nomulti": {
+      "var_param": "nomulti"
     },
-    "floattype_flag": {
-      "var_param": "floattype_flag"
+    "floattype": {
+      "var_param": "floattype"
     },
-    "finalnearest_flag": {
-      "var_param": "finalnearest_flag"
+    "finalnearest": {
+      "var_param": "finalnearest"
     },
-    "doubleprec_flag": {
-      "var_param": "doubleprec_flag"
+    "doubleprec": {
+      "var_param": "doubleprec"
     },
-    "cras_flag": {
-      "var_param": "cras_flag"
+    "cras": {
+      "var_param": "cras"
     },
     "res_thresh": {
       "var_param": "res_thresh"
@@ -109,8 +109,20 @@
     "frobnorm_thresh": {
       "var_param": "frobnorm_thresh"
     },
-    "debug_flag": {
-      "var_param": "debug_flag"
+    "conform": {
+      "var_param": "conform"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "allow_diff_vox_size": {
+      "var_param": "allow_diff_vox_size"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "debug": {
+      "var_param": "debug"
     }
   }
 }

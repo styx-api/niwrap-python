@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_ROBUST_TEMPLATE_METADATA = Metadata(
-    id="879b2b379c54ce744a435c993b95da04800bb0ba.boutiques",
+    id="f043b3273e9985d357cf80355b397d8ee42c3a35.boutiques",
     name="mri_robust_template",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -14,83 +14,91 @@ MRI_ROBUST_TEMPLATE_METADATA = Metadata(
 
 
 _MriRobustTemplateParamsDictNoTag = typing.TypedDict('_MriRobustTemplateParamsDictNoTag', {
-    "mov_files": list[InputPathType],
-    "template_file": str,
-    "sat_value": typing.NotRequired[float | None],
-    "satit_flag": bool,
-    "lta_files": typing.NotRequired[list[str] | None],
-    "mapmov_files": typing.NotRequired[list[str] | None],
-    "mapmovhdr_files": typing.NotRequired[list[str] | None],
-    "weights_files": typing.NotRequired[list[str] | None],
-    "oneminusw_flag": bool,
-    "average_type": typing.NotRequired[int | None],
+    "mov": list[InputPathType],
+    "template": str,
+    "sat": typing.NotRequired[float | None],
+    "satit": bool,
+    "lta": typing.NotRequired[list[str] | None],
+    "mapmov": typing.NotRequired[list[str] | None],
+    "mapmovhdr": typing.NotRequired[list[str] | None],
+    "weights": typing.NotRequired[list[str] | None],
+    "oneminusw": bool,
+    "average": typing.NotRequired[int | None],
     "inittp": typing.NotRequired[int | None],
-    "fixtp_flag": bool,
-    "iscale_flag": bool,
-    "iscaleonly_flag": bool,
-    "iscalein_files": typing.NotRequired[list[str] | None],
-    "iscaleout_files": typing.NotRequired[list[str] | None],
-    "transonly_flag": bool,
-    "affine_flag": bool,
-    "ixforms_files": typing.NotRequired[list[str] | None],
-    "masks_files": typing.NotRequired[list[str] | None],
-    "vox2vox_flag": bool,
-    "leastsquares_flag": bool,
-    "noit_flag": bool,
+    "fixtp": bool,
+    "iscale": bool,
+    "iscaleonly": bool,
+    "iscalein": typing.NotRequired[list[InputPathType] | None],
+    "iscaleout": typing.NotRequired[list[str] | None],
+    "transonly": bool,
+    "affine": bool,
+    "ixforms": typing.NotRequired[list[InputPathType] | None],
+    "masks": typing.NotRequired[list[InputPathType] | None],
+    "vox2vox": bool,
+    "leastsquares": bool,
+    "noit": bool,
     "maxit": typing.NotRequired[int | None],
     "highit": typing.NotRequired[int | None],
     "epsit": typing.NotRequired[float | None],
     "pairmaxit": typing.NotRequired[int | None],
     "pairepsit": typing.NotRequired[float | None],
     "subsample": typing.NotRequired[int | None],
-    "nomulti_flag": bool,
-    "floattype_flag": bool,
-    "finalnearest_flag": bool,
-    "doubleprec_flag": bool,
-    "cras_flag": bool,
+    "nomulti": bool,
+    "floattype": bool,
+    "finalnearest": bool,
+    "doubleprec": bool,
+    "cras": bool,
     "res_thresh": typing.NotRequired[float | None],
     "frobnorm_thresh": typing.NotRequired[float | None],
-    "debug_flag": bool,
+    "conform": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[int | None],
+    "allow_diff_vox_size": bool,
+    "threads": typing.NotRequired[int | None],
+    "debug": bool,
 })
 MriRobustTemplateParamsDictTagged = typing.TypedDict('MriRobustTemplateParamsDictTagged', {
     "@type": typing.Literal["freesurfer/mri_robust_template"],
-    "mov_files": list[InputPathType],
-    "template_file": str,
-    "sat_value": typing.NotRequired[float | None],
-    "satit_flag": bool,
-    "lta_files": typing.NotRequired[list[str] | None],
-    "mapmov_files": typing.NotRequired[list[str] | None],
-    "mapmovhdr_files": typing.NotRequired[list[str] | None],
-    "weights_files": typing.NotRequired[list[str] | None],
-    "oneminusw_flag": bool,
-    "average_type": typing.NotRequired[int | None],
+    "mov": list[InputPathType],
+    "template": str,
+    "sat": typing.NotRequired[float | None],
+    "satit": bool,
+    "lta": typing.NotRequired[list[str] | None],
+    "mapmov": typing.NotRequired[list[str] | None],
+    "mapmovhdr": typing.NotRequired[list[str] | None],
+    "weights": typing.NotRequired[list[str] | None],
+    "oneminusw": bool,
+    "average": typing.NotRequired[int | None],
     "inittp": typing.NotRequired[int | None],
-    "fixtp_flag": bool,
-    "iscale_flag": bool,
-    "iscaleonly_flag": bool,
-    "iscalein_files": typing.NotRequired[list[str] | None],
-    "iscaleout_files": typing.NotRequired[list[str] | None],
-    "transonly_flag": bool,
-    "affine_flag": bool,
-    "ixforms_files": typing.NotRequired[list[str] | None],
-    "masks_files": typing.NotRequired[list[str] | None],
-    "vox2vox_flag": bool,
-    "leastsquares_flag": bool,
-    "noit_flag": bool,
+    "fixtp": bool,
+    "iscale": bool,
+    "iscaleonly": bool,
+    "iscalein": typing.NotRequired[list[InputPathType] | None],
+    "iscaleout": typing.NotRequired[list[str] | None],
+    "transonly": bool,
+    "affine": bool,
+    "ixforms": typing.NotRequired[list[InputPathType] | None],
+    "masks": typing.NotRequired[list[InputPathType] | None],
+    "vox2vox": bool,
+    "leastsquares": bool,
+    "noit": bool,
     "maxit": typing.NotRequired[int | None],
     "highit": typing.NotRequired[int | None],
     "epsit": typing.NotRequired[float | None],
     "pairmaxit": typing.NotRequired[int | None],
     "pairepsit": typing.NotRequired[float | None],
     "subsample": typing.NotRequired[int | None],
-    "nomulti_flag": bool,
-    "floattype_flag": bool,
-    "finalnearest_flag": bool,
-    "doubleprec_flag": bool,
-    "cras_flag": bool,
+    "nomulti": bool,
+    "floattype": bool,
+    "finalnearest": bool,
+    "doubleprec": bool,
+    "cras": bool,
     "res_thresh": typing.NotRequired[float | None],
     "frobnorm_thresh": typing.NotRequired[float | None],
-    "debug_flag": bool,
+    "conform": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[int | None],
+    "allow_diff_vox_size": bool,
+    "threads": typing.NotRequired[int | None],
+    "debug": bool,
 })
 MriRobustTemplateParamsDict = _MriRobustTemplateParamsDictNoTag | MriRobustTemplateParamsDictTagged
 
@@ -101,157 +109,166 @@ class MriRobustTemplateOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    output_template: OutputPathType
+    template_output: OutputPathType
     """Output template volume (final mean/median image)."""
-    output_lta_transform: OutputPathType
-    """Output transform file."""
-    output_mapped_image: OutputPathType
-    """Output mapped and resampled image."""
-    output_weights_map: OutputPathType
-    """Output weights map (outliers)."""
+    conform_output: OutputPathType | None
+    """Output conformed template volume."""
 
 
 def mri_robust_template_params(
-    mov_files: list[InputPathType],
-    template_file: str,
-    sat_value: float | None = None,
-    satit_flag: bool = False,
-    lta_files: list[str] | None = None,
-    mapmov_files: list[str] | None = None,
-    mapmovhdr_files: list[str] | None = None,
-    weights_files: list[str] | None = None,
-    oneminusw_flag: bool = False,
-    average_type: int | None = None,
+    mov: list[InputPathType],
+    template: str,
+    sat: float | None = None,
+    satit: bool = False,
+    lta: list[str] | None = None,
+    mapmov: list[str] | None = None,
+    mapmovhdr: list[str] | None = None,
+    weights: list[str] | None = None,
+    oneminusw: bool = False,
+    average: int | None = None,
     inittp: int | None = None,
-    fixtp_flag: bool = False,
-    iscale_flag: bool = False,
-    iscaleonly_flag: bool = False,
-    iscalein_files: list[str] | None = None,
-    iscaleout_files: list[str] | None = None,
-    transonly_flag: bool = False,
-    affine_flag: bool = False,
-    ixforms_files: list[str] | None = None,
-    masks_files: list[str] | None = None,
-    vox2vox_flag: bool = False,
-    leastsquares_flag: bool = False,
-    noit_flag: bool = False,
+    fixtp: bool = False,
+    iscale: bool = False,
+    iscaleonly: bool = False,
+    iscalein: list[InputPathType] | None = None,
+    iscaleout: list[str] | None = None,
+    transonly: bool = False,
+    affine: bool = False,
+    ixforms: list[InputPathType] | None = None,
+    masks: list[InputPathType] | None = None,
+    vox2vox: bool = False,
+    leastsquares: bool = False,
+    noit: bool = False,
     maxit: int | None = None,
     highit: int | None = None,
     epsit: float | None = None,
     pairmaxit: int | None = None,
     pairepsit: float | None = None,
     subsample: int | None = None,
-    nomulti_flag: bool = False,
-    floattype_flag: bool = False,
-    finalnearest_flag: bool = False,
-    doubleprec_flag: bool = False,
-    cras_flag: bool = False,
+    nomulti: bool = False,
+    floattype: bool = False,
+    finalnearest: bool = False,
+    doubleprec: bool = False,
+    cras: bool = False,
     res_thresh: float | None = None,
     frobnorm_thresh: float | None = None,
-    debug_flag: bool = False,
+    conform: str | None = None,
+    seed: int | None = None,
+    allow_diff_vox_size: bool = False,
+    threads: int | None = None,
+    debug: bool = False,
 ) -> MriRobustTemplateParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        mov_files: Input movable volumes to be aligned to common mean/median\
-            template.
-        template_file: Output template volume (final mean/median image).
-        sat_value: Set outlier sensitivity manually. Higher values mean less\
+        mov: Input movable volumes to be aligned to common mean/median template\
+            (at least 2 required).
+        template: Output template volume (final mean/median image).
+        sat: Set outlier sensitivity manually. Higher values mean less\
             sensitivity.
-        satit_flag: Auto-detect good sensitivity (recommended for head or full\
-            brain scans).
-        lta_files: Output transforms to template (for each input).
-        mapmov_files: Output images: map and resample each input to template.
-        mapmovhdr_files: Output images: header-adjusted movables (no\
-            resampling).
-        weights_files: Output weights (outliers) in target space.
-        oneminusw_flag: Weights (outlier) map will be inverted (0=outlier), as\
-            in earlier versions.
-        average_type: Construct template from: 0 Mean, 1 Median (default).
-        inittp: Use TP# for spatial init (default random), 0: no init.
-        fixtp_flag: Map everything to init TP# (init TP is not resampled).
-        iscale_flag: Allow also intensity scaling (default off).
-        iscaleonly_flag: Only perform iscale (no transformation, default off).
-        iscalein_files: Use initial intensity scales.
-        iscaleout_files: Output final intensity scales (will activate\
-            --iscale).
-        transonly_flag: Find 3 parameter translation only.
-        affine_flag: Find 12 parameter affine transform.
-        ixforms_files: Use initial transforms (lta) on source ('id'=identity).
-        masks_files: Input masks applied to movables.
-        vox2vox_flag: Output VOX2VOX lta file (default is RAS2RAS).
-        leastsquares_flag: Use least squares instead of robust M-estimator (for\
+        satit: Auto-detect good sensitivity (recommended for head or full brain\
+            scans).
+        lta: Output LTA transforms to template (one per input volume).
+        mapmov: Output mapped and resampled images in template space (one per\
+            input volume).
+        mapmovhdr: Output header-adjusted movable images (no resampling, only\
+            vox2ras adjusted).
+        weights: Output weight volumes in template space (0=regular,\
+            1=outlier).
+        oneminusw: Invert outlier weight map (0=outlier), as in earlier\
+            versions.
+        average: Construct template from: 0=mean, 1=median (default 1).
+        inittp: Use timepoint number for spatial initialization (default:\
+            random). 0 constructs template from original volumes without\
+            initialization.
+        fixtp: Map everything to initial timepoint (init TP is not resampled).
+        iscale: Enable intensity scaling (default off).
+        iscaleonly: Only perform intensity scaling (no spatial transformation).
+        iscalein: Input initial intensity scale files.
+        iscaleout: Output final intensity scale files (will activate --iscale).
+        transonly: Find 3 parameter translation only.
+        affine: Find 12 parameter affine transform.
+        ixforms: Use initial LTA transforms on source ('id' for identity).
+        masks: Input mask volumes applied to movable images.
+        vox2vox: Output VOX2VOX LTA file (default is RAS2RAS).
+        leastsquares: Use least squares instead of robust M-estimator (for\
             testing only).
-        noit_flag: Do not iterate, just create first template.
-        maxit: Iterate max # times (if #tp>2 default 6, else 5 for 2tp reg.).
-        highit: Iterate max # times on highest resolution (default 5).
-        epsit: Stop iterations when all transform updates fall below the\
-            specified value.
-        pairmaxit: Iterate max # times (default 5) for individual pairwise\
-            registrations.
-        pairepsit: Stop individual pairwise registration iterations when\
-            transform updates fall below the specified value.
-        subsample: Subsample if dimension > specified value on all axes\
-            (default no subsampling).
-        nomulti_flag: Do not use multi-resolution (only highest resolution).
-        floattype_flag: Convert images to float internally (default: keep input\
+        noit: Do not iterate, just create first template.
+        maxit: Maximum number of template iterations (default: 6 if >2\
+            timepoints, 5 otherwise).
+        highit: Maximum number of iterations on highest resolution (default:\
+            -1, use maxit).
+        epsit: Stop template iterations when all transform updates fall below\
+            this value (default: -1.0, disabled).
+        pairmaxit: Maximum number of iterations for pairwise registrations\
+            (default: 5).
+        pairepsit: Stop pairwise registration iterations when transform updates\
+            fall below this value (default: 0.01).
+        subsample: Subsample if voxel dimension exceeds this value on all axes\
+            (default: -1, disabled).
+        nomulti: Do not use multi-resolution (process highest resolution only).
+        floattype: Convert images to float internally (default: keep input\
             type).
-        finalnearest_flag: Use nearest neighbor in final interpolation when\
-            creating average.
-        doubleprec_flag: Use double precision instead of float internally\
-            (large memory usage).
-        cras_flag: Center template at average CRAS, instead of average\
-            barycenter.
-        res_thresh: Volume resolution threshold (default is 0.01 mm).
-        frobnorm_thresh: Matrix frobenius norm threshold (default is 0.0001).
-        debug_flag: Show debug output (default no debug output).
+        finalnearest: Use nearest neighbor interpolation when creating the\
+            final average.
+        doubleprec: Use double precision instead of float internally (large\
+            memory usage).
+        cras: Center template at average CRAS instead of average barycenter.
+        res_thresh: Volume resolution threshold in mm (default: 0.01).
+        frobnorm_thresh: Matrix Frobenius norm threshold (default: 0.0001).
+        conform: Output conformed template (256^3, 1mm isotropic voxels).
+        seed: Set random seed for target selection (default: 0).
+        allow_diff_vox_size: Allow input volumes with different voxel sizes.
+        threads: Set number of OpenMP threads.
+        debug: Show debug output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "freesurfer/mri_robust_template",
-        "mov_files": mov_files,
-        "template_file": template_file,
-        "satit_flag": satit_flag,
-        "oneminusw_flag": oneminusw_flag,
-        "fixtp_flag": fixtp_flag,
-        "iscale_flag": iscale_flag,
-        "iscaleonly_flag": iscaleonly_flag,
-        "transonly_flag": transonly_flag,
-        "affine_flag": affine_flag,
-        "vox2vox_flag": vox2vox_flag,
-        "leastsquares_flag": leastsquares_flag,
-        "noit_flag": noit_flag,
-        "nomulti_flag": nomulti_flag,
-        "floattype_flag": floattype_flag,
-        "finalnearest_flag": finalnearest_flag,
-        "doubleprec_flag": doubleprec_flag,
-        "cras_flag": cras_flag,
-        "debug_flag": debug_flag,
+        "mov": mov,
+        "template": template,
+        "satit": satit,
+        "oneminusw": oneminusw,
+        "fixtp": fixtp,
+        "iscale": iscale,
+        "iscaleonly": iscaleonly,
+        "transonly": transonly,
+        "affine": affine,
+        "vox2vox": vox2vox,
+        "leastsquares": leastsquares,
+        "noit": noit,
+        "nomulti": nomulti,
+        "floattype": floattype,
+        "finalnearest": finalnearest,
+        "doubleprec": doubleprec,
+        "cras": cras,
+        "allow_diff_vox_size": allow_diff_vox_size,
+        "debug": debug,
     }
-    if sat_value is not None:
-        params["sat_value"] = sat_value
-    if lta_files is not None:
-        params["lta_files"] = lta_files
-    if mapmov_files is not None:
-        params["mapmov_files"] = mapmov_files
-    if mapmovhdr_files is not None:
-        params["mapmovhdr_files"] = mapmovhdr_files
-    if weights_files is not None:
-        params["weights_files"] = weights_files
-    if average_type is not None:
-        params["average_type"] = average_type
+    if sat is not None:
+        params["sat"] = sat
+    if lta is not None:
+        params["lta"] = lta
+    if mapmov is not None:
+        params["mapmov"] = mapmov
+    if mapmovhdr is not None:
+        params["mapmovhdr"] = mapmovhdr
+    if weights is not None:
+        params["weights"] = weights
+    if average is not None:
+        params["average"] = average
     if inittp is not None:
         params["inittp"] = inittp
-    if iscalein_files is not None:
-        params["iscalein_files"] = iscalein_files
-    if iscaleout_files is not None:
-        params["iscaleout_files"] = iscaleout_files
-    if ixforms_files is not None:
-        params["ixforms_files"] = ixforms_files
-    if masks_files is not None:
-        params["masks_files"] = masks_files
+    if iscalein is not None:
+        params["iscalein"] = iscalein
+    if iscaleout is not None:
+        params["iscaleout"] = iscaleout
+    if ixforms is not None:
+        params["ixforms"] = ixforms
+    if masks is not None:
+        params["masks"] = masks
     if maxit is not None:
         params["maxit"] = maxit
     if highit is not None:
@@ -268,6 +285,12 @@ def mri_robust_template_params(
         params["res_thresh"] = res_thresh
     if frobnorm_thresh is not None:
         params["frobnorm_thresh"] = frobnorm_thresh
+    if conform is not None:
+        params["conform"] = conform
+    if seed is not None:
+        params["seed"] = seed
+    if threads is not None:
+        params["threads"] = threads
     return params
 
 
@@ -283,114 +306,114 @@ def mri_robust_template_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("mov_files", None) is None:
-        raise StyxValidationError("`mov_files` must not be None")
-    if not isinstance(params["mov_files"], list):
-        raise StyxValidationError(f'`mov_files` has the wrong type: Received `{type(params.get("mov_files", None))}` expected `list[InputPathType]`')
-    for e in params["mov_files"]:
+    if params.get("mov", None) is None:
+        raise StyxValidationError("`mov` must not be None")
+    if not isinstance(params["mov"], list):
+        raise StyxValidationError(f'`mov` has the wrong type: Received `{type(params.get("mov", None))}` expected `list[InputPathType]`')
+    for e in params["mov"]:
         if not isinstance(e, (pathlib.Path, str)):
-            raise StyxValidationError(f'`mov_files` has the wrong type: Received `{type(params.get("mov_files", None))}` expected `list[InputPathType]`')
-    if params.get("template_file", None) is None:
-        raise StyxValidationError("`template_file` must not be None")
-    if not isinstance(params["template_file"], str):
-        raise StyxValidationError(f'`template_file` has the wrong type: Received `{type(params.get("template_file", None))}` expected `str`')
-    if params.get("sat_value", None) is not None:
-        if not isinstance(params["sat_value"], (float, int)):
-            raise StyxValidationError(f'`sat_value` has the wrong type: Received `{type(params.get("sat_value", None))}` expected `float | None`')
-    if params.get("satit_flag", False) is None:
-        raise StyxValidationError("`satit_flag` must not be None")
-    if not isinstance(params["satit_flag"], bool):
-        raise StyxValidationError(f'`satit_flag` has the wrong type: Received `{type(params.get("satit_flag", False))}` expected `bool`')
-    if params.get("lta_files", None) is not None:
-        if not isinstance(params["lta_files"], list):
-            raise StyxValidationError(f'`lta_files` has the wrong type: Received `{type(params.get("lta_files", None))}` expected `list[str] | None`')
-        for e in params["lta_files"]:
+            raise StyxValidationError(f'`mov` has the wrong type: Received `{type(params.get("mov", None))}` expected `list[InputPathType]`')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], str):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `str`')
+    if params.get("sat", None) is not None:
+        if not isinstance(params["sat"], (float, int)):
+            raise StyxValidationError(f'`sat` has the wrong type: Received `{type(params.get("sat", None))}` expected `float | None`')
+    if params.get("satit", False) is None:
+        raise StyxValidationError("`satit` must not be None")
+    if not isinstance(params["satit"], bool):
+        raise StyxValidationError(f'`satit` has the wrong type: Received `{type(params.get("satit", False))}` expected `bool`')
+    if params.get("lta", None) is not None:
+        if not isinstance(params["lta"], list):
+            raise StyxValidationError(f'`lta` has the wrong type: Received `{type(params.get("lta", None))}` expected `list[str] | None`')
+        for e in params["lta"]:
             if not isinstance(e, str):
-                raise StyxValidationError(f'`lta_files` has the wrong type: Received `{type(params.get("lta_files", None))}` expected `list[str] | None`')
-    if params.get("mapmov_files", None) is not None:
-        if not isinstance(params["mapmov_files"], list):
-            raise StyxValidationError(f'`mapmov_files` has the wrong type: Received `{type(params.get("mapmov_files", None))}` expected `list[str] | None`')
-        for e in params["mapmov_files"]:
+                raise StyxValidationError(f'`lta` has the wrong type: Received `{type(params.get("lta", None))}` expected `list[str] | None`')
+    if params.get("mapmov", None) is not None:
+        if not isinstance(params["mapmov"], list):
+            raise StyxValidationError(f'`mapmov` has the wrong type: Received `{type(params.get("mapmov", None))}` expected `list[str] | None`')
+        for e in params["mapmov"]:
             if not isinstance(e, str):
-                raise StyxValidationError(f'`mapmov_files` has the wrong type: Received `{type(params.get("mapmov_files", None))}` expected `list[str] | None`')
-    if params.get("mapmovhdr_files", None) is not None:
-        if not isinstance(params["mapmovhdr_files"], list):
-            raise StyxValidationError(f'`mapmovhdr_files` has the wrong type: Received `{type(params.get("mapmovhdr_files", None))}` expected `list[str] | None`')
-        for e in params["mapmovhdr_files"]:
+                raise StyxValidationError(f'`mapmov` has the wrong type: Received `{type(params.get("mapmov", None))}` expected `list[str] | None`')
+    if params.get("mapmovhdr", None) is not None:
+        if not isinstance(params["mapmovhdr"], list):
+            raise StyxValidationError(f'`mapmovhdr` has the wrong type: Received `{type(params.get("mapmovhdr", None))}` expected `list[str] | None`')
+        for e in params["mapmovhdr"]:
             if not isinstance(e, str):
-                raise StyxValidationError(f'`mapmovhdr_files` has the wrong type: Received `{type(params.get("mapmovhdr_files", None))}` expected `list[str] | None`')
-    if params.get("weights_files", None) is not None:
-        if not isinstance(params["weights_files"], list):
-            raise StyxValidationError(f'`weights_files` has the wrong type: Received `{type(params.get("weights_files", None))}` expected `list[str] | None`')
-        for e in params["weights_files"]:
+                raise StyxValidationError(f'`mapmovhdr` has the wrong type: Received `{type(params.get("mapmovhdr", None))}` expected `list[str] | None`')
+    if params.get("weights", None) is not None:
+        if not isinstance(params["weights"], list):
+            raise StyxValidationError(f'`weights` has the wrong type: Received `{type(params.get("weights", None))}` expected `list[str] | None`')
+        for e in params["weights"]:
             if not isinstance(e, str):
-                raise StyxValidationError(f'`weights_files` has the wrong type: Received `{type(params.get("weights_files", None))}` expected `list[str] | None`')
-    if params.get("oneminusw_flag", False) is None:
-        raise StyxValidationError("`oneminusw_flag` must not be None")
-    if not isinstance(params["oneminusw_flag"], bool):
-        raise StyxValidationError(f'`oneminusw_flag` has the wrong type: Received `{type(params.get("oneminusw_flag", False))}` expected `bool`')
-    if params.get("average_type", None) is not None:
-        if not isinstance(params["average_type"], int):
-            raise StyxValidationError(f'`average_type` has the wrong type: Received `{type(params.get("average_type", None))}` expected `int | None`')
+                raise StyxValidationError(f'`weights` has the wrong type: Received `{type(params.get("weights", None))}` expected `list[str] | None`')
+    if params.get("oneminusw", False) is None:
+        raise StyxValidationError("`oneminusw` must not be None")
+    if not isinstance(params["oneminusw"], bool):
+        raise StyxValidationError(f'`oneminusw` has the wrong type: Received `{type(params.get("oneminusw", False))}` expected `bool`')
+    if params.get("average", None) is not None:
+        if not isinstance(params["average"], int):
+            raise StyxValidationError(f'`average` has the wrong type: Received `{type(params.get("average", None))}` expected `int | None`')
     if params.get("inittp", None) is not None:
         if not isinstance(params["inittp"], int):
             raise StyxValidationError(f'`inittp` has the wrong type: Received `{type(params.get("inittp", None))}` expected `int | None`')
-    if params.get("fixtp_flag", False) is None:
-        raise StyxValidationError("`fixtp_flag` must not be None")
-    if not isinstance(params["fixtp_flag"], bool):
-        raise StyxValidationError(f'`fixtp_flag` has the wrong type: Received `{type(params.get("fixtp_flag", False))}` expected `bool`')
-    if params.get("iscale_flag", False) is None:
-        raise StyxValidationError("`iscale_flag` must not be None")
-    if not isinstance(params["iscale_flag"], bool):
-        raise StyxValidationError(f'`iscale_flag` has the wrong type: Received `{type(params.get("iscale_flag", False))}` expected `bool`')
-    if params.get("iscaleonly_flag", False) is None:
-        raise StyxValidationError("`iscaleonly_flag` must not be None")
-    if not isinstance(params["iscaleonly_flag"], bool):
-        raise StyxValidationError(f'`iscaleonly_flag` has the wrong type: Received `{type(params.get("iscaleonly_flag", False))}` expected `bool`')
-    if params.get("iscalein_files", None) is not None:
-        if not isinstance(params["iscalein_files"], list):
-            raise StyxValidationError(f'`iscalein_files` has the wrong type: Received `{type(params.get("iscalein_files", None))}` expected `list[str] | None`')
-        for e in params["iscalein_files"]:
+    if params.get("fixtp", False) is None:
+        raise StyxValidationError("`fixtp` must not be None")
+    if not isinstance(params["fixtp"], bool):
+        raise StyxValidationError(f'`fixtp` has the wrong type: Received `{type(params.get("fixtp", False))}` expected `bool`')
+    if params.get("iscale", False) is None:
+        raise StyxValidationError("`iscale` must not be None")
+    if not isinstance(params["iscale"], bool):
+        raise StyxValidationError(f'`iscale` has the wrong type: Received `{type(params.get("iscale", False))}` expected `bool`')
+    if params.get("iscaleonly", False) is None:
+        raise StyxValidationError("`iscaleonly` must not be None")
+    if not isinstance(params["iscaleonly"], bool):
+        raise StyxValidationError(f'`iscaleonly` has the wrong type: Received `{type(params.get("iscaleonly", False))}` expected `bool`')
+    if params.get("iscalein", None) is not None:
+        if not isinstance(params["iscalein"], list):
+            raise StyxValidationError(f'`iscalein` has the wrong type: Received `{type(params.get("iscalein", None))}` expected `list[InputPathType] | None`')
+        for e in params["iscalein"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`iscalein` has the wrong type: Received `{type(params.get("iscalein", None))}` expected `list[InputPathType] | None`')
+    if params.get("iscaleout", None) is not None:
+        if not isinstance(params["iscaleout"], list):
+            raise StyxValidationError(f'`iscaleout` has the wrong type: Received `{type(params.get("iscaleout", None))}` expected `list[str] | None`')
+        for e in params["iscaleout"]:
             if not isinstance(e, str):
-                raise StyxValidationError(f'`iscalein_files` has the wrong type: Received `{type(params.get("iscalein_files", None))}` expected `list[str] | None`')
-    if params.get("iscaleout_files", None) is not None:
-        if not isinstance(params["iscaleout_files"], list):
-            raise StyxValidationError(f'`iscaleout_files` has the wrong type: Received `{type(params.get("iscaleout_files", None))}` expected `list[str] | None`')
-        for e in params["iscaleout_files"]:
-            if not isinstance(e, str):
-                raise StyxValidationError(f'`iscaleout_files` has the wrong type: Received `{type(params.get("iscaleout_files", None))}` expected `list[str] | None`')
-    if params.get("transonly_flag", False) is None:
-        raise StyxValidationError("`transonly_flag` must not be None")
-    if not isinstance(params["transonly_flag"], bool):
-        raise StyxValidationError(f'`transonly_flag` has the wrong type: Received `{type(params.get("transonly_flag", False))}` expected `bool`')
-    if params.get("affine_flag", False) is None:
-        raise StyxValidationError("`affine_flag` must not be None")
-    if not isinstance(params["affine_flag"], bool):
-        raise StyxValidationError(f'`affine_flag` has the wrong type: Received `{type(params.get("affine_flag", False))}` expected `bool`')
-    if params.get("ixforms_files", None) is not None:
-        if not isinstance(params["ixforms_files"], list):
-            raise StyxValidationError(f'`ixforms_files` has the wrong type: Received `{type(params.get("ixforms_files", None))}` expected `list[str] | None`')
-        for e in params["ixforms_files"]:
-            if not isinstance(e, str):
-                raise StyxValidationError(f'`ixforms_files` has the wrong type: Received `{type(params.get("ixforms_files", None))}` expected `list[str] | None`')
-    if params.get("masks_files", None) is not None:
-        if not isinstance(params["masks_files"], list):
-            raise StyxValidationError(f'`masks_files` has the wrong type: Received `{type(params.get("masks_files", None))}` expected `list[str] | None`')
-        for e in params["masks_files"]:
-            if not isinstance(e, str):
-                raise StyxValidationError(f'`masks_files` has the wrong type: Received `{type(params.get("masks_files", None))}` expected `list[str] | None`')
-    if params.get("vox2vox_flag", False) is None:
-        raise StyxValidationError("`vox2vox_flag` must not be None")
-    if not isinstance(params["vox2vox_flag"], bool):
-        raise StyxValidationError(f'`vox2vox_flag` has the wrong type: Received `{type(params.get("vox2vox_flag", False))}` expected `bool`')
-    if params.get("leastsquares_flag", False) is None:
-        raise StyxValidationError("`leastsquares_flag` must not be None")
-    if not isinstance(params["leastsquares_flag"], bool):
-        raise StyxValidationError(f'`leastsquares_flag` has the wrong type: Received `{type(params.get("leastsquares_flag", False))}` expected `bool`')
-    if params.get("noit_flag", False) is None:
-        raise StyxValidationError("`noit_flag` must not be None")
-    if not isinstance(params["noit_flag"], bool):
-        raise StyxValidationError(f'`noit_flag` has the wrong type: Received `{type(params.get("noit_flag", False))}` expected `bool`')
+                raise StyxValidationError(f'`iscaleout` has the wrong type: Received `{type(params.get("iscaleout", None))}` expected `list[str] | None`')
+    if params.get("transonly", False) is None:
+        raise StyxValidationError("`transonly` must not be None")
+    if not isinstance(params["transonly"], bool):
+        raise StyxValidationError(f'`transonly` has the wrong type: Received `{type(params.get("transonly", False))}` expected `bool`')
+    if params.get("affine", False) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], bool):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", False))}` expected `bool`')
+    if params.get("ixforms", None) is not None:
+        if not isinstance(params["ixforms"], list):
+            raise StyxValidationError(f'`ixforms` has the wrong type: Received `{type(params.get("ixforms", None))}` expected `list[InputPathType] | None`')
+        for e in params["ixforms"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`ixforms` has the wrong type: Received `{type(params.get("ixforms", None))}` expected `list[InputPathType] | None`')
+    if params.get("masks", None) is not None:
+        if not isinstance(params["masks"], list):
+            raise StyxValidationError(f'`masks` has the wrong type: Received `{type(params.get("masks", None))}` expected `list[InputPathType] | None`')
+        for e in params["masks"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`masks` has the wrong type: Received `{type(params.get("masks", None))}` expected `list[InputPathType] | None`')
+    if params.get("vox2vox", False) is None:
+        raise StyxValidationError("`vox2vox` must not be None")
+    if not isinstance(params["vox2vox"], bool):
+        raise StyxValidationError(f'`vox2vox` has the wrong type: Received `{type(params.get("vox2vox", False))}` expected `bool`')
+    if params.get("leastsquares", False) is None:
+        raise StyxValidationError("`leastsquares` must not be None")
+    if not isinstance(params["leastsquares"], bool):
+        raise StyxValidationError(f'`leastsquares` has the wrong type: Received `{type(params.get("leastsquares", False))}` expected `bool`')
+    if params.get("noit", False) is None:
+        raise StyxValidationError("`noit` must not be None")
+    if not isinstance(params["noit"], bool):
+        raise StyxValidationError(f'`noit` has the wrong type: Received `{type(params.get("noit", False))}` expected `bool`')
     if params.get("maxit", None) is not None:
         if not isinstance(params["maxit"], int):
             raise StyxValidationError(f'`maxit` has the wrong type: Received `{type(params.get("maxit", None))}` expected `int | None`')
@@ -409,36 +432,49 @@ def mri_robust_template_validate(
     if params.get("subsample", None) is not None:
         if not isinstance(params["subsample"], int):
             raise StyxValidationError(f'`subsample` has the wrong type: Received `{type(params.get("subsample", None))}` expected `int | None`')
-    if params.get("nomulti_flag", False) is None:
-        raise StyxValidationError("`nomulti_flag` must not be None")
-    if not isinstance(params["nomulti_flag"], bool):
-        raise StyxValidationError(f'`nomulti_flag` has the wrong type: Received `{type(params.get("nomulti_flag", False))}` expected `bool`')
-    if params.get("floattype_flag", False) is None:
-        raise StyxValidationError("`floattype_flag` must not be None")
-    if not isinstance(params["floattype_flag"], bool):
-        raise StyxValidationError(f'`floattype_flag` has the wrong type: Received `{type(params.get("floattype_flag", False))}` expected `bool`')
-    if params.get("finalnearest_flag", False) is None:
-        raise StyxValidationError("`finalnearest_flag` must not be None")
-    if not isinstance(params["finalnearest_flag"], bool):
-        raise StyxValidationError(f'`finalnearest_flag` has the wrong type: Received `{type(params.get("finalnearest_flag", False))}` expected `bool`')
-    if params.get("doubleprec_flag", False) is None:
-        raise StyxValidationError("`doubleprec_flag` must not be None")
-    if not isinstance(params["doubleprec_flag"], bool):
-        raise StyxValidationError(f'`doubleprec_flag` has the wrong type: Received `{type(params.get("doubleprec_flag", False))}` expected `bool`')
-    if params.get("cras_flag", False) is None:
-        raise StyxValidationError("`cras_flag` must not be None")
-    if not isinstance(params["cras_flag"], bool):
-        raise StyxValidationError(f'`cras_flag` has the wrong type: Received `{type(params.get("cras_flag", False))}` expected `bool`')
+    if params.get("nomulti", False) is None:
+        raise StyxValidationError("`nomulti` must not be None")
+    if not isinstance(params["nomulti"], bool):
+        raise StyxValidationError(f'`nomulti` has the wrong type: Received `{type(params.get("nomulti", False))}` expected `bool`')
+    if params.get("floattype", False) is None:
+        raise StyxValidationError("`floattype` must not be None")
+    if not isinstance(params["floattype"], bool):
+        raise StyxValidationError(f'`floattype` has the wrong type: Received `{type(params.get("floattype", False))}` expected `bool`')
+    if params.get("finalnearest", False) is None:
+        raise StyxValidationError("`finalnearest` must not be None")
+    if not isinstance(params["finalnearest"], bool):
+        raise StyxValidationError(f'`finalnearest` has the wrong type: Received `{type(params.get("finalnearest", False))}` expected `bool`')
+    if params.get("doubleprec", False) is None:
+        raise StyxValidationError("`doubleprec` must not be None")
+    if not isinstance(params["doubleprec"], bool):
+        raise StyxValidationError(f'`doubleprec` has the wrong type: Received `{type(params.get("doubleprec", False))}` expected `bool`')
+    if params.get("cras", False) is None:
+        raise StyxValidationError("`cras` must not be None")
+    if not isinstance(params["cras"], bool):
+        raise StyxValidationError(f'`cras` has the wrong type: Received `{type(params.get("cras", False))}` expected `bool`')
     if params.get("res_thresh", None) is not None:
         if not isinstance(params["res_thresh"], (float, int)):
             raise StyxValidationError(f'`res_thresh` has the wrong type: Received `{type(params.get("res_thresh", None))}` expected `float | None`')
     if params.get("frobnorm_thresh", None) is not None:
         if not isinstance(params["frobnorm_thresh"], (float, int)):
             raise StyxValidationError(f'`frobnorm_thresh` has the wrong type: Received `{type(params.get("frobnorm_thresh", None))}` expected `float | None`')
-    if params.get("debug_flag", False) is None:
-        raise StyxValidationError("`debug_flag` must not be None")
-    if not isinstance(params["debug_flag"], bool):
-        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("conform", None) is not None:
+        if not isinstance(params["conform"], str):
+            raise StyxValidationError(f'`conform` has the wrong type: Received `{type(params.get("conform", None))}` expected `str | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], int):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `int | None`')
+    if params.get("allow_diff_vox_size", False) is None:
+        raise StyxValidationError("`allow_diff_vox_size` must not be None")
+    if not isinstance(params["allow_diff_vox_size"], bool):
+        raise StyxValidationError(f'`allow_diff_vox_size` has the wrong type: Received `{type(params.get("allow_diff_vox_size", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], int):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
 
 
 def mri_robust_template_cargs(
@@ -457,87 +493,87 @@ def mri_robust_template_cargs(
     cargs = []
     cargs.append("mri_robust_template")
     cargs.extend([
-        "-mov",
-        *[execution.input_file(f) for f in params.get("mov_files", None)]
+        "--mov",
+        *[execution.input_file(f) for f in params.get("mov", None)]
     ])
     cargs.extend([
-        "-template",
-        params.get("template_file", None)
+        "--template",
+        params.get("template", None)
     ])
-    if params.get("sat_value", None) is not None:
+    if params.get("sat", None) is not None:
         cargs.extend([
             "--sat",
-            str(params.get("sat_value", None))
+            str(params.get("sat", None))
         ])
-    if params.get("satit_flag", False):
+    if params.get("satit", False):
         cargs.append("--satit")
-    if params.get("lta_files", None) is not None:
+    if params.get("lta", None) is not None:
         cargs.extend([
             "--lta",
-            *params.get("lta_files", None)
+            *params.get("lta", None)
         ])
-    if params.get("mapmov_files", None) is not None:
+    if params.get("mapmov", None) is not None:
         cargs.extend([
             "--mapmov",
-            *params.get("mapmov_files", None)
+            *params.get("mapmov", None)
         ])
-    if params.get("mapmovhdr_files", None) is not None:
+    if params.get("mapmovhdr", None) is not None:
         cargs.extend([
             "--mapmovhdr",
-            *params.get("mapmovhdr_files", None)
+            *params.get("mapmovhdr", None)
         ])
-    if params.get("weights_files", None) is not None:
+    if params.get("weights", None) is not None:
         cargs.extend([
             "--weights",
-            *params.get("weights_files", None)
+            *params.get("weights", None)
         ])
-    if params.get("oneminusw_flag", False):
+    if params.get("oneminusw", False):
         cargs.append("--oneminusw")
-    if params.get("average_type", None) is not None:
+    if params.get("average", None) is not None:
         cargs.extend([
             "--average",
-            str(params.get("average_type", None))
+            str(params.get("average", None))
         ])
     if params.get("inittp", None) is not None:
         cargs.extend([
             "--inittp",
             str(params.get("inittp", None))
         ])
-    if params.get("fixtp_flag", False):
+    if params.get("fixtp", False):
         cargs.append("--fixtp")
-    if params.get("iscale_flag", False):
+    if params.get("iscale", False):
         cargs.append("--iscale")
-    if params.get("iscaleonly_flag", False):
+    if params.get("iscaleonly", False):
         cargs.append("--iscaleonly")
-    if params.get("iscalein_files", None) is not None:
+    if params.get("iscalein", None) is not None:
         cargs.extend([
             "--iscalein",
-            *params.get("iscalein_files", None)
+            *[execution.input_file(f) for f in params.get("iscalein", None)]
         ])
-    if params.get("iscaleout_files", None) is not None:
+    if params.get("iscaleout", None) is not None:
         cargs.extend([
             "--iscaleout",
-            *params.get("iscaleout_files", None)
+            *params.get("iscaleout", None)
         ])
-    if params.get("transonly_flag", False):
+    if params.get("transonly", False):
         cargs.append("--transonly")
-    if params.get("affine_flag", False):
+    if params.get("affine", False):
         cargs.append("--affine")
-    if params.get("ixforms_files", None) is not None:
+    if params.get("ixforms", None) is not None:
         cargs.extend([
             "--ixforms",
-            *params.get("ixforms_files", None)
+            *[execution.input_file(f) for f in params.get("ixforms", None)]
         ])
-    if params.get("masks_files", None) is not None:
+    if params.get("masks", None) is not None:
         cargs.extend([
             "--masks",
-            *params.get("masks_files", None)
+            *[execution.input_file(f) for f in params.get("masks", None)]
         ])
-    if params.get("vox2vox_flag", False):
+    if params.get("vox2vox", False):
         cargs.append("--vox2vox")
-    if params.get("leastsquares_flag", False):
+    if params.get("leastsquares", False):
         cargs.append("--leastsquares")
-    if params.get("noit_flag", False):
+    if params.get("noit", False):
         cargs.append("--noit")
     if params.get("maxit", None) is not None:
         cargs.extend([
@@ -569,15 +605,15 @@ def mri_robust_template_cargs(
             "--subsample",
             str(params.get("subsample", None))
         ])
-    if params.get("nomulti_flag", False):
+    if params.get("nomulti", False):
         cargs.append("--nomulti")
-    if params.get("floattype_flag", False):
+    if params.get("floattype", False):
         cargs.append("--floattype")
-    if params.get("finalnearest_flag", False):
+    if params.get("finalnearest", False):
         cargs.append("--finalnearest")
-    if params.get("doubleprec_flag", False):
+    if params.get("doubleprec", False):
         cargs.append("--doubleprec")
-    if params.get("cras_flag", False):
+    if params.get("cras", False):
         cargs.append("--cras")
     if params.get("res_thresh", None) is not None:
         cargs.extend([
@@ -589,7 +625,24 @@ def mri_robust_template_cargs(
             "--frobnorm-thresh",
             str(params.get("frobnorm_thresh", None))
         ])
-    if params.get("debug_flag", False):
+    if params.get("conform", None) is not None:
+        cargs.extend([
+            "--conform",
+            params.get("conform", None)
+        ])
+    if params.get("seed", None) is not None:
+        cargs.extend([
+            "--seed",
+            str(params.get("seed", None))
+        ])
+    if params.get("allow_diff_vox_size", False):
+        cargs.append("--allow-diff-vox-size")
+    if params.get("threads", None) is not None:
+        cargs.extend([
+            "--threads",
+            str(params.get("threads", None))
+        ])
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -609,10 +662,8 @@ def mri_robust_template_outputs(
     """
     ret = MriRobustTemplateOutputs(
         root=execution.output_file("."),
-        output_template=execution.output_file(params.get("template_file", None)),
-        output_lta_transform=execution.output_file("[TMP_NAME].lta"),
-        output_mapped_image=execution.output_file("[TMP_NAME]_to_template.mgz"),
-        output_weights_map=execution.output_file("[TMP_NAME]_weights.mgz"),
+        template_output=execution.output_file(params.get("template", None)),
+        conform_output=execution.output_file(params.get("conform", None)) if (params.get("conform") is not None) else None,
     )
     return ret
 
@@ -648,43 +699,47 @@ def mri_robust_template_execute(
 
 
 def mri_robust_template(
-    mov_files: list[InputPathType],
-    template_file: str,
-    sat_value: float | None = None,
-    satit_flag: bool = False,
-    lta_files: list[str] | None = None,
-    mapmov_files: list[str] | None = None,
-    mapmovhdr_files: list[str] | None = None,
-    weights_files: list[str] | None = None,
-    oneminusw_flag: bool = False,
-    average_type: int | None = None,
+    mov: list[InputPathType],
+    template: str,
+    sat: float | None = None,
+    satit: bool = False,
+    lta: list[str] | None = None,
+    mapmov: list[str] | None = None,
+    mapmovhdr: list[str] | None = None,
+    weights: list[str] | None = None,
+    oneminusw: bool = False,
+    average: int | None = None,
     inittp: int | None = None,
-    fixtp_flag: bool = False,
-    iscale_flag: bool = False,
-    iscaleonly_flag: bool = False,
-    iscalein_files: list[str] | None = None,
-    iscaleout_files: list[str] | None = None,
-    transonly_flag: bool = False,
-    affine_flag: bool = False,
-    ixforms_files: list[str] | None = None,
-    masks_files: list[str] | None = None,
-    vox2vox_flag: bool = False,
-    leastsquares_flag: bool = False,
-    noit_flag: bool = False,
+    fixtp: bool = False,
+    iscale: bool = False,
+    iscaleonly: bool = False,
+    iscalein: list[InputPathType] | None = None,
+    iscaleout: list[str] | None = None,
+    transonly: bool = False,
+    affine: bool = False,
+    ixforms: list[InputPathType] | None = None,
+    masks: list[InputPathType] | None = None,
+    vox2vox: bool = False,
+    leastsquares: bool = False,
+    noit: bool = False,
     maxit: int | None = None,
     highit: int | None = None,
     epsit: float | None = None,
     pairmaxit: int | None = None,
     pairepsit: float | None = None,
     subsample: int | None = None,
-    nomulti_flag: bool = False,
-    floattype_flag: bool = False,
-    finalnearest_flag: bool = False,
-    doubleprec_flag: bool = False,
-    cras_flag: bool = False,
+    nomulti: bool = False,
+    floattype: bool = False,
+    finalnearest: bool = False,
+    doubleprec: bool = False,
+    cras: bool = False,
     res_thresh: float | None = None,
     frobnorm_thresh: float | None = None,
-    debug_flag: bool = False,
+    conform: str | None = None,
+    seed: int | None = None,
+    allow_diff_vox_size: bool = False,
+    threads: int | None = None,
+    debug: bool = False,
     runner: Runner | None = None,
 ) -> MriRobustTemplateOutputs:
     """
@@ -698,100 +753,112 @@ def mri_robust_template(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
-        mov_files: Input movable volumes to be aligned to common mean/median\
-            template.
-        template_file: Output template volume (final mean/median image).
-        sat_value: Set outlier sensitivity manually. Higher values mean less\
+        mov: Input movable volumes to be aligned to common mean/median template\
+            (at least 2 required).
+        template: Output template volume (final mean/median image).
+        sat: Set outlier sensitivity manually. Higher values mean less\
             sensitivity.
-        satit_flag: Auto-detect good sensitivity (recommended for head or full\
-            brain scans).
-        lta_files: Output transforms to template (for each input).
-        mapmov_files: Output images: map and resample each input to template.
-        mapmovhdr_files: Output images: header-adjusted movables (no\
-            resampling).
-        weights_files: Output weights (outliers) in target space.
-        oneminusw_flag: Weights (outlier) map will be inverted (0=outlier), as\
-            in earlier versions.
-        average_type: Construct template from: 0 Mean, 1 Median (default).
-        inittp: Use TP# for spatial init (default random), 0: no init.
-        fixtp_flag: Map everything to init TP# (init TP is not resampled).
-        iscale_flag: Allow also intensity scaling (default off).
-        iscaleonly_flag: Only perform iscale (no transformation, default off).
-        iscalein_files: Use initial intensity scales.
-        iscaleout_files: Output final intensity scales (will activate\
-            --iscale).
-        transonly_flag: Find 3 parameter translation only.
-        affine_flag: Find 12 parameter affine transform.
-        ixforms_files: Use initial transforms (lta) on source ('id'=identity).
-        masks_files: Input masks applied to movables.
-        vox2vox_flag: Output VOX2VOX lta file (default is RAS2RAS).
-        leastsquares_flag: Use least squares instead of robust M-estimator (for\
+        satit: Auto-detect good sensitivity (recommended for head or full brain\
+            scans).
+        lta: Output LTA transforms to template (one per input volume).
+        mapmov: Output mapped and resampled images in template space (one per\
+            input volume).
+        mapmovhdr: Output header-adjusted movable images (no resampling, only\
+            vox2ras adjusted).
+        weights: Output weight volumes in template space (0=regular,\
+            1=outlier).
+        oneminusw: Invert outlier weight map (0=outlier), as in earlier\
+            versions.
+        average: Construct template from: 0=mean, 1=median (default 1).
+        inittp: Use timepoint number for spatial initialization (default:\
+            random). 0 constructs template from original volumes without\
+            initialization.
+        fixtp: Map everything to initial timepoint (init TP is not resampled).
+        iscale: Enable intensity scaling (default off).
+        iscaleonly: Only perform intensity scaling (no spatial transformation).
+        iscalein: Input initial intensity scale files.
+        iscaleout: Output final intensity scale files (will activate --iscale).
+        transonly: Find 3 parameter translation only.
+        affine: Find 12 parameter affine transform.
+        ixforms: Use initial LTA transforms on source ('id' for identity).
+        masks: Input mask volumes applied to movable images.
+        vox2vox: Output VOX2VOX LTA file (default is RAS2RAS).
+        leastsquares: Use least squares instead of robust M-estimator (for\
             testing only).
-        noit_flag: Do not iterate, just create first template.
-        maxit: Iterate max # times (if #tp>2 default 6, else 5 for 2tp reg.).
-        highit: Iterate max # times on highest resolution (default 5).
-        epsit: Stop iterations when all transform updates fall below the\
-            specified value.
-        pairmaxit: Iterate max # times (default 5) for individual pairwise\
-            registrations.
-        pairepsit: Stop individual pairwise registration iterations when\
-            transform updates fall below the specified value.
-        subsample: Subsample if dimension > specified value on all axes\
-            (default no subsampling).
-        nomulti_flag: Do not use multi-resolution (only highest resolution).
-        floattype_flag: Convert images to float internally (default: keep input\
+        noit: Do not iterate, just create first template.
+        maxit: Maximum number of template iterations (default: 6 if >2\
+            timepoints, 5 otherwise).
+        highit: Maximum number of iterations on highest resolution (default:\
+            -1, use maxit).
+        epsit: Stop template iterations when all transform updates fall below\
+            this value (default: -1.0, disabled).
+        pairmaxit: Maximum number of iterations for pairwise registrations\
+            (default: 5).
+        pairepsit: Stop pairwise registration iterations when transform updates\
+            fall below this value (default: 0.01).
+        subsample: Subsample if voxel dimension exceeds this value on all axes\
+            (default: -1, disabled).
+        nomulti: Do not use multi-resolution (process highest resolution only).
+        floattype: Convert images to float internally (default: keep input\
             type).
-        finalnearest_flag: Use nearest neighbor in final interpolation when\
-            creating average.
-        doubleprec_flag: Use double precision instead of float internally\
-            (large memory usage).
-        cras_flag: Center template at average CRAS, instead of average\
-            barycenter.
-        res_thresh: Volume resolution threshold (default is 0.01 mm).
-        frobnorm_thresh: Matrix frobenius norm threshold (default is 0.0001).
-        debug_flag: Show debug output (default no debug output).
+        finalnearest: Use nearest neighbor interpolation when creating the\
+            final average.
+        doubleprec: Use double precision instead of float internally (large\
+            memory usage).
+        cras: Center template at average CRAS instead of average barycenter.
+        res_thresh: Volume resolution threshold in mm (default: 0.01).
+        frobnorm_thresh: Matrix Frobenius norm threshold (default: 0.0001).
+        conform: Output conformed template (256^3, 1mm isotropic voxels).
+        seed: Set random seed for target selection (default: 0).
+        allow_diff_vox_size: Allow input volumes with different voxel sizes.
+        threads: Set number of OpenMP threads.
+        debug: Show debug output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRobustTemplateOutputs`).
     """
     params = mri_robust_template_params(
-        mov_files=mov_files,
-        template_file=template_file,
-        sat_value=sat_value,
-        satit_flag=satit_flag,
-        lta_files=lta_files,
-        mapmov_files=mapmov_files,
-        mapmovhdr_files=mapmovhdr_files,
-        weights_files=weights_files,
-        oneminusw_flag=oneminusw_flag,
-        average_type=average_type,
+        mov=mov,
+        template=template,
+        sat=sat,
+        satit=satit,
+        lta=lta,
+        mapmov=mapmov,
+        mapmovhdr=mapmovhdr,
+        weights=weights,
+        oneminusw=oneminusw,
+        average=average,
         inittp=inittp,
-        fixtp_flag=fixtp_flag,
-        iscale_flag=iscale_flag,
-        iscaleonly_flag=iscaleonly_flag,
-        iscalein_files=iscalein_files,
-        iscaleout_files=iscaleout_files,
-        transonly_flag=transonly_flag,
-        affine_flag=affine_flag,
-        ixforms_files=ixforms_files,
-        masks_files=masks_files,
-        vox2vox_flag=vox2vox_flag,
-        leastsquares_flag=leastsquares_flag,
-        noit_flag=noit_flag,
+        fixtp=fixtp,
+        iscale=iscale,
+        iscaleonly=iscaleonly,
+        iscalein=iscalein,
+        iscaleout=iscaleout,
+        transonly=transonly,
+        affine=affine,
+        ixforms=ixforms,
+        masks=masks,
+        vox2vox=vox2vox,
+        leastsquares=leastsquares,
+        noit=noit,
         maxit=maxit,
         highit=highit,
         epsit=epsit,
         pairmaxit=pairmaxit,
         pairepsit=pairepsit,
         subsample=subsample,
-        nomulti_flag=nomulti_flag,
-        floattype_flag=floattype_flag,
-        finalnearest_flag=finalnearest_flag,
-        doubleprec_flag=doubleprec_flag,
-        cras_flag=cras_flag,
+        nomulti=nomulti,
+        floattype=floattype,
+        finalnearest=finalnearest,
+        doubleprec=doubleprec,
+        cras=cras,
         res_thresh=res_thresh,
         frobnorm_thresh=frobnorm_thresh,
-        debug_flag=debug_flag,
+        conform=conform,
+        seed=seed,
+        allow_diff_vox_size=allow_diff_vox_size,
+        threads=threads,
+        debug=debug,
     )
     return mri_robust_template_execute(params, runner)
 
