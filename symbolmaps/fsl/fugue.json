@@ -67,12 +67,6 @@
     "poly_order": {
       "var_param": "poly_order"
     },
-    "save_fmap": {
-      "var_param": "save_fmap"
-    },
-    "save_shift": {
-      "var_param": "save_shift"
-    },
     "save_unmasked_fmap": {
       "var_param": "save_unmasked_fmap"
     },

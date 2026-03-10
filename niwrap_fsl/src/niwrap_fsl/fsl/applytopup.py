@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLYTOPUP_METADATA = Metadata(
-    id="3fd3f000d10be8bf5d764ca4ebb15f739a64a341.boutiques",
+    id="ae279a4be6f94567ba6bf2bcba66ac29645e7f5e.boutiques",
     name="applytopup",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -201,7 +201,7 @@ def applytopup_outputs(
     """
     ret = ApplytopupOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("out", None)),
+        output_file=execution.output_file(params.get("out", None) + ".nii.gz"),
     )
     return ret
 

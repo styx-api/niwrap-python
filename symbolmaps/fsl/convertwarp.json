@@ -16,6 +16,9 @@
     "midmat": {
       "var_param": "midmat"
     },
+    "out": {
+      "var_param": "out"
+    },
     "out_abswarp": {
       "var_param": "out_abswarp"
     },

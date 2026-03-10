@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TOPUP_METADATA = Metadata(
-    id="4b2cf20a0f50a8958ae980e1aaf3e65e9bc5ea52.boutiques",
+    id="2bc61d13aa7f66f101bf99a72a149b1caf523b4e.boutiques",
     name="topup",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -372,8 +372,8 @@ def topup_outputs(
         root=execution.output_file("."),
         fieldcoef=execution.output_file(params.get("out", None) + "_fieldcoef.nii.gz") if (params.get("out") is not None) else None,
         movpar=execution.output_file(params.get("out", None) + "_movpar.txt") if (params.get("out") is not None) else None,
-        fout=execution.output_file(params.get("fout", None)) if (params.get("fout") is not None) else None,
-        iout=execution.output_file(params.get("iout", None)) if (params.get("iout") is not None) else None,
+        fout=execution.output_file(params.get("fout", None) + ".nii.gz") if (params.get("fout") is not None) else None,
+        iout=execution.output_file(params.get("iout", None) + ".nii.gz") if (params.get("iout") is not None) else None,
         logout=execution.output_file(params.get("logout", None)) if (params.get("logout") is not None) else None,
     )
     return ret

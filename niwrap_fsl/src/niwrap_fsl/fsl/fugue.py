@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FUGUE_METADATA = Metadata(
-    id="b2af5c065fecc04b02b5d76d864132d0f7d5f4db.boutiques",
+    id="8accaed8e26afdcc5d70586bc89db0a31c680b57.boutiques",
     name="fugue",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -36,8 +36,6 @@ _FugueParamsDictNoTag = typing.TypedDict('_FugueParamsDictNoTag', {
     "phase_conjugate": bool,
     "phasemap_in_file": typing.NotRequired[InputPathType | None],
     "poly_order": typing.NotRequired[int | None],
-    "save_fmap": bool,
-    "save_shift": bool,
     "save_unmasked_fmap": bool,
     "save_unmasked_shift": bool,
     "shift_in_file": typing.NotRequired[InputPathType | None],
@@ -72,8 +70,6 @@ FugueParamsDictTagged = typing.TypedDict('FugueParamsDictTagged', {
     "phase_conjugate": bool,
     "phasemap_in_file": typing.NotRequired[InputPathType | None],
     "poly_order": typing.NotRequired[int | None],
-    "save_fmap": bool,
-    "save_shift": bool,
     "save_unmasked_fmap": bool,
     "save_unmasked_shift": bool,
     "shift_in_file": typing.NotRequired[InputPathType | None],
@@ -126,8 +122,6 @@ def fugue_params(
     phase_conjugate: bool = False,
     phasemap_in_file: InputPathType | None = None,
     poly_order: int | None = None,
-    save_fmap: bool = False,
-    save_shift: bool = False,
     save_unmasked_fmap: bool = False,
     save_unmasked_shift: bool = False,
     shift_in_file: InputPathType | None = None,
@@ -167,8 +161,6 @@ def fugue_params(
         phase_conjugate: Apply phase conjugate method of unwarping.
         phasemap_in_file: Filename for input phase image.
         poly_order: Apply polynomial fitting of order n.
-        save_fmap: Write field map volume.
-        save_shift: Write pixel shift volume.
         save_unmasked_fmap: Saves the unmasked fieldmap when using --savefmap.
         save_unmasked_shift: Saves the unmasked shiftmap when using\
             --saveshift.
@@ -195,8 +187,6 @@ def fugue_params(
         "nokspace": nokspace,
         "pava": pava,
         "phase_conjugate": phase_conjugate,
-        "save_fmap": save_fmap,
-        "save_shift": save_shift,
         "save_unmasked_fmap": save_unmasked_fmap,
         "save_unmasked_shift": save_unmasked_shift,
     }
@@ -331,14 +321,6 @@ def fugue_validate(
     if params.get("poly_order", None) is not None:
         if not isinstance(params["poly_order"], int):
             raise StyxValidationError(f'`poly_order` has the wrong type: Received `{type(params.get("poly_order", None))}` expected `int | None`')
-    if params.get("save_fmap", False) is None:
-        raise StyxValidationError("`save_fmap` must not be None")
-    if not isinstance(params["save_fmap"], bool):
-        raise StyxValidationError(f'`save_fmap` has the wrong type: Received `{type(params.get("save_fmap", False))}` expected `bool`')
-    if params.get("save_shift", False) is None:
-        raise StyxValidationError("`save_shift` must not be None")
-    if not isinstance(params["save_shift"], bool):
-        raise StyxValidationError(f'`save_shift` has the wrong type: Received `{type(params.get("save_shift", False))}` expected `bool`')
     if params.get("save_unmasked_fmap", False) is None:
         raise StyxValidationError("`save_unmasked_fmap` must not be None")
     if not isinstance(params["save_unmasked_fmap"], bool):
@@ -431,10 +413,6 @@ def fugue_cargs(
         cargs.append("--phasemap=" + execution.input_file(params.get("phasemap_in_file", None)))
     if params.get("poly_order", None) is not None:
         cargs.append("--poly=" + str(params.get("poly_order", None)))
-    if params.get("save_fmap", False):
-        cargs.append("--save_fmap")
-    if params.get("save_shift", False):
-        cargs.append("--save_shift")
     if params.get("save_unmasked_fmap", False):
         cargs.append("--unmaskfmap")
     if params.get("save_unmasked_shift", False):
@@ -531,8 +509,6 @@ def fugue(
     phase_conjugate: bool = False,
     phasemap_in_file: InputPathType | None = None,
     poly_order: int | None = None,
-    save_fmap: bool = False,
-    save_shift: bool = False,
     save_unmasked_fmap: bool = False,
     save_unmasked_shift: bool = False,
     shift_in_file: InputPathType | None = None,
@@ -579,8 +555,6 @@ def fugue(
         phase_conjugate: Apply phase conjugate method of unwarping.
         phasemap_in_file: Filename for input phase image.
         poly_order: Apply polynomial fitting of order n.
-        save_fmap: Write field map volume.
-        save_shift: Write pixel shift volume.
         save_unmasked_fmap: Saves the unmasked fieldmap when using --savefmap.
         save_unmasked_shift: Saves the unmasked shiftmap when using\
             --saveshift.
@@ -619,8 +593,6 @@ def fugue(
         phase_conjugate=phase_conjugate,
         phasemap_in_file=phasemap_in_file,
         poly_order=poly_order,
-        save_fmap=save_fmap,
-        save_shift=save_shift,
         save_unmasked_fmap=save_unmasked_fmap,
         save_unmasked_shift=save_unmasked_shift,
         shift_in_file=shift_in_file,

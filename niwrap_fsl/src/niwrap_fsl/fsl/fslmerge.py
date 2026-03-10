@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMERGE_METADATA = Metadata(
-    id="acdddf24252447cc2c7bf472678cd573adad7658.boutiques",
+    id="132b41de2dbed1d8ee9a1fee56e0d37a5fe0b33c.boutiques",
     name="fslmerge",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -210,7 +210,7 @@ def fslmerge_outputs(
     """
     ret = FslmergeOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("output_file", None)),
+        out_file=execution.output_file(params.get("output_file", None) + ".nii.gz"),
     )
     return ret
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERTWARP_METADATA = Metadata(
-    id="1a7852ca0af8f9dec381ff32fbe50239a29ed0d9.boutiques",
+    id="fd9c00229c5122d221352b393969d66ef7f8e807.boutiques",
     name="convertwarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -19,6 +19,7 @@ _ConvertwarpParamsDictNoTag = typing.TypedDict('_ConvertwarpParamsDictNoTag', {
     "jacobian_max": typing.NotRequired[float | None],
     "jacobian_min": typing.NotRequired[float | None],
     "midmat": typing.NotRequired[InputPathType | None],
+    "out": str,
     "out_abswarp": bool,
     "out_relwarp": bool,
     "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
@@ -38,6 +39,7 @@ ConvertwarpParamsDictTagged = typing.TypedDict('ConvertwarpParamsDictTagged', {
     "jacobian_max": typing.NotRequired[float | None],
     "jacobian_min": typing.NotRequired[float | None],
     "midmat": typing.NotRequired[InputPathType | None],
+    "out": str,
     "out_abswarp": bool,
     "out_relwarp": bool,
     "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
@@ -63,11 +65,10 @@ class ConvertwarpOutputs(typing.NamedTuple):
     """Name of output file, containing warps that are the combination of all
     those given as arguments. the format of this will be a field-file (rather
     than spline coefficients) with any affine components included."""
-    out_file_: OutputPathType
-    """Name of output file, containing the warp as field or coefficients."""
 
 
 def convertwarp_params(
+    out: str,
     reference: InputPathType,
     abswarp: bool = False,
     cons_jacobian: bool = False,
@@ -89,6 +90,9 @@ def convertwarp_params(
     Build parameters.
     
     Args:
+        out: Name of output file, containing warps that are the combination of\
+            all those given as arguments. the format of this will be a field-file\
+            (rather than spline coefficients) with any affine components included.
         reference: Name of a file in target space of the full transform.
         abswarp: If set it indicates that the warps in --warp1 and --warp2\
             should be interpreted as absolute. i.e. the values in --warp1/2 are the\
@@ -140,6 +144,7 @@ def convertwarp_params(
         "@type": "fsl/convertwarp",
         "abswarp": abswarp,
         "cons_jacobian": cons_jacobian,
+        "out": out,
         "out_abswarp": out_abswarp,
         "out_relwarp": out_relwarp,
         "reference": reference,
@@ -197,6 +202,10 @@ def convertwarp_validate(
     if params.get("midmat", None) is not None:
         if not isinstance(params["midmat"], (pathlib.Path, str)):
             raise StyxValidationError(f'`midmat` has the wrong type: Received `{type(params.get("midmat", None))}` expected `InputPathType | None`')
+    if params.get("out", None) is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str`')
     if params.get("out_abswarp", False) is None:
         raise StyxValidationError("`out_abswarp` must not be None")
     if not isinstance(params["out_abswarp"], bool):
@@ -265,6 +274,7 @@ def convertwarp_cargs(
         cargs.append("--jmin=" + str(params.get("jacobian_min", None)))
     if params.get("midmat", None) is not None:
         cargs.append("--midmat=" + execution.input_file(params.get("midmat", None)))
+    cargs.append("--out=" + params.get("out", None))
     if params.get("out_abswarp", False):
         cargs.append("--absout")
     if params.get("out_relwarp", False):
@@ -304,8 +314,7 @@ def convertwarp_outputs(
     """
     ret = ConvertwarpOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("reference", None)).name + "_concatwarp"),
-        out_file_=execution.output_file("out_file"),
+        out_file=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -340,6 +349,7 @@ def convertwarp_execute(
 
 
 def convertwarp(
+    out: str,
     reference: InputPathType,
     abswarp: bool = False,
     cons_jacobian: bool = False,
@@ -368,6 +378,9 @@ def convertwarp(
     URL: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki
     
     Args:
+        out: Name of output file, containing warps that are the combination of\
+            all those given as arguments. the format of this will be a field-file\
+            (rather than spline coefficients) with any affine components included.
         reference: Name of a file in target space of the full transform.
         abswarp: If set it indicates that the warps in --warp1 and --warp2\
             should be interpreted as absolute. i.e. the values in --warp1/2 are the\
@@ -422,6 +435,7 @@ def convertwarp(
         jacobian_max=jacobian_max,
         jacobian_min=jacobian_min,
         midmat=midmat,
+        out=out,
         out_abswarp=out_abswarp,
         out_relwarp=out_relwarp,
         output_type=output_type,
