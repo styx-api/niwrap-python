@@ -6,32 +6,23 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSHIFT_METADATA = Metadata(
-    id="eb1127cdc88eed5f16539462f60c9212dd13437b.boutiques",
+    id="532465668136863eecd81d4cd122486105f8a4e6.boutiques",
     name="3dTshift",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
 
 
-_V3dTshiftRltParamsDictNoTag = typing.TypedDict('_V3dTshiftRltParamsDictNoTag', {})
-V3dTshiftRltParamsDictTagged = typing.TypedDict('V3dTshiftRltParamsDictTagged', {
-    "@type": typing.Literal["rlt"],
+_V3dTshiftTrMicrosyntaxParamsDictNoTag = typing.TypedDict('_V3dTshiftTrMicrosyntaxParamsDictNoTag', {
+    "value": float,
+    "unit": typing.NotRequired[typing.Literal["s", "ms", "Hz"] | None],
 })
-V3dTshiftRltParamsDict = _V3dTshiftRltParamsDictNoTag | V3dTshiftRltParamsDictTagged
-
-
-_V3dTshiftRltPlusParamsDictNoTag = typing.TypedDict('_V3dTshiftRltPlusParamsDictNoTag', {})
-V3dTshiftRltPlusParamsDictTagged = typing.TypedDict('V3dTshiftRltPlusParamsDictTagged', {
-    "@type": typing.Literal["rlt_plus"],
+V3dTshiftTrMicrosyntaxParamsDictTagged = typing.TypedDict('V3dTshiftTrMicrosyntaxParamsDictTagged', {
+    "@type": typing.Literal["tr_microsyntax"],
+    "value": float,
+    "unit": typing.NotRequired[typing.Literal["s", "ms", "Hz"] | None],
 })
-V3dTshiftRltPlusParamsDict = _V3dTshiftRltPlusParamsDictNoTag | V3dTshiftRltPlusParamsDictTagged
-
-
-_V3dTshiftNoDetrendParamsDictNoTag = typing.TypedDict('_V3dTshiftNoDetrendParamsDictNoTag', {})
-V3dTshiftNoDetrendParamsDictTagged = typing.TypedDict('V3dTshiftNoDetrendParamsDictTagged', {
-    "@type": typing.Literal["no_detrend"],
-})
-V3dTshiftNoDetrendParamsDict = _V3dTshiftNoDetrendParamsDictNoTag | V3dTshiftNoDetrendParamsDictTagged
+V3dTshiftTrMicrosyntaxParamsDict = _V3dTshiftTrMicrosyntaxParamsDictNoTag | V3dTshiftTrMicrosyntaxParamsDictTagged
 
 
 _V3dTshiftAlignToTzeroParamsDictNoTag = typing.TypedDict('_V3dTshiftAlignToTzeroParamsDictNoTag', {
@@ -64,6 +55,27 @@ V3dTshiftAlignVoxelWiseParamsDictTagged = typing.TypedDict('V3dTshiftAlignVoxelW
 V3dTshiftAlignVoxelWiseParamsDict = _V3dTshiftAlignVoxelWiseParamsDictNoTag | V3dTshiftAlignVoxelWiseParamsDictTagged
 
 
+_V3dTshiftRltParamsDictNoTag = typing.TypedDict('_V3dTshiftRltParamsDictNoTag', {})
+V3dTshiftRltParamsDictTagged = typing.TypedDict('V3dTshiftRltParamsDictTagged', {
+    "@type": typing.Literal["rlt"],
+})
+V3dTshiftRltParamsDict = _V3dTshiftRltParamsDictNoTag | V3dTshiftRltParamsDictTagged
+
+
+_V3dTshiftRltPlusParamsDictNoTag = typing.TypedDict('_V3dTshiftRltPlusParamsDictNoTag', {})
+V3dTshiftRltPlusParamsDictTagged = typing.TypedDict('V3dTshiftRltPlusParamsDictTagged', {
+    "@type": typing.Literal["rlt_plus"],
+})
+V3dTshiftRltPlusParamsDict = _V3dTshiftRltPlusParamsDictNoTag | V3dTshiftRltPlusParamsDictTagged
+
+
+_V3dTshiftNoDetrendParamsDictNoTag = typing.TypedDict('_V3dTshiftNoDetrendParamsDictNoTag', {})
+V3dTshiftNoDetrendParamsDictTagged = typing.TypedDict('V3dTshiftNoDetrendParamsDictTagged', {
+    "@type": typing.Literal["no_detrend"],
+})
+V3dTshiftNoDetrendParamsDict = _V3dTshiftNoDetrendParamsDictNoTag | V3dTshiftNoDetrendParamsDictTagged
+
+
 _V3dTshiftTpatternModeStringParamsDictNoTag = typing.TypedDict('_V3dTshiftTpatternModeStringParamsDictNoTag', {
     "tpattern_string": typing.Literal["alt+z", "altplus", "alt+z2", "alt-z", "altminus", "alt-z2", "seq+z", "seqplus", "seq-z", "seqminus"],
 })
@@ -84,84 +96,30 @@ V3dTshiftTpatternModeFileParamsDictTagged = typing.TypedDict('V3dTshiftTpatternM
 V3dTshiftTpatternModeFileParamsDict = _V3dTshiftTpatternModeFileParamsDictNoTag | V3dTshiftTpatternModeFileParamsDictTagged
 
 
-_V3dTshiftTrMicrosyntaxParamsDictNoTag = typing.TypedDict('_V3dTshiftTrMicrosyntaxParamsDictNoTag', {
-    "value": float,
-    "unit": typing.NotRequired[typing.Literal["s", "ms"] | None],
-})
-V3dTshiftTrMicrosyntaxParamsDictTagged = typing.TypedDict('V3dTshiftTrMicrosyntaxParamsDictTagged', {
-    "@type": typing.Literal["tr_microsyntax"],
-    "value": float,
-    "unit": typing.NotRequired[typing.Literal["s", "ms"] | None],
-})
-V3dTshiftTrMicrosyntaxParamsDict = _V3dTshiftTrMicrosyntaxParamsDictNoTag | V3dTshiftTrMicrosyntaxParamsDictTagged
-
-
 _V3dTshiftParamsDictNoTag = typing.TypedDict('_V3dTshiftParamsDictNoTag', {
+    "verbose": bool,
+    "tr": typing.NotRequired[V3dTshiftTrMicrosyntaxParamsDict | None],
+    "shift_strategy": typing.NotRequired[typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
-    "in_file": InputPathType,
-    "interp": typing.NotRequired[typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None],
-    "num_threads": typing.NotRequired[int | None],
-    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "detrend_strategy": typing.NotRequired[typing.Union[V3dTshiftRltParamsDictTagged, V3dTshiftRltPlusParamsDictTagged, V3dTshiftNoDetrendParamsDictTagged] | None],
-    "shift_strategy": typing.NotRequired[typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None],
-    "slice_encoding_direction": typing.NotRequired[typing.Literal["k", "k-"] | None],
+    "interp": typing.NotRequired[typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None],
     "tpattern": typing.NotRequired[typing.Union[V3dTshiftTpatternModeStringParamsDictTagged, V3dTshiftTpatternModeFileParamsDictTagged] | None],
-    "tr": typing.NotRequired[V3dTshiftTrMicrosyntaxParamsDict | None],
-    "verbose": bool,
+    "in_file": InputPathType,
 })
 V3dTshiftParamsDictTagged = typing.TypedDict('V3dTshiftParamsDictTagged', {
     "@type": typing.Literal["afni/3dTshift"],
+    "verbose": bool,
+    "tr": typing.NotRequired[V3dTshiftTrMicrosyntaxParamsDict | None],
+    "shift_strategy": typing.NotRequired[typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
-    "in_file": InputPathType,
-    "interp": typing.NotRequired[typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None],
-    "num_threads": typing.NotRequired[int | None],
-    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "detrend_strategy": typing.NotRequired[typing.Union[V3dTshiftRltParamsDictTagged, V3dTshiftRltPlusParamsDictTagged, V3dTshiftNoDetrendParamsDictTagged] | None],
-    "shift_strategy": typing.NotRequired[typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None],
-    "slice_encoding_direction": typing.NotRequired[typing.Literal["k", "k-"] | None],
+    "interp": typing.NotRequired[typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None],
     "tpattern": typing.NotRequired[typing.Union[V3dTshiftTpatternModeStringParamsDictTagged, V3dTshiftTpatternModeFileParamsDictTagged] | None],
-    "tr": typing.NotRequired[V3dTshiftTrMicrosyntaxParamsDict | None],
-    "verbose": bool,
+    "in_file": InputPathType,
 })
 V3dTshiftParamsDict = _V3dTshiftParamsDictNoTag | V3dTshiftParamsDictTagged
-
-
-def v_3d_tshift_detrend_strategy_cargs_dyn_fn(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "rlt": v_3d_tshift_rlt_cargs,
-        "rlt_plus": v_3d_tshift_rlt_plus_cargs,
-        "no_detrend": v_3d_tshift_no_detrend_cargs,
-    }.get(t)
-
-
-def v_3d_tshift_detrend_strategy_validate_dyn_fn(
-    t: str,
-) -> typing.Any:
-    """
-    Get validate params function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Validate params function.
-    """
-    return {
-        "rlt": v_3d_tshift_rlt_validate,
-        "rlt_plus": v_3d_tshift_rlt_plus_validate,
-        "no_detrend": v_3d_tshift_no_detrend_validate,
-    }.get(t)
 
 
 def v_3d_tshift_shift_strategy_cargs_dyn_fn(
@@ -200,6 +158,42 @@ def v_3d_tshift_shift_strategy_validate_dyn_fn(
     }.get(t)
 
 
+def v_3d_tshift_detrend_strategy_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "rlt": v_3d_tshift_rlt_cargs,
+        "rlt_plus": v_3d_tshift_rlt_plus_cargs,
+        "no_detrend": v_3d_tshift_no_detrend_cargs,
+    }.get(t)
+
+
+def v_3d_tshift_detrend_strategy_validate_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get validate params function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Validate params function.
+    """
+    return {
+        "rlt": v_3d_tshift_rlt_validate,
+        "rlt_plus": v_3d_tshift_rlt_plus_validate,
+        "no_detrend": v_3d_tshift_no_detrend_validate,
+    }.get(t)
+
+
 def v_3d_tshift_tpattern_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
@@ -232,6 +226,237 @@ def v_3d_tshift_tpattern_validate_dyn_fn(
         "tpattern_mode_string": v_3d_tshift_tpattern_mode_string_validate,
         "tpattern_mode_file": v_3d_tshift_tpattern_mode_file_validate,
     }.get(t)
+
+
+def v_3d_tshift_tr_microsyntax(
+    value: float,
+    unit: typing.Literal["s", "ms", "Hz"] | None = None,
+) -> V3dTshiftTrMicrosyntaxParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        value: The TR value. Must be greater than 0.
+        unit: Unit for the TR.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "tr_microsyntax",
+        "value": value,
+    }
+    if unit is not None:
+        params["unit"] = unit
+    return params
+
+
+def v_3d_tshift_tr_microsyntax_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTshiftTrMicrosyntaxParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], (float, int)):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `typing.Literal["s", "ms", "Hz"] | None`')
+        if params["unit"] not in ["s", "ms", "Hz"]:
+            raise StyxValidationError("Parameter `unit` must be one of [\"s\", \"ms\", \"Hz\"]")
+
+
+def v_3d_tshift_tr_microsyntax_cargs(
+    params: V3dTshiftTrMicrosyntaxParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append(str(params.get("value", None)) + (params.get("unit", None) if (params.get("unit", None) is not None) else ""))
+    return cargs
+
+
+def v_3d_tshift_align_to_tzero(
+    tzero: float,
+) -> V3dTshiftAlignToTzeroParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        tzero: The time offset to align to. Must be between the minimum and\
+            maximum slice temporal offsets.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "align_to_tzero",
+        "tzero": tzero,
+    }
+    return params
+
+
+def v_3d_tshift_align_to_tzero_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTshiftAlignToTzeroParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tzero", None) is None:
+        raise StyxValidationError("`tzero` must not be None")
+    if not isinstance(params["tzero"], (float, int)):
+        raise StyxValidationError(f'`tzero` has the wrong type: Received `{type(params.get("tzero", None))}` expected `float`')
+
+
+def v_3d_tshift_align_to_tzero_cargs(
+    params: V3dTshiftAlignToTzeroParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("-tzero")
+    cargs.append(str(params.get("tzero", None)))
+    return cargs
+
+
+def v_3d_tshift_align_to_slice(
+    slice_index: int,
+) -> V3dTshiftAlignToSliceParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        slice_index: The index of the reference slice. Must be less than the\
+            total number of slices.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "align_to_slice",
+        "slice_index": slice_index,
+    }
+    return params
+
+
+def v_3d_tshift_align_to_slice_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTshiftAlignToSliceParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("slice_index", None) is None:
+        raise StyxValidationError("`slice_index` must not be None")
+    if not isinstance(params["slice_index"], int):
+        raise StyxValidationError(f'`slice_index` has the wrong type: Received `{type(params.get("slice_index", None))}` expected `int`')
+
+
+def v_3d_tshift_align_to_slice_cargs(
+    params: V3dTshiftAlignToSliceParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("-slice")
+    cargs.append(str(params.get("slice_index", None)))
+    return cargs
+
+
+def v_3d_tshift_align_voxel_wise(
+    voxshift_file: InputPathType,
+) -> V3dTshiftAlignVoxelWiseParamsDictTagged:
+    """
+    Build parameters.
+    
+    Args:
+        voxshift_file: Dataset containing fractional TR shift values. Must have\
+            the same spatial dimensions as the input.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "align_voxel_wise",
+        "voxshift_file": voxshift_file,
+    }
+    return params
+
+
+def v_3d_tshift_align_voxel_wise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTshiftAlignVoxelWiseParamsDict` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("voxshift_file", None) is None:
+        raise StyxValidationError("`voxshift_file` must not be None")
+    if not isinstance(params["voxshift_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`voxshift_file` has the wrong type: Received `{type(params.get("voxshift_file", None))}` expected `InputPathType`')
+
+
+def v_3d_tshift_align_voxel_wise_cargs(
+    params: V3dTshiftAlignVoxelWiseParamsDict,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("-voxshift")
+    cargs.append(execution.input_file(params.get("voxshift_file", None)))
+    return cargs
 
 
 def v_3d_tshift_rlt(
@@ -375,171 +600,6 @@ def v_3d_tshift_no_detrend_cargs(
     return cargs
 
 
-def v_3d_tshift_align_to_tzero(
-    tzero: float,
-) -> V3dTshiftAlignToTzeroParamsDictTagged:
-    """
-    Build parameters.
-    
-    Args:
-        tzero: The time offset to align to (e.g., 0).
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "align_to_tzero",
-        "tzero": tzero,
-    }
-    return params
-
-
-def v_3d_tshift_align_to_tzero_validate(
-    params: typing.Any,
-) -> None:
-    """
-    Validate parameters. Throws an error if `params` is not a valid
-    `V3dTshiftAlignToTzeroParamsDict` object.
-    
-    Args:
-        params: The parameters object to validate.
-    """
-    if params is None or not isinstance(params, dict):
-        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("tzero", None) is None:
-        raise StyxValidationError("`tzero` must not be None")
-    if not isinstance(params["tzero"], (float, int)):
-        raise StyxValidationError(f'`tzero` has the wrong type: Received `{type(params.get("tzero", None))}` expected `float`')
-
-
-def v_3d_tshift_align_to_tzero_cargs(
-    params: V3dTshiftAlignToTzeroParamsDict,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-tzero")
-    cargs.append(str(params.get("tzero", None)))
-    return cargs
-
-
-def v_3d_tshift_align_to_slice(
-    slice_index: int,
-) -> V3dTshiftAlignToSliceParamsDictTagged:
-    """
-    Build parameters.
-    
-    Args:
-        slice_index: The index of the slice to use as the reference.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "align_to_slice",
-        "slice_index": slice_index,
-    }
-    return params
-
-
-def v_3d_tshift_align_to_slice_validate(
-    params: typing.Any,
-) -> None:
-    """
-    Validate parameters. Throws an error if `params` is not a valid
-    `V3dTshiftAlignToSliceParamsDict` object.
-    
-    Args:
-        params: The parameters object to validate.
-    """
-    if params is None or not isinstance(params, dict):
-        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("slice_index", None) is None:
-        raise StyxValidationError("`slice_index` must not be None")
-    if not isinstance(params["slice_index"], int):
-        raise StyxValidationError(f'`slice_index` has the wrong type: Received `{type(params.get("slice_index", None))}` expected `int`')
-
-
-def v_3d_tshift_align_to_slice_cargs(
-    params: V3dTshiftAlignToSliceParamsDict,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-slice")
-    cargs.append(str(params.get("slice_index", None)))
-    return cargs
-
-
-def v_3d_tshift_align_voxel_wise(
-    voxshift_file: InputPathType,
-) -> V3dTshiftAlignVoxelWiseParamsDictTagged:
-    """
-    Build parameters.
-    
-    Args:
-        voxshift_file: Dataset containing fractional TR shift values.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "align_voxel_wise",
-        "voxshift_file": voxshift_file,
-    }
-    return params
-
-
-def v_3d_tshift_align_voxel_wise_validate(
-    params: typing.Any,
-) -> None:
-    """
-    Validate parameters. Throws an error if `params` is not a valid
-    `V3dTshiftAlignVoxelWiseParamsDict` object.
-    
-    Args:
-        params: The parameters object to validate.
-    """
-    if params is None or not isinstance(params, dict):
-        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("voxshift_file", None) is None:
-        raise StyxValidationError("`voxshift_file` must not be None")
-    if not isinstance(params["voxshift_file"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`voxshift_file` has the wrong type: Received `{type(params.get("voxshift_file", None))}` expected `InputPathType`')
-
-
-def v_3d_tshift_align_voxel_wise_cargs(
-    params: V3dTshiftAlignVoxelWiseParamsDict,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-voxshift")
-    cargs.append(execution.input_file(params.get("voxshift_file", None)))
-    return cargs
-
-
 def v_3d_tshift_tpattern_mode_string(
     tpattern_string: typing.Literal["alt+z", "altplus", "alt+z2", "alt-z", "altminus", "alt-z2", "seq+z", "seqplus", "seq-z", "seqminus"],
 ) -> V3dTshiftTpatternModeStringParamsDictTagged:
@@ -603,7 +663,7 @@ def v_3d_tshift_tpattern_mode_file(
     Build parameters.
     
     Args:
-        tpattern_file: File containing temporal offsets.
+        tpattern_file: File containing temporal offsets (one per slice).
     Returns:
         Parameter dictionary
     """
@@ -650,69 +710,6 @@ def v_3d_tshift_tpattern_mode_file_cargs(
     return cargs
 
 
-def v_3d_tshift_tr_microsyntax(
-    value: float,
-    unit: typing.Literal["s", "ms"] | None = None,
-) -> V3dTshiftTrMicrosyntaxParamsDictTagged:
-    """
-    Build parameters.
-    
-    Args:
-        value: The temporal resolution value.
-        unit: Unit for the TR (seconds or milliseconds).
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "tr_microsyntax",
-        "value": value,
-    }
-    if unit is not None:
-        params["unit"] = unit
-    return params
-
-
-def v_3d_tshift_tr_microsyntax_validate(
-    params: typing.Any,
-) -> None:
-    """
-    Validate parameters. Throws an error if `params` is not a valid
-    `V3dTshiftTrMicrosyntaxParamsDict` object.
-    
-    Args:
-        params: The parameters object to validate.
-    """
-    if params is None or not isinstance(params, dict):
-        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("value", None) is None:
-        raise StyxValidationError("`value` must not be None")
-    if not isinstance(params["value"], (float, int)):
-        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float`')
-    if params.get("unit", None) is not None:
-        if not isinstance(params["unit"], str):
-            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `typing.Literal["s", "ms"] | None`')
-        if params["unit"] not in ["s", "ms"]:
-            raise StyxValidationError("Parameter `unit` must be one of [\"s\", \"ms\"]")
-
-
-def v_3d_tshift_tr_microsyntax_cargs(
-    params: V3dTshiftTrMicrosyntaxParamsDict,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append(str(params.get("value", None)) + (params.get("unit", None) if (params.get("unit", None) is not None) else ""))
-    return cargs
-
-
 class V3dTshiftOutputs(typing.NamedTuple):
     """
     Output object returned when calling `V3dTshiftParamsDict(...)`.
@@ -720,81 +717,65 @@ class V3dTshiftOutputs(typing.NamedTuple):
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
     out_file: OutputPathType | None
-    """Output image file name."""
-    timing_file: OutputPathType
-    """Afni formatted timing file, if ``slice_timing`` is a list."""
+    """Time-shifted output dataset."""
 
 
 def v_3d_tshift_params(
     in_file: InputPathType,
+    verbose: bool = False,
+    tr: V3dTshiftTrMicrosyntaxParamsDict | None = None,
+    shift_strategy: typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None = None,
     prefix: str | None = None,
     ignore: int | None = None,
-    interp: typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None = None,
-    num_threads: int | None = None,
-    outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     detrend_strategy: typing.Union[V3dTshiftRltParamsDictTagged, V3dTshiftRltPlusParamsDictTagged, V3dTshiftNoDetrendParamsDictTagged] | None = None,
-    shift_strategy: typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None = None,
-    slice_encoding_direction: typing.Literal["k", "k-"] | None = None,
+    interp: typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None = None,
     tpattern: typing.Union[V3dTshiftTpatternModeStringParamsDictTagged, V3dTshiftTpatternModeFileParamsDictTagged] | None = None,
-    tr: V3dTshiftTrMicrosyntaxParamsDict | None = None,
-    verbose: bool = False,
 ) -> V3dTshiftParamsDictTagged:
     """
     Build parameters.
     
     Args:
-        in_file: Input dataset to 3dTshift. The input dataset can have a\
-            sub-brick selector attached.
-        prefix: Prefix for output image file name. The default is 'tshift'.
-        ignore: Ignore the first 'ii' points. The first ii values will be\
-            unchanged in the output (regardless of the -rlt option). They also will\
-            not be used in the detrending or time shifting. Default is ii=0.
-        interp: Different interpolation methods. Fourier (default) is most\
-            accurate but slowest. Linear is least accurate. Polynomials: cubic,\
-            quintic, heptic. Weighted sinc: wsinc5, wsinc9.
-        num_threads: Set number of threads.
-        outputtype: Afni output filetype.
-        detrend_strategy: Specify how to handle the mean and linear trend\
-            during shifting. If unspecified, the default is to remove the trend and\
-            add it back.
-        shift_strategy: Select how the temporal alignment should be calculated.
-        slice_encoding_direction: 'k' or 'k-'. Direction in which slice_timing\
-            is specified (default: k). Only in effect when slice_timing is passed\
-            as list.
-        tpattern: Use specified slice time pattern rather than one in header.\
-            Values can be a standard pattern string (e.g. 'alt+z') or a filename\
-            prefixed with '@'.
-        tr: Manually set the TR. You can attach suffix 's' for seconds or 'ms'\
-            for milliseconds.
+        in_file: Input dataset to 3dTshift. Can include a sub-brick selector\
+            (e.g., prefix+orig[4..$]).
         verbose: Print lots of messages while program runs.
+        tr: Manually set the TR instead of using the value in the dataset\
+            header. You can attach a suffix for units.
+        shift_strategy: How to determine the temporal alignment target. Default\
+            is the average of the tpattern values.
+        prefix: Prefix for output file name. Default is 'tshift'.
+        ignore: Ignore the first 'ii' points. These values will be unchanged in\
+            the output and will not be used in detrending or time shifting. Default\
+            is 0.
+        detrend_strategy: How to handle the mean and linear trend during\
+            shifting. Default is to remove both before shifting and add both back\
+            after.
+        interp: Interpolation method. Fourier (default) is most accurate but\
+            slowest. Linear is least accurate. Polynomials: cubic, quintic, heptic.\
+            Weighted sinc: wsinc5, wsinc9.
+        tpattern: Use specified slice time pattern rather than the one in the\
+            dataset header.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "afni/3dTshift",
-        "in_file": in_file,
         "verbose": verbose,
+        "in_file": in_file,
     }
+    if tr is not None:
+        params["tr"] = tr
+    if shift_strategy is not None:
+        params["shift_strategy"] = shift_strategy
     if prefix is not None:
         params["prefix"] = prefix
     if ignore is not None:
         params["ignore"] = ignore
-    if interp is not None:
-        params["interp"] = interp
-    if num_threads is not None:
-        params["num_threads"] = num_threads
-    if outputtype is not None:
-        params["outputtype"] = outputtype
     if detrend_strategy is not None:
         params["detrend_strategy"] = detrend_strategy
-    if shift_strategy is not None:
-        params["shift_strategy"] = shift_strategy
-    if slice_encoding_direction is not None:
-        params["slice_encoding_direction"] = slice_encoding_direction
+    if interp is not None:
+        params["interp"] = interp
     if tpattern is not None:
         params["tpattern"] = tpattern
-    if tr is not None:
-        params["tr"] = tr
     return params
 
 
@@ -810,37 +791,12 @@ def v_3d_tshift_validate(
     """
     if params is None or not isinstance(params, dict):
         raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
-    if params.get("prefix", None) is not None:
-        if not isinstance(params["prefix"], str):
-            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
-    if params.get("ignore", None) is not None:
-        if not isinstance(params["ignore"], int):
-            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `int | None`')
-    if params.get("in_file", None) is None:
-        raise StyxValidationError("`in_file` must not be None")
-    if not isinstance(params["in_file"], (pathlib.Path, str)):
-        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
-    if params.get("interp", None) is not None:
-        if not isinstance(params["interp"], str):
-            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None`')
-        if params["interp"] not in ["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"]:
-            raise StyxValidationError("Parameter `interp` must be one of [\"Fourier\", \"linear\", \"cubic\", \"quintic\", \"heptic\", \"wsinc5\", \"wsinc9\"]")
-    if params.get("num_threads", None) is not None:
-        if not isinstance(params["num_threads"], int):
-            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
-    if params.get("outputtype", None) is not None:
-        if not isinstance(params["outputtype"], str):
-            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
-        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
-            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
-    if params.get("detrend_strategy", None) is not None:
-        if not isinstance(params["detrend_strategy"], dict):
-            raise StyxValidationError(f'Params object has the wrong type \'{type(params["detrend_strategy"])}\'')
-        if "@type" not in params["detrend_strategy"]:
-            raise StyxValidationError("Params object is missing `@type`")
-        if params["detrend_strategy"]["@type"] not in ["rlt", "rlt_plus", "no_detrend"]:
-            raise StyxValidationError("Parameter `detrend_strategy`s `@type` must be one of [\"rlt\", \"rlt_plus\", \"no_detrend\"]")
-        v_3d_tshift_detrend_strategy_validate_dyn_fn(params["detrend_strategy"]["@type"])(params["detrend_strategy"])
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("tr", None) is not None:
+        v_3d_tshift_tr_microsyntax_validate(params["tr"])
     if params.get("shift_strategy", None) is not None:
         if not isinstance(params["shift_strategy"], dict):
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["shift_strategy"])}\'')
@@ -849,11 +805,25 @@ def v_3d_tshift_validate(
         if params["shift_strategy"]["@type"] not in ["align_to_tzero", "align_to_slice", "align_voxel_wise"]:
             raise StyxValidationError("Parameter `shift_strategy`s `@type` must be one of [\"align_to_tzero\", \"align_to_slice\", \"align_voxel_wise\"]")
         v_3d_tshift_shift_strategy_validate_dyn_fn(params["shift_strategy"]["@type"])(params["shift_strategy"])
-    if params.get("slice_encoding_direction", None) is not None:
-        if not isinstance(params["slice_encoding_direction"], str):
-            raise StyxValidationError(f'`slice_encoding_direction` has the wrong type: Received `{type(params.get("slice_encoding_direction", None))}` expected `typing.Literal["k", "k-"] | None`')
-        if params["slice_encoding_direction"] not in ["k", "k-"]:
-            raise StyxValidationError("Parameter `slice_encoding_direction` must be one of [\"k\", \"k-\"]")
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], int):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `int | None`')
+    if params.get("detrend_strategy", None) is not None:
+        if not isinstance(params["detrend_strategy"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["detrend_strategy"])}\'')
+        if "@type" not in params["detrend_strategy"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        if params["detrend_strategy"]["@type"] not in ["rlt", "rlt_plus", "no_detrend"]:
+            raise StyxValidationError("Parameter `detrend_strategy`s `@type` must be one of [\"rlt\", \"rlt_plus\", \"no_detrend\"]")
+        v_3d_tshift_detrend_strategy_validate_dyn_fn(params["detrend_strategy"]["@type"])(params["detrend_strategy"])
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None`')
+        if params["interp"] not in ["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"Fourier\", \"linear\", \"cubic\", \"quintic\", \"heptic\", \"wsinc5\", \"wsinc9\"]")
     if params.get("tpattern", None) is not None:
         if not isinstance(params["tpattern"], dict):
             raise StyxValidationError(f'Params object has the wrong type \'{type(params["tpattern"])}\'')
@@ -862,12 +832,10 @@ def v_3d_tshift_validate(
         if params["tpattern"]["@type"] not in ["tpattern_mode_string", "tpattern_mode_file"]:
             raise StyxValidationError("Parameter `tpattern`s `@type` must be one of [\"tpattern_mode_string\", \"tpattern_mode_file\"]")
         v_3d_tshift_tpattern_validate_dyn_fn(params["tpattern"]["@type"])(params["tpattern"])
-    if params.get("tr", None) is not None:
-        v_3d_tshift_tr_microsyntax_validate(params["tr"])
-    if params.get("verbose", False) is None:
-        raise StyxValidationError("`verbose` must not be None")
-    if not isinstance(params["verbose"], bool):
-        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
 
 
 def v_3d_tshift_cargs(
@@ -885,6 +853,15 @@ def v_3d_tshift_cargs(
     """
     cargs = []
     cargs.append("3dTshift")
+    if params.get("verbose", False):
+        cargs.append("-verbose")
+    if params.get("tr", None) is not None:
+        cargs.extend([
+            "-TR",
+            *v_3d_tshift_tr_microsyntax_cargs(params.get("tr", None), execution)
+        ])
+    if params.get("shift_strategy", None) is not None:
+        cargs.extend(v_3d_tshift_shift_strategy_cargs_dyn_fn(params.get("shift_strategy", None)["@type"])(params.get("shift_strategy", None), execution))
     if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
@@ -895,34 +872,19 @@ def v_3d_tshift_cargs(
             "-ignore",
             str(params.get("ignore", None))
         ])
-    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("detrend_strategy", None) is not None:
+        cargs.extend(v_3d_tshift_detrend_strategy_cargs_dyn_fn(params.get("detrend_strategy", None)["@type"])(params.get("detrend_strategy", None), execution))
     if params.get("interp", None) is not None:
         cargs.extend([
             "-",
             params.get("interp", None)
         ])
-    if params.get("num_threads", None) is not None:
-        cargs.append(str(params.get("num_threads", None)))
-    if params.get("outputtype", None) is not None:
-        cargs.append(params.get("outputtype", None))
-    if params.get("detrend_strategy", None) is not None:
-        cargs.extend(v_3d_tshift_detrend_strategy_cargs_dyn_fn(params.get("detrend_strategy", None)["@type"])(params.get("detrend_strategy", None), execution))
-    if params.get("shift_strategy", None) is not None:
-        cargs.extend(v_3d_tshift_shift_strategy_cargs_dyn_fn(params.get("shift_strategy", None)["@type"])(params.get("shift_strategy", None), execution))
-    if params.get("slice_encoding_direction", None) is not None:
-        cargs.append(params.get("slice_encoding_direction", None))
     if params.get("tpattern", None) is not None:
         cargs.extend([
             "-tpattern",
             *v_3d_tshift_tpattern_cargs_dyn_fn(params.get("tpattern", None)["@type"])(params.get("tpattern", None), execution)
         ])
-    if params.get("tr", None) is not None:
-        cargs.extend([
-            "-TR",
-            *v_3d_tshift_tr_microsyntax_cargs(params.get("tr", None), execution)
-        ])
-    if params.get("verbose", False):
-        cargs.append("-verbose")
+    cargs.append(execution.input_file(params.get("in_file", None)))
     return cargs
 
 
@@ -942,7 +904,6 @@ def v_3d_tshift_outputs(
     ret = V3dTshiftOutputs(
         root=execution.output_file("."),
         out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
-        timing_file=execution.output_file("timing_file"),
     )
     return ret
 
@@ -979,17 +940,14 @@ def v_3d_tshift_execute(
 
 def v_3d_tshift(
     in_file: InputPathType,
+    verbose: bool = False,
+    tr: V3dTshiftTrMicrosyntaxParamsDict | None = None,
+    shift_strategy: typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None = None,
     prefix: str | None = None,
     ignore: int | None = None,
-    interp: typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None = None,
-    num_threads: int | None = None,
-    outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     detrend_strategy: typing.Union[V3dTshiftRltParamsDictTagged, V3dTshiftRltPlusParamsDictTagged, V3dTshiftNoDetrendParamsDictTagged] | None = None,
-    shift_strategy: typing.Union[V3dTshiftAlignToTzeroParamsDictTagged, V3dTshiftAlignToSliceParamsDictTagged, V3dTshiftAlignVoxelWiseParamsDictTagged] | None = None,
-    slice_encoding_direction: typing.Literal["k", "k-"] | None = None,
+    interp: typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic", "wsinc5", "wsinc9"] | None = None,
     tpattern: typing.Union[V3dTshiftTpatternModeStringParamsDictTagged, V3dTshiftTpatternModeFileParamsDictTagged] | None = None,
-    tr: V3dTshiftTrMicrosyntaxParamsDict | None = None,
-    verbose: bool = False,
     runner: Runner | None = None,
 ) -> V3dTshiftOutputs:
     """
@@ -1003,47 +961,39 @@ def v_3d_tshift(
     URL: https://afni.nimh.nih.gov/
     
     Args:
-        in_file: Input dataset to 3dTshift. The input dataset can have a\
-            sub-brick selector attached.
-        prefix: Prefix for output image file name. The default is 'tshift'.
-        ignore: Ignore the first 'ii' points. The first ii values will be\
-            unchanged in the output (regardless of the -rlt option). They also will\
-            not be used in the detrending or time shifting. Default is ii=0.
-        interp: Different interpolation methods. Fourier (default) is most\
-            accurate but slowest. Linear is least accurate. Polynomials: cubic,\
-            quintic, heptic. Weighted sinc: wsinc5, wsinc9.
-        num_threads: Set number of threads.
-        outputtype: Afni output filetype.
-        detrend_strategy: Specify how to handle the mean and linear trend\
-            during shifting. If unspecified, the default is to remove the trend and\
-            add it back.
-        shift_strategy: Select how the temporal alignment should be calculated.
-        slice_encoding_direction: 'k' or 'k-'. Direction in which slice_timing\
-            is specified (default: k). Only in effect when slice_timing is passed\
-            as list.
-        tpattern: Use specified slice time pattern rather than one in header.\
-            Values can be a standard pattern string (e.g. 'alt+z') or a filename\
-            prefixed with '@'.
-        tr: Manually set the TR. You can attach suffix 's' for seconds or 'ms'\
-            for milliseconds.
+        in_file: Input dataset to 3dTshift. Can include a sub-brick selector\
+            (e.g., prefix+orig[4..$]).
         verbose: Print lots of messages while program runs.
+        tr: Manually set the TR instead of using the value in the dataset\
+            header. You can attach a suffix for units.
+        shift_strategy: How to determine the temporal alignment target. Default\
+            is the average of the tpattern values.
+        prefix: Prefix for output file name. Default is 'tshift'.
+        ignore: Ignore the first 'ii' points. These values will be unchanged in\
+            the output and will not be used in detrending or time shifting. Default\
+            is 0.
+        detrend_strategy: How to handle the mean and linear trend during\
+            shifting. Default is to remove both before shifting and add both back\
+            after.
+        interp: Interpolation method. Fourier (default) is most accurate but\
+            slowest. Linear is least accurate. Polynomials: cubic, quintic, heptic.\
+            Weighted sinc: wsinc5, wsinc9.
+        tpattern: Use specified slice time pattern rather than the one in the\
+            dataset header.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTshiftOutputs`).
     """
     params = v_3d_tshift_params(
+        verbose=verbose,
+        tr=tr,
+        shift_strategy=shift_strategy,
         prefix=prefix,
         ignore=ignore,
-        in_file=in_file,
-        interp=interp,
-        num_threads=num_threads,
-        outputtype=outputtype,
         detrend_strategy=detrend_strategy,
-        shift_strategy=shift_strategy,
-        slice_encoding_direction=slice_encoding_direction,
+        interp=interp,
         tpattern=tpattern,
-        tr=tr,
-        verbose=verbose,
+        in_file=in_file,
     )
     return v_3d_tshift_execute(params, runner)
 

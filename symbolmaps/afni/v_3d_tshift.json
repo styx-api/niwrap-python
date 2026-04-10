@@ -1,38 +1,18 @@
 {
   "fn_root_make_params_and_execute": "v_3d_tshift",
   "properties": {
-    "prefix": {
-      "var_param": "prefix"
+    "verbose": {
+      "var_param": "verbose"
     },
-    "ignore": {
-      "var_param": "ignore"
-    },
-    "in_file": {
-      "var_param": "in_file"
-    },
-    "interp": {
-      "var_param": "interp"
-    },
-    "num_threads": {
-      "var_param": "num_threads"
-    },
-    "outputtype": {
-      "var_param": "outputtype"
-    },
-    "detrend_strategy": {
-      "var_param": "detrend_strategy",
-      "variants": {
-        "rlt": {
-          "fn_struct_make_params": "v_3d_tshift_rlt",
-          "properties": {}
+    "tr": {
+      "var_param": "tr",
+      "fn_struct_make_params": "v_3d_tshift_tr_microsyntax",
+      "properties": {
+        "value": {
+          "var_param": "value"
         },
-        "rlt_plus": {
-          "fn_struct_make_params": "v_3d_tshift_rlt_plus",
-          "properties": {}
-        },
-        "no_detrend": {
-          "fn_struct_make_params": "v_3d_tshift_no_detrend",
-          "properties": {}
+        "unit": {
+          "var_param": "unit"
         }
       }
     },
@@ -65,8 +45,31 @@
         }
       }
     },
-    "slice_encoding_direction": {
-      "var_param": "slice_encoding_direction"
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "detrend_strategy": {
+      "var_param": "detrend_strategy",
+      "variants": {
+        "rlt": {
+          "fn_struct_make_params": "v_3d_tshift_rlt",
+          "properties": {}
+        },
+        "rlt_plus": {
+          "fn_struct_make_params": "v_3d_tshift_rlt_plus",
+          "properties": {}
+        },
+        "no_detrend": {
+          "fn_struct_make_params": "v_3d_tshift_no_detrend",
+          "properties": {}
+        }
+      }
+    },
+    "interp": {
+      "var_param": "interp"
     },
     "tpattern": {
       "var_param": "tpattern",
@@ -89,20 +92,8 @@
         }
       }
     },
-    "tr": {
-      "var_param": "tr",
-      "fn_struct_make_params": "v_3d_tshift_tr_microsyntax",
-      "properties": {
-        "value": {
-          "var_param": "value"
-        },
-        "unit": {
-          "var_param": "unit"
-        }
-      }
-    },
-    "verbose": {
-      "var_param": "verbose"
+    "in_file": {
+      "var_param": "in_file"
     }
   }
 }
