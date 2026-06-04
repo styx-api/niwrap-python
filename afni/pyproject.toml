@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_afni"
-version = "24.2.06"
+version = "0.9.4"
 description = "AFNI (Analysis of Functional NeuroImages) is a suite of programs for the analysis and visualization of multiple MRI modalities: anatomical, functional MRI (FMRI), and diffusion weighted (DW) data. Developed and maintained at the National Institute of Mental Health (NIMH), AFNI provides a comprehensive environment for processing, analyzing, and visualizing neuroimaging data, including real-time FMRI capabilities. It is freely available as open source software for research purposes."
 readme = "README.md"
 license = { text = "MIT" }
