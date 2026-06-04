@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_mrtrix"
-version = "0.9.4"
+version = "1.0.0"
 description = "MRtrix3 is a fast, flexible, and open software framework for medical image processing and visualisation, with a particular focus on diffusion MRI analysis. It provides tools for constrained spherical deconvolution, anatomically-constrained tractography, fixel-based analysis, and next-generation group-level analyses. It is freely available under the Mozilla Public License v2.0."
 readme = "README.md"
 license = { text = "MIT" }

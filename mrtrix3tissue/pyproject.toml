@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_mrtrix3tissue"
-version = "0.9.4"
+version = "1.0.0"
 description = "MRtrix3Tissue is a fork of MRtrix3 that adds capabilities for 3-Tissue Constrained Spherical Deconvolution (CSD) modelling and analysis. It provides Single-Shell 3-Tissue CSD (SS3T-CSD), enabling multi-tissue CSD analysis from single-shell diffusion MRI data without requiring multi-shell acquisitions."
 readme = "README.md"
 license = { text = "MIT" }
