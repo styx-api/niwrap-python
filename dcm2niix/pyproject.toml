@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_dcm2niix"
+version = "1.0.20240202"
+description = "dcm2niix converts neuroimaging data from the DICOM format to NIfTI format. It handles all major MRI vendors (Siemens, GE, Philips), supports lossy and lossless compression, and can generate Brain Imaging Data Structure (BIDS) sidecar JSON files. dcm2niix is the successor to dcm2nii and is designed for fast, reliable batch conversion of DICOM images."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Chris Rorden" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["dcm2niix"]
+package-dir = { "dcm2niix" = "." }
+
+[tool.setuptools.package-data]
+"dcm2niix" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

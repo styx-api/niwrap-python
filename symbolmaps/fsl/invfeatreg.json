@@ -1,8 +1,0 @@
-{
-  "fn_root_make_params_and_execute": "invfeatreg",
-  "properties": {
-    "feat_directory": {
-      "var_param": "feat_directory"
-    }
-  }
-}

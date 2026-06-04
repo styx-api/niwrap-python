@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_fastsurfer"
+version = "2.3.3"
+description = "FastSurfer is a fast and accurate deep-learning-based neuroimaging pipeline that provides a full FreeSurfer alternative for volumetric analysis (via FastSurferVINN) and surface-based thickness analysis (via recon-surf). It can segment a whole brain MRI scan in under one minute on a GPU and produces FreeSurfer-compatible outputs, making it a drop-in replacement for FreeSurfer's recon-all pipeline. FastSurfer includes FastSurferVINN for whole brain segmentation, CerebNet for cerebellum sub-segmentation, and HypVINN for hypothalamus sub-segmentation."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Martin Reuter" }, { name = "Leonie Henschel" }, { name = "David Kuegler" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["fastsurfer"]
+package-dir = { "fastsurfer" = "." }
+
+[tool.setuptools.package-data]
+"fastsurfer" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

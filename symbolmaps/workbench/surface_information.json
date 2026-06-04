@@ -1,8 +1,0 @@
-{
-  "fn_root_make_params_and_execute": "surface_information",
-  "properties": {
-    "Surface File": {
-      "var_param": "surface_file"
-    }
-  }
-}

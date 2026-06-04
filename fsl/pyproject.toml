@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_fsl"
+version = "6.0.4"
+description = "FSL (FMRIB Software Library) is a comprehensive library of analysis tools for FMRI, MRI, and diffusion brain imaging data, developed by the FMRIB Analysis Group at the University of Oxford. It includes tools for brain extraction, image registration, structural and functional analysis, tractography, ICA-based analysis, and statistical inference. Most tools can be run both from the command line and as GUIs."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Stephen M. Smith" }, { name = "Mark Jenkinson" }, { name = "Mark W. Woolrich" }, { name = "Christian F. Beckmann" }, { name = "Timothy E.J. Behrens" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["fsl"]
+package-dir = { "fsl" = "." }
+
+[tool.setuptools.package-data]
+"fsl" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

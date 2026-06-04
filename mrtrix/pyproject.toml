@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_mrtrix"
+version = "3.0.4"
+description = "MRtrix3 is a fast, flexible, and open software framework for medical image processing and visualisation, with a particular focus on diffusion MRI analysis. It provides tools for constrained spherical deconvolution, anatomically-constrained tractography, fixel-based analysis, and next-generation group-level analyses. It is freely available under the Mozilla Public License v2.0."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "J-Donald Tournier" }, { name = "Robert E. Smith" }, { name = "David Raffelt" }, { name = "Thijs Dhollander" }, { name = "Alan Connelly" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["mrtrix"]
+package-dir = { "mrtrix" = "." }
+
+[tool.setuptools.package-data]
+"mrtrix" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_afni"
+version = "24.2.06"
+description = "AFNI (Analysis of Functional NeuroImages) is a suite of programs for the analysis and visualization of multiple MRI modalities: anatomical, functional MRI (FMRI), and diffusion weighted (DW) data. Developed and maintained at the National Institute of Mental Health (NIMH), AFNI provides a comprehensive environment for processing, analyzing, and visualizing neuroimaging data, including real-time FMRI capabilities. It is freely available as open source software for research purposes."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Robert W. Cox" }, { name = "Ziad S. Saad" }, { name = "Richard C. Reynolds" }, { name = "Daniel R. Glen" }, { name = "Paul A. Taylor" }, { name = "Gang Chen" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["afni"]
+package-dir = { "afni" = "." }
+
+[tool.setuptools.package-data]
+"afni" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

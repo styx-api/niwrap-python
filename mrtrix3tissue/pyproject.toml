@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_mrtrix3tissue"
+version = "5.2.8"
+description = "MRtrix3Tissue is a fork of MRtrix3 that adds capabilities for 3-Tissue Constrained Spherical Deconvolution (CSD) modelling and analysis. It provides Single-Shell 3-Tissue CSD (SS3T-CSD), enabling multi-tissue CSD analysis from single-shell diffusion MRI data without requiring multi-shell acquisitions."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Thijs Dhollander" }, { name = "Alan Connelly" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["mrtrix3tissue"]
+package-dir = { "mrtrix3tissue" = "." }
+
+[tool.setuptools.package-data]
+"mrtrix3tissue" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

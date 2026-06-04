@@ -1,0 +1,22 @@
+[project]
+name = "niwrap_c3d"
+version = "1.1.0"
+description = "Convert3D (c3d) is a command-line tool for medical image processing that offers complementary features to ITK-SNAP. It provides standard filters, resampling commands, and tools specialized for multilabel and multicomponent images. Through the use of reverse polish notation on the command line, c3d allows many image processing tasks to be combined in small command-line mini-programs without saving intermediate image files."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Paul A. Yushkevich" }]
+requires-python = ">=3.10"
+dependencies = [
+  "styxdefs>=0.7.0,<0.8.0",
+]
+
+[tool.setuptools]
+packages = ["c3d"]
+package-dir = { "c3d" = "." }
+
+[tool.setuptools.package-data]
+"c3d" = ["py.typed"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

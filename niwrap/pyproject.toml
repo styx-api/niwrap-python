@@ -3,7 +3,7 @@ name = "niwrap"
 version = "0.9.3"
 description = "Neuroimaging wrappers."
 readme = "README.md"
-license = "MIT"
+license = { text = "MIT" }
 authors = [{ name = "CMI DAIR" }]
 requires-python = ">=3.10"
 dependencies = [
@@ -24,6 +24,9 @@ dependencies = [
   "niwrap_workbench",
 ]
 
+[tool.setuptools]
+packages = []
+
 [build-system]
-requires = ["uv_build>=0.8.13,<0.9.0"]
-build-backend = "uv_build"
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
